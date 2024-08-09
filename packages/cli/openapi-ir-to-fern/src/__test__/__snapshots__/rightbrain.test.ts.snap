@@ -602,6 +602,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "ChatIamListMembersRequestType": {
@@ -610,6 +613,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ChatIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -617,6 +623,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ChatIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -624,6 +633,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ChatIamPermissionTestPermissionsItem": {
           "enum": [
@@ -638,6 +650,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "Llm": {
           "default": "gpt-3.5-turbo",
@@ -691,6 +706,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "value": "gemini-pro",
             },
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -1484,6 +1502,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "CollectionIamListMembersRequestType": {
@@ -1492,6 +1513,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "CollectionIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -1499,6 +1523,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "CollectionIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -1506,6 +1533,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "CollectionIamPermissionTestPermissionsItem": {
           "enum": [
@@ -1524,6 +1554,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -1802,6 +1835,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -2223,6 +2259,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
     "datasourceConfluence.yml": {
@@ -2642,6 +2681,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -3063,6 +3105,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
     "datasourceGdrive.yml": {
@@ -3482,6 +3527,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -3903,6 +3951,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
     "datasourceOnedrive.yml": {
@@ -4323,6 +4374,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
     "datasourceSharepoint.yml": {
@@ -4742,6 +4796,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -5536,6 +5593,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "DocumentIamListMembersRequestType": {
@@ -5544,6 +5604,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "DocumentIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -5551,6 +5614,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "DocumentIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -5558,6 +5624,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "DocumentIamPermissionTestPermissionsItem": {
           "enum": [
@@ -5572,6 +5641,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource": {
           "enum": [
@@ -5585,6 +5657,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "dropbox",
             "sharepoint",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -5788,6 +5863,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
     "listings.yml": {
@@ -5956,6 +6034,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "list<root.ChatGuardrail>",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -6701,6 +6782,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "OrganizationIamListMembersRequestType": {
@@ -6709,6 +6793,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "OrganizationIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -6716,6 +6803,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "OrganizationIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -6723,6 +6813,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "OrganizationIamPermissionTestPermissionsItem": {
           "enum": [
@@ -6737,6 +6830,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -7366,6 +7462,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "Llm": {
@@ -7420,6 +7519,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "value": "gemini-pro",
             },
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ProjectIamListMembersRequestType": {
           "enum": [
@@ -7427,6 +7529,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ProjectIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -7439,6 +7544,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "task_runner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ProjectIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -7451,6 +7559,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "task_runner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ProjectIamPermissionTestPermissionsItem": {
           "enum": [
@@ -7481,6 +7592,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view_data",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -7710,6 +7824,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "root.PaginatedResultSetDatasourceSyncRun",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -8038,6 +8155,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "root.TaskForwarder",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -8990,6 +9110,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "TaskCreateLlmModel": {
@@ -9044,6 +9167,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "value": "gemini-pro",
             },
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskCreateOutputFormatValue": {
           "enum": [
@@ -9055,6 +9181,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "integer",
             "list",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskIamListMembersRequestType": {
           "enum": [
@@ -9062,6 +9191,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -9069,6 +9201,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -9076,6 +9211,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskIamPermissionTestPermissionsItem": {
           "enum": [
@@ -9090,6 +9228,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskUpdateLlmModel": {
           "enum": [
@@ -9142,6 +9283,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "value": "gemini-pro",
             },
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskUpdateOutputFormatValue": {
           "enum": [
@@ -9153,6 +9297,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "integer",
             "list",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -9272,6 +9419,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "root.User",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -11559,6 +11709,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
         },
       },
+      "source": {
+        "openapi": "rightbrain/openapi.yml",
+      },
     },
     "types": {
       "AsyncJobResult": {
@@ -11567,11 +11720,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "status": "string",
           "task_id": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "AuthorizeOrgOrgIdProjectProjectIdDatasourceBoxAuthorizeGetRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11581,6 +11740,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11590,6 +11752,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11599,6 +11764,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11608,6 +11776,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11617,6 +11788,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11626,6 +11800,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11635,6 +11812,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11644,6 +11824,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11653,6 +11836,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11662,6 +11848,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11671,6 +11860,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11680,6 +11872,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11689,6 +11884,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11699,11 +11897,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "id": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPost": {
         "docs": undefined,
         "properties": {
           "id": "list<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPost": {
@@ -11711,11 +11915,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "id": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPost": {
         "docs": undefined,
         "properties": {
           "id": "list<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPost": {
@@ -11723,17 +11933,26 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "id": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPost": {
         "docs": undefined,
         "properties": {
           "id": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPost": {
         "docs": undefined,
         "properties": {
           "id": "list<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "Chat": {
@@ -11776,6 +11995,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "summary": "optional<string>",
           "title": "optional<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatConfig": {
         "docs": undefined,
@@ -11809,6 +12031,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ChatDocument": {
@@ -11850,6 +12075,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "strategy": "string",
           "title": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatDocumentEmbeddingInstance": {
         "docs": undefined,
@@ -11875,6 +12103,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "is_active": "boolean",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatDocumentEmbeddingRecord": {
         "docs": undefined,
@@ -11889,6 +12120,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ChatDocumentQueryResult": {
@@ -11906,6 +12140,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "score": "double",
           "text": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatDocumentSource": {
         "enum": [
@@ -11919,11 +12156,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "dropbox",
           "sharepoint",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatGetMemberRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11937,11 +12180,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "name": "string",
           "type": "Type",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatIamListMembersRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11951,6 +12200,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -11962,6 +12214,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -11971,6 +12226,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -11983,6 +12241,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12013,11 +12274,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "CheckStatusOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdRunGetRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12027,6 +12294,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12036,6 +12306,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12045,6 +12318,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12054,6 +12330,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12063,6 +12342,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12072,6 +12354,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12104,11 +12389,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "summary": "optional<string>",
           "title": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "CollectionAddOrgOrgIdProjectProjectIdCollectionCollectionIdAddPostRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12119,11 +12410,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "all",
           "viewable",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "CollectionEditOrgOrgIdProjectProjectIdCollectionCollectionIdPostRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12134,11 +12431,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "embedding_instance_ids": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "CollectionGetMemberRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12148,6 +12451,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12157,6 +12463,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -12168,6 +12477,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12177,6 +12489,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -12189,6 +12504,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12198,6 +12516,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12207,6 +12528,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12218,17 +12542,26 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "documents_by_source": "list<SourceRow>",
           "number_of_chats": "integer",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ComposeContent": {
         "docs": undefined,
         "properties": {
           "existing_content": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ComposeGenerate": {
         "docs": undefined,
         "properties": {
           "structure": "list<InitialComposeSection>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ComposeInit": {
@@ -12253,11 +12586,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "voice": "optional<string>",
           "word_count": "optional<integer>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ComposeSectionTalkingPoint": {
         "docs": undefined,
         "properties": {
           "section_heading": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ComposeSectionUpdate": {
@@ -12267,6 +12606,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "position": "integer",
           "section_title": "string",
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ConversationalGuardrails": {
@@ -12281,11 +12623,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "optional<list<OutputConversationalGuardrailDefinition>>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "CreateChatChatPostRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12295,6 +12643,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12304,6 +12655,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12313,6 +12667,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12322,6 +12679,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12341,6 +12701,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "name": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "DatasourceConfiguration": {
         "docs": undefined,
@@ -12348,6 +12711,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "name": "string",
           "private": "boolean",
           "root_folder_id": "optional<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "DatasourceConnection": {
@@ -12396,6 +12762,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "DatasourceConnectionPublic": {
         "docs": undefined,
@@ -12434,6 +12803,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "DatasourceSyncRun": {
         "docs": undefined,
@@ -12457,11 +12829,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "task_id": "optional<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "DeleteOrgOrgIdProjectProjectIdDatasourceBoxConnectionIdDeleteRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12471,6 +12849,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12480,6 +12861,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12489,6 +12873,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12498,6 +12885,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12507,6 +12897,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12516,6 +12909,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12525,6 +12921,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12537,11 +12936,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "state": "State",
           "task_id": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "DocumentDeleteOrgOrgIdProjectProjectIdDocumentDocumentIdDeleteRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12551,6 +12956,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12560,6 +12968,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12569,6 +12980,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12578,6 +12992,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12587,6 +13004,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -12598,6 +13018,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12607,6 +13030,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -12619,6 +13045,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12628,6 +13057,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12637,6 +13069,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12649,11 +13084,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "task_count": "integer",
           "tasks": "list<DocumentCreateTask>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "DocumentUpdateOrgOrgIdProjectProjectIdDocumentDocumentIdPostRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12663,6 +13104,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12672,6 +13116,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12680,11 +13127,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
       "EmptyErrorDetails": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "GenerateOrgOrgIdProjectProjectIdComposeGeneratePostRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12694,6 +13147,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12703,6 +13159,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12712,6 +13171,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12721,6 +13183,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12730,6 +13195,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12739,6 +13207,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12748,6 +13219,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12757,6 +13231,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12766,6 +13243,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12775,6 +13255,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12784,6 +13267,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12793,6 +13279,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12802,6 +13291,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12811,6 +13303,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12820,6 +13315,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12829,6 +13327,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12838,6 +13339,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12847,6 +13351,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12857,6 +13364,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "detail": "optional<list<ValidationError>>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "HydraWebhookTokenHookSession": {
         "docs": undefined,
@@ -12864,11 +13374,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "client_id": "string",
           "id_token": "HydraWebhookTokenHookSessionIDTokenClaims",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "HydraWebhookTokenHookSessionIDTokenClaims": {
         "docs": undefined,
         "properties": {
           "id_token_claims": "map<string, unknown>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "IAMMember": {
@@ -12898,12 +13414,18 @@ Some entities, such as Organizations, may contain members that exist without any
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "IAMObjectErrorDetails": {
         "docs": undefined,
         "properties": {
           "id": "optional<string>",
           "type": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "IAMPermissionTest": {
@@ -12912,6 +13434,9 @@ Some entities, such as Organizations, may contain members that exist without any
           "member": "optional<string>",
           "permissions": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Id": {
         "enum": [
@@ -12919,10 +13444,14 @@ Some entities, such as Organizations, may contain members that exist without any
           "prompt_policy",
           "pii_policy",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Identity": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "map<string, unknown>",
           "KratosIdentity",
@@ -12935,11 +13464,17 @@ Some entities, such as Organizations, may contain members that exist without any
           "position": "integer",
           "title": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "InitialiseOrgOrgIdProjectProjectIdComposePostRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -12950,12 +13485,18 @@ Some entities, such as Organizations, may contain members that exist without any
         "properties": {
           "name": "Name",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "InvalidMemberErrorDetails": {
         "docs": undefined,
         "properties": {
           "resource": "optional<IAMObjectErrorDetails>",
           "subject": "optional<IAMObjectErrorDetails>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "InvalidMemberErrorResponse": {
@@ -12970,12 +13511,18 @@ Some entities, such as Organizations, may contain members that exist without any
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "InvalidRoleErrorDetails": {
         "docs": undefined,
         "properties": {
           "resource": "optional<IAMObjectErrorDetails>",
           "role": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "InvalidRoleErrorResponse": {
@@ -12990,11 +13537,17 @@ Some entities, such as Organizations, may contain members that exist without any
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "InvalidSubjectTypeErrorDetails": {
         "docs": undefined,
         "properties": {
           "subject": "optional<IAMObjectErrorDetails>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "InvalidSubjectTypeErrorResponse": {
@@ -13008,6 +13561,9 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": "Human readable representation of the error",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "KratosIdentity": {
@@ -13024,6 +13580,9 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "traits": "optional<KratosIdentityTraits>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "KratosIdentityTraits": {
@@ -13061,6 +13620,9 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "sso_email_verified": "optional<boolean>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "KratosWebhook": {
         "docs": undefined,
@@ -13097,6 +13659,9 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "KratosWebhookDetailedMessage": {
         "docs": "Sourced from detailedMessage in:
@@ -13107,6 +13672,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "text": "string",
           "type": "Type",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "KratosWebhookErrorMessage": {
         "docs": "Sourced from errorMessage in:
@@ -13115,6 +13683,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "instance_ptr": "string",
           "messages": "optional<list<KratosWebhookDetailedMessage>>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "KratosWebhookResponse": {
         "docs": "Sourced from rawHookResponse in:
@@ -13122,6 +13693,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "identity": "optional<Identity>",
           "messages": "optional<list<KratosWebhookErrorMessage>>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "Language": {
@@ -13136,11 +13710,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "italian",
           "german",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ListChatsOrgOrgIdProjectProjectIdCollectionCollectionIdChatGetRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13150,6 +13730,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13159,6 +13742,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13168,6 +13754,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13177,6 +13766,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13186,6 +13778,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13195,6 +13790,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13204,6 +13802,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13213,6 +13814,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13222,6 +13826,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13279,6 +13886,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "value": "gemini-pro",
           },
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "MalformedResourceIdentifierErrorDetails": {
         "docs": undefined,
@@ -13286,6 +13896,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "expected_format": "string",
           "field": "string",
           "value": "unknown",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "MalformedResourceIdentifierErrorResponse": {
@@ -13300,6 +13913,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "MissingAuthenticationErrorResponse": {
         "docs": undefined,
@@ -13313,12 +13929,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "EmptyErrorDetails",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "MultipleRolesNotAllowedErrorDetails": {
         "docs": undefined,
         "properties": {
           "resource": "optional<IAMObjectErrorDetails>",
           "roles": "list<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "MultipleRolesNotAllowedErrorResponse": {
@@ -13333,12 +13955,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "MultipleRolesNotAllowedErrorDetails",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Name": {
         "enum": [
           "prompt_policy",
           "pii_policy",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OAuthClientCreateResponse": {
         "docs": undefined,
@@ -13360,6 +13988,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OAuthClientProfile": {
         "enum": [
@@ -13368,6 +13999,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "user_defined",
           "zendesk",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Object": {
         "docs": undefined,
@@ -13385,6 +14019,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "tags": "optional<list<ObjectTags>>",
           "type": "optional<ObjectType>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ObjectList": "list<Object>",
       "ObjectTags": {
@@ -13392,12 +14029,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "no_size",
           "site",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ObjectType": {
         "enum": [
           "file",
           "dir",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Org": {
         "docs": undefined,
@@ -13423,11 +14066,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "name": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrgDomainDeleteOrgOrgIdDomainsDomainIdDeleteRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13437,6 +14086,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13446,6 +14098,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13455,6 +14110,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13466,11 +14124,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "pending",
           "accepted",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrgInvitesCreateOrgOrgIdInvitePostRequestBadRequestErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MALFORMED_RESOURCE_IDENTIFIER": "MalformedResourceIdentifierErrorResponse",
           "ORGANIZATION_INVITE_ALREADY_EXISTS": "OrganizationInviteAlreadyExistsErrorResponse",
@@ -13481,6 +14145,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13490,6 +14157,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13499,6 +14169,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13508,6 +14181,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13520,11 +14196,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "joinable_by_domain",
           "joinable_by_invite",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrgUpdateAvatarOrgOrgIdAvatarPostRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13534,6 +14216,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13554,11 +14239,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "status": "Status",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrganizationGetMemberRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13568,6 +14259,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13577,6 +14271,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -13588,6 +14285,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13597,6 +14297,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -13609,6 +14312,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13637,12 +14343,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "roles": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrganizationInviteAlreadyExistsErrorDetails": {
         "docs": undefined,
         "properties": {
           "email_address": "string",
           "organization_id": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "OrganizationInviteAlreadyExistsErrorResponse": {
@@ -13657,12 +14369,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "OrganizationInviteAlreadyExistsErrorDetails",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrganizationMemberAlreadyExistsErrorDetails": {
         "docs": undefined,
         "properties": {
           "member_id": "string",
           "organization_id": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "OrganizationMemberAlreadyExistsErrorResponse": {
@@ -13677,11 +14395,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "OrganizationMemberAlreadyExistsErrorDetails",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OutputConversationalGuardrailDefinition": {
         "docs": undefined,
         "properties": {
           "name": "literal<"source_validation">",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetChat": {
@@ -13696,6 +14420,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<Chat>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetChatDocument": {
         "docs": undefined,
@@ -13708,6 +14435,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<ChatDocument>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetChatDocumentEmbeddingRecord": {
@@ -13722,6 +14452,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<ChatDocumentEmbeddingRecord>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetCollection": {
         "docs": undefined,
@@ -13734,6 +14467,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<Collection>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetDatasourceSyncRun": {
@@ -13748,6 +14484,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<DatasourceSyncRun>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetIamMember": {
         "docs": undefined,
@@ -13760,6 +14499,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<IAMMember>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetOrganizationDomain": {
@@ -13774,6 +14516,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<OrganizationDomain>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetOrganizationInvite": {
         "docs": undefined,
@@ -13786,6 +14531,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<OrganizationInvite>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetProject": {
@@ -13800,6 +14548,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<Project>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetTask": {
         "docs": undefined,
@@ -13812,6 +14563,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<Task>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetTaskForwarder": {
@@ -13826,6 +14580,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<TaskForwarder>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetTaskRun": {
         "docs": undefined,
@@ -13838,6 +14595,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<TaskRun>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginationDetails": {
@@ -13856,6 +14616,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PermissionCheckFailedErrorDetails": {
         "docs": undefined,
@@ -13863,6 +14626,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "permission": "string",
           "resource": "optional<IAMObjectErrorDetails>",
           "subject": "optional<IAMObjectErrorDetails>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PermissionCheckFailedErrorResponse": {
@@ -13876,6 +14642,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "Metadata detailing more information about the error.",
             "type": "PermissionCheckFailedErrorDetails",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "Project": {
@@ -13911,6 +14680,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ProjectConfig": {
         "docs": undefined,
@@ -13942,11 +14714,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ProjectGetMemberRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13956,6 +14734,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13965,6 +14746,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -13976,6 +14760,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -13985,6 +14772,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -13997,6 +14787,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14006,6 +14799,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14045,11 +14841,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "QueryChatChatChatIdQueryGetRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14059,6 +14861,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14068,6 +14873,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14077,6 +14885,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14086,6 +14897,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14095,6 +14909,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14104,6 +14921,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14113,6 +14933,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14122,6 +14945,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14131,6 +14957,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14140,6 +14969,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14149,6 +14981,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14158,6 +14993,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14167,6 +15005,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14184,12 +15025,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "dropbox",
           "sharepoint",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "SourceRow": {
         "docs": undefined,
         "properties": {
           "count": "integer",
           "source": "Source",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "State": {
@@ -14201,12 +15048,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "RETRY",
           "PROGRESS",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Status": {
         "enum": [
           "unverified",
           "verified",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Task": {
         "docs": undefined,
@@ -14255,6 +15108,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "Each update to a Task results in a new Revision being created. Task Revisions are a powerful concept that can be used to assist with A/B testing, comparing responses from different LLM's, etc.",
             "type": "list<TaskRevision>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "TaskForwarder": {
@@ -14305,6 +15161,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskForwarderConfig": {
         "docs": undefined,
@@ -14313,6 +15172,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The URL where Task Run result will be forwarded. Must be a valid HTTPS URL.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "TaskForwarderSensitiveConfig": {
@@ -14323,11 +15185,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskGetMemberRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14337,6 +15205,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14346,6 +15217,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -14357,6 +15231,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14366,6 +15243,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -14378,6 +15258,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14399,6 +15282,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskRAG": {
         "docs": undefined,
@@ -14413,6 +15299,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "rag_param": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "TaskRevision": {
@@ -14479,6 +15368,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "user_prompt": "unknown",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskRevisionLlmModel": {
         "docs": "The LLM model to use for the Task.",
@@ -14532,6 +15424,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "value": "gemini-pro",
           },
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskRevisionOutputFormatValue": {
         "enum": [
@@ -14543,6 +15438,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "integer",
           "list",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskRun": {
         "docs": undefined,
@@ -14580,11 +15478,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskStatusOrgOrgIdProjectProjectIdDocumentCreateStatusGroupIdGetRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14594,6 +15498,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14606,11 +15513,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "success",
           "validation",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "UpdateChatChatChatIdPostRequestForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14620,6 +15533,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14629,6 +15545,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14638,6 +15557,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14647,6 +15569,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -14677,6 +15602,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "name": "optional<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -14685,10 +15613,14 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "integer",
@@ -15314,6 +16246,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "ChatIamListMembersRequestType": {
@@ -15322,6 +16257,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ChatIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -15329,6 +16267,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ChatIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -15336,6 +16277,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ChatIamPermissionTestPermissionsItem": {
           "enum": [
@@ -15350,6 +16294,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "Llm": {
           "default": "gpt-3.5-turbo",
@@ -15403,6 +16350,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "value": "gemini-pro",
             },
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -16196,6 +17146,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "CollectionIamListMembersRequestType": {
@@ -16204,6 +17157,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "CollectionIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -16211,6 +17167,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "CollectionIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -16218,6 +17177,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "CollectionIamPermissionTestPermissionsItem": {
           "enum": [
@@ -16236,6 +17198,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -16514,6 +17479,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -16935,6 +17903,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
     "datasourceConfluence.yml": {
@@ -17354,6 +18325,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -17775,6 +18749,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
     "datasourceGdrive.yml": {
@@ -18194,6 +19171,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -18615,6 +19595,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
     "datasourceOnedrive.yml": {
@@ -19035,6 +20018,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
     "datasourceSharepoint.yml": {
@@ -19454,6 +20440,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -20248,6 +21237,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "DocumentIamListMembersRequestType": {
@@ -20256,6 +21248,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "DocumentIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -20263,6 +21258,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "DocumentIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -20270,6 +21268,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "DocumentIamPermissionTestPermissionsItem": {
           "enum": [
@@ -20284,6 +21285,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "DocumentListOrgOrgIdProjectProjectIdDocumentGetRequestSource": {
           "enum": [
@@ -20297,6 +21301,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "dropbox",
             "sharepoint",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -20500,6 +21507,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
     "listings.yml": {
@@ -20668,6 +21678,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "list<root.ChatGuardrail>",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -21413,6 +22426,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "OrganizationIamListMembersRequestType": {
@@ -21421,6 +22437,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "OrganizationIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -21428,6 +22447,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "OrganizationIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -21435,6 +22457,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "OrganizationIamPermissionTestPermissionsItem": {
           "enum": [
@@ -21449,6 +22474,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -22078,6 +23106,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "Llm": {
@@ -22132,6 +23163,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "value": "gemini-pro",
             },
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ProjectIamListMembersRequestType": {
           "enum": [
@@ -22139,6 +23173,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ProjectIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -22151,6 +23188,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "task_runner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ProjectIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -22163,6 +23203,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "task_runner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "ProjectIamPermissionTestPermissionsItem": {
           "enum": [
@@ -22193,6 +23236,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view_data",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -22422,6 +23468,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "root.PaginatedResultSetDatasourceSyncRun",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -22750,6 +23799,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "type": "root.TaskForwarder",
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
     },
@@ -23702,6 +24754,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "types": {
         "TaskCreateLlmModel": {
@@ -23756,6 +24811,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "value": "gemini-pro",
             },
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskCreateOutputFormatValue": {
           "enum": [
@@ -23767,6 +24825,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "integer",
             "list",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskIamListMembersRequestType": {
           "enum": [
@@ -23774,6 +24835,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "organization",
             "project",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskIamMemberRoleUpdateAddItem": {
           "enum": [
@@ -23781,6 +24845,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskIamMemberRoleUpdateRemoveItem": {
           "enum": [
@@ -23788,6 +24855,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "owner",
             "viewer",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskIamPermissionTestPermissionsItem": {
           "enum": [
@@ -23802,6 +24872,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "view",
             "view_members",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskUpdateLlmModel": {
           "enum": [
@@ -23854,6 +24927,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "value": "gemini-pro",
             },
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
         "TaskUpdateOutputFormatValue": {
           "enum": [
@@ -23865,6 +24941,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "integer",
             "list",
           ],
+          "source": {
+            "openapi": "rightbrain/openapi.yml",
+          },
         },
       },
     },
@@ -23985,6 +25064,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
     },
   },
@@ -24060,6 +25142,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
         },
       },
+      "source": {
+        "openapi": "rightbrain/openapi.yml",
+      },
     },
     "types": {
       "AsyncJobResult": {
@@ -24068,11 +25153,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "status": "string",
           "task_id": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "BadRequestErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "INVALID_MEMBER": "InvalidMemberErrorResponse",
           "INVALID_ROLE": "InvalidRoleErrorResponse",
@@ -24085,11 +25176,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "id": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceConfluenceConnectionIdFetchPost": {
         "docs": undefined,
         "properties": {
           "id": "list<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceDropboxConnectionIdFetchPost": {
@@ -24097,11 +25194,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "id": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceGdriveConnectionIdFetchPost": {
         "docs": undefined,
         "properties": {
           "id": "list<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceNotionConnectionIdFetchPost": {
@@ -24109,17 +25212,26 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "id": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceOnedriveConnectionIdFetchPost": {
         "docs": undefined,
         "properties": {
           "id": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "BodyFetchOrgOrgIdProjectProjectIdDatasourceSharepointConnectionIdFetchPost": {
         "docs": undefined,
         "properties": {
           "id": "list<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "Chat": {
@@ -24162,6 +25274,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "summary": "optional<string>",
           "title": "optional<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatConfig": {
         "docs": undefined,
@@ -24195,6 +25310,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ChatDocument": {
@@ -24236,6 +25354,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "strategy": "string",
           "title": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatDocumentEmbeddingInstance": {
         "docs": undefined,
@@ -24261,6 +25382,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "is_active": "boolean",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatDocumentEmbeddingRecord": {
         "docs": undefined,
@@ -24275,6 +25399,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ChatDocumentQueryResult": {
@@ -24292,6 +25419,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "score": "double",
           "text": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatDocumentSource": {
         "enum": [
@@ -24305,6 +25435,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "dropbox",
           "sharepoint",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ChatGuardrail": {
         "docs": undefined,
@@ -24313,6 +25446,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "id": "Id",
           "name": "string",
           "type": "Type",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ChatModel": {
@@ -24339,6 +25475,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "docs": "Whether the LLM is able to see and interpret images.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "Collection": {
@@ -24368,17 +25507,26 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "summary": "optional<string>",
           "title": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "CollectionChatShow": {
         "enum": [
           "all",
           "viewable",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "CollectionEmbeddingUpdate": {
         "docs": undefined,
         "properties": {
           "embedding_instance_ids": "list<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "CollectionStatsResponse": {
@@ -24387,17 +25535,26 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "documents_by_source": "list<SourceRow>",
           "number_of_chats": "integer",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ComposeContent": {
         "docs": undefined,
         "properties": {
           "existing_content": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ComposeGenerate": {
         "docs": undefined,
         "properties": {
           "structure": "list<InitialComposeSection>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ComposeInit": {
@@ -24422,11 +25579,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "voice": "optional<string>",
           "word_count": "optional<integer>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ComposeSectionTalkingPoint": {
         "docs": undefined,
         "properties": {
           "section_heading": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ComposeSectionUpdate": {
@@ -24436,6 +25599,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "position": "integer",
           "section_title": "string",
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ConversationalGuardrails": {
@@ -24449,6 +25615,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "docs": "List of valid Output Conversational Guardrails to enable",
             "type": "optional<list<OutputConversationalGuardrailDefinition>>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "Datasource": {
@@ -24465,6 +25634,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "name": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "DatasourceConfiguration": {
         "docs": undefined,
@@ -24472,6 +25644,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "name": "string",
           "private": "boolean",
           "root_folder_id": "optional<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "DatasourceConnection": {
@@ -24520,6 +25695,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "DatasourceConnectionPublic": {
         "docs": undefined,
@@ -24558,6 +25736,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "DatasourceSyncRun": {
         "docs": undefined,
@@ -24581,6 +25762,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           },
           "task_id": "optional<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "DocumentCreateTask": {
         "docs": undefined,
@@ -24588,6 +25772,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "info": "optional<map<string, unknown>>",
           "state": "State",
           "task_id": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "DocumentStatusResponse": {
@@ -24597,15 +25784,24 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "task_count": "integer",
           "tasks": "list<DocumentCreateTask>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "EmptyErrorDetails": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ForbiddenErrorBody": {
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": {
           "MISSING_AUTHENTICATION": "MissingAuthenticationErrorResponse",
           "PERMISSION_CHECK_FAILED": "PermissionCheckFailedErrorResponse",
@@ -24616,6 +25812,9 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "properties": {
           "detail": "optional<list<ValidationError>>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "HydraWebhookTokenHookSession": {
         "docs": undefined,
@@ -24623,11 +25822,17 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
           "client_id": "string",
           "id_token": "HydraWebhookTokenHookSessionIDTokenClaims",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "HydraWebhookTokenHookSessionIDTokenClaims": {
         "docs": undefined,
         "properties": {
           "id_token_claims": "map<string, unknown>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "IAMMember": {
@@ -24657,12 +25862,18 @@ Some entities, such as Organizations, may contain members that exist without any
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "IAMObjectErrorDetails": {
         "docs": undefined,
         "properties": {
           "id": "optional<string>",
           "type": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "IAMPermissionTest": {
@@ -24671,6 +25882,9 @@ Some entities, such as Organizations, may contain members that exist without any
           "member": "optional<string>",
           "permissions": "list<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Id": {
         "enum": [
@@ -24678,10 +25892,14 @@ Some entities, such as Organizations, may contain members that exist without any
           "prompt_policy",
           "pii_policy",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Identity": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "map<string, unknown>",
           "KratosIdentity",
@@ -24694,11 +25912,17 @@ Some entities, such as Organizations, may contain members that exist without any
           "position": "integer",
           "title": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "InputConversationalGuardrailDefinition": {
         "docs": undefined,
         "properties": {
           "name": "Name",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "InvalidMemberErrorDetails": {
@@ -24706,6 +25930,9 @@ Some entities, such as Organizations, may contain members that exist without any
         "properties": {
           "resource": "optional<IAMObjectErrorDetails>",
           "subject": "optional<IAMObjectErrorDetails>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "InvalidMemberErrorResponse": {
@@ -24720,12 +25947,18 @@ Some entities, such as Organizations, may contain members that exist without any
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "InvalidRoleErrorDetails": {
         "docs": undefined,
         "properties": {
           "resource": "optional<IAMObjectErrorDetails>",
           "role": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "InvalidRoleErrorResponse": {
@@ -24740,11 +25973,17 @@ Some entities, such as Organizations, may contain members that exist without any
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "InvalidSubjectTypeErrorDetails": {
         "docs": undefined,
         "properties": {
           "subject": "optional<IAMObjectErrorDetails>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "InvalidSubjectTypeErrorResponse": {
@@ -24758,6 +25997,9 @@ Some entities, such as Organizations, may contain members that exist without any
             "docs": "Human readable representation of the error",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "KratosIdentity": {
@@ -24774,6 +26016,9 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
           "traits": "optional<KratosIdentityTraits>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "KratosIdentityTraits": {
@@ -24811,6 +26056,9 @@ Some entities, such as Organizations, may contain members that exist without any
           },
           "sso_email_verified": "optional<boolean>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "KratosWebhook": {
         "docs": undefined,
@@ -24847,6 +26095,9 @@ Some entities, such as Organizations, may contain members that exist without any
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "KratosWebhookDetailedMessage": {
         "docs": "Sourced from detailedMessage in:
@@ -24857,6 +26108,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "text": "string",
           "type": "Type",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "KratosWebhookErrorMessage": {
         "docs": "Sourced from errorMessage in:
@@ -24865,6 +26119,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "instance_ptr": "string",
           "messages": "optional<list<KratosWebhookDetailedMessage>>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "KratosWebhookResponse": {
         "docs": "Sourced from rawHookResponse in:
@@ -24872,6 +26129,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "properties": {
           "identity": "optional<Identity>",
           "messages": "optional<list<KratosWebhookErrorMessage>>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "Language": {
@@ -24886,6 +26146,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "italian",
           "german",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Llm": {
         "default": "gpt-3.5-turbo",
@@ -24939,6 +26202,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "value": "gemini-pro",
           },
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "MalformedResourceIdentifierErrorDetails": {
         "docs": undefined,
@@ -24946,6 +26212,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "expected_format": "string",
           "field": "string",
           "value": "unknown",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "MalformedResourceIdentifierErrorResponse": {
@@ -24960,6 +26229,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "MissingAuthenticationErrorResponse": {
         "docs": undefined,
@@ -24973,12 +26245,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "EmptyErrorDetails",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "MultipleRolesNotAllowedErrorDetails": {
         "docs": undefined,
         "properties": {
           "resource": "optional<IAMObjectErrorDetails>",
           "roles": "list<string>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "MultipleRolesNotAllowedErrorResponse": {
@@ -24993,12 +26271,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "MultipleRolesNotAllowedErrorDetails",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Name": {
         "enum": [
           "prompt_policy",
           "pii_policy",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OAuthClientCreateResponse": {
         "docs": undefined,
@@ -25020,6 +26304,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OAuthClientProfile": {
         "enum": [
@@ -25028,6 +26315,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "user_defined",
           "zendesk",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Object": {
         "docs": undefined,
@@ -25045,6 +26335,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "tags": "optional<list<ObjectTags>>",
           "type": "optional<ObjectType>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ObjectList": "list<Object>",
       "ObjectTags": {
@@ -25052,12 +26345,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "no_size",
           "site",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ObjectType": {
         "enum": [
           "file",
           "dir",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Org": {
         "docs": undefined,
@@ -25083,6 +26382,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "name": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrgInviteShow": {
         "enum": [
@@ -25090,6 +26392,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "pending",
           "accepted",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrgMembership": {
         "enum": [
@@ -25098,6 +26403,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "joinable_by_domain",
           "joinable_by_invite",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrganizationDomain": {
         "docs": undefined,
@@ -25113,6 +26421,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "status": "Status",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "OrganizationInvite": {
@@ -25138,12 +26449,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "roles": "optional<list<string>>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrganizationInviteAlreadyExistsErrorDetails": {
         "docs": undefined,
         "properties": {
           "email_address": "string",
           "organization_id": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "OrganizationInviteAlreadyExistsErrorResponse": {
@@ -25158,12 +26475,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "OrganizationInviteAlreadyExistsErrorDetails",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OrganizationMemberAlreadyExistsErrorDetails": {
         "docs": undefined,
         "properties": {
           "member_id": "string",
           "organization_id": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "OrganizationMemberAlreadyExistsErrorResponse": {
@@ -25178,11 +26501,17 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "OrganizationMemberAlreadyExistsErrorDetails",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "OutputConversationalGuardrailDefinition": {
         "docs": undefined,
         "properties": {
           "name": "literal<"source_validation">",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetChat": {
@@ -25197,6 +26526,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<Chat>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetChatDocument": {
         "docs": undefined,
@@ -25209,6 +26541,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<ChatDocument>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetChatDocumentEmbeddingRecord": {
@@ -25223,6 +26558,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<ChatDocumentEmbeddingRecord>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetCollection": {
         "docs": undefined,
@@ -25235,6 +26573,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<Collection>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetDatasourceSyncRun": {
@@ -25249,6 +26590,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<DatasourceSyncRun>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetIamMember": {
         "docs": undefined,
@@ -25261,6 +26605,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<IAMMember>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetOrganizationDomain": {
@@ -25275,6 +26622,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<OrganizationDomain>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetOrganizationInvite": {
         "docs": undefined,
@@ -25287,6 +26637,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<OrganizationInvite>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetProject": {
@@ -25301,6 +26654,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<Project>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetTask": {
         "docs": undefined,
@@ -25313,6 +26669,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<Task>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginatedResultSetTaskForwarder": {
@@ -25327,6 +26686,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "list<TaskForwarder>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PaginatedResultSetTaskRun": {
         "docs": undefined,
@@ -25339,6 +26701,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "The list of items returned for the current page.",
             "type": "list<TaskRun>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PaginationDetails": {
@@ -25357,6 +26722,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "PermissionCheckFailedErrorDetails": {
         "docs": undefined,
@@ -25364,6 +26732,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "permission": "string",
           "resource": "optional<IAMObjectErrorDetails>",
           "subject": "optional<IAMObjectErrorDetails>",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "PermissionCheckFailedErrorResponse": {
@@ -25377,6 +26748,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "Metadata detailing more information about the error.",
             "type": "PermissionCheckFailedErrorDetails",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "Project": {
@@ -25412,6 +26786,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ProjectConfig": {
         "docs": undefined,
@@ -25442,6 +26819,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "ProjectWithDatasources": {
@@ -25478,6 +26858,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Source": {
         "enum": [
@@ -25491,12 +26874,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "dropbox",
           "sharepoint",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "SourceRow": {
         "docs": undefined,
         "properties": {
           "count": "integer",
           "source": "Source",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "State": {
@@ -25508,12 +26897,18 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "RETRY",
           "PROGRESS",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Status": {
         "enum": [
           "unverified",
           "verified",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Task": {
         "docs": undefined,
@@ -25562,6 +26957,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "Each update to a Task results in a new Revision being created. Task Revisions are a powerful concept that can be used to assist with A/B testing, comparing responses from different LLM's, etc.",
             "type": "list<TaskRevision>",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "TaskForwarder": {
@@ -25612,6 +27010,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskForwarderConfig": {
         "docs": undefined,
@@ -25621,6 +27022,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskForwarderSensitiveConfig": {
         "docs": undefined,
@@ -25629,6 +27033,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "docs": "A secret key used to sign the forwarded data for verification purposes.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "TaskLLMConfig": {
@@ -25647,6 +27054,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskRAG": {
         "docs": undefined,
@@ -25661,6 +27071,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
           "rag_param": "string",
+        },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
         },
       },
       "TaskRevision": {
@@ -25727,6 +27140,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "user_prompt": "unknown",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskRevisionLlmModel": {
         "docs": "The LLM model to use for the Task.",
@@ -25780,6 +27196,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             "value": "gemini-pro",
           },
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskRevisionOutputFormatValue": {
         "enum": [
@@ -25791,6 +27210,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "integer",
           "list",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "TaskRun": {
         "docs": undefined,
@@ -25828,6 +27250,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
             },
           },
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "Type": {
         "enum": [
@@ -25836,6 +27261,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "success",
           "validation",
         ],
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "User": {
         "docs": undefined,
@@ -25862,6 +27290,9 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           },
           "name": "optional<string>",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -25870,10 +27301,14 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "string",
           "integer",

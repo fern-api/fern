@@ -43,6 +43,10 @@ exports[`open api parser default-content parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "default-content/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -59,12 +63,24 @@ exports[`open api parser default-content parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "GenerateContentResponse",
+          "source": {
+            "file": "default-content/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "default-content/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "default-content/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "generativelanguage",

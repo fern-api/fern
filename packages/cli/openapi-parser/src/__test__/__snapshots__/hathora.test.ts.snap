@@ -237,13 +237,25 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ApplicationWithDeployment",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "AppV1",
@@ -276,6 +288,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -297,6 +313,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -495,6 +515,10 @@ exports[`open api parser hathora parse open api 1`] = `
                             },
                           },
                         ],
+                        "source": {
+                          "file": "hathora/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "object",
                       },
                     },
@@ -520,6 +544,10 @@ exports[`open api parser hathora parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": "Record_string.never_",
+                        "source": {
+                          "file": "hathora/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "reference",
                       },
                     },
@@ -545,11 +573,19 @@ exports[`open api parser hathora parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": "Record_string.never_",
+                        "source": {
+                          "file": "hathora/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "reference",
                       },
                     },
                   },
                 ],
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             },
@@ -578,7 +614,15 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -593,12 +637,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Application",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "AppV1",
@@ -631,6 +687,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "422": {
           "description": "",
@@ -653,6 +713,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -674,6 +738,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -813,7 +881,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -899,6 +975,10 @@ exports[`open api parser hathora parse open api 1`] = `
                             },
                           },
                         ],
+                        "source": {
+                          "file": "hathora/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "object",
                       },
                     },
@@ -924,6 +1004,10 @@ exports[`open api parser hathora parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": "Record_string.never_",
+                        "source": {
+                          "file": "hathora/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "reference",
                       },
                     },
@@ -949,11 +1033,19 @@ exports[`open api parser hathora parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": "Record_string.never_",
+                        "source": {
+                          "file": "hathora/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "reference",
                       },
                     },
                   },
                 ],
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             },
@@ -982,7 +1074,15 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -997,12 +1097,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Application",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "AppV1",
@@ -1034,6 +1146,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1158,7 +1274,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -1176,12 +1300,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Application",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "AppV1",
@@ -1214,6 +1350,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -1235,6 +1375,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1282,7 +1426,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -1293,6 +1445,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "AppV1",
@@ -1324,6 +1480,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1382,7 +1542,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -1428,12 +1596,24 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "AuthV1",
@@ -1465,6 +1645,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1534,7 +1718,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -1579,7 +1771,15 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1622,12 +1822,24 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "AuthV1",
@@ -1660,6 +1872,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "404": {
           "description": "",
@@ -1681,6 +1897,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1750,7 +1970,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -1795,7 +2023,15 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1838,12 +2074,24 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "AuthV1",
@@ -1875,6 +2123,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2012,7 +2264,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2037,13 +2297,25 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Build",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "BuildV1",
@@ -2075,6 +2347,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2217,7 +2493,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2232,7 +2516,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "BuildId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2250,12 +2542,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Build",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "BuildV1",
@@ -2288,6 +2592,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "422": {
           "description": "",
@@ -2310,6 +2618,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -2331,6 +2643,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2463,7 +2779,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2481,12 +2805,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Build",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "BuildV1",
@@ -2519,6 +2855,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -2540,6 +2880,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2564,7 +2908,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2579,7 +2931,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "BuildId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2599,15 +2959,27 @@ exports[`open api parser hathora parse open api 1`] = `
             },
           },
         ],
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
+        },
         "type": "multipart",
       },
       "requestNameOverride": null,
       "response": {
         "description": "Ok",
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
+        },
         "type": "file",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "BuildV1",
@@ -2640,6 +3012,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "422": {
           "description": "",
@@ -2662,6 +3038,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -2683,6 +3063,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2740,7 +3124,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2755,7 +3147,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "BuildId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2766,6 +3166,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "BuildV1",
@@ -2797,6 +3201,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2948,7 +3356,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -2973,13 +3389,25 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Deployment",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "DeploymentV1",
@@ -3011,6 +3439,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -3167,7 +3599,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -3182,7 +3622,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "DeploymentId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -3200,12 +3648,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Deployment",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "DeploymentV1",
@@ -3238,6 +3698,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "422": {
           "description": "",
@@ -3260,6 +3724,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -3281,6 +3749,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -3487,7 +3959,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -3502,7 +3982,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "BuildId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -3519,7 +4007,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "DeploymentConfig",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3534,12 +4030,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Deployment",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "DeploymentV1",
@@ -3613,12 +4121,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "DiscoveryResponse",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "DiscoveryV1",
@@ -3651,6 +4171,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "404": {
           "description": "",
@@ -3672,6 +4196,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         "422": {
@@ -3695,6 +4223,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "",
@@ -3717,6 +4249,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -3738,6 +4274,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -3806,6 +4346,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -3826,7 +4370,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -3851,8 +4403,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Region",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -3880,6 +4440,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -3894,12 +4458,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "RoomId",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LobbyV1",
@@ -3932,6 +4508,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "404": {
           "description": "",
@@ -3953,6 +4533,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         "422": {
@@ -3976,6 +4560,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "",
@@ -3998,6 +4586,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -4019,6 +4611,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -4087,6 +4683,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -4107,7 +4707,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -4132,8 +4740,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Region",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -4161,6 +4777,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -4175,12 +4795,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "RoomId",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LobbyV1",
@@ -4213,6 +4845,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "404": {
           "description": "",
@@ -4234,6 +4870,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -4390,6 +5030,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -4410,7 +5054,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -4441,6 +5093,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -4461,8 +5117,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Region",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -4485,13 +5149,25 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Lobby",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LobbyV1",
@@ -4524,6 +5200,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "404": {
           "description": "",
@@ -4545,6 +5225,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         "422": {
@@ -4568,6 +5252,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "",
@@ -4590,6 +5278,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -4611,6 +5303,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -4791,6 +5487,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -4811,7 +5511,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -4836,8 +5544,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "RoomId",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -4905,11 +5621,23 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Region",
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -4924,12 +5652,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Lobby",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LobbyV2",
@@ -4962,6 +5702,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "404": {
           "description": "",
@@ -4983,6 +5727,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         "422": {
@@ -5006,6 +5754,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "",
@@ -5028,6 +5780,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -5049,6 +5805,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -5229,6 +5989,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -5249,7 +6013,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -5274,8 +6046,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "RoomId",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -5343,11 +6123,23 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Region",
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5362,12 +6154,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Lobby",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LobbyV2",
@@ -5400,6 +6204,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "404": {
           "description": "",
@@ -5421,6 +6229,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         "422": {
@@ -5444,6 +6256,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "",
@@ -5466,6 +6282,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -5487,6 +6307,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -5667,6 +6491,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -5687,7 +6515,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -5712,8 +6548,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "RoomId",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -5781,11 +6625,23 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Region",
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5800,12 +6656,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Lobby",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LobbyV2",
@@ -5838,6 +6706,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "404": {
           "description": "",
@@ -5859,6 +6731,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         "422": {
@@ -5882,6 +6758,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "",
@@ -5904,6 +6784,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -5925,6 +6809,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -6109,6 +6997,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -6129,7 +7021,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -6154,8 +7054,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "RoomId",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -6187,6 +7095,10 @@ exports[`open api parser hathora parse open api 1`] = `
                 "generatedName": "CreateLobbyRequestVisibility",
                 "groupName": null,
                 "nameOverride": null,
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "enum",
                 "values": [
                   {
@@ -6281,11 +7193,23 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Region",
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -6300,12 +7224,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Lobby",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LobbyV2",
@@ -6455,7 +7391,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -6480,8 +7424,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Region",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -6504,13 +7456,25 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Lobby",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LobbyV2",
@@ -6542,6 +7506,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -6688,7 +7656,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -6703,7 +7679,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -6721,12 +7705,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Lobby",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LobbyV2",
@@ -6759,6 +7755,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "422": {
           "description": "",
@@ -6780,6 +7780,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -6951,7 +7955,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -6966,7 +7978,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -7023,7 +8043,15 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -7038,12 +8066,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Lobby",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LobbyV2",
@@ -7076,6 +8116,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       },
       "examples": [],
@@ -7099,7 +8143,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -7129,6 +8181,10 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -7161,6 +8217,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -7181,8 +8241,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Region",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -7190,10 +8258,18 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": null,
       "response": {
         "description": "Ok",
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
+        },
         "type": "file",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LogV1",
@@ -7226,6 +8302,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       },
       "examples": [],
@@ -7249,7 +8329,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -7264,7 +8352,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ProcessId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -7294,6 +8390,10 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -7326,16 +8426,28 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
       "requestNameOverride": null,
       "response": {
         "description": "Ok",
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
+        },
         "type": "file",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LogV1",
@@ -7368,6 +8480,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       },
       "examples": [],
@@ -7391,7 +8507,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -7406,7 +8530,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "DeploymentId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -7436,6 +8568,10 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -7468,16 +8604,28 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
       "requestNameOverride": null,
       "response": {
         "description": "Ok",
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
+        },
         "type": "text",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "LogV1",
@@ -7510,6 +8658,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "422": {
           "description": "",
@@ -7531,6 +8683,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -7688,7 +8844,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -7703,7 +8867,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ProcessId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -7735,9 +8907,17 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "MetricName",
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -7770,6 +8950,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -7800,6 +8984,10 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -7832,6 +9020,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -7846,12 +9038,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "MetricsResponse",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "MetricsV1",
@@ -7883,6 +9087,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -8083,7 +9291,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -8108,8 +9324,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Region",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -8132,13 +9356,25 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ProcessWithRooms",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "ProcessesV1",
@@ -8170,6 +9406,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -8335,7 +9575,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -8360,8 +9608,16 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Region",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -8384,13 +9640,25 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Process",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "ProcessesV1",
@@ -8422,6 +9690,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -8592,7 +9864,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -8607,7 +9887,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ProcessId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -8625,12 +9913,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Process",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "ProcessesV1",
@@ -8663,6 +9963,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -8684,6 +9988,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -8745,7 +10053,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -8779,11 +10095,23 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Region",
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           ],
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -8798,12 +10126,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "RoomId",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "RoomV1",
@@ -8835,6 +10175,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -8985,7 +10329,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9000,7 +10352,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9018,12 +10378,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Room",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "RoomV1",
@@ -9055,6 +10427,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -9172,7 +10548,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9187,7 +10571,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ProcessId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9212,13 +10604,25 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomWithoutAllocations",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "RoomV1",
@@ -9250,6 +10654,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -9367,7 +10775,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9382,7 +10798,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ProcessId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9407,13 +10831,25 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomWithoutAllocations",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "RoomV1",
@@ -9446,6 +10882,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -9467,6 +10907,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -9524,7 +10968,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9539,7 +10991,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9550,6 +11010,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "RoomV1",
@@ -9582,6 +11046,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -9603,6 +11071,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -9660,7 +11132,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9675,7 +11155,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9686,6 +11174,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "RoomV1",
@@ -9718,6 +11210,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "422": {
           "description": "",
@@ -9740,6 +11236,10 @@ exports[`open api parser hathora parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
         "500": {
           "description": "",
@@ -9761,6 +11261,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -9785,7 +11289,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9800,7 +11312,15 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -9818,12 +11338,24 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "ConnectionInfo",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "RoomV1",
@@ -9892,6 +11424,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "TransportType",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -9958,10 +11494,18 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "AppId": {
@@ -10106,6 +11650,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "OrgId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10175,6 +11723,10 @@ exports[`open api parser hathora parse open api 1`] = `
                         },
                       },
                     ],
+                    "source": {
+                      "file": "hathora/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "object",
                   },
                 },
@@ -10200,6 +11752,10 @@ exports[`open api parser hathora parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Record_string.never_",
+                    "source": {
+                      "file": "hathora/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 },
@@ -10225,11 +11781,19 @@ exports[`open api parser hathora parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Record_string.never_",
+                    "source": {
+                      "file": "hathora/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 },
               },
             ],
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
           },
         },
@@ -10306,6 +11870,10 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ApplicationWithDeployment": {
@@ -10318,6 +11886,10 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Application",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -10341,10 +11913,18 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Deployment",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Build": {
@@ -10419,10 +11999,18 @@ exports[`open api parser hathora parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Region",
+                    "source": {
+                      "file": "hathora/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 },
               ],
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "object",
             },
           },
@@ -10466,6 +12054,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "generatedName": "BuildStatus",
             "groupName": null,
             "nameOverride": null,
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "enum",
             "values": [
               {
@@ -10661,6 +12253,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "BuildId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10678,10 +12274,18 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "BuildId": {
@@ -10719,6 +12323,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ActiveConnectionInfo",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "starting": {
@@ -10728,8 +12336,16 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "StartingConnectionInfo",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -10744,6 +12360,10 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "DeploymentConfig",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -10860,6 +12480,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "DeploymentId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10877,6 +12501,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "BuildId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10894,10 +12522,18 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DeploymentConfig": {
@@ -10983,6 +12619,10 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                 },
               ],
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "object",
             },
           },
@@ -11026,6 +12666,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "PlanName",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11043,6 +12687,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "TransportType",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11072,6 +12720,10 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DeploymentId": {
@@ -11171,10 +12823,18 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Region",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         ],
+        "source": {
+          "file": "hathora/openapi.json",
+          "type": "openapi",
+        },
         "type": "object",
       },
     },
@@ -11345,6 +13005,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "generatedName": "LobbyVisibility",
             "groupName": null,
             "nameOverride": null,
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "enum",
             "values": [
               {
@@ -11403,6 +13067,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Region",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11420,6 +13088,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11437,10 +13109,18 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "MetricName": {
@@ -11450,6 +13130,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedName": "MetricName",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -11567,6 +13251,10 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "MetricsResponse": {
@@ -11576,6 +13264,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "schema": "Record_Partial_MetricName_.MetricValue-Array_",
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "reference",
     },
     "Omit_Room.allocations_": {
@@ -11585,6 +13277,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "schema": "Pick_Room.Exclude_keyofRoom.allocations__",
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "reference",
     },
     "OrgId": {
@@ -11627,6 +13323,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11644,6 +13344,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11661,6 +13365,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomStatus",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11685,11 +13393,19 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "RoomAllocation",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PlanName": {
@@ -11699,6 +13415,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedName": "PlanName",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -12075,6 +13795,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Region",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -12092,6 +13816,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ProcessId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -12109,6 +13837,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "DeploymentId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -12126,10 +13858,18 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ProcessId": {
@@ -12158,6 +13898,10 @@ exports[`open api parser hathora parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Process",
+          "source": {
+            "file": "hathora/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -12188,6 +13932,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "RoomWithoutAllocations",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -12218,6 +13966,10 @@ exports[`open api parser hathora parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Record_Partial_MetricName_.MetricValue-Array_": {
@@ -12258,6 +14010,10 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "MetricValue",
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -12291,6 +14047,10 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "MetricValue",
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -12324,6 +14084,10 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "MetricValue",
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -12357,12 +14121,20 @@ exports[`open api parser hathora parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "MetricValue",
+                "source": {
+                  "file": "hathora/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Record_string.never_": {
@@ -12375,6 +14147,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Region": {
@@ -12384,6 +14160,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedName": "Region",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -12549,6 +14329,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "RoomAllocation",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -12567,6 +14351,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomStatus",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -12591,6 +14379,10 @@ exports[`open api parser hathora parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "RoomAllocation",
+              "source": {
+                "file": "hathora/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -12609,6 +14401,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -12626,10 +14422,18 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AppId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RoomAllocation": {
@@ -12702,6 +14506,10 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ProcessId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -12719,10 +14527,18 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomAllocationId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RoomAllocationId": {
@@ -12764,6 +14580,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedName": "RoomStatus",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -12827,6 +14647,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "groupName": null,
       "nameOverride": null,
       "schema": "Omit_Room.allocations_",
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "reference",
     },
     "StartingConnectionInfo": {
@@ -12853,10 +14677,18 @@ exports[`open api parser hathora parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RoomId",
+            "source": {
+              "file": "hathora/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransportType": {
@@ -12866,6 +14698,10 @@ exports[`open api parser hathora parse open api 1`] = `
       "generatedName": "TransportType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "hathora/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {

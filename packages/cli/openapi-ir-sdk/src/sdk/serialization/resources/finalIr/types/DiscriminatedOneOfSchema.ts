@@ -23,14 +23,16 @@ export const DiscriminatedOneOfSchema: core.serialization.ObjectSchema<
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace DiscriminatedOneOfSchema {
     interface Raw
         extends serializers.WithDescription.Raw,
             serializers.WithName.Raw,
             serializers.WithSdkGroupName.Raw,
-            serializers.WithAvailability.Raw {
+            serializers.WithAvailability.Raw,
+            serializers.WithSource.Raw {
         discriminantProperty: string;
         commonProperties: serializers.CommonProperty.Raw[];
         schemas: Record<string, serializers.Schema.Raw>;

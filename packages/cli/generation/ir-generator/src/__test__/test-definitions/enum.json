@@ -143,7 +143,10 @@
                 ]
             },
             "referencedTypes": [],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -334,7 +337,10 @@
                 ]
             },
             "referencedTypes": [],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -493,7 +499,10 @@
                 "type_:Color",
                 "type_:Operand"
             ],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -643,8 +652,13 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": null,
-            "transport": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_inlined-request.send",
@@ -1543,8 +1557,13 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": null,
-            "transport": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_path-param.send",
@@ -3130,8 +3149,13 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": null,
-            "transport": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_query-param.send",

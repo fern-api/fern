@@ -2,6 +2,10 @@ imports:
   finalIr: finalIr.yml
 
 types:
+  WithSource:
+    properties:
+      source: optional<Source>
+
   WithDescription:
     properties:
       description: optional<string>
@@ -22,6 +26,19 @@ types:
           of the type declarations.
           [MyType -> propA -> propB] will turn into MyTypePropAPropB
           [MyType] will turn into MyType
+
+  Source:
+    union:
+      openapi: OpenAPISource
+      protobuf: ProtobufSource
+
+  OpenAPISource:
+    properties:
+      file: string
+  
+  ProtobufSource:
+    properties:
+      file: string
 
   SchemaId:
     type: string

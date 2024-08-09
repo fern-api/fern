@@ -51,6 +51,9 @@ exports[`application-json application-json docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "application-json/openapi.yml",
+      },
     },
     "types": {
       "Data": {
@@ -58,6 +61,9 @@ exports[`application-json application-json docs 1`] = `
         "properties": {
           "bar": "optional<string>",
           "foo": "optional<string>",
+        },
+        "source": {
+          "openapi": "application-json/openapi.yml",
         },
       },
     },
@@ -123,6 +129,9 @@ exports[`application-json application-json simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "application-json/openapi.yml",
+      },
     },
     "types": {
       "Data": {
@@ -130,6 +139,9 @@ exports[`application-json application-json simple 1`] = `
         "properties": {
           "bar": "optional<string>",
           "foo": "optional<string>",
+        },
+        "source": {
+          "openapi": "application-json/openapi.yml",
         },
       },
     },

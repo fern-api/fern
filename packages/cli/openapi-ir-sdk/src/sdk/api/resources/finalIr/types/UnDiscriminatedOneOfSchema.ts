@@ -8,6 +8,7 @@ export interface UnDiscriminatedOneOfSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
-        FernOpenapiIr.WithAvailability {
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithSource {
     schemas: FernOpenapiIr.Schema[];
 }

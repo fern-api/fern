@@ -13,10 +13,11 @@ export const JsonRequest: core.serialization.ObjectSchema<serializers.JsonReques
             contentType: core.serialization.string().optional(),
             additionalProperties: core.serialization.boolean(),
         })
-        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+        .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace JsonRequest {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithSource.Raw {
         schema: serializers.Schema.Raw;
         contentType?: string | null;
         additionalProperties: boolean;

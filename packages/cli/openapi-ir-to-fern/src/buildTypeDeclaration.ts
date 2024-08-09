@@ -28,6 +28,7 @@ import {
 } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
+import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedTypeDeclaration {
@@ -201,9 +202,11 @@ export function buildObjectTypeDeclaration({
     if (schema.additionalProperties) {
         objectTypeDeclaration["extra-properties"] = true;
     }
-
     if (schema.availability != null) {
         objectTypeDeclaration.availability = convertAvailability(schema.availability);
+    }
+    if (schema.source != null) {
+        objectTypeDeclaration.source = convertToSourceSchema(schema.source);
     }
 
     return {
@@ -374,7 +377,8 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
     const uniqueEnumName = new Set<string>();
     const uniqueEnumSchema: RawSchemas.EnumSchema = {
         ...enumSchema,
-        enum: []
+        enum: [],
+        source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
     };
     for (const enumValue of enumSchema.enum) {
         const name = typeof enumValue === "string" ? enumValue : enumValue.name ?? enumValue.value;
@@ -477,7 +481,8 @@ export function buildOneOfTypeDeclaration({
                 discriminant: schema.discriminantProperty,
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
-                union
+                union,
+                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
             }
         };
     }
@@ -497,7 +502,8 @@ export function buildOneOfTypeDeclaration({
         schema: {
             discriminated: false,
             docs: schema.description ?? undefined,
-            union
+            union,
+            source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
         }
     };
 }

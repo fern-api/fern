@@ -72,7 +72,15 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "CreateCompletionRequest",
+          "source": {
+            "file": "x-fern-version/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "x-fern-version/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -96,6 +104,10 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
           },
           "type": "primitive",
         },
+        "source": {
+          "file": "x-fern-version/openapi.yml",
+          "type": "openapi",
+        },
         "type": "json",
       },
       "sdkName": {
@@ -105,6 +117,10 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
         "methodName": "create",
       },
       "server": [],
+      "source": {
+        "file": "x-fern-version/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -158,6 +174,10 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-version/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CompletionChunk": {
@@ -203,6 +223,10 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-version/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CreateCompletionRequest": {
@@ -268,6 +292,10 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-version/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

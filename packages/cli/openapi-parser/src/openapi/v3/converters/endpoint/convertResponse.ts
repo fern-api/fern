@@ -1,5 +1,5 @@
 import { assertNever, MediaType } from "@fern-api/core-utils";
-import { FernOpenapiIr, ResponseWithExample } from "@fern-api/openapi-ir-sdk";
+import { FernOpenapiIr, ResponseWithExample, Source } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { convertSchema } from "../../../../schema/convertSchemas";
@@ -26,7 +26,8 @@ export function convertResponse({
     context,
     responseBreadcrumbs,
     responseStatusCode,
-    streamFormat
+    streamFormat,
+    source
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
@@ -34,12 +35,13 @@ export function convertResponse({
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
     responseStatusCode?: number;
+    source: Source;
 }): ConvertedResponse {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (responses == null) {
         return { value: undefined, errors: {} };
     }
-    const errors = markErrorSchemas({ responses, context });
+    const errors = markErrorSchemas({ responses, context, source });
 
     let successStatusCodePresent = false;
     let convertedResponse: FernOpenapiIr.ResponseWithExample | undefined = undefined;
@@ -55,7 +57,8 @@ export function convertResponse({
                 response,
                 context,
                 responseBreadcrumbs,
-                streamFormat
+                streamFormat,
+                source
             });
         }
     }
@@ -67,7 +70,8 @@ export function convertResponse({
             response: responses.default,
             context,
             responseBreadcrumbs,
-            streamFormat
+            streamFormat,
+            source
         });
     }
 
@@ -107,13 +111,15 @@ function convertResolvedResponse({
     streamFormat,
     response,
     context,
-    responseBreadcrumbs
+    responseBreadcrumbs,
+    source
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
     response: OpenAPIV3.ReferenceObject | OpenAPIV3.ResponseObject;
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
+    source: Source;
 }): ResponseWithExample | undefined {
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
 
@@ -128,7 +134,7 @@ function convertResolvedResponse({
             return resolvedSchema.type === "string" && resolvedSchema.format === "binary";
         });
         if (isdownloadFile) {
-            return ResponseWithExample.file({ description: resolvedResponse.description });
+            return ResponseWithExample.file({ description: resolvedResponse.description, source });
         }
     }
 
@@ -141,24 +147,27 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         schema: convertSchemaWithExampleToSchema(
-                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
-                        )
+                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source)
+                        ),
+                        source
                     });
                 case "sse":
                     return ResponseWithExample.streamingSse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         schema: convertSchemaWithExampleToSchema(
-                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs)
-                        )
+                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source)
+                        ),
+                        source
                     });
             }
         }
         return ResponseWithExample.json({
             description: resolvedResponse.description,
-            schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs),
+            schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
-            fullExamples: jsonMediaObject.examples
+            fullExamples: jsonMediaObject.examples,
+            source
         });
     }
 
@@ -175,21 +184,21 @@ function convertResolvedResponse({
             mimeType.isImage() ||
             mimeType.isVideo()
         ) {
-            return ResponseWithExample.file({ description: resolvedResponse.description });
+            return ResponseWithExample.file({ description: resolvedResponse.description, source });
         }
 
         if (mimeType.isPlainText()) {
             const textPlainSchema = mediaObject.schema;
             if (textPlainSchema == null) {
-                return ResponseWithExample.text({ description: resolvedResponse.description });
+                return ResponseWithExample.text({ description: resolvedResponse.description, source });
             }
             const resolvedTextPlainSchema = isReferenceObject(textPlainSchema)
                 ? context.resolveSchemaReference(textPlainSchema)
                 : textPlainSchema;
             if (resolvedTextPlainSchema.type === "string" && resolvedTextPlainSchema.format === "byte") {
-                return ResponseWithExample.file({ description: resolvedResponse.description });
+                return ResponseWithExample.file({ description: resolvedResponse.description, source });
             }
-            return ResponseWithExample.text({ description: resolvedResponse.description });
+            return ResponseWithExample.text({ description: resolvedResponse.description, source });
         }
     }
 
@@ -198,10 +207,12 @@ function convertResolvedResponse({
 
 function markErrorSchemas({
     responses,
-    context
+    context,
+    source
 }: {
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
+    source: Source;
 }): Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> {
     const errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> = {};
     for (const [statusCode, response] of Object.entries(responses)) {
@@ -225,8 +236,9 @@ function markErrorSchemas({
             nameOverride: undefined,
             generatedName: errorName,
             description: resolvedResponse.description,
-            schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, "Body"]),
-            fullExamples: mediaObject?.examples
+            schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, "Body"], source),
+            fullExamples: mediaObject?.examples,
+            source
         };
     }
     return errors;

@@ -13,6 +13,7 @@ import {
     SchemaId,
     SchemaWithExample,
     SecurityScheme,
+    Source,
     Webhook
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -47,21 +48,23 @@ import { runResolutions } from "./runResolutions";
 export function generateIr({
     openApi,
     taskContext,
-    options
+    options,
+    source
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
     options: ParseOpenAPIOptions;
+    source: Source;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
-            const convertedSecurityScheme = convertSecurityScheme(securityScheme);
+            const convertedSecurityScheme = convertSecurityScheme(securityScheme, source);
             if (convertedSecurityScheme == null) {
                 return [];
             }
-            return [key, convertSecurityScheme(securityScheme)];
+            return [key, convertSecurityScheme(securityScheme, source)];
         })
     );
     const authHeaders = new Set(
@@ -78,7 +81,8 @@ export function generateIr({
         document: openApi,
         taskContext,
         authHeaders,
-        options
+        options,
+        source
     });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);
@@ -153,18 +157,19 @@ export function generateIr({
                                 { ...schema, "x-fern-type-name": `${key}Body` } as any as OpenAPIV3.SchemaObject,
                                 false,
                                 context,
-                                [key]
+                                [key],
+                                source
                             )
                         ];
                     }
                 }
-                return [key, convertSchema(schema, false, context, [key])];
+                return [key, convertSchema(schema, false, context, [key], source)];
             })
             .filter((entry) => entry.length > 0)
     );
 
     // Remove discriminants from discriminated unions since Fern handles this in the IR.
-    const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context);
+    const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context, source);
     // Add them back when declared as union metadata, as that means we're treating discriminated unions as undiscriminated unions.
     const schemasWithDiscriminants = maybeAddBackDiscriminantsFromSchemas(schemasWithoutDiscriminants, context);
     const schemas: Record<string, Schema> = {};
@@ -221,7 +226,8 @@ export function generateIr({
                     name: queryParameter.name,
                     schema: convertSchemaWithExampleToSchema(queryParameter.schema),
                     parameterNameOverride: queryParameter.parameterNameOverride,
-                    availability: queryParameter.availability
+                    availability: queryParameter.availability,
+                    source: queryParameter.source
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
@@ -230,7 +236,8 @@ export function generateIr({
                     name: pathParameter.name,
                     schema: convertSchemaWithExampleToSchema(pathParameter.schema),
                     variableReference: pathParameter.variableReference,
-                    availability: pathParameter.availability
+                    availability: pathParameter.availability,
+                    source: pathParameter.source
                 };
             }),
             headers: endpointWithExample.headers.map((header) => {
@@ -240,7 +247,8 @@ export function generateIr({
                     schema: convertSchemaWithExampleToSchema(header.schema),
                     parameterNameOverride: header.parameterNameOverride,
                     env: header.env,
-                    availability: header.availability
+                    availability: header.availability,
+                    source: header.source
                 };
             }),
             examples,
@@ -250,6 +258,7 @@ export function generateIr({
                     nameOverride: error.nameOverride,
                     schema: convertSchemaWithExampleToSchema(error.schema),
                     description: error.description,
+                    source: error.source,
                     examples: error.fullExamples
                         ?.map((example): ErrorExample | undefined => {
                             const fullExample = convertToFullExample(example.value);
@@ -311,7 +320,8 @@ export function generateIr({
 
 function maybeRemoveDiscriminantsFromSchemas(
     schemas: Record<string, SchemaWithExample>,
-    context: AbstractOpenAPIV3ParserContext
+    context: AbstractOpenAPIV3ParserContext,
+    source: Source
 ): Record<string, SchemaWithExample> {
     const result: Record<string, SchemaWithExample> = {};
     for (const [schemaId, schema] of Object.entries(schemas)) {
@@ -336,7 +346,8 @@ function maybeRemoveDiscriminantsFromSchemas(
             }),
             allOfPropertyConflicts: schema.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
                 return !discriminatedUnionReference.discriminants.has(allOfPropertyConflict.propertyKey);
-            })
+            }),
+            source
         };
         result[schemaId] = schemaWithoutDiscriminants;
 

@@ -6,6 +6,7 @@ import {
     Schema,
     SchemaId,
     SchemaWithExample,
+    Source,
     WebsocketChannel,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir-sdk";
@@ -35,11 +36,13 @@ export function parseAsyncAPI({
     document,
     taskContext,
     options,
+    source,
     asyncApiOptions
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
     options: ParseOpenAPIOptions;
+    source: Source;
     asyncApiOptions: ParseAsyncAPIOptions;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
@@ -62,7 +65,7 @@ export function parseAsyncAPI({
     let parsedChannel: WebsocketChannel | undefined = undefined;
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        const convertedSchema = convertSchema(schema, false, context, [schemaId]);
+        const convertedSchema = convertSchema(schema, false, context, [schemaId], source);
         schemas[schemaId] = convertedSchema;
     }
 
@@ -82,7 +85,7 @@ export function parseAsyncAPI({
                     description: parameter.description,
                     schema:
                         parameter.schema != null
-                            ? convertSchema(parameter.schema, false, context, breadcrumbs)
+                            ? convertSchema(parameter.schema, false, context, breadcrumbs, source)
                             : SchemaWithExample.primitive({
                                   schema: PrimitiveSchemaValueWithExample.string({
                                       default: undefined,
@@ -99,7 +102,8 @@ export function parseAsyncAPI({
                                   nameOverride: undefined
                               }),
                     variableReference: undefined,
-                    availability: convertAvailability(parameter)
+                    availability: convertAvailability(parameter),
+                    source
                 });
             }
         }
@@ -111,11 +115,12 @@ export function parseAsyncAPI({
                 const resolvedHeader = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
                 headers.push({
                     name,
-                    schema: convertSchema(resolvedHeader, !required.includes(name), context, breadcrumbs),
+                    schema: convertSchema(resolvedHeader, !required.includes(name), context, breadcrumbs, source),
                     description: resolvedHeader.description,
                     parameterNameOverride: undefined,
                     env: undefined,
-                    availability: convertAvailability(resolvedHeader)
+                    availability: convertAvailability(resolvedHeader),
+                    source
                 });
             }
         }
@@ -129,10 +134,17 @@ export function parseAsyncAPI({
                     : schema;
                 queryParameters.push({
                     name,
-                    schema: convertSchema(resolvedQueryParameter, !required.includes(name), context, breadcrumbs),
+                    schema: convertSchema(
+                        resolvedQueryParameter,
+                        !required.includes(name),
+                        context,
+                        breadcrumbs,
+                        source
+                    ),
                     description: resolvedQueryParameter.description,
                     parameterNameOverride: undefined,
-                    availability: convertAvailability(resolvedQueryParameter)
+                    availability: convertAvailability(resolvedQueryParameter),
+                    source
                 });
             }
         }
@@ -144,6 +156,7 @@ export function parseAsyncAPI({
                 event: channel.publish,
                 breadcrumbs,
                 context,
+                source,
                 options,
                 asyncApiOptions
             });
@@ -156,6 +169,7 @@ export function parseAsyncAPI({
                 event: channel.subscribe,
                 breadcrumbs,
                 context,
+                source,
                 options,
                 asyncApiOptions
             });
@@ -174,7 +188,8 @@ export function parseAsyncAPI({
                         queryParameters
                     },
                     publish: publishSchema,
-                    subscribe: subscribeSchema
+                    subscribe: subscribeSchema,
+                    source
                 });
             } else {
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({
@@ -220,7 +235,8 @@ export function parseAsyncAPI({
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 path: channelPath,
                 description: undefined,
-                examples
+                examples,
+                source
             };
             break;
         }
@@ -240,6 +256,7 @@ function convertMessageToSchema({
     event,
     context,
     breadcrumbs,
+    source,
     options,
     asyncApiOptions
 }: {
@@ -247,6 +264,7 @@ function convertMessageToSchema({
     generatedName: string;
     event: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent;
     context: AsyncAPIV2ParserContext;
+    source: Source;
     options: ParseOpenAPIOptions;
     asyncApiOptions: ParseAsyncAPIOptions;
 }): SchemaWithExample | undefined {
@@ -284,6 +302,7 @@ function convertMessageToSchema({
             wrapAsNullable: false,
             breadcrumbs,
             context,
+            source,
             subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
         });
     }

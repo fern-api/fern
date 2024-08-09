@@ -17,10 +17,11 @@ export const JsonResponseWithExample: core.serialization.ObjectSchema<
             .list(core.serialization.lazyObject(async () => (await import("../../..")).NamedFullExample))
             .optional(),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace JsonResponseWithExample {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithSource.Raw {
         schema: serializers.SchemaWithExample.Raw;
         responseProperty?: string | null;
         fullExamples?: serializers.NamedFullExample.Raw[] | null;

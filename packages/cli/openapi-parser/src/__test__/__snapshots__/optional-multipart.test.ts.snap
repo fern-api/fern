@@ -46,6 +46,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "optional-multipart/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -74,6 +78,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "optional-multipart/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -108,6 +116,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "optional-multipart/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -187,15 +199,27 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
             },
           },
         ],
+        "source": {
+          "file": "optional-multipart/openapi.json",
+          "type": "openapi",
+        },
         "type": "multipart",
       },
       "requestNameOverride": null,
       "response": {
         "description": "Successful Response",
+        "source": {
+          "file": "optional-multipart/openapi.json",
+          "type": "openapi",
+        },
         "type": "file",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "optional-multipart/openapi.json",
+        "type": "openapi",
+      },
       "summary": "speech",
       "tags": [],
     },
@@ -264,6 +288,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "optional-multipart/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "idempotent": null,
@@ -292,6 +320,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "optional-multipart/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -326,6 +358,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "optional-multipart/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -423,6 +459,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "generatedName": "SpeechStreamOperationRequestMyEnum",
                   "groupName": null,
                   "nameOverride": null,
+                  "source": {
+                    "file": "optional-multipart/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "enum",
                   "values": [
                     {
@@ -475,18 +515,30 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "request-model",
+                  "source": {
+                    "file": "optional-multipart/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
             },
           },
         ],
+        "source": {
+          "file": "optional-multipart/openapi.json",
+          "type": "openapi",
+        },
         "type": "multipart",
       },
       "requestNameOverride": null,
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "optional-multipart/openapi.json",
+        "type": "openapi",
+      },
       "summary": "speech_stream",
       "tags": [],
     },
@@ -598,6 +650,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "optional-multipart/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SpeechBodyStream": {
@@ -719,6 +775,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "generatedName": "SpeechBodyStreamMyEnum",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "optional-multipart/openapi.json",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -772,11 +832,19 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "request-model",
+              "source": {
+                "file": "optional-multipart/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "optional-multipart/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "request-model": {
@@ -814,6 +882,10 @@ exports[`optional-multipart optional-multipart parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "optional-multipart/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

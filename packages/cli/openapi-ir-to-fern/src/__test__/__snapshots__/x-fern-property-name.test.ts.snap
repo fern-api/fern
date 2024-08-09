@@ -19,6 +19,9 @@ exports[`x-fern-property-name x-fern-property-name docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-property-name/openapi.yml",
+        },
       },
     },
   },
@@ -50,6 +53,9 @@ exports[`x-fern-property-name x-fern-property-name simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-property-name/openapi.yml",
         },
       },
     },

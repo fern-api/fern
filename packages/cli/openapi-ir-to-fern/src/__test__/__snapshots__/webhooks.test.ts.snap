@@ -12,6 +12,9 @@ exports[`webhooks webhooks docs 1`] = `
           "name": "string",
           "tag": "optional<string>",
         },
+        "source": {
+          "openapi": "webhooks/openapi.yml",
+        },
       },
     },
     "webhooks": {
@@ -55,6 +58,9 @@ exports[`webhooks webhooks simple 1`] = `
           "id": "long",
           "name": "string",
           "tag": "optional<string>",
+        },
+        "source": {
+          "openapi": "webhooks/openapi.yml",
         },
       },
     },

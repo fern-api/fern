@@ -418,6 +418,9 @@ Log.d("TAG", group.toString())
             },
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
     },
     "upload.yml": {
@@ -2398,6 +2401,9 @@ to us as a value of the \`part_size\` parameter (in bytes).
             },
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "types": {
         "BaseUploadResponse": {
@@ -2414,6 +2420,9 @@ the value is the unique ID of the file on our systems.
                 "pattern": undefined,
               },
             },
+          },
+          "source": {
+            "openapi": "uploadcare/openapi.json",
           },
         },
         "FromUrlUploadRequestCheckUrlDuplicates": {
@@ -2432,6 +2441,9 @@ this request will return information about the already uploaded file.
               "value": "1",
             },
           ],
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
         },
         "FromUrlUploadRequestSaveUrlDuplicates": {
           "docs": "Determines if the requested \`source_url\` should be kept in the history of
@@ -2448,10 +2460,14 @@ to the value of the \`check_URL_duplicates\` parameter.
               "value": "1",
             },
           ],
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
         },
         "FromUrlUploadResponse": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "root.FromUrlUploadResponseSchema",
             "root.FileUploadInfoFromUrl",
@@ -2460,6 +2476,7 @@ to the value of the \`check_URL_duplicates\` parameter.
         "FromUrlUploadStatusResponse": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "root.FileUploadInfoWaitingStatus",
             "root.FileUploadInfoProgressStatus",
@@ -2482,6 +2499,9 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "pattern": undefined,
               },
             },
+          },
+          "source": {
+            "openapi": "uploadcare/openapi.json",
           },
         },
       },
@@ -3360,6 +3380,7 @@ to the value of the \`check_URL_duplicates\` parameter.
       "BaseUploadRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -3384,6 +3405,7 @@ to the value of the \`check_URL_duplicates\` parameter.
       "BaseUploadRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "UploadcarePublicKeyRequiredError",
           "UploadcarePublicKeyInvalidError",
@@ -3407,6 +3429,9 @@ to the value of the \`check_URL_duplicates\` parameter.
           },
           "video": "optional<VideoInfo>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "ContentInfoMime": {
         "docs": "MIME type.",
@@ -3424,10 +3449,14 @@ to the value of the \`check_URL_duplicates\` parameter.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "CreateFilesGroupRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -3443,6 +3472,7 @@ to the value of the \`check_URL_duplicates\` parameter.
       "CreateFilesGroupRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3572,6 +3602,9 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           },
           "video_info": "optional<LegacyVideoInfo>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoErrorStatus": {
         "docs": undefined,
@@ -3595,6 +3628,9 @@ page for a full list of all possible error codes.
             "type": "optional<literal<"error">>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoFromUrl": {
         "docs": undefined,
@@ -3603,6 +3639,9 @@ page for a full list of all possible error codes.
         ],
         "properties": {
           "type": "optional<literal<"file_info">>",
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoProgressStatus": {
@@ -3628,10 +3667,14 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "NullCharactersForbiddenError",
           "FileIdRequiredError",
@@ -3641,6 +3684,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "FileUploadInfoRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3657,6 +3701,9 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
             "type": "optional<literal<"success">>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoUnknownStatus": {
         "docs": undefined,
@@ -3671,6 +3718,9 @@ that are tool old (or that have not been created at all).
             "type": "optional<literal<"unknown">>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoWaitingStatus": {
         "docs": undefined,
@@ -3681,10 +3731,14 @@ that are tool old (or that have not been created at all).
             "type": "optional<literal<"waiting">>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FilesGroupInfoRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "NullCharactersForbiddenError",
           "GroupIdRequiredError",
@@ -3693,6 +3747,7 @@ that are tool old (or that have not been created at all).
       "FilesGroupInfoRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3704,6 +3759,7 @@ that are tool old (or that have not been created at all).
       "FromUrlUploadRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -3733,6 +3789,7 @@ that are tool old (or that have not been created at all).
       "FromUrlUploadRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3760,6 +3817,9 @@ that are tool old (or that have not been created at all).
             },
           },
           "type": "optional<literal<"token">>",
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "GroupFileUrlParsingFailedError": {
@@ -3820,6 +3880,9 @@ that are tool old (or that have not been created at all).
             },
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "GroupNotFoundError": {
         "type": "string",
@@ -3874,6 +3937,9 @@ that are tool old (or that have not been created at all).
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "ImageInfoColorMode": {
         "docs": "Image color mode.",
@@ -3890,6 +3956,9 @@ that are tool old (or that have not been created at all).
           "HSV",
           "LAB",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "ImageInfoGeoLocation": {
         "docs": "Geo-location of image from EXIF.",
@@ -3902,6 +3971,9 @@ that are tool old (or that have not been created at all).
             "docs": "Location longitude.",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "LegacyVideoInfo": {
@@ -3928,6 +4000,9 @@ that are tool old (or that have not been created at all).
             "type": "optional<LegacyVideoInfoVideo>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "LegacyVideoInfoAudio": {
         "docs": "Audio stream's metadata.",
@@ -3948,6 +4023,9 @@ that are tool old (or that have not been created at all).
             "docs": "Audio stream's sample rate.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "LegacyVideoInfoVideo": {
@@ -3973,6 +4051,9 @@ that are tool old (or that have not been created at all).
             "docs": "Video stream's image width.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "Metadata": {
@@ -4009,6 +4090,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadCompleteRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -4026,6 +4108,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadCompleteRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "UploadcarePublicKeyRequiredError",
           "UploadcarePublicKeyInvalidError",
@@ -4034,6 +4117,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadStartRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -4061,6 +4145,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadStartRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "UploadcarePublicKeyRequiredError",
           "UploadcarePublicKeyInvalidError",
@@ -4164,6 +4249,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "SchemasImageInfoColorMode": {
         "docs": "Image color mode.",
@@ -4180,6 +4268,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "HSV",
           "LAB",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "SchemasImageInfoGeoLocation": {
         "docs": "Geo-location of image from EXIF.",
@@ -4192,6 +4283,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "docs": "Location longitude.",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "SignatureExpirationError": {
@@ -4251,6 +4345,9 @@ change the value to \`auto\`.
           },
           "auto",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "TokenRequiredError": {
         "type": "string",
@@ -4306,6 +4403,9 @@ change the value to \`auto\`.
           },
           "video": "list<VideoInfoVideoItem>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "VideoInfoAudioItem": {
         "docs": "Audio stream's metadata.",
@@ -4326,6 +4426,9 @@ change the value to \`auto\`.
             "docs": "Audio stream's sample rate.",
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "VideoInfoVideoItem": {
@@ -4351,6 +4454,9 @@ change the value to \`auto\`.
             "docs": "Video stream's image width.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
     },
@@ -4786,6 +4892,9 @@ Log.d("TAG", group.toString())
               "type": "root.GroupInfo",
             },
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
     },
@@ -6767,6 +6876,9 @@ to us as a value of the \`part_size\` parameter (in bytes).
             },
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "types": {
         "BaseUploadResponse": {
@@ -6783,6 +6895,9 @@ the value is the unique ID of the file on our systems.
                 "pattern": undefined,
               },
             },
+          },
+          "source": {
+            "openapi": "uploadcare/openapi.json",
           },
         },
         "FromUrlUploadRequestCheckUrlDuplicates": {
@@ -6801,6 +6916,9 @@ this request will return information about the already uploaded file.
               "value": "1",
             },
           ],
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
         },
         "FromUrlUploadRequestSaveUrlDuplicates": {
           "docs": "Determines if the requested \`source_url\` should be kept in the history of
@@ -6817,10 +6935,14 @@ to the value of the \`check_URL_duplicates\` parameter.
               "value": "1",
             },
           ],
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
         },
         "FromUrlUploadResponse": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "root.FromUrlUploadResponseSchema",
             "root.FileUploadInfoFromUrl",
@@ -6829,6 +6951,7 @@ to the value of the \`check_URL_duplicates\` parameter.
         "FromUrlUploadStatusResponse": {
           "discriminated": false,
           "docs": undefined,
+          "source": undefined,
           "union": [
             "root.FileUploadInfoWaitingStatus",
             "root.FileUploadInfoProgressStatus",
@@ -6851,6 +6974,9 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "pattern": undefined,
               },
             },
+          },
+          "source": {
+            "openapi": "uploadcare/openapi.json",
           },
         },
       },
@@ -6993,6 +7119,7 @@ to the value of the \`check_URL_duplicates\` parameter.
       "BadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "NullCharactersForbiddenError",
           "GroupIdRequiredError",
@@ -7007,6 +7134,9 @@ to the value of the \`check_URL_duplicates\` parameter.
             "type": "optional<ContentInfoMime>",
           },
           "video": "optional<VideoInfo>",
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "ContentInfoMime": {
@@ -7024,6 +7154,9 @@ to the value of the \`check_URL_duplicates\` parameter.
             "docs": "Type of MIME type.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "ExpireType": {
@@ -7143,6 +7276,9 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           },
           "video_info": "optional<LegacyVideoInfo>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoErrorStatus": {
         "docs": undefined,
@@ -7166,6 +7302,9 @@ page for a full list of all possible error codes.
             "type": "optional<literal<"error">>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoFromUrl": {
         "docs": undefined,
@@ -7174,6 +7313,9 @@ page for a full list of all possible error codes.
         ],
         "properties": {
           "type": "optional<literal<"file_info">>",
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoProgressStatus": {
@@ -7199,6 +7341,9 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoSuccessStatus": {
         "docs": undefined,
@@ -7210,6 +7355,9 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
             "docs": "The file has been fetched/uploaded successfully.",
             "type": "optional<literal<"success">>",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoUnknownStatus": {
@@ -7225,6 +7373,9 @@ that are tool old (or that have not been created at all).
             "type": "optional<literal<"unknown">>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoWaitingStatus": {
         "docs": undefined,
@@ -7235,6 +7386,9 @@ that are tool old (or that have not been created at all).
             "type": "optional<literal<"waiting">>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FilesRequiredError": {
         "type": "string",
@@ -7242,6 +7396,7 @@ that are tool old (or that have not been created at all).
       "ForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -7261,6 +7416,9 @@ that are tool old (or that have not been created at all).
             },
           },
           "type": "optional<literal<"token">>",
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "GroupFileUrlParsingFailedError": {
@@ -7321,6 +7479,9 @@ that are tool old (or that have not been created at all).
             },
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "GroupNotFoundError": {
         "type": "string",
@@ -7375,6 +7536,9 @@ that are tool old (or that have not been created at all).
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "ImageInfoColorMode": {
         "docs": "Image color mode.",
@@ -7391,6 +7555,9 @@ that are tool old (or that have not been created at all).
           "HSV",
           "LAB",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "ImageInfoGeoLocation": {
         "docs": "Geo-location of image from EXIF.",
@@ -7403,6 +7570,9 @@ that are tool old (or that have not been created at all).
             "docs": "Location longitude.",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "LegacyVideoInfo": {
@@ -7429,6 +7599,9 @@ that are tool old (or that have not been created at all).
             "type": "optional<LegacyVideoInfoVideo>",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "LegacyVideoInfoAudio": {
         "docs": "Audio stream's metadata.",
@@ -7449,6 +7622,9 @@ that are tool old (or that have not been created at all).
             "docs": "Audio stream's sample rate.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "LegacyVideoInfoVideo": {
@@ -7474,6 +7650,9 @@ that are tool old (or that have not been created at all).
             "docs": "Video stream's image width.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "Metadata": {
@@ -7597,6 +7776,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "SchemasImageInfoColorMode": {
         "docs": "Image color mode.",
@@ -7613,6 +7795,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "HSV",
           "LAB",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "SchemasImageInfoGeoLocation": {
         "docs": "Geo-location of image from EXIF.",
@@ -7625,6 +7810,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "docs": "Location longitude.",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "SignatureExpirationError": {
@@ -7684,6 +7872,9 @@ change the value to \`auto\`.
           },
           "auto",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "TokenRequiredError": {
         "type": "string",
@@ -7739,6 +7930,9 @@ change the value to \`auto\`.
           },
           "video": "list<VideoInfoVideoItem>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "VideoInfoAudioItem": {
         "docs": "Audio stream's metadata.",
@@ -7759,6 +7953,9 @@ change the value to \`auto\`.
             "docs": "Audio stream's sample rate.",
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "VideoInfoVideoItem": {
@@ -7784,6 +7981,9 @@ change the value to \`auto\`.
             "docs": "Video stream's image width.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
     },

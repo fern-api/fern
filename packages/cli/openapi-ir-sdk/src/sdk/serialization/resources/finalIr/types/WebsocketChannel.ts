@@ -21,10 +21,11 @@ export const WebsocketChannel: core.serialization.ObjectSchema<
             core.serialization.lazyObject(async () => (await import("../../..")).WebsocketSessionExample)
         ),
     })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription));
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDescription))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace WebsocketChannel {
-    interface Raw extends serializers.WithDescription.Raw {
+    interface Raw extends serializers.WithDescription.Raw, serializers.WithSource.Raw {
         path: string;
         groupName: serializers.SdkGroupName.Raw;
         summary?: string | null;

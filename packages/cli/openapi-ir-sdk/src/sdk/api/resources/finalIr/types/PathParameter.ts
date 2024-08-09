@@ -4,7 +4,10 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface PathParameter extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithAvailability {
+export interface PathParameter
+    extends FernOpenapiIr.WithDescription,
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithSource {
     name: string;
     schema: FernOpenapiIr.Schema;
     variableReference: string | undefined;

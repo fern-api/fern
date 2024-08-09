@@ -41,6 +41,9 @@ exports[`float float docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "float/openapi.yml",
+      },
     },
     "types": {
       "Response": {
@@ -49,6 +52,9 @@ exports[`float float docs 1`] = `
         "properties": {
           "id": "optional<float>",
           "value": "optional<float>",
+        },
+        "source": {
+          "openapi": "float/openapi.yml",
         },
       },
     },
@@ -104,6 +110,9 @@ exports[`float float simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "float/openapi.yml",
+      },
     },
     "types": {
       "Response": {
@@ -112,6 +121,9 @@ exports[`float float simple 1`] = `
         "properties": {
           "id": "optional<float>",
           "value": "optional<float>",
+        },
+        "source": {
+          "openapi": "float/openapi.yml",
         },
       },
     },

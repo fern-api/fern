@@ -1,4 +1,4 @@
-import { EnumSchema, SecurityScheme } from "@fern-api/openapi-ir-sdk";
+import { EnumSchema, SecurityScheme, Source } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { convertEnum } from "../../../schema/convertEnum";
@@ -14,15 +14,19 @@ import {
 } from "../extensions/getSecuritySchemeNameAndEnvvars";
 
 export function convertSecurityScheme(
-    securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject
+    securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject,
+    source: Source
 ): SecurityScheme | undefined {
     if (isReferenceObject(securityScheme)) {
         throw new Error(`Converting referenced security schemes is unsupported: ${JSON.stringify(securityScheme)}`);
     }
-    return convertSecuritySchemeHelper(securityScheme);
+    return convertSecuritySchemeHelper(securityScheme, source);
 }
 
-function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObject): SecurityScheme | undefined {
+function convertSecuritySchemeHelper(
+    securityScheme: OpenAPIV3.SecuritySchemeObject,
+    source: Source
+): SecurityScheme | undefined {
     if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
         const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
         const headerNames = getExtension<HeaderSecuritySchemeNames>(
@@ -62,13 +66,13 @@ function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObj
         });
     } else if (securityScheme.type === "oauth2") {
         return SecurityScheme.oauth({
-            scopesEnum: getScopes(securityScheme)
+            scopesEnum: getScopes(securityScheme, source)
         });
     }
     throw new Error(`Failed to convert security scheme ${JSON.stringify(securityScheme)}`);
 }
 
-function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme): EnumSchema | undefined {
+function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme, source: Source): EnumSchema | undefined {
     const scopes =
         oauthSecurityScheme.flows.authorizationCode?.scopes ??
         oauthSecurityScheme.flows.clientCredentials?.scopes ??
@@ -95,7 +99,8 @@ function getScopes(oauthSecurityScheme: OpenAPIV3.OAuth2SecurityScheme): EnumSch
             enumVarNames: undefined,
             wrapAsNullable: false,
             groupName: undefined,
-            context: undefined
+            context: undefined,
+            source
         });
         const schema = convertSchemaWithExampleToSchema(schemaWithExample);
         if (schema.type === "enum") {

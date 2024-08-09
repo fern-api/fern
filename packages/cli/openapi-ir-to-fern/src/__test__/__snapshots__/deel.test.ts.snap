@@ -328,6 +328,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "attachments.yml": {
@@ -386,12 +389,18 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "types": {
         "InputToCreateFileRefData": {
           "docs": undefined,
           "properties": {
             "content_type": "root.FileRefTypeEnum",
+          },
+          "source": {
+            "openapi": "deel/openapi.yml",
           },
         },
       },
@@ -554,6 +563,9 @@ exports[`open api parser deel docs 1`] = `
               "type": "root.PeopleContainer",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -1662,6 +1674,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "contracts.yml": {
@@ -2516,6 +2531,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "types": {
         "CalculateFinalPaymentRequestCalculationType": {
@@ -2525,6 +2543,9 @@ exports[`open api parser deel docs 1`] = `
             "CALENDAR_DAYS",
             "FULL_AMOUNT",
           ],
+          "source": {
+            "openapi": "deel/openapi.yml",
+          },
         },
       },
     },
@@ -2717,6 +2738,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "hris.yml": {
@@ -2755,6 +2779,9 @@ exports[`open api parser deel docs 1`] = `
               "type": "root.HrisDirectEmployeeContainer",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -3315,6 +3342,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "lookups.yml": {
@@ -3551,6 +3581,9 @@ exports[`open api parser deel docs 1`] = `
               "type": "root.TimeoffTypeListContainer",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -3924,6 +3957,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "offCyclePayments.yml": {
@@ -4126,6 +4162,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "organizations.yml": {
@@ -4324,6 +4363,9 @@ exports[`open api parser deel docs 1`] = `
               "type": "root.TeamListContainer",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -4656,6 +4698,9 @@ exports[`open api parser deel docs 1`] = `
               "type": "root.TaskListContainer",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -5289,6 +5334,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "timesheets.yml": {
@@ -5910,6 +5958,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "webhooks.yml": {
@@ -6238,6 +6289,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "types": {
         "CreateWebhookRequestStatus": {
@@ -6246,6 +6300,9 @@ exports[`open api parser deel docs 1`] = `
             "enabled",
             "disabled",
           ],
+          "source": {
+            "openapi": "deel/openapi.yml",
+          },
         },
         "PatchWebhookRequestStatus": {
           "docs": "Status of webhook.",
@@ -6253,6 +6310,9 @@ exports[`open api parser deel docs 1`] = `
             "enabled",
             "disabled",
           ],
+          "source": {
+            "openapi": "deel/openapi.yml",
+          },
         },
       },
     },
@@ -8986,12 +9046,18 @@ exports[`open api parser deel docs 1`] = `
           "msa": "AgreementMsa",
           "provider_legal_entity": "AgreementProviderLegalEntity",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "AgreementClientLegalEntity": {
         "docs": undefined,
         "properties": {
           "id": "double",
           "name": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "AgreementList": "list<Agreement>",
@@ -9001,6 +9067,9 @@ exports[`open api parser deel docs 1`] = `
           "data": "AgreementList",
           "page": "optional<PageInfoWithoutCursor>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "AgreementMsa": {
         "docs": undefined,
@@ -9008,12 +9077,18 @@ exports[`open api parser deel docs 1`] = `
           "id": "string",
           "title": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "AgreementProviderLegalEntity": {
         "docs": undefined,
         "properties": {
           "id": "double",
           "name": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "AgreementsParamLimit": {
@@ -9031,12 +9106,18 @@ exports[`open api parser deel docs 1`] = `
           "limit": "optional<AgreementsParamLimit>",
           "offset": "optional<AgreementsParamOffset>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "AlternateEmailItem": {
         "docs": undefined,
         "properties": {
           "email": "optional<EmailType>",
           "isVerified": "boolean",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "AlternateEmailList": {
@@ -9055,12 +9136,18 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ApiErrorContainer": {
         "docs": undefined,
         "properties": {
           "errors": "optional<list<ApiError>>",
           "request": "optional<ApiErrorRequest>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ApiErrorRequest": {
@@ -9094,6 +9181,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "The relative URL of the failed request",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicContract": {
@@ -9134,6 +9224,9 @@ exports[`open api parser deel docs 1`] = `
           "who_reports": "optional<ContractWhoReportsEnum>",
           "worker": "optional<WorkerOfBasicContract>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicInvoiceAdjustment": {
         "docs": undefined,
@@ -9157,6 +9250,9 @@ exports[`open api parser deel docs 1`] = `
           "type": "InvoiceAdjustmentTypeEnum",
           "worksheet": "optional<BasicInvoiceAdjustmentWorksheet>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicInvoiceAdjustmentContract": {
         "docs": undefined,
@@ -9165,6 +9261,9 @@ exports[`open api parser deel docs 1`] = `
           "title": "string",
           "type": "ContractTypeEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicInvoiceAdjustmentPaymentCycle": {
         "docs": undefined,
@@ -9172,12 +9271,18 @@ exports[`open api parser deel docs 1`] = `
           "end_date": "optional<DateTimeStringRequired>",
           "start_date": "optional<DateTimeStringRequired>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicInvoiceAdjustmentReportedBy": {
         "docs": undefined,
         "properties": {
           "full_name": "string",
           "id": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicInvoiceAdjustmentReviewedBy": {
@@ -9187,6 +9292,9 @@ exports[`open api parser deel docs 1`] = `
           "id": "double",
           "remarks": "string",
           "reviewed_at": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicInvoiceAdjustmentWorksheet": {
@@ -9233,6 +9341,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicLegalEntity": {
         "docs": undefined,
@@ -9241,6 +9352,9 @@ exports[`open api parser deel docs 1`] = `
           "entity_type": "LegalEntityType",
           "id": "double",
           "name": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicOrganization": {
@@ -9257,6 +9371,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicTeam": {
         "docs": undefined,
@@ -9271,6 +9388,9 @@ exports[`open api parser deel docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicTimesheet": {
@@ -9301,6 +9421,9 @@ exports[`open api parser deel docs 1`] = `
           },
           "worksheet": "optional<BasicTimesheetWorksheet>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicTimesheetContract": {
         "docs": undefined,
@@ -9309,6 +9432,9 @@ exports[`open api parser deel docs 1`] = `
           "title": "string",
           "type": "ContractTypeEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicTimesheetPaymentCycle": {
         "docs": undefined,
@@ -9316,12 +9442,18 @@ exports[`open api parser deel docs 1`] = `
           "end_date": "optional<DateTimeString>",
           "start_date": "optional<DateTimeString>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicTimesheetReportedBy": {
         "docs": undefined,
         "properties": {
           "full_name": "string",
           "id": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicTimesheetReviewedBy": {
@@ -9331,6 +9463,9 @@ exports[`open api parser deel docs 1`] = `
           "id": "double",
           "remarks": "string",
           "reviewed_at": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicTimesheetWorksheet": {
@@ -9377,6 +9512,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ClientLegalEntity": {
         "docs": undefined,
@@ -9389,11 +9527,17 @@ exports[`open api parser deel docs 1`] = `
           "type": "LegalEntityType",
           "vat_number": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ClientOfBasicContract": {
         "docs": undefined,
         "properties": {
           "team": "optional<TeamOfBasicContract>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ClientOfContract": {
@@ -9404,6 +9548,9 @@ exports[`open api parser deel docs 1`] = `
           "id": "long",
           "legal_entity": "optional<ClientLegalEntity>",
           "team": "TeamOfContract",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "CompensationDetailsOfContract": {
@@ -9419,6 +9566,9 @@ exports[`open api parser deel docs 1`] = `
           "gross_variable_bonus": "string",
           "scale": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "CompensationDetailsOfContractToCreateOngoingTimeBased": {
         "docs": undefined,
@@ -9426,12 +9576,18 @@ exports[`open api parser deel docs 1`] = `
           "amount": "double",
           "scale": "WorkStatementScaleEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "CompensationDetailsOfContractToCreatePayAsYouGoTimeBased": {
         "docs": undefined,
         "properties": {
           "amount": "double",
           "scale": "WorkStatementScaleEnum",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "CompensationDetailsOfContractToCreateShared": {
@@ -9485,6 +9641,9 @@ exports[`open api parser deel docs 1`] = `
           },
           "payment_due_type": "WorkStatementPaymentDueTypeEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Contract": {
         "docs": undefined,
@@ -9531,11 +9690,17 @@ exports[`open api parser deel docs 1`] = `
           "who_reports": "optional<ContractWhoReportsEnum>",
           "worker": "optional<WorkerOfContract>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractContainer": {
         "docs": undefined,
         "properties": {
           "data": "Contract",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractContainerOngoingTimeBased": {
@@ -9543,11 +9708,17 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "data": "Contract",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractContainerPayAsYouGoTimeBased": {
         "docs": undefined,
         "properties": {
           "data": "Contract",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractContainerPaygMilestones": {
@@ -9555,11 +9726,17 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "data": "Contract",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractContainerPaygTasks": {
         "docs": undefined,
         "properties": {
           "data": "Contract",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractCustomField": {
@@ -9573,6 +9750,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Custom field property value.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractDetailsToAmend": {
@@ -9650,17 +9830,26 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractDocumentContainer": {
         "docs": undefined,
         "properties": {
           "data": "optional<FileAttachmentInfo>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractExternalIdPatchedContainer": {
         "docs": undefined,
         "properties": {
           "data": "ContractExternalIdToPatch",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractExternalIdPatchedResponseContainer": "ContractExternalIdToPatch",
@@ -9672,6 +9861,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractFirstSignEnum": {
         "docs": "Flag to indicate who is supposed to sign a contract",
@@ -9679,6 +9871,9 @@ exports[`open api parser deel docs 1`] = `
           "client",
           "contractor",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractInvitationToCreate": {
         "docs": undefined,
@@ -9695,6 +9890,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractList": "list<BasicContract>",
       "ContractListContainer": {
@@ -9703,11 +9901,15 @@ exports[`open api parser deel docs 1`] = `
           "data": "ContractList",
           "page": "PageInfo",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractPreview": "string",
       "ContractSearchForm": {
         "discriminated": false,
         "docs": "Search form should include parameters varied based on usage of cursor for pagination. NOTE: that all query parameters are based on strings",
+        "source": undefined,
         "union": [
           "ContractSearchFormWithCursor",
           "ContractSearchFormWithoutCursor",
@@ -9731,6 +9933,9 @@ exports[`open api parser deel docs 1`] = `
               "pattern": "^\\d{1,2}$",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractSearchFormWithoutCursor": {
@@ -9778,10 +9983,14 @@ exports[`open api parser deel docs 1`] = `
           },
           "types": "optional<ContractSearchFormWithoutCursorTypes>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractSearchFormWithoutCursorCountries": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "CountryCodeList",
           "CountryCode",
@@ -9790,6 +9999,7 @@ exports[`open api parser deel docs 1`] = `
       "ContractSearchFormWithoutCursorCurrencies": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "CurrencyCodeList",
           "CurrencyCodeRequired",
@@ -9798,6 +10008,7 @@ exports[`open api parser deel docs 1`] = `
       "ContractSearchFormWithoutCursorStatuses": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContractStatusEnumList",
           "ContractStatusEnum",
@@ -9806,6 +10017,7 @@ exports[`open api parser deel docs 1`] = `
       "ContractSearchFormWithoutCursorTypes": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContractTypeEnum",
           "ContractTypeEnumList",
@@ -9829,6 +10041,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractStatusEnum": {
         "docs": "Status of a contract in Deel workflow",
@@ -9849,6 +10064,9 @@ exports[`open api parser deel docs 1`] = `
           "rejected",
           "waiting_for_client_payment",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractStatusEnumList": {
         "docs": "List of contract statuses",
@@ -9859,6 +10077,9 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "data": "optional<ContractTemplateList>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractTemplateSummary": {
@@ -9873,6 +10094,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractTerminationResult": {
         "docs": undefined,
@@ -9886,16 +10110,23 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractTerminationResultContainer": {
         "docs": undefined,
         "properties": {
           "data": "ContractTerminationResult",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreate": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContractToCreatePayAsYouGoTimeBased",
           "ContractToCreatePaygTasks",
@@ -9911,6 +10142,9 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "compensation_details": "ContractToCreateOngoingTimeBasedCompensationDetails",
           "type": "literal<"ongoing_time_based">",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractToCreateOngoingTimeBasedCompensationDetails": {
@@ -9965,6 +10199,9 @@ exports[`open api parser deel docs 1`] = `
           "payment_due_type": "WorkStatementPaymentDueTypeEnum",
           "scale": "WorkStatementScaleEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreatePayAsYouGoTimeBased": {
         "docs": undefined,
@@ -9974,6 +10211,9 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "compensation_details": "ContractToCreatePayAsYouGoTimeBasedCompensationDetails",
           "type": "literal<"pay_as_you_go_time_based">",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractToCreatePayAsYouGoTimeBasedCompensationDetails": {
@@ -10028,6 +10268,9 @@ exports[`open api parser deel docs 1`] = `
           "payment_due_type": "WorkStatementPaymentDueTypeEnum",
           "scale": "WorkStatementScaleEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreatePaygMilestones": {
         "docs": undefined,
@@ -10038,6 +10281,9 @@ exports[`open api parser deel docs 1`] = `
           "compensation_details": "CompensationDetailsOfContractToCreateShared",
           "type": "literal<"payg_milestones">",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreatePaygTasks": {
         "docs": undefined,
@@ -10047,6 +10293,9 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "compensation_details": "CompensationDetailsOfContractToCreateShared",
           "type": "literal<"payg_tasks">",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractToCreateShared": {
@@ -10092,6 +10341,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<ContractToCreateSharedWorker>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreateSharedClient": {
         "docs": undefined,
@@ -10105,17 +10357,26 @@ exports[`open api parser deel docs 1`] = `
             "type": "ContractToCreateSharedClientTeam",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreateSharedClientLegalEntity": {
         "docs": "Choose the Deel legal entity for this contract. Use legal entity endpoint to retrieve a list of legal entities in your organization.",
         "properties": {
           "id": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreateSharedClientTeam": {
         "docs": "Choose the Deel team for this contract. Use teams endpoint to retrieve a list of teams in your organization.",
         "properties": {
           "id": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractToCreateSharedJobTitle": {
@@ -10136,11 +10397,17 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreateSharedSeniority": {
         "docs": "Job seniority level. Please use the seniority levels endpoint to retrieve the list of seniority levels.",
         "properties": {
           "id": "optional<double>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractToCreateSharedWorker": {
@@ -10168,6 +10435,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToTerminate": {
         "docs": undefined,
@@ -10178,6 +10448,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
           "terminate_now": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractTypeEnum": {
@@ -10197,6 +10470,9 @@ exports[`open api parser deel docs 1`] = `
           "shield_msa",
           "hris_direct_employee",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractTypeEnumList": {
         "docs": "List of contract types",
@@ -10209,6 +10485,9 @@ exports[`open api parser deel docs 1`] = `
           "payg_tasks",
           "payg_milestones",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractWhoReportsEnum": {
         "docs": "Flag to indicate who is supposed to provide regular reports",
@@ -10217,6 +10496,9 @@ exports[`open api parser deel docs 1`] = `
           "client",
           "contractor",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Contractor": {
         "docs": undefined,
@@ -10225,6 +10507,9 @@ exports[`open api parser deel docs 1`] = `
             "default": "",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractsSortByEnum": {
@@ -10235,6 +10520,9 @@ exports[`open api parser deel docs 1`] = `
           "total",
           "status",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Country": {
         "docs": undefined,
@@ -10264,6 +10552,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "CountryCode": {
         "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code.",
@@ -10291,6 +10582,9 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "data": "CountryList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "CreateTimeoff": {
@@ -10329,11 +10623,17 @@ exports[`open api parser deel docs 1`] = `
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "CreateTimeoffContainer": {
         "docs": undefined,
         "properties": {
           "data": "CreateTimeoff",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "CreateTimeoffType": {
@@ -10343,6 +10643,9 @@ exports[`open api parser deel docs 1`] = `
           "SICK_LEAVE",
           "OTHER",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Currency": {
         "docs": undefined,
@@ -10357,6 +10660,9 @@ exports[`open api parser deel docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "CurrencyCode": {
@@ -10384,6 +10690,9 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "data": "CurrencyList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "DateString": {
@@ -10471,6 +10780,9 @@ exports[`open api parser deel docs 1`] = `
           "team_id": "optional<double>",
           "timezone": "optional<string>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EmployeeListClientLegalEntity": {
         "docs": undefined,
@@ -10478,17 +10790,26 @@ exports[`open api parser deel docs 1`] = `
           "id": "optional<double>",
           "name": "optional<string>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EmployeeListContainer": {
         "docs": undefined,
         "properties": {
           "data": "list<EmployeeList>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EmployeeListMonthlyPayment": {
         "docs": undefined,
         "properties": {
           "count": "optional<double>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EmployeeListPaymentsItem": {
@@ -10498,6 +10819,9 @@ exports[`open api parser deel docs 1`] = `
           "currency": "optional<string>",
           "rate": "optional<double>",
           "scale": "optional<string>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "Employment": {
@@ -10588,6 +10912,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EmploymentDetailsOfContract": {
         "docs": undefined,
@@ -10602,6 +10929,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
           "type": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorClientTimeoffRequests": {
@@ -10633,6 +10963,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorClientTimeoffs": {
         "docs": undefined,
@@ -10643,11 +10976,17 @@ exports[`open api parser deel docs 1`] = `
           },
           "total_requests": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorClientTimeoffsContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorClientTimeoffs",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractCreated": {
@@ -10671,11 +11010,17 @@ exports[`open api parser deel docs 1`] = `
           "status": "optional<ContractStatusEnum>",
           "type": "optional<ContractTypeEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractCreatedClient": {
         "docs": undefined,
         "properties": {
           "legal_entity": "optional<EorContractCreatedClientLegalEntity>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractCreatedClientLegalEntity": {
@@ -10685,6 +11030,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Legal entity name.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractCreatedCompensationDetails": {
@@ -10707,11 +11055,17 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractCreatedContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorContractCreated",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractCreatedEmployee": {
@@ -10733,6 +11087,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Employee's legal name.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractCreatedEmployment": {
@@ -10769,6 +11126,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractCreatedHealthPlan": {
         "docs": undefined,
@@ -10781,6 +11141,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Health plan name",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractToCreate": {
@@ -10804,12 +11167,18 @@ exports[`open api parser deel docs 1`] = `
           },
           "seniority": "EorContractToCreateSeniority",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateClient": {
         "docs": undefined,
         "properties": {
           "legal_entity": "optional<EorContractToCreateClientLegalEntity>",
           "team": "optional<EorContractToCreateClientTeam>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractToCreateClientLegalEntity": {
@@ -10820,6 +11189,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateClientTeam": {
         "docs": undefined,
@@ -10828,6 +11200,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Enter the Id of team this person will be hired in. Use /teams endpoint to retrieve a list of teams in your organization.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractToCreateCompensationDetails": {
@@ -10849,6 +11224,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractToCreateEmployee": {
@@ -10872,6 +11250,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateEmployeeAddress": {
         "docs": undefined,
@@ -10893,6 +11274,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Zip code.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractToCreateEmployment": {
@@ -10931,6 +11315,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateEmploymentTimeOffType": {
         "docs": "If you want to use standard number of holidays for this employee, choose "STANDARD". If you want to enter a specific number of holidays, choose "SPECIFIC" and enter the number of days in the holidays field.",
@@ -10938,6 +11325,9 @@ exports[`open api parser deel docs 1`] = `
           "STANDARD",
           "SPECIFIC",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateEmploymentType": {
         "docs": "Is it a full-time contract or a part-time contract?",
@@ -10951,6 +11341,9 @@ exports[`open api parser deel docs 1`] = `
             "value": "Part-time",
           },
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateQuoteAdditionalFields": {
         "docs": "Some countries require additional employee information for employment contracts.",
@@ -10968,6 +11361,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<EorContractToCreateQuoteAdditionalFieldsWorkerType>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateQuoteAdditionalFieldsWorkerType": {
         "docs": "Type of worker.",
@@ -10975,6 +11371,9 @@ exports[`open api parser deel docs 1`] = `
           "Skilled",
           "Unskilled",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateSeniority": {
         "docs": undefined,
@@ -10983,6 +11382,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Enter the Id retrieved from the seniority lookup endpoint. Enter 34 for "Not Applicable".",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidations": {
@@ -11039,11 +11441,17 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<EorCountryValidationsWorkSchedule>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorCountryValidations",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidationsDefiniteContract": {
@@ -11052,6 +11460,9 @@ exports[`open api parser deel docs 1`] = `
           "maximum_limitation": "optional<double>",
           "type": "optional<EorCountryValidationsDefiniteContractType>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsDefiniteContractType": {
         "enum": [
@@ -11059,12 +11470,18 @@ exports[`open api parser deel docs 1`] = `
           "ALLOWED_WITH_MAXIMUM_LIMITATION",
           "NOT_ALLOWED",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsHealthInsurance": {
         "docs": undefined,
         "properties": {
           "providers": "optional<list<HealthInsuranceProvider>>",
           "status": "optional<HealthInsuranceStatusEnum>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidationsHoliday": {
@@ -11074,6 +11491,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Minimum number of holidays required for a legally compliant contract.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidationsPartTimeHoliday": {
@@ -11085,6 +11505,9 @@ exports[`open api parser deel docs 1`] = `
           },
           "type": "optional<EorCountryValidationsPartTimeHolidayType>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsPartTimeHolidayType": {
         "enum": [
@@ -11092,6 +11515,9 @@ exports[`open api parser deel docs 1`] = `
           "STANDARD",
           "SPECIFIC",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsPartTimeProbation": {
         "docs": "Probation period range for part-time contracts.",
@@ -11104,6 +11530,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Minimum probation days required for a legally compliant contract.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidationsProbation": {
@@ -11118,6 +11547,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsSalary": {
         "docs": "Salary range.",
@@ -11130,6 +11562,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Minimum wage for a legally compliant contract.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidationsSickDays": {
@@ -11144,6 +11579,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsWorkSchedule": {
         "docs": "Employee's Work schedule in days and hours.",
@@ -11151,17 +11589,26 @@ exports[`open api parser deel docs 1`] = `
           "days": "optional<EorCountryValidationsWorkScheduleDays>",
           "hours": "optional<EorCountryValidationsWorkScheduleHours>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsWorkScheduleDays": {
         "docs": undefined,
         "properties": {
           "max": "optional<string>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsWorkScheduleHours": {
         "docs": undefined,
         "properties": {
           "max": "optional<string>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorEntitlementListItem": {
@@ -11227,6 +11674,9 @@ exports[`open api parser deel docs 1`] = `
           },
           "year": "optional<double>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorEntitlements": {
         "docs": "Time-off Entitlements for EOR contracts.",
@@ -11236,11 +11686,17 @@ exports[`open api parser deel docs 1`] = `
             "type": "list<EorEntitlementListItem>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorEntitlementsContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorEntitlements",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorHolidaysRolloverType": {
@@ -11251,6 +11707,9 @@ exports[`open api parser deel docs 1`] = `
           "LIMITED_ROLLOVER",
           "UNSET",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorTimeoffs": {
         "docs": "List of time offs.",
@@ -11326,11 +11785,17 @@ exports[`open api parser deel docs 1`] = `
             "type": "TimeoffsTypeEnum",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorTimeoffsContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorTimeoffs",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorTimeoffsEmployeeItem": {
@@ -11353,6 +11818,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "List of employee vacation time offs.",
             "type": "list<EorClientTimeoffRequests>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorTimeoffsItem": {
@@ -11384,11 +11852,17 @@ exports[`open api parser deel docs 1`] = `
           "start_date": "optional<DateTimeString>",
           "updated_at": "optional<DateTimeString>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorTimeoffsItemContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorTimeoffsItem",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EstimateFirstPayment": {
@@ -11398,6 +11872,9 @@ exports[`open api parser deel docs 1`] = `
           "country_code": "CountryCode",
           "start_date": "DateStringRequired",
           "type": "ContractTypeEnum",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EstimateFirstPaymentCompensationDetails": {
@@ -11446,6 +11923,9 @@ exports[`open api parser deel docs 1`] = `
           "work_week_end": "optional<WeekDaysEnum>",
           "work_week_start": "optional<WeekDaysEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EstimateFirstPaymentCompensationDetailsCalculationType": {
         "docs": "Either works days or calendar days",
@@ -11455,12 +11935,18 @@ exports[`open api parser deel docs 1`] = `
           "CALENDAR_DAYS",
           "FULL_AMOUNT",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ExchangeRates": {
         "docs": undefined,
         "properties": {
           "rates": "optional<map<string, unknown>>",
           "risk": "optional<double>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "FileAttachmentInfo": {
@@ -11474,6 +11960,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "You can call attachments end-point, get key and URL to upload your file.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "FileObject": {
@@ -11489,6 +11978,9 @@ exports[`open api parser deel docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "FileRefTypeEnum": {
@@ -11515,6 +12007,9 @@ exports[`open api parser deel docs 1`] = `
             "value": "image/png",
           },
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "FinalPaymentCalculated": {
         "docs": undefined,
@@ -11550,6 +12045,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "FinalPaymentCalculatedCalculationType": {
         "docs": "Either works days or calendar days",
@@ -11559,11 +12057,17 @@ exports[`open api parser deel docs 1`] = `
           "CALENDAR_DAYS",
           "FULL_AMOUNT",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "FinalPaymentCalculatedContainer": {
         "docs": undefined,
         "properties": {
           "data": "FinalPaymentCalculated",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "FinalPaymentCalculatedLastCycle": {
@@ -11573,11 +12077,17 @@ exports[`open api parser deel docs 1`] = `
           "end": "optional<DateTimeStringRequired>",
           "start": "optional<DateTimeStringRequired>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "FirstPaymentDate": {
         "docs": "First payment date",
         "properties": {
           "due": "optional<DateStringRequired>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "GenericReportReviewCreated": {
@@ -11587,11 +12097,17 @@ exports[`open api parser deel docs 1`] = `
           "public_id": "optional<PublicId>",
           "status": "optional<InvoiceAdjustmentStatusEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "GenericReportReviewCreatedContainer": {
         "docs": undefined,
         "properties": {
           "data": "GenericReportReviewCreatedList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "GenericReportReviewCreatedList": "list<GenericReportReviewCreated>",
@@ -11600,17 +12116,26 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "data": "GenericResultCreatedData",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "GenericResultCreatedData": {
         "docs": undefined,
         "properties": {
           "created": "boolean",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "GenericResultDeleted": {
         "docs": undefined,
         "properties": {
           "data": "GenericResultDeletedData",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "GenericResultDeletedData": {
@@ -11621,17 +12146,26 @@ exports[`open api parser deel docs 1`] = `
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "GenericResultUpdated": {
         "docs": undefined,
         "properties": {
           "data": "GenericResultUpdatedData",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "GenericResultUpdatedData": {
         "docs": undefined,
         "properties": {
           "updated": "boolean",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "HealthInsuranceProvider": {
@@ -11681,12 +12215,18 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HealthInsuranceProviderAttachmentsItem": {
         "docs": undefined,
         "properties": {
           "id": "optional<double>",
           "label": "optional<string>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "HealthInsuranceProviderPlansItem": {
@@ -11710,6 +12250,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HealthInsuranceStatusEnum": {
         "docs": "Health insurance status.",
@@ -11718,6 +12261,9 @@ exports[`open api parser deel docs 1`] = `
           "ENABLED",
           "DISABLED",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisCompensation": {
         "docs": undefined,
@@ -11733,6 +12279,9 @@ exports[`open api parser deel docs 1`] = `
           },
           "gross_annual_salary": "float",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisContractBase": {
         "docs": undefined,
@@ -11745,6 +12294,9 @@ exports[`open api parser deel docs 1`] = `
           "end_date": "optional<DateString>",
           "start_date": "DateStringRequired",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisContractFullTime": {
         "docs": undefined,
@@ -11752,6 +12304,9 @@ exports[`open api parser deel docs 1`] = `
           "HrisContractBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisContractPartTime": {
         "docs": undefined,
@@ -11771,6 +12326,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisDirectEmployee": {
         "docs": undefined,
@@ -11782,17 +12340,26 @@ exports[`open api parser deel docs 1`] = `
           "team_information": "HrisTeamInformation",
           "vacation_info": "optional<HrisDirectEmployeeVacationInfo>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisDirectEmployeeContainer": {
         "docs": undefined,
         "properties": {
           "data": "HrisDirectEmployeeResponse",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisDirectEmployeeContract": {
         "base-properties": {},
         "discriminant": "employment_type",
         "docs": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": {
           "FULL_TIME": "HrisContractFullTime",
           "PART_TIME": "HrisContractPartTime",
@@ -11865,10 +12432,14 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisDirectEmployeeJobInformation": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "HrisJobInformationTitleId",
           "HrisJobInformationTitleName",
@@ -11884,6 +12455,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "The Hris Direct employee ID",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "HrisDirectEmployeeVacationInfo": {
@@ -11909,11 +12483,17 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisJobInformationBase": {
         "docs": undefined,
         "properties": {
           "seniority_id": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "HrisJobInformationTitleId": {
@@ -11924,6 +12504,9 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "job_title_id": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisJobInformationTitleName": {
         "docs": undefined,
@@ -11933,6 +12516,9 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "job_title_name": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisTeamInformation": {
         "docs": undefined,
@@ -11940,17 +12526,26 @@ exports[`open api parser deel docs 1`] = `
           "legal_entity_id": "double",
           "team_id": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InputToDeletePgoTask": {
         "docs": undefined,
         "properties": {
           "data": "PgoTaskToDelete",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InputToShieldContract": {
         "docs": undefined,
         "properties": {
           "data": "InputToShieldContractData",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InputToShieldContractData": {
@@ -11961,12 +12556,18 @@ exports[`open api parser deel docs 1`] = `
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvitationsOfBasicContract": {
         "docs": undefined,
         "properties": {
           "client_email": "optional<EmailType>",
           "worker_email": "optional<EmailType>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "Invoice": {
@@ -12023,6 +12624,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustment": {
         "docs": undefined,
@@ -12031,6 +12635,9 @@ exports[`open api parser deel docs 1`] = `
           "InvoiceAdjustmentApproversContainer",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentApprover": {
         "docs": undefined,
@@ -12039,6 +12646,9 @@ exports[`open api parser deel docs 1`] = `
           "email": "string",
           "full_name": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentApproverList": "list<InvoiceAdjustmentApprover>",
       "InvoiceAdjustmentApproversContainer": {
@@ -12046,11 +12656,17 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "approvers": "InvoiceAdjustmentApproverList",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentContainer": {
         "docs": undefined,
         "properties": {
           "data": "InvoiceAdjustment",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InvoiceAdjustmentCreated": {
@@ -12062,11 +12678,17 @@ exports[`open api parser deel docs 1`] = `
           "public_id": "optional<PublicId>",
           "status": "optional<InvoiceAdjustmentStatusEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentCreatedContainer": {
         "docs": undefined,
         "properties": {
           "data": "InvoiceAdjustmentCreated",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InvoiceAdjustmentList": "list<BasicInvoiceAdjustment>",
@@ -12076,6 +12698,9 @@ exports[`open api parser deel docs 1`] = `
           "data": "InvoiceAdjustmentList",
           "page": "PageInfoWithoutCursorNew",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentReviewToCreate": {
         "docs": undefined,
@@ -12083,12 +12708,18 @@ exports[`open api parser deel docs 1`] = `
           "reason": "optional<string>",
           "status": "InvoiceAdjustmentReviewToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentReviewToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentReviewsToCreate": {
         "docs": undefined,
@@ -12097,12 +12728,18 @@ exports[`open api parser deel docs 1`] = `
           "reason": "optional<string>",
           "status": "InvoiceAdjustmentReviewsToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentReviewsToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentSearchContainer": {
         "docs": "This is a model to make it easier to understand and restrict search parameters",
@@ -12154,10 +12791,14 @@ exports[`open api parser deel docs 1`] = `
           "statuses": "optional<InvoiceAdjustmentSearchContainerStatuses>",
           "types": "optional<InvoiceAdjustmentSearchContainerTypes>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentSearchContainerContractTypes": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContractTypeEnumList",
           "ContractTypeEnum",
@@ -12166,6 +12807,7 @@ exports[`open api parser deel docs 1`] = `
       "InvoiceAdjustmentSearchContainerStatuses": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "InvoiceAdjustmentStatusEnumList",
           "optional<InvoiceAdjustmentStatusEnum>",
@@ -12174,6 +12816,7 @@ exports[`open api parser deel docs 1`] = `
       "InvoiceAdjustmentSearchContainerTypes": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "InvoiceAdjustmentTypeEnumList",
           "InvoiceAdjustmentTypeEnum",
@@ -12213,6 +12856,9 @@ exports[`open api parser deel docs 1`] = `
           },
           "type": "InvoiceAdjustmentTypeToCreateEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentToCreateWithFile": {
         "docs": undefined,
@@ -12221,6 +12867,9 @@ exports[`open api parser deel docs 1`] = `
           "FileObject",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentToUpdate": {
         "docs": "Details of invoice adjustment to update.",
@@ -12236,6 +12885,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
           "description": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InvoiceAdjustmentTypeEnum": {
@@ -12274,6 +12926,9 @@ exports[`open api parser deel docs 1`] = `
           "withholding_tax",
           "work",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentTypeEnumList": "list<InvoiceAdjustmentTypeEnum>",
       "InvoiceAdjustmentTypeToCreateEnum": {
@@ -12288,6 +12943,9 @@ exports[`open api parser deel docs 1`] = `
           "time_off",
           "vat",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceContract": {
         "docs": undefined,
@@ -12305,6 +12963,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceContractTypes": {
         "docs": "invoice's allowed contract types",
@@ -12317,11 +12978,17 @@ exports[`open api parser deel docs 1`] = `
           "failed",
           "refunded",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceDownloadContainer": {
         "docs": undefined,
         "properties": {
           "data": "InvoiceDownloadObject",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InvoiceDownloadObject": {
@@ -12340,6 +13007,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceList": "list<Invoice>",
       "InvoiceListContainer": {
@@ -12347,12 +13017,18 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "data": "InvoiceObject",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceObject": {
         "docs": undefined,
         "properties": {
           "rows": "optional<InvoiceList>",
           "total": "optional<double>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InvoiceStatusEnum": {
@@ -12366,6 +13042,9 @@ exports[`open api parser deel docs 1`] = `
           "failed",
           "refunded",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceStatusEnumList": {
         "docs": "filter invoices by current status, show a invoice if its status is in this list",
@@ -12387,6 +13066,9 @@ exports[`open api parser deel docs 1`] = `
           "SHIELD_DEPOSIT",
           "EOR_MANAGEMENT_FEE",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "JobTitle": {
         "docs": undefined,
@@ -12400,6 +13082,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "JobTitleList": "list<JobTitle>",
       "JobTitleListContainer": {
@@ -12407,6 +13092,9 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "data": "JobTitleList",
           "page": "JobTitleListContainerPage",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "JobTitleListContainerPage": {
@@ -12417,6 +13105,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "LegalEntityArray": "list<LegalEntityType>",
       "LegalEntityList": "list<BasicLegalEntity>",
@@ -12425,6 +13116,9 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "data": "optional<LegalEntityList>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "LegalEntitySubType": "string",
       "LegalEntityType": {
@@ -12432,6 +13126,9 @@ exports[`open api parser deel docs 1`] = `
           "individual",
           "company",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MetaDataOfContractToCreate": {
         "docs": "Additional custom info about a contract",
@@ -12441,6 +13138,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "boolean",
           },
           "is_main_income": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "Milestone": {
@@ -12480,11 +13180,17 @@ exports[`open api parser deel docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneContainer": {
         "docs": undefined,
         "properties": {
           "data": "Milestone",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "MilestoneList": "list<Milestone>",
@@ -12492,6 +13198,9 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "data": "MilestoneList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "MilestoneProperties": {
@@ -12510,6 +13219,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReportedBy": {
         "docs": "Milestone creator.",
@@ -12523,6 +13235,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReviewToCreate": {
         "docs": undefined,
@@ -12530,12 +13245,18 @@ exports[`open api parser deel docs 1`] = `
           "reason": "optional<string>",
           "status": "MilestoneReviewToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReviewToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReviewedBy": {
         "docs": "Reviewer's information.",
@@ -12549,6 +13270,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReviewsToCreate": {
         "docs": undefined,
@@ -12557,12 +13281,18 @@ exports[`open api parser deel docs 1`] = `
           "reason": "optional<string>",
           "status": "MilestoneReviewsToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReviewsToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneToCreate": "MilestoneProperties",
       "MilestoneToCreateFormWithFile": {
@@ -12572,6 +13302,9 @@ exports[`open api parser deel docs 1`] = `
           "FileObject",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MonthlyPayment": {
         "docs": "Monthly payment details for the user",
@@ -12580,6 +13313,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "The number of monthly payments",
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "NoticePeriod": {
@@ -12671,6 +13407,9 @@ exports[`open api parser deel docs 1`] = `
             "value": "tasks:write",
           },
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OffCyclePayment": {
         "docs": undefined,
@@ -12692,11 +13431,17 @@ exports[`open api parser deel docs 1`] = `
           "reviewed_by": "optional<OffCyclePaymentReviewedBy>",
           "status": "optional<InvoiceAdjustmentStatusEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OffCyclePaymentContainer": {
         "docs": undefined,
         "properties": {
           "data": "OffCyclePayment",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "OffCyclePaymentList": "list<OffCyclePayment>",
@@ -12704,6 +13449,9 @@ exports[`open api parser deel docs 1`] = `
         "docs": undefined,
         "properties": {
           "data": "OffCyclePaymentList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "OffCyclePaymentReportedBy": {
@@ -12717,6 +13465,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Profile id of the creator.",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "OffCyclePaymentReviewedBy": {
@@ -12739,6 +13490,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OffCyclePaymentToCreate": {
         "docs": "Details of invoice adjustment to create.",
@@ -12760,6 +13514,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OffCyclePaymentTypeEnum": {
         "docs": "Type for Off-cycle payments",
@@ -12771,6 +13528,9 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "data": "OrganizationList",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OutputToCreateFileRef": {
         "docs": undefined,
@@ -12778,11 +13538,17 @@ exports[`open api parser deel docs 1`] = `
           "key": "string",
           "url": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OutputToCreateFileRefContainer": {
         "docs": undefined,
         "properties": {
           "data": "OutputToCreateFileRef",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PageInfo": {
@@ -12791,11 +13557,17 @@ exports[`open api parser deel docs 1`] = `
           "cursor": "string",
           "total_rows": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PageInfoWithoutCursor": {
         "docs": undefined,
         "properties": {
           "total_rows": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PageInfoWithoutCursorNew": {
@@ -12823,6 +13595,9 @@ exports[`open api parser deel docs 1`] = `
           },
           "total_rows": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Payment": {
         "docs": undefined,
@@ -12848,6 +13623,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "double",
           },
           "workers": "PaymentWorkerList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PaymentBreakDown": {
@@ -12912,11 +13690,17 @@ exports[`open api parser deel docs 1`] = `
           },
           "work": "optional<string>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PaymentBreakDownContainer": {
         "docs": undefined,
         "properties": {
           "data": "list<PaymentBreakDown>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PaymentList": "list<Payment>",
@@ -12925,11 +13709,17 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "data": "PaymentObject",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PaymentMethod": {
         "docs": undefined,
         "properties": {
           "type": "PaymentMethodEnum",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PaymentMethodEnum": {
@@ -12950,6 +13740,9 @@ exports[`open api parser deel docs 1`] = `
           "mercury_wire",
           "bt_pay_pal",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PaymentMethodEnumList": {
         "docs": "filter invoices by payment method",
@@ -12961,12 +13754,18 @@ exports[`open api parser deel docs 1`] = `
           "rows": "optional<PaymentList>",
           "total": "optional<double>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PaymentStatementInitiatedWebhook": {
         "docs": undefined,
         "properties": {
           "billing_invoices": "list<double>",
           "invoices": "list<double>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PaymentStatusEnum": {
@@ -12975,6 +13774,9 @@ exports[`open api parser deel docs 1`] = `
           "paid",
           "processing",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PaymentStatusEnumList": "list<PaymentStatusEnum>",
       "PaymentWorker": {
@@ -12993,6 +13795,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "URL to worker's Deel avatar.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PaymentWorkerList": "list<PaymentWorker>",
@@ -13132,6 +13937,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PeopleClientLegalEntity": {
         "docs": undefined,
@@ -13145,11 +13953,17 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PeopleContainer": {
         "docs": undefined,
         "properties": {
           "data": "list<People>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PeopleMe": {
@@ -13211,6 +14025,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PeopleMeContainer": "PeopleMe",
       "PeoplePayment": {
@@ -13233,6 +14050,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTask": {
         "docs": undefined,
@@ -13253,6 +14073,9 @@ exports[`open api parser deel docs 1`] = `
           },
           "status": "optional<TimesheetStatusEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskReviewsByIdToCreate": {
         "docs": undefined,
@@ -13266,6 +14089,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "PgoTaskReviewsByIdToCreateStatus",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskReviewsByIdToCreateStatus": {
         "docs": "Review status.",
@@ -13273,6 +14099,9 @@ exports[`open api parser deel docs 1`] = `
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskReviewsToCreate": {
         "docs": undefined,
@@ -13287,6 +14116,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "PgoTaskReviewsToCreateStatus",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskReviewsToCreateStatus": {
         "docs": "Review status.",
@@ -13294,6 +14126,9 @@ exports[`open api parser deel docs 1`] = `
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskToCreate": {
         "docs": undefined,
@@ -13315,6 +14150,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskToDelete": {
         "docs": undefined,
@@ -13327,6 +14165,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Description of exclusion.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PremiumResultAdded": {
@@ -13344,11 +14185,17 @@ exports[`open api parser deel docs 1`] = `
           "penalties": "PremiumResultAddedPenalties",
           "third_party_liabilities": "PremiumResultAddedThirdPartyLiabilities",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PremiumResultAddedContainer": {
         "docs": undefined,
         "properties": {
           "data": "PremiumResultAdded",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PremiumResultAddedMisclassificationGuarantee": {
@@ -13363,6 +14210,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PremiumResultAddedPenalties": {
         "docs": undefined,
@@ -13375,6 +14225,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Penalties.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PremiumResultAddedThirdPartyLiabilities": {
@@ -13389,6 +14242,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PremiumToAdd": {
         "docs": undefined,
@@ -13401,6 +14257,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Workers doing certain jobs may be considered to be employees by law, even if they would otherwise be considered independent contractors under common law. Is the work of this worker characterized as: Apprentice, Trainee, Labourer, Driver, Medical worker, Legal worker, Construction worker or someone working in the fields of Finance/Investment?",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ProRata": {
@@ -13459,6 +14318,9 @@ exports[`open api parser deel docs 1`] = `
           "work_week_end": "optional<WeekDaysEnum>",
           "work_week_start": "optional<WeekDaysEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ProRataCalculationType": {
         "docs": "Either works days or calendar days",
@@ -13468,6 +14330,9 @@ exports[`open api parser deel docs 1`] = `
           "CALENDAR_DAYS",
           "FULL_AMOUNT",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ProfileTypeEnum": {
         "enum": [
@@ -13478,6 +14343,9 @@ exports[`open api parser deel docs 1`] = `
           "hris_direct_employee",
           "service_account",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PublicId": {
         "docs": "The public UUID of the object",
@@ -13489,11 +14357,17 @@ exports[`open api parser deel docs 1`] = `
           "first_payment_dates": "optional<list<FirstPaymentDate>>",
           "pro_rata": "optional<ProRata>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ResponseEstimateFirstPaymentContainer": {
         "docs": undefined,
         "properties": {
           "data": "ResponseEstimateFirstPayment",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "Seniority": {
@@ -13518,12 +14392,18 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "SeniorityList": "list<SeniorityRequired>",
       "SeniorityListContainer": {
         "docs": undefined,
         "properties": {
           "data": "SeniorityList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "SeniorityRequired": {
@@ -13548,6 +14428,9 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "SignaturesOfBasicContract": {
         "docs": undefined,
@@ -13558,6 +14441,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "string",
           },
           "worker_signed_at": "optional<DateTimeString>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "SignaturesOfContract": {
@@ -13575,12 +14461,18 @@ exports[`open api parser deel docs 1`] = `
           },
           "worker_signed_at": "optional<DateTimeString>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "SortDirEnum": {
         "enum": [
           "asc",
           "desc",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "StateOfCountry": {
         "docs": "It may be called states, provinces, prefectures or regions, or none at all",
@@ -13606,12 +14498,18 @@ exports[`open api parser deel docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TaskList": "list<PgoTask>",
       "TaskListContainer": {
         "docs": undefined,
         "properties": {
           "data": "TaskList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "Team": {
@@ -13626,12 +14524,18 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TeamList": "list<BasicTeam>",
       "TeamListContainer": {
         "docs": undefined,
         "properties": {
           "data": "TeamList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "TeamOfBasicContract": {
@@ -13646,6 +14550,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TeamOfContract": {
         "docs": undefined,
@@ -13658,6 +14565,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Name of a team",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "TimeoffReview": {
@@ -13672,12 +14582,18 @@ exports[`open api parser deel docs 1`] = `
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimeoffTypeList": "list<string>",
       "TimeoffTypeListContainer": {
         "docs": undefined,
         "properties": {
           "data": "TimeoffTypeList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "TimeoffsAttachments": {
@@ -13697,6 +14613,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimeoffsProfile": {
         "docs": undefined,
@@ -13713,6 +14632,9 @@ exports[`open api parser deel docs 1`] = `
           },
           "profile_type": "ProfileTypeEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimeoffsStatusEnum": {
         "enum": [
@@ -13720,6 +14642,9 @@ exports[`open api parser deel docs 1`] = `
           "APPROVED",
           "REJECTED",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimeoffsTypeEnum": {
         "enum": [
@@ -13727,6 +14652,9 @@ exports[`open api parser deel docs 1`] = `
           "SICK_LEAVE",
           "OTHER",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Timesheet": {
         "docs": undefined,
@@ -13735,6 +14663,9 @@ exports[`open api parser deel docs 1`] = `
           "TimesheetApproversContainer",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetAccountingRefs": "optional<list<TimesheetAccountingRefsItem>>",
       "TimesheetAccountingRefsItem": {
@@ -13743,12 +14674,18 @@ exports[`open api parser deel docs 1`] = `
           "integration": "string",
           "mapping_category": "optional<TimesheetAccountingRefsItemMappingCategory>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetAccountingRefsItemMappingCategory": {
         "docs": undefined,
         "properties": {
           "id": "string",
           "name": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "TimesheetApprover": {
@@ -13758,6 +14695,9 @@ exports[`open api parser deel docs 1`] = `
           "email": "string",
           "full_name": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetApproverList": "list<TimesheetApprover>",
       "TimesheetApproversContainer": {
@@ -13765,17 +14705,24 @@ exports[`open api parser deel docs 1`] = `
         "properties": {
           "approvers": "TimesheetApproverList",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetContainer": {
         "docs": undefined,
         "properties": {
           "data": "Timesheet",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetIdItems": "list<TimesheetIdItemsItem>",
       "TimesheetIdItemsItem": {
         "discriminated": false,
         "docs": "ID of an existing timesheet record",
+        "source": undefined,
         "union": [
           "double",
           "string",
@@ -13788,6 +14735,9 @@ exports[`open api parser deel docs 1`] = `
           "data": "TimesheetList",
           "page": "PageInfoWithoutCursor",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetReviewToCreate": {
         "docs": undefined,
@@ -13795,12 +14745,18 @@ exports[`open api parser deel docs 1`] = `
           "reason": "optional<string>",
           "status": "TimesheetReviewToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetReviewToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetReviewsToCreate": {
         "docs": undefined,
@@ -13809,12 +14765,18 @@ exports[`open api parser deel docs 1`] = `
           "reason": "optional<string>",
           "status": "TimesheetReviewsToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetReviewsToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetSearchContainer": {
         "docs": "This is a model to make it easier to understand and restrict search parameters",
@@ -13866,10 +14828,14 @@ exports[`open api parser deel docs 1`] = `
           "statuses": "optional<TimesheetSearchContainerStatuses>",
           "types": "optional<TimesheetSearchContainerTypes>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetSearchContainerContractTypes": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContractTypeEnumList",
           "ContractTypeEnum",
@@ -13878,6 +14844,7 @@ exports[`open api parser deel docs 1`] = `
       "TimesheetSearchContainerStatuses": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "TimesheetStatusEnumList",
           "optional<TimesheetStatusEnum>",
@@ -13886,6 +14853,7 @@ exports[`open api parser deel docs 1`] = `
       "TimesheetSearchContainerTypes": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "TimesheetTypeEnumList",
           "TimesheetTypeEnum",
@@ -13908,6 +14876,9 @@ exports[`open api parser deel docs 1`] = `
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetStatusEnum": {
         "docs": "Status of this entry.",
@@ -13923,12 +14894,18 @@ exports[`open api parser deel docs 1`] = `
           "FileObject",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetToUpdate": {
         "docs": "Details of timesheet to create; a client, contractor or EOR may update a timesheet",
         "properties": {
           "description": "string",
           "quantity": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "TimesheetTypeEnum": {
@@ -13939,6 +14916,7 @@ exports[`open api parser deel docs 1`] = `
       "UniqueObjectIdentifier": {
         "discriminated": false,
         "docs": "Unique identifier of this resource.",
+        "source": undefined,
         "union": [
           "string",
           "double",
@@ -14011,11 +14989,17 @@ exports[`open api parser deel docs 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WebhookItemResponse": {
         "docs": undefined,
         "properties": {
           "data": "WebhookItem",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "WebhookItemStatus": {
@@ -14024,11 +15008,17 @@ exports[`open api parser deel docs 1`] = `
           "enabled",
           "disabled",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WebhookListResponse": {
         "docs": undefined,
         "properties": {
           "data": "list<WebhookItem>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "WeekDaysEnum": {
@@ -14042,6 +15032,9 @@ exports[`open api parser deel docs 1`] = `
           "Friday",
           "Saturday",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkStatementCycleEndTypeEnum": {
         "docs": "Cycle end can be weekly 1-7 (Monday = 1) or monthly 1-31.",
@@ -14050,6 +15043,9 @@ exports[`open api parser deel docs 1`] = `
           "DAY_OF_LAST_WEEK",
           "DAY_OF_MONTH",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkStatementCycleScaleEnum": {
         "docs": "Scale of the invoice cycle.",
@@ -14063,6 +15059,9 @@ exports[`open api parser deel docs 1`] = `
             "value": "calendar-month",
           },
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkStatementPaymentDueTypeEnum": {
         "default": "REGULAR",
@@ -14071,6 +15070,9 @@ exports[`open api parser deel docs 1`] = `
           "REGULAR",
           "WITHIN_MONTH",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkStatementScaleEnum": {
         "docs": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
@@ -14083,6 +15085,9 @@ exports[`open api parser deel docs 1`] = `
           "semimonthly",
           "custom",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkStatementScaleEnumOptional": {
         "docs": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
@@ -14095,6 +15100,9 @@ exports[`open api parser deel docs 1`] = `
           "semimonthly",
           "custom",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkerEmailType": {
         "docs": "Worker's email address.",
@@ -14113,6 +15121,9 @@ exports[`open api parser deel docs 1`] = `
           "registration_number": "string",
           "type": "LegalEntityType",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkerOfBasicContract": {
         "docs": undefined,
@@ -14130,6 +15141,9 @@ exports[`open api parser deel docs 1`] = `
           },
           "id": "long",
           "image": "optional<UrlType>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "WorkerOfContract": {
@@ -14176,6 +15190,9 @@ exports[`open api parser deel docs 1`] = `
             "docs": "Worker's nationality.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -14531,6 +15548,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "attachments.yml": {
@@ -14589,12 +15609,18 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "types": {
         "InputToCreateFileRefData": {
           "docs": undefined,
           "properties": {
             "content_type": "root.FileRefTypeEnum",
+          },
+          "source": {
+            "openapi": "deel/openapi.yml",
           },
         },
       },
@@ -14757,6 +15783,9 @@ exports[`open api parser deel simple 1`] = `
               "type": "root.PeopleContainer",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -15865,6 +16894,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "contracts.yml": {
@@ -16719,6 +17751,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "types": {
         "CalculateFinalPaymentRequestCalculationType": {
@@ -16728,6 +17763,9 @@ exports[`open api parser deel simple 1`] = `
             "CALENDAR_DAYS",
             "FULL_AMOUNT",
           ],
+          "source": {
+            "openapi": "deel/openapi.yml",
+          },
         },
       },
     },
@@ -16920,6 +17958,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "hris.yml": {
@@ -16958,6 +17999,9 @@ exports[`open api parser deel simple 1`] = `
               "type": "root.HrisDirectEmployeeContainer",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -17518,6 +18562,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "lookups.yml": {
@@ -17754,6 +18801,9 @@ exports[`open api parser deel simple 1`] = `
               "type": "root.TimeoffTypeListContainer",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -18127,6 +19177,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "offCyclePayments.yml": {
@@ -18329,6 +19382,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "organizations.yml": {
@@ -18527,6 +19583,9 @@ exports[`open api parser deel simple 1`] = `
               "type": "root.TeamListContainer",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -18859,6 +19918,9 @@ exports[`open api parser deel simple 1`] = `
               "type": "root.TaskListContainer",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },
@@ -19492,6 +20554,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "timesheets.yml": {
@@ -20113,6 +21178,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
     },
     "webhooks.yml": {
@@ -20441,6 +21509,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "types": {
         "CreateWebhookRequestStatus": {
@@ -20449,6 +21520,9 @@ exports[`open api parser deel simple 1`] = `
             "enabled",
             "disabled",
           ],
+          "source": {
+            "openapi": "deel/openapi.yml",
+          },
         },
         "PatchWebhookRequestStatus": {
           "docs": "Status of webhook.",
@@ -20456,6 +21530,9 @@ exports[`open api parser deel simple 1`] = `
             "enabled",
             "disabled",
           ],
+          "source": {
+            "openapi": "deel/openapi.yml",
+          },
         },
       },
     },
@@ -20514,12 +21591,18 @@ exports[`open api parser deel simple 1`] = `
           "msa": "AgreementMsa",
           "provider_legal_entity": "AgreementProviderLegalEntity",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "AgreementClientLegalEntity": {
         "docs": undefined,
         "properties": {
           "id": "double",
           "name": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "AgreementList": "list<Agreement>",
@@ -20529,6 +21612,9 @@ exports[`open api parser deel simple 1`] = `
           "data": "AgreementList",
           "page": "optional<PageInfoWithoutCursor>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "AgreementMsa": {
         "docs": undefined,
@@ -20536,12 +21622,18 @@ exports[`open api parser deel simple 1`] = `
           "id": "string",
           "title": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "AgreementProviderLegalEntity": {
         "docs": undefined,
         "properties": {
           "id": "double",
           "name": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "AgreementsParamLimit": {
@@ -20559,12 +21651,18 @@ exports[`open api parser deel simple 1`] = `
           "limit": "optional<AgreementsParamLimit>",
           "offset": "optional<AgreementsParamOffset>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "AlternateEmailItem": {
         "docs": undefined,
         "properties": {
           "email": "optional<EmailType>",
           "isVerified": "boolean",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "AlternateEmailList": {
@@ -20583,12 +21681,18 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ApiErrorContainer": {
         "docs": undefined,
         "properties": {
           "errors": "optional<list<ApiError>>",
           "request": "optional<ApiErrorRequest>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ApiErrorRequest": {
@@ -20622,6 +21726,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "The relative URL of the failed request",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicContract": {
@@ -20662,6 +21769,9 @@ exports[`open api parser deel simple 1`] = `
           "who_reports": "optional<ContractWhoReportsEnum>",
           "worker": "optional<WorkerOfBasicContract>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicInvoiceAdjustment": {
         "docs": undefined,
@@ -20685,6 +21795,9 @@ exports[`open api parser deel simple 1`] = `
           "type": "InvoiceAdjustmentTypeEnum",
           "worksheet": "optional<BasicInvoiceAdjustmentWorksheet>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicInvoiceAdjustmentContract": {
         "docs": undefined,
@@ -20693,6 +21806,9 @@ exports[`open api parser deel simple 1`] = `
           "title": "string",
           "type": "ContractTypeEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicInvoiceAdjustmentPaymentCycle": {
         "docs": undefined,
@@ -20700,12 +21816,18 @@ exports[`open api parser deel simple 1`] = `
           "end_date": "optional<DateTimeStringRequired>",
           "start_date": "optional<DateTimeStringRequired>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicInvoiceAdjustmentReportedBy": {
         "docs": undefined,
         "properties": {
           "full_name": "string",
           "id": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicInvoiceAdjustmentReviewedBy": {
@@ -20715,6 +21837,9 @@ exports[`open api parser deel simple 1`] = `
           "id": "double",
           "remarks": "string",
           "reviewed_at": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicInvoiceAdjustmentWorksheet": {
@@ -20761,6 +21886,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicLegalEntity": {
         "docs": undefined,
@@ -20769,6 +21897,9 @@ exports[`open api parser deel simple 1`] = `
           "entity_type": "LegalEntityType",
           "id": "double",
           "name": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicOrganization": {
@@ -20785,6 +21916,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicTeam": {
         "docs": undefined,
@@ -20799,6 +21933,9 @@ exports[`open api parser deel simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicTimesheet": {
@@ -20829,6 +21966,9 @@ exports[`open api parser deel simple 1`] = `
           },
           "worksheet": "optional<BasicTimesheetWorksheet>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicTimesheetContract": {
         "docs": undefined,
@@ -20837,6 +21977,9 @@ exports[`open api parser deel simple 1`] = `
           "title": "string",
           "type": "ContractTypeEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicTimesheetPaymentCycle": {
         "docs": undefined,
@@ -20844,12 +21987,18 @@ exports[`open api parser deel simple 1`] = `
           "end_date": "optional<DateTimeString>",
           "start_date": "optional<DateTimeString>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "BasicTimesheetReportedBy": {
         "docs": undefined,
         "properties": {
           "full_name": "string",
           "id": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicTimesheetReviewedBy": {
@@ -20859,6 +22008,9 @@ exports[`open api parser deel simple 1`] = `
           "id": "double",
           "remarks": "string",
           "reviewed_at": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "BasicTimesheetWorksheet": {
@@ -20905,6 +22057,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ClientLegalEntity": {
         "docs": undefined,
@@ -20917,11 +22072,17 @@ exports[`open api parser deel simple 1`] = `
           "type": "LegalEntityType",
           "vat_number": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ClientOfBasicContract": {
         "docs": undefined,
         "properties": {
           "team": "optional<TeamOfBasicContract>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ClientOfContract": {
@@ -20932,6 +22093,9 @@ exports[`open api parser deel simple 1`] = `
           "id": "long",
           "legal_entity": "optional<ClientLegalEntity>",
           "team": "TeamOfContract",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "CompensationDetailsOfContract": {
@@ -20947,6 +22111,9 @@ exports[`open api parser deel simple 1`] = `
           "gross_variable_bonus": "string",
           "scale": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "CompensationDetailsOfContractToCreateOngoingTimeBased": {
         "docs": undefined,
@@ -20954,12 +22121,18 @@ exports[`open api parser deel simple 1`] = `
           "amount": "double",
           "scale": "WorkStatementScaleEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "CompensationDetailsOfContractToCreatePayAsYouGoTimeBased": {
         "docs": undefined,
         "properties": {
           "amount": "double",
           "scale": "WorkStatementScaleEnum",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "CompensationDetailsOfContractToCreateShared": {
@@ -21013,6 +22186,9 @@ exports[`open api parser deel simple 1`] = `
           },
           "payment_due_type": "WorkStatementPaymentDueTypeEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Contract": {
         "docs": undefined,
@@ -21059,11 +22235,17 @@ exports[`open api parser deel simple 1`] = `
           "who_reports": "optional<ContractWhoReportsEnum>",
           "worker": "optional<WorkerOfContract>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractContainer": {
         "docs": undefined,
         "properties": {
           "data": "Contract",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractContainerOngoingTimeBased": {
@@ -21071,11 +22253,17 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "data": "Contract",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractContainerPayAsYouGoTimeBased": {
         "docs": undefined,
         "properties": {
           "data": "Contract",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractContainerPaygMilestones": {
@@ -21083,11 +22271,17 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "data": "Contract",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractContainerPaygTasks": {
         "docs": undefined,
         "properties": {
           "data": "Contract",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractCustomField": {
@@ -21101,6 +22295,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Custom field property value.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractDetailsToAmend": {
@@ -21178,17 +22375,26 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractDocumentContainer": {
         "docs": undefined,
         "properties": {
           "data": "optional<FileAttachmentInfo>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractExternalIdPatchedContainer": {
         "docs": undefined,
         "properties": {
           "data": "ContractExternalIdToPatch",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractExternalIdPatchedResponseContainer": "ContractExternalIdToPatch",
@@ -21200,6 +22406,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractFirstSignEnum": {
         "docs": "Flag to indicate who is supposed to sign a contract",
@@ -21207,6 +22416,9 @@ exports[`open api parser deel simple 1`] = `
           "client",
           "contractor",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractInvitationToCreate": {
         "docs": undefined,
@@ -21223,6 +22435,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractList": "list<BasicContract>",
       "ContractListContainer": {
@@ -21231,11 +22446,15 @@ exports[`open api parser deel simple 1`] = `
           "data": "ContractList",
           "page": "PageInfo",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractPreview": "string",
       "ContractSearchForm": {
         "discriminated": false,
         "docs": "Search form should include parameters varied based on usage of cursor for pagination. NOTE: that all query parameters are based on strings",
+        "source": undefined,
         "union": [
           "ContractSearchFormWithCursor",
           "ContractSearchFormWithoutCursor",
@@ -21259,6 +22478,9 @@ exports[`open api parser deel simple 1`] = `
               "pattern": "^\\d{1,2}$",
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractSearchFormWithoutCursor": {
@@ -21306,10 +22528,14 @@ exports[`open api parser deel simple 1`] = `
           },
           "types": "optional<ContractSearchFormWithoutCursorTypes>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractSearchFormWithoutCursorCountries": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "CountryCodeList",
           "CountryCode",
@@ -21318,6 +22544,7 @@ exports[`open api parser deel simple 1`] = `
       "ContractSearchFormWithoutCursorCurrencies": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "CurrencyCodeList",
           "CurrencyCodeRequired",
@@ -21326,6 +22553,7 @@ exports[`open api parser deel simple 1`] = `
       "ContractSearchFormWithoutCursorStatuses": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContractStatusEnumList",
           "ContractStatusEnum",
@@ -21334,6 +22562,7 @@ exports[`open api parser deel simple 1`] = `
       "ContractSearchFormWithoutCursorTypes": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContractTypeEnum",
           "ContractTypeEnumList",
@@ -21357,6 +22586,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractStatusEnum": {
         "docs": "Status of a contract in Deel workflow",
@@ -21377,6 +22609,9 @@ exports[`open api parser deel simple 1`] = `
           "rejected",
           "waiting_for_client_payment",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractStatusEnumList": {
         "docs": "List of contract statuses",
@@ -21387,6 +22622,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "data": "optional<ContractTemplateList>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractTemplateSummary": {
@@ -21401,6 +22639,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractTerminationResult": {
         "docs": undefined,
@@ -21414,16 +22655,23 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractTerminationResultContainer": {
         "docs": undefined,
         "properties": {
           "data": "ContractTerminationResult",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreate": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContractToCreatePayAsYouGoTimeBased",
           "ContractToCreatePaygTasks",
@@ -21439,6 +22687,9 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "compensation_details": "ContractToCreateOngoingTimeBasedCompensationDetails",
           "type": "literal<"ongoing_time_based">",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractToCreateOngoingTimeBasedCompensationDetails": {
@@ -21493,6 +22744,9 @@ exports[`open api parser deel simple 1`] = `
           "payment_due_type": "WorkStatementPaymentDueTypeEnum",
           "scale": "WorkStatementScaleEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreatePayAsYouGoTimeBased": {
         "docs": undefined,
@@ -21502,6 +22756,9 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "compensation_details": "ContractToCreatePayAsYouGoTimeBasedCompensationDetails",
           "type": "literal<"pay_as_you_go_time_based">",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractToCreatePayAsYouGoTimeBasedCompensationDetails": {
@@ -21556,6 +22813,9 @@ exports[`open api parser deel simple 1`] = `
           "payment_due_type": "WorkStatementPaymentDueTypeEnum",
           "scale": "WorkStatementScaleEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreatePaygMilestones": {
         "docs": undefined,
@@ -21566,6 +22826,9 @@ exports[`open api parser deel simple 1`] = `
           "compensation_details": "CompensationDetailsOfContractToCreateShared",
           "type": "literal<"payg_milestones">",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreatePaygTasks": {
         "docs": undefined,
@@ -21575,6 +22838,9 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "compensation_details": "CompensationDetailsOfContractToCreateShared",
           "type": "literal<"payg_tasks">",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractToCreateShared": {
@@ -21620,6 +22886,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<ContractToCreateSharedWorker>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreateSharedClient": {
         "docs": undefined,
@@ -21633,17 +22902,26 @@ exports[`open api parser deel simple 1`] = `
             "type": "ContractToCreateSharedClientTeam",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreateSharedClientLegalEntity": {
         "docs": "Choose the Deel legal entity for this contract. Use legal entity endpoint to retrieve a list of legal entities in your organization.",
         "properties": {
           "id": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreateSharedClientTeam": {
         "docs": "Choose the Deel team for this contract. Use teams endpoint to retrieve a list of teams in your organization.",
         "properties": {
           "id": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractToCreateSharedJobTitle": {
@@ -21664,11 +22942,17 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToCreateSharedSeniority": {
         "docs": "Job seniority level. Please use the seniority levels endpoint to retrieve the list of seniority levels.",
         "properties": {
           "id": "optional<double>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractToCreateSharedWorker": {
@@ -21696,6 +22980,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractToTerminate": {
         "docs": undefined,
@@ -21706,6 +22993,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
           "terminate_now": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractTypeEnum": {
@@ -21725,6 +23015,9 @@ exports[`open api parser deel simple 1`] = `
           "shield_msa",
           "hris_direct_employee",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractTypeEnumList": {
         "docs": "List of contract types",
@@ -21737,6 +23030,9 @@ exports[`open api parser deel simple 1`] = `
           "payg_tasks",
           "payg_milestones",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ContractWhoReportsEnum": {
         "docs": "Flag to indicate who is supposed to provide regular reports",
@@ -21745,6 +23041,9 @@ exports[`open api parser deel simple 1`] = `
           "client",
           "contractor",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Contractor": {
         "docs": undefined,
@@ -21753,6 +23052,9 @@ exports[`open api parser deel simple 1`] = `
             "default": "",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ContractsSortByEnum": {
@@ -21763,6 +23065,9 @@ exports[`open api parser deel simple 1`] = `
           "total",
           "status",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Country": {
         "docs": undefined,
@@ -21792,6 +23097,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "CountryCode": {
         "docs": "Country code. [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country code.",
@@ -21819,6 +23127,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "data": "CountryList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "CreateTimeoff": {
@@ -21857,11 +23168,17 @@ exports[`open api parser deel simple 1`] = `
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "CreateTimeoffContainer": {
         "docs": undefined,
         "properties": {
           "data": "CreateTimeoff",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "CreateTimeoffType": {
@@ -21871,6 +23188,9 @@ exports[`open api parser deel simple 1`] = `
           "SICK_LEAVE",
           "OTHER",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Currency": {
         "docs": undefined,
@@ -21885,6 +23205,9 @@ exports[`open api parser deel simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "CurrencyCode": {
@@ -21912,6 +23235,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "data": "CurrencyList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "DateString": {
@@ -21999,6 +23325,9 @@ exports[`open api parser deel simple 1`] = `
           "team_id": "optional<double>",
           "timezone": "optional<string>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EmployeeListClientLegalEntity": {
         "docs": undefined,
@@ -22006,17 +23335,26 @@ exports[`open api parser deel simple 1`] = `
           "id": "optional<double>",
           "name": "optional<string>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EmployeeListContainer": {
         "docs": undefined,
         "properties": {
           "data": "list<EmployeeList>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EmployeeListMonthlyPayment": {
         "docs": undefined,
         "properties": {
           "count": "optional<double>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EmployeeListPaymentsItem": {
@@ -22026,6 +23364,9 @@ exports[`open api parser deel simple 1`] = `
           "currency": "optional<string>",
           "rate": "optional<double>",
           "scale": "optional<string>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "Employment": {
@@ -22116,6 +23457,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EmploymentDetailsOfContract": {
         "docs": undefined,
@@ -22130,6 +23474,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
           "type": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorClientTimeoffRequests": {
@@ -22161,6 +23508,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorClientTimeoffs": {
         "docs": undefined,
@@ -22171,11 +23521,17 @@ exports[`open api parser deel simple 1`] = `
           },
           "total_requests": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorClientTimeoffsContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorClientTimeoffs",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractCreated": {
@@ -22199,11 +23555,17 @@ exports[`open api parser deel simple 1`] = `
           "status": "optional<ContractStatusEnum>",
           "type": "optional<ContractTypeEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractCreatedClient": {
         "docs": undefined,
         "properties": {
           "legal_entity": "optional<EorContractCreatedClientLegalEntity>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractCreatedClientLegalEntity": {
@@ -22213,6 +23575,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Legal entity name.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractCreatedCompensationDetails": {
@@ -22235,11 +23600,17 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractCreatedContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorContractCreated",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractCreatedEmployee": {
@@ -22261,6 +23632,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Employee's legal name.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractCreatedEmployment": {
@@ -22297,6 +23671,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractCreatedHealthPlan": {
         "docs": undefined,
@@ -22309,6 +23686,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Health plan name",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractToCreate": {
@@ -22332,12 +23712,18 @@ exports[`open api parser deel simple 1`] = `
           },
           "seniority": "EorContractToCreateSeniority",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateClient": {
         "docs": undefined,
         "properties": {
           "legal_entity": "optional<EorContractToCreateClientLegalEntity>",
           "team": "optional<EorContractToCreateClientTeam>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractToCreateClientLegalEntity": {
@@ -22348,6 +23734,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateClientTeam": {
         "docs": undefined,
@@ -22356,6 +23745,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Enter the Id of team this person will be hired in. Use /teams endpoint to retrieve a list of teams in your organization.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractToCreateCompensationDetails": {
@@ -22377,6 +23769,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Should be set only if variable_compensation is set. It can be PERCENTAGE or FIXED.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractToCreateEmployee": {
@@ -22400,6 +23795,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateEmployeeAddress": {
         "docs": undefined,
@@ -22421,6 +23819,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Zip code.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorContractToCreateEmployment": {
@@ -22459,6 +23860,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<boolean>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateEmploymentTimeOffType": {
         "docs": "If you want to use standard number of holidays for this employee, choose "STANDARD". If you want to enter a specific number of holidays, choose "SPECIFIC" and enter the number of days in the holidays field.",
@@ -22466,6 +23870,9 @@ exports[`open api parser deel simple 1`] = `
           "STANDARD",
           "SPECIFIC",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateEmploymentType": {
         "docs": "Is it a full-time contract or a part-time contract?",
@@ -22479,6 +23886,9 @@ exports[`open api parser deel simple 1`] = `
             "value": "Part-time",
           },
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateQuoteAdditionalFields": {
         "docs": "Some countries require additional employee information for employment contracts.",
@@ -22496,6 +23906,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<EorContractToCreateQuoteAdditionalFieldsWorkerType>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateQuoteAdditionalFieldsWorkerType": {
         "docs": "Type of worker.",
@@ -22503,6 +23916,9 @@ exports[`open api parser deel simple 1`] = `
           "Skilled",
           "Unskilled",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorContractToCreateSeniority": {
         "docs": undefined,
@@ -22511,6 +23927,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Enter the Id retrieved from the seniority lookup endpoint. Enter 34 for "Not Applicable".",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidations": {
@@ -22567,11 +23986,17 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<EorCountryValidationsWorkSchedule>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorCountryValidations",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidationsDefiniteContract": {
@@ -22580,6 +24005,9 @@ exports[`open api parser deel simple 1`] = `
           "maximum_limitation": "optional<double>",
           "type": "optional<EorCountryValidationsDefiniteContractType>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsDefiniteContractType": {
         "enum": [
@@ -22587,12 +24015,18 @@ exports[`open api parser deel simple 1`] = `
           "ALLOWED_WITH_MAXIMUM_LIMITATION",
           "NOT_ALLOWED",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsHealthInsurance": {
         "docs": undefined,
         "properties": {
           "providers": "optional<list<HealthInsuranceProvider>>",
           "status": "optional<HealthInsuranceStatusEnum>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidationsHoliday": {
@@ -22602,6 +24036,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Minimum number of holidays required for a legally compliant contract.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidationsPartTimeHoliday": {
@@ -22613,6 +24050,9 @@ exports[`open api parser deel simple 1`] = `
           },
           "type": "optional<EorCountryValidationsPartTimeHolidayType>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsPartTimeHolidayType": {
         "enum": [
@@ -22620,6 +24060,9 @@ exports[`open api parser deel simple 1`] = `
           "STANDARD",
           "SPECIFIC",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsPartTimeProbation": {
         "docs": "Probation period range for part-time contracts.",
@@ -22632,6 +24075,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Minimum probation days required for a legally compliant contract.",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidationsProbation": {
@@ -22646,6 +24092,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsSalary": {
         "docs": "Salary range.",
@@ -22658,6 +24107,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Minimum wage for a legally compliant contract.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorCountryValidationsSickDays": {
@@ -22672,6 +24124,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsWorkSchedule": {
         "docs": "Employee's Work schedule in days and hours.",
@@ -22679,17 +24134,26 @@ exports[`open api parser deel simple 1`] = `
           "days": "optional<EorCountryValidationsWorkScheduleDays>",
           "hours": "optional<EorCountryValidationsWorkScheduleHours>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsWorkScheduleDays": {
         "docs": undefined,
         "properties": {
           "max": "optional<string>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorCountryValidationsWorkScheduleHours": {
         "docs": undefined,
         "properties": {
           "max": "optional<string>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorEntitlementListItem": {
@@ -22755,6 +24219,9 @@ exports[`open api parser deel simple 1`] = `
           },
           "year": "optional<double>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorEntitlements": {
         "docs": "Time-off Entitlements for EOR contracts.",
@@ -22764,11 +24231,17 @@ exports[`open api parser deel simple 1`] = `
             "type": "list<EorEntitlementListItem>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorEntitlementsContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorEntitlements",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorHolidaysRolloverType": {
@@ -22779,6 +24252,9 @@ exports[`open api parser deel simple 1`] = `
           "LIMITED_ROLLOVER",
           "UNSET",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorTimeoffs": {
         "docs": "List of time offs.",
@@ -22854,11 +24330,17 @@ exports[`open api parser deel simple 1`] = `
             "type": "TimeoffsTypeEnum",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorTimeoffsContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorTimeoffs",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorTimeoffsEmployeeItem": {
@@ -22881,6 +24363,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "List of employee vacation time offs.",
             "type": "list<EorClientTimeoffRequests>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EorTimeoffsItem": {
@@ -22912,11 +24397,17 @@ exports[`open api parser deel simple 1`] = `
           "start_date": "optional<DateTimeString>",
           "updated_at": "optional<DateTimeString>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EorTimeoffsItemContainer": {
         "docs": undefined,
         "properties": {
           "data": "EorTimeoffsItem",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EstimateFirstPayment": {
@@ -22926,6 +24417,9 @@ exports[`open api parser deel simple 1`] = `
           "country_code": "CountryCode",
           "start_date": "DateStringRequired",
           "type": "ContractTypeEnum",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "EstimateFirstPaymentCompensationDetails": {
@@ -22974,6 +24468,9 @@ exports[`open api parser deel simple 1`] = `
           "work_week_end": "optional<WeekDaysEnum>",
           "work_week_start": "optional<WeekDaysEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "EstimateFirstPaymentCompensationDetailsCalculationType": {
         "docs": "Either works days or calendar days",
@@ -22983,12 +24480,18 @@ exports[`open api parser deel simple 1`] = `
           "CALENDAR_DAYS",
           "FULL_AMOUNT",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ExchangeRates": {
         "docs": undefined,
         "properties": {
           "rates": "optional<map<string, unknown>>",
           "risk": "optional<double>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "FileAttachmentInfo": {
@@ -23002,6 +24505,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "You can call attachments end-point, get key and URL to upload your file.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "FileObject": {
@@ -23017,6 +24523,9 @@ exports[`open api parser deel simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "FileRefTypeEnum": {
@@ -23043,6 +24552,9 @@ exports[`open api parser deel simple 1`] = `
             "value": "image/png",
           },
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "FinalPaymentCalculated": {
         "docs": undefined,
@@ -23078,6 +24590,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "FinalPaymentCalculatedCalculationType": {
         "docs": "Either works days or calendar days",
@@ -23087,11 +24602,17 @@ exports[`open api parser deel simple 1`] = `
           "CALENDAR_DAYS",
           "FULL_AMOUNT",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "FinalPaymentCalculatedContainer": {
         "docs": undefined,
         "properties": {
           "data": "FinalPaymentCalculated",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "FinalPaymentCalculatedLastCycle": {
@@ -23101,11 +24622,17 @@ exports[`open api parser deel simple 1`] = `
           "end": "optional<DateTimeStringRequired>",
           "start": "optional<DateTimeStringRequired>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "FirstPaymentDate": {
         "docs": "First payment date",
         "properties": {
           "due": "optional<DateStringRequired>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "GenericReportReviewCreated": {
@@ -23115,11 +24642,17 @@ exports[`open api parser deel simple 1`] = `
           "public_id": "optional<PublicId>",
           "status": "optional<InvoiceAdjustmentStatusEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "GenericReportReviewCreatedContainer": {
         "docs": undefined,
         "properties": {
           "data": "GenericReportReviewCreatedList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "GenericReportReviewCreatedList": "list<GenericReportReviewCreated>",
@@ -23128,17 +24661,26 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "data": "GenericResultCreatedData",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "GenericResultCreatedData": {
         "docs": undefined,
         "properties": {
           "created": "boolean",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "GenericResultDeleted": {
         "docs": undefined,
         "properties": {
           "data": "GenericResultDeletedData",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "GenericResultDeletedData": {
@@ -23149,17 +24691,26 @@ exports[`open api parser deel simple 1`] = `
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "GenericResultUpdated": {
         "docs": undefined,
         "properties": {
           "data": "GenericResultUpdatedData",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "GenericResultUpdatedData": {
         "docs": undefined,
         "properties": {
           "updated": "boolean",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "HealthInsuranceProvider": {
@@ -23209,12 +24760,18 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HealthInsuranceProviderAttachmentsItem": {
         "docs": undefined,
         "properties": {
           "id": "optional<double>",
           "label": "optional<string>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "HealthInsuranceProviderPlansItem": {
@@ -23238,6 +24795,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HealthInsuranceStatusEnum": {
         "docs": "Health insurance status.",
@@ -23246,6 +24806,9 @@ exports[`open api parser deel simple 1`] = `
           "ENABLED",
           "DISABLED",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisCompensation": {
         "docs": undefined,
@@ -23261,6 +24824,9 @@ exports[`open api parser deel simple 1`] = `
           },
           "gross_annual_salary": "float",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisContractBase": {
         "docs": undefined,
@@ -23273,6 +24839,9 @@ exports[`open api parser deel simple 1`] = `
           "end_date": "optional<DateString>",
           "start_date": "DateStringRequired",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisContractFullTime": {
         "docs": undefined,
@@ -23280,6 +24849,9 @@ exports[`open api parser deel simple 1`] = `
           "HrisContractBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisContractPartTime": {
         "docs": undefined,
@@ -23299,6 +24871,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisDirectEmployee": {
         "docs": undefined,
@@ -23310,17 +24885,26 @@ exports[`open api parser deel simple 1`] = `
           "team_information": "HrisTeamInformation",
           "vacation_info": "optional<HrisDirectEmployeeVacationInfo>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisDirectEmployeeContainer": {
         "docs": undefined,
         "properties": {
           "data": "HrisDirectEmployeeResponse",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisDirectEmployeeContract": {
         "base-properties": {},
         "discriminant": "employment_type",
         "docs": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": {
           "FULL_TIME": "HrisContractFullTime",
           "PART_TIME": "HrisContractPartTime",
@@ -23393,10 +24977,14 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisDirectEmployeeJobInformation": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "HrisJobInformationTitleId",
           "HrisJobInformationTitleName",
@@ -23412,6 +25000,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "The Hris Direct employee ID",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "HrisDirectEmployeeVacationInfo": {
@@ -23437,11 +25028,17 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisJobInformationBase": {
         "docs": undefined,
         "properties": {
           "seniority_id": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "HrisJobInformationTitleId": {
@@ -23452,6 +25049,9 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "job_title_id": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisJobInformationTitleName": {
         "docs": undefined,
@@ -23461,6 +25061,9 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "job_title_name": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "HrisTeamInformation": {
         "docs": undefined,
@@ -23468,17 +25071,26 @@ exports[`open api parser deel simple 1`] = `
           "legal_entity_id": "double",
           "team_id": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InputToDeletePgoTask": {
         "docs": undefined,
         "properties": {
           "data": "PgoTaskToDelete",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InputToShieldContract": {
         "docs": undefined,
         "properties": {
           "data": "InputToShieldContractData",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InputToShieldContractData": {
@@ -23489,12 +25101,18 @@ exports[`open api parser deel simple 1`] = `
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvitationsOfBasicContract": {
         "docs": undefined,
         "properties": {
           "client_email": "optional<EmailType>",
           "worker_email": "optional<EmailType>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "Invoice": {
@@ -23551,6 +25169,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustment": {
         "docs": undefined,
@@ -23559,6 +25180,9 @@ exports[`open api parser deel simple 1`] = `
           "InvoiceAdjustmentApproversContainer",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentApprover": {
         "docs": undefined,
@@ -23567,6 +25191,9 @@ exports[`open api parser deel simple 1`] = `
           "email": "string",
           "full_name": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentApproverList": "list<InvoiceAdjustmentApprover>",
       "InvoiceAdjustmentApproversContainer": {
@@ -23574,11 +25201,17 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "approvers": "InvoiceAdjustmentApproverList",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentContainer": {
         "docs": undefined,
         "properties": {
           "data": "InvoiceAdjustment",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InvoiceAdjustmentCreated": {
@@ -23590,11 +25223,17 @@ exports[`open api parser deel simple 1`] = `
           "public_id": "optional<PublicId>",
           "status": "optional<InvoiceAdjustmentStatusEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentCreatedContainer": {
         "docs": undefined,
         "properties": {
           "data": "InvoiceAdjustmentCreated",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InvoiceAdjustmentList": "list<BasicInvoiceAdjustment>",
@@ -23604,6 +25243,9 @@ exports[`open api parser deel simple 1`] = `
           "data": "InvoiceAdjustmentList",
           "page": "PageInfoWithoutCursorNew",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentReviewToCreate": {
         "docs": undefined,
@@ -23611,12 +25253,18 @@ exports[`open api parser deel simple 1`] = `
           "reason": "optional<string>",
           "status": "InvoiceAdjustmentReviewToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentReviewToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentReviewsToCreate": {
         "docs": undefined,
@@ -23625,12 +25273,18 @@ exports[`open api parser deel simple 1`] = `
           "reason": "optional<string>",
           "status": "InvoiceAdjustmentReviewsToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentReviewsToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentSearchContainer": {
         "docs": "This is a model to make it easier to understand and restrict search parameters",
@@ -23682,10 +25336,14 @@ exports[`open api parser deel simple 1`] = `
           "statuses": "optional<InvoiceAdjustmentSearchContainerStatuses>",
           "types": "optional<InvoiceAdjustmentSearchContainerTypes>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentSearchContainerContractTypes": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContractTypeEnumList",
           "ContractTypeEnum",
@@ -23694,6 +25352,7 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceAdjustmentSearchContainerStatuses": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "InvoiceAdjustmentStatusEnumList",
           "optional<InvoiceAdjustmentStatusEnum>",
@@ -23702,6 +25361,7 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceAdjustmentSearchContainerTypes": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "InvoiceAdjustmentTypeEnumList",
           "InvoiceAdjustmentTypeEnum",
@@ -23741,6 +25401,9 @@ exports[`open api parser deel simple 1`] = `
           },
           "type": "InvoiceAdjustmentTypeToCreateEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentToCreateWithFile": {
         "docs": undefined,
@@ -23749,6 +25412,9 @@ exports[`open api parser deel simple 1`] = `
           "FileObject",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentToUpdate": {
         "docs": "Details of invoice adjustment to update.",
@@ -23764,6 +25430,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
           "description": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InvoiceAdjustmentTypeEnum": {
@@ -23802,6 +25471,9 @@ exports[`open api parser deel simple 1`] = `
           "withholding_tax",
           "work",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceAdjustmentTypeEnumList": "list<InvoiceAdjustmentTypeEnum>",
       "InvoiceAdjustmentTypeToCreateEnum": {
@@ -23816,6 +25488,9 @@ exports[`open api parser deel simple 1`] = `
           "time_off",
           "vat",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceContract": {
         "docs": undefined,
@@ -23833,6 +25508,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceContractTypes": {
         "docs": "invoice's allowed contract types",
@@ -23845,11 +25523,17 @@ exports[`open api parser deel simple 1`] = `
           "failed",
           "refunded",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceDownloadContainer": {
         "docs": undefined,
         "properties": {
           "data": "InvoiceDownloadObject",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InvoiceDownloadObject": {
@@ -23868,6 +25552,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceList": "list<Invoice>",
       "InvoiceListContainer": {
@@ -23875,12 +25562,18 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "data": "InvoiceObject",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceObject": {
         "docs": undefined,
         "properties": {
           "rows": "optional<InvoiceList>",
           "total": "optional<double>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "InvoiceStatusEnum": {
@@ -23894,6 +25587,9 @@ exports[`open api parser deel simple 1`] = `
           "failed",
           "refunded",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "InvoiceStatusEnumList": {
         "docs": "filter invoices by current status, show a invoice if its status is in this list",
@@ -23915,6 +25611,9 @@ exports[`open api parser deel simple 1`] = `
           "SHIELD_DEPOSIT",
           "EOR_MANAGEMENT_FEE",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "JobTitle": {
         "docs": undefined,
@@ -23928,6 +25627,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "JobTitleList": "list<JobTitle>",
       "JobTitleListContainer": {
@@ -23935,6 +25637,9 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "data": "JobTitleList",
           "page": "JobTitleListContainerPage",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "JobTitleListContainerPage": {
@@ -23945,6 +25650,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "LegalEntityArray": "list<LegalEntityType>",
       "LegalEntityList": "list<BasicLegalEntity>",
@@ -23953,6 +25661,9 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "data": "optional<LegalEntityList>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "LegalEntitySubType": "string",
       "LegalEntityType": {
@@ -23960,6 +25671,9 @@ exports[`open api parser deel simple 1`] = `
           "individual",
           "company",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MetaDataOfContractToCreate": {
         "docs": "Additional custom info about a contract",
@@ -23969,6 +25683,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "boolean",
           },
           "is_main_income": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "Milestone": {
@@ -24008,11 +25725,17 @@ exports[`open api parser deel simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneContainer": {
         "docs": undefined,
         "properties": {
           "data": "Milestone",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "MilestoneList": "list<Milestone>",
@@ -24020,6 +25743,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "data": "MilestoneList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "MilestoneProperties": {
@@ -24038,6 +25764,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReportedBy": {
         "docs": "Milestone creator.",
@@ -24051,6 +25780,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReviewToCreate": {
         "docs": undefined,
@@ -24058,12 +25790,18 @@ exports[`open api parser deel simple 1`] = `
           "reason": "optional<string>",
           "status": "MilestoneReviewToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReviewToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReviewedBy": {
         "docs": "Reviewer's information.",
@@ -24077,6 +25815,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReviewsToCreate": {
         "docs": undefined,
@@ -24085,12 +25826,18 @@ exports[`open api parser deel simple 1`] = `
           "reason": "optional<string>",
           "status": "MilestoneReviewsToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneReviewsToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MilestoneToCreate": "MilestoneProperties",
       "MilestoneToCreateFormWithFile": {
@@ -24100,6 +25847,9 @@ exports[`open api parser deel simple 1`] = `
           "FileObject",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "MonthlyPayment": {
         "docs": "Monthly payment details for the user",
@@ -24108,6 +25858,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "The number of monthly payments",
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "NoticePeriod": {
@@ -24199,6 +25952,9 @@ exports[`open api parser deel simple 1`] = `
             "value": "tasks:write",
           },
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OffCyclePayment": {
         "docs": undefined,
@@ -24220,11 +25976,17 @@ exports[`open api parser deel simple 1`] = `
           "reviewed_by": "optional<OffCyclePaymentReviewedBy>",
           "status": "optional<InvoiceAdjustmentStatusEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OffCyclePaymentContainer": {
         "docs": undefined,
         "properties": {
           "data": "OffCyclePayment",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "OffCyclePaymentList": "list<OffCyclePayment>",
@@ -24232,6 +25994,9 @@ exports[`open api parser deel simple 1`] = `
         "docs": undefined,
         "properties": {
           "data": "OffCyclePaymentList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "OffCyclePaymentReportedBy": {
@@ -24245,6 +26010,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Profile id of the creator.",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "OffCyclePaymentReviewedBy": {
@@ -24267,6 +26035,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OffCyclePaymentToCreate": {
         "docs": "Details of invoice adjustment to create.",
@@ -24288,6 +26059,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OffCyclePaymentTypeEnum": {
         "docs": "Type for Off-cycle payments",
@@ -24299,6 +26073,9 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "data": "OrganizationList",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OutputToCreateFileRef": {
         "docs": undefined,
@@ -24306,11 +26083,17 @@ exports[`open api parser deel simple 1`] = `
           "key": "string",
           "url": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "OutputToCreateFileRefContainer": {
         "docs": undefined,
         "properties": {
           "data": "OutputToCreateFileRef",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PageInfo": {
@@ -24319,11 +26102,17 @@ exports[`open api parser deel simple 1`] = `
           "cursor": "string",
           "total_rows": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PageInfoWithoutCursor": {
         "docs": undefined,
         "properties": {
           "total_rows": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PageInfoWithoutCursorNew": {
@@ -24351,6 +26140,9 @@ exports[`open api parser deel simple 1`] = `
           },
           "total_rows": "double",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Payment": {
         "docs": undefined,
@@ -24376,6 +26168,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "double",
           },
           "workers": "PaymentWorkerList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PaymentBreakDown": {
@@ -24440,11 +26235,17 @@ exports[`open api parser deel simple 1`] = `
           },
           "work": "optional<string>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PaymentBreakDownContainer": {
         "docs": undefined,
         "properties": {
           "data": "list<PaymentBreakDown>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PaymentList": "list<Payment>",
@@ -24453,11 +26254,17 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "data": "PaymentObject",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PaymentMethod": {
         "docs": undefined,
         "properties": {
           "type": "PaymentMethodEnum",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PaymentMethodEnum": {
@@ -24478,6 +26285,9 @@ exports[`open api parser deel simple 1`] = `
           "mercury_wire",
           "bt_pay_pal",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PaymentMethodEnumList": {
         "docs": "filter invoices by payment method",
@@ -24489,12 +26299,18 @@ exports[`open api parser deel simple 1`] = `
           "rows": "optional<PaymentList>",
           "total": "optional<double>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PaymentStatementInitiatedWebhook": {
         "docs": undefined,
         "properties": {
           "billing_invoices": "list<double>",
           "invoices": "list<double>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PaymentStatusEnum": {
@@ -24503,6 +26319,9 @@ exports[`open api parser deel simple 1`] = `
           "paid",
           "processing",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PaymentStatusEnumList": "list<PaymentStatusEnum>",
       "PaymentWorker": {
@@ -24521,6 +26340,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "URL to worker's Deel avatar.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PaymentWorkerList": "list<PaymentWorker>",
@@ -24660,6 +26482,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PeopleClientLegalEntity": {
         "docs": undefined,
@@ -24673,11 +26498,17 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PeopleContainer": {
         "docs": undefined,
         "properties": {
           "data": "list<People>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PeopleMe": {
@@ -24739,6 +26570,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PeopleMeContainer": "PeopleMe",
       "PeoplePayment": {
@@ -24761,6 +26595,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTask": {
         "docs": undefined,
@@ -24781,6 +26618,9 @@ exports[`open api parser deel simple 1`] = `
           },
           "status": "optional<TimesheetStatusEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskReviewsByIdToCreate": {
         "docs": undefined,
@@ -24794,6 +26634,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "PgoTaskReviewsByIdToCreateStatus",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskReviewsByIdToCreateStatus": {
         "docs": "Review status.",
@@ -24801,6 +26644,9 @@ exports[`open api parser deel simple 1`] = `
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskReviewsToCreate": {
         "docs": undefined,
@@ -24815,6 +26661,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "PgoTaskReviewsToCreateStatus",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskReviewsToCreateStatus": {
         "docs": "Review status.",
@@ -24822,6 +26671,9 @@ exports[`open api parser deel simple 1`] = `
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskToCreate": {
         "docs": undefined,
@@ -24843,6 +26695,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PgoTaskToDelete": {
         "docs": undefined,
@@ -24855,6 +26710,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Description of exclusion.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PremiumResultAdded": {
@@ -24872,11 +26730,17 @@ exports[`open api parser deel simple 1`] = `
           "penalties": "PremiumResultAddedPenalties",
           "third_party_liabilities": "PremiumResultAddedThirdPartyLiabilities",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PremiumResultAddedContainer": {
         "docs": undefined,
         "properties": {
           "data": "PremiumResultAdded",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PremiumResultAddedMisclassificationGuarantee": {
@@ -24891,6 +26755,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PremiumResultAddedPenalties": {
         "docs": undefined,
@@ -24903,6 +26770,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Penalties.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "PremiumResultAddedThirdPartyLiabilities": {
@@ -24917,6 +26787,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PremiumToAdd": {
         "docs": undefined,
@@ -24929,6 +26802,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Workers doing certain jobs may be considered to be employees by law, even if they would otherwise be considered independent contractors under common law. Is the work of this worker characterized as: Apprentice, Trainee, Labourer, Driver, Medical worker, Legal worker, Construction worker or someone working in the fields of Finance/Investment?",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "ProRata": {
@@ -24987,6 +26863,9 @@ exports[`open api parser deel simple 1`] = `
           "work_week_end": "optional<WeekDaysEnum>",
           "work_week_start": "optional<WeekDaysEnum>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ProRataCalculationType": {
         "docs": "Either works days or calendar days",
@@ -24996,6 +26875,9 @@ exports[`open api parser deel simple 1`] = `
           "CALENDAR_DAYS",
           "FULL_AMOUNT",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ProfileTypeEnum": {
         "enum": [
@@ -25006,6 +26888,9 @@ exports[`open api parser deel simple 1`] = `
           "hris_direct_employee",
           "service_account",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "PublicId": {
         "docs": "The public UUID of the object",
@@ -25017,11 +26902,17 @@ exports[`open api parser deel simple 1`] = `
           "first_payment_dates": "optional<list<FirstPaymentDate>>",
           "pro_rata": "optional<ProRata>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "ResponseEstimateFirstPaymentContainer": {
         "docs": undefined,
         "properties": {
           "data": "ResponseEstimateFirstPayment",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "Seniority": {
@@ -25046,12 +26937,18 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "SeniorityList": "list<SeniorityRequired>",
       "SeniorityListContainer": {
         "docs": undefined,
         "properties": {
           "data": "SeniorityList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "SeniorityRequired": {
@@ -25076,6 +26973,9 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "SignaturesOfBasicContract": {
         "docs": undefined,
@@ -25086,6 +26986,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "string",
           },
           "worker_signed_at": "optional<DateTimeString>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "SignaturesOfContract": {
@@ -25103,12 +27006,18 @@ exports[`open api parser deel simple 1`] = `
           },
           "worker_signed_at": "optional<DateTimeString>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "SortDirEnum": {
         "enum": [
           "asc",
           "desc",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "StateOfCountry": {
         "docs": "It may be called states, provinces, prefectures or regions, or none at all",
@@ -25134,12 +27043,18 @@ exports[`open api parser deel simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TaskList": "list<PgoTask>",
       "TaskListContainer": {
         "docs": undefined,
         "properties": {
           "data": "TaskList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "Team": {
@@ -25154,12 +27069,18 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TeamList": "list<BasicTeam>",
       "TeamListContainer": {
         "docs": undefined,
         "properties": {
           "data": "TeamList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "TeamOfBasicContract": {
@@ -25174,6 +27095,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TeamOfContract": {
         "docs": undefined,
@@ -25186,6 +27110,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Name of a team",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "TimeoffReview": {
@@ -25200,12 +27127,18 @@ exports[`open api parser deel simple 1`] = `
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimeoffTypeList": "list<string>",
       "TimeoffTypeListContainer": {
         "docs": undefined,
         "properties": {
           "data": "TimeoffTypeList",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "TimeoffsAttachments": {
@@ -25225,6 +27158,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimeoffsProfile": {
         "docs": undefined,
@@ -25241,6 +27177,9 @@ exports[`open api parser deel simple 1`] = `
           },
           "profile_type": "ProfileTypeEnum",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimeoffsStatusEnum": {
         "enum": [
@@ -25248,6 +27187,9 @@ exports[`open api parser deel simple 1`] = `
           "APPROVED",
           "REJECTED",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimeoffsTypeEnum": {
         "enum": [
@@ -25255,6 +27197,9 @@ exports[`open api parser deel simple 1`] = `
           "SICK_LEAVE",
           "OTHER",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "Timesheet": {
         "docs": undefined,
@@ -25263,6 +27208,9 @@ exports[`open api parser deel simple 1`] = `
           "TimesheetApproversContainer",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetAccountingRefs": "optional<list<TimesheetAccountingRefsItem>>",
       "TimesheetAccountingRefsItem": {
@@ -25271,12 +27219,18 @@ exports[`open api parser deel simple 1`] = `
           "integration": "string",
           "mapping_category": "optional<TimesheetAccountingRefsItemMappingCategory>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetAccountingRefsItemMappingCategory": {
         "docs": undefined,
         "properties": {
           "id": "string",
           "name": "string",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "TimesheetApprover": {
@@ -25286,6 +27240,9 @@ exports[`open api parser deel simple 1`] = `
           "email": "string",
           "full_name": "string",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetApproverList": "list<TimesheetApprover>",
       "TimesheetApproversContainer": {
@@ -25293,17 +27250,24 @@ exports[`open api parser deel simple 1`] = `
         "properties": {
           "approvers": "TimesheetApproverList",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetContainer": {
         "docs": undefined,
         "properties": {
           "data": "Timesheet",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetIdItems": "list<TimesheetIdItemsItem>",
       "TimesheetIdItemsItem": {
         "discriminated": false,
         "docs": "ID of an existing timesheet record",
+        "source": undefined,
         "union": [
           "double",
           "string",
@@ -25316,6 +27280,9 @@ exports[`open api parser deel simple 1`] = `
           "data": "TimesheetList",
           "page": "PageInfoWithoutCursor",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetReviewToCreate": {
         "docs": undefined,
@@ -25323,12 +27290,18 @@ exports[`open api parser deel simple 1`] = `
           "reason": "optional<string>",
           "status": "TimesheetReviewToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetReviewToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetReviewsToCreate": {
         "docs": undefined,
@@ -25337,12 +27310,18 @@ exports[`open api parser deel simple 1`] = `
           "reason": "optional<string>",
           "status": "TimesheetReviewsToCreateStatus",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetReviewsToCreateStatus": {
         "enum": [
           "approved",
           "declined",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetSearchContainer": {
         "docs": "This is a model to make it easier to understand and restrict search parameters",
@@ -25394,10 +27373,14 @@ exports[`open api parser deel simple 1`] = `
           "statuses": "optional<TimesheetSearchContainerStatuses>",
           "types": "optional<TimesheetSearchContainerTypes>",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetSearchContainerContractTypes": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "ContractTypeEnumList",
           "ContractTypeEnum",
@@ -25406,6 +27389,7 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetSearchContainerStatuses": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "TimesheetStatusEnumList",
           "optional<TimesheetStatusEnum>",
@@ -25414,6 +27398,7 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetSearchContainerTypes": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "TimesheetTypeEnumList",
           "TimesheetTypeEnum",
@@ -25436,6 +27421,9 @@ exports[`open api parser deel simple 1`] = `
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetStatusEnum": {
         "docs": "Status of this entry.",
@@ -25451,12 +27439,18 @@ exports[`open api parser deel simple 1`] = `
           "FileObject",
         ],
         "properties": {},
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "TimesheetToUpdate": {
         "docs": "Details of timesheet to create; a client, contractor or EOR may update a timesheet",
         "properties": {
           "description": "string",
           "quantity": "double",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "TimesheetTypeEnum": {
@@ -25467,6 +27461,7 @@ exports[`open api parser deel simple 1`] = `
       "UniqueObjectIdentifier": {
         "discriminated": false,
         "docs": "Unique identifier of this resource.",
+        "source": undefined,
         "union": [
           "string",
           "double",
@@ -25539,11 +27534,17 @@ exports[`open api parser deel simple 1`] = `
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WebhookItemResponse": {
         "docs": undefined,
         "properties": {
           "data": "WebhookItem",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "WebhookItemStatus": {
@@ -25552,11 +27553,17 @@ exports[`open api parser deel simple 1`] = `
           "enabled",
           "disabled",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WebhookListResponse": {
         "docs": undefined,
         "properties": {
           "data": "list<WebhookItem>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "WeekDaysEnum": {
@@ -25570,6 +27577,9 @@ exports[`open api parser deel simple 1`] = `
           "Friday",
           "Saturday",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkStatementCycleEndTypeEnum": {
         "docs": "Cycle end can be weekly 1-7 (Monday = 1) or monthly 1-31.",
@@ -25578,6 +27588,9 @@ exports[`open api parser deel simple 1`] = `
           "DAY_OF_LAST_WEEK",
           "DAY_OF_MONTH",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkStatementCycleScaleEnum": {
         "docs": "Scale of the invoice cycle.",
@@ -25591,6 +27604,9 @@ exports[`open api parser deel simple 1`] = `
             "value": "calendar-month",
           },
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkStatementPaymentDueTypeEnum": {
         "default": "REGULAR",
@@ -25599,6 +27615,9 @@ exports[`open api parser deel simple 1`] = `
           "REGULAR",
           "WITHIN_MONTH",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkStatementScaleEnum": {
         "docs": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
@@ -25611,6 +27630,9 @@ exports[`open api parser deel simple 1`] = `
           "semimonthly",
           "custom",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkStatementScaleEnumOptional": {
         "docs": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
@@ -25623,6 +27645,9 @@ exports[`open api parser deel simple 1`] = `
           "semimonthly",
           "custom",
         ],
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkerEmailType": {
         "docs": "Worker's email address.",
@@ -25641,6 +27666,9 @@ exports[`open api parser deel simple 1`] = `
           "registration_number": "string",
           "type": "LegalEntityType",
         },
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
       },
       "WorkerOfBasicContract": {
         "docs": undefined,
@@ -25658,6 +27686,9 @@ exports[`open api parser deel simple 1`] = `
           },
           "id": "long",
           "image": "optional<UrlType>",
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
       "WorkerOfContract": {
@@ -25704,6 +27735,9 @@ exports[`open api parser deel simple 1`] = `
             "docs": "Worker's nationality.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "deel/openapi.yml",
         },
       },
     },

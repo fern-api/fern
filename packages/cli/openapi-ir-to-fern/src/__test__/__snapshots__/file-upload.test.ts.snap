@@ -34,6 +34,9 @@ exports[`open api parser file-upload docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "file-upload/openapi.yml",
+      },
     },
   },
   "rootApiFile": {
@@ -79,6 +82,9 @@ exports[`open api parser file-upload simple 1`] = `
             "query-parameters": undefined,
           },
         },
+      },
+      "source": {
+        "openapi": "file-upload/openapi.yml",
       },
     },
   },

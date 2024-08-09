@@ -1,4 +1,4 @@
-import { Availability, EnumValue, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { Availability, EnumValue, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
 import { FernEnumConfig } from "../openapi/v3/extensions/getFernEnum";
 import { SchemaParserContext } from "./SchemaParserContext";
@@ -17,7 +17,8 @@ export function convertEnum({
     availability,
     wrapAsNullable,
     groupName,
-    context
+    context,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -30,6 +31,7 @@ export function convertEnum({
     wrapAsNullable: boolean;
     groupName: SdkGroupName | undefined;
     context: SchemaParserContext | undefined;
+    source: Source;
 }): SchemaWithExample {
     const strippedEnumVarNames = stripCommonPrefix(enumVarNames ?? []);
     const uniqueValues = new Set(enumValues);
@@ -71,7 +73,8 @@ export function convertEnum({
         _default: _defaultEnumValue,
         description,
         availability,
-        groupName
+        groupName,
+        source
     });
 }
 
@@ -83,7 +86,8 @@ export function wrapEnum({
     _default,
     description,
     availability,
-    groupName
+    groupName,
+    source
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
@@ -93,6 +97,7 @@ export function wrapEnum({
     description: string | undefined;
     availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
+    source: Source;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -106,7 +111,8 @@ export function wrapEnum({
                 default: _default,
                 availability: undefined,
                 example: undefined,
-                groupName
+                groupName,
+                source
             }),
             description,
             availability,
@@ -121,7 +127,8 @@ export function wrapEnum({
         availability,
         default: _default,
         example: undefined,
-        groupName
+        groupName,
+        source
     });
 }
 

@@ -32,6 +32,9 @@ exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-streaming-with-sse/openapi.yml",
+        },
       },
     },
   },
@@ -42,11 +45,17 @@ exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse docs 1`] = `
         "properties": {
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-streaming-with-sse/openapi.yml",
+        },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-streaming-with-sse/openapi.yml",
         },
       },
     },
@@ -93,6 +102,9 @@ exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-streaming-with-sse/openapi.yml",
+        },
       },
     },
   },
@@ -103,11 +115,17 @@ exports[`x-fern-streaming-with-sse x-fern-streaming-with-sse simple 1`] = `
         "properties": {
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-streaming-with-sse/openapi.yml",
+        },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-streaming-with-sse/openapi.yml",
         },
       },
     },

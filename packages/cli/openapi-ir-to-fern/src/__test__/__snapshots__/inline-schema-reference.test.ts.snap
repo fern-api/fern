@@ -30,11 +30,15 @@ exports[`open api parser inline-schema-reference docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "inline-schema-reference/openapi.yml",
+      },
     },
     "types": {
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "NotFound",
           "Schema1",
@@ -47,11 +51,17 @@ exports[`open api parser inline-schema-reference docs 1`] = `
         "properties": {
           "message": "optional<string>",
         },
+        "source": {
+          "openapi": "inline-schema-reference/openapi.yml",
+        },
       },
       "NotFound": {
         "docs": undefined,
         "properties": {
           "message": "optional<string>",
+        },
+        "source": {
+          "openapi": "inline-schema-reference/openapi.yml",
         },
       },
       "Schema1": {
@@ -60,12 +70,18 @@ exports[`open api parser inline-schema-reference docs 1`] = `
           "id": "optional<integer>",
           "name": "optional<string>",
         },
+        "source": {
+          "openapi": "inline-schema-reference/openapi.yml",
+        },
       },
       "Schema2": {
         "docs": undefined,
         "properties": {
           "age": "optional<integer>",
           "email": "optional<string>",
+        },
+        "source": {
+          "openapi": "inline-schema-reference/openapi.yml",
         },
       },
     },
@@ -110,11 +126,15 @@ exports[`open api parser inline-schema-reference simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "inline-schema-reference/openapi.yml",
+      },
     },
     "types": {
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
+        "source": undefined,
         "union": [
           "NotFound",
           "Schema1",
@@ -127,11 +147,17 @@ exports[`open api parser inline-schema-reference simple 1`] = `
         "properties": {
           "message": "optional<string>",
         },
+        "source": {
+          "openapi": "inline-schema-reference/openapi.yml",
+        },
       },
       "NotFound": {
         "docs": undefined,
         "properties": {
           "message": "optional<string>",
+        },
+        "source": {
+          "openapi": "inline-schema-reference/openapi.yml",
         },
       },
       "Schema1": {
@@ -140,12 +166,18 @@ exports[`open api parser inline-schema-reference simple 1`] = `
           "id": "optional<integer>",
           "name": "optional<string>",
         },
+        "source": {
+          "openapi": "inline-schema-reference/openapi.yml",
+        },
       },
       "Schema2": {
         "docs": undefined,
         "properties": {
           "age": "optional<integer>",
           "email": "optional<string>",
+        },
+        "source": {
+          "openapi": "inline-schema-reference/openapi.yml",
         },
       },
     },

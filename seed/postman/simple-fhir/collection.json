@@ -1,0 +1,47 @@
+{
+  "info": {
+    "name": "Api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Get Account",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/account/:account_id",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "account",
+            ":account_id"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "key": "account_id",
+              "value": "",
+              "description": null
+            }
+          ]
+        },
+        "header": [],
+        "method": "GET",
+        "auth": null,
+        "body": null
+      },
+      "response": []
+    }
+  ]
+}

@@ -37,6 +37,9 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-sdk-group-name/openapi.yml",
+        },
       },
     },
     "ids/person.yml": {
@@ -68,6 +71,9 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "x-fern-sdk-group-name/openapi.yml",
+          },
         },
       },
     },
@@ -86,6 +92,9 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-sdk-group-name/openapi.yml",
         },
       },
     },
@@ -137,6 +146,9 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-sdk-group-name/openapi.yml",
+        },
       },
     },
     "ids/person.yml": {
@@ -168,6 +180,9 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "x-fern-sdk-group-name/openapi.yml",
+          },
         },
       },
     },
@@ -186,6 +201,9 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-sdk-group-name/openapi.yml",
         },
       },
     },

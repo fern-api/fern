@@ -4,7 +4,10 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface HeaderWithExample extends FernOpenapiIr.WithDescription, FernOpenapiIr.WithAvailability {
+export interface HeaderWithExample
+    extends FernOpenapiIr.WithDescription,
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithSource {
     name: string;
     schema: FernOpenapiIr.SchemaWithExample;
     env: string | undefined;

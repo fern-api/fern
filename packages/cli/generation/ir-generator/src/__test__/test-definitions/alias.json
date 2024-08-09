@@ -84,7 +84,10 @@
                 }
             },
             "referencedTypes": [],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -262,7 +265,10 @@
             "referencedTypes": [
                 "type_:TypeId"
             ],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -559,7 +565,10 @@
                 "type_:Type",
                 "type_:TypeId"
             ],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -818,8 +827,13 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": null,
-            "transport": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_.get",
