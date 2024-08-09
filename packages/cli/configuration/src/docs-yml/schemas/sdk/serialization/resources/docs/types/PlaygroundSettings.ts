@@ -10,13 +10,13 @@ export const PlaygroundSettings: core.serialization.ObjectSchema<
     serializers.PlaygroundSettings.Raw,
     FernDocsConfig.PlaygroundSettings
 > = core.serialization.object({
-    allowedEnvironments: core.serialization.list(core.serialization.string()).optional(),
+    environments: core.serialization.list(core.serialization.string()).optional(),
     button: core.serialization.lazyObject(async () => (await import("../../..")).PlaygroundButtonSettings).optional(),
 });
 
 export declare namespace PlaygroundSettings {
     interface Raw {
-        allowedEnvironments?: string[] | null;
+        environments?: string[] | null;
         button?: serializers.PlaygroundButtonSettings.Raw | null;
     }
 }

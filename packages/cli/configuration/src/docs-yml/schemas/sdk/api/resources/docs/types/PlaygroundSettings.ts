@@ -6,6 +6,6 @@ import * as FernDocsConfig from "../../..";
 
 export interface PlaygroundSettings {
     /** A list of environment IDs that are allowed to be used in the playground. If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled. */
-    allowedEnvironments?: string[];
+    environments?: string[];
     button?: FernDocsConfig.PlaygroundButtonSettings;
 }
