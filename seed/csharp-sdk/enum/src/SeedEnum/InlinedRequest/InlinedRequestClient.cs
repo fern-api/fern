@@ -1,5 +1,4 @@
 using System.Net.Http;
-using SeedEnum;
 using SeedEnum.Core;
 
 #nullable enable
@@ -15,15 +14,27 @@ public class InlinedRequestClient
         _client = client;
     }
 
-    public async Task SendAsync(SendEnumInlinedRequest request)
+    public async Task SendAsync(SendEnumInlinedRequest request, RequestOptions? options = null)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "inlined",
-                Body = request
+                Body = request,
+                Options = options
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedEnumApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

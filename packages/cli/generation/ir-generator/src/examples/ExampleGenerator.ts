@@ -204,8 +204,7 @@ export class ExampleGenerator {
         const examples = [
             ...endpoint.userSpecifiedExamples.map((userSpecified) => userSpecified.example).filter(isNonNullish)
         ];
-        return {
-            url: endpoint.path.head,
+        const exampleWithoutUrl = {
             rootPathParameters: rootPathParameters.map((p) =>
                 this.generatePathParameterExample({
                     pathParameter: p,
@@ -266,6 +265,32 @@ export class ExampleGenerator {
             name: undefined,
             docs: undefined
         };
+        const allPathParameters = [
+            ...exampleWithoutUrl.rootPathParameters,
+            ...exampleWithoutUrl.servicePathParameters,
+            ...exampleWithoutUrl.endpointPathParameters
+        ];
+        const pathParameterStringsByName = this.examplePathParametersToRecord(allPathParameters);
+        const url =
+            endpoint.fullPath.head +
+            endpoint.fullPath.parts
+                .map((pathPart) => pathParameterStringsByName[pathPart.pathParameter] + pathPart.tail)
+                .join("");
+        return {
+            // not sure why this sometimes doesn't start with a slash
+            url: url.startsWith("/") || url === "" ? url : `/${url}`,
+            ...exampleWithoutUrl
+        };
+    }
+
+    private examplePathParametersToRecord(examplePathParameters: ExamplePathParameter[]): Record<string, string> {
+        const result: Record<string, string> = {};
+        examplePathParameters.forEach((examplePathParameter) => {
+            const value = examplePathParameter.value.jsonExample;
+            const stringValue = typeof value === "string" ? value : JSON.stringify(value);
+            result[examplePathParameter.name.originalName] = stringValue;
+        });
+        return result;
     }
 
     private generateEndpointExamples(
@@ -822,6 +847,27 @@ export class ExampleGenerator {
                 return {
                     jsonExample: exInt,
                     shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(exInt))
+                };
+            }
+            case "UINT": {
+                const exUint = example != null && typeof example === "number" ? example : Examples.UINT;
+                return {
+                    jsonExample: exUint,
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(exUint))
+                };
+            }
+            case "UINT_64": {
+                const exUint = example != null && typeof example === "number" ? example : Examples.UINT64;
+                return {
+                    jsonExample: exUint,
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(exUint))
+                };
+            }
+            case "FLOAT": {
+                const exFloat = example != null && typeof example === "number" ? example : Examples.FLOAT;
+                return {
+                    jsonExample: exFloat,
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(exFloat))
                 };
             }
             case "DOUBLE": {

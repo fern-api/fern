@@ -163,9 +163,8 @@ class RootClientGenerator:
     def generate(self, source_file: SourceFile) -> GeneratedRootClient:
         exported_client_class_name = self._context.get_class_name_for_exported_root_client()
         builder = RootClientGenerator.GeneratedRootClientBuilder(
-            module_path=self._context.get_module_path_in_project(
-                self._context.get_filepath_for_exported_root_client().to_module().path
-            ),
+            # HACK: This is a hack to get the module path for the root client to be from the root of the project
+            module_path=self._context.get_module_path_in_project(()),
             class_name=self._context.get_class_name_for_exported_root_client(),
             async_class_name="Async" + exported_client_class_name,
             constructor_parameters=self._root_client_constructor_params,
@@ -456,7 +455,7 @@ class RootClientGenerator:
                                     import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                                     qualified_name_excluding_import=("getenv",),
                                 ),
-                                args=[AST.Expression(f'"{oauth.client_id_env_var.get_as_str()}"')],
+                                args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
                             )
                         )
                         if oauth.client_id_env_var is not None
@@ -465,7 +464,7 @@ class RootClientGenerator:
                             AST.CodeWriter(
                                 self._get_paramter_validation_writer(
                                     param_name="client_id",
-                                    environment_variable=oauth.client_id_env_var.get_as_str(),
+                                    environment_variable=oauth.client_id_env_var,
                                 )
                             )
                         )
@@ -489,7 +488,7 @@ class RootClientGenerator:
                                     import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                                     qualified_name_excluding_import=("getenv",),
                                 ),
-                                args=[AST.Expression(f'"{oauth.client_secret_env_var.get_as_str()}"')],
+                                args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
                             )
                         )
                         if oauth.client_secret_env_var is not None
@@ -498,7 +497,7 @@ class RootClientGenerator:
                             AST.CodeWriter(
                                 self._get_paramter_validation_writer(
                                     param_name="client_secret",
-                                    environment_variable=oauth.client_secret_env_var.get_as_str(),
+                                    environment_variable=oauth.client_secret_env_var,
                                 )
                             )
                         )

@@ -4,12 +4,42 @@ docs: |-
   The docs schema is intended to be human-readable and hand-maintained, by using human-friendly undiscriminated unions and optional properties.
 
 types:
+  ProgrammingLanguage:
+    enum:
+      - typescript
+      - javascript
+      - python
+      - java
+      - go
+      - ruby
+      - csharp
+      - nodets
+      - nodejs
+      - dotnet
+      - curl
+      - jvm
+      - ts
+      - js
+
+  AnalyticsConfig:
+    properties:
+      segment: optional<SegmentConfig>
+
+  SegmentConfig:
+    properties:
+      write-key: string
+      
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
+      analytics: 
+        type: optional<AnalyticsConfig>
+        docs: |
+          The `analytics` object allows you to configure analytics for your docs site.
+          Currently, only Segment is supported.
 
       # navigation
       tabs: optional<map<TabId, TabConfig>>
@@ -21,6 +51,7 @@ types:
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
       experimental: optional<ExperimentalConfig>
+      "default-language": optional<ProgrammingLanguage>
 
       # seo
       metadata: optional<MetadataConfig>
@@ -269,7 +300,7 @@ types:
           - `{number}px`
 
       searchbar-placement:
-        type: optional<SidebarOrHeaderPlacement>
+        type: optional<SearchbarPlacement>
         docs: |
           Sets the placement of the searchbar
 
@@ -278,7 +309,7 @@ types:
           Note: this setting is ignored when `disable-header` is set to true.
 
       tabs-placement:
-        type: optional<SidebarOrHeaderPlacement>
+        type: optional<TabsPlacement>
         docs: |
           Set the placement of the tabs
 
@@ -313,7 +344,17 @@ types:
           If `disable-header` is set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,
           and a 1px border will separate the sidebar from the content.
 
-  SidebarOrHeaderPlacement:
+  SearchbarPlacement:
+    enum:
+      - header
+      - value: header-tabs
+        name: header_tabs
+        docs: |
+          The searchbar will be placed in the header, but on the tabs row. If the tabs row is hidden, the searchbar will be placed in the header instead.
+          This is a good option if you want to keep the searchbar visible, but save space in the header for more navbar links.
+      - sidebar
+
+  TabsPlacement:
     enum:
       - header
       - sidebar
@@ -821,3 +862,9 @@ types:
         docs: |
           List of relative paths to folders or files that end in .{ts,tsx,js,jsx},
           and makes them available for use in MDX files.
+      disable-stream-toggle:
+        type: optional<boolean>
+        docs: |
+          If `disable-stream-toggle` is set to true, the stream toggle will be disabled.
+
+          This behavior is unstable and may change in the future.

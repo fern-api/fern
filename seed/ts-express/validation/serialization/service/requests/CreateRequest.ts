@@ -11,6 +11,7 @@ export const CreateRequest: core.serialization.Schema<serializers.CreateRequest.
         decimal: core.serialization.number(),
         even: core.serialization.number(),
         name: core.serialization.string(),
+        shape: core.serialization.lazy(() => serializers.Shape),
     });
 
 export declare namespace CreateRequest {
@@ -18,5 +19,6 @@ export declare namespace CreateRequest {
         decimal: number;
         even: number;
         name: string;
+        shape: serializers.Shape.Raw;
     }
 }

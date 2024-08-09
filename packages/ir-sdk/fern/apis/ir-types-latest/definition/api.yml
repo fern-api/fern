@@ -1,3 +1,5 @@
 name: ir
 docs: |
- - Add primitive type v2 (with defaults) to booleans, longs and big ints
+ - Add `float` primitive type.
+ - Add a `PrimitiveTypeV2` variant for every `PrimitiveTypeV1`.
+ - Add gRPC/Protobuf types.

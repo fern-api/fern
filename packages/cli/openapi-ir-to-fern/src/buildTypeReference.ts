@@ -93,6 +93,11 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
                 description: primitiveSchema.description,
                 schema: primitiveSchema.schema
             });
+        case "float":
+            return buildFloatTypeReference({
+                description: primitiveSchema.description,
+                schema: primitiveSchema.schema
+            });
         case "double":
             return buildDoubleTypeReference({
                 description: primitiveSchema.description,
@@ -112,6 +117,8 @@ export function buildPrimitiveTypeReference(primitiveSchema: PrimitiveSchema): R
     const typeReference = primitiveSchema.schema._visit({
         int: () => "integer",
         int64: () => "long",
+        uint: () => "uint",
+        uint64: () => "uint64",
         float: () => "double",
         double: () => "double",
         string: () => "string",
@@ -230,6 +237,26 @@ function buildIntegerTypeReference({
     return result;
 }
 
+function buildFloatTypeReference({
+    description,
+    schema
+}: {
+    description: string | undefined;
+    schema: PrimitiveSchemaValue.Float;
+}): RawSchemas.TypeReferenceWithDocsSchema {
+    const type = "float";
+    if (description == null) {
+        return type;
+    }
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
+    };
+    if (description != null) {
+        result.docs = description;
+    }
+    return result;
+}
+
 function buildDoubleTypeReference({
     description,
     schema
@@ -284,6 +311,7 @@ function maybeValidFormat(format: string | undefined): string | undefined {
         case "date-time":
         case "password":
         case "byte":
+        case "bytes":
         case "binary":
         case "email":
         case "uuid":
@@ -455,12 +483,19 @@ export function buildOptionalTypeReference({
     if (schema.description == null && itemDocs == null && itemDefault == null && itemValidation == null) {
         return type;
     }
-    return {
-        type,
-        docs: schema.description ?? itemDocs,
-        default: itemDefault,
-        validation: itemValidation
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type
     };
+    if (schema.description != null || itemDocs != null) {
+        result.docs = schema.description ?? itemDocs;
+    }
+    if (itemDefault != null) {
+        result.default = itemDefault;
+    }
+    if (itemValidation != null) {
+        result.validation = itemValidation;
+    }
+    return result;
 }
 
 export function buildUnknownTypeReference(): RawSchemas.TypeReferenceWithDocsSchema {
@@ -508,13 +543,19 @@ export function buildEnumTypeReference({
         schema: enumTypeDeclaration.schema
     });
     const prefixedType = getPrefixedType({ type: name, fileContainingReference, declarationFile, context });
-    if (schema.description == null) {
+    if (schema.description == null && schema.default == null) {
         return prefixedType;
     }
-    return {
-        type: prefixedType,
-        docs: schema.description
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
+        type: prefixedType
     };
+    if (schema.description != null) {
+        result.docs = schema.description;
+    }
+    if (schema.default != null) {
+        result.default = schema.default.value;
+    }
+    return result;
 }
 
 export function buildObjectTypeReference({

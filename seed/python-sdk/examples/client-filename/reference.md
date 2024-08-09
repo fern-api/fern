@@ -12,7 +12,7 @@
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
@@ -71,7 +71,7 @@ client.echo(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
@@ -144,7 +144,7 @@ This endpoint returns a file by its name.
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
@@ -226,7 +226,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
@@ -298,7 +298,7 @@ This endpoint checks the health of the service.
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
@@ -347,7 +347,7 @@ client.health.service.ping()
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
@@ -405,7 +405,7 @@ client.service.get_movie(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
@@ -480,7 +480,7 @@ client.service.create_movie(
 <dl>
 <dd>
 
-**metadata:** `typing.Dict[str, typing.Any]` 
+**metadata:** `typing.Dict[str, typing.Optional[typing.Any]]` 
     
 </dd>
 </dl>
@@ -529,7 +529,7 @@ client.service.create_movie(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(
@@ -605,7 +605,7 @@ client.service.get_metadata(
 <dd>
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 from seed.environment import SeedExhaustiveEnvironment
 
 client = SeedExhaustive(

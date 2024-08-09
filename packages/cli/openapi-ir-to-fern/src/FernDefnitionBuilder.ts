@@ -8,7 +8,15 @@ import path, { basename, extname } from "path";
 export interface FernDefinitionBuilder {
     addNavigation({ navigation }: { navigation: string[] }): void;
 
-    addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void;
+    addAuthScheme({
+        name,
+        schema,
+        additionalImports
+    }: {
+        name: string;
+        schema: RawSchemas.AuthSchemeDeclarationSchema;
+        additionalImports?: RelativeFilePath[];
+    }): void;
 
     setAuth(name: string): void;
 
@@ -56,6 +64,10 @@ export interface FernDefinitionBuilder {
         { name, schema }: { name: string; schema: RawSchemas.HttpEndpointSchema }
     ): void;
 
+    getEndpoint(method: string, url: string): string | undefined;
+
+    getEndpointWithoutMethod(url: string): string | undefined;
+
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
 
     addChannel(file: RelativeFilePath, { channel }: { channel: RawSchemas.WebSocketChannelSchema }): void;
@@ -82,11 +94,21 @@ export interface FernDefinition {
     definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema>;
 }
 
+interface EndpointLocation {
+    file: RelativeFilePath;
+    endpointReference: string;
+}
+
 export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
     private rootApiFile: RawSchemas.RootApiFileSchema;
     private packageMarkerFile: RawSchemas.PackageMarkerFileSchema = {};
     private definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema> = {};
     private basePath: string | undefined = undefined;
+
+    // A map of `${method} ${path}` to the endpoint package path
+    private endpoints: Record<string, EndpointLocation> = {};
+    // The number of endpoints by path, with a location as well
+    private endpointsByPath: Record<string, [number, EndpointLocation]> = {};
 
     public constructor(
         ir: OpenApiIntermediateRepresentation,
@@ -102,6 +124,42 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (ir.title != null) {
             this.rootApiFile["display-name"] = ir.title;
         }
+    }
+
+    getEndpointMapKey(method: string, path: string): string {
+        return `${method} ${path}`;
+    }
+
+    getPathFromUrl(url: string): string {
+        let path: string;
+        try {
+            path = new URL(url).pathname;
+        } catch (err) {
+            if (url.startsWith("/")) {
+                path = url;
+            } else {
+                path = new URL("https//:" + url).pathname;
+            }
+        }
+        return path;
+    }
+
+    public getEndpointWithoutMethod(url: string): string | undefined {
+        const path = this.getPathFromUrl(url);
+        const endpointByPath = this.endpointsByPath[path];
+
+        if (endpointByPath != null && endpointByPath[0] > 1) {
+            throw new Error(
+                `Multiple endpoints found for path ${path}, you must specify the method as well, ex: "GET ${path}", to disambiguate.`
+            );
+        }
+
+        return this.endpointsByPath[path]?.[1].endpointReference;
+    }
+
+    public getEndpoint(method: string, url: string): string | undefined {
+        const path = this.getPathFromUrl(url);
+        return this.endpoints[this.getEndpointMapKey(method, path)]?.endpointReference;
     }
 
     public addNavigation({ navigation }: { navigation: string[] }): void {
@@ -212,6 +270,10 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.rootApiFile.variables[name] = schema;
     }
 
+    getImportFromFileName(file: RelativeFilePath): string {
+        return camelCase(basename(file, extname(file)).replaceAll("__package__", "root"));
+    }
+
     public addImport({
         file,
         fileToImport
@@ -222,7 +284,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         if (file === fileToImport) {
             return undefined;
         }
-        const importPrefix = camelCase(basename(fileToImport, extname(fileToImport)).replaceAll("__package__", "root"));
+        const importPrefix = this.getImportFromFileName(fileToImport);
 
         if (file === RelativeFilePath.of(ROOT_API_FILENAME)) {
             if (this.rootApiFile.imports == null) {
@@ -332,6 +394,15 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 endpoints: {}
             };
         }
+
+        // This defaulting of method should never happen, but it's here to not barf in the off chance it does
+        const endpointLocation = {
+            endpointReference: `${this.getImportFromFileName(file)}.${name}`,
+            file
+        };
+        this.endpoints[this.getEndpointMapKey(schema.method ?? "GET", schema.path)] = endpointLocation;
+        this.endpointsByPath[schema.path] = [(this.endpointsByPath[schema.path]?.[0] ?? 0) + 1, endpointLocation];
+
         fernFile.service.endpoints[name] = schema;
     }
 

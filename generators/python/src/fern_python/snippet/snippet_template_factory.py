@@ -1,5 +1,6 @@
-from typing import Dict, List, Optional, Tuple, Union
+from typing import Dict, List, Optional, Tuple, Union, cast
 
+import fdr.api.v_1.read as FdrApiV1Read
 import fern.ir.resources as ir_types
 from fdr import (
     DictTemplate,
@@ -18,19 +19,24 @@ from fdr import (
     SnippetTemplate,
     Template,
     TemplateInput,
+    UnionTemplateMember,
+    UnionTemplateV2,
     VersionedSnippetTemplate,
 )
-from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
+from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
 
 from fern_python.codegen import AST
 from fern_python.codegen.imports_manager import ImportsManager
 from fern_python.codegen.project import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.pydantic_model.type_declaration_handler.discriminated_union.simple_discriminated_union_generator import (
-    DiscriminatedUnionSnippetGenerator,
-)
 from fern_python.generators.pydantic_model.type_declaration_handler.enum_generator import (
     EnumSnippetGenerator,
+)
+from fern_python.generators.pydantic_model.type_declaration_handler.pydantic_models.pydantic_model_simple_discriminated_union_generator import (
+    PydanticModelDiscriminatedUnionSnippetGenerator,
+)
+from fern_python.generators.pydantic_model.type_declaration_handler.typeddicts.typeddict_simple_discriminated_union_generator import (
+    TypeddictDiscriminatedUnionSnippetGenerator,
 )
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
     get_endpoint_name,
@@ -61,7 +67,7 @@ class SnippetTemplateFactory:
     CLIENT_FIXTURE_NAME = "client"
     TEST_URL_ENVVAR = "TESTS_BASE_URL"
 
-    MAXIMUM_TEMPLATE_DEPTH = 20
+    MAXIMUM_TEMPLATE_DEPTH = 15
 
     TAB_CHAR = "\t"
 
@@ -82,6 +88,12 @@ class SnippetTemplateFactory:
         self._ir = ir
         self._generated_root_client = generated_root_client
         self._generator_exec_wrapper = generator_exec_wrapper
+        self._use_typeddict_requests = self._context.custom_config.use_typeddict_requests
+
+    def _get_name_value_separator(self, name: Optional[str], is_function_parameter: bool) -> str:
+        if name is None:
+            return ""
+        return f'"{name}": ' if self._use_typeddict_requests and not is_function_parameter else f"{name}="
 
     # Stolen from SnippetRegistry
     def _expression_to_snippet_str(
@@ -91,7 +103,7 @@ class SnippetTemplateFactory:
         snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
-        return snippet.to_str().strip()
+        return snippet.to_str(should_format_override=False).strip()
 
     def _expression_to_snippet_str_and_imports(
         self,
@@ -99,8 +111,8 @@ class SnippetTemplateFactory:
     ) -> Tuple[str, str]:
         snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
-        snippet_full = snippet.to_str()
-        snippet_without_imports = snippet.to_str(include_imports=False)
+        snippet_full = snippet.to_str(should_format_override=False)
+        snippet_without_imports = snippet.to_str(should_format_override=False, include_imports=False)
 
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet_full.replace(snippet_without_imports, "").strip(), snippet_without_imports.strip()
@@ -143,10 +155,10 @@ class SnippetTemplateFactory:
         return Template.factory.generic(
             GenericTemplate(
                 imports=[imports] if imports is not None else [],
-                isOptional=True,
-                templateString=instantiation,
-                templateInputs=client_template_inputs,
-                inputDelimiter=",",
+                is_optional=True,
+                template_string=instantiation,
+                template_inputs=client_template_inputs,
+                input_delimiter=",",
             )
         )
 
@@ -181,12 +193,15 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
     ) -> Template:
+        template_string = f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}"
+
         return Template.factory.generic(
             GenericTemplate(
                 imports=[],
                 is_optional=True,
-                template_string=f"{name}={TEMPLATE_SENTINEL}" if name is not None else f"{TEMPLATE_SENTINEL}",
+                template_string=template_string,
                 template_inputs=[
                     TemplateInput.factory.payload(
                         PayloadInput(
@@ -205,24 +220,32 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
+        depth: int,
         indentation_level: int = 0,
+        include_literal_templates: bool = False,
     ) -> Union[Template, None]:
         child_indentation_level = indentation_level + 1
 
         container_union = container.get_as_union()
         if container_union.type == "list":
-            innerTr = container_union.list
+            innerTr = container_union.list_
             inner_template = self.get_type_reference_template(
-                innerTr, None, "RELATIVE", None, None, child_indentation_level
+                type_=innerTr,
+                name=None,
+                location="RELATIVE",
+                wire_or_original_name=None,
+                name_breadcrumbs=None,
+                indentation_level=child_indentation_level,
+                is_function_parameter=False,
+                depth=depth + 1,
             )
             return (
                 Template.factory.iterable(
                     IterableTemplate(
                         imports=[],
                         is_optional=True,
-                        container_template_string=f"{name}=[\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]"
-                        if name is not None
-                        else f"[\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]",
+                        container_template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}[\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}]",
                         delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                         inner_template=inner_template,
                         template_input=PayloadInput(
@@ -235,17 +258,22 @@ class SnippetTemplateFactory:
             )
 
         if container_union.type == "set":
-            innerTr = container_union.set
+            innerTr = container_union.set_
             inner_template = self.get_type_reference_template(
-                innerTr, None, "RELATIVE", None, None, child_indentation_level
+                type_=innerTr,
+                name=None,
+                location="RELATIVE",
+                wire_or_original_name=None,
+                name_breadcrumbs=None,
+                indentation_level=child_indentation_level,
+                is_function_parameter=False,
+                depth=depth + 1,
             )
             Template.factory.iterable(
                 IterableTemplate(
                     imports=[],
                     is_optional=True,
-                    container_template_string=f"{name}={{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
-                    if name is not None
-                    else f"{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
+                    container_template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
                     delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                     inner_template=inner_template,
                     template_input=PayloadInput(
@@ -256,19 +284,31 @@ class SnippetTemplateFactory:
 
         if container_union.type == "map":
             key_template = self.get_type_reference_template(
-                container_union.key_type, None, "RELATIVE", None, None, child_indentation_level
+                type_=container_union.key_type,
+                name=None,
+                location="RELATIVE",
+                wire_or_original_name=None,
+                name_breadcrumbs=None,
+                indentation_level=child_indentation_level,
+                is_function_parameter=False,
+                depth=depth + 1,
             )
             value_template = self.get_type_reference_template(
-                container_union.value_type, None, "RELATIVE", None, None, child_indentation_level
+                type_=container_union.value_type,
+                name=None,
+                location="RELATIVE",
+                wire_or_original_name=None,
+                name_breadcrumbs=None,
+                indentation_level=child_indentation_level,
+                is_function_parameter=False,
+                depth=depth + 1,
             )
             return (
                 Template.factory.dict(
                     DictTemplate(
                         imports=[],
                         is_optional=True,
-                        container_template_string=f"{name}={{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
-                        if name is not None
-                        else f"{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
+                        container_template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}",
                         delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
                         key_value_separator=": ",
                         key_template=key_template,
@@ -285,7 +325,35 @@ class SnippetTemplateFactory:
         if container_union.type == "optional":
             value = container_union.optional
             return self.get_type_reference_template(
-                value, name, location, wire_or_original_name, name_breadcrumbs, indentation_level
+                type_=value,
+                name=name,
+                location=location,
+                wire_or_original_name=wire_or_original_name,
+                name_breadcrumbs=name_breadcrumbs,
+                indentation_level=indentation_level,
+                is_function_parameter=is_function_parameter,
+                depth=depth,
+            )
+
+        if include_literal_templates and container_union.type == "literal":
+            literal_value = container_union.literal.visit(
+                string=lambda s: f'"{s}"',
+                boolean=lambda b: f"{b}",
+            )
+            template_string = f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{literal_value}"
+            return Template.factory.generic(
+                GenericTemplate(
+                    is_optional=True,
+                    template_string=template_string,
+                    template_inputs=[
+                        TemplateInput.factory.payload(
+                            PayloadInput(
+                                location=location,
+                                path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                            )
+                        )
+                    ],
+                )
             )
 
         return None
@@ -309,6 +377,7 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
     ) -> Template:
         # TODO: we should also be making it so you can easily grab the right import depending on the enum you use
         value_map = {
@@ -320,7 +389,7 @@ class SnippetTemplateFactory:
                 imports=[],
                 is_optional=True,
                 values=value_map,
-                template_string=f"{name}={TEMPLATE_SENTINEL}" if name is not None else f"{TEMPLATE_SENTINEL}",
+                template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}",
                 template_input=PayloadInput(
                     location=location,
                     path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
@@ -336,9 +405,33 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        depth: int,
         indentation_level: int = 0,
     ) -> Union[Template, None]:
         sut_shape = sut.shape.get_as_union()
+        if self._use_typeddict_requests:
+            get_template_string = lambda snippet_template_str: (
+                f"{name}: {snippet_template_str}" if name is not None else f"{snippet_template_str}"
+            )
+            snippet_template = TypeddictDiscriminatedUnionSnippetGenerator(
+                snippet_writer=self._snippet_writer,
+                name=type_name,
+                example=None,
+                example_expression=AST.Expression(TEMPLATE_SENTINEL),
+                single_union_type=sut,
+            ).generate_snippet_template()
+        else:
+            get_template_string = lambda snippet_template_str: (
+                f"{name}={snippet_template_str}" if name is not None else f"{snippet_template_str}"
+            )
+            snippet_template = PydanticModelDiscriminatedUnionSnippetGenerator(
+                snippet_writer=self._snippet_writer,
+                name=type_name,
+                example=None,
+                example_expression=AST.Expression(TEMPLATE_SENTINEL),
+                single_union_type=sut,
+            ).generate_snippet_template()
+
         if sut_shape.properties_type == "samePropertiesAsObject":
             object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
                 type_name=sut_shape.type_id
@@ -356,39 +449,25 @@ class SnippetTemplateFactory:
                     wire_or_original_name=prop.name.wire_value,
                     name_breadcrumbs=child_breadcrumbs,
                     indentation_level=indentation_level,
+                    is_function_parameter=False,
+                    depth=depth + 1,
                 )
                 if template_input is not None:
                     template_inputs.append(template_input)
 
-            snippet_template = DiscriminatedUnionSnippetGenerator(
-                snippet_writer=self._snippet_writer,
-                name=type_name,
-                example=None,
-                example_expression=AST.Expression(TEMPLATE_SENTINEL),
-                single_union_type=sut,
-            ).generate_snippet_template()
             if snippet_template is not None:
                 imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
                 return Template.factory.generic(
                     GenericTemplate(
                         imports=[imports] if imports is not None else [],
                         is_optional=True,
-                        template_string=f"{name}={snippet_template_str}"
-                        if name is not None
-                        else f"{snippet_template_str}",
+                        template_string=get_template_string(snippet_template_str),
                         template_inputs=template_inputs,
                     )
                 )
             return None
 
         elif sut_shape.properties_type == "singleProperty":
-            snippet_template = DiscriminatedUnionSnippetGenerator(
-                snippet_writer=self._snippet_writer,
-                name=type_name,
-                example=None,
-                example_expression=AST.Expression(TEMPLATE_SENTINEL),
-                single_union_type=sut,
-            ).generate_snippet_template()
             child_breadcrumbs = name_breadcrumbs or []
             if wire_or_original_name is not None:
                 child_breadcrumbs.append(wire_or_original_name)
@@ -396,35 +475,27 @@ class SnippetTemplateFactory:
             if snippet_template is not None:
                 imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
 
+                input = self.get_type_reference_template_input(
+                    type_=sut_shape.type,
+                    name=name,
+                    location=location,
+                    wire_or_original_name=sut_shape.name.wire_value,
+                    name_breadcrumbs=child_breadcrumbs,
+                    is_function_parameter=False,
+                    depth=depth + 1,
+                )
+
                 return Template.factory.generic(
                     GenericTemplate(
                         imports=[imports] if imports is not None else [],
                         is_optional=True,
-                        template_string=f"{name}={snippet_template_str}"
-                        if name is not None
-                        else f"{snippet_template_str}",
-                        template_inputs=[
-                            self.get_type_reference_template_input(
-                                type_=sut_shape.type,
-                                name=name,
-                                location=location,
-                                wire_or_original_name=sut_shape.name.wire_value,
-                                name_breadcrumbs=child_breadcrumbs,
-                            )
-                        ],
+                        template_string=get_template_string(snippet_template_str),
+                        template_inputs=[input] if input is not None else [],
                     )
                 )
             return None
 
         elif sut_shape.properties_type == "noProperties":
-            snippet_template = DiscriminatedUnionSnippetGenerator(
-                snippet_writer=self._snippet_writer,
-                name=type_name,
-                example=None,
-                example_expression=AST.Expression(TEMPLATE_SENTINEL),
-                single_union_type=sut,
-            ).generate_snippet_template()
-
             if snippet_template is not None:
                 imports, snippet_template_str = self._expression_to_snippet_str_and_imports(snippet_template)
 
@@ -432,9 +503,7 @@ class SnippetTemplateFactory:
                     GenericTemplate(
                         imports=[imports] if imports is not None else [],
                         is_optional=True,
-                        template_string=f"{name}={snippet_template_str}"
-                        if name is not None
-                        else f"{snippet_template_str}",
+                        template_string=get_template_string(snippet_template_str),
                         template_inputs=[],
                     )
                 )
@@ -450,6 +519,8 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
+        depth: int,
         indentation_level: int = 0,
     ) -> Template:
         member_templates: Dict[str, Template] = {}
@@ -462,6 +533,7 @@ class SnippetTemplateFactory:
                 wire_or_original_name=wire_or_original_name,
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
+                depth=depth + 1,
             )
             if member_template is not None:
                 member_templates[sut.discriminant_value.wire_value] = member_template
@@ -471,7 +543,7 @@ class SnippetTemplateFactory:
                 imports=[],
                 is_optional=True,
                 discriminant_field=union_declaration.discriminant.wire_value,
-                template_string=f"{name}={TEMPLATE_SENTINEL}" if name is not None else f"{TEMPLATE_SENTINEL}",
+                template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}",
                 members=member_templates,
                 template_input=PayloadInput(location="RELATIVE"),
             )
@@ -484,9 +556,13 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
+        depth: int,
         indentation_level: int = 0,
     ) -> Template:
-        object_reference = self._snippet_writer.get_class_reference_for_declared_type_name(name=type_name)
+        object_reference = self._snippet_writer.get_class_reference_for_declared_type_name(
+            name=type_name, as_request=True
+        )
         object_properties = self._context.pydantic_generator_context.get_all_properties_including_extensions(
             type_name=type_name.type_id
         )
@@ -505,34 +581,144 @@ class SnippetTemplateFactory:
                 wire_or_original_name=prop.name.wire_value,
                 name_breadcrumbs=child_breadcrumbs,
                 indentation_level=child_indentation_level,
+                is_function_parameter=False,
+                depth=depth + 1,
             )
             if template_input is not None:
                 template_inputs.append(template_input)
 
         object_class_name = type_name.name.pascal_case.safe_name
+        if self._use_typeddict_requests:
+            template_sentinel_str = f"{{\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level}}}"
+            template_string = f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{template_sentinel_str}"
+        else:
+            template_sentinel_str = f"{object_class_name}(\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level})"
+            template_string = f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{template_sentinel_str}"
+
         return Template.factory.generic(
             GenericTemplate(
                 imports=[self._imports_manager._get_import_as_string(object_reference.import_)]
-                if object_reference.import_ is not None
+                if object_reference.import_ is not None and not self._use_typeddict_requests
                 else [],
                 is_optional=True,
                 # TODO: move the object name getter to a function instead of the dot access below
-                template_string=f"{name}={object_class_name}(\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level})"
-                if name is not None
-                else f"{object_class_name}(\n{self.TAB_CHAR * child_indentation_level}{TEMPLATE_SENTINEL}\n{self.TAB_CHAR * indentation_level})",
+                template_string=template_string,
                 template_inputs=template_inputs,
                 input_delimiter=f",\n{self.TAB_CHAR * child_indentation_level}",
             )
         )
 
-    def _get_named_template(
+    def _convert_ir_type_reference_to_fdr_type_reference(
+        self, type_reference: ir_types.TypeReference
+    ) -> FdrApiV1Read.TypeReference:
+        return type_reference.visit(
+            container=lambda container: container.visit(
+                list_=lambda list_contents: FdrApiV1Read.TypeReference.factory.list_(
+                    FdrApiV1Read.ListType(
+                        item_type=self._convert_ir_type_reference_to_fdr_type_reference(list_contents)
+                    )
+                ),
+                set_=lambda set_contents: FdrApiV1Read.TypeReference.factory.set_(
+                    FdrApiV1Read.SetType(item_type=self._convert_ir_type_reference_to_fdr_type_reference(set_contents))
+                ),
+                map_=lambda map_contents: FdrApiV1Read.TypeReference.factory.map_(
+                    FdrApiV1Read.MapType(
+                        key_type=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.key_type),
+                        value_type=self._convert_ir_type_reference_to_fdr_type_reference(map_contents.value_type),
+                    )
+                ),
+                optional=lambda optional_value: FdrApiV1Read.TypeReference.factory.optional(
+                    FdrApiV1Read.OptionalType(
+                        item_type=self._convert_ir_type_reference_to_fdr_type_reference(optional_value)
+                    )
+                ),
+                literal=lambda literal_value: FdrApiV1Read.TypeReference.factory.literal(
+                    literal_value.visit(
+                        boolean=lambda b: FdrApiV1Read.LiteralType.factory.boolean_literal(value=b),
+                        string=lambda s: FdrApiV1Read.LiteralType.factory.string_literal(value=s),
+                    )
+                ),
+            ),
+            named=lambda named: FdrApiV1Read.TypeReference.factory.id(
+                FdrApiV1Read.TypeReferenceId(value=named.type_id)
+            ),
+            primitive=lambda primitive: FdrApiV1Read.TypeReference.factory.primitive(
+                primitive.v_1.visit(
+                    integer=lambda: FdrApiV1Read.PrimitiveType.factory.integer(FdrApiV1Read.IntegerType()),
+                    long_=lambda: FdrApiV1Read.PrimitiveType.factory.long_(FdrApiV1Read.LongType()),
+                    uint=lambda: FdrApiV1Read.PrimitiveType.factory.uint(),
+                    uint_64=lambda: FdrApiV1Read.PrimitiveType.factory.uint_64(),
+                    float_=lambda: FdrApiV1Read.PrimitiveType.factory.double(FdrApiV1Read.DoubleType()),
+                    double=lambda: FdrApiV1Read.PrimitiveType.factory.double(FdrApiV1Read.DoubleType()),
+                    boolean=lambda: FdrApiV1Read.PrimitiveType.factory.boolean(FdrApiV1Read.BooleanType()),
+                    string=lambda: FdrApiV1Read.PrimitiveType.factory.string(FdrApiV1Read.StringType()),
+                    date=lambda: FdrApiV1Read.PrimitiveType.factory.date(FdrApiV1Read.DateType()),
+                    date_time=lambda: FdrApiV1Read.PrimitiveType.factory.datetime(FdrApiV1Read.DatetimeType()),
+                    uuid_=lambda: FdrApiV1Read.PrimitiveType.factory.uuid_(FdrApiV1Read.UuidType()),
+                    base_64=lambda: FdrApiV1Read.PrimitiveType.factory.base_64(FdrApiV1Read.Base64Type()),
+                    big_integer=lambda: FdrApiV1Read.PrimitiveType.factory.big_integer(FdrApiV1Read.BigIntegerType()),
+                )
+            ),
+            unknown=lambda: FdrApiV1Read.TypeReference.factory.unknown(),
+        )
+
+    def _get_undiscriminated_union_template(
         self,
-        type_name: ir_types.DeclaredTypeName,
+        union_declaration: ir_types.UndiscriminatedUnionTypeDeclaration,
         name: Optional[str],
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
+        depth: int,
         indentation_level: int = 0,
+    ) -> Template:
+        member_templates: List[UnionTemplateMember] = []
+        for member in union_declaration.members:
+            member_template = self.get_type_reference_template(
+                type_=member.type,
+                name=None,
+                location="RELATIVE",
+                wire_or_original_name=None,
+                name_breadcrumbs=None,
+                indentation_level=indentation_level,
+                is_function_parameter=False,
+                # Allow creation of literal members
+                include_literal_templates=True,
+                depth=depth + 1,
+            )
+            if member_template is not None:
+                member_templates.append(
+                    UnionTemplateMember(
+                        type=self._convert_ir_type_reference_to_fdr_type_reference(member.type),
+                        template=member_template,
+                    )
+                )
+
+        return Template.factory.union_v_2(
+            UnionTemplateV2(
+                imports=[],
+                is_optional=True,
+                template_string=f"{self._get_name_value_separator(name=name, is_function_parameter=is_function_parameter)}{TEMPLATE_SENTINEL}",
+                members=member_templates,
+                template_input=PayloadInput(
+                    location=location,
+                    path=self._get_breadcrumb_path(wire_or_original_name, name_breadcrumbs),
+                ),
+            )
+        )
+
+    def _get_named_template(
+        self,
+        type_name: ir_types.NamedType,
+        name: Optional[str],
+        location: PayloadLocation,
+        wire_or_original_name: Optional[str],
+        name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
+        depth: int,
+        indentation_level: int = 0,
+        include_literal_templates: bool = False,
     ) -> Union[Template, None]:
         type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
             type_id=type_name.type_id
@@ -547,33 +733,50 @@ class SnippetTemplateFactory:
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
                     indentation_level=indentation_level,
+                    is_function_parameter=is_function_parameter,
+                    include_literal_templates=include_literal_templates,
+                    depth=depth,
                 ),
                 enum=lambda etd: self._get_enum_template(
-                    type_name=type_name,
+                    type_name=cast(ir_types.DeclaredTypeName, type_name),
                     values=etd.values,
                     name=name,
                     location=location,
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
+                    is_function_parameter=is_function_parameter,
                 ),
                 object=lambda _: self._get_object_template(
-                    type_name=type_name,
+                    type_name=cast(ir_types.DeclaredTypeName, type_name),
                     name=name,
                     location=location,
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
                     indentation_level=indentation_level,
+                    is_function_parameter=is_function_parameter,
+                    depth=depth,
                 ),
                 union=lambda utd: self._get_discriminated_union_template(
-                    type_name=type_name,
+                    type_name=cast(ir_types.DeclaredTypeName, type_name),
                     union_declaration=utd,
                     name=name,
                     location=location,
                     wire_or_original_name=wire_or_original_name,
                     name_breadcrumbs=name_breadcrumbs,
                     indentation_level=indentation_level,
+                    is_function_parameter=is_function_parameter,
+                    depth=depth,
                 ),
-                undiscriminated_union=lambda _: None,
+                undiscriminated_union=lambda uutd: self._get_undiscriminated_union_template(
+                    union_declaration=uutd,
+                    name=name,
+                    location=location,
+                    wire_or_original_name=wire_or_original_name,
+                    name_breadcrumbs=name_breadcrumbs,
+                    indentation_level=indentation_level,
+                    is_function_parameter=is_function_parameter,
+                    depth=depth,
+                ),
             )
         return None
 
@@ -584,10 +787,18 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
+        depth: int,
         indentation_level: int = 0,
+        # Only used for union members
+        include_literal_templates: bool = False,
     ) -> Union[Template, None]:
+        # Terminate if depth is too deep
+        if depth >= self.MAXIMUM_TEMPLATE_DEPTH:
+            return None
+
         # if type is literal return None, we do not use literals as inputs
-        if self._is_type_literal(type_):
+        if self._is_type_literal(type_) and not include_literal_templates:
             return None
 
         return type_.visit(
@@ -596,12 +807,14 @@ class SnippetTemplateFactory:
                 location=location,
                 wire_or_original_name=wire_or_original_name,
                 name_breadcrumbs=name_breadcrumbs,
+                is_function_parameter=is_function_parameter,
             ),
             unknown=lambda: self._get_generic_template(
                 name=name,
                 location=location,
                 wire_or_original_name=wire_or_original_name,
                 name_breadcrumbs=name_breadcrumbs,
+                is_function_parameter=is_function_parameter,
             ),
             container=lambda container: self._get_container_template(
                 container=container,
@@ -610,6 +823,9 @@ class SnippetTemplateFactory:
                 wire_or_original_name=wire_or_original_name,
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
+                is_function_parameter=is_function_parameter,
+                include_literal_templates=include_literal_templates,
+                depth=depth,
             ),
             named=lambda type_name: self._get_named_template(
                 type_name=type_name,
@@ -618,6 +834,9 @@ class SnippetTemplateFactory:
                 wire_or_original_name=wire_or_original_name,
                 name_breadcrumbs=name_breadcrumbs,
                 indentation_level=indentation_level,
+                is_function_parameter=is_function_parameter,
+                include_literal_templates=include_literal_templates,
+                depth=depth,
             ),
         )
 
@@ -628,12 +847,10 @@ class SnippetTemplateFactory:
         location: PayloadLocation,
         wire_or_original_name: Optional[str],
         name_breadcrumbs: Optional[List[str]],
+        is_function_parameter: bool,
+        depth: int,
         indentation_level: int = 0,
     ) -> Union[TemplateInput, None]:
-        # Terminate if depth is too deep
-        if indentation_level >= self.MAXIMUM_TEMPLATE_DEPTH:
-            return None
-
         # if type is literal return None, we do not use literals as inputs
         if self._is_type_literal(type_):
             return None
@@ -645,6 +862,8 @@ class SnippetTemplateFactory:
             wire_or_original_name=wire_or_original_name,
             name_breadcrumbs=name_breadcrumbs,
             indentation_level=indentation_level,
+            is_function_parameter=is_function_parameter,
+            depth=depth,
         )
         return self._get_template_input_from_template(template=template) if template is not None else None
 
@@ -659,7 +878,7 @@ class SnippetTemplateFactory:
         return EndpointIdentifier(
             path=EndpointPath(self._full_path_for_endpoint(endpoint)),
             method=self._ir_method_to_fdr_method(endpoint.method),
-            identifierOverride=endpoint.id.get_as_str(),
+            identifier_override=endpoint.id,
         )
 
     def _full_path_for_endpoint(
@@ -718,6 +937,8 @@ class SnippetTemplateFactory:
                         wire_or_original_name=header.name.wire_value,
                         name_breadcrumbs=None,
                         indentation_level=1,
+                        is_function_parameter=True,
+                        depth=0,
                     )
                     if ti is not None:
                         top_level_template_inputs.append(ti)
@@ -730,6 +951,8 @@ class SnippetTemplateFactory:
                         wire_or_original_name=path_parameter.name.original_name,
                         name_breadcrumbs=None,
                         indentation_level=1,
+                        is_function_parameter=True,
+                        depth=0,
                     )
                     if ti is not None:
                         top_level_template_inputs.append(ti)
@@ -742,6 +965,8 @@ class SnippetTemplateFactory:
                         wire_or_original_name=query_parameter.name.name.original_name,
                         name_breadcrumbs=None,
                         indentation_level=1,
+                        is_function_parameter=True,
+                        depth=0,
                     )
                     if ti is not None:
                         top_level_template_inputs.append(ti)
@@ -779,6 +1004,8 @@ class SnippetTemplateFactory:
                                 wire_or_original_name=parameter.raw_name,
                                 name_breadcrumbs=None,
                                 indentation_level=1,
+                                is_function_parameter=True,
+                                depth=0,
                             )
                             if parameter.raw_type is not None
                             else None

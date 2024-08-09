@@ -11,13 +11,17 @@ from ...references import ClassReference, Module, Reference, ReferenceImport
 from ..expressions import Expression
 from .type_parameter import TypeParameter
 
+TYPING_REFERENCE_IMPORT = ReferenceImport(
+    module=Module.built_in(("typing",)),
+)
+
 
 class TypeHint(AstNode):
     def __init__(
         self,
         type: Union[ClassReference, GenericTypeVar],
-        type_parameters: Sequence[TypeParameter] = None,
-        arguments: Sequence[Expression] = None,
+        type_parameters: Optional[Sequence[TypeParameter]] = None,
+        arguments: Optional[Sequence[Expression]] = None,
         is_optional: bool = False,
         is_literal: bool = False,
     ):
@@ -148,6 +152,14 @@ class TypeHint(AstNode):
         )
 
     @staticmethod
+    def type_checking() -> TypeHint:
+        return TypeHint(type=get_reference_to_typing_import("TYPE_CHECKING"))
+
+    @staticmethod
+    def type_checking_reference() -> Reference:
+        return get_reference_to_typing_import("TYPE_CHECKING")
+
+    @staticmethod
     def any() -> TypeHint:
         return TypeHint(type=get_reference_to_typing_import("Any"))
 
@@ -240,18 +252,17 @@ class TypeHint(AstNode):
             writer.write(")")
 
 
-def get_reference_to_typing_extensions_import(name: str) -> ClassReference:
+def get_reference_to_typing_extensions_import(name: str, require_postponed_annotations: bool = False) -> ClassReference:
     return ClassReference(
         import_=ReferenceImport(module=Module.built_in(("typing_extensions",))),
         qualified_name_excluding_import=(name,),
+        require_postponed_annotations=require_postponed_annotations,
     )
 
 
 def get_reference_to_typing_import(name: str) -> ClassReference:
     return ClassReference(
-        import_=ReferenceImport(
-            module=Module.built_in(("typing",)),
-        ),
+        import_=TYPING_REFERENCE_IMPORT,
         qualified_name_excluding_import=(name,),
     )
 

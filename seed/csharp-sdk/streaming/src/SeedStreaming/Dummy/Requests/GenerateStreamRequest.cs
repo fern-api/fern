@@ -7,8 +7,8 @@ namespace SeedStreaming;
 public record GenerateStreamRequest
 {
     [JsonPropertyName("stream")]
-    public required bool Stream { get; init; }
+    public required bool Stream { get; set; }
 
     [JsonPropertyName("num_events")]
-    public required int NumEvents { get; init; }
+    public required int NumEvents { get; set; }
 }

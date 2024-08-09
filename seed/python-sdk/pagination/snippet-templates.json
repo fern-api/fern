@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedPagination"
+                    "from seed import SeedPagination"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -118,7 +118,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedPagination"
+                        "from seed import AsyncSeedPagination"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -235,7 +235,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedPagination"
+                    "from seed import SeedPagination"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -269,7 +269,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from seed import WithCursor"
+                                "from seed.users import WithCursor"
                             ],
                             "isOptional": true,
                             "templateString": "pagination=WithCursor(\n\t\t$FERN_INPUT\n\t)",
@@ -305,7 +305,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedPagination"
+                        "from seed import AsyncSeedPagination"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -339,7 +339,7 @@
                             "type": "template",
                             "value": {
                                 "imports": [
-                                    "from seed import WithCursor"
+                                    "from seed.users import WithCursor"
                                 ],
                                 "isOptional": true,
                                 "templateString": "pagination=WithCursor(\n\t\t$FERN_INPUT\n\t)",
@@ -387,7 +387,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedPagination"
+                    "from seed import SeedPagination"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -492,7 +492,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedPagination"
+                        "from seed import AsyncSeedPagination"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -609,7 +609,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedPagination"
+                    "from seed import SeedPagination"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -643,7 +643,7 @@
                         "type": "template",
                         "value": {
                             "imports": [
-                                "from seed import WithPage"
+                                "from seed.users import WithPage"
                             ],
                             "isOptional": true,
                             "templateString": "pagination=WithPage(\n\t\t$FERN_INPUT\n\t)",
@@ -679,7 +679,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedPagination"
+                        "from seed import AsyncSeedPagination"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -713,7 +713,7 @@
                             "type": "template",
                             "value": {
                                 "imports": [
-                                    "from seed import WithPage"
+                                    "from seed.users import WithPage"
                                 ],
                                 "isOptional": true,
                                 "templateString": "pagination=WithPage(\n\t\t$FERN_INPUT\n\t)",
@@ -761,7 +761,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedPagination"
+                    "from seed import SeedPagination"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -850,7 +850,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedPagination"
+                        "from seed import AsyncSeedPagination"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -951,7 +951,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedPagination"
+                    "from seed import SeedPagination"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1007,7 +1007,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedPagination"
+                        "from seed import AsyncSeedPagination"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1075,7 +1075,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedPagination"
+                    "from seed import SeedPagination"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1131,7 +1131,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedPagination"
+                        "from seed import AsyncSeedPagination"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1199,7 +1199,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedPagination"
+                    "from seed import SeedPagination"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -1255,7 +1255,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedPagination"
+                        "from seed import AsyncSeedPagination"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedPagination(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",

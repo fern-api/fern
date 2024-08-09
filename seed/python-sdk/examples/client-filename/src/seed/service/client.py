@@ -37,7 +37,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
@@ -67,7 +67,7 @@ class ServiceClient:
         from_: str,
         rating: float,
         tag: Tag,
-        metadata: typing.Dict[str, typing.Any],
+        metadata: typing.Dict[str, typing.Optional[typing.Any]],
         prequel: typing.Optional[MovieId] = OMIT,
         book: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -86,7 +86,7 @@ class ServiceClient:
 
         tag : Tag
 
-        metadata : typing.Dict[str, typing.Any]
+        metadata : typing.Dict[str, typing.Optional[typing.Any]]
 
         prequel : typing.Optional[MovieId]
 
@@ -101,7 +101,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
@@ -173,7 +173,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
@@ -214,7 +214,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
@@ -256,7 +256,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(
@@ -292,7 +292,7 @@ class AsyncServiceClient:
         from_: str,
         rating: float,
         tag: Tag,
-        metadata: typing.Dict[str, typing.Any],
+        metadata: typing.Dict[str, typing.Optional[typing.Any]],
         prequel: typing.Optional[MovieId] = OMIT,
         book: typing.Optional[str] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -311,7 +311,7 @@ class AsyncServiceClient:
 
         tag : Tag
 
-        metadata : typing.Dict[str, typing.Any]
+        metadata : typing.Dict[str, typing.Optional[typing.Any]]
 
         prequel : typing.Optional[MovieId]
 
@@ -328,7 +328,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(
@@ -408,7 +408,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(
@@ -457,7 +457,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(

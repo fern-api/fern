@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from .exception_info import ExceptionInfo
 
 T_Result = typing.TypeVar("T_Result")
@@ -62,6 +62,3 @@ class _ExceptionV2:
 
     class Timeout(UniversalBaseModel):
         type: typing.Literal["timeout"] = "timeout"
-
-
-update_forward_refs(ExceptionV2)

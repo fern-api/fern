@@ -30,7 +30,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedApi
+        from seed import SeedApi
 
         client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
@@ -46,11 +46,13 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def unknown_request(self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None) -> None:
+    def unknown_request(
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Parameters
         ----------
-        request : typing.Any
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -61,7 +63,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedApi
+        from seed import SeedApi
 
         client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
@@ -103,7 +105,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedApi
+        from seed import AsyncSeedApi
 
         client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",
@@ -128,12 +130,12 @@ class AsyncServiceClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def unknown_request(
-        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> None:
         """
         Parameters
         ----------
-        request : typing.Any
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -146,7 +148,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedApi
+        from seed import AsyncSeedApi
 
         client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",

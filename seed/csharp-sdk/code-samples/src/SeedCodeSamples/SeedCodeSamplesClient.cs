@@ -1,4 +1,4 @@
-using SeedCodeSamples;
+using System;
 using SeedCodeSamples.Core;
 
 #nullable enable
@@ -13,6 +13,7 @@ public partial class SeedCodeSamplesClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

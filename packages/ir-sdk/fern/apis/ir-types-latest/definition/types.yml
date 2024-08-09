@@ -2,7 +2,25 @@
 
 imports:
   commons: commons.yml
+  proto: proto.yml
 types:
+  Source:
+    docs: |
+      The original source of the declared type (e.g. a `.proto` file).
+    union:
+      proto: proto.ProtobufType
+
+  Encoding:
+    properties:
+      json: optional<JsonEncoding>
+      proto: optional<ProtoEncoding>
+
+  JsonEncoding:
+    properties: {}
+
+  ProtoEncoding:
+    properties: {}
+      
   TypeDeclaration:
     docs: "A type, which is a name and a shape"
     extends: commons.Declaration
@@ -14,6 +32,8 @@ types:
       referencedTypes:
         docs: All other named types that this type references (directly or indirectly)
         type: set<commons.TypeId>
+      encoding: optional<Encoding>
+      source: optional<Source>
 
   DeclaredTypeName:
     properties:
@@ -53,13 +73,13 @@ types:
     properties:
       name: DeclaredTypeName
       shape: ShapeType
+
   ShapeType:
     enum:
       - ENUM
       - OBJECT
       - UNION
       - UNDISCRIMINATED_UNION
-
   EnumTypeDeclaration:
     properties:
       default: optional<EnumValue>
@@ -75,6 +95,9 @@ types:
         docs: A list of other types to inherit from
         type: list<DeclaredTypeName>
       properties: list<ObjectProperty>
+      extendedProperties: 
+        type: optional<list<ObjectProperty>>
+        docs: A list of properties that all the parents of this object have. 
       extra-properties:
         docs: Whether to allow extra properties on the object.
         type: boolean
@@ -126,11 +149,32 @@ types:
       container:
         type: ContainerType
         key: container
-      named: DeclaredTypeName
+      named: NamedType
       primitive:
         type: PrimitiveType
         key: primitive
       unknown: {}
+
+  NamedType:
+    docs: |
+      A reference to a named type. For backwards compatbility, this type must be fully compatible
+      with the DeclaredTypeName.
+    properties:
+      typeId: commons.TypeId
+      fernFilepath: commons.FernFilepath
+      name: commons.Name
+      default: optional<NamedTypeDefault>
+      inline: optional<boolean>
+
+  NamedTypeDefault:
+    union:
+      enum: EnumValue
+
+  EnumTypeReference:
+    properties:
+      default: optional<EnumValue>
+      name: DeclaredTypeName
+
   ContainerType:
     discriminant:
       value: _type
@@ -161,23 +205,33 @@ types:
   PrimitiveTypeV1:
     enum:
       - INTEGER
-      - DOUBLE
-      - STRING
-      - BOOLEAN
       - value: LONG
         docs: "Within the range -2^53 to 2^53"
-      - DATE_TIME
+      - UINT
+      - UINT_64
+      - FLOAT
+      - DOUBLE
+      - BOOLEAN
+      - STRING
       - DATE
+      - DATE_TIME
       - UUID
       - BASE_64
       - BIG_INTEGER
   PrimitiveTypeV2:
     union:
       integer: IntegerType
-      double: DoubleType
-      string: StringType
-      boolean: BooleanType
       long: LongType
+      uint: UintType
+      uint64: Uint64Type
+      float: FloatType
+      double: DoubleType
+      boolean: BooleanType
+      string: StringType
+      date: DateType
+      dateTime: DateTimeType
+      uuid: UuidType
+      base64: Base64Type
       bigInteger: BigIntegerType
 
   IntegerType:
@@ -191,9 +245,18 @@ types:
       exclusiveMin: optional<boolean>
       exclusiveMax: optional<boolean>
       multipleOf: optional<integer>
+  LongType:
+    properties:
+      default: optional<long>
+  UintType:
+    properties: {}
+  Uint64Type:
+    properties: {}
+  FloatType:
+    properties: {}
   DoubleType:
     properties:
-      default: optional<integer>
+      default: optional<double>
       validation: optional<DoubleValidationRules>
   DoubleValidationRules:
     properties:
@@ -202,6 +265,9 @@ types:
       exclusiveMin: optional<boolean>
       exclusiveMax: optional<boolean>
       multipleOf: optional<double>
+  BooleanType:
+    properties:
+      default: optional<boolean>
   StringType:
     properties:
       default: optional<string>
@@ -212,12 +278,14 @@ types:
       pattern: optional<string>
       minLength: optional<integer>
       maxLength: optional<integer>
-  BooleanType:
-    properties:
-      default: optional<boolean>
-  LongType:
-    properties:
-      default: optional<long>
+  DateType:
+    properties: {}
+  DateTimeType:
+    properties: {}
+  UuidType:
+    properties: {}
+  Base64Type:
+    properties: {}
   BigIntegerType:
     properties:
       default: optional<string>
@@ -366,27 +434,42 @@ types:
       integer:
         type: integer
         key: integer
-      double:
-        type: double
-        key: double
-      string:
-        type: commons.EscapedString
-        key: string
-      boolean:
-        type: boolean
-        key: boolean
       long:
         type: long
         key: long
-      datetime:
-        type: datetime
-        key: datetime
+      uint:
+        type: uint
+        key: uint
+      uint64:
+        type: uint64
+        key: uint64
+      float:
+        type: double # TODO: Refactor the following to be a float once we have a float type.
+        key: float
+      double:
+        type: double
+        key: double
+      boolean:
+        type: boolean
+        key: boolean
+      string:
+        type: commons.EscapedString
+        key: string
       date:
         type: date
         key: date
+      datetime:
+        type: datetime
+        key: datetime
       uuid:
         type: uuid
         key: uuid
+      base64:
+        type: base64
+        key: base64
+      bigInteger:
+        type: bigint
+        key: bigInteger
 
   ExampleNamedType:
     properties:

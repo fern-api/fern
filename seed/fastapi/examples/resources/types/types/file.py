@@ -11,7 +11,7 @@ class File(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples import File
+    from seed.examples.resources.types import File
 
     File(
         name="file.txt",

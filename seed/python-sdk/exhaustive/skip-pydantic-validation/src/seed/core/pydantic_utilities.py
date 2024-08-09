@@ -111,7 +111,7 @@ class UniversalBaseModel(pydantic.BaseModel):
             )
 
 
-UniversalRootModel: typing.Type[typing.Any]
+UniversalRootModel: typing.Type[pydantic.BaseModel]
 if IS_PYDANTIC_V2:
 
     class V2RootModel(UniversalBaseModel, pydantic.RootModel):  # type: ignore # Pydantic v2
@@ -136,11 +136,11 @@ def encode_by_type(o: typing.Any) -> typing.Any:
             return encoder(o)
 
 
-def update_forward_refs(model: typing.Type["Model"], **localns: typing.Any) -> None:
+def update_forward_refs(model: typing.Type["Model"]) -> None:
     if IS_PYDANTIC_V2:
-        model.model_rebuild(force=True)  # type: ignore # Pydantic v2
+        model.model_rebuild(raise_errors=False)  # type: ignore # Pydantic v2
     else:
-        model.update_forward_refs(**localns)
+        model.update_forward_refs()
 
 
 # Mirrors Pydantic's internal typing
@@ -156,7 +156,7 @@ def universal_root_validator(pre: bool = False) -> typing.Callable[[AnyCallable]
             else:
                 wrapped_func = pydantic.root_validator(pre=pre)(func)  # type: ignore # Pydantic v1
 
-            return wrapped_func(*args, **kwargs)
+            return wrapped_func(*args, **kwargs)  # type: ignore # Pydantic v2
 
         return validate
 
@@ -170,7 +170,7 @@ def universal_field_validator(field_name: str, pre: bool = False) -> typing.Call
             if IS_PYDANTIC_V2:
                 wrapped_func = pydantic.field_validator(field_name, mode="before" if pre else "after")(func)  # type: ignore # Pydantic v2
             else:
-                wrapped_func = pydantic.validator(field_name, pre=pre)(func)
+                wrapped_func = pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 
             return wrapped_func(*args, **kwargs)
 

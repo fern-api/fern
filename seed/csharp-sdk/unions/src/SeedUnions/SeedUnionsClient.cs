@@ -1,4 +1,4 @@
-using SeedUnions;
+using System;
 using SeedUnions.Core;
 
 #nullable enable
@@ -13,6 +13,7 @@ public partial class SeedUnionsClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Types = new TypesClient(_client);

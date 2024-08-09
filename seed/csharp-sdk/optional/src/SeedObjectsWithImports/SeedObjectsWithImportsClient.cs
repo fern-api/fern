@@ -1,4 +1,4 @@
-using SeedObjectsWithImports;
+using System;
 using SeedObjectsWithImports.Core;
 
 #nullable enable
@@ -13,6 +13,7 @@ public partial class SeedObjectsWithImportsClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Optional = new OptionalClient(_client);

@@ -4,7 +4,7 @@ import tempfile
 from math import e
 from typing import Dict, List, Optional, Union
 
-import fern.generator_exec.resources as generator_exec
+import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
 import generatorcli
 import yaml  # type: ignore
@@ -98,7 +98,7 @@ class GeneratorCli:
             snippets=snippets,
             pagination_enabled=pagination_enabled,
             generated_root_client=generated_root_client,
-            api_error_reference=self._context.core_utilities.get_reference_to_api_error(),
+            api_error_reference=self._context.core_utilities.get_reference_to_api_error(as_snippet=True),
             endpoint_metadata=self._endpoint_metadata,
         )
         readme_config_filepath = self._write_readme_config(

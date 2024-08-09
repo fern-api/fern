@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedFileUpload
+from seed import SeedFileUpload
 
 client = SeedFileUpload(
     base_url="https://yourhost.com/path/to/api",
@@ -139,7 +139,7 @@ typing.Optional[typing.List[core.File]]` — See core.File for more documentatio
 <dd>
 
 ```python
-from seed.client import SeedFileUpload
+from seed import SeedFileUpload
 
 client = SeedFileUpload(
     base_url="https://yourhost.com/path/to/api",
@@ -195,7 +195,7 @@ core.File` — See core.File for more documentation
 <dd>
 
 ```python
-from seed.client import SeedFileUpload
+from seed import SeedFileUpload
 
 client = SeedFileUpload(
     base_url="https://yourhost.com/path/to/api",

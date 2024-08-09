@@ -2,12 +2,12 @@ from .discriminated_union_with_utils_generator import (
     DiscriminatedUnionWithUtilsGenerator,
 )
 from .simple_discriminated_union_generator import (
-    DiscriminatedUnionSnippetGenerator,
-    SimpleDiscriminatedUnionGenerator,
+    AbstractDiscriminatedUnionSnippetGenerator,
+    AbstractSimpleDiscriminatedUnionGenerator,
 )
 
 __all__ = [
-    "DiscriminatedUnionSnippetGenerator",
+    "AbstractDiscriminatedUnionSnippetGenerator",
     "DiscriminatedUnionWithUtilsGenerator",
-    "SimpleDiscriminatedUnionGenerator",
+    "AbstractSimpleDiscriminatedUnionGenerator",
 ]

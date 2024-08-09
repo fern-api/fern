@@ -1,5 +1,13 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { cp, rm, writeFile } from "fs/promises";
+import {
+    AbsoluteFilePath,
+    dirname,
+    File,
+    FileOrDirectory,
+    getDirectoryContents,
+    join,
+    RelativeFilePath
+} from "@fern-api/fs-utils";
+import { cp, mkdir, rm, writeFile } from "fs/promises";
 import glob from "glob-promise";
 import path from "path";
 import { SourceFile } from "ts-morph";
@@ -56,7 +64,13 @@ export class CoreUtilitiesManager {
         }
     }
 
-    public async copyCoreUtilities({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
+    public async copyCoreUtilities({
+        pathToSrc,
+        pathToRoot
+    }: {
+        pathToSrc: AbsoluteFilePath;
+        pathToRoot: AbsoluteFilePath;
+    }): Promise<void> {
         await Promise.all(
             [...Object.entries(this.referencedCoreUtilities)].map(async ([utilityName, utility]) => {
                 const fromPath =
@@ -68,7 +82,13 @@ export class CoreUtilitiesManager {
                     ...this.getPathToUtility(utility).map((directory) => RelativeFilePath.of(directory.nameOnDisk))
                 );
                 await cp(fromPath, toPath, {
-                    recursive: true
+                    recursive: true,
+                    filter: (source) => {
+                        if (source.includes("__test__")) {
+                            return false;
+                        }
+                        return true;
+                    }
                 });
                 if (utilityName === "auth") {
                     // TODO(amckinney): Find a better way to add utility-scoped overrides. The way we designed the
@@ -87,8 +107,51 @@ export class CoreUtilitiesManager {
                     });
                     await Promise.all(filesToDelete.map((filepath) => rm(filepath, { recursive: true })));
                 }
+
+                // Copy over unit tests
+                if (utility.unitTests) {
+                    const toUnitTestPath = join(
+                        pathToRoot,
+                        RelativeFilePath.of("tests/unit"),
+                        RelativeFilePath.of(utility.name)
+                    );
+                    await mkdir(toUnitTestPath, { recursive: true });
+
+                    const fromUnitTestPath = join(utility.originalPathOnDocker, utility.unitTests.fromDirectory);
+                    const files: { path: AbsoluteFilePath; file: File }[] = [];
+                    const contents = await getDirectoryContents(fromUnitTestPath);
+                    for (const fileOrDirectory of contents) {
+                        this.getAllFiles(fileOrDirectory, toUnitTestPath, files);
+                    }
+
+                    for (const file of files) {
+                        await mkdir(dirname(file.path), { recursive: true });
+                        let contents = file.file.contents;
+                        for (const [find, replace] of Object.entries(utility.unitTests.findAndReplace)) {
+                            contents = contents.replaceAll(find, replace);
+                        }
+                        await writeFile(file.path, contents);
+                    }
+                }
             })
         );
+    }
+
+    private getAllFiles(
+        fileOrDirectory: FileOrDirectory,
+        absoluteFilePath: AbsoluteFilePath,
+        files: { path: AbsoluteFilePath; file: File }[]
+    ): void {
+        if (fileOrDirectory.type === "directory") {
+            for (const content of fileOrDirectory.contents) {
+                this.getAllFiles(content, join(absoluteFilePath, RelativeFilePath.of(fileOrDirectory.name)), files);
+            }
+        } else {
+            files.push({
+                file: fileOrDirectory,
+                path: join(absoluteFilePath, RelativeFilePath.of(fileOrDirectory.name))
+            });
+        }
     }
 
     public addAuthOverride({ filepath, content }: { filepath: RelativeFilePath; content: string }): void {

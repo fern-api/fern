@@ -7,8 +7,8 @@ namespace SeedPagination;
 public record UsernamePage
 {
     [JsonPropertyName("after")]
-    public string? After { get; init; }
+    public string? After { get; set; }
 
     [JsonPropertyName("data")]
-    public IEnumerable<string> Data { get; init; } = new List<string>();
+    public IEnumerable<string> Data { get; set; } = new List<string>();
 }

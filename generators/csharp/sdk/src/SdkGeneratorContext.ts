@@ -1,6 +1,7 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import {
+    DeclaredErrorName,
     FernFilepath,
     HttpEndpoint,
     HttpService,
@@ -12,10 +13,12 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { CLIENT_OPTIONS_CLASS_NAME } from "./client-options/ClientOptionsGenerator";
+import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
+import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
+const EXCEPTIONS_FOLDER_NAME = "Exceptions";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
     /**
@@ -57,6 +60,15 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         );
     }
 
+    public getDirectoryForError(declaredErrorName: DeclaredErrorName): RelativeFilePath {
+        return RelativeFilePath.of(
+            [
+                ...declaredErrorName.fernFilepath.allParts.map((path) => path.pascalCase.safeName),
+                EXCEPTIONS_FOLDER_NAME
+            ].join("/")
+        );
+    }
+
     public getNamespaceForTypeId(typeId: TypeId): string {
         const typeDeclaration = this.getTypeDeclarationOrThrow(typeId);
         return this.getNamespaceFromFernFilepath(typeDeclaration.name.fernFilepath);
@@ -68,7 +80,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.StringEnumSerializer,
             AsIsFiles.OneOfSerializer,
             AsIsFiles.CollectionItemSerializer,
-            AsIsFiles.HttpMethodExtensions
+            AsIsFiles.HttpMethodExtensions,
+            AsIsFiles.Constants,
+            AsIsFiles.DateTimeSerializer,
+            AsIsFiles.JsonConfiguration
         ];
     }
 
@@ -90,6 +105,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         );
     }
 
+    public getJsonExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json",
+            name: "JsonException"
+        });
+    }
+
     public getSubpackageClassReference(subpackage: Subpackage): csharp.ClassReference {
         return csharp.classReference({
             name: `${subpackage.name.pascalCase.unsafeName}Client`,
@@ -97,11 +119,42 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
+    private getComputedClientName(): string {
+        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}`;
+    }
+
     public getRootClientClassName(): string {
         if (this.customConfig["client-class-name"] != null) {
             return this.customConfig["client-class-name"];
         }
-        return `${upperFirst(camelCase(this.config.organization))}${this.ir.apiName.pascalCase.unsafeName}Client`;
+        return `${this.getComputedClientName()}Client`;
+    }
+
+    public getBaseExceptionClassReference(): csharp.ClassReference {
+        const maybeOverrideName = this.customConfig["base-exception-class-name"];
+        return csharp.classReference({
+            name: maybeOverrideName ?? this.getExceptionPrefix() + "Exception",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getBaseApiExceptionClassReference(): csharp.ClassReference {
+        const maybeOverrideName = this.customConfig["base-api-exception-class-name"];
+        return csharp.classReference({
+            name: maybeOverrideName ?? this.getExceptionPrefix() + "ApiException",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExceptionClassReference(declaredErrorName: DeclaredErrorName): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getPascalCaseSafeName(declaredErrorName.name),
+            namespace: this.getNamespaceFromFernFilepath(declaredErrorName.fernFilepath)
+        });
+    }
+
+    private getExceptionPrefix() {
+        return this.customConfig["client-class-name"] ?? this.getComputedClientName();
     }
 
     public getRawClientClassReference(): csharp.ClassReference {
@@ -112,8 +165,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getEnvironmentsClassReference(): csharp.ClassReference {
+        let environmentsClassName: string;
+        if (this.customConfig["client-class-name"] != null) {
+            environmentsClassName = `${this.customConfig["client-class-name"]}Environment`;
+        } else {
+            environmentsClassName = `${this.getComputedClientName()}Environment`;
+        }
         return csharp.classReference({
-            name: "Environments",
+            name: environmentsClassName,
             namespace: this.getCoreNamespace()
         });
     }
@@ -123,6 +182,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             name: CLIENT_OPTIONS_CLASS_NAME,
             namespace: this.getCoreNamespace()
         });
+    }
+
+    public getRequestOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: REQUEST_OPTIONS_CLASS_NAME,
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getRequestOptionsParameterName(): string {
+        return REQUEST_OPTIONS_PARAMETER_NAME;
     }
 
     public getRequestWrapperReference(serviceId: ServiceId, requestName: Name): csharp.ClassReference {
@@ -142,8 +212,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["extra-dependencies"] ?? {};
     }
 
-    private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
-        return [this.getNamespace(), ...fernFilepath.packagePath.map((path) => path.pascalCase.safeName)].join(".");
+    override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
+        const segmentNames =
+            this.customConfig["explicit-namespaces"] === true ? fernFilepath.allParts : fernFilepath.packagePath;
+        return segmentNames.map((segmentName) => segmentName.pascalCase.safeName);
     }
 
     public isOptional(typeReference: TypeReference): boolean {

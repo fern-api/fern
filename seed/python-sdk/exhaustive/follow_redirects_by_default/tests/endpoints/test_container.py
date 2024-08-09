@@ -2,8 +2,8 @@
 
 import typing
 
-from seed.client import AsyncSeedExhaustive, SeedExhaustive
-from seed.types import ObjectWithRequiredField
+from seed import AsyncSeedExhaustive, SeedExhaustive
+from seed.types.object import ObjectWithRequiredField
 
 from ..utilities import validate_response
 

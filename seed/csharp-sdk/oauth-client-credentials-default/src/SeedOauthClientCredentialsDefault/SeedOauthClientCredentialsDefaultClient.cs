@@ -1,4 +1,4 @@
-using SeedOauthClientCredentialsDefault;
+using System;
 using SeedOauthClientCredentialsDefault.Core;
 
 #nullable enable
@@ -13,6 +13,7 @@ public partial class SeedOauthClientCredentialsDefaultClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Auth = new AuthClient(_client);

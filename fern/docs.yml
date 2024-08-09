@@ -44,6 +44,8 @@ navigation:
         contents:
           - page: What is an API Definition?
             path: ./pages/api-definition/introduction/what-is-an-api-definition.mdx
+          - page: What is the Fern Folder?
+            path: ./pages/api-definition/introduction/what-is-the-fern-folder.mdx
       - section: OpenAPI Specification
         slug: openapi
         contents:
@@ -170,9 +172,12 @@ navigation:
         contents:
           - page: NPM
             path: ./pages/sdks/integration/npm.mdx
-          - page: PyPi
+          - page: PyPI
             slug: pypi
             path: ./pages/sdks/integration/pypi.mdx
+          - page: NuGet
+            slug: nuget
+            path: ./pages/sdks/integration/nuget.mdx
       
       - section: Alternatives
         hidden: true
@@ -300,6 +305,10 @@ navigation:
           - page: ReadMe
             slug: readme
             path: ./pages/docs/comparison/readme.mdx
+      - section: Analytics
+        contents:
+          - page: Segment
+            path: ./pages/docs/analytics/segment.mdx
   - tab: cli-api
     layout:
       - section: CLI Reference

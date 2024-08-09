@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedBasicAuthEnvironmentVariables"
+                    "from seed import SeedBasicAuthEnvironmentVariables"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedBasicAuthEnvironmentVariables(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -68,7 +68,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedBasicAuthEnvironmentVariables"
+                        "from seed import AsyncSeedBasicAuthEnvironmentVariables"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedBasicAuthEnvironmentVariables(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -135,7 +135,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedBasicAuthEnvironmentVariables"
+                    "from seed import SeedBasicAuthEnvironmentVariables"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedBasicAuthEnvironmentVariables(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
@@ -207,7 +207,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedBasicAuthEnvironmentVariables"
+                        "from seed import AsyncSeedBasicAuthEnvironmentVariables"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedBasicAuthEnvironmentVariables(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",

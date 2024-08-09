@@ -1,6 +1,5 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedTrace;
 using SeedTrace.Core;
 
 #nullable enable
@@ -19,22 +18,39 @@ public class ProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
-    public async Task<object> CreateProblemAsync(CreateProblemRequest request)
+    public async Task<object> CreateProblemAsync(
+        CreateProblemRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/problem-crud/create",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<object>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<object>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
@@ -42,36 +58,63 @@ public class ProblemClient
     /// </summary>
     public async Task<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
-        CreateProblemRequest request
+        CreateProblemRequest request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/problem-crud/update/{problemId}",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<UpdateProblemResponse>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<UpdateProblemResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
-    public async Task DeleteProblemAsync(string problemId)
+    public async Task DeleteProblemAsync(string problemId, RequestOptions? options = null)
     {
-        await _client.MakeRequestAsync(
+        var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
-                Path = $"/problem-crud/delete/{problemId}"
+                Path = $"/problem-crud/delete/{problemId}",
+                Options = options
             }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 
@@ -79,22 +122,37 @@ public class ProblemClient
     /// Returns default starter files for problem
     /// </summary>
     public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
-        GetDefaultStarterFilesRequest request
+        GetDefaultStarterFilesRequest request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/problem-crud/default-starter-files",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<GetDefaultStarterFilesResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

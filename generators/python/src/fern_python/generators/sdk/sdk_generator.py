@@ -1,15 +1,17 @@
 import json
 import os
+import uuid
 from typing import Literal, Optional, Sequence, Tuple, Union, cast
 from uuid import uuid4
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate, Snippets
-from fern.generator_exec.resources.config import GeneratorConfig
+from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate, Snippets
+from fern.generator_exec.config import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
+from fern_python.codegen.module_manager import ModuleExport
 from fern_python.generator_cli import README_FILENAME, GeneratorCli
 from fern_python.generator_cli.generator_cli import REFERENCE_FILENAME
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
@@ -65,13 +67,15 @@ class SdkGenerator(AbstractGenerator):
         custom_config = SDKCustomConfig.parse_obj(generator_config.custom_config or {})
         if custom_config.package_name is not None:
             return (custom_config.package_name,)
+
+        cleaned_org_name = self._clean_organization_name(generator_config.organization)
         return (
             (
-                generator_config.organization,
+                cleaned_org_name,
                 ir.api_name.snake_case.safe_name,
             )
             if custom_config.use_api_name_in_package
-            else (generator_config.organization,)
+            else (cleaned_org_name,)
         )
 
     def run(
@@ -195,6 +199,28 @@ class SdkGenerator(AbstractGenerator):
             snippet_writer=snippet_writer,
             endpoint_metadata_collector=endpoint_metadata_collector,
             oauth_scheme=oauth_scheme,
+        )
+
+        # Since you can customize the client export, we handle it here to capture the generated
+        # and non-generated cases. If we were to base this off exporting the class declaration
+        # we would have to handle the case where the exported client is not generated.
+        # So we do it here to have a single source of truth for both cases.
+        root_client_name = context.get_class_name_for_exported_root_client()
+        exported_filename = custom_config.client.exported_filename
+        # Remove .py from the end of the filename
+        if exported_filename.endswith(".py"):
+            exported_filename = exported_filename[:-3]
+        project.add_init_exports(
+            path=(),
+            exports=[
+                ModuleExport(
+                    from_=exported_filename,
+                    imports=[
+                        root_client_name,
+                        "Async" + root_client_name,
+                    ],
+                )
+            ],
         )
 
         for subpackage_id in ir.subpackages.keys():
@@ -498,7 +524,10 @@ __version__ = metadata.version("{project._project_config.package_name}")
                 # API Definition ID doesn't matter right now
                 try:
                     fdr_client.templates.register_batch(
-                        org_id=org_id, api_id=api_name, api_definition_id=uuid4(), snippets=snippets
+                        org_id=org_id,
+                        api_id=api_name,
+                        api_definition_id=uuid.UUID(ir.fdr_api_definition_id) or uuid4(),
+                        snippets=snippets,
                     )
                     generator_exec_wrapper.send_update(
                         GeneratorUpdate.factory.log(

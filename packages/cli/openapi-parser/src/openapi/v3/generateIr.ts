@@ -54,14 +54,26 @@ export function generateIr({
     options: ParseOpenAPIOptions;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
+    // We need a context to do extract and validate, but we don't have headers at this time since that's
+    // what we're extracting. So making a dummy context here without the headers to GET the headers.
+    const dummyContext = new OpenAPIV3ParserContext({
+        document: openApi,
+        taskContext,
+        authHeaders: new Set(),
+        options
+    });
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
-            const convertedSecurityScheme = convertSecurityScheme(securityScheme);
+            const convertedSecurityScheme = convertSecurityScheme({
+                document: openApi,
+                securityScheme,
+                context: dummyContext
+            });
             if (convertedSecurityScheme == null) {
                 return [];
             }
-            return [key, convertSecurityScheme(securityScheme)];
+            return [key, convertSecurityScheme({ document: openApi, securityScheme, context: dummyContext })];
         })
     );
     const authHeaders = new Set(

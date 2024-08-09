@@ -1,0 +1,116 @@
+openapi: 3.1.0
+info:
+  title: Test extension `x-fern-access-token-endpoint`.
+  version: 1.0.0
+x-fern-oauth:
+  - flow: clientCredentials
+    clientId:
+      name: username
+      env: MY_CLIENT_ID
+    clientSecret:
+      name: password
+      env: MY_CLIENT_ID
+    tokenPrefix: Bearer
+    getToken:
+      endpoint: GET https://example.com/token
+      request:
+        clientId: $query.client_id
+        clientSecret: $query.client_secret
+        scopes: $query.scopes
+      response:
+        accessToken: $response.access_token
+        refreshToken: $response.refresh_token
+    refreshToken:
+      endpoint: GET /refresh
+      request:
+        refreshToken: $query.refresh_token
+      response:
+        accessToken: $response.access_token
+        refreshToken: $response.refresh_token
+    scopes: ["scope1", "scope2"]
+paths:
+  "/refresh":
+    post:
+      x-fern-sdk-group-name: auth
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: refresh_token
+          required: true
+      responses:
+        '200':
+          description: A real life token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+                required:
+                  - accessToken
+                  - refreshToken
+  "/token":
+    post:
+      x-fern-sdk-group-name: auth
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: clientId
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: clientSecret
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: scopes
+          required: true
+      responses:
+        '200':
+          description: A real life token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+                required:
+                  - accessToken
+                  - refreshToken
+components:
+  securitySchemes:
+    oAuth:
+      type: oauth2
+      description: This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)
+      flows:
+        clientCredentials:
+          tokenUrl: https://example.com/token
+          x-fern-access-token-endpoint:
+            request:
+              clientId: $query.client_id
+              clientSecret: $query.client_secret
+              scopes: $query.scopes
+            response:
+              accessToken: $response.access_token
+              refreshToken: $response.refresh_token
+          refreshUrl: https://example.com/refresh
+          x-fern-refresh-token-endpoint:
+            request:
+              refreshToken: $query.refresh_token
+            response:
+              accessToken: $response.access_token
+              refreshToken: $response.refresh_token
+
+          scopes:
+            scope1: something witty about this scope
+            scope2: something else about this one

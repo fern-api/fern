@@ -34,8 +34,8 @@ class UnionClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
-        from seed.types import Animal_Dog
+        from seed import SeedExhaustive
+        from seed.types.union import Animal_Dog
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -83,8 +83,8 @@ class AsyncUnionClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
-        from seed.types import Animal_Dog
+        from seed import AsyncSeedExhaustive
+        from seed.types.union import Animal_Dog
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",

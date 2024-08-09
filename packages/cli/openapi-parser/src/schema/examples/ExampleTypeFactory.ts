@@ -551,6 +551,8 @@ export class ExampleTypeFactory {
                 const matches = schema.schema._visit({
                     int: () => typeof fullExample === "number",
                     int64: () => typeof fullExample === "number",
+                    uint: () => typeof fullExample === "number",
+                    uint64: () => typeof fullExample === "number",
                     float: () => typeof fullExample === "number",
                     double: () => typeof fullExample === "number",
                     string: () => typeof fullExample === "string",
@@ -773,6 +775,22 @@ export class ExampleTypeFactory {
                     return PrimitiveExample.int64(schema.example);
                 } else {
                     return PrimitiveExample.int64(Examples.INT64);
+                }
+            case "uint":
+                if (example != null && typeof example === "number") {
+                    return PrimitiveExample.uint(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.uint(schema.example);
+                } else {
+                    return PrimitiveExample.uint(Examples.UINT);
+                }
+            case "uint64":
+                if (example != null && typeof example === "number") {
+                    return PrimitiveExample.uint64(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.uint64(schema.example);
+                } else {
+                    return PrimitiveExample.uint64(Examples.UINT64);
                 }
             default:
                 assertNever(schema);

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 
 #nullable enable
 
@@ -8,8 +7,8 @@ namespace SeedTrace;
 public record BuildingExecutorResponse
 {
     [JsonPropertyName("submissionId")]
-    public required Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("status")]
-    public required ExecutionSessionStatus Status { get; init; }
+    public required ExecutionSessionStatus Status { get; set; }
 }

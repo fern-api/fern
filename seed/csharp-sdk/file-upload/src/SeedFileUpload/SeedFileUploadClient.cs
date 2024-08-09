@@ -1,4 +1,4 @@
-using SeedFileUpload;
+using System;
 using SeedFileUpload.Core;
 
 #nullable enable
@@ -13,6 +13,7 @@ public partial class SeedFileUploadClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

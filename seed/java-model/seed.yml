@@ -30,3 +30,4 @@ allowedFailures:
   - reserved-keywords
   - trace
   - unions
+  - alias-extends

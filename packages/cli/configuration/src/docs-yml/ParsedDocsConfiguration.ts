@@ -2,7 +2,7 @@ import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
-import { DocsInstance, VersionAvailability, ExperimentalConfig } from "./schemas";
+import { DocsInstance, ExperimentalConfig, VersionAvailability } from "./schemas";
 
 export interface ParsedDocsConfiguration {
     instances: DocsInstance[];
@@ -28,6 +28,8 @@ export interface ParsedDocsConfiguration {
     colors: DocsV1Write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
     layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
+    defaultLanguage: DocsV1Write.ProgrammingLanguage | undefined;
+    analyticsConfig: DocsV1Write.AnalyticsConfig | undefined;
 
     /* integrations */
     integrations: DocsV1Write.IntegrationsConfig | undefined;
@@ -191,6 +193,7 @@ export declare namespace DocsNavigationItem {
         absolutePath: AbsoluteFilePath;
         slug: string | undefined;
         hidden: boolean | undefined;
+        noindex: boolean | undefined;
     }
 
     export interface Section {

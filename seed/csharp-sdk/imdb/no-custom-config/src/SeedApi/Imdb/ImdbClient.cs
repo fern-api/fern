@@ -1,6 +1,5 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedApi;
 using SeedApi.Core;
 
 #nullable enable
@@ -19,34 +18,81 @@ public class ImdbClient
     /// <summary>
     /// Add a movie to the database
     /// </summary>
-    public async Task<string> CreateMovieAsync(CreateMovieRequest request)
+    public async Task<string> CreateMovieAsync(
+        CreateMovieRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/movies/create-movie",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedApiException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
-    public async Task<Movie> GetMovieAsync(string movieId)
+    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = $"/movies/{movieId}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"/movies/{movieId}",
+                Options = options
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Movie>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<Movie>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedApiException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 404:
+                    throw new MovieDoesNotExistError(JsonUtils.Deserialize<string>(responseBody));
+            }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new SeedApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

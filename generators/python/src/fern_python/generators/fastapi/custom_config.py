@@ -1,4 +1,4 @@
-from typing import Literal, Optional
+from typing import List, Literal, Optional, Union
 
 import pydantic
 from fern_python.generators.pydantic_model.custom_config import (
@@ -14,5 +14,8 @@ class FastApiPydanticModelCustomConfig(BasePydanticModelCustomConfig):
 class FastAPICustomConfig(pydantic.BaseModel):
     include_validators: bool = False
     skip_formatting: bool = False
-    async_handlers: bool = False
+    async_handlers: Union[bool, List[str]] = False
     pydantic_config: FastApiPydanticModelCustomConfig = FastApiPydanticModelCustomConfig()
+
+    class Config:
+        extra = pydantic.Extra.forbid

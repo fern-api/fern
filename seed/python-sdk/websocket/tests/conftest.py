@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedWebsocket, SeedWebsocket
+from seed import AsyncSeedWebsocket, SeedWebsocket
 
 
 @pytest.fixture

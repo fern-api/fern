@@ -13,10 +13,10 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedMixedCase"
+                    "from seed import SeedMixedCase"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -52,10 +52,10 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedMixedCase"
+                        "from seed import AsyncSeedMixedCase"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -103,10 +103,10 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedMixedCase"
+                    "from seed import SeedMixedCase"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -158,10 +158,10 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedMixedCase"
+                        "from seed import AsyncSeedMixedCase"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .bar import Bar as resources_types_types_bar_Bar
 from .foo import Foo as resources_types_types_foo_Foo
 
@@ -65,6 +65,3 @@ class _UnionWithoutKey:
 
     class Bar(resources_types_types_bar_Bar):
         type: typing.Literal["bar"] = "bar"
-
-
-update_forward_refs(UnionWithoutKey)

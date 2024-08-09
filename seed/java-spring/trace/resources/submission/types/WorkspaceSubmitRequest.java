@@ -148,7 +148,7 @@ public final class WorkspaceSubmitRequest {
 
     @java.lang.Override
     public _FinalStage userId(String userId) {
-      this.userId = Optional.of(userId);
+      this.userId = Optional.ofNullable(userId);
       return this;
     }
 

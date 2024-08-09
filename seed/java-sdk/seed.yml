@@ -69,3 +69,4 @@ allowedFailures:
   - trace
   - unions
   - query-parameters
+  - alias-extends

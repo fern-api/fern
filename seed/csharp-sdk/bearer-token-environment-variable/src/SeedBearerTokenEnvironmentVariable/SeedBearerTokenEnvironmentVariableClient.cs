@@ -1,4 +1,4 @@
-using SeedBearerTokenEnvironmentVariable;
+using System;
 using SeedBearerTokenEnvironmentVariable.Core;
 
 #nullable enable
@@ -24,6 +24,7 @@ public partial class SeedBearerTokenEnvironmentVariableClient
                 { "Authorization", $"Bearer {apiKey}" },
                 { "X-Fern-Language", "C#" },
             },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

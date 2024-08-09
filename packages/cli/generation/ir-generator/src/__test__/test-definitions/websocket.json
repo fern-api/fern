@@ -1,4 +1,5 @@
 {
+    "fdrApiDefinitionId": null,
     "apiVersion": null,
     "apiName": {
         "originalName": "websocket",
@@ -229,7 +230,9 @@
                                         }
                                     }
                                 },
-                                "typeId": "type_realtime:Model"
+                                "typeId": "type_realtime:Model",
+                                "default": null,
+                                "inline": null
                             }
                         }
                     },
@@ -486,6 +489,7 @@
         }
     },
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {
         "subpackage_realtime": {
             "name": {
@@ -587,7 +591,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

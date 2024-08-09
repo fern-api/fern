@@ -46,6 +46,7 @@ class ObjectClient:
         Parameters
         ----------
         string : typing.Optional[str]
+            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
 
         integer : typing.Optional[int]
 
@@ -83,7 +84,7 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -157,7 +158,7 @@ class ObjectClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -199,7 +200,7 @@ class ObjectClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -250,8 +251,8 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed.client import SeedExhaustive
-        from seed.types import ObjectWithOptionalField
+        from seed import SeedExhaustive
+        from seed.types.object import ObjectWithOptionalField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -326,8 +327,8 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed.client import SeedExhaustive
-        from seed.types import ObjectWithOptionalField
+        from seed import SeedExhaustive
+        from seed.types.object import ObjectWithOptionalField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -397,8 +398,11 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed.client import SeedExhaustive
-        from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
+        from seed import SeedExhaustive
+        from seed.types.object import (
+            NestedObjectWithRequiredField,
+            ObjectWithOptionalField,
+        )
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -475,6 +479,7 @@ class AsyncObjectClient:
         Parameters
         ----------
         string : typing.Optional[str]
+            This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
 
         integer : typing.Optional[int]
 
@@ -513,7 +518,7 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -595,7 +600,7 @@ class AsyncObjectClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -645,7 +650,7 @@ class AsyncObjectClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -703,8 +708,8 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
-        from seed.types import ObjectWithOptionalField
+        from seed import AsyncSeedExhaustive
+        from seed.types.object import ObjectWithOptionalField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -786,8 +791,8 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
-        from seed.types import ObjectWithOptionalField
+        from seed import AsyncSeedExhaustive
+        from seed.types.object import ObjectWithOptionalField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",
@@ -864,8 +869,11 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
-        from seed.types import NestedObjectWithRequiredField, ObjectWithOptionalField
+        from seed import AsyncSeedExhaustive
+        from seed.types.object import (
+            NestedObjectWithRequiredField,
+            ObjectWithOptionalField,
+        )
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",

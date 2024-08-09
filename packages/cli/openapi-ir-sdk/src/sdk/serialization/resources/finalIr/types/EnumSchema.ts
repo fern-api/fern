@@ -9,6 +9,7 @@ import * as core from "../../../../core";
 export const EnumSchema: core.serialization.ObjectSchema<serializers.EnumSchema.Raw, FernOpenapiIr.EnumSchema> =
     core.serialization
         .objectWithoutOptionalProperties({
+            default: core.serialization.lazyObject(async () => (await import("../../..")).EnumValue).optional(),
             values: core.serialization.list(
                 core.serialization.lazyObject(async () => (await import("../../..")).EnumValue)
             ),
@@ -24,6 +25,7 @@ export declare namespace EnumSchema {
             serializers.WithName.Raw,
             serializers.WithSdkGroupName.Raw,
             serializers.WithAvailability.Raw {
+        default?: serializers.EnumValue.Raw | null;
         values: serializers.EnumValue.Raw[];
     }
 }

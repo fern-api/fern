@@ -1166,17 +1166,15 @@ Log.d("TAG", file.toString())
               "body": {
                 "properties": {
                   "check_URL_duplicates": {
-                    "default": undefined,
+                    "default": "0",
                     "docs": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
 ",
                     "type": "optional<FromUrlUploadRequestCheckUrlDuplicates>",
-                    "validation": undefined,
                   },
                   "expire": "optional<root.ExpireType>",
                   "filename": {
-                    "default": undefined,
                     "docs": "Sets the file name of the resource fetched from the source URL.
 If not defined, the file name is obtained from either HTTP
 response headers or the \`source_url\`'s path.
@@ -1185,18 +1183,15 @@ response headers or the \`source_url\`'s path.
 \`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._\`.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "pub_key": "root.ProjectPublicKeyType",
                   "save_URL_duplicates": {
-                    "default": undefined,
                     "docs": "Determines if the requested \`source_url\` should be kept in the history of
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
 to the value of the \`check_URL_duplicates\` parameter.
 ",
                     "type": "optional<FromUrlUploadRequestSaveUrlDuplicates>",
-                    "validation": undefined,
                   },
                   "signature": "optional<root.SignatureType>",
                   "source_url": {
@@ -2411,8 +2406,6 @@ the value is the unique ID of the file on our systems.
 ",
           "properties": {
             "filename": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uuid",
@@ -2424,6 +2417,7 @@ the value is the unique ID of the file on our systems.
           },
         },
         "FromUrlUploadRequestCheckUrlDuplicates": {
+          "default": "0",
           "docs": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
@@ -3408,10 +3402,8 @@ to the value of the \`check_URL_duplicates\` parameter.
         "properties": {
           "image": "optional<SchemasImageInfo>",
           "mime": {
-            "default": undefined,
             "docs": "MIME type.",
             "type": "optional<ContentInfoMime>",
-            "validation": undefined,
           },
           "video": "optional<VideoInfo>",
         },
@@ -3557,10 +3549,8 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "type": "string",
           },
           "s3_bucket": {
-            "default": undefined,
             "docs": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "size": {
             "docs": "File's size in bytes.",
@@ -3587,28 +3577,22 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         "docs": undefined,
         "properties": {
           "error": {
-            "default": undefined,
             "docs": "Human readable description of the issue with the fetch/upload task.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "error_code": {
-            "default": undefined,
             "docs": "Machine readable error code.
 
 Note: See the [Errors > FromURL upload errors](#tag/Errors) section of this
 page for a full list of all possible error codes.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The system failed to fetch and/or upload the file.
 ",
             "type": "optional<literal<"error">>",
-            "validation": undefined,
           },
         },
       },
@@ -3625,21 +3609,16 @@ page for a full list of all possible error codes.
         "docs": undefined,
         "properties": {
           "done": {
-            "default": undefined,
             "docs": "How many bytes of the file have been fetched so far.
 ",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The system is fetching/uploading the file.
 ",
             "type": "optional<literal<"progress">>",
-            "validation": undefined,
           },
           "total": {
-            "default": undefined,
             "docs": "The expected size of the fetched file (in bytes).
 
 **Note:** the value can be missing if the server we are fetching the file from
@@ -3647,7 +3626,6 @@ does not provide the information or if the server is returning the file in, for
 example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).
 ",
             "type": "optional<double>",
-            "validation": undefined,
           },
         },
       },
@@ -3675,10 +3653,8 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         ],
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The file has been fetched/uploaded successfully.",
             "type": "optional<literal<"success">>",
-            "validation": undefined,
           },
         },
       },
@@ -3686,7 +3662,6 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         "docs": undefined,
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The system does not have information about the task.
 
 Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
@@ -3694,7 +3669,6 @@ period of time only. The endpoint can return the status \`unknown\` for the task
 that are tool old (or that have not been created at all).
 ",
             "type": "optional<literal<"unknown">>",
-            "validation": undefined,
           },
         },
       },
@@ -3702,11 +3676,9 @@ that are tool old (or that have not been created at all).
         "docs": undefined,
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The system is preparing to handle the request.
 ",
             "type": "optional<literal<"waiting">>",
-            "validation": undefined,
           },
         },
       },
@@ -3778,7 +3750,6 @@ that are tool old (or that have not been created at all).
         "docs": "\`/from_url/\` upload response.",
         "properties": {
           "token": {
-            "default": undefined,
             "docs": "Token to identify a \`/from_url/\` request.",
             "type": "optional<string>",
             "validation": {
@@ -3807,7 +3778,6 @@ that are tool old (or that have not been created at all).
         "docs": "File group information object.",
         "properties": {
           "cdn_url": {
-            "default": undefined,
             "docs": "Group's CDN URL.",
             "type": "optional<string>",
             "validation": {
@@ -3818,39 +3788,28 @@ that are tool old (or that have not been created at all).
             },
           },
           "datetime_created": {
-            "default": undefined,
             "docs": "ISO-8601 date and time when the group was created.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "datetime_stored": {
             "availability": "deprecated",
-            "default": undefined,
             "docs": "ISO-8601 date and time when the group was marked as stored.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "files": {
-            "default": undefined,
             "docs": "The list of files in the group. An array may contain null values if a file has been removed.
 ",
             "type": "optional<list<unknown>>",
-            "validation": undefined,
           },
           "files_count": {
-            "default": undefined,
             "docs": "Number of the files in the group.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Group's unique ID.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details.",
             "type": "optional<string>",
             "validation": {
@@ -3876,33 +3835,26 @@ that are tool old (or that have not been created at all).
             "type": "ImageInfoColorMode",
           },
           "datetime_original": {
-            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "dpi": {
-            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
-            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<ImageInfoGeoLocation>",
-            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
-            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
             "validation": {
@@ -3956,34 +3908,24 @@ that are tool old (or that have not been created at all).
         "docs": "Video metadata.",
         "properties": {
           "audio": {
-            "default": undefined,
             "docs": "Audio stream's metadata.",
             "type": "optional<LegacyVideoInfoAudio>",
-            "validation": undefined,
           },
           "bitrate": {
-            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "duration": {
-            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Video file's format.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "video": {
-            "default": undefined,
             "docs": "Video stream's metadata.",
             "type": "optional<LegacyVideoInfoVideo>",
-            "validation": undefined,
           },
         },
       },
@@ -3991,28 +3933,20 @@ that are tool old (or that have not been created at all).
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "channels": {
-            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "sample_rate": {
-            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
         },
       },
@@ -4020,42 +3954,30 @@ that are tool old (or that have not been created at all).
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Video stream codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "frame_rate": {
-            "default": undefined,
             "docs": "Video stream's frame rate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "height": {
-            "default": undefined,
             "docs": "Video stream's image height.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "width": {
-            "default": undefined,
             "docs": "Video stream's image width.",
             "type": "optional<double>",
-            "validation": undefined,
           },
         },
       },
       "Metadata": {
-        "default": undefined,
         "docs": "Arbitrary metadata associated with a file.",
         "type": "optional<map<string, unknown>>",
-        "validation": undefined,
       },
       "MetadataValue": {
         "docs": "Arbitrary metadata associated with the file.
@@ -4203,33 +4125,26 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "SchemasImageInfoColorMode",
           },
           "datetime_original": {
-            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "dpi": {
-            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
-            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<SchemasImageInfoGeoLocation>",
-            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
-            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
             "validation": {
@@ -4306,6 +4221,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         "type": "string",
       },
       "StoreType": {
+        "default": "auto",
         "docs": "Determines if an uploaded file should be marked as temporary or permanent.
 
 The parameter can have the following values:
@@ -4377,16 +4293,12 @@ change the value to \`auto\`.
         "properties": {
           "audio": "list<VideoInfoAudioItem>",
           "bitrate": {
-            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "duration": {
-            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Video file's format.",
@@ -4399,28 +4311,20 @@ change the value to \`auto\`.
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "channels": {
-            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "sample_rate": {
-            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
         },
       },
@@ -4428,16 +4332,12 @@ change the value to \`auto\`.
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Video stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "frame_rate": {
             "docs": "Video stream's frame rate.",
@@ -5635,17 +5535,15 @@ Log.d("TAG", file.toString())
               "body": {
                 "properties": {
                   "check_URL_duplicates": {
-                    "default": undefined,
+                    "default": "0",
                     "docs": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
 ",
                     "type": "optional<FromUrlUploadRequestCheckUrlDuplicates>",
-                    "validation": undefined,
                   },
                   "expire": "optional<root.ExpireType>",
                   "filename": {
-                    "default": undefined,
                     "docs": "Sets the file name of the resource fetched from the source URL.
 If not defined, the file name is obtained from either HTTP
 response headers or the \`source_url\`'s path.
@@ -5654,18 +5552,15 @@ response headers or the \`source_url\`'s path.
 \`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._\`.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "pub_key": "root.ProjectPublicKeyType",
                   "save_URL_duplicates": {
-                    "default": undefined,
                     "docs": "Determines if the requested \`source_url\` should be kept in the history of
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
 to the value of the \`check_URL_duplicates\` parameter.
 ",
                     "type": "optional<FromUrlUploadRequestSaveUrlDuplicates>",
-                    "validation": undefined,
                   },
                   "signature": "optional<root.SignatureType>",
                   "source_url": {
@@ -6880,8 +6775,6 @@ the value is the unique ID of the file on our systems.
 ",
           "properties": {
             "filename": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uuid",
@@ -6893,6 +6786,7 @@ the value is the unique ID of the file on our systems.
           },
         },
         "FromUrlUploadRequestCheckUrlDuplicates": {
+          "default": "0",
           "docs": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
@@ -7109,10 +7003,8 @@ to the value of the \`check_URL_duplicates\` parameter.
         "properties": {
           "image": "optional<SchemasImageInfo>",
           "mime": {
-            "default": undefined,
             "docs": "MIME type.",
             "type": "optional<ContentInfoMime>",
-            "validation": undefined,
           },
           "video": "optional<VideoInfo>",
         },
@@ -7228,10 +7120,8 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "type": "string",
           },
           "s3_bucket": {
-            "default": undefined,
             "docs": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "size": {
             "docs": "File's size in bytes.",
@@ -7258,28 +7148,22 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         "docs": undefined,
         "properties": {
           "error": {
-            "default": undefined,
             "docs": "Human readable description of the issue with the fetch/upload task.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "error_code": {
-            "default": undefined,
             "docs": "Machine readable error code.
 
 Note: See the [Errors > FromURL upload errors](#tag/Errors) section of this
 page for a full list of all possible error codes.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The system failed to fetch and/or upload the file.
 ",
             "type": "optional<literal<"error">>",
-            "validation": undefined,
           },
         },
       },
@@ -7296,21 +7180,16 @@ page for a full list of all possible error codes.
         "docs": undefined,
         "properties": {
           "done": {
-            "default": undefined,
             "docs": "How many bytes of the file have been fetched so far.
 ",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The system is fetching/uploading the file.
 ",
             "type": "optional<literal<"progress">>",
-            "validation": undefined,
           },
           "total": {
-            "default": undefined,
             "docs": "The expected size of the fetched file (in bytes).
 
 **Note:** the value can be missing if the server we are fetching the file from
@@ -7318,7 +7197,6 @@ does not provide the information or if the server is returning the file in, for
 example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).
 ",
             "type": "optional<double>",
-            "validation": undefined,
           },
         },
       },
@@ -7329,10 +7207,8 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         ],
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The file has been fetched/uploaded successfully.",
             "type": "optional<literal<"success">>",
-            "validation": undefined,
           },
         },
       },
@@ -7340,7 +7216,6 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         "docs": undefined,
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The system does not have information about the task.
 
 Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
@@ -7348,7 +7223,6 @@ period of time only. The endpoint can return the status \`unknown\` for the task
 that are tool old (or that have not been created at all).
 ",
             "type": "optional<literal<"unknown">>",
-            "validation": undefined,
           },
         },
       },
@@ -7356,11 +7230,9 @@ that are tool old (or that have not been created at all).
         "docs": undefined,
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The system is preparing to handle the request.
 ",
             "type": "optional<literal<"waiting">>",
-            "validation": undefined,
           },
         },
       },
@@ -7379,7 +7251,6 @@ that are tool old (or that have not been created at all).
         "docs": "\`/from_url/\` upload response.",
         "properties": {
           "token": {
-            "default": undefined,
             "docs": "Token to identify a \`/from_url/\` request.",
             "type": "optional<string>",
             "validation": {
@@ -7408,7 +7279,6 @@ that are tool old (or that have not been created at all).
         "docs": "File group information object.",
         "properties": {
           "cdn_url": {
-            "default": undefined,
             "docs": "Group's CDN URL.",
             "type": "optional<string>",
             "validation": {
@@ -7419,39 +7289,28 @@ that are tool old (or that have not been created at all).
             },
           },
           "datetime_created": {
-            "default": undefined,
             "docs": "ISO-8601 date and time when the group was created.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "datetime_stored": {
             "availability": "deprecated",
-            "default": undefined,
             "docs": "ISO-8601 date and time when the group was marked as stored.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "files": {
-            "default": undefined,
             "docs": "The list of files in the group. An array may contain null values if a file has been removed.
 ",
             "type": "optional<list<unknown>>",
-            "validation": undefined,
           },
           "files_count": {
-            "default": undefined,
             "docs": "Number of the files in the group.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Group's unique ID.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details.",
             "type": "optional<string>",
             "validation": {
@@ -7477,33 +7336,26 @@ that are tool old (or that have not been created at all).
             "type": "ImageInfoColorMode",
           },
           "datetime_original": {
-            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "dpi": {
-            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
-            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<ImageInfoGeoLocation>",
-            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
-            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
             "validation": {
@@ -7557,34 +7409,24 @@ that are tool old (or that have not been created at all).
         "docs": "Video metadata.",
         "properties": {
           "audio": {
-            "default": undefined,
             "docs": "Audio stream's metadata.",
             "type": "optional<LegacyVideoInfoAudio>",
-            "validation": undefined,
           },
           "bitrate": {
-            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "duration": {
-            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Video file's format.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "video": {
-            "default": undefined,
             "docs": "Video stream's metadata.",
             "type": "optional<LegacyVideoInfoVideo>",
-            "validation": undefined,
           },
         },
       },
@@ -7592,28 +7434,20 @@ that are tool old (or that have not been created at all).
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "channels": {
-            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "sample_rate": {
-            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
         },
       },
@@ -7621,42 +7455,30 @@ that are tool old (or that have not been created at all).
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Video stream codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "frame_rate": {
-            "default": undefined,
             "docs": "Video stream's frame rate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "height": {
-            "default": undefined,
             "docs": "Video stream's image height.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "width": {
-            "default": undefined,
             "docs": "Video stream's image width.",
             "type": "optional<double>",
-            "validation": undefined,
           },
         },
       },
       "Metadata": {
-        "default": undefined,
         "docs": "Arbitrary metadata associated with a file.",
         "type": "optional<map<string, unknown>>",
-        "validation": undefined,
       },
       "MetadataValue": {
         "docs": "Arbitrary metadata associated with the file.
@@ -7736,33 +7558,26 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "SchemasImageInfoColorMode",
           },
           "datetime_original": {
-            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "dpi": {
-            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
-            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<SchemasImageInfoGeoLocation>",
-            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
-            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
             "validation": {
@@ -7839,6 +7654,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         "type": "string",
       },
       "StoreType": {
+        "default": "auto",
         "docs": "Determines if an uploaded file should be marked as temporary or permanent.
 
 The parameter can have the following values:
@@ -7910,16 +7726,12 @@ change the value to \`auto\`.
         "properties": {
           "audio": "list<VideoInfoAudioItem>",
           "bitrate": {
-            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "duration": {
-            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Video file's format.",
@@ -7932,28 +7744,20 @@ change the value to \`auto\`.
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "channels": {
-            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "sample_rate": {
-            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
         },
       },
@@ -7961,16 +7765,12 @@ change the value to \`auto\`.
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Video stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "frame_rate": {
             "docs": "Video stream's frame rate.",

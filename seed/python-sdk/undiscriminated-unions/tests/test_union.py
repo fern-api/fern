@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedUndiscriminatedUnions, SeedUndiscriminatedUnions
+from seed import AsyncSeedUndiscriminatedUnions, SeedUndiscriminatedUnions
 
 from .utilities import validate_response
 

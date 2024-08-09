@@ -1,4 +1,4 @@
-using SeedLiteral;
+using System;
 using SeedLiteral.Core;
 
 #nullable enable
@@ -18,6 +18,7 @@ public partial class SeedLiteralClient
                 { "X-API-Enable-Audit-Logging", true.ToString() },
                 { "X-Fern-Language", "C#" },
             },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Headers = new HeadersClient(_client);

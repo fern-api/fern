@@ -13,10 +13,13 @@ import {
     Name,
     NameAndWireValue,
     ObjectTypeDeclaration,
+    PrimitiveTypeV1,
     TypeReference,
+    UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { FdrSnippetTemplate } from "@fern-fern/snippet-sdk";
+import * as FDRAPIV1Read from "@fern-fern/snippet-sdk/api/resources/api/resources/v1/resources/read";
 import { GetReferenceOpts, getTextOfTsNode, NpmPackage, PackageId } from "@fern-typescript/commons";
 import { GeneratedEnumType, SdkContext } from "@fern-typescript/contexts";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
@@ -169,6 +172,115 @@ export class TemplateGenerator {
         });
     }
 
+    private convertIRTypeReferenceToFdrTypeReference(typeReference: TypeReference): FDRAPIV1Read.TypeReference {
+        return typeReference._visit<FDRAPIV1Read.TypeReference>({
+            primitive: (primitive) =>
+                FDRAPIV1Read.TypeReference.primitive(
+                    PrimitiveTypeV1._visit<FDRAPIV1Read.PrimitiveType>(primitive.v1, {
+                        integer: () => FDRAPIV1Read.PrimitiveType.integer({}),
+                        string: () => FDRAPIV1Read.PrimitiveType.string({}),
+                        boolean: () => FDRAPIV1Read.PrimitiveType.boolean({}),
+                        double: () => FDRAPIV1Read.PrimitiveType.double({}),
+                        date: () => FDRAPIV1Read.PrimitiveType.date({}),
+                        dateTime: () => FDRAPIV1Read.PrimitiveType.datetime({}),
+                        long: () => FDRAPIV1Read.PrimitiveType.long({}),
+                        uuid: () => FDRAPIV1Read.PrimitiveType.uuid({}),
+                        bigInteger: () => FDRAPIV1Read.PrimitiveType.bigInteger({}),
+                        base64: () => FDRAPIV1Read.PrimitiveType.base64({}),
+                        uint: () => FDRAPIV1Read.PrimitiveType.uint(),
+                        uint64: () => FDRAPIV1Read.PrimitiveType.uint64(),
+                        float: () => FDRAPIV1Read.PrimitiveType.double({}),
+                        _other: () => {
+                            throw new Error("Unknown primitive type: " + primitive.v1);
+                        }
+                    })
+                ),
+            container: (container) =>
+                container._visit<FDRAPIV1Read.TypeReference>({
+                    list: (listType) =>
+                        FDRAPIV1Read.TypeReference.list({
+                            itemType: this.convertIRTypeReferenceToFdrTypeReference(listType)
+                        }),
+                    set: (setType) =>
+                        FDRAPIV1Read.TypeReference.set({
+                            itemType: this.convertIRTypeReferenceToFdrTypeReference(setType)
+                        }),
+                    map: (mapType) =>
+                        FDRAPIV1Read.TypeReference.map({
+                            keyType: this.convertIRTypeReferenceToFdrTypeReference(mapType.keyType),
+                            valueType: this.convertIRTypeReferenceToFdrTypeReference(mapType.valueType)
+                        }),
+                    optional: (optionalType) =>
+                        FDRAPIV1Read.TypeReference.optional({
+                            itemType: this.convertIRTypeReferenceToFdrTypeReference(optionalType)
+                        }),
+                    literal: (literalValue) =>
+                        FDRAPIV1Read.TypeReference.literal(
+                            literalValue._visit<FDRAPIV1Read.LiteralType>({
+                                boolean: (bool) => FDRAPIV1Read.LiteralType.booleanLiteral(bool),
+                                string: (str) => FDRAPIV1Read.LiteralType.stringLiteral(str),
+                                _other: () => {
+                                    throw new Error("Unknown literal type: " + literalValue.type);
+                                }
+                            })
+                        ),
+                    _other: () => FDRAPIV1Read.TypeReference.unknown()
+                }),
+            named: (named) => FDRAPIV1Read.TypeReference.id({ value: named.typeId }),
+            unknown: () => FDRAPIV1Read.TypeReference.unknown(),
+            _other: () => FDRAPIV1Read.TypeReference.unknown()
+        });
+    }
+
+    private getUndiscriminatedUnionTemplate({
+        uutd,
+        name,
+        location,
+        wireOrOriginalName,
+        nameBreadcrumbs,
+        indentationLevel
+    }: {
+        uutd: UndiscriminatedUnionTypeDeclaration;
+        name: string | undefined;
+        location: FdrSnippetTemplate.PayloadLocation;
+        wireOrOriginalName: string | undefined;
+        nameBreadcrumbs: string[] | undefined;
+        indentationLevel: number;
+    }): FdrSnippetTemplate.Template | undefined {
+        const childIndentationLevel = indentationLevel + 1;
+
+        const memberTemplates: FdrSnippetTemplate.UnionTemplateMember[] = [];
+        for (const member of uutd.members) {
+            const memberTemplate = this.getTemplateFromTypeReference({
+                typeReference: member.type,
+                name: undefined,
+                location: FdrSnippetTemplate.PayloadLocation.Relative,
+                wireOrOriginalName: undefined,
+                nameBreadcrumbs: undefined,
+                indentationLevel: childIndentationLevel,
+                isObjectInlined: true,
+                includeLiteralTemplates: true
+            });
+
+            if (memberTemplate != null) {
+                memberTemplates.push({
+                    template: memberTemplate,
+                    type: this.convertIRTypeReferenceToFdrTypeReference(member.type)
+                });
+            }
+        }
+        return FdrSnippetTemplate.Template.unionV2({
+            imports: [],
+            isOptional: true,
+            templateString: this.getAsNamedParameterTemplate(name, `${TEMPLATE_SENTINEL}`),
+            members: memberTemplates,
+            templateInput: FdrSnippetTemplate.TemplateInput.payload({
+                location,
+                path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
+            })
+        });
+    }
+
     private getUnionTemplate({
         utd,
         name,
@@ -307,7 +419,7 @@ export class TemplateGenerator {
                 wireOrOriginalName: prop.name.wireValue,
                 nameBreadcrumbs: childBreadcrumbs,
                 indentationLevel: childIndentationLevel,
-                isObjectInlined
+                isObjectInlined: false
             });
 
             if (propInput != null) {
@@ -334,7 +446,8 @@ export class TemplateGenerator {
         wireOrOriginalName,
         nameBreadcrumbs,
         indentationLevel,
-        isObjectInlined
+        isObjectInlined,
+        includeLiteralTemplates
     }: {
         typeName: DeclaredTypeName;
         name: string | undefined;
@@ -343,6 +456,7 @@ export class TemplateGenerator {
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
         isObjectInlined: boolean;
+        includeLiteralTemplates?: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         const td = this.endpointContext.type.getTypeDeclaration(typeName);
         const generatedType = this.endpointContext.type.getGeneratedType(typeName);
@@ -365,7 +479,8 @@ export class TemplateGenerator {
                     wireOrOriginalName,
                     nameBreadcrumbs,
                     indentationLevel,
-                    isObjectInlined
+                    isObjectInlined,
+                    includeLiteralTemplates
                 }),
             object: (otd) =>
                 this.getObjectTemplate({
@@ -377,7 +492,6 @@ export class TemplateGenerator {
                     indentationLevel,
                     isObjectInlined
                 }),
-            // This is likely just calling get object template on every member
             union: (utd) =>
                 this.getUnionTemplate({
                     utd,
@@ -387,7 +501,15 @@ export class TemplateGenerator {
                     nameBreadcrumbs,
                     indentationLevel
                 }),
-            undiscriminatedUnion: () => undefined,
+            undiscriminatedUnion: (uutd) =>
+                this.getUndiscriminatedUnionTemplate({
+                    uutd,
+                    name,
+                    location,
+                    wireOrOriginalName,
+                    nameBreadcrumbs,
+                    indentationLevel
+                }),
             _other: () => undefined
         });
     }
@@ -399,7 +521,8 @@ export class TemplateGenerator {
         wireOrOriginalName,
         nameBreadcrumbs,
         indentationLevel,
-        isObjectInlined
+        isObjectInlined,
+        includeLiteralTemplates
     }: {
         containerType: ContainerType;
         name: string | undefined;
@@ -408,6 +531,7 @@ export class TemplateGenerator {
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
         isObjectInlined: boolean;
+        includeLiteralTemplates?: boolean;
     }): FdrSnippetTemplate.Template | undefined {
         const childIndentationLevel = indentationLevel + 1;
         const selfTabs = "\t".repeat(indentationLevel);
@@ -422,7 +546,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
                 return innerTemplate != null
                     ? FdrSnippetTemplate.Template.iterable({
@@ -449,7 +573,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
 
                 return innerTemplate != null
@@ -477,7 +601,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
                 const valueTemplate = this.getTemplateFromTypeReference({
                     typeReference: kvType.valueType,
@@ -486,7 +610,7 @@ export class TemplateGenerator {
                     wireOrOriginalName: undefined,
                     nameBreadcrumbs: undefined,
                     indentationLevel: childIndentationLevel,
-                    isObjectInlined
+                    isObjectInlined: false
                 });
 
                 return keyTemplate != null && valueTemplate != null
@@ -518,7 +642,28 @@ export class TemplateGenerator {
                     indentationLevel,
                     isObjectInlined
                 }),
-            literal: () => undefined,
+            literal: (literal) => {
+                const literalValue = literal._visit<string>({
+                    boolean: (bool) => bool.toString(),
+                    string: (str) => `"${str}"`,
+                    _other: () => {
+                        throw new Error("Unknown literal type: " + literal.type);
+                    }
+                });
+                return includeLiteralTemplates
+                    ? FdrSnippetTemplate.Template.generic({
+                          imports: [],
+                          templateString: name != null ? `${name}: ${literalValue}` : literalValue,
+                          isOptional: true,
+                          templateInputs: [
+                              FdrSnippetTemplate.TemplateInput.payload({
+                                  location,
+                                  path: this.getBreadCrumbPath({ wireOrOriginalName, nameBreadcrumbs })
+                              })
+                          ]
+                      })
+                    : undefined;
+            },
             _other: () => undefined
         });
     }
@@ -530,7 +675,8 @@ export class TemplateGenerator {
         wireOrOriginalName,
         nameBreadcrumbs,
         indentationLevel,
-        isObjectInlined
+        isObjectInlined,
+        includeLiteralTemplates
     }: {
         typeReference: TypeReference;
         name: string | undefined;
@@ -539,11 +685,8 @@ export class TemplateGenerator {
         nameBreadcrumbs: string[] | undefined;
         indentationLevel: number;
         isObjectInlined: boolean;
+        includeLiteralTemplates?: boolean;
     }): FdrSnippetTemplate.Template | undefined {
-        // Do not insert literals into templates
-        if (typeReference.type === "container" && typeReference.container.type === "literal") {
-            return;
-        }
         // TODO: Implement a better way to handle type -> template relation to better handle
         // circular references
         if (indentationLevel > 10) {
@@ -561,7 +704,8 @@ export class TemplateGenerator {
                     wireOrOriginalName,
                     nameBreadcrumbs,
                     indentationLevel,
-                    isObjectInlined
+                    isObjectInlined,
+                    includeLiteralTemplates
                 }),
             named: (typeName) =>
                 this.getNamedTypeTemplate({
@@ -571,7 +715,8 @@ export class TemplateGenerator {
                     wireOrOriginalName,
                     nameBreadcrumbs,
                     indentationLevel,
-                    isObjectInlined
+                    isObjectInlined,
+                    includeLiteralTemplates
                 }),
             _other: () => undefined
         });

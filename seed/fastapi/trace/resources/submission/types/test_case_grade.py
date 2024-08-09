@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .test_case_hidden_grade import TestCaseHiddenGrade
 from .test_case_non_hidden_grade import TestCaseNonHiddenGrade
 
@@ -65,6 +65,3 @@ class _TestCaseGrade:
 
     class NonHidden(TestCaseNonHiddenGrade):
         type: typing.Literal["nonHidden"] = "nonHidden"
-
-
-update_forward_refs(TestCaseGrade)

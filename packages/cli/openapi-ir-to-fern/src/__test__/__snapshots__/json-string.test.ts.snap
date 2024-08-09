@@ -9,8 +9,6 @@ exports[`json-string json-string docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -43,8 +41,6 @@ exports[`json-string json-string simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",

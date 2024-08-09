@@ -12,7 +12,7 @@ class ExtendedMovie(Movie):
     """
     Examples
     --------
-    from seed.examples import ExtendedMovie
+    from seed.examples.resources.types import ExtendedMovie
 
     ExtendedMovie(
         id="movie-sda231x",

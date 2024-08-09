@@ -11,6 +11,8 @@ import {
     HttpRequestBody,
     HttpResponseBody,
     HttpService,
+    MultipleBaseUrlsEnvironment,
+    SingleBaseUrlEnvironment,
     TypeReference,
     Webhook,
     WebhookPayload
@@ -25,6 +27,7 @@ import {
     AudienceId,
     EndpointId,
     EndpointNode,
+    EnvironmentId,
     ErrorId,
     ErrorNode,
     InlinedRequestPropertiesNode,
@@ -50,6 +53,7 @@ export class IrGraph {
     private webhooks: Record<WebhookId, WebhookNode> = {};
     private audiences: Audiences;
     private typesReferencedByService: Record<TypeId, Set<ServiceId>> = {};
+    private environmentsNeededForAudience: Set<EnvironmentId> = new Set();
     private typesNeededForAudience: Set<TypeId> = new Set();
     private servicesNeededForAudience: Set<ServiceId> = new Set();
     private endpointsNeededForAudience: Set<EndpointId> = new Set();
@@ -98,6 +102,19 @@ export class IrGraph {
             this.types[typeId]?.referencedSubpackages.forEach((fernFilePath) => {
                 this.addSubpackages(fernFilePath);
             });
+        }
+    }
+
+    public markEnvironmentForAudiences(
+        environment: SingleBaseUrlEnvironment | MultipleBaseUrlsEnvironment,
+        audiences: string[],
+        // TODO: (rohin) this is brought in for backwards compatibility when no audiences are supplied to environments. Restore this when api/generators bumping.
+        ignoreAudiences?: boolean
+    ): void {
+        if (environment) {
+            if (this.hasAudience(audiences) || ignoreAudiences) {
+                this.environmentsNeededForAudience.add(environment.id);
+            }
         }
     }
 
@@ -435,6 +452,7 @@ export class IrGraph {
             errors: errorIds,
             requestProperties,
             queryParameters,
+            environments: this.environmentsNeededForAudience,
             services: this.servicesNeededForAudience,
             endpoints: this.endpointsNeededForAudience,
             webhooks: this.webhooksNeededForAudience,

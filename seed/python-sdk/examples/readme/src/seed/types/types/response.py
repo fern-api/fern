@@ -12,7 +12,8 @@ class Response(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Identifier, Response
+    from seed import Identifier
+    from seed.types import Response
 
     Response(
         response="Initializing...",
@@ -31,7 +32,7 @@ class Response(UniversalBaseModel):
     )
     """
 
-    response: typing.Any
+    response: typing.Optional[typing.Any] = None
     identifiers: typing.List[Identifier]
 
     if IS_PYDANTIC_V2:

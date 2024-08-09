@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import Optional, Set
 
-from fern.generator_exec.resources import GeneratorUpdate, LogLevel, LogUpdate
+from fern.generator_exec import GeneratorUpdate, LogLevel, LogUpdate
 
 from fern_python.codegen import Filepath, SourceFile
 from fern_python.codegen.dependency_manager import DependencyManager

@@ -1,4 +1,5 @@
 import { FERN_PACKAGE_MARKER_FILENAME, generatorsYml } from "@fern-api/configuration";
+import { isNonNullish } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { convert } from "@fern-api/openapi-ir-to-fern";
 import { parse, ParseOpenAPIOptions } from "@fern-api/openapi-parser";
@@ -6,6 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
 import { APIChangelog, FernDefinition, Spec } from "../types/Workspace";
+import { getAllOpenAPISpecs } from "../utils/getAllOpenAPISpecs";
 import { AbstractAPIWorkspace } from "./AbstractAPIWorkspace";
 import { FernWorkspace } from "./FernWorkspace";
 
@@ -63,8 +65,9 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         },
         settings?: OSSWorkspace.Settings
     ): Promise<FernDefinition> {
+        const openApiSpecs = await getAllOpenAPISpecs({ context, specs: this.specs });
         const openApiIr = await parse({
-            specs: this.specs,
+            specs: openApiSpecs,
             taskContext: context,
             optionOverrides: getOptionsOverridesFromSettings(settings)
         });
@@ -80,6 +83,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             // these files doesn't live on disk, so there's no absolute filepath
             absoluteFilepath: AbsoluteFilePath.of("/DUMMY_PATH"),
             rootApiFile: {
+                defaultUrl: definition.rootApiFile["default-url"],
                 contents: definition.rootApiFile,
                 rawContents: yaml.dump(definition.rootApiFile)
             },
@@ -117,6 +121,18 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             definition,
             changelog: this.changelog
         });
+    }
+
+    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
+        return [
+            this.absoluteFilepath,
+            ...this.specs
+                .flatMap((spec) => [
+                    spec.type === "protobuf" ? spec.absoluteFilepathToProtobufTarget : spec.absoluteFilepath,
+                    spec.absoluteFilepathToOverrides
+                ])
+                .filter(isNonNullish)
+        ];
     }
 }
 

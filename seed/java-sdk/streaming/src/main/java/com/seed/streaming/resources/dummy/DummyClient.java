@@ -8,6 +8,7 @@ import com.seed.streaming.core.ClientOptions;
 import com.seed.streaming.core.MediaTypes;
 import com.seed.streaming.core.ObjectMappers;
 import com.seed.streaming.core.RequestOptions;
+import com.seed.streaming.core.ResponseBodyReader;
 import com.seed.streaming.core.SeedStreamingApiException;
 import com.seed.streaming.core.SeedStreamingException;
 import com.seed.streaming.core.Stream;
@@ -56,10 +57,11 @@ public class DummyClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        try (Response response = client.newCall(okhttpRequest).execute()) {
+        try {
+            Response response = client.newCall(okhttpRequest).execute();
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
-                return new Stream<StreamResponse>(StreamResponse.class, responseBody.charStream(), "\n");
+                return new Stream<StreamResponse>(StreamResponse.class, new ResponseBodyReader(response), "\n");
             }
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
             throw new SeedStreamingApiException(

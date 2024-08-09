@@ -50,8 +50,8 @@ class InlinedRequestsClient:
         import datetime
         import uuid
 
-        from seed.client import SeedExhaustive
-        from seed.types import ObjectWithOptionalField
+        from seed import SeedExhaustive
+        from seed.types.object import ObjectWithOptionalField
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -139,8 +139,8 @@ class AsyncInlinedRequestsClient:
         import datetime
         import uuid
 
-        from seed.client import AsyncSeedExhaustive
-        from seed.types import ObjectWithOptionalField
+        from seed import AsyncSeedExhaustive
+        from seed.types.object import ObjectWithOptionalField
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",

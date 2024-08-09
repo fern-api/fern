@@ -1,36 +1,32 @@
-using SeedQueryParameters;
-
-#nullable enable
-
 namespace SeedQueryParameters;
 
 public record GetUsersRequest
 {
-    public required int Limit { get; init; }
+    public required int Limit { get; set; }
 
-    public required Guid Id { get; init; }
+    public required string Id { get; set; }
 
-    public required DateOnly Date { get; init; }
+    public required DateOnly Date { get; set; }
 
-    public required DateTime Deadline { get; init; }
+    public required DateTime Deadline { get; set; }
 
-    public required string Bytes { get; init; }
+    public required string Bytes { get; set; }
 
-    public required User User { get; init; }
+    public required User User { get; set; }
 
-    public IEnumerable<User> UserList { get; init; } = new List<User>();
+    public IEnumerable<User> UserList { get; set; } = new List<User>();
 
-    public DateTime? OptionalDeadline { get; init; }
+    public DateTime? OptionalDeadline { get; set; }
 
-    public Dictionary<string, string> KeyValue { get; init; } = new Dictionary<string, string>();
+    public Dictionary<string, string> KeyValue { get; set; } = new Dictionary<string, string>();
 
-    public string? OptionalString { get; init; }
+    public string? OptionalString { get; set; }
 
-    public required NestedUser NestedUser { get; init; }
+    public required NestedUser NestedUser { get; set; }
 
-    public User? OptionalUser { get; init; }
+    public User? OptionalUser { get; set; }
 
-    public required User ExcludeUser { get; init; }
+    public IEnumerable<User> ExcludeUser { get; set; } = new List<User>();
 
-    public required string Filter { get; init; }
+    public IEnumerable<string> Filter { get; set; } = new List<string>();
 }

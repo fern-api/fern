@@ -1,5 +1,5 @@
+using System;
 using System.Net.Http;
-using SeedTrace.Core;
 
 #nullable enable
 
@@ -10,7 +10,7 @@ public partial class ClientOptions
     /// <summary>
     /// The Base URL for the API.
     /// </summary>
-    public string BaseUrl { get; init; } = Environments.PROD;
+    public string BaseUrl { get; init; } = SeedTraceEnvironment.PROD;
 
     /// <summary>
     /// The http client used to make requests.
@@ -23,7 +23,7 @@ public partial class ClientOptions
     public int MaxRetries { get; init; } = 2;
 
     /// <summary>
-    /// The timeout for the request in seconds.
+    /// The timeout for the request.
     /// </summary>
-    public int TimeoutInSeconds { get; init; } = 30;
+    public TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(30);
 }

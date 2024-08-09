@@ -32,6 +32,9 @@ fixtures:
 allowedFailures:
   - streaming
   - objects-with-imports
+  - circular-references
+  # TODO: Add support for recursive undiscriminated unions.
+  - grpc
 features:
   requestOptions: true
   idempotency: false

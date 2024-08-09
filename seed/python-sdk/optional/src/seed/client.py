@@ -28,7 +28,7 @@ class SeedObjectsWithImports:
 
     Examples
     --------
-    from seed.client import SeedObjectsWithImports
+    from seed import SeedObjectsWithImports
 
     client = SeedObjectsWithImports(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedObjectsWithImports:
 
     Examples
     --------
-    from seed.client import AsyncSeedObjectsWithImports
+    from seed import AsyncSeedObjectsWithImports
 
     client = AsyncSeedObjectsWithImports(
         base_url="https://yourhost.com/path/to/api",

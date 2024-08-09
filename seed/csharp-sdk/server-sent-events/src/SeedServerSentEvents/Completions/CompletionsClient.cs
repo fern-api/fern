@@ -15,15 +15,23 @@ public class CompletionsClient
         _client = client;
     }
 
-    public async Task StreamAsync(StreamCompletionRequest request)
+    public async Task StreamAsync(StreamCompletionRequest request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "stream",
-                Body = request
+                Body = request,
+                Options = options
             }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedServerSentEventsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

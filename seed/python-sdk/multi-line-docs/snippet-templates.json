@@ -13,10 +13,10 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedMultiLineDocs"
+                    "from seed import SeedMultiLineDocs"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedMultiLineDocs(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -52,10 +52,10 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedMultiLineDocs"
+                        "from seed import AsyncSeedMultiLineDocs"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedMultiLineDocs(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -103,10 +103,10 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedMultiLineDocs"
+                    "from seed import SeedMultiLineDocs"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedMultiLineDocs(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -158,10 +158,10 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedMultiLineDocs"
+                        "from seed import AsyncSeedMultiLineDocs"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedMultiLineDocs(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedMultiLineDocs(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

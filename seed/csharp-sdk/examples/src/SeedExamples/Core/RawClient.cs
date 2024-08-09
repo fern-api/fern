@@ -1,6 +1,5 @@
 using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 
 namespace SeedExamples.Core;
 
@@ -9,12 +8,16 @@ namespace SeedExamples.Core;
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
-public class RawClient(Dictionary<string, string> headers, ClientOptions clientOptions)
+public class RawClient(
+    Dictionary<string, string> headers,
+    Dictionary<string, Func<string>> headerSuppliers,
+    ClientOptions clientOptions
+)
 {
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
-    private readonly ClientOptions _clientOptions = clientOptions;
+    public readonly ClientOptions Options = clientOptions;
 
     /// <summary>
     /// Global headers to be sent with every request.
@@ -23,7 +26,7 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
 
     public async Task<ApiResponse> MakeRequestAsync(BaseApiRequest request)
     {
-        var url = BuildUrl(request.Path, request.Query);
+        var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
         if (request.ContentType != null)
         {
@@ -33,6 +36,11 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
         foreach (var header in _headers)
         {
             httpRequest.Headers.Add(header.Key, header.Value);
+        }
+        // Add global headers to the request from supplier
+        foreach (var header in headerSuppliers)
+        {
+            httpRequest.Headers.Add(header.Key, header.Value.Invoke());
         }
         // Add request headers to the request
         foreach (var header in request.Headers)
@@ -44,9 +52,8 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
         {
             if (jsonRequest.Body != null)
             {
-                var serializerOptions = new JsonSerializerOptions { WriteIndented = true, };
                 httpRequest.Content = new StringContent(
-                    JsonSerializer.Serialize(jsonRequest.Body, serializerOptions),
+                    JsonUtils.Serialize(jsonRequest.Body),
                     Encoding.UTF8,
                     "application/json"
                 );
@@ -57,12 +64,15 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
             httpRequest.Content = new StreamContent(streamRequest.Body);
         }
         // Send the request
-        var response = await _clientOptions.HttpClient.SendAsync(httpRequest);
+        var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
+        var response = await httpClient.SendAsync(httpRequest);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
     public record BaseApiRequest
     {
+        public required string BaseUrl { get; init; }
+
         public required HttpMethod Method { get; init; }
 
         public required string Path { get; init; }
@@ -73,7 +83,7 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
 
         public Dictionary<string, string> Headers { get; init; } = new();
 
-        public object? RequestOptions { get; init; }
+        public RequestOptions? Options { get; init; }
     }
 
     /// <summary>
@@ -102,17 +112,36 @@ public class RawClient(Dictionary<string, string> headers, ClientOptions clientO
         public required HttpResponseMessage Raw { get; init; }
     }
 
-    private string BuildUrl(string path, Dictionary<string, object> query)
+    private string BuildUrl(BaseApiRequest request)
     {
-        var trimmedBaseUrl = _clientOptions.BaseUrl.TrimEnd('/');
-        var trimmedBasePath = path.TrimStart('/');
+        var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
+        var trimmedBaseUrl = baseUrl.TrimEnd('/');
+        var trimmedBasePath = request.Path.TrimStart('/');
         var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
-        if (query.Count <= 0)
+        if (request.Query.Count <= 0)
             return url;
         url += "?";
-        url = query.Aggregate(
+        url = request.Query.Aggregate(
             url,
-            (current, queryItem) => current + $"{queryItem.Key}={queryItem.Value}&"
+            (current, queryItem) =>
+            {
+                if (queryItem.Value is System.Collections.IEnumerable collection and not string)
+                {
+                    var items = collection
+                        .Cast<object>()
+                        .Select(value => $"{queryItem.Key}={value}")
+                        .ToList();
+                    if (items.Any())
+                    {
+                        current += string.Join("&", items) + "&";
+                    }
+                }
+                else
+                {
+                    current += $"{queryItem.Key}={queryItem.Value}&";
+                }
+                return current;
+            }
         );
         url = url.Substring(0, url.Length - 1);
         return url;

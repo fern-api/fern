@@ -16,7 +16,7 @@ pip install fern_exhaustive
 Instantiate and use the client with the following:
 
 ```python
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     token="YOUR_TOKEN",
@@ -34,7 +34,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed.client import AsyncSeedExhaustive
+from seed import AsyncSeedExhaustive
 
 client = AsyncSeedExhaustive(
     token="YOUR_TOKEN",
@@ -57,7 +57,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```python
-from .api_error import ApiError
+from seed.core.api_error import ApiError
 
 try:
     client.endpoints.container.get_and_return_list_of_primitives(...)
@@ -83,8 +83,8 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.endpoints.container.get_and_return_list_of_primitives(...,{
-    max_retries=1
+client.endpoints.container.get_and_return_list_of_primitives(..., {
+    "max_retries": 1
 })
 ```
 
@@ -94,14 +94,17 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
-client = SeedExhaustive(..., { timeout=20.0 }, )
+client = SeedExhaustive(
+    ...,
+    timeout=20.0,
+)
 
 
 # Override timeout for a specific method
-client.endpoints.container.get_and_return_list_of_primitives(...,{
-    timeout_in_seconds=1
+client.endpoints.container.get_and_return_list_of_primitives(..., {
+    "timeout_in_seconds": 1
 })
 ```
 
@@ -111,11 +114,11 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedExhaustive
+from seed import SeedExhaustive
 
 client = SeedExhaustive(
     ...,
-    http_client=httpx.Client(
+    httpx_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),

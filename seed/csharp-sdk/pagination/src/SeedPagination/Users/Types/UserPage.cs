@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedPagination;
 
 #nullable enable
 
@@ -8,8 +7,8 @@ namespace SeedPagination;
 public record UserPage
 {
     [JsonPropertyName("data")]
-    public required UserListContainer Data { get; init; }
+    public required UserListContainer Data { get; set; }
 
     [JsonPropertyName("next")]
-    public Guid? Next { get; init; }
+    public string? Next { get; set; }
 }

@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedMultiUrlEnvironmentNoDefault, SeedMultiUrlEnvironmentNoDefault
+from seed import AsyncSeedMultiUrlEnvironmentNoDefault, SeedMultiUrlEnvironmentNoDefault
 
 from .utilities import validate_response
 

@@ -7,7 +7,7 @@ from pathlib import Path
 from types import TracebackType
 from typing import List, Optional, Sequence, Set, Type
 
-from fern.generator_exec.resources import GithubOutputMode, LicenseConfig, PypiMetadata
+from fern.generator_exec import GithubOutputMode, LicenseConfig, PypiMetadata
 from isort import file
 
 from fern_python.codegen import AST
@@ -39,7 +39,7 @@ class Project:
         filepath: str,
         relative_path_to_project: str,
         python_version: str = "^3.8",
-        project_config: ProjectConfig = None,
+        project_config: Optional[ProjectConfig] = None,
         should_format_files: bool,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,

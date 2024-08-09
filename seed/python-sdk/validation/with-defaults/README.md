@@ -16,7 +16,7 @@ pip install fern_validation
 Instantiate and use the client with the following:
 
 ```python
-from seed.client import SeedValidation
+from seed import SeedValidation
 
 client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",
@@ -25,6 +25,7 @@ client.create(
     decimal=1.1,
     even=1,
     name="string",
+    shape="SQUARE",
 )
 ```
 
@@ -35,7 +36,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed.client import AsyncSeedValidation
+from seed import AsyncSeedValidation
 
 client = AsyncSeedValidation(
     base_url="https://yourhost.com/path/to/api",
@@ -47,6 +48,7 @@ async def main() -> None:
         decimal=1.1,
         even=1,
         name="string",
+        shape="SQUARE",
     )
 
 
@@ -59,7 +61,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```python
-from .api_error import ApiError
+from seed.core.api_error import ApiError
 
 try:
     client.create(...)
@@ -85,8 +87,8 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.create(...,{
-    max_retries=1
+client.create(..., {
+    "max_retries": 1
 })
 ```
 
@@ -96,14 +98,17 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedValidation
+from seed import SeedValidation
 
-client = SeedValidation(..., { timeout=20.0 }, )
+client = SeedValidation(
+    ...,
+    timeout=20.0,
+)
 
 
 # Override timeout for a specific method
-client.create(...,{
-    timeout_in_seconds=1
+client.create(..., {
+    "timeout_in_seconds": 1
 })
 ```
 
@@ -113,11 +118,11 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedValidation
+from seed import SeedValidation
 
 client = SeedValidation(
     ...,
-    http_client=httpx.Client(
+    httpx_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),

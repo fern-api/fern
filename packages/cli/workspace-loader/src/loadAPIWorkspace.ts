@@ -1,22 +1,13 @@
-import {
-    ASYNCAPI_DIRECTORY,
-    DEFINITION_DIRECTORY,
-    dependenciesYml,
-    generatorsYml,
-    OPENAPI_DIRECTORY
-} from "@fern-api/configuration";
+import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { listFernFiles } from "./listFernFiles";
 import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
-import { parseYamlFiles } from "./parseYamlFiles";
-import { processPackageMarkers } from "./processPackageMarkers";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { APIChangelog, Spec } from "./types/Workspace";
-import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
-import { FernWorkspace, OSSWorkspace } from "./workspaces";
+import { OSSWorkspace } from "./workspaces";
+import { LazyFernWorkspace } from "./workspaces/FernWorkspace";
 
 export async function loadAPIWorkspace({
     absolutePathToWorkspace,
@@ -47,18 +38,61 @@ export async function loadAPIWorkspace({
 
     if (generatorsConfiguration?.api != null && generatorsConfiguration.api.definitions.length > 0) {
         const specs: Spec[] = [];
-
         for (const definition of generatorsConfiguration.api.definitions) {
-            const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.path));
             const absoluteFilepathToOverrides =
                 definition.overrides != null
                     ? join(absolutePathToWorkspace, RelativeFilePath.of(definition.overrides))
                     : undefined;
+            if (definition.schema.type === "protobuf") {
+                const absoluteFilepathToProtobufRoot = join(
+                    absolutePathToWorkspace,
+                    RelativeFilePath.of(definition.schema.root)
+                );
+                if (!(await doesPathExist(absoluteFilepathToProtobufRoot))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.root)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
+                        }
+                    };
+                }
+                const absoluteFilepathToProtobufTarget = join(
+                    absolutePathToWorkspace,
+                    RelativeFilePath.of(definition.schema.target)
+                );
+                if (!(await doesPathExist(absoluteFilepathToProtobufTarget))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.target)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
+                        }
+                    };
+                }
+                specs.push({
+                    type: "protobuf",
+                    absoluteFilepathToProtobufRoot,
+                    absoluteFilepathToProtobufTarget,
+                    absoluteFilepathToOverrides,
+                    generateLocally: definition.schema.localGeneration,
+                    settings: {
+                        audiences: definition.audiences ?? [],
+                        shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                        shouldUseUndiscriminatedUnionsWithLiterals:
+                            definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
+                    }
+                });
+                continue;
+            }
+            const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
             if (!(await doesPathExist(absoluteFilepath))) {
                 return {
                     didSucceed: false,
                     failures: {
-                        [RelativeFilePath.of(definition.path)]: {
+                        [RelativeFilePath.of(definition.schema.path)]: {
                             type: WorkspaceLoaderFailureType.FILE_MISSING
                         }
                     }
@@ -79,13 +113,15 @@ export async function loadAPIWorkspace({
                 };
             }
             specs.push({
+                type: "openapi",
                 absoluteFilepath,
                 absoluteFilepathToOverrides,
                 settings: {
                     audiences: definition.audiences ?? [],
                     shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
                     shouldUseUndiscriminatedUnionsWithLiterals:
-                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false
+                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                    asyncApiNaming: definition.settings?.asyncApiMessageNaming
                 }
             });
         }
@@ -112,12 +148,14 @@ export async function loadAPIWorkspace({
         const specs: Spec[] = [];
         if (absolutePathToOpenAPI != null) {
             specs.push({
+                type: "openapi",
                 absoluteFilepath: absolutePathToOpenAPI,
                 absoluteFilepathToOverrides: undefined
             });
         }
         if (absolutePathToAsyncAPI != null) {
             specs.push({
+                type: "openapi",
                 absoluteFilepath: absolutePathToAsyncAPI,
                 absoluteFilepathToOverrides: undefined
             });
@@ -143,55 +181,28 @@ export async function loadAPIWorkspace({
             })
         };
     }
+    if (await doesPathExist(join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY)))) {
+        const fernWorkspace = new LazyFernWorkspace({
+            absoluteFilepath: absolutePathToWorkspace,
+            generatorsConfiguration,
+            workspaceName,
+            changelog,
+            context,
+            cliVersion
+        });
 
-    const absolutePathToDefinition = join(absolutePathToWorkspace, RelativeFilePath.of(DEFINITION_DIRECTORY));
-
-    const dependenciesConfiguration = await dependenciesYml.loadDependenciesConfiguration({
-        absolutePathToWorkspace,
-        context
-    });
-    const yamlFiles = await listFernFiles(absolutePathToDefinition, "{yml,yaml}");
-
-    const parseResult = await parseYamlFiles(yamlFiles);
-    if (!parseResult.didSucceed) {
-        return parseResult;
+        return {
+            didSucceed: true,
+            workspace: fernWorkspace
+        };
     }
-
-    const structuralValidationResult = validateStructureOfYamlFiles({
-        files: parseResult.files,
-        absolutePathToDefinition
-    });
-    if (!structuralValidationResult.didSucceed) {
-        return structuralValidationResult;
-    }
-
-    const processPackageMarkersResult = await processPackageMarkers({
-        dependenciesConfiguration,
-        structuralValidationResult,
-        context,
-        cliVersion
-    });
-    if (!processPackageMarkersResult.didSucceed) {
-        return processPackageMarkersResult;
-    }
-
-    const fernWorkspace = new FernWorkspace({
-        absoluteFilepath: absolutePathToWorkspace,
-        generatorsConfiguration,
-        dependenciesConfiguration,
-        workspaceName,
-        definition: {
-            absoluteFilepath: absolutePathToDefinition,
-            rootApiFile: structuralValidationResult.rootApiFile,
-            namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
-            packageMarkers: processPackageMarkersResult.packageMarkers,
-            importedDefinitions: processPackageMarkersResult.importedDefinitions
-        },
-        changelog
-    });
 
     return {
-        didSucceed: true,
-        workspace: fernWorkspace
+        didSucceed: false,
+        failures: {
+            [RelativeFilePath.of(OPENAPI_DIRECTORY)]: {
+                type: WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY
+            }
+        }
     };
 }

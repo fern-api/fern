@@ -16,7 +16,7 @@ pip install fern_oauth-client-credentials-default
 Instantiate and use the client with the following:
 
 ```python
-from seed.client import SeedOauthClientCredentialsDefault
+from seed import SeedOauthClientCredentialsDefault
 
 client = SeedOauthClientCredentialsDefault(
     base_url="https://yourhost.com/path/to/api",
@@ -36,7 +36,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed.client import AsyncSeedOauthClientCredentialsDefault
+from seed import AsyncSeedOauthClientCredentialsDefault
 
 client = AsyncSeedOauthClientCredentialsDefault(
     base_url="https://yourhost.com/path/to/api",
@@ -61,7 +61,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```python
-from .api_error import ApiError
+from seed.core.api_error import ApiError
 
 try:
     client.auth.get_token()
@@ -88,7 +88,7 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.auth.get_token({
-    max_retries=1
+    "max_retries": 1
 })
 ```
 
@@ -98,14 +98,17 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedOauthClientCredentialsDefault
+from seed import SeedOauthClientCredentialsDefault
 
-client = SeedOauthClientCredentialsDefault(..., { timeout=20.0 }, )
+client = SeedOauthClientCredentialsDefault(
+    ...,
+    timeout=20.0,
+)
 
 
 # Override timeout for a specific method
 client.auth.get_token({
-    timeout_in_seconds=1
+    "timeout_in_seconds": 1
 })
 ```
 
@@ -115,11 +118,11 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedOauthClientCredentialsDefault
+from seed import SeedOauthClientCredentialsDefault
 
 client = SeedOauthClientCredentialsDefault(
     ...,
-    http_client=httpx.Client(
+    httpx_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),

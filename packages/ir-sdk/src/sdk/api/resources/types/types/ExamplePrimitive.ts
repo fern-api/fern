@@ -6,13 +6,18 @@ import * as FernIr from "../../..";
 
 export type ExamplePrimitive =
     | FernIr.ExamplePrimitive.Integer
-    | FernIr.ExamplePrimitive.Double
-    | FernIr.ExamplePrimitive.String
-    | FernIr.ExamplePrimitive.Boolean
     | FernIr.ExamplePrimitive.Long
-    | FernIr.ExamplePrimitive.Datetime
+    | FernIr.ExamplePrimitive.Uint
+    | FernIr.ExamplePrimitive.Uint64
+    | FernIr.ExamplePrimitive.Float
+    | FernIr.ExamplePrimitive.Double
+    | FernIr.ExamplePrimitive.Boolean
+    | FernIr.ExamplePrimitive.String
     | FernIr.ExamplePrimitive.Date_
-    | FernIr.ExamplePrimitive.Uuid;
+    | FernIr.ExamplePrimitive.Datetime
+    | FernIr.ExamplePrimitive.Uuid
+    | FernIr.ExamplePrimitive.Base64
+    | FernIr.ExamplePrimitive.BigInteger;
 
 export declare namespace ExamplePrimitive {
     interface Integer extends _Utils {
@@ -20,14 +25,29 @@ export declare namespace ExamplePrimitive {
         integer: number;
     }
 
+    interface Long extends _Utils {
+        type: "long";
+        long: number;
+    }
+
+    interface Uint extends _Utils {
+        type: "uint";
+        uint: number;
+    }
+
+    interface Uint64 extends _Utils {
+        type: "uint64";
+        uint64: number;
+    }
+
+    interface Float extends _Utils {
+        type: "float";
+        float: number;
+    }
+
     interface Double extends _Utils {
         type: "double";
         double: number;
-    }
-
-    interface String extends _Utils {
-        type: "string";
-        string: FernIr.EscapedString;
     }
 
     interface Boolean extends _Utils {
@@ -35,14 +55,9 @@ export declare namespace ExamplePrimitive {
         boolean: boolean;
     }
 
-    interface Long extends _Utils {
-        type: "long";
-        long: number;
-    }
-
-    interface Datetime extends _Utils {
-        type: "datetime";
-        datetime: Date;
+    interface String extends _Utils {
+        type: "string";
+        string: FernIr.EscapedString;
     }
 
     interface Date_ extends _Utils {
@@ -50,9 +65,24 @@ export declare namespace ExamplePrimitive {
         date: string;
     }
 
+    interface Datetime extends _Utils {
+        type: "datetime";
+        datetime: Date;
+    }
+
     interface Uuid extends _Utils {
         type: "uuid";
         uuid: string;
+    }
+
+    interface Base64 extends _Utils {
+        type: "base64";
+        base64: string;
+    }
+
+    interface BigInteger extends _Utils {
+        type: "bigInteger";
+        bigInteger: string;
     }
 
     interface _Utils {
@@ -61,13 +91,18 @@ export declare namespace ExamplePrimitive {
 
     interface _Visitor<_Result> {
         integer: (value: number) => _Result;
-        double: (value: number) => _Result;
-        string: (value: FernIr.EscapedString) => _Result;
-        boolean: (value: boolean) => _Result;
         long: (value: number) => _Result;
-        datetime: (value: Date) => _Result;
+        uint: (value: number) => _Result;
+        uint64: (value: number) => _Result;
+        float: (value: number) => _Result;
+        double: (value: number) => _Result;
+        boolean: (value: boolean) => _Result;
+        string: (value: FernIr.EscapedString) => _Result;
         date: (value: string) => _Result;
+        datetime: (value: Date) => _Result;
         uuid: (value: string) => _Result;
+        base64: (value: string) => _Result;
+        bigInteger: (value: string) => _Result;
         _other: (value: { type: string }) => _Result;
     }
 }
@@ -79,45 +114,6 @@ export const ExamplePrimitive = {
             type: "integer",
             _visit: function <_Result>(
                 this: FernIr.ExamplePrimitive.Integer,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
-            ) {
-                return FernIr.ExamplePrimitive._visit(this, visitor);
-            },
-        };
-    },
-
-    double: (value: number): FernIr.ExamplePrimitive.Double => {
-        return {
-            double: value,
-            type: "double",
-            _visit: function <_Result>(
-                this: FernIr.ExamplePrimitive.Double,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
-            ) {
-                return FernIr.ExamplePrimitive._visit(this, visitor);
-            },
-        };
-    },
-
-    string: (value: FernIr.EscapedString): FernIr.ExamplePrimitive.String => {
-        return {
-            string: value,
-            type: "string",
-            _visit: function <_Result>(
-                this: FernIr.ExamplePrimitive.String,
-                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
-            ) {
-                return FernIr.ExamplePrimitive._visit(this, visitor);
-            },
-        };
-    },
-
-    boolean: (value: boolean): FernIr.ExamplePrimitive.Boolean => {
-        return {
-            boolean: value,
-            type: "boolean",
-            _visit: function <_Result>(
-                this: FernIr.ExamplePrimitive.Boolean,
                 visitor: FernIr.ExamplePrimitive._Visitor<_Result>
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
@@ -138,12 +134,77 @@ export const ExamplePrimitive = {
         };
     },
 
-    datetime: (value: Date): FernIr.ExamplePrimitive.Datetime => {
+    uint: (value: number): FernIr.ExamplePrimitive.Uint => {
         return {
-            datetime: value,
-            type: "datetime",
+            uint: value,
+            type: "uint",
             _visit: function <_Result>(
-                this: FernIr.ExamplePrimitive.Datetime,
+                this: FernIr.ExamplePrimitive.Uint,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
+    uint64: (value: number): FernIr.ExamplePrimitive.Uint64 => {
+        return {
+            uint64: value,
+            type: "uint64",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.Uint64,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
+    float: (value: number): FernIr.ExamplePrimitive.Float => {
+        return {
+            float: value,
+            type: "float",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.Float,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
+    double: (value: number): FernIr.ExamplePrimitive.Double => {
+        return {
+            double: value,
+            type: "double",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.Double,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
+    boolean: (value: boolean): FernIr.ExamplePrimitive.Boolean => {
+        return {
+            boolean: value,
+            type: "boolean",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.Boolean,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
+    string: (value: FernIr.EscapedString): FernIr.ExamplePrimitive.String => {
+        return {
+            string: value,
+            type: "string",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.String,
                 visitor: FernIr.ExamplePrimitive._Visitor<_Result>
             ) {
                 return FernIr.ExamplePrimitive._visit(this, visitor);
@@ -164,6 +225,19 @@ export const ExamplePrimitive = {
         };
     },
 
+    datetime: (value: Date): FernIr.ExamplePrimitive.Datetime => {
+        return {
+            datetime: value,
+            type: "datetime",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.Datetime,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
     uuid: (value: string): FernIr.ExamplePrimitive.Uuid => {
         return {
             uuid: value,
@@ -177,24 +251,60 @@ export const ExamplePrimitive = {
         };
     },
 
+    base64: (value: string): FernIr.ExamplePrimitive.Base64 => {
+        return {
+            base64: value,
+            type: "base64",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.Base64,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
+    bigInteger: (value: string): FernIr.ExamplePrimitive.BigInteger => {
+        return {
+            bigInteger: value,
+            type: "bigInteger",
+            _visit: function <_Result>(
+                this: FernIr.ExamplePrimitive.BigInteger,
+                visitor: FernIr.ExamplePrimitive._Visitor<_Result>
+            ) {
+                return FernIr.ExamplePrimitive._visit(this, visitor);
+            },
+        };
+    },
+
     _visit: <_Result>(value: FernIr.ExamplePrimitive, visitor: FernIr.ExamplePrimitive._Visitor<_Result>): _Result => {
         switch (value.type) {
             case "integer":
                 return visitor.integer(value.integer);
-            case "double":
-                return visitor.double(value.double);
-            case "string":
-                return visitor.string(value.string);
-            case "boolean":
-                return visitor.boolean(value.boolean);
             case "long":
                 return visitor.long(value.long);
-            case "datetime":
-                return visitor.datetime(value.datetime);
+            case "uint":
+                return visitor.uint(value.uint);
+            case "uint64":
+                return visitor.uint64(value.uint64);
+            case "float":
+                return visitor.float(value.float);
+            case "double":
+                return visitor.double(value.double);
+            case "boolean":
+                return visitor.boolean(value.boolean);
+            case "string":
+                return visitor.string(value.string);
             case "date":
                 return visitor.date(value.date);
+            case "datetime":
+                return visitor.datetime(value.datetime);
             case "uuid":
                 return visitor.uuid(value.uuid);
+            case "base64":
+                return visitor.base64(value.base64);
+            case "bigInteger":
+                return visitor.bigInteger(value.bigInteger);
             default:
                 return visitor._other(value as any);
         }

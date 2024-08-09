@@ -91,7 +91,7 @@ public final class ListUsersBodyOffsetPaginationRequest {
         }
 
         public Builder pagination(WithPage pagination) {
-            this.pagination = Optional.of(pagination);
+            this.pagination = Optional.ofNullable(pagination);
             return this;
         }
 

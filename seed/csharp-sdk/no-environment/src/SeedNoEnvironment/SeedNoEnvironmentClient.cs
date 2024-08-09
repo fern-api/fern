@@ -1,4 +1,4 @@
-using SeedNoEnvironment;
+using System;
 using SeedNoEnvironment.Core;
 
 #nullable enable
@@ -17,6 +17,7 @@ public partial class SeedNoEnvironmentClient
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
             },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Dummy = new DummyClient(_client);

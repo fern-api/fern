@@ -9,6 +9,7 @@ from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.pydantic_utilities import parse_obj_as
 from .core.request_options import RequestOptions
+from .types.shape import Shape
 from .types.type import Type
 
 # this is used as the default value for optional parameters
@@ -35,7 +36,7 @@ class SeedValidation:
 
     Examples
     --------
-    from seed.client import SeedValidation
+    from seed import SeedValidation
 
     client = SeedValidation(
         base_url="https://yourhost.com/path/to/api",
@@ -62,7 +63,13 @@ class SeedValidation:
         )
 
     def create(
-        self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        decimal: float,
+        even: int,
+        name: str,
+        shape: Shape,
+        request_options: typing.Optional[RequestOptions] = None
     ) -> Type:
         """
         Parameters
@@ -73,6 +80,8 @@ class SeedValidation:
 
         name : str
 
+        shape : Shape
+
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
 
@@ -82,7 +91,7 @@ class SeedValidation:
 
         Examples
         --------
-        from seed.client import SeedValidation
+        from seed import SeedValidation
 
         client = SeedValidation(
             base_url="https://yourhost.com/path/to/api",
@@ -91,12 +100,13 @@ class SeedValidation:
             decimal=1.1,
             even=1,
             name="string",
+            shape="SQUARE",
         )
         """
         _response = self._client_wrapper.httpx_client.request(
             "create",
             method="POST",
-            json={"decimal": decimal, "even": even, "name": name},
+            json={"decimal": decimal, "even": even, "name": name, "shape": shape},
             request_options=request_options,
             omit=OMIT,
         )
@@ -129,7 +139,7 @@ class SeedValidation:
 
         Examples
         --------
-        from seed.client import SeedValidation
+        from seed import SeedValidation
 
         client = SeedValidation(
             base_url="https://yourhost.com/path/to/api",
@@ -172,7 +182,7 @@ class AsyncSeedValidation:
 
     Examples
     --------
-    from seed.client import AsyncSeedValidation
+    from seed import AsyncSeedValidation
 
     client = AsyncSeedValidation(
         base_url="https://yourhost.com/path/to/api",
@@ -199,7 +209,13 @@ class AsyncSeedValidation:
         )
 
     async def create(
-        self, *, decimal: float, even: int, name: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        decimal: float,
+        even: int,
+        name: str,
+        shape: Shape,
+        request_options: typing.Optional[RequestOptions] = None
     ) -> Type:
         """
         Parameters
@@ -209,6 +225,8 @@ class AsyncSeedValidation:
         even : int
 
         name : str
+
+        shape : Shape
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -221,7 +239,7 @@ class AsyncSeedValidation:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedValidation
+        from seed import AsyncSeedValidation
 
         client = AsyncSeedValidation(
             base_url="https://yourhost.com/path/to/api",
@@ -233,6 +251,7 @@ class AsyncSeedValidation:
                 decimal=1.1,
                 even=1,
                 name="string",
+                shape="SQUARE",
             )
 
 
@@ -241,7 +260,7 @@ class AsyncSeedValidation:
         _response = await self._client_wrapper.httpx_client.request(
             "create",
             method="POST",
-            json={"decimal": decimal, "even": even, "name": name},
+            json={"decimal": decimal, "even": even, "name": name, "shape": shape},
             request_options=request_options,
             omit=OMIT,
         )
@@ -276,7 +295,7 @@ class AsyncSeedValidation:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedValidation
+        from seed import AsyncSeedValidation
 
         client = AsyncSeedValidation(
             base_url="https://yourhost.com/path/to/api",

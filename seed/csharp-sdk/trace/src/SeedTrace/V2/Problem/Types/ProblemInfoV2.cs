@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
-using SeedTrace.V2;
 
 #nullable enable
 
@@ -9,33 +8,33 @@ namespace SeedTrace.V2;
 public record ProblemInfoV2
 {
     [JsonPropertyName("problemId")]
-    public required string ProblemId { get; init; }
+    public required string ProblemId { get; set; }
 
     [JsonPropertyName("problemDescription")]
-    public required ProblemDescription ProblemDescription { get; init; }
+    public required ProblemDescription ProblemDescription { get; set; }
 
     [JsonPropertyName("problemName")]
-    public required string ProblemName { get; init; }
+    public required string ProblemName { get; set; }
 
     [JsonPropertyName("problemVersion")]
-    public required int ProblemVersion { get; init; }
+    public required int ProblemVersion { get; set; }
 
     [JsonPropertyName("supportedLanguages")]
-    public HashSet<Language> SupportedLanguages { get; init; } = new HashSet<Language>();
+    public HashSet<Language> SupportedLanguages { get; set; } = new HashSet<Language>();
 
     [JsonPropertyName("customFiles")]
-    public required object CustomFiles { get; init; }
+    public required object CustomFiles { get; set; }
 
     [JsonPropertyName("generatedFiles")]
-    public required GeneratedFiles GeneratedFiles { get; init; }
+    public required GeneratedFiles GeneratedFiles { get; set; }
 
     [JsonPropertyName("customTestCaseTemplates")]
-    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; init; } =
+    public IEnumerable<TestCaseTemplate> CustomTestCaseTemplates { get; set; } =
         new List<TestCaseTemplate>();
 
     [JsonPropertyName("testcases")]
-    public IEnumerable<TestCaseV2> Testcases { get; init; } = new List<TestCaseV2>();
+    public IEnumerable<TestCaseV2> Testcases { get; set; } = new List<TestCaseV2>();
 
     [JsonPropertyName("isPublic")]
-    public required bool IsPublic { get; init; }
+    public required bool IsPublic { get; set; }
 }

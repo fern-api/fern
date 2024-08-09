@@ -13,10 +13,10 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedAuthEnvironmentVariables"
+                    "from seed import SeedAuthEnvironmentVariables"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -35,10 +35,10 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedAuthEnvironmentVariables"
+                        "from seed import AsyncSeedAuthEnvironmentVariables"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -69,10 +69,10 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedAuthEnvironmentVariables"
+                    "from seed import SeedAuthEnvironmentVariables"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -108,10 +108,10 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedAuthEnvironmentVariables"
+                        "from seed import AsyncSeedAuthEnvironmentVariables"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

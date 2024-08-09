@@ -5,6 +5,42 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2024-08-06
+
+- Improvement: expose `package_name` configuration option for pydantic models. This field controls the package from which users will import your client, for example, the following config would allow users to use: `from my_custom_package import Client`
+  ```yaml
+  generators:
+    - name: fernapi/fern-pydantic-model
+      config:
+        package_name: my_custom_package
+  ```
+
+## [1.3.1] - 2024-08-05
+
+- Fix: The root type for unions with visitors now has it's parent typed correctly. This allows auto-complete to work once again on the union when it's nested within other pydantic models.
+
+## [1.3.0] - 2024-08-05
+
+- Improvement: The generated models now respects the pydantic version flag, generating V1 only code and V2 only code if specified. If not, the models is generated as it is today, with compatibility for BOTH Pydantic versions. This cleans up the generated code, and brings back features liked wrapped aliases and custom root validators for V1-only models.
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-pydantic-model
+      config:
+        pydantic_config:
+          version: "v1" # Other valid options include: "v2" and "both"
+  ```
+
+## [1.2.0] - 2024-08-04
+
+- Internal: The generator has now been upgraded to use Pydantic V2 internally. Note that
+  there is no change to the generated code, however by leveraging Pydantic V2 you should notice
+  an improvement in `fern generate` times.
+
+## [1.1.0-rc0] - 2024-07-31
+
+- Internal: The generator now consumes IRv53.
+
 ## [1.0.0-rc0] - 2024-07-16
 
 - Break: The generated models now support Pydantic V2 outright, it no longer uses `pydantic.v1` models. This change introduces additional breaks:

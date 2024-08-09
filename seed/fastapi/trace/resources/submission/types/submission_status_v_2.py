@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .test_submission_status_v_2 import TestSubmissionStatusV2
 from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
 
@@ -69,6 +69,3 @@ class _SubmissionStatusV2:
 
     class Workspace(WorkspaceSubmissionStatusV2):
         type: typing.Literal["workspace"] = "workspace"
-
-
-update_forward_refs(SubmissionStatusV2)

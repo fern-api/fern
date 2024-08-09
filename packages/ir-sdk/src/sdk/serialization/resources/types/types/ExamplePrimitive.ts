@@ -12,26 +12,41 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
             integer: core.serialization.object({
                 integer: core.serialization.number(),
             }),
+            long: core.serialization.object({
+                long: core.serialization.number(),
+            }),
+            uint: core.serialization.object({
+                uint: core.serialization.number(),
+            }),
+            uint64: core.serialization.object({
+                uint64: core.serialization.number(),
+            }),
+            float: core.serialization.object({
+                float: core.serialization.number(),
+            }),
             double: core.serialization.object({
                 double: core.serialization.number(),
-            }),
-            string: core.serialization.object({
-                string: core.serialization.lazyObject(async () => (await import("../../..")).EscapedString),
             }),
             boolean: core.serialization.object({
                 boolean: core.serialization.boolean(),
             }),
-            long: core.serialization.object({
-                long: core.serialization.number(),
-            }),
-            datetime: core.serialization.object({
-                datetime: core.serialization.date(),
+            string: core.serialization.object({
+                string: core.serialization.lazyObject(async () => (await import("../../..")).EscapedString),
             }),
             date: core.serialization.object({
                 date: core.serialization.string(),
             }),
+            datetime: core.serialization.object({
+                datetime: core.serialization.date(),
+            }),
             uuid: core.serialization.object({
                 uuid: core.serialization.string(),
+            }),
+            base64: core.serialization.object({
+                base64: core.serialization.string(),
+            }),
+            bigInteger: core.serialization.object({
+                bigInteger: core.serialization.string(),
             }),
         })
         .transform<FernIr.ExamplePrimitive>({
@@ -39,20 +54,30 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
                 switch (value.type) {
                     case "integer":
                         return FernIr.ExamplePrimitive.integer(value.integer);
-                    case "double":
-                        return FernIr.ExamplePrimitive.double(value.double);
-                    case "string":
-                        return FernIr.ExamplePrimitive.string(value.string);
-                    case "boolean":
-                        return FernIr.ExamplePrimitive.boolean(value.boolean);
                     case "long":
                         return FernIr.ExamplePrimitive.long(value.long);
-                    case "datetime":
-                        return FernIr.ExamplePrimitive.datetime(value.datetime);
+                    case "uint":
+                        return FernIr.ExamplePrimitive.uint(value.uint);
+                    case "uint64":
+                        return FernIr.ExamplePrimitive.uint64(value.uint64);
+                    case "float":
+                        return FernIr.ExamplePrimitive.float(value.float);
+                    case "double":
+                        return FernIr.ExamplePrimitive.double(value.double);
+                    case "boolean":
+                        return FernIr.ExamplePrimitive.boolean(value.boolean);
+                    case "string":
+                        return FernIr.ExamplePrimitive.string(value.string);
                     case "date":
                         return FernIr.ExamplePrimitive.date(value.date);
+                    case "datetime":
+                        return FernIr.ExamplePrimitive.datetime(value.datetime);
                     case "uuid":
                         return FernIr.ExamplePrimitive.uuid(value.uuid);
+                    case "base64":
+                        return FernIr.ExamplePrimitive.base64(value.base64);
+                    case "bigInteger":
+                        return FernIr.ExamplePrimitive.bigInteger(value.bigInteger);
                     default:
                         return value as FernIr.ExamplePrimitive;
                 }
@@ -63,32 +88,22 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
 export declare namespace ExamplePrimitive {
     type Raw =
         | ExamplePrimitive.Integer
-        | ExamplePrimitive.Double
-        | ExamplePrimitive.String
-        | ExamplePrimitive.Boolean
         | ExamplePrimitive.Long
-        | ExamplePrimitive.Datetime
+        | ExamplePrimitive.Uint
+        | ExamplePrimitive.Uint64
+        | ExamplePrimitive.Float
+        | ExamplePrimitive.Double
+        | ExamplePrimitive.Boolean
+        | ExamplePrimitive.String
         | ExamplePrimitive.Date
-        | ExamplePrimitive.Uuid;
+        | ExamplePrimitive.Datetime
+        | ExamplePrimitive.Uuid
+        | ExamplePrimitive.Base64
+        | ExamplePrimitive.BigInteger;
 
     interface Integer {
         type: "integer";
         integer: number;
-    }
-
-    interface Double {
-        type: "double";
-        double: number;
-    }
-
-    interface String {
-        type: "string";
-        string: serializers.EscapedString.Raw;
-    }
-
-    interface Boolean {
-        type: "boolean";
-        boolean: boolean;
     }
 
     interface Long {
@@ -96,9 +111,34 @@ export declare namespace ExamplePrimitive {
         long: number;
     }
 
-    interface Datetime {
-        type: "datetime";
-        datetime: string;
+    interface Uint {
+        type: "uint";
+        uint: number;
+    }
+
+    interface Uint64 {
+        type: "uint64";
+        uint64: number;
+    }
+
+    interface Float {
+        type: "float";
+        float: number;
+    }
+
+    interface Double {
+        type: "double";
+        double: number;
+    }
+
+    interface Boolean {
+        type: "boolean";
+        boolean: boolean;
+    }
+
+    interface String {
+        type: "string";
+        string: serializers.EscapedString.Raw;
     }
 
     interface Date {
@@ -106,8 +146,23 @@ export declare namespace ExamplePrimitive {
         date: string;
     }
 
+    interface Datetime {
+        type: "datetime";
+        datetime: string;
+    }
+
     interface Uuid {
         type: "uuid";
         uuid: string;
+    }
+
+    interface Base64 {
+        type: "base64";
+        base64: string;
+    }
+
+    interface BigInteger {
+        type: "bigInteger";
+        bigInteger: string;
     }
 }

@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment"
+                    "from seed import SeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedSingleUrlEnvironmentNoDefault(environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -52,7 +52,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment"
+                        "from seed import AsyncSeedSingleUrlEnvironmentNoDefault\nfrom seed.environment import SeedSingleUrlEnvironmentNoDefaultEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedSingleUrlEnvironmentNoDefault(environment=SeedSingleUrlEnvironmentNoDefaultEnvironment.PRODUCTION, $FERN_INPUT, )",

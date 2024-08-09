@@ -4,116 +4,163 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .binary_tree_node_value import BinaryTreeNodeValue
-from .binary_tree_value import BinaryTreeValue
 from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
-from .doubly_linked_list_value import DoublyLinkedListValue
 from .node_id import NodeId
 from .singly_linked_list_node_value import SinglyLinkedListNodeValue
-from .singly_linked_list_value import SinglyLinkedListValue
 
 
-class VariableValue_IntegerValue(pydantic_v1.BaseModel):
-    type: typing.Literal["integerValue"] = "integerValue"
+class VariableValue_IntegerValue(UniversalBaseModel):
     value: int
+    type: typing.Literal["integerValue"] = "integerValue"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class VariableValue_BooleanValue(pydantic_v1.BaseModel):
-    type: typing.Literal["booleanValue"] = "booleanValue"
+class VariableValue_BooleanValue(UniversalBaseModel):
     value: bool
+    type: typing.Literal["booleanValue"] = "booleanValue"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class VariableValue_DoubleValue(pydantic_v1.BaseModel):
-    type: typing.Literal["doubleValue"] = "doubleValue"
+class VariableValue_DoubleValue(UniversalBaseModel):
     value: float
+    type: typing.Literal["doubleValue"] = "doubleValue"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class VariableValue_StringValue(pydantic_v1.BaseModel):
+class VariableValue_StringValue(UniversalBaseModel):
+    value: str
     type: typing.Literal["stringValue"] = "stringValue"
+
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+
+
+class VariableValue_CharValue(UniversalBaseModel):
     value: str
-
-    class Config:
-        frozen = True
-        smart_union = True
-
-
-class VariableValue_CharValue(pydantic_v1.BaseModel):
     type: typing.Literal["charValue"] = "charValue"
-    value: str
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class VariableValue_MapValue(MapValue):
+class VariableValue_MapValue(UniversalBaseModel):
     type: typing.Literal["mapValue"] = "mapValue"
+    key_value_pairs: typing.List["KeyValuePair"] = pydantic.Field(alias="keyValuePairs")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableValue_ListValue(pydantic_v1.BaseModel):
+class VariableValue_ListValue(UniversalBaseModel):
+    value: typing.List["VariableValue"]
     type: typing.Literal["listValue"] = "listValue"
-    value: typing.List[VariableValue]
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class VariableValue_BinaryTreeValue(BinaryTreeValue):
+class VariableValue_BinaryTreeValue(UniversalBaseModel):
     type: typing.Literal["binaryTreeValue"] = "binaryTreeValue"
+    root: typing.Optional[NodeId] = None
+    nodes: typing.Dict[NodeId, BinaryTreeNodeValue]
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableValue_SinglyLinkedListValue(SinglyLinkedListValue):
+class VariableValue_SinglyLinkedListValue(UniversalBaseModel):
     type: typing.Literal["singlyLinkedListValue"] = "singlyLinkedListValue"
+    head: typing.Optional[NodeId] = None
+    nodes: typing.Dict[NodeId, SinglyLinkedListNodeValue]
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableValue_DoublyLinkedListValue(DoublyLinkedListValue):
+class VariableValue_DoublyLinkedListValue(UniversalBaseModel):
     type: typing.Literal["doublyLinkedListValue"] = "doublyLinkedListValue"
+    head: typing.Optional[NodeId] = None
+    nodes: typing.Dict[NodeId, DoublyLinkedListNodeValue]
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class VariableValue_NullValue(pydantic_v1.BaseModel):
+class VariableValue_NullValue(UniversalBaseModel):
     type: typing.Literal["nullValue"] = "nullValue"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 VariableValue = typing.Union[
@@ -130,7 +177,6 @@ VariableValue = typing.Union[
     VariableValue_NullValue,
 ]
 from .key_value_pair import KeyValuePair  # noqa: E402
-from .map_value import MapValue  # noqa: E402
 
-VariableValue_MapValue.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
-VariableValue_ListValue.update_forward_refs(KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
+update_forward_refs(VariableValue_MapValue)
+update_forward_refs(VariableValue_ListValue)

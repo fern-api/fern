@@ -1,4 +1,4 @@
-using SeedStreaming;
+using System;
 using SeedStreaming.Core;
 
 #nullable enable
@@ -13,6 +13,7 @@ public partial class SeedStreamingClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Dummy = new DummyClient(_client);

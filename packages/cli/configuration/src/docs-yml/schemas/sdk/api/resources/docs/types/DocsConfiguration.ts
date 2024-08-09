@@ -8,6 +8,11 @@ export interface DocsConfiguration {
     instances: FernDocsConfig.DocsInstance[];
     /** used as tab bar title, and in the navbar if no logo is defined */
     title?: string;
+    /**
+     * The `analytics` object allows you to configure analytics for your docs site.
+     * Currently, only Segment is supported.
+     */
+    analytics?: FernDocsConfig.AnalyticsConfig;
     tabs?: Record<FernDocsConfig.TabId, FernDocsConfig.TabConfig>;
     versions?: FernDocsConfig.VersionConfig[];
     landingPage?: FernDocsConfig.PageConfiguration;
@@ -16,6 +21,7 @@ export interface DocsConfiguration {
     navbarLinks?: FernDocsConfig.NavbarLink[];
     footerLinks?: FernDocsConfig.FooterLinksConfig;
     experimental?: FernDocsConfig.ExperimentalConfig;
+    defaultLanguage?: FernDocsConfig.ProgrammingLanguage;
     metadata?: FernDocsConfig.MetadataConfig;
     redirects?: FernDocsConfig.RedirectConfig[];
     logo?: FernDocsConfig.LogoConfiguration;

@@ -52,6 +52,22 @@
                           "additionalProperties": false
                         }
                       },
+                      "encoding": {
+                        "type": "object",
+                        "properties": {
+                          "proto": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "description": "The name of the Protobuf type (e.g. google.protobuf.Struct)."
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        },
+                        "additionalProperties": false
+                      },
                       "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
                         "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }]
@@ -128,6 +144,9 @@
                       "examples": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
                       },
+                      "encoding": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                      },
                       "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
@@ -156,6 +175,7 @@
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
+                  "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
                   "base-properties": {
                     "type": "object",
                     "additionalProperties": {
@@ -236,6 +256,7 @@
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
+                  "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
                   "type": { "type": "string" },
                   "validation": {
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
@@ -255,6 +276,7 @@
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
+                  "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
                   "default": { "type": "string" },
                   "enum": {
                     "type": "array",
@@ -303,6 +325,7 @@
                     "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
+                  "encoding": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding" },
                   "union": {
                     "type": "array",
                     "items": {
@@ -356,6 +379,9 @@
                           "validation": {
                             "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
                           },
+                          "availability": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                          },
                           "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" }
                         },
                         "required": ["type"],
@@ -368,7 +394,10 @@
                     "type": "object",
                     "properties": {
                       "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-                      "variable": { "type": "string" }
+                      "variable": { "type": "string" },
+                      "availability": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                      }
                     },
                     "required": ["variable"],
                     "additionalProperties": false
@@ -407,6 +436,20 @@
                   }
                 ]
               }
+            },
+            "transport": {
+              "type": "object",
+              "properties": {
+                "grpc": {
+                  "type": "object",
+                  "properties": {
+                    "service-name": { "type": "string", "description": "The name of the gRPC service." }
+                  },
+                  "required": ["service-name"],
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
             },
             "endpoints": {
               "type": "object",

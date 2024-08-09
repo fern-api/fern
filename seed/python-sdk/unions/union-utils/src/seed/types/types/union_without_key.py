@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .bar import Bar as types_types_bar_Bar
 from .foo import Foo as types_types_foo_Foo
 
@@ -81,6 +81,3 @@ class _UnionWithoutKey:
             class Config:
                 frozen = True
                 smart_union = True
-
-
-update_forward_refs(UnionWithoutKey)

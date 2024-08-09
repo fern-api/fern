@@ -41,6 +41,9 @@ export class Inlined {
      * @example
      *     await client.inlined.send({
      *         temperature: 10.1,
+     *         context: "You're super wise",
+     *         aliasedContext: "You're super wise",
+     *         maybeContext: "You're super wise",
      *         query: "What is the weather today"
      *     })
      */
@@ -61,6 +64,7 @@ export class Inlined {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/literal/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -70,6 +74,7 @@ export class Inlined {
                 ...serializers.SendLiteralsInlinedRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 prompt: "You are a helpful assistant",
                 stream: false,
+                aliasedContext: "You're super wise",
             },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,

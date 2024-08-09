@@ -51,3 +51,51 @@ await client.unknown.post({
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client/Client.ts">postObject</a>({ ...params }) -> any[]</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.unknown.postObject({});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedUnknownAsAny.MyObject`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Unknown.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>

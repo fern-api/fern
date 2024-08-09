@@ -13,7 +13,9 @@ export const SecurityScheme: core.serialization.Schema<serializers.SecuritySchem
             bearer: core.serialization.lazyObject(async () => (await import("../../..")).BearerSecurityScheme),
             header: core.serialization.lazyObject(async () => (await import("../../..")).HeaderSecurityScheme),
             query: core.serialization.lazyObject(async () => (await import("../../..")).QuerySecurityScheme),
-            oauth: core.serialization.lazyObject(async () => (await import("../../..")).OauthSecurityScheme),
+            oauth: core.serialization.object({
+                value: core.serialization.lazy(async () => (await import("../../..")).OauthSecurityScheme),
+            }),
         })
         .transform<FernOpenapiIr.SecurityScheme>({
             transform: (value) => {
@@ -27,7 +29,7 @@ export const SecurityScheme: core.serialization.Schema<serializers.SecuritySchem
                     case "query":
                         return FernOpenapiIr.SecurityScheme.query(value);
                     case "oauth":
-                        return FernOpenapiIr.SecurityScheme.oauth(value);
+                        return FernOpenapiIr.SecurityScheme.oauth(value.value);
                     default:
                         return value as FernOpenapiIr.SecurityScheme;
                 }
@@ -59,7 +61,8 @@ export declare namespace SecurityScheme {
         type: "query";
     }
 
-    interface Oauth extends serializers.OauthSecurityScheme.Raw {
+    interface Oauth {
         type: "oauth";
+        value: serializers.OauthSecurityScheme.Raw;
     }
 }

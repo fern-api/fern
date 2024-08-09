@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .cat import Cat as types_union_types_cat_Cat
 from .dog import Dog as types_union_types_dog_Dog
 
@@ -81,6 +81,3 @@ class _Animal:
             class Config:
                 frozen = True
                 smart_union = True
-
-
-update_forward_refs(Animal)

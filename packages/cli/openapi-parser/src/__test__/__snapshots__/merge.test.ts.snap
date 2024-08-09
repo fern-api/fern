@@ -868,6 +868,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "BankInfoListRequestAccountType",
               "groupName": null,
@@ -1186,6 +1187,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "BankInfoListRequestOrderBy",
               "groupName": null,
@@ -4232,6 +4234,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmployeePayrollRunsListRequestExpand",
               "groupName": null,
@@ -5402,6 +5405,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmployeePayrollRunsRetrieveRequestExpand",
               "groupName": null,
@@ -6084,6 +6088,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmployeesListRequestEmploymentStatus",
               "groupName": null,
@@ -6147,6 +6152,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmployeesListRequestExpand",
               "groupName": null,
@@ -9825,6 +9831,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmployeesListRequestRemoteFields",
               "groupName": null,
@@ -10074,6 +10081,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmployeesListRequestShowEnumOrigins",
               "groupName": null,
@@ -11582,6 +11590,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmployeesRetrieveRequestExpand",
               "groupName": null,
@@ -14973,6 +14982,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmployeesRetrieveRequestRemoteFields",
               "groupName": null,
@@ -15192,6 +15202,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmployeesRetrieveRequestShowEnumOrigins",
               "groupName": null,
@@ -16113,6 +16124,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmploymentsListRequestExpand",
               "groupName": null,
@@ -16278,6 +16290,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmploymentsListRequestOrderBy",
               "groupName": null,
@@ -16359,6 +16372,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmploymentsListRequestRemoteFields",
               "groupName": null,
@@ -16608,6 +16622,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmploymentsListRequestShowEnumOrigins",
               "groupName": null,
@@ -17133,6 +17148,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmploymentsRetrieveRequestExpand",
               "groupName": null,
@@ -17222,6 +17238,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmploymentsRetrieveRequestRemoteFields",
               "groupName": null,
@@ -17441,6 +17458,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "EmploymentsRetrieveRequestShowEnumOrigins",
               "groupName": null,
@@ -19190,6 +19208,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "IssuesListRequestStatus",
               "groupName": null,
@@ -19803,6 +19822,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "LinkedAccountsListRequestCategory",
               "groupName": null,
@@ -22783,6 +22803,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "PayrollRunsListRequestRemoteFields",
               "groupName": null,
@@ -22882,6 +22903,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "PayrollRunsListRequestRunType",
               "groupName": null,
@@ -22971,6 +22993,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "PayrollRunsListRequestShowEnumOrigins",
               "groupName": null,
@@ -23390,6 +23413,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "PayrollRunsRetrieveRequestRemoteFields",
               "groupName": null,
@@ -23453,6 +23477,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "PayrollRunsRetrieveRequestShowEnumOrigins",
               "groupName": null,
@@ -25923,6 +25948,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TimeOffListRequestExpand",
               "groupName": null,
@@ -26119,6 +26145,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TimeOffListRequestRemoteFields",
               "groupName": null,
@@ -26271,6 +26298,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TimeOffListRequestRequestType",
               "groupName": null,
@@ -26373,6 +26401,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TimeOffListRequestShowEnumOrigins",
               "groupName": null,
@@ -26494,6 +26523,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TimeOffListRequestStatus",
               "groupName": null,
@@ -27611,6 +27641,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TimeOffBalancesListRequestPolicyType",
               "groupName": null,
@@ -28480,6 +28511,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TimeOffRetrieveRequestExpand",
               "groupName": null,
@@ -28569,6 +28601,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TimeOffRetrieveRequestRemoteFields",
               "groupName": null,
@@ -28684,6 +28717,7 @@ exports[`open api parser merge parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "TimeOffRetrieveRequestShowEnumOrigins",
               "groupName": null,
@@ -30199,6 +30233,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
     },
     "AccountDetailsAndActionsStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`COMPLETE\` - COMPLETE
 * \`INCOMPLETE\` - INCOMPLETE
 * \`RELINK_NEEDED\` - RELINK_NEEDED",
@@ -30590,6 +30625,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
     },
     "AccountTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`SAVINGS\` - SAVINGS
 * \`CHECKING\` - CHECKING",
       "generatedName": "AccountTypeEnum",
@@ -31726,6 +31762,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
     },
     "CategoriesEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`hris\` - hris
 * \`ats\` - ats
 * \`accounting\` - accounting
@@ -31833,6 +31870,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
     },
     "CategoryEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`hris\` - hris
 * \`ats\` - ats
 * \`accounting\` - accounting
@@ -32648,6 +32686,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
     },
     "ConditionTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`BOOLEAN\` - BOOLEAN
 * \`DATE\` - DATE
 * \`DATE_TIME\` - DATE_TIME
@@ -32755,6 +32794,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
     },
     "CountryEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`AF\` - Afghanistan
 * \`AX\` - Åland Islands
 * \`AL\` - Albania
@@ -37498,6 +37538,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
     },
     "EarningTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`SALARY\` - SALARY
 * \`REIMBURSEMENT\` - REIMBURSEMENT
 * \`OVERTIME\` - OVERTIME
@@ -42527,6 +42568,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
     },
     "EmploymentStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`ACTIVE\` - ACTIVE
 * \`PENDING\` - PENDING
 * \`INACTIVE\` - INACTIVE",
@@ -42578,6 +42620,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
     },
     "EmploymentTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`FULL_TIME\` - FULL_TIME
 * \`PART_TIME\` - PART_TIME
 * \`INTERN\` - INTERN
@@ -42657,6 +42700,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
     },
     "EnabledActionsEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`READ\` - READ
 * \`WRITE\` - WRITE",
       "generatedName": "EnabledActionsEnum",
@@ -42694,6 +42738,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
     },
     "EncodingEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`RAW\` - RAW
 * \`BASE64\` - BASE64
 * \`GZIP_BASE64\` - GZIP_BASE64",
@@ -43115,6 +43160,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
     },
     "EthnicityEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`AMERICAN_INDIAN_OR_ALASKA_NATIVE\` - AMERICAN_INDIAN_OR_ALASKA_NATIVE
 * \`ASIAN_OR_INDIAN_SUBCONTINENT\` - ASIAN_OR_INDIAN_SUBCONTINENT
 * \`BLACK_OR_AFRICAN_AMERICAN\` - BLACK_OR_AFRICAN_AMERICAN
@@ -43236,6 +43282,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
     },
     "FlsaStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`EXEMPT\` - EXEMPT
 * \`SALARIED_NONEXEMPT\` - SALARIED_NONEXEMPT
 * \`NONEXEMPT\` - NONEXEMPT
@@ -43301,6 +43348,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
     },
     "GenderEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`MALE\` - MALE
 * \`FEMALE\` - FEMALE
 * \`NON-BINARY\` - NON-BINARY
@@ -43814,6 +43862,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
     },
     "GroupTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`TEAM\` - TEAM
 * \`DEPARTMENT\` - DEPARTMENT
 * \`COST_CENTER\` - COST_CENTER
@@ -44292,6 +44341,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
     },
     "IssueStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`ONGOING\` - ONGOING
 * \`RESOLVED\` - RESOLVED",
       "generatedName": "IssueStatusEnum",
@@ -46009,6 +46059,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
     },
     "LocationTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`HOME\` - HOME
 * \`WORK\` - WORK",
       "generatedName": "LocationTypeEnum",
@@ -46046,6 +46097,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
     },
     "MaritalStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`SINGLE\` - SINGLE
 * \`MARRIED_FILING_JOINTLY\` - MARRIED_FILING_JOINTLY
 * \`MARRIED_FILING_SEPARATELY\` - MARRIED_FILING_SEPARATELY
@@ -46283,6 +46335,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
     },
     "MethodEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`GET\` - GET
 * \`OPTIONS\` - OPTIONS
 * \`HEAD\` - HEAD
@@ -48959,6 +49012,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
     },
     "PayCurrencyEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`XUA\` - ADB Unit of Account
 * \`AFN\` - Afghan Afghani
 * \`AFA\` - Afghan Afghani (1927–2002)
@@ -53252,6 +53306,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
     },
     "PayFrequencyEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`WEEKLY\` - WEEKLY
 * \`BIWEEKLY\` - BIWEEKLY
 * \`MONTHLY\` - MONTHLY
@@ -53665,6 +53720,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
     },
     "PayPeriodEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`HOUR\` - HOUR
 * \`DAY\` - DAY
 * \`WEEK\` - WEEK
@@ -54291,6 +54347,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
     },
     "PolicyTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`VACATION\` - VACATION
 * \`SICK\` - SICK
 * \`PERSONAL\` - PERSONAL
@@ -54384,6 +54441,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
     },
     "ReasonEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`GENERAL_CUSTOMER_REQUEST\` - GENERAL_CUSTOMER_REQUEST
 * \`GDPR\` - GDPR
 * \`OTHER\` - OTHER",
@@ -54870,6 +54928,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
     },
     "RequestFormatEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`JSON\` - JSON
 * \`XML\` - XML
 * \`MULTIPART\` - MULTIPART",
@@ -54921,6 +54980,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
     },
     "RequestTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`VACATION\` - VACATION
 * \`SICK\` - SICK
 * \`PERSONAL\` - PERSONAL
@@ -55014,6 +55074,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
     },
     "ResponseTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`JSON\` - JSON
 * \`BASE64_GZIP\` - BASE64_GZIP",
       "generatedName": "ResponseTypeEnum",
@@ -55051,6 +55112,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
     },
     "RunStateEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`PAID\` - PAID
 * \`DRAFT\` - DRAFT
 * \`APPROVED\` - APPROVED
@@ -55130,6 +55192,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
     },
     "RunTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`REGULAR\` - REGULAR
 * \`OFF_CYCLE\` - OFF_CYCLE
 * \`CORRECTION\` - CORRECTION
@@ -55209,6 +55272,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
     },
     "SelectiveSyncConfigurationsUsageEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`IN_NEXT_SYNC\` - IN_NEXT_SYNC
 * \`IN_LAST_SYNC\` - IN_LAST_SYNC",
       "generatedName": "SelectiveSyncConfigurationsUsageEnum",
@@ -55428,6 +55492,7 @@ View the \`SyncStatus\` for an account to see how recently its models were synce
     },
     "SyncStatusStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`SYNCING\` - SYNCING
 * \`DONE\` - DONE
 * \`FAILED\` - FAILED
@@ -58071,6 +58136,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
     },
     "TimeOffStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`REQUESTED\` - REQUESTED
 * \`APPROVED\` - APPROVED
 * \`DECLINED\` - DECLINED
@@ -58150,6 +58216,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
     },
     "UnitsEnum": {
       "availability": null,
+      "default": null,
       "description": "* \`HOURS\` - HOURS
 * \`DAYS\` - DAYS",
       "generatedName": "UnitsEnum",

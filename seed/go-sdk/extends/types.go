@@ -8,6 +8,12 @@ import (
 	core "github.com/extends/fern/core"
 )
 
+type Inlined struct {
+	Docs   string `json:"docs" url:"-"`
+	Name   string `json:"name" url:"-"`
+	Unique string `json:"unique" url:"-"`
+}
+
 type Docs struct {
 	Docs string `json:"docs" url:"docs"`
 

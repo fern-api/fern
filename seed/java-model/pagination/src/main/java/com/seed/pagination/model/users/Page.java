@@ -151,7 +151,7 @@ public final class Page {
 
         @java.lang.Override
         public _FinalStage next(NextPage next) {
-            this.next = Optional.of(next);
+            this.next = Optional.ofNullable(next);
             return this;
         }
 

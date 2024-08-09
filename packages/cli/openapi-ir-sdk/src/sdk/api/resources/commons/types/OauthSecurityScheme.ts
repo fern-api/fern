@@ -4,6 +4,70 @@
 
 import * as FernOpenapiIr from "../../..";
 
-export interface OauthSecurityScheme {
-    scopesEnum: FernOpenapiIr.EnumSchema | undefined;
+export type OauthSecurityScheme =
+    | FernOpenapiIr.OauthSecurityScheme.ClientCredentials
+    | FernOpenapiIr.OauthSecurityScheme.Unrecognized;
+
+export declare namespace OauthSecurityScheme {
+    interface ClientCredentials extends FernOpenapiIr.OAuthClientCredentials, _Utils {
+        type: "clientCredentials";
+    }
+
+    interface Unrecognized extends FernOpenapiIr.FallbackOAuthScheme, _Utils {
+        type: "unrecognized";
+    }
+
+    interface _Utils {
+        _visit: <_Result>(visitor: FernOpenapiIr.OauthSecurityScheme._Visitor<_Result>) => _Result;
+    }
+
+    interface _Visitor<_Result> {
+        clientCredentials: (value: FernOpenapiIr.OAuthClientCredentials) => _Result;
+        unrecognized: (value: FernOpenapiIr.FallbackOAuthScheme) => _Result;
+        _other: (value: { type: string }) => _Result;
+    }
 }
+
+export const OauthSecurityScheme = {
+    clientCredentials: (
+        value: FernOpenapiIr.OAuthClientCredentials
+    ): FernOpenapiIr.OauthSecurityScheme.ClientCredentials => {
+        return {
+            ...value,
+            type: "clientCredentials",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.OauthSecurityScheme.ClientCredentials,
+                visitor: FernOpenapiIr.OauthSecurityScheme._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.OauthSecurityScheme._visit(this, visitor);
+            },
+        };
+    },
+
+    unrecognized: (value: FernOpenapiIr.FallbackOAuthScheme): FernOpenapiIr.OauthSecurityScheme.Unrecognized => {
+        return {
+            ...value,
+            type: "unrecognized",
+            _visit: function <_Result>(
+                this: FernOpenapiIr.OauthSecurityScheme.Unrecognized,
+                visitor: FernOpenapiIr.OauthSecurityScheme._Visitor<_Result>
+            ) {
+                return FernOpenapiIr.OauthSecurityScheme._visit(this, visitor);
+            },
+        };
+    },
+
+    _visit: <_Result>(
+        value: FernOpenapiIr.OauthSecurityScheme,
+        visitor: FernOpenapiIr.OauthSecurityScheme._Visitor<_Result>
+    ): _Result => {
+        switch (value.type) {
+            case "clientCredentials":
+                return visitor.clientCredentials(value);
+            case "unrecognized":
+                return visitor.unrecognized(value);
+            default:
+                return visitor._other(value as any);
+        }
+    },
+} as const;

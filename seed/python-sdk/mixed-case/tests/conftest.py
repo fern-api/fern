@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedMixedCase, SeedMixedCase
+from seed import AsyncSeedMixedCase, SeedMixedCase
 
 
 @pytest.fixture

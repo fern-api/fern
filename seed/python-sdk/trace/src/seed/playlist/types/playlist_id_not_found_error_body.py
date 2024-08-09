@@ -4,17 +4,23 @@ from __future__ import annotations
 
 import typing
 
-from ...core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .playlist_id import PlaylistId
 
 
-class PlaylistIdNotFoundErrorBody_PlaylistId(pydantic_v1.BaseModel):
-    type: typing.Literal["playlistId"] = "playlistId"
+class PlaylistIdNotFoundErrorBody_PlaylistId(UniversalBaseModel):
     value: PlaylistId
+    type: typing.Literal["playlistId"] = "playlistId"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-PlaylistIdNotFoundErrorBody = typing.Union[PlaylistIdNotFoundErrorBody_PlaylistId]
+PlaylistIdNotFoundErrorBody = PlaylistIdNotFoundErrorBody_PlaylistId

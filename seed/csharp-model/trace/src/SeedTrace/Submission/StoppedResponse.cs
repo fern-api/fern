@@ -7,5 +7,5 @@ namespace SeedTrace;
 public record StoppedResponse
 {
     [JsonPropertyName("submissionId")]
-    public required Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 }

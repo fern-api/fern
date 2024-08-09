@@ -13,7 +13,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment"
+                    "from seed import SeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedMultiUrlEnvironmentNoDefault(environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -69,7 +69,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment"
+                        "from seed import AsyncSeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedMultiUrlEnvironmentNoDefault(environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -137,7 +137,7 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment"
+                    "from seed import SeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment"
                 ],
                 "isOptional": true,
                 "templateString": "client = SeedMultiUrlEnvironmentNoDefault(environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, $FERN_INPUT, )",
@@ -193,7 +193,7 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment"
+                        "from seed import AsyncSeedMultiUrlEnvironmentNoDefault\nfrom seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment"
                     ],
                     "isOptional": true,
                     "templateString": "client = AsyncSeedMultiUrlEnvironmentNoDefault(environment=SeedMultiUrlEnvironmentNoDefaultEnvironment.PRODUCTION, $FERN_INPUT, )",

@@ -1,11 +1,12 @@
 import { docsYml, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { DefinitionFileSchema, PackageMarkerFileSchema, RootApiFileSchema } from "@fern-api/yaml-schema";
-import { FernWorkspace } from "../workspaces/FernWorkspace";
+import { processPackageMarkers } from "../processPackageMarkers";
+import { FernWorkspace, LazyFernWorkspace } from "../workspaces/FernWorkspace";
 import { OSSWorkspace } from "../workspaces/OSSWorkspace";
 import { ParsedFernFile } from "./FernFile";
 
-export type Workspace = DocsWorkspace | FernWorkspace | OSSWorkspace;
+export type Workspace = DocsWorkspace | LazyFernWorkspace | OSSWorkspace;
 
 export interface DocsWorkspace {
     type: "docs";
@@ -15,16 +16,28 @@ export interface DocsWorkspace {
     config: docsYml.RawSchemas.DocsConfiguration;
 }
 
-export interface Spec {
+export type Spec = OpenAPISpec | ProtobufSpec;
+
+export interface OpenAPISpec {
+    type: "openapi";
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     settings?: SpecImportSettings;
 }
 
+export interface ProtobufSpec {
+    type: "protobuf";
+    absoluteFilepathToProtobufRoot: AbsoluteFilePath;
+    absoluteFilepathToProtobufTarget: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    generateLocally: boolean;
+    settings?: SpecImportSettings;
+}
 export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    asyncApiNaming?: "v1" | "v2";
 }
 export interface APIChangelog {
     files: ChangelogFile[];
@@ -50,7 +63,7 @@ export interface FernDefinition {
     rootApiFile: ParsedFernFile<RootApiFileSchema>;
     namedDefinitionFiles: Record<RelativeFilePath, OnDiskNamedDefinitionFile>;
     packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
-    importedDefinitions: Record<RelativeFilePath, FernDefinition>;
+    importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition>;
 }
 
 export interface OnDiskNamedDefinitionFile extends ParsedFernFile<DefinitionFileSchema> {

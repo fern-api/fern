@@ -29,6 +29,10 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedObj
     seventeen: core.serialization.list(core.serialization.string().optional()),
     eighteen: core.serialization.stringLiteral("eighteen"),
     nineteen: Name,
+    twenty: core.serialization.number(),
+    twentyone: core.serialization.number(),
+    twentytwo: core.serialization.number(),
+    twentythree: core.serialization.string(),
 });
 
 export declare namespace Type {
@@ -52,5 +56,9 @@ export declare namespace Type {
         seventeen: (string | null | undefined)[];
         eighteen: "eighteen";
         nineteen: Name.Raw;
+        twenty: number;
+        twentyone: number;
+        twentytwo: number;
+        twentythree: string;
     }
 }

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorConfig
+from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
 
@@ -16,6 +16,7 @@ class FastApiGeneratorContext(ABC):
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         project_module_path: AST.ModulePath,
+        use_str_enums: bool,
     ):
         self.ir = ir
         self.generator_config = generator_config
@@ -26,6 +27,8 @@ class FastApiGeneratorContext(ABC):
             project_module_path=project_module_path,
             allow_skipping_validation=False,
             allow_leveraging_defaults=False,
+            use_typeddict_requests=False,
+            use_str_enums=use_str_enums,
         )
         self.core_utilities = CoreUtilities()
 

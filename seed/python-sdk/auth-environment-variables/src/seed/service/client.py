@@ -29,7 +29,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedAuthEnvironmentVariables
+        from seed import SeedAuthEnvironmentVariables
 
         client = SeedAuthEnvironmentVariables(
             x_another_header="YOUR_X_ANOTHER_HEADER",
@@ -70,7 +70,7 @@ class ServiceClient:
 
         Examples
         --------
-        from seed.client import SeedAuthEnvironmentVariables
+        from seed import SeedAuthEnvironmentVariables
 
         client = SeedAuthEnvironmentVariables(
             x_another_header="YOUR_X_ANOTHER_HEADER",
@@ -117,7 +117,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedAuthEnvironmentVariables
+        from seed import AsyncSeedAuthEnvironmentVariables
 
         client = AsyncSeedAuthEnvironmentVariables(
             x_another_header="YOUR_X_ANOTHER_HEADER",
@@ -168,7 +168,7 @@ class AsyncServiceClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedAuthEnvironmentVariables
+        from seed import AsyncSeedAuthEnvironmentVariables
 
         client = AsyncSeedAuthEnvironmentVariables(
             x_another_header="YOUR_X_ANOTHER_HEADER",

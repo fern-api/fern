@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record InitializeProblemRequest
 {
     [JsonPropertyName("problemId")]
-    public required string ProblemId { get; init; }
+    public required string ProblemId { get; set; }
 
     [JsonPropertyName("problemVersion")]
-    public int? ProblemVersion { get; init; }
+    public int? ProblemVersion { get; set; }
 }

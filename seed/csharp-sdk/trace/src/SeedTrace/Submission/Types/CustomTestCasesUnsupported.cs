@@ -7,8 +7,8 @@ namespace SeedTrace;
 public record CustomTestCasesUnsupported
 {
     [JsonPropertyName("problemId")]
-    public required string ProblemId { get; init; }
+    public required string ProblemId { get; set; }
 
     [JsonPropertyName("submissionId")]
-    public required Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 }

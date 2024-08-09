@@ -19,14 +19,14 @@ class NoAuthClient:
         self._client_wrapper = client_wrapper
 
     def post_with_no_auth(
-        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with no auth
 
         Parameters
         ----------
-        request : typing.Any
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -37,7 +37,7 @@ class NoAuthClient:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
 
         client = SeedExhaustive(
             token="YOUR_TOKEN",
@@ -68,14 +68,14 @@ class AsyncNoAuthClient:
         self._client_wrapper = client_wrapper
 
     async def post_with_no_auth(
-        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with no auth
 
         Parameters
         ----------
-        request : typing.Any
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -88,7 +88,7 @@ class AsyncNoAuthClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
 
         client = AsyncSeedExhaustive(
             token="YOUR_TOKEN",

@@ -1,6 +1,5 @@
 using System.Net.Http;
 using SeedTrace.Core;
-using SeedTrace.V2;
 using SeedTrace.V2.V3;
 
 #nullable enable
@@ -22,10 +21,26 @@ public class V2Client
 
     public V3Client V3 { get; }
 
-    public async Task TestAsync()
+    public async Task TestAsync(RequestOptions? options = null)
     {
-        await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "" }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "",
+                Options = options
+            }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

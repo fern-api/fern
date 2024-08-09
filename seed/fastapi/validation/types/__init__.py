@@ -3,8 +3,9 @@
 from .double import Double
 from .large_integer import LargeInteger
 from .sentence import Sentence
+from .shape import Shape
 from .small_integer import SmallInteger
 from .type import Type
 from .word import Word
 
-__all__ = ["Double", "LargeInteger", "Sentence", "SmallInteger", "Type", "Word"]
+__all__ = ["Double", "LargeInteger", "Sentence", "Shape", "SmallInteger", "Type", "Word"]

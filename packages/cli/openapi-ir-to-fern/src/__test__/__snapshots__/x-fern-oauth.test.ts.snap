@@ -1,0 +1,215 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-oauth x-fern-oauth docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "postRefresh": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "query-parameters": {
+                "refresh_token": "refresh_token",
+              },
+              "response": {
+                "body": {
+                  "accessToken": "accessToken",
+                  "refreshToken": "refreshToken",
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/refresh",
+          "request": {
+            "name": "PostRefreshRequest",
+            "query-parameters": {
+              "refresh_token": "string",
+            },
+          },
+          "response": {
+            "docs": "A real life token",
+            "type": "PostRefreshResponse",
+          },
+        },
+        "postToken": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "query-parameters": {
+                "client_id": "client_id",
+                "client_secret": "client_secret",
+                "scopes": "scopes",
+              },
+              "response": {
+                "body": {
+                  "accessToken": "accessToken",
+                  "refreshToken": "refreshToken",
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/token",
+          "request": {
+            "name": "PostTokenRequest",
+            "query-parameters": {
+              "client_id": "string",
+              "client_secret": "string",
+              "scopes": "string",
+            },
+          },
+          "response": {
+            "docs": "A real life token",
+            "type": "PostTokenResponse",
+          },
+        },
+      },
+    },
+    "types": {
+      "PostRefreshResponse": {
+        "docs": undefined,
+        "properties": {
+          "accessToken": "string",
+          "refreshToken": "string",
+        },
+      },
+      "PostTokenResponse": {
+        "docs": undefined,
+        "properties": {
+          "accessToken": "string",
+          "refreshToken": "string",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
+    },
+    "display-name": "Test extension \`x-fern-oauth\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-oauth x-fern-oauth simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "postRefresh": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "query-parameters": {
+                "refresh_token": "refresh_token",
+              },
+              "response": {
+                "body": {
+                  "accessToken": "accessToken",
+                  "refreshToken": "refreshToken",
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/refresh",
+          "request": {
+            "name": "PostRefreshRequest",
+            "query-parameters": {
+              "refresh_token": "string",
+            },
+          },
+          "response": {
+            "docs": "A real life token",
+            "type": "PostRefreshResponse",
+          },
+        },
+        "postToken": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "query-parameters": {
+                "client_id": "client_id",
+                "client_secret": "client_secret",
+                "scopes": "scopes",
+              },
+              "response": {
+                "body": {
+                  "accessToken": "accessToken",
+                  "refreshToken": "refreshToken",
+                },
+              },
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/token",
+          "request": {
+            "name": "PostTokenRequest",
+            "query-parameters": {
+              "client_id": "string",
+              "client_secret": "string",
+              "scopes": "string",
+            },
+          },
+          "response": {
+            "docs": "A real life token",
+            "type": "PostTokenResponse",
+          },
+        },
+      },
+    },
+    "types": {
+      "PostRefreshResponse": {
+        "docs": undefined,
+        "properties": {
+          "accessToken": "string",
+          "refreshToken": "string",
+        },
+      },
+      "PostTokenResponse": {
+        "docs": undefined,
+        "properties": {
+          "accessToken": "string",
+          "refreshToken": "string",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
+    },
+    "display-name": "Test extension \`x-fern-oauth\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedMixedCase;
 using SeedMixedCase.Core;
 
 #nullable enable

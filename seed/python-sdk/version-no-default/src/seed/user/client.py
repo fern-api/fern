@@ -31,7 +31,7 @@ class UserClient:
 
         Examples
         --------
-        from seed.client import SeedVersion
+        from seed import SeedVersion
 
         client = SeedVersion(
             base_url="https://yourhost.com/path/to/api",
@@ -73,7 +73,7 @@ class AsyncUserClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedVersion
+        from seed import AsyncSeedVersion
 
         client = AsyncSeedVersion(
             base_url="https://yourhost.com/path/to/api",

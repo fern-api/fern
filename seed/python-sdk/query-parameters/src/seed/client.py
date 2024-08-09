@@ -28,7 +28,7 @@ class SeedQueryParameters:
 
     Examples
     --------
-    from seed.client import SeedQueryParameters
+    from seed import SeedQueryParameters
 
     client = SeedQueryParameters(
         base_url="https://yourhost.com/path/to/api",
@@ -76,7 +76,7 @@ class AsyncSeedQueryParameters:
 
     Examples
     --------
-    from seed.client import AsyncSeedQueryParameters
+    from seed import AsyncSeedQueryParameters
 
     client = AsyncSeedQueryParameters(
         base_url="https://yourhost.com/path/to/api",

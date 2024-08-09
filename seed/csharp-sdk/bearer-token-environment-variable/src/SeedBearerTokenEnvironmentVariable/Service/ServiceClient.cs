@@ -18,16 +18,37 @@ public class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async Task<string> GetWithBearerTokenAsync()
+    public async Task<string> GetWithBearerTokenAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "apiKey" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "apiKey",
+                Options = options
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedBearerTokenEnvironmentVariableException(
+                    "Failed to deserialize response",
+                    e
+                );
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedBearerTokenEnvironmentVariableApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

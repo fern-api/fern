@@ -36,7 +36,7 @@ class DummyClient:
 
         Examples
         --------
-        from seed.client import SeedStreaming
+        from seed import SeedStreaming
 
         client = SeedStreaming(
             base_url="https://yourhost.com/path/to/api",
@@ -67,7 +67,7 @@ class DummyClient:
 
         Examples
         --------
-        from seed.client import SeedStreaming
+        from seed import SeedStreaming
 
         client = SeedStreaming(
             base_url="https://yourhost.com/path/to/api",
@@ -153,7 +153,7 @@ class AsyncDummyClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedStreaming
+        from seed import AsyncSeedStreaming
 
         client = AsyncSeedStreaming(
             base_url="https://yourhost.com/path/to/api",
@@ -192,7 +192,7 @@ class AsyncDummyClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedStreaming
+        from seed import AsyncSeedStreaming
 
         client = AsyncSeedStreaming(
             base_url="https://yourhost.com/path/to/api",

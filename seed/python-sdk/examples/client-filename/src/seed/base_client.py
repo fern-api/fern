@@ -42,7 +42,7 @@ class BaseSeedExhaustive:
 
     Examples
     --------
-    from seed.client import SeedExhaustive
+    from seed import SeedExhaustive
     from seed.environment import SeedExhaustiveEnvironment
 
     client = SeedExhaustive(
@@ -91,7 +91,7 @@ class BaseSeedExhaustive:
 
         Examples
         --------
-        from seed.client import SeedExhaustive
+        from seed import SeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = SeedExhaustive(
@@ -138,7 +138,7 @@ class AsyncBaseSeedExhaustive:
 
     Examples
     --------
-    from seed.client import AsyncSeedExhaustive
+    from seed import AsyncSeedExhaustive
     from seed.environment import SeedExhaustiveEnvironment
 
     client = AsyncSeedExhaustive(
@@ -189,7 +189,7 @@ class AsyncBaseSeedExhaustive:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedExhaustive
+        from seed import AsyncSeedExhaustive
         from seed.environment import SeedExhaustiveEnvironment
 
         client = AsyncSeedExhaustive(

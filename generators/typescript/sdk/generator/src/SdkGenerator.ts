@@ -80,10 +80,12 @@ export declare namespace SdkGenerator {
         context: GeneratorContext;
         npmPackage: NpmPackage | undefined;
         generateJestTests: boolean;
+        rawConfig: FernGeneratorExec.GeneratorConfig;
         config: Config;
     }
 
     export interface Config {
+        runScripts: boolean;
         whitelabel: boolean;
         generateOAuthClients: boolean;
         originalReadmeFilepath: AbsoluteFilePath | undefined;
@@ -130,6 +132,7 @@ export class SdkGenerator {
     private namespaceExport: string;
     private context: GeneratorContext;
     private intermediateRepresentation: IntermediateRepresentation;
+    private rawConfig: FernGeneratorExec.GeneratorConfig;
     private config: SdkGenerator.Config;
     private npmPackage: NpmPackage | undefined;
     private generateOAuthClients: boolean;
@@ -189,6 +192,7 @@ export class SdkGenerator {
         intermediateRepresentation,
         context,
         npmPackage,
+        rawConfig,
         config,
         generateJestTests
     }: SdkGenerator.Init) {
@@ -197,6 +201,7 @@ export class SdkGenerator {
         this.intermediateRepresentation = intermediateRepresentation;
         this.config = config;
         this.npmPackage = npmPackage;
+        this.rawConfig = rawConfig;
         this.generateJestTests = generateJestTests;
         this.generateOAuthClients =
             this.config.generateOAuthClients &&
@@ -429,17 +434,15 @@ export class SdkGenerator {
         if (this.generateJestTests && this.config.writeUnitTests) {
             this.generateTestFiles();
         }
-        if (this.generateJestTests) {
-            this.jestTestGenerator.addExtras();
-            this.extraScripts = {
-                ...this.extraScripts,
-                ...this.jestTestGenerator.scripts
-            };
-            this.extraFiles = {
-                ...this.extraFiles,
-                ...this.jestTestGenerator.extraFiles
-            };
-        }
+        this.jestTestGenerator.addExtras();
+        this.extraScripts = {
+            ...this.extraScripts,
+            ...this.jestTestGenerator.scripts
+        };
+        this.extraFiles = {
+            ...this.extraFiles,
+            ...this.jestTestGenerator.extraFiles
+        };
 
         if (this.config.snippetFilepath != null) {
             this.generateSnippets();
@@ -469,7 +472,7 @@ export class SdkGenerator {
                         await this.FdrClient.templates.registerBatch({
                             orgId: this.config.organization,
                             apiId: this.config.apiName,
-                            apiDefinitionId: uuidv4(),
+                            apiDefinitionId: this.intermediateRepresentation.fdrApiDefinitionId ?? uuidv4(),
                             snippets: this.endpointSnippetTemplates
                         });
                     } catch (e) {
@@ -504,7 +507,8 @@ export class SdkGenerator {
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
                   extraConfigs: this.config.packageJson,
-                  outputJsr: this.config.outputJsr
+                  outputJsr: this.config.outputJsr,
+                  runScripts: this.config.runScripts
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -519,12 +523,19 @@ export class SdkGenerator {
                   extraFiles: this.extraFiles,
                   extraScripts: this.extraScripts,
                   resolutions: {},
-                  extraConfigs: this.config.packageJson
+                  extraConfigs: this.config.packageJson,
+                  runScripts: this.config.runScripts
               });
     }
 
-    public async copyCoreUtilities({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc });
+    public async copyCoreUtilities({
+        pathToSrc,
+        pathToRoot
+    }: {
+        pathToSrc: AbsoluteFilePath;
+        pathToRoot: AbsoluteFilePath;
+    }): Promise<void> {
+        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
     }
 
     private generateTypeDeclarations() {
@@ -1204,6 +1215,7 @@ export class SdkGenerator {
         { isForSnippet }: { isForSnippet?: boolean } = {}
     ): SdkContextImpl {
         return new SdkContextImpl({
+            config: this.rawConfig,
             ir: this.intermediateRepresentation,
             npmPackage: this.npmPackage,
             isForSnippet: isForSnippet ?? false,

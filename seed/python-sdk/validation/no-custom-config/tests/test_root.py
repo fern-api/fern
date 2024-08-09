@@ -2,24 +2,24 @@
 
 import typing
 
-from seed.client import AsyncSeedValidation, SeedValidation
+from seed import AsyncSeedValidation, SeedValidation
 
 from .utilities import validate_response
 
 
 async def test_create(client: SeedValidation, async_client: AsyncSeedValidation) -> None:
-    expected_response: typing.Any = {"decimal": 1.1, "even": 2, "name": "rules"}
-    expected_types: typing.Any = {"decimal": None, "even": "integer", "name": None}
-    response = client.create(decimal=1.1, even=1, name="string")
+    expected_response: typing.Any = {"decimal": 1.1, "even": 2, "name": "rules", "shape": "SQUARE"}
+    expected_types: typing.Any = {"decimal": None, "even": "integer", "name": None, "shape": None}
+    response = client.create(decimal=1.1, even=1, name="string", shape="SQUARE")
     validate_response(response, expected_response, expected_types)
 
-    async_response = await async_client.create(decimal=1.1, even=1, name="string")
+    async_response = await async_client.create(decimal=1.1, even=1, name="string", shape="SQUARE")
     validate_response(async_response, expected_response, expected_types)
 
 
 async def test_get(client: SeedValidation, async_client: AsyncSeedValidation) -> None:
-    expected_response: typing.Any = {"decimal": 1.1, "even": 2, "name": "rules"}
-    expected_types: typing.Any = {"decimal": None, "even": "integer", "name": None}
+    expected_response: typing.Any = {"decimal": 1.1, "even": 2, "name": "rules", "shape": "SQUARE"}
+    expected_types: typing.Any = {"decimal": None, "even": "integer", "name": None, "shape": None}
     response = client.get(decimal=1.1, even=1, name="string")
     validate_response(response, expected_response, expected_types)
 

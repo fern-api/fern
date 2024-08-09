@@ -245,6 +245,7 @@ export class ExpressGenerator {
         this.exportsManager.writeExportsToProject(this.rootDirectory);
 
         return new SimpleTypescriptProject({
+            runScripts: true,
             npmPackage: this.npmPackage,
             dependencies: this.dependencyManager.getDependencies(),
             tsMorphProject: this.project,
@@ -263,8 +264,14 @@ export class ExpressGenerator {
         });
     }
 
-    public async copyCoreUtilities({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc });
+    public async copyCoreUtilities({
+        pathToSrc,
+        pathToRoot
+    }: {
+        pathToSrc: AbsoluteFilePath;
+        pathToRoot: AbsoluteFilePath;
+    }): Promise<void> {
+        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
     }
 
     private generateTypeDeclarations() {

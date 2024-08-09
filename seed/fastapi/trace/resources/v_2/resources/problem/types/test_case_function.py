@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .test_case_with_actual_result_implementation import TestCaseWithActualResultImplementation
 from .void_function_definition import VoidFunctionDefinition
 
@@ -73,6 +73,3 @@ class _TestCaseFunction:
 
     class Custom(VoidFunctionDefinition):
         type: typing.Literal["custom"] = "custom"
-
-
-update_forward_refs(TestCaseFunction)

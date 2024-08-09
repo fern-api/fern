@@ -23,28 +23,26 @@ class Base(UncheckedBaseModel):
 
 
 class Shape_Circle(Base):
-    radius: float
     type: typing.Literal["circle"] = "circle"
+    radius: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
-            allow_population_by_field_name = True
             extra = pydantic.Extra.allow
 
 
 class Shape_Square(Base):
-    length: float
     type: typing.Literal["square"] = "square"
+    length: float
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
-            allow_population_by_field_name = True
             extra = pydantic.Extra.allow
 
 

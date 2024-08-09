@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedPagination;
 
 #nullable enable
 
@@ -11,11 +10,11 @@ public record ListUsersExtendedResponse
     /// The totall number of /users
     /// </summary>
     [JsonPropertyName("total_count")]
-    public required int TotalCount { get; init; }
+    public required int TotalCount { get; set; }
 
     [JsonPropertyName("data")]
-    public required UserListContainer Data { get; init; }
+    public required UserListContainer Data { get; set; }
 
     [JsonPropertyName("next")]
-    public Guid? Next { get; init; }
+    public string? Next { get; set; }
 }

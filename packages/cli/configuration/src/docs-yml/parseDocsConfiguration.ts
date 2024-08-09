@@ -46,6 +46,7 @@ export async function parseDocsConfiguration({
         navigation: rawNavigation,
         navbarLinks,
         footerLinks,
+        defaultLanguage,
 
         /* seo */
         metadata: rawMetadata,
@@ -58,7 +59,7 @@ export async function parseDocsConfiguration({
         colors,
         typography: rawTypography,
         layout,
-
+        analytics: analyticsConfig,
         /* integrations */
         integrations,
 
@@ -128,6 +129,7 @@ export async function parseDocsConfiguration({
         navigation,
         navbarLinks: convertNavbarLinks(navbarLinks),
         footerLinks: convertFooterLinks(footerLinks),
+        defaultLanguage,
 
         /* seo */
         metadata,
@@ -140,6 +142,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout),
+        analyticsConfig: rawDocsConfiguration.analytics,
 
         /* integrations */
         integrations,
@@ -258,12 +261,12 @@ function convertLayoutConfig(layout: RawDocs.LayoutConfig | undefined): ParsedDo
 
         searchbarPlacement:
             layout.searchbarPlacement === "header"
-                ? DocsV1Write.SidebarOrHeaderPlacement.Header
-                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar,
+                ? DocsV1Write.SearchbarPlacement.Header
+                : layout.searchbarPlacement === "header-tabs"
+                ? DocsV1Write.SearchbarPlacement.HeaderTabs
+                : DocsV1Write.SearchbarPlacement.Sidebar,
         tabsPlacement:
-            layout.tabsPlacement === "header"
-                ? DocsV1Write.SidebarOrHeaderPlacement.Header
-                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar,
+            layout.tabsPlacement === "header" ? DocsV1Write.TabsPlacement.Header : DocsV1Write.TabsPlacement.Sidebar,
         contentAlignment:
             layout.contentAlignment === "left"
                 ? DocsV1Write.ContentAlignment.Left
@@ -665,7 +668,9 @@ function parsePageConfig(
         absolutePath: resolveFilepath(item.path, absolutePathToConfig),
         slug: item.slug,
         icon: item.icon,
-        hidden: item.hidden
+        hidden: item.hidden,
+        // TODO: implement noindex
+        noindex: undefined
     };
 }
 
@@ -886,7 +891,9 @@ async function convertMetadata(
         "twitter:handle": metadata.twitterHandle,
         "twitter:site": metadata.twitterSite,
         "twitter:url": metadata.twitterUrl,
-        "twitter:card": metadata.twitterCard
+        "twitter:card": metadata.twitterCard,
+        nofollow: undefined,
+        noindex: undefined
     };
 }
 

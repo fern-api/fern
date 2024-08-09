@@ -31,7 +31,7 @@ class SeedMultiUrlEnvironmentNoDefault:
 
     Examples
     --------
-    from seed.client import SeedMultiUrlEnvironmentNoDefault
+    from seed import SeedMultiUrlEnvironmentNoDefault
     from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
     client = SeedMultiUrlEnvironmentNoDefault(
@@ -85,7 +85,7 @@ class AsyncSeedMultiUrlEnvironmentNoDefault:
 
     Examples
     --------
-    from seed.client import AsyncSeedMultiUrlEnvironmentNoDefault
+    from seed import AsyncSeedMultiUrlEnvironmentNoDefault
     from seed.environment import SeedMultiUrlEnvironmentNoDefaultEnvironment
 
     client = AsyncSeedMultiUrlEnvironmentNoDefault(

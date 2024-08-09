@@ -15,21 +15,70 @@ public class UnknownClient
         _client = client;
     }
 
-    public async Task<IEnumerable<object>> PostAsync(object request)
+    public async Task<IEnumerable<object>> PostAsync(object request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<object>>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUnknownAsAnyException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedUnknownAsAnyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
+    }
+
+    public async Task<IEnumerable<object>> PostObjectAsync(
+        MyObject request,
+        RequestOptions? options = null
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "/with-object",
+                Body = request,
+                Options = options
+            }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUnknownAsAnyException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedUnknownAsAnyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

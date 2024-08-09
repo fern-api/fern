@@ -1,3 +1,4 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernDefinition } from "../types/Workspace";
 import { FernWorkspace } from "./FernWorkspace";
@@ -13,7 +14,15 @@ export abstract class AbstractAPIWorkspace<Settings> {
     /**
      * @returns The Fern Definition that corresponds to this workspace
      */
-    public abstract getDefinition({ context }: { context: TaskContext }, settings?: Settings): Promise<FernDefinition>;
+    public abstract getDefinition({ context }: { context?: TaskContext }, settings?: Settings): Promise<FernDefinition>;
 
-    public abstract toFernWorkspace({ context }: { context: TaskContext }, settings?: Settings): Promise<FernWorkspace>;
+    public abstract toFernWorkspace(
+        { context }: { context?: TaskContext },
+        settings?: Settings
+    ): Promise<FernWorkspace>;
+
+    /**
+     * @returns all filepaths related to this workspace
+     */
+    public abstract getAbsoluteFilepaths(): AbsoluteFilePath[];
 }

@@ -120,6 +120,15 @@ jobs:
       - name: Install
         run: yarn install
 
+      - uses: bufbuild/buf-setup-action@v1.34.0
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
+
       - name: Run tests
         run: yarn test --maxWorkers 15 --ci --silent
 
@@ -176,8 +185,23 @@ jobs:
           cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
 
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      typescript: ${{ steps.filter.outputs.typescript }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            typescript:
+              - 'generators/typescript/sdk/**'
+
   node-version-tests:
     runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.typescript == 'true' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -192,6 +216,34 @@ jobs:
 
       - name: Run file tests
         run: ./scripts/node-all-versions-test.sh
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  cloudflare-startup-tests:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.typescript == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run cloudflare startup test
+        run: ./scripts/cloudflare-startup-test.sh
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  browser-startup-tests:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ needs.changes.outputs.typescript == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run browser startup test
+        run: ./scripts/browser-startup-test.sh
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code

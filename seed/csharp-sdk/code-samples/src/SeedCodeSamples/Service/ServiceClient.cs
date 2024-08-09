@@ -1,6 +1,5 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedCodeSamples;
 using SeedCodeSamples.Core;
 
 #nullable enable
@@ -16,21 +15,35 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<MyResponse> HelloAsync(MyRequest request)
+    public async Task<MyResponse> HelloAsync(MyRequest request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "hello",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MyResponse>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<MyResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedCodeSamplesException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedCodeSamplesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

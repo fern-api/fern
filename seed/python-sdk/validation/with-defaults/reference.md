@@ -12,7 +12,7 @@
 <dd>
 
 ```python
-from seed.client import SeedValidation
+from seed import SeedValidation
 
 client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",
@@ -21,6 +21,7 @@ client.create(
     decimal=1.1,
     even=1,
     name="string",
+    shape="SQUARE",
 )
 
 ```
@@ -61,6 +62,14 @@ client.create(
 <dl>
 <dd>
 
+**shape:** `Shape` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
     
 </dd>
@@ -86,7 +95,7 @@ client.create(
 <dd>
 
 ```python
-from seed.client import SeedValidation
+from seed import SeedValidation
 
 client = SeedValidation(
     base_url="https://yourhost.com/path/to/api",

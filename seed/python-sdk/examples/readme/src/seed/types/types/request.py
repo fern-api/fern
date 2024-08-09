@@ -11,14 +11,14 @@ class Request(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Request
+    from seed.types import Request
 
     Request(
         request={},
     )
     """
 
-    request: typing.Any
+    request: typing.Optional[typing.Any] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

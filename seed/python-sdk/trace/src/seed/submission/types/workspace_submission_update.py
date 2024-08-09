@@ -3,27 +3,21 @@
 import datetime as dt
 import typing
 
-from ...core.datetime_utils import serialize_datetime
-from ...core.pydantic_utilities import pydantic_v1
+import pydantic
+
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .workspace_submission_update_info import WorkspaceSubmissionUpdateInfo
 
 
-class WorkspaceSubmissionUpdate(pydantic_v1.BaseModel):
-    update_time: dt.datetime = pydantic_v1.Field(alias="updateTime")
-    update_info: WorkspaceSubmissionUpdateInfo = pydantic_v1.Field(alias="updateInfo")
+class WorkspaceSubmissionUpdate(UniversalBaseModel):
+    update_time: dt.datetime = pydantic.Field(alias="updateTime")
+    update_info: WorkspaceSubmissionUpdateInfo = pydantic.Field(alias="updateInfo")
 
-    def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().json(**kwargs_with_defaults)
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        return super().dict(**kwargs_with_defaults)
-
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
-        extra = pydantic_v1.Extra.allow
-        json_encoders = {dt.datetime: serialize_datetime}
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow

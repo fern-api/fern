@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedOauthClientCredentials, SeedOauthClientCredentials
+from seed import AsyncSeedOauthClientCredentials, SeedOauthClientCredentials
 
 from ..utilities import validate_response
 

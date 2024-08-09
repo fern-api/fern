@@ -6,15 +6,36 @@ import * as serializers from "../../..";
 import * as FernOpenapiIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const OauthSecurityScheme: core.serialization.ObjectSchema<
+export const OauthSecurityScheme: core.serialization.Schema<
     serializers.OauthSecurityScheme.Raw,
     FernOpenapiIr.OauthSecurityScheme
-> = core.serialization.objectWithoutOptionalProperties({
-    scopesEnum: core.serialization.lazyObject(async () => (await import("../../..")).EnumSchema).optional(),
-});
+> = core.serialization
+    .union("type", {
+        clientCredentials: core.serialization.lazyObject(async () => (await import("../../..")).OAuthClientCredentials),
+        unrecognized: core.serialization.lazyObject(async () => (await import("../../..")).FallbackOAuthScheme),
+    })
+    .transform<FernOpenapiIr.OauthSecurityScheme>({
+        transform: (value) => {
+            switch (value.type) {
+                case "clientCredentials":
+                    return FernOpenapiIr.OauthSecurityScheme.clientCredentials(value);
+                case "unrecognized":
+                    return FernOpenapiIr.OauthSecurityScheme.unrecognized(value);
+                default:
+                    return value as FernOpenapiIr.OauthSecurityScheme;
+            }
+        },
+        untransform: ({ _visit, ...value }) => value as any,
+    });
 
 export declare namespace OauthSecurityScheme {
-    interface Raw {
-        scopesEnum?: serializers.EnumSchema.Raw | null;
+    type Raw = OauthSecurityScheme.ClientCredentials | OauthSecurityScheme.Unrecognized;
+
+    interface ClientCredentials extends serializers.OAuthClientCredentials.Raw {
+        type: "clientCredentials";
+    }
+
+    interface Unrecognized extends serializers.FallbackOAuthScheme.Raw {
+        type: "unrecognized";
     }
 }

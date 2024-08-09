@@ -1,6 +1,5 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedLiteral;
 using SeedLiteral.Core;
 
 #nullable enable
@@ -16,7 +15,10 @@ public class HeadersClient
         _client = client;
     }
 
-    public async Task<SendResponse> SendAsync(SendLiteralsInHeadersRequest request)
+    public async Task<SendResponse> SendAsync(
+        SendLiteralsInHeadersRequest request,
+        RequestOptions? options = null
+    )
     {
         var _headers = new Dictionary<string, string>()
         {
@@ -26,16 +28,30 @@ public class HeadersClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "headers",
-                Headers = _headers
+                Headers = _headers,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<SendResponse>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedLiteralException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedLiteralApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

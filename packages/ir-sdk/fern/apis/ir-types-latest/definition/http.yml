@@ -2,9 +2,10 @@
 
 imports:
   commons: commons.yml
-  types: types.yml
-  errors: errors.yml
   environment: environment.yml
+  errors: errors.yml
+  proto: proto.yml
+  types: types.yml
   variables: variables.yml
 types:
   HttpService:
@@ -16,9 +17,20 @@ types:
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
       pathParameters: list<PathParameter>
+      encoding: optional<types.Encoding>
+      transport: optional<Transport>
   DeclaredServiceName:
     properties:
       fernFilepath: commons.FernFilepath
+
+  Transport:
+    union:
+      http: {}
+      grpc: GrpcTransport
+
+  GrpcTransport:
+    properties:
+      service: proto.ProtobufService
 
   HttpEndpoint:
     extends: commons.Declaration
@@ -94,6 +106,9 @@ types:
       name: commons.Name
       extends: list<types.DeclaredTypeName>
       properties: list<InlinedRequestBodyProperty>
+      extendedProperties: 
+        type: optional<list<types.ObjectProperty>>
+        docs: A list of properties that all the parents of this request have. 
       contentType: optional<string>
       extra-properties:
         docs: Whether to allow extra properties on the request.

@@ -488,15 +488,37 @@ export const FernOpenAPIExtension = {
      *         refreshUrl: https://api.example.com/oauth2/refresh
      *         x-fern-refresh-token-endpoint:
      *           request:
-     *             clientId: $query.client_id
-     *             clientSecret: $query.client_secret
-     *             scopes: $query.scopes
+     *             refreshToken: $query.refresh_token
      *           response:
      *             accessToken: $response.access_token
      *             expiresIn: $response.access_token
      *             refreshToken: $response.refresh_token
      */
-    FERN_OAUTH_REFRESH_TOKEN_ENDPOINT: "x-fern-refresh-token-endpoint"
+    FERN_OAUTH_REFRESH_TOKEN_ENDPOINT: "x-fern-refresh-token-endpoint",
+
+    /**
+     * Allows users to specify the encoding of the type. For example, suppose you need to configure
+     * Protobuf-encoding details like the following:
+     *
+     * User:
+     *  properties:
+     *    username:
+     *      type: string
+     *  x-fern-encoding:
+     *    proto:
+     *      type: user.v1.User
+     */
+    ENCODING: "x-fern-encoding",
+
+    /**
+     * Allows users to configure gRPC services. This must be specified on individual service
+     * declarations.
+     *
+     * x-fern-transport:
+     *   grpc:
+     *     service-name: UserService
+     */
+    TRANSPORT: "x-fern-transport"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

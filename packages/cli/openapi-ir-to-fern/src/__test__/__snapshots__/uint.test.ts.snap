@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`uint uint docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "Get": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "id": 1.1,
+                  "value": 1000000,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/get",
+          "request": {
+            "body": {
+              "properties": {
+                "id": "optional<float>",
+                "value": "optional<uint64>",
+              },
+            },
+            "headers": undefined,
+            "name": "Request",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "A simple API response.",
+            "type": "Response",
+          },
+        },
+      },
+    },
+    "types": {
+      "Response": {
+        "docs": "A generic response type used throughout the API.
+",
+        "properties": {
+          "id": "optional<float>",
+          "value": "optional<uint64>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test spec for \`uint\` types specified as number formats.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`uint uint simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "Get": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "id": 1.1,
+                  "value": 1000000,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/get",
+          "request": {
+            "body": {
+              "properties": {
+                "id": "optional<float>",
+                "value": "optional<uint64>",
+              },
+            },
+            "headers": undefined,
+            "name": "Request",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "A simple API response.",
+            "type": "Response",
+          },
+        },
+      },
+    },
+    "types": {
+      "Response": {
+        "docs": "A generic response type used throughout the API.
+",
+        "properties": {
+          "id": "optional<float>",
+          "value": "optional<uint64>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test spec for \`uint\` types specified as number formats.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

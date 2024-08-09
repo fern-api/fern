@@ -528,6 +528,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetIssueTriggersRequestOrderByItem",
                       "groupName": null,
@@ -623,6 +624,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetIssueTriggersRequestDirItem",
                       "groupName": null,
@@ -2911,6 +2913,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetAttemptsRequestDirItem",
                       "groupName": null,
@@ -4169,6 +4172,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetBookmarksRequestDirItem",
                       "groupName": null,
@@ -5714,6 +5718,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": "Bookmark target",
                   "generatedName": "TriggerBookmarkRequestTarget",
                   "groupName": null,
@@ -6821,6 +6826,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetDestinationsRequestDirItem",
                       "groupName": null,
@@ -7260,6 +7266,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": "Period to rate limit attempts",
                   "generatedName": "CreateDestinationRequestRateLimitPeriod",
                   "groupName": null,
@@ -7688,6 +7695,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": "Period to rate limit attempts",
                   "generatedName": "UpsertDestinationRequestRateLimitPeriod",
                   "groupName": null,
@@ -8345,6 +8353,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "optional",
                 "value": {
                   "availability": null,
+                  "default": null,
                   "description": "Period to rate limit attempts",
                   "generatedName": "UpdateDestinationRequestRateLimitPeriod",
                   "groupName": null,
@@ -11275,6 +11284,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetEventsRequestOrderByItem",
                       "groupName": null,
@@ -11383,6 +11393,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetEventsRequestDirItem",
                       "groupName": null,
@@ -15846,6 +15857,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "array",
                             "value": {
                               "availability": null,
+                              "default": null,
                               "description": null,
                               "generatedName": "GetEventBulkRetriesRequestQueryOrderByItem",
                               "groupName": null,
@@ -15956,6 +15968,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "array",
                             "value": {
                               "availability": null,
+                              "default": null,
                               "description": null,
                               "generatedName": "GetEventBulkRetriesRequestQueryDirItem",
                               "groupName": null,
@@ -16264,6 +16277,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetEventBulkRetriesRequestDirItem",
                       "groupName": null,
@@ -22859,6 +22873,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetIgnoredEventBulkRetriesRequestDirItem",
                       "groupName": null,
@@ -26219,6 +26234,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": "Issue type",
                       "generatedName": "GetIssuesRequestTypeItem",
                       "groupName": null,
@@ -26351,6 +26367,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": "Issue status",
                       "generatedName": "GetIssuesRequestStatusItem",
                       "groupName": null,
@@ -27693,6 +27710,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetIssuesRequestOrderByItem",
                       "groupName": null,
@@ -27827,6 +27845,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetIssuesRequestDirItem",
                       "groupName": null,
@@ -28270,6 +28289,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": "Issue type",
                       "generatedName": "GetIssueCountRequestTypeItem",
                       "groupName": null,
@@ -28402,6 +28422,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": "Issue status",
                       "generatedName": "GetIssueCountRequestStatusItem",
                       "groupName": null,
@@ -29744,6 +29765,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetIssueCountRequestOrderByItem",
                       "groupName": null,
@@ -29878,6 +29900,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetIssueCountRequestDirItem",
                       "groupName": null,
@@ -30207,6 +30230,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "nameOverride": null,
               "schema": {
                 "availability": null,
+                "default": null,
                 "description": "New status",
                 "generatedName": "UpdateIssueRequestStatus",
                 "groupName": null,
@@ -30691,6 +30715,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "GetRequestsRequestStatus",
               "groupName": null,
@@ -32305,6 +32330,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetRequestsRequestOrderByItem",
                       "groupName": null,
@@ -32400,6 +32426,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetRequestsRequestDirItem",
                       "groupName": null,
@@ -35872,6 +35899,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetRequestEventsRequestOrderByItem",
                       "groupName": null,
@@ -35980,6 +36008,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetRequestEventsRequestDirItem",
                       "groupName": null,
@@ -36533,6 +36562,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetRequestIgnoredEventsRequestDirItem",
                       "groupName": null,
@@ -37807,6 +37837,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetRequestBulkRetriesRequestQueryStatus",
                       "groupName": null,
@@ -39457,6 +39488,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "array",
                             "value": {
                               "availability": null,
+                              "default": null,
                               "description": null,
                               "generatedName": "GetRequestBulkRetriesRequestQueryOrderByItem",
                               "groupName": null,
@@ -39554,6 +39586,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                             "type": "array",
                             "value": {
                               "availability": null,
+                              "default": null,
                               "description": null,
                               "generatedName": "GetRequestBulkRetriesRequestQueryDirItem",
                               "groupName": null,
@@ -39836,6 +39869,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetRequestBulkRetriesRequestDirItem",
                       "groupName": null,
@@ -40301,6 +40335,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "availability": null,
+                          "default": null,
                           "description": null,
                           "generatedName": "CreateRequestBulkRetryRequestQueryStatus",
                           "groupName": null,
@@ -42091,6 +42126,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GenerateRequestBulkRetryPlanRequestQueryStatus",
                       "groupName": null,
@@ -45302,6 +45338,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetRulesetsRequestDirItem",
                       "groupName": null,
@@ -47756,6 +47793,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetSourcesRequestDirItem",
                       "groupName": null,
@@ -49892,6 +49930,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetTransformationsRequestDirItem",
                       "groupName": null,
@@ -52195,6 +52234,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "nullable",
                       "value": {
                         "availability": null,
+                        "default": null,
                         "description": null,
                         "generatedName": "GetTransformationExecutionsRequestLogLevelItem",
                         "groupName": null,
@@ -52710,6 +52750,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetTransformationExecutionsRequestDirItem",
                       "groupName": null,
@@ -54559,6 +54600,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "array",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "GetConnectionsRequestDirItem",
                       "groupName": null,
@@ -55331,6 +55373,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "availability": null,
+                          "default": null,
                           "description": "Period to rate limit attempts",
                           "generatedName": "CreateConnectionRequestDestinationRateLimitPeriod",
                           "groupName": null,
@@ -56337,6 +56380,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
                         "type": "optional",
                         "value": {
                           "availability": null,
+                          "default": null,
                           "description": "Period to rate limit attempts",
                           "generatedName": "UpsertConnectionRequestDestinationRateLimitPeriod",
                           "groupName": null,
@@ -59617,6 +59661,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "AlertStrategy": {
       "availability": null,
+      "default": null,
       "description": "Alert strategy to use",
       "generatedName": "AlertStrategy",
       "groupName": null,
@@ -59686,6 +59731,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "AttemptErrorCodes": {
       "availability": null,
+      "default": null,
       "description": "Attempt could not complete because of an error",
       "generatedName": "AttemptErrorCodes",
       "groupName": null,
@@ -59950,6 +59996,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "nullable",
       "value": {
         "availability": null,
+        "default": null,
         "description": null,
         "generatedName": "AttemptState",
         "groupName": null,
@@ -60026,6 +60073,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "AttemptStatus": {
       "availability": null,
+      "default": null,
       "description": "Attempt status",
       "generatedName": "AttemptStatus",
       "groupName": null,
@@ -60095,6 +60143,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "nullable",
       "value": {
         "availability": null,
+        "default": null,
         "description": "How the attempt was triggered",
         "generatedName": "AttemptTrigger",
         "groupName": null,
@@ -61929,6 +61978,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "ConsoleLineType",
             "groupName": null,
@@ -63620,6 +63670,19 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "type": "nullable",
       "value": {
         "availability": null,
+        "default": {
+          "availability": null,
+          "casing": {
+            "camel": null,
+            "pascal": null,
+            "screamingSnake": null,
+            "snake": null,
+          },
+          "description": null,
+          "generatedName": "second",
+          "nameOverride": null,
+          "value": "second",
+        },
         "description": "Period to rate limit attempts",
         "generatedName": "DestinationRateLimitPeriod",
         "groupName": null,
@@ -65494,6 +65557,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "EventStatus": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "EventStatus",
       "groupName": null,
@@ -65682,6 +65746,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "FilteredMeta": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "FilteredMeta",
       "groupName": null,
@@ -65744,6 +65809,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "HMACAlgorithms": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "HmacAlgorithms",
       "groupName": null,
@@ -65888,6 +65954,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "HmacIntegrationConfigsEncoding",
             "groupName": null,
@@ -66184,6 +66251,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "IgnoredEventCause": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "IgnoredEventCause",
       "groupName": null,
@@ -66613,6 +66681,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "IntegrationFeature": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "IntegrationFeature",
       "groupName": null,
@@ -66766,6 +66835,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "IntegrationProvider": {
       "availability": null,
+      "default": null,
       "description": "The provider name",
       "generatedName": "IntegrationProvider",
       "groupName": null,
@@ -67146,6 +67216,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "IssueStatus": {
       "availability": null,
+      "default": null,
       "description": "Issue status",
       "generatedName": "IssueStatus",
       "groupName": null,
@@ -67992,6 +68063,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "IssueTriggerStrategy": {
       "availability": null,
+      "default": null,
       "description": "The strategy uses to open the issue",
       "generatedName": "IssueTriggerStrategy",
       "groupName": null,
@@ -68119,6 +68191,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "IssueType": {
       "availability": null,
+      "default": null,
       "description": "Issue type",
       "generatedName": "IssueType",
       "groupName": null,
@@ -68305,6 +68378,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "OrderByDirection": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "OrderByDirection",
       "groupName": null,
@@ -68665,6 +68739,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "nullable",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": "The priority attributed to the request when received",
                 "generatedName": "RequestIngestPriority",
                 "groupName": null,
@@ -69451,6 +69526,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "RequestRejectionCause": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "RequestRejectionCause",
       "groupName": null,
@@ -69808,6 +69884,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "RetryStrategy": {
       "availability": null,
+      "default": null,
       "description": "Algorithm to use when calculating delay between retries",
       "generatedName": "RetryStrategy",
       "groupName": null,
@@ -70508,6 +70585,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "type": "nullable",
               "value": {
                 "availability": null,
+                "default": null,
                 "description": null,
                 "generatedName": "ShopifyIntegrationConfigsRateLimitPeriod",
                 "groupName": null,
@@ -71628,6 +71706,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "TopicsValue": {
       "availability": null,
+      "default": null,
       "description": "Supported topics",
       "generatedName": "TopicsValue",
       "groupName": null,
@@ -72624,6 +72703,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
     },
     "TransformationExecutionLogLevel": {
       "availability": null,
+      "default": null,
       "description": "The minimum log level to open the issue on",
       "generatedName": "TransformationExecutionLogLevel",
       "groupName": null,

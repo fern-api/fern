@@ -30,8 +30,9 @@ export declare namespace SecurityScheme {
         type: "query";
     }
 
-    interface Oauth extends FernOpenapiIr.OauthSecurityScheme, _Utils {
+    interface Oauth extends _Utils {
         type: "oauth";
+        value: FernOpenapiIr.OauthSecurityScheme;
     }
 
     interface _Utils {
@@ -103,7 +104,7 @@ export const SecurityScheme = {
 
     oauth: (value: FernOpenapiIr.OauthSecurityScheme): FernOpenapiIr.SecurityScheme.Oauth => {
         return {
-            ...value,
+            value: value,
             type: "oauth",
             _visit: function <_Result>(
                 this: FernOpenapiIr.SecurityScheme.Oauth,
@@ -128,7 +129,7 @@ export const SecurityScheme = {
             case "query":
                 return visitor.query(value);
             case "oauth":
-                return visitor.oauth(value);
+                return visitor.oauth(value.value);
             default:
                 return visitor._other(value as any);
         }

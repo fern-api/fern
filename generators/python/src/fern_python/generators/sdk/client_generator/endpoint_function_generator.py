@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
-from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import HttpX
 from fern_python.external_dependencies.asyncio import Asyncio
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
     EndpointMetadata,
     EndpointMetadataCollector,
@@ -1019,8 +1019,24 @@ class EndpointFunctionGenerator:
             response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 response.response_body_type,
             ),
-            nested_property_as_response=lambda _: raise_json_nested_property_as_response_unsupported(),
+            # TODO: What is the case where you have a nested property as response, but no response property configured?
+            nested_property_as_response=lambda response: self._get_nested_json_response_type(response),
         )
+
+    def _get_nested_json_response_type(self, response: ir_types.JsonResponseBodyWithProperty) -> AST.TypeHint:
+        response_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+            response.response_body_type
+        )
+        property_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+            response.response_property.value_type
+            if response.response_property is not None
+            else response.response_body_type
+        )
+
+        if response_type.is_optional and not property_type.is_optional:
+            return AST.TypeHint.optional(property_type)
+
+        return property_type
 
     def _get_streaming_response_body_type(
         self, *, stream_response: ir_types.StreamingResponse, is_async: bool
@@ -1080,6 +1096,18 @@ class EndpointFunctionGenerator:
                     writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
+
+        elif self._context.custom_config.pydantic_config.use_typeddict_requests and FernTypedDict.can_tr_be_typeddict(
+            query_parameter.value_type, self._context.get_types()
+        ):
+            # We don't need any optional wrappings for the coercion here.
+            unwrapped_tr = self._context.unwrap_optional_type_reference(query_parameter.value_type)
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                unwrapped_tr, in_endpoint=True, for_typeddict=True
+            )
+            reference = self._context.core_utilities.convert_and_respect_annotation_metadata(
+                object_=reference, annotation=type_hint
+            )
 
         elif not self._is_httpx_primitive_data(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.jsonable_encoder(reference)
@@ -1228,7 +1256,7 @@ class EndpointFunctionGenerator:
         allow_optional: bool,
         allow_enum: bool,
     ) -> bool:
-        def visit_named_type(type_name: ir_types.DeclaredTypeName) -> bool:
+        def visit_named_type(type_name: ir_types.NamedType) -> bool:
             type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_name.type_id)
             return type_declaration.shape.visit(
                 alias=lambda alias: self._does_type_reference_match_primitives(
@@ -1365,8 +1393,10 @@ class EndpointFunctionSnippetGenerator:
         for path_parameter in all_path_parameters:
             path_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=path_parameter.value,
+                as_request=True,
+                use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
-            if not self._is_path_literal(path_parameter.name.original_name):
+            if not self._is_path_literal(path_parameter.name.original_name, disqualify_optionals=True):
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=self.path_parameter_names[path_parameter.name],
@@ -1392,9 +1422,11 @@ class EndpointFunctionSnippetGenerator:
                 continue
             example_header_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=example_header.value,
+                as_request=True,
+                use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
             if (
-                not self._is_header_literal(example_header.name.wire_value)
+                not self._is_header_literal(example_header.name.wire_value, disqualify_optionals=True)
                 and example_header_parameter_value is not None
             ):
                 args.append(
@@ -1407,8 +1439,13 @@ class EndpointFunctionSnippetGenerator:
         for query_parameter in self.example.query_parameters:
             query_parameter_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=query_parameter.value,
+                as_request=True,
+                use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
             )
-            if not self._is_query_literal(query_parameter.name.wire_value) and query_parameter_value is not None:
+            if (
+                not self._is_query_literal(query_parameter.name.wire_value, disqualify_optionals=True)
+                and query_parameter_value is not None
+            ):
                 args.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(query_parameter.name.name),
@@ -1483,8 +1520,14 @@ class EndpointFunctionSnippetGenerator:
         for example_property in example_inlined_request_body.properties:
             property_value = self.snippet_writer.get_snippet_for_example_type_reference(
                 example_type_reference=example_property.value,
+                as_request=True,
+                use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
+                force_include_literals=True,
             )
-            if not self._is_inlined_request_literal(example_property.name.wire_value) and property_value is not None:
+            if (
+                not self._is_inlined_request_literal(example_property.name.wire_value, disqualify_optionals=True)
+                and property_value is not None
+            ):
                 snippets.append(
                     self.snippet_writer.get_snippet_for_named_parameter(
                         parameter_name=get_parameter_name(example_property.name.name),
@@ -1498,6 +1541,8 @@ class EndpointFunctionSnippetGenerator:
     ) -> List[AST.Expression]:
         request_value = self.snippet_writer.get_snippet_for_example_type_reference(
             example_type_reference=example_type_reference,
+            as_request=True,
+            use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
         )
         if request_value is not None:
             return [
@@ -1513,7 +1558,13 @@ class EndpointFunctionSnippetGenerator:
         example_object: ir_types.ExampleObjectType,
         request_parameter_names: Dict[ir_types.Name, str],
     ) -> List[AST.Expression]:
-        return self.snippet_writer.get_snippet_for_object_properties(example_object, request_parameter_names)
+        return self.snippet_writer.get_snippet_for_object_properties(
+            example_object,
+            request_parameter_names,
+            as_request=True,
+            use_typeddict_request=self.context.custom_config.pydantic_config.use_typeddict_requests,
+            in_typeddict=False,
+        )
 
     def _get_snippet_for_request_reference(
         self,
@@ -1538,30 +1589,44 @@ class EndpointFunctionSnippetGenerator:
             raise Exception("request body is referenced but SDKRequestBody is not defined")
         return self.endpoint.sdk_request.request_parameter_name.snake_case.safe_name
 
-    def _is_query_literal(self, query_parameter_wire_value: str) -> bool:
+    # We allow the option to keep literals, typically we filter them out because we default them,
+    # but if they're optional we don't and so if an example is provided for that we must respect it.
+    def _is_query_literal(self, query_parameter_wire_value: str, disqualify_optionals: bool) -> bool:
         param = next(
             filter(lambda q: q.name.wire_value == query_parameter_wire_value, self.endpoint.query_parameters), None
         )
         if param is not None:
+            if disqualify_optionals:
+                # Not a direct literal, return False
+                if self._is_type_optional(param.value_type):
+                    return False
             return self.context.get_literal_value(param.value_type) is not None
         return False
 
-    def _is_path_literal(self, path_parameter_original_name: str) -> bool:
+    def _is_path_literal(self, path_parameter_original_name: str, disqualify_optionals: bool) -> bool:
         param = next(
             filter(lambda p: p.name.original_name == path_parameter_original_name, self.endpoint.all_path_parameters),
             None,
         )
         if param is not None:
+            if disqualify_optionals:
+                # Not a direct literal, return False
+                if self._is_type_optional(param.value_type):
+                    return False
             return self.context.get_literal_value(param.value_type) is not None
         return False
 
-    def _is_header_literal(self, header_wire_value: str) -> bool:
+    def _is_header_literal(self, header_wire_value: str, disqualify_optionals: bool) -> bool:
         param = next(filter(lambda h: h.name.wire_value == header_wire_value, self.endpoint.headers), None)
         if param is not None:
+            if disqualify_optionals:
+                # Not a direct literal, return False
+                if self._is_type_optional(param.value_type):
+                    return False
             return self.context.get_literal_value(param.value_type) is not None
         return False
 
-    def _is_inlined_request_literal(self, property_wire_value: str) -> bool:
+    def _is_inlined_request_literal(self, property_wire_value: str, disqualify_optionals: bool) -> bool:
         if self.endpoint.request_body is None:
             return False
         request_body_union = self.endpoint.request_body.get_as_union()
@@ -1570,15 +1635,30 @@ class EndpointFunctionSnippetGenerator:
                 filter(lambda p: p.name.wire_value == property_wire_value, request_body_union.properties), None
             )
             if param is not None:
+                if disqualify_optionals:
+                    # Not a direct literal, return False
+                    if self._is_type_optional(param.value_type):
+                        return False
                 return self.context.get_literal_value(param.value_type) is not None
             return False
         return False
 
+    def _is_type_optional(self, type_reference: ir_types.TypeReference) -> bool:
+        union = type_reference.get_as_union()
+        if union.type == "named":
+            td = self.context.pydantic_generator_context.get_declaration_for_type_id(union.type_id)
+            td_shape = td.shape.get_as_union()
+            if td_shape.type == "alias":
+                resolved_type = td_shape.resolved_type.get_as_union()
+                return resolved_type.type == "container" and resolved_type.container.get_as_union().type == "optional"
+
+        return union.type == "container" and union.container.get_as_union().type == "optional"
+
 
 def get_endpoint_name(endpoint: ir_types.HttpEndpoint) -> str:
-    if endpoint.name.get_as_name().original_name.lower() in ALLOWED_RESERVED_METHOD_NAMES:
-        return endpoint.name.get_as_name().snake_case.unsafe_name
-    return endpoint.name.get_as_name().snake_case.safe_name
+    if endpoint.name.original_name.lower() in ALLOWED_RESERVED_METHOD_NAMES:
+        return endpoint.name.snake_case.unsafe_name
+    return endpoint.name.snake_case.safe_name
 
 
 def get_parameter_name(name: ir_types.Name) -> str:
@@ -1596,7 +1676,3 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "optional":
             return unwrap_optional_type(container_as_union.optional)
     return type_reference
-
-
-def raise_json_nested_property_as_response_unsupported() -> Never:
-    raise RuntimeError("nested property json response is unsupported")

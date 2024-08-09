@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel, update_forward_refs
+from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalRootModel
 from .non_void_function_signature import NonVoidFunctionSignature
 from .void_function_signature import VoidFunctionSignature
 from .void_function_signature_that_takes_actual_result import VoidFunctionSignatureThatTakesActualResult
@@ -104,6 +104,3 @@ class _FunctionSignature:
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
         type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
-
-
-update_forward_refs(FunctionSignature)

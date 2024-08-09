@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 
 #nullable enable
 
@@ -8,14 +7,14 @@ namespace SeedTrace;
 public record ExecutionSessionResponse
 {
     [JsonPropertyName("sessionId")]
-    public required string SessionId { get; init; }
+    public required string SessionId { get; set; }
 
     [JsonPropertyName("executionSessionUrl")]
-    public string? ExecutionSessionUrl { get; init; }
+    public string? ExecutionSessionUrl { get; set; }
 
     [JsonPropertyName("language")]
-    public required Language Language { get; init; }
+    public required Language Language { get; set; }
 
     [JsonPropertyName("status")]
-    public required ExecutionSessionStatus Status { get; init; }
+    public required ExecutionSessionStatus Status { get; set; }
 }

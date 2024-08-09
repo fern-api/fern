@@ -13976,6 +13976,7 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "nullable",
             "value": {
               "availability": null,
+              "default": null,
               "description": null,
               "generatedName": "CalculateFinalPaymentRequestCalculationType",
               "groupName": null,
@@ -33671,6 +33672,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "ContractFirstSignEnum": {
       "availability": null,
+      "default": null,
       "description": "Flag to indicate who is supposed to sign a contract",
       "generatedName": "ContractFirstSignEnum",
       "groupName": null,
@@ -34466,6 +34468,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "ContractStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "Status of a contract in Deel workflow",
       "generatedName": "ContractStatusEnum",
       "groupName": null,
@@ -36330,6 +36333,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "ContractTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "Type of a contract",
       "generatedName": "ContractTypeEnum",
       "groupName": null,
@@ -36526,6 +36530,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "ContractTypeEnumToCreate": {
       "availability": null,
+      "default": null,
       "description": "Type of a contract",
       "generatedName": "ContractTypeEnumToCreate",
       "groupName": null,
@@ -36575,6 +36580,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "ContractWhoReportsEnum": {
       "availability": null,
+      "default": null,
       "description": "Flag to indicate who is supposed to provide regular reports",
       "generatedName": "ContractWhoReportsEnum",
       "groupName": null,
@@ -36624,6 +36630,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "ContractsSortByEnum": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "ContractsSortByEnum",
       "groupName": null,
@@ -36971,6 +36978,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Time off type.",
             "generatedName": "CreateTimeoffType",
             "groupName": null,
@@ -37339,6 +37347,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Status of webhook.",
             "generatedName": "CreateWebhookRequestStatus",
             "groupName": null,
@@ -41445,6 +41454,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "optional",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": "Is it a full-time contract or a part-time contract?",
                     "generatedName": "EorContractToCreateEmploymentType",
                     "groupName": null,
@@ -41648,6 +41658,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "optional",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": "If you want to use standard number of holidays for this employee, choose "STANDARD". If you want to enter a specific number of holidays, choose "SPECIFIC" and enter the number of days in the holidays field.",
                     "generatedName": "EorContractToCreateEmploymentTimeOffType",
                     "groupName": null,
@@ -42214,6 +42225,7 @@ exports[`open api parser deel parse open api 1`] = `
                       "type": "optional",
                       "value": {
                         "availability": null,
+                        "default": null,
                         "description": "Type of worker.",
                         "generatedName": "EorContractToCreateQuoteAdditionalFieldsWorkerType",
                         "groupName": null,
@@ -42464,6 +42476,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "EorCountryValidationsPartTimeHolidayType",
                       "groupName": null,
@@ -43245,6 +43258,7 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "optional",
                     "value": {
                       "availability": null,
+                      "default": null,
                       "description": null,
                       "generatedName": "EorCountryValidationsDefiniteContractType",
                       "groupName": null,
@@ -44113,6 +44127,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "EorHolidaysRolloverType": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "EorHolidaysRolloverType",
       "groupName": null,
@@ -45664,6 +45679,7 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "optional",
                   "value": {
                     "availability": null,
+                    "default": null,
                     "description": "Either works days or calendar days",
                     "generatedName": "EstimateFirstPaymentCompensationDetailsCalculationType",
                     "groupName": null,
@@ -46019,6 +46035,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "FileRefTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "type of files allowed when uploading attachments",
       "generatedName": "FileRefTypeEnum",
       "groupName": null,
@@ -46279,6 +46296,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Either works days or calendar days",
             "generatedName": "FinalPaymentCalculatedCalculationType",
             "groupName": null,
@@ -47401,6 +47419,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "HealthInsuranceStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "Health insurance status.",
       "generatedName": "HealthInsuranceStatusEnum",
       "groupName": null,
@@ -49666,6 +49685,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "InvoiceAdjustmentReviewToCreateStatus",
             "groupName": null,
@@ -49793,6 +49813,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "InvoiceAdjustmentReviewsToCreateStatus",
             "groupName": null,
@@ -50678,6 +50699,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "InvoiceAdjustmentTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "Type of invoice adjustment.",
       "generatedName": "InvoiceAdjustmentTypeEnum",
       "groupName": null,
@@ -51121,6 +51143,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "InvoiceAdjustmentTypeToCreateEnum": {
       "availability": null,
+      "default": null,
       "description": "Type of invoice adjustment.",
       "generatedName": "InvoiceAdjustmentTypeToCreateEnum",
       "groupName": null,
@@ -51328,6 +51351,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "InvoiceContractTypes": {
       "availability": null,
+      "default": null,
       "description": "invoice's allowed contract types",
       "generatedName": "InvoiceContractTypes",
       "groupName": null,
@@ -51718,6 +51742,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "InvoiceStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "Current status of the invoice.",
       "generatedName": "InvoiceStatusEnum",
       "groupName": null,
@@ -51836,6 +51861,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "InvoiceTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "invoice's type",
       "generatedName": "InvoiceTypeEnum",
       "groupName": null,
@@ -52244,6 +52270,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "LegalEntityType": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "LegalEntityType",
       "groupName": null,
@@ -52839,6 +52866,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "MilestoneReviewToCreateStatus",
             "groupName": null,
@@ -52966,6 +52994,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "MilestoneReviewsToCreateStatus",
             "groupName": null,
@@ -54220,6 +54249,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Status of webhook.",
             "generatedName": "PatchWebhookRequestStatus",
             "groupName": null,
@@ -55561,6 +55591,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "PaymentMethodEnum": {
       "availability": null,
+      "default": null,
       "description": "All the supported payment types",
       "generatedName": "PaymentMethodEnum",
       "groupName": null,
@@ -55920,6 +55951,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "PaymentStatusEnum": {
       "availability": null,
+      "default": null,
       "description": "status of payment",
       "generatedName": "PaymentStatusEnum",
       "groupName": null,
@@ -58138,6 +58170,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Review status.",
             "generatedName": "PgoTaskReviewsByIdToCreateStatus",
             "groupName": null,
@@ -58235,6 +58268,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Review status.",
             "generatedName": "PgoTaskReviewsToCreateStatus",
             "groupName": null,
@@ -59002,6 +59036,7 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "optional",
             "value": {
               "availability": null,
+              "default": null,
               "description": "Either works days or calendar days",
               "generatedName": "ProRataCalculationType",
               "groupName": null,
@@ -59301,6 +59336,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "ProfileTypeEnum": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "ProfileTypeEnum",
       "groupName": null,
@@ -60002,6 +60038,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "SortDirEnum": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "SortDirEnum",
       "groupName": null,
@@ -60827,6 +60864,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "TimeoffsStatusEnum": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "TimeoffsStatusEnum",
       "groupName": null,
@@ -60876,6 +60914,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "TimeoffsTypeEnum": {
       "availability": null,
+      "default": null,
       "description": null,
       "generatedName": "TimeoffsTypeEnum",
       "groupName": null,
@@ -61377,6 +61416,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "TimesheetReviewToCreateStatus",
             "groupName": null,
@@ -61504,6 +61544,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": null,
             "generatedName": "TimesheetReviewsToCreateStatus",
             "groupName": null,
@@ -62554,6 +62595,7 @@ exports[`open api parser deel parse open api 1`] = `
           "nameOverride": null,
           "schema": {
             "availability": null,
+            "default": null,
             "description": "Status of webhook.",
             "generatedName": "WebhookItemStatus",
             "groupName": null,
@@ -62858,6 +62900,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "WeekDaysEnum": {
       "availability": null,
+      "default": null,
       "description": "Days of the week.",
       "generatedName": "WeekDaysEnum",
       "groupName": null,
@@ -62959,6 +63002,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "WorkStatementCycleEndTypeEnum": {
       "availability": null,
+      "default": null,
       "description": "Cycle end can be weekly 1-7 (Monday = 1) or monthly 1-31.",
       "generatedName": "WorkStatementCycleEndTypeEnum",
       "groupName": null,
@@ -63008,6 +63052,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "WorkStatementCycleScaleEnum": {
       "availability": null,
+      "default": null,
       "description": "Scale of the invoice cycle.",
       "generatedName": "WorkStatementCycleScaleEnum",
       "groupName": null,
@@ -63083,6 +63128,19 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "WorkStatementPaymentDueTypeEnum": {
       "availability": null,
+      "default": {
+        "availability": null,
+        "casing": {
+          "camel": null,
+          "pascal": null,
+          "screamingSnake": null,
+          "snake": null,
+        },
+        "description": null,
+        "generatedName": "REGULAR",
+        "nameOverride": null,
+        "value": "REGULAR",
+      },
       "description": "Type of payment due. If the payment is due on the last day of month, enter 'WITHIN_MONTH'.",
       "generatedName": "WorkStatementPaymentDueTypeEnum",
       "groupName": null,
@@ -63119,6 +63177,7 @@ exports[`open api parser deel parse open api 1`] = `
     },
     "WorkStatementScaleEnum": {
       "availability": null,
+      "default": null,
       "description": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
       "generatedName": "WorkStatementScaleEnum",
       "groupName": null,
@@ -63227,6 +63286,7 @@ exports[`open api parser deel parse open api 1`] = `
       "type": "nullable",
       "value": {
         "availability": null,
+        "default": null,
         "description": "Defines the scale at which the amount is paid. For example, enter 'hourly' to define the amount per hour. This field can be excluded when creating a Pay-as-you-go task-based or Milestone contracts.",
         "generatedName": "WorkStatementScaleEnumOptional",
         "groupName": null,
@@ -63929,6 +63989,7 @@ exports[`open api parser deel parse open api 1`] = `
     "oauth2": {
       "scopesEnum": {
         "availability": null,
+        "default": null,
         "description": null,
         "generatedName": "OauthScope",
         "groupName": null,

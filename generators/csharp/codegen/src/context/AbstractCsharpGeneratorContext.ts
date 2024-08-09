@@ -1,22 +1,21 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import {
-    AliasTypeDeclaration,
-    DeclaredTypeName,
+    FernFilepath,
     IntermediateRepresentation,
     Name,
-    ObjectProperty,
-    ObjectTypeDeclaration,
     TypeDeclaration,
     TypeId,
     TypeReference,
-    UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
+    UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { csharp } from "..";
 import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
+    CONSTANTS_CLASS_NAME,
+    DATETIME_SERIALIZER_CLASS_NAME,
+    JSON_UTILS_CLASS_NAME,
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
@@ -31,8 +30,8 @@ export abstract class AbstractCsharpGeneratorContext<
     private namespace: string;
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
-    public readonly flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map();
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
+    private allNamespaceSegmentsCache?: Set<string>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -45,9 +44,6 @@ export abstract class AbstractCsharpGeneratorContext<
             this.customConfig.namespace ??
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
         this.project = new CsharpProject(this, this.namespace);
-        for (const typeId of Object.keys(ir.types)) {
-            this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
-        }
         this.csharpTypeMapper = new CsharpTypeMapper(this);
         config.output.mode._visit<void>({
             github: (github) => {
@@ -73,10 +69,62 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.namespace}.Test`;
     }
 
+    public getConstantsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: CONSTANTS_CLASS_NAME
+        });
+    }
+
+    public getAllNamespaceSegments(): Set<string> {
+        if (this.allNamespaceSegmentsCache == null) {
+            const namespaces: string[] = [];
+            for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
+                const namespaceSegments = this.getFullNamespaceSegments(subpackage.fernFilepath);
+                if (namespaceSegments != null) {
+                    namespaces.push(...namespaceSegments);
+                }
+            }
+            this.allNamespaceSegmentsCache = new Set(namespaces);
+        }
+        return this.allNamespaceSegmentsCache;
+    }
+
+    public getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
+        return this.getFullNamespaceSegments(fernFilepath).join(".");
+    }
+
+    abstract getChildNamespaceSegments(fernFilepath: FernFilepath): string[];
+
+    public getFullNamespaceSegments(fernFilepath: FernFilepath): string[] {
+        return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
+    }
+
     public getStringEnumSerializerClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
             name: STRING_ENUM_SERIALIZER_CLASS_NAME
+        });
+    }
+
+    public getDateTimeSerializerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: DATETIME_SERIALIZER_CLASS_NAME
+        });
+    }
+
+    public getJsonUtilsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: JSON_UTILS_CLASS_NAME
+        });
+    }
+
+    public getJsonExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json",
+            name: "JsonException"
         });
     }
 
@@ -173,55 +221,4 @@ export abstract class AbstractCsharpGeneratorContext<
     public abstract getNamespaceForTypeId(typeId: TypeId): string;
 
     public abstract getExtraDependencies(): Record<string, string>;
-
-    // STOLEN FROM: ruby/TypesGenerator.ts
-    // We need a better way to share this sort of ir-processing logic.
-    //
-    // We pull all inherited properties onto the object because C#
-    // does not allow for multiple inheritence of classes, and creating interfaces feels
-    // heavy-handed + duplicative.
-    private getFlattenedProperties(typeId: TypeId): ObjectProperty[] {
-        const td = this.getTypeDeclarationOrThrow(typeId);
-        return td === undefined
-            ? []
-            : this.flattenedProperties.get(typeId) ??
-                  td.shape._visit<ObjectProperty[]>({
-                      alias: (atd: AliasTypeDeclaration) => {
-                          return atd.aliasOf._visit<ObjectProperty[]>({
-                              container: () => [],
-                              named: (dtn: DeclaredTypeName) => this.getFlattenedProperties(dtn.typeId),
-                              primitive: () => [],
-                              unknown: () => [],
-                              _other: () => []
-                          });
-                      },
-                      enum: () => {
-                          this.flattenedProperties.set(typeId, []);
-                          return [];
-                      },
-                      object: (otd: ObjectTypeDeclaration) => {
-                          const props = [
-                              ...otd.properties,
-                              ...otd.extends.flatMap((eo) => this.getFlattenedProperties(eo.typeId))
-                          ];
-                          this.flattenedProperties.set(typeId, props);
-                          return props;
-                      },
-                      union: (utd: UnionTypeDeclaration) => {
-                          const props = [
-                              ...utd.baseProperties,
-                              ...utd.extends.flatMap((eo) => this.getFlattenedProperties(eo.typeId))
-                          ];
-                          this.flattenedProperties.set(typeId, props);
-                          return props;
-                      },
-                      undiscriminatedUnion: () => {
-                          this.flattenedProperties.set(typeId, []);
-                          return [];
-                      },
-                      _other: () => {
-                          throw new Error("Attempting to type declaration for an unknown type.");
-                      }
-                  });
-    }
 }

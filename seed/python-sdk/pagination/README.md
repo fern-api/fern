@@ -16,8 +16,8 @@ pip install fern_pagination
 Instantiate and use the client with the following:
 
 ```python
-from seed import WithCursor
-from seed.client import SeedPagination
+from seed import SeedPagination
+from seed.users import WithCursor
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -42,8 +42,8 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import WithCursor
-from seed.client import AsyncSeedPagination
+from seed import AsyncSeedPagination
+from seed.users import WithCursor
 
 client = AsyncSeedPagination(
     token="YOUR_TOKEN",
@@ -73,7 +73,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```python
-from .api_error import ApiError
+from seed.core.api_error import ApiError
 
 try:
     client.users.list_with_body_cursor_pagination(...)
@@ -87,7 +87,7 @@ except ApiError as e:
 Paginated requests will return a `SyncPager` or `AsyncPager`, which can be used as generators for the underlying object.
 
 ```python
-from seed.client import SeedPagination
+from seed import SeedPagination
 
 client = SeedPagination(
     token="YOUR_TOKEN",
@@ -123,8 +123,8 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.users.list_with_body_cursor_pagination(...,{
-    max_retries=1
+client.users.list_with_body_cursor_pagination(..., {
+    "max_retries": 1
 })
 ```
 
@@ -134,14 +134,17 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedPagination
+from seed import SeedPagination
 
-client = SeedPagination(..., { timeout=20.0 }, )
+client = SeedPagination(
+    ...,
+    timeout=20.0,
+)
 
 
 # Override timeout for a specific method
-client.users.list_with_body_cursor_pagination(...,{
-    timeout_in_seconds=1
+client.users.list_with_body_cursor_pagination(..., {
+    "timeout_in_seconds": 1
 })
 ```
 
@@ -151,11 +154,11 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedPagination
+from seed import SeedPagination
 
 client = SeedPagination(
     ...,
-    http_client=httpx.Client(
+    httpx_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),

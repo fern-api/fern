@@ -4,65 +4,92 @@ from __future__ import annotations
 
 import typing
 
+import pydantic
+
 from ...commons.types.problem_id import ProblemId
-from ...core.pydantic_utilities import pydantic_v1
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .code_execution_update import CodeExecutionUpdate
-from .exception_info import ExceptionInfo
-from .terminated_response import TerminatedResponse
 
 
-class SubmissionResponse_ServerInitialized(pydantic_v1.BaseModel):
+class SubmissionResponse_ServerInitialized(UniversalBaseModel):
     type: typing.Literal["serverInitialized"] = "serverInitialized"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class SubmissionResponse_ProblemInitialized(pydantic_v1.BaseModel):
-    type: typing.Literal["problemInitialized"] = "problemInitialized"
+class SubmissionResponse_ProblemInitialized(UniversalBaseModel):
     value: ProblemId
+    type: typing.Literal["problemInitialized"] = "problemInitialized"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class SubmissionResponse_WorkspaceInitialized(pydantic_v1.BaseModel):
+class SubmissionResponse_WorkspaceInitialized(UniversalBaseModel):
     type: typing.Literal["workspaceInitialized"] = "workspaceInitialized"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class SubmissionResponse_ServerErrored(ExceptionInfo):
+class SubmissionResponse_ServerErrored(UniversalBaseModel):
     type: typing.Literal["serverErrored"] = "serverErrored"
+    exception_type: str = pydantic.Field(alias="exceptionType")
+    exception_message: str = pydantic.Field(alias="exceptionMessage")
+    exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class SubmissionResponse_CodeExecutionUpdate(pydantic_v1.BaseModel):
-    type: typing.Literal["codeExecutionUpdate"] = "codeExecutionUpdate"
+class SubmissionResponse_CodeExecutionUpdate(UniversalBaseModel):
     value: CodeExecutionUpdate
+    type: typing.Literal["codeExecutionUpdate"] = "codeExecutionUpdate"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
-class SubmissionResponse_Terminated(TerminatedResponse):
+class SubmissionResponse_Terminated(UniversalBaseModel):
     type: typing.Literal["terminated"] = "terminated"
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
 SubmissionResponse = typing.Union[

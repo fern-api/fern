@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
@@ -27,6 +26,7 @@ public class InlinedRequestsClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/req-bodies/object",
                 Body = request
@@ -35,7 +35,7 @@ public class InlinedRequestsClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 
 #nullable enable
 
@@ -8,8 +7,8 @@ namespace SeedTrace;
 public record TestCaseResultWithStdout
 {
     [JsonPropertyName("result")]
-    public required TestCaseResult Result { get; init; }
+    public required TestCaseResult Result { get; set; }
 
     [JsonPropertyName("stdout")]
-    public required string Stdout { get; init; }
+    public required string Stdout { get; set; }
 }

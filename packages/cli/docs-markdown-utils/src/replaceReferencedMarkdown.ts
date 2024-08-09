@@ -10,7 +10,6 @@ async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
 }
 
 // TODO: recursively replace referenced markdown files
-// TODO: inherit indentation from parent markdown file when replacing referenced markdown snippets
 export async function replaceReferencedMarkdown({
     markdown,
     absolutePathToFernFolder,
@@ -29,7 +28,7 @@ export async function replaceReferencedMarkdown({
         return markdown;
     }
 
-    const regex = /<Markdown\s+src={?['"]([^'"]+.mdx?)['"](?! \+)}?\s*\/>/g;
+    const regex = /([ \t]*)<Markdown\s+src={?['"]([^'"]+.mdx?)['"](?! \+)}?\s*\/>/g;
 
     let newMarkdown = markdown;
 
@@ -37,7 +36,8 @@ export async function replaceReferencedMarkdown({
     let match: RegExpExecArray | null;
     while ((match = regex.exec(markdown)) != null) {
         const matchString = match[0];
-        const src = match[1];
+        const indent = match[1];
+        const src = match[2];
 
         if (matchString == null || src == null) {
             throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMdx}`);
@@ -49,9 +49,14 @@ export async function replaceReferencedMarkdown({
         );
 
         try {
-            newMarkdown = newMarkdown.replace(matchString, await markdownLoader(filepath));
+            let replaceString = await markdownLoader(filepath);
+            replaceString = replaceString
+                .split("\n")
+                .map((line) => indent + line)
+                .join("\n");
+            newMarkdown = newMarkdown.replace(matchString, replaceString);
         } catch (e) {
-            context.failAndThrow(`Failed to read markdown file "${src}" referenced in ${absolutePathToMdx}`, e);
+            context.logger.warn(`Failed to read markdown file "${src}" referenced in ${absolutePathToMdx}`);
             break;
         }
     }

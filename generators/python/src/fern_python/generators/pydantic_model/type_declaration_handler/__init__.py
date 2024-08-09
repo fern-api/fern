@@ -1,15 +1,8 @@
-from .alias_generator import AliasSnippetGenerator
-from .discriminated_union import DiscriminatedUnionSnippetGenerator
 from .enum_generator import EnumSnippetGenerator
-from .object_generator import ObjectGenerator, ObjectProperty, ObjectSnippetGenerator
+from .object_generator import ObjectProperty
 from .type_declaration_handler import TypeDeclarationHandler
+from .type_declaration_snippet_generator_builder import (
+    TypeDeclarationSnippetGeneratorBuilder,
+)
 
-__all__ = [
-    "AliasSnippetGenerator",
-    "DiscriminatedUnionSnippetGenerator",
-    "EnumSnippetGenerator",
-    "ObjectGenerator",
-    "ObjectSnippetGenerator",
-    "ObjectProperty",
-    "TypeDeclarationHandler",
-]
+__all__ = ["EnumSnippetGenerator", "ObjectProperty", "TypeDeclarationHandler", "TypeDeclarationSnippetGeneratorBuilder"]

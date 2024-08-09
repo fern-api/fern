@@ -8,4 +8,10 @@ export interface ExperimentalConfig {
      * and makes them available for use in MDX files.
      */
     mdxComponents?: string[];
+    /**
+     * If `disable-stream-toggle` is set to true, the stream toggle will be disabled.
+     *
+     * This behavior is unstable and may change in the future.
+     */
+    disableStreamToggle?: boolean;
 }

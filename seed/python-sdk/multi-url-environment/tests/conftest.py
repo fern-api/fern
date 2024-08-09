@@ -3,7 +3,7 @@
 import os
 
 import pytest
-from seed.client import AsyncSeedMultiUrlEnvironment, SeedMultiUrlEnvironment
+from seed import AsyncSeedMultiUrlEnvironment, SeedMultiUrlEnvironment
 from seed.environment import SeedMultiUrlEnvironmentEnvironment
 
 

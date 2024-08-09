@@ -229,30 +229,40 @@ function validatePrimitiveExample({
                     example,
                     rules: v2.validation
                 }),
+            long: () => validateLong(example),
+            uint: () => validateUint(example),
+            uint64: () => validateUint64(example),
             double: (v2) =>
                 validateDoubleWithRules({
                     example,
                     rules: v2.validation
                 }),
+            float: () => validateFloat(example),
+            boolean: () => validateBoolean(example),
             string: (v2) =>
                 validateStringWithRules({
                     example,
                     rules: v2.validation
                 }),
+            uuid: () => validateString(example),
+            dateTime: () => validateDateTime(example),
+            date: () => validateString(example),
+            base64: () => validateString(example),
             bigInteger: () => validateString(example),
-            long: () => validateLong(example),
-            boolean: () => validateBoolean(example),
             _other: () => {
                 throw new Error("Unknown primitive type v2: " + primitiveType.v2);
             }
         });
     }
     return PrimitiveTypeV1._visit<ExampleViolation[]>(primitiveType.v1, {
-        string: () => validateString(example),
         integer: () => validateInteger(example),
-        double: () => validateDouble(example),
         long: () => validateLong(example),
+        uint: () => validateUint(example),
+        uint64: () => validateUint64(example),
+        double: () => validateDouble(example),
+        float: () => validateFloat(example),
         boolean: () => validateBoolean(example),
+        string: () => validateString(example),
         uuid: () => validateUuid(example),
         dateTime: () => validateDateTime(example),
         date: () => validateString(example),
@@ -394,6 +404,15 @@ function validateStringWithRules({
 
 const validateString = createValidator((example) => typeof example === "string", "a string");
 const validateInteger = createValidator((example) => Number.isInteger(example), "an integer");
+const validateUint = createValidator(
+    (example) => Number.isInteger(example) && typeof example === "number" && example >= 0,
+    "a uint"
+);
+const validateUint64 = createValidator(
+    (example) => Number.isInteger(example) && typeof example === "number" && example >= 0,
+    "a uint64"
+);
+const validateFloat = createValidator((example) => typeof example === "number", "a float");
 const validateDouble = createValidator((example) => typeof example === "number", "a double");
 const validateLong = createValidator((example) => Number.isInteger(example), "an integer");
 const validateBoolean = createValidator((example) => typeof example === "boolean", "a boolean");

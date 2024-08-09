@@ -2,7 +2,7 @@
 
 import typing
 
-from seed.client import AsyncSeedErrorProperty, SeedErrorProperty
+from seed import AsyncSeedErrorProperty, SeedErrorProperty
 
 from .utilities import validate_response
 

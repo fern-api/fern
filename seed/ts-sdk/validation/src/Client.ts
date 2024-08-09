@@ -34,7 +34,8 @@ export class SeedValidationClient {
      *     await client.create({
      *         decimal: 1.1,
      *         even: 1,
-     *         name: "string"
+     *         name: "string",
+     *         shape: SeedValidation.Shape.Square
      *     })
      */
     public async create(
@@ -48,6 +49,7 @@ export class SeedValidationClient {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/validation",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/validation/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
@@ -116,6 +118,7 @@ export class SeedValidationClient {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/validation",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/validation/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

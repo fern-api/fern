@@ -92,7 +92,7 @@ public final class FindRequest {
     }
 
     public Builder publicProperty(String publicProperty) {
-      this.publicProperty = Optional.of(publicProperty);
+      this.publicProperty = Optional.ofNullable(publicProperty);
       return this;
     }
 
@@ -106,7 +106,7 @@ public final class FindRequest {
     }
 
     public Builder privateProperty(Integer privateProperty) {
-      this.privateProperty = Optional.of(privateProperty);
+      this.privateProperty = Optional.ofNullable(privateProperty);
       return this;
     }
 

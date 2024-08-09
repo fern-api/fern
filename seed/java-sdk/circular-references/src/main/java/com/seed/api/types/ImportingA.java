@@ -85,7 +85,7 @@ public final class ImportingA {
         }
 
         public Builder a(A a) {
-            this.a = Optional.of(a);
+            this.a = Optional.ofNullable(a);
             return this;
         }
 

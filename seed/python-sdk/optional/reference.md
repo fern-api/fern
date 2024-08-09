@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedObjectsWithImports
+from seed import SeedObjectsWithImports
 
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
@@ -36,7 +36,7 @@ client.optional.send_optional_body(
 <dl>
 <dd>
 
-**request:** `typing.Optional[typing.Dict[str, typing.Any]]` 
+**request:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
     
 </dd>
 </dl>

@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using OneOf;
-using SeedUndiscriminatedUnions;
 using SeedUndiscriminatedUnions.Core;
 
 #nullable enable
@@ -34,46 +33,81 @@ public class UnionClient
             IEnumerable<int>,
             IEnumerable<IEnumerable<int>>,
             HashSet<string>
-        > request
+        > request,
+        RequestOptions? options = null
     )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Body = request
+                Body = request,
+                Options = options
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<
-                OneOf<
-                    string,
-                    IEnumerable<string>,
-                    int,
-                    IEnumerable<int>,
-                    IEnumerable<IEnumerable<int>>,
-                    HashSet<string>
-                >
-            >(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<
+                    OneOf<
+                        string,
+                        IEnumerable<string>,
+                        int,
+                        IEnumerable<int>,
+                        IEnumerable<IEnumerable<int>>,
+                        HashSet<string>
+                    >
+                >(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedUndiscriminatedUnionsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 
-    public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync()
+    public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "/metadata" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/metadata",
+                Options = options
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
-                responseBody
-            )!;
+            try
+            {
+                return JsonUtils.Deserialize<Dictionary<OneOf<KeyType, string>, string>>(
+                    responseBody
+                )!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUndiscriminatedUnionsException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedUndiscriminatedUnionsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

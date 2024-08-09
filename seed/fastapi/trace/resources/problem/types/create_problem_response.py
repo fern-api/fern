@@ -7,7 +7,7 @@ import typing
 import pydantic
 import typing_extensions
 
-from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel, update_forward_refs
+from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, UniversalRootModel
 from ...commons.types.problem_id import ProblemId
 from .create_problem_error import CreateProblemError
 
@@ -67,6 +67,3 @@ class _CreateProblemResponse:
     class Error(UniversalBaseModel):
         type: typing.Literal["error"] = "error"
         value: CreateProblemError
-
-
-update_forward_refs(CreateProblemResponse)

@@ -7,8 +7,8 @@ namespace SeedStreaming;
 public record RegularResponse
 {
     [JsonPropertyName("id")]
-    public required string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("name")]
-    public string? Name { get; init; }
+    public string? Name { get; set; }
 }

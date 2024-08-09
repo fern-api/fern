@@ -34,7 +34,7 @@ class SingleBaseUrlEnvironmentGenerator:
             enum_class.add_class_var(
                 AST.VariableDeclaration(
                     name=class_var_name,
-                    initializer=AST.Expression(f'"{single_base_url_env.url.get_as_str()}"'),
+                    initializer=AST.Expression(f'"{single_base_url_env.url}"'),
                     docstring=AST.Docstring(single_base_url_env.docs) if single_base_url_env.docs is not None else None,
                 )
             )
@@ -86,4 +86,4 @@ class SingleBaseUrlEnvironmentGenerator:
         for environment in environments.environments:
             if environment.id == environment_id:
                 return environment
-        raise RuntimeError("Environment does not exist: " + environment_id.get_as_str())
+        raise RuntimeError("Environment does not exist: " + environment_id)

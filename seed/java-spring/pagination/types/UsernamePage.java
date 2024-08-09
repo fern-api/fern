@@ -93,7 +93,7 @@ public final class UsernamePage {
     }
 
     public Builder after(String after) {
-      this.after = Optional.of(after);
+      this.after = Optional.ofNullable(after);
       return this;
     }
 

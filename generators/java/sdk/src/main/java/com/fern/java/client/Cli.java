@@ -21,6 +21,8 @@ import com.fern.java.client.generators.EnvironmentGenerator;
 import com.fern.java.client.generators.ErrorGenerator;
 import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
+import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
+import com.fern.java.client.generators.ResponseBodyReaderGenerator;
 import com.fern.java.client.generators.RetryInterceptorGenerator;
 import com.fern.java.client.generators.RootClientGenerator;
 import com.fern.java.client.generators.SampleAppGenerator;
@@ -99,6 +101,9 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 JavaSdkCustomConfig.builder()
                         .wrappedAliases(customConfig.wrappedAliases())
                         .clientClassName(customConfig.clientClassName())
+                        .baseApiExceptionClassName(customConfig.baseApiExceptionClassName())
+                        .baseExceptionClassName(customConfig.baseExceptionClassName())
+                        .customDependencies(customConfig.customDependencies())
                         .build(),
                 clientPoetClassNameFactory,
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
@@ -188,6 +193,13 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         RetryInterceptorGenerator retryInterceptorGenerator = new RetryInterceptorGenerator(context);
         this.addGeneratedFile(retryInterceptorGenerator.generateFile());
+
+        ResponseBodyInputStreamGenerator responseBodyInputStreamGenerator =
+                new ResponseBodyInputStreamGenerator(context);
+        this.addGeneratedFile(responseBodyInputStreamGenerator.generateFile());
+
+        ResponseBodyReaderGenerator responseBodyReaderGenerator = new ResponseBodyReaderGenerator(context);
+        this.addGeneratedFile(responseBodyReaderGenerator.generateFile());
 
         ClientOptionsGenerator clientOptionsGenerator =
                 new ClientOptionsGenerator(context, generatedEnvironmentsClass, generatedRequestOptions);

@@ -1,7 +1,7 @@
 from typing import Callable, Optional
+from urllib import response
 
 import fern.ir.resources as ir_types
-from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.external_dependencies.httpx_sse import HttpxSSE
@@ -158,6 +158,50 @@ class EndpointResponseCodeWriter:
                 else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"
             ),
         )
+
+        # Validation rules limit the type of the response object to be either
+        # an object or optional object
+        property_access_expression: Optional[AST.Expression] = None
+        response_union = json_response.get_as_union()
+        if response_union.type == "nestedPropertyAsResponse":
+            response_body: ir_types.TypeReference = response_union.response_body_type
+            response_body_union = response_body.get_as_union()
+            response_property = (
+                response_union.response_property.name.name.snake_case.safe_name
+                if response_union.response_property is not None
+                else None
+            )
+            if response_body_union.type == "container":
+                response_container = response_body_union.container.get_as_union()
+                if response_container.type == "optional" and response_property is not None:
+                    property_access_expression = AST.Expression(
+                        f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{response_property} if {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE} is not None else {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}"
+                    )
+            elif response_body_union.type == "named":
+                response_named = self._context.pydantic_generator_context.get_declaration_for_type_id(
+                    response_body_union.type_id
+                )
+                property_access_expression = response_named.shape.visit(
+                    object=lambda _: AST.Expression(
+                        f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{response_property}"
+                    ),
+                    alias=lambda _: None,
+                    enum=lambda _: None,
+                    union=lambda _: None,
+                    undiscriminated_union=lambda _: None,
+                )
+
+            if property_access_expression is not None:
+                # If you are indeed accessing a property, set the parsed response to an intermediate variable
+                writer.write_node(
+                    AST.VariableDeclaration(
+                        name=EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE, initializer=pydantic_parse_expression
+                    )
+                )
+
+                # Then use the property accessed expression moving forward
+                pydantic_parse_expression = property_access_expression
+
         if self._pagination is not None:
             paginator = self._pagination.visit(
                 cursor=lambda cursor: CursorPagination(
@@ -254,7 +298,7 @@ class EndpointResponseCodeWriter:
                     else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.read()"
                 )
 
-            for error in self._errors.get_as_list():
+            for error in self._errors:
                 error_declaration = self._context.ir.errors[error.error.error_id]
 
                 writer.write_line(
@@ -329,12 +373,12 @@ class EndpointResponseCodeWriter:
         if self._response is None or self._response.body is None:
             self._try_deserialize_json_response(writer=writer, response_handler=None)
 
-        if len(self._errors.get_as_list()) > 0:
+        if len(self._errors) > 0:
             writer.write_line(
                 f'if "{strategy.discriminant.wire_value}" in {EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}:'
             )
             with writer.indent():
-                for error in self._errors.get_as_list():
+                for error in self._errors:
                     error_declaration = self._context.ir.errors[error.error.error_id]
 
                     writer.write_line(
@@ -404,7 +448,10 @@ class EndpointResponseCodeWriter:
             response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 response.response_body_type
             ),
-            nested_property_as_response=lambda _: raise_json_nested_property_as_response_unsupported(),
+            # TODO: What is the case where you have a nested property as response, but no response property configured?
+            nested_property_as_response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                response.response_body_type
+            ),
         )
 
     def _get_streaming_response_data_type(self, streaming_response: ir_types.StreamingResponse) -> AST.TypeHint:
@@ -416,7 +463,3 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
-
-
-def raise_json_nested_property_as_response_unsupported() -> Never:
-    raise RuntimeError("nested property json response is unsupported")

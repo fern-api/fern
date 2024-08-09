@@ -16,6 +16,7 @@ export const RootApiFileSchema = z.strictObject({
     auth: z.optional(ApiAuthSchema),
     "auth-schemes": z.optional(z.record(AuthSchemeDeclarationSchema)),
     headers: z.optional(z.record(z.string(), HttpHeaderSchema)),
+    "default-url": z.optional(z.string()),
     "default-environment": z.optional(z.string().or(z.null())),
     environments: z.optional(z.record(z.string(), EnvironmentSchema)),
     "error-discrimination": z.optional(ErrorDiscriminationSchema),

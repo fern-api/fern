@@ -60,7 +60,7 @@ class UsersClient:
 
         Examples
         --------
-        from seed.client import SeedPagination
+        from seed import SeedPagination
 
         client = SeedPagination(
             token="YOUR_TOKEN",
@@ -126,8 +126,8 @@ class UsersClient:
 
         Examples
         --------
-        from seed import WithCursor
-        from seed.client import SeedPagination
+        from seed import SeedPagination
+        from seed.users import WithCursor
 
         client = SeedPagination(
             token="YOUR_TOKEN",
@@ -198,7 +198,7 @@ class UsersClient:
 
         Examples
         --------
-        from seed.client import SeedPagination
+        from seed import SeedPagination
 
         client = SeedPagination(
             token="YOUR_TOKEN",
@@ -261,8 +261,8 @@ class UsersClient:
 
         Examples
         --------
-        from seed import WithPage
-        from seed.client import SeedPagination
+        from seed import SeedPagination
+        from seed.users import WithPage
 
         client = SeedPagination(
             token="YOUR_TOKEN",
@@ -327,7 +327,7 @@ class UsersClient:
 
         Examples
         --------
-        from seed.client import SeedPagination
+        from seed import SeedPagination
 
         client = SeedPagination(
             token="YOUR_TOKEN",
@@ -384,7 +384,7 @@ class UsersClient:
         --------
         import uuid
 
-        from seed.client import SeedPagination
+        from seed import SeedPagination
 
         client = SeedPagination(
             token="YOUR_TOKEN",
@@ -440,7 +440,7 @@ class UsersClient:
 
         Examples
         --------
-        from seed.client import SeedPagination
+        from seed import SeedPagination
 
         client = SeedPagination(
             token="YOUR_TOKEN",
@@ -495,7 +495,7 @@ class UsersClient:
 
         Examples
         --------
-        from seed.client import SeedPagination
+        from seed import SeedPagination
 
         client = SeedPagination(
             token="YOUR_TOKEN",
@@ -566,7 +566,7 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedPagination
+        from seed import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
@@ -640,8 +640,8 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from seed import WithCursor
-        from seed.client import AsyncSeedPagination
+        from seed import AsyncSeedPagination
+        from seed.users import WithCursor
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
@@ -720,7 +720,7 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedPagination
+        from seed import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
@@ -791,8 +791,8 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from seed import WithPage
-        from seed.client import AsyncSeedPagination
+        from seed import AsyncSeedPagination
+        from seed.users import WithPage
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
@@ -865,7 +865,7 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedPagination
+        from seed import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
@@ -929,7 +929,7 @@ class AsyncUsersClient:
         import asyncio
         import uuid
 
-        from seed.client import AsyncSeedPagination
+        from seed import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
@@ -993,7 +993,7 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedPagination
+        from seed import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",
@@ -1056,7 +1056,7 @@ class AsyncUsersClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedPagination
+        from seed import AsyncSeedPagination
 
         client = AsyncSeedPagination(
             token="YOUR_TOKEN",

@@ -1,6 +1,11 @@
 import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { parseImagePaths, replaceImagePathsAndUrls, replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
+import {
+    parseImagePaths,
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown
+} from "@fern-api/docs-markdown-utils";
 import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -79,6 +84,16 @@ export class DocsDefinitionResolver {
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
+                markdown,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
+                absolutePathToMdx: this.resolveFilepath(relativePath),
+                context: this.taskContext
+            });
+        }
+
+        // replaces all instances of <Code src="path/to/file.js" /> with the content of the referenced code file
+        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
                 absolutePathToMdx: this.resolveFilepath(relativePath),
@@ -240,7 +255,8 @@ export class DocsDefinitionResolver {
             redirects: this.parsedDocsConfig.redirects,
             integrations: this.parsedDocsConfig.integrations,
             footerLinks: this.parsedDocsConfig.footerLinks,
-
+            defaultLanguage: this.parsedDocsConfig.defaultLanguage,
+            analyticsConfig: this.parsedDocsConfig.analyticsConfig,
             // deprecated
             logo: undefined,
             logoV2: undefined,
@@ -354,7 +370,9 @@ export class DocsDefinitionResolver {
                     keywords: undefined,
                     smartCasing: false,
                     disableExamples: false,
-                    readme: undefined
+                    readme: undefined,
+                    version: undefined,
+                    packageName: undefined
                 });
                 const apiDefinitionId = await this.registerApi({ ir, snippetsConfig });
                 const api = convertIrToApiDefinition(ir, apiDefinitionId);

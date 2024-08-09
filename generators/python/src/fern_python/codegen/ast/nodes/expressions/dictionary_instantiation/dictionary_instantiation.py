@@ -8,7 +8,7 @@ from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 class DictionaryInstantiation(AstNode):
     def __init__(
         self,
-        entries: Sequence[Tuple[Expression, Expression]] = None,
+        entries: Optional[Sequence[Tuple[Expression, Expression]]] = None,
     ):
         self.entries = entries or []
 

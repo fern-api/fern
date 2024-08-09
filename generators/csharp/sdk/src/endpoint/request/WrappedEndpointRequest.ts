@@ -52,7 +52,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
         const requiredQueryParameters: QueryParameter[] = [];
         const optionalQueryParameters: QueryParameter[] = [];
         for (const queryParameter of this.endpoint.queryParameters) {
-            if (this.context.isOptional(queryParameter.valueType)) {
+            if (!queryParameter.allowMultiple && this.context.isOptional(queryParameter.valueType)) {
                 optionalQueryParameters.push(queryParameter);
             } else {
                 requiredQueryParameters.push(queryParameter);
@@ -66,27 +66,44 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     csharp.dictionary({
                         keyType: csharp.Type.string(),
                         valueType: csharp.Type.object(),
-                        entries: requiredQueryParameters.map((queryParameter) => {
-                            return {
-                                key: csharp.codeblock(`"${queryParameter.name.wireValue}"`),
-                                value: this.stringify({
-                                    reference: queryParameter.valueType,
-                                    name: queryParameter.name.name
-                                })
-                            };
-                        })
+                        entries: []
                     })
                 );
+                for (const query of requiredQueryParameters) {
+                    this.writeQueryParameter(writer, query);
+                }
                 for (const query of optionalQueryParameters) {
                     const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
                     writer.controlFlow("if", `${queryParameterReference} != null`);
-                    writer.write(`${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = `);
-                    writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
+                    this.writeQueryParameter(writer, query);
                     writer.endControlFlow();
                 }
             }),
             queryParameterBagReference: QUERY_PARAMETER_BAG_NAME
         };
+    }
+
+    private writeQueryParameter(writer: csharp.Writer, query: QueryParameter): void {
+        writer.write(`${QUERY_PARAMETER_BAG_NAME}["${query.name.wireValue}"] = `);
+        if (!query.allowMultiple) {
+            writer.writeNodeStatement(this.stringify({ reference: query.valueType, name: query.name.name }));
+            return;
+        }
+        const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
+        if (this.isString(query.valueType)) {
+            writer.writeLine(`${queryParameterReference};`);
+            return;
+        }
+        writer.write(`${queryParameterReference}.Select(_value => `);
+        writer.writeNode(
+            this.stringify({
+                reference: query.valueType,
+                name: query.name.name,
+                parameterOverride: "_value",
+                allowOptionals: false // When allow-multiple is set, the query parameter never uses optional types.
+            })
+        );
+        writer.writeLine(").ToList();");
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
@@ -144,24 +161,33 @@ export class WrappedEndpointRequest extends EndpointRequest {
         return undefined;
     }
 
-    private stringify({ reference, name }: { reference: TypeReference; name: Name }): csharp.CodeBlock {
+    private stringify({
+        reference,
+        name,
+        parameterOverride,
+        allowOptionals
+    }: {
+        reference: TypeReference;
+        name: Name;
+        parameterOverride?: string;
+        allowOptionals?: boolean;
+    }): csharp.CodeBlock {
+        const parameter = parameterOverride ?? `${this.getParameterName()}.${name.pascalCase.safeName}`;
         if (this.isString(reference)) {
-            return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}`);
-        } else if (this.isDatetime({ typeReference: reference, allowOptionals: false })) {
-            return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.ToString("o")`);
-        } else if (this.isDatetime({ typeReference: reference, allowOptionals: true })) {
-            return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.Value.ToString("o")`);
-        } else if (this.isEnum({ typeReference: reference, allowOptionals: false })) {
+            return csharp.codeblock(`${parameter}`);
+        } else if (this.isDatetime({ typeReference: reference, allowOptionals: allowOptionals ?? false })) {
             return csharp.codeblock((writer) => {
-                writer.writeNode(
-                    csharp.classReference({
-                        name: "JsonSerializer",
-                        namespace: "System.Text.Json"
-                    })
-                );
-                writer.write(`.Serialize(${this.getParameterName()}.${name.pascalCase.safeName})`);
+                writer.write(`${parameter}.ToString(`);
+                writer.writeNode(this.context.getConstantsClassReference());
+                writer.write(".DateTimeFormat)");
             });
-        } else if (this.isEnum({ typeReference: reference, allowOptionals: true })) {
+        } else if (this.isDatetime({ typeReference: reference, allowOptionals: allowOptionals ?? true })) {
+            return csharp.codeblock((writer) => {
+                writer.write(`${parameter}.Value.ToString(`);
+                writer.writeNode(this.context.getConstantsClassReference());
+                writer.write(".DateTimeFormat)");
+            });
+        } else if (this.isEnum({ typeReference: reference, allowOptionals: allowOptionals ?? false })) {
             return csharp.codeblock((writer) => {
                 writer.writeNode(
                     csharp.classReference({
@@ -169,10 +195,20 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         namespace: "System.Text.Json"
                     })
                 );
-                writer.write(`.Serialize(${this.getParameterName()}.${name.pascalCase.safeName}.Value)`);
+                writer.write(`.Serialize(${parameter})`);
+            });
+        } else if (this.isEnum({ typeReference: reference, allowOptionals: allowOptionals ?? true })) {
+            return csharp.codeblock((writer) => {
+                writer.writeNode(
+                    csharp.classReference({
+                        name: "JsonSerializer",
+                        namespace: "System.Text.Json"
+                    })
+                );
+                writer.write(`.Serialize(${parameter}.Value)`);
             });
         } else {
-            return csharp.codeblock(`${this.getParameterName()}.${name.pascalCase.safeName}.ToString()`);
+            return csharp.codeblock(`${parameter}.ToString()`);
         }
     }
 

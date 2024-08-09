@@ -19,7 +19,7 @@ export async function formatWorkspaces({
             }
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
                 await formatWorkspace({
-                    workspace,
+                    workspace: await workspace.toFernWorkspace({}),
                     context,
                     shouldFix
                 });

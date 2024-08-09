@@ -1,4 +1,4 @@
-irVersion: v49
+irVersion: v53
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python
@@ -14,6 +14,10 @@ local:
   runCommand: poetry run python -m src.fern_python.generators.sdk.cli
   env: 
     PYTEST_CURRENT_TEST: "some value"
+customFixtureConfig:
+  customConfig: 
+    use_typeddict_requests: true
+  outputFolder: client-filename
 fixtures:
   examples: 
     - customConfig: null
@@ -60,6 +64,11 @@ fixtures:
         pydantic_config:
           version: v1
       outputFolder: pydantic-v1
+    - customConfig:
+        pydantic_config:
+          version: v1
+          wrapped_aliases: True
+      outputFolder: pydantic-v1-wrapped
     - customConfig:
         pydantic_config:
           extra_fields: "allow"
@@ -123,6 +132,12 @@ fixtures:
         pydantic_config:
           use_provided_defaults: true
       outputFolder: with-defaults
+  literal:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+      outputFolder: use_typeddict_requests
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -158,13 +173,24 @@ scripts:
 allowedFailures: 
   # This is the only one that should always fail
   - exhaustive:additional_init_exports
+  # This should only succeed in Pydantic V1 tests
+  - exhaustive:pydantic-v1-wrapped
+
   # TODO(FER-1837): Address this list
-  - response-property
   - websocket
   - exhaustive:union-utils
   - extra-properties
   - trace
-  - circular-references-advanced
+
+  # Remove the following fixtures soon as a CLI is released with
+  # default enum value support, the latest primitive types, and gRPC
+  # configuration. This otherwise causes a 'fern check' issue when
+  # 'fern test' is run.
+  - grpc
+  - grpc-proto
+  - object
+  - validation:no-custom-config
+  - validation:with-defaults
   # === Allowed failures due to unit testing ===
   - pagination
   # ===========================================
@@ -175,3 +201,6 @@ allowedFailures:
   # We are not generating the correct snippets for union-utils
   # types (e.g. we generate `Shape_Square` instead of Shape.factory.square())
   - unions:union-utils
+
+  # Complex circular refs
+  - simple-fhir

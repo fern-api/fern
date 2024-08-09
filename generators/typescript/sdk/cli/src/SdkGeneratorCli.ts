@@ -56,7 +56,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             inlineFileProperties: parsed?.inlineFileProperties ?? false,
             packageJson: parsed?.packageJson,
             publishToJsr: parsed?.publishToJsr ?? false,
-            omitUndefined: parsed?.omitUndefined ?? false
+            omitUndefined: parsed?.omitUndefined ?? false,
+            generateWireTests: parsed?.generateWireTests ?? false,
+            noScripts: parsed?.noScripts ?? false
         };
     }
 
@@ -85,7 +87,9 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             context: generatorContext,
             npmPackage,
             generateJestTests: config.output.mode.type === "github",
+            rawConfig: config,
             config: {
+                runScripts: !customConfig.noScripts,
                 organization: config.organization,
                 apiName: intermediateRepresentation.apiName.originalName,
                 whitelabel: config.whitelabel,
@@ -127,7 +131,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
                 inlineFileProperties: customConfig.inlineFileProperties ?? false,
-                writeUnitTests: false,
+                writeUnitTests: customConfig.generateWireTests ?? config.writeUnitTests,
                 executionEnvironment: this.exectuionEnvironment(config),
                 packageJson: customConfig.packageJson,
                 githubRepoUrl: maybeGithubOutputMode?.repoUrl,
@@ -139,7 +143,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         const typescriptProject = await sdkGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
         await sdkGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory()
+            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
+            pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
 
         return persistedTypescriptProject;

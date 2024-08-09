@@ -4,18 +4,21 @@ export { GENERATOR_INVOCATIONS } from "./generatorInvocations";
 export { GeneratorName } from "./GeneratorName";
 export {
     GenerationLanguage,
+    getPackageName,
     type GeneratorGroup,
     type GeneratorInvocation,
-    type GeneratorsConfiguration
+    type GeneratorsConfiguration,
+    type ProtoAPIDefinitionSchema
 } from "./GeneratorsConfiguration";
 export { getGeneratorNameOrThrow } from "./getGeneratorName";
 export { getLatestGeneratorVersion } from "./getGeneratorVersions";
+export { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
 export {
     getPathToGeneratorsConfiguration,
     loadGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
 } from "./loadGeneratorsConfiguration";
-export { type APIConfigurationSchema } from "./schemas/APIConfigurationSchema";
+export { type APIConfigurationSchema, type ProtobufAPIDefinitionSchema } from "./schemas/APIConfigurationSchema";
 export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 export { type GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 export {

@@ -7,16 +7,9 @@ import typing
 import pydantic
 
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
-from .binary_tree_node_and_tree_value import BinaryTreeNodeAndTreeValue
-from .binary_tree_node_value import BinaryTreeNodeValue
 from .binary_tree_value import BinaryTreeValue
-from .doubly_linked_list_node_and_list_value import DoublyLinkedListNodeAndListValue
-from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
 from .doubly_linked_list_value import DoublyLinkedListValue
-from .generic_value import GenericValue
 from .node_id import NodeId
-from .singly_linked_list_node_and_list_value import SinglyLinkedListNodeAndListValue
-from .singly_linked_list_node_value import SinglyLinkedListNodeValue
 from .singly_linked_list_value import SinglyLinkedListValue
 
 
@@ -46,8 +39,8 @@ class DebugVariableValue_CharValue(UniversalBaseModel):
 
 
 class DebugVariableValue_MapValue(UniversalBaseModel):
-    key_value_pairs: typing.List[DebugKeyValuePairs] = pydantic.Field(alias="keyValuePairs")
     type: typing.Literal["mapValue"] = "mapValue"
+    key_value_pairs: typing.List["DebugKeyValuePairs"] = pydantic.Field(alias="keyValuePairs")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -58,14 +51,14 @@ class DebugVariableValue_MapValue(UniversalBaseModel):
 
 
 class DebugVariableValue_ListValue(UniversalBaseModel):
-    value: typing.List[DebugVariableValue]
+    value: typing.List["DebugVariableValue"]
     type: typing.Literal["listValue"] = "listValue"
 
 
 class DebugVariableValue_BinaryTreeNodeValue(UniversalBaseModel):
+    type: typing.Literal["binaryTreeNodeValue"] = "binaryTreeNodeValue"
     node_id: NodeId = pydantic.Field(alias="nodeId")
     full_tree: BinaryTreeValue = pydantic.Field(alias="fullTree")
-    type: typing.Literal["binaryTreeNodeValue"] = "binaryTreeNodeValue"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -76,9 +69,9 @@ class DebugVariableValue_BinaryTreeNodeValue(UniversalBaseModel):
 
 
 class DebugVariableValue_SinglyLinkedListNodeValue(UniversalBaseModel):
+    type: typing.Literal["singlyLinkedListNodeValue"] = "singlyLinkedListNodeValue"
     node_id: NodeId = pydantic.Field(alias="nodeId")
     full_list: SinglyLinkedListValue = pydantic.Field(alias="fullList")
-    type: typing.Literal["singlyLinkedListNodeValue"] = "singlyLinkedListNodeValue"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -89,9 +82,9 @@ class DebugVariableValue_SinglyLinkedListNodeValue(UniversalBaseModel):
 
 
 class DebugVariableValue_DoublyLinkedListNodeValue(UniversalBaseModel):
+    type: typing.Literal["doublyLinkedListNodeValue"] = "doublyLinkedListNodeValue"
     node_id: NodeId = pydantic.Field(alias="nodeId")
     full_list: DoublyLinkedListValue = pydantic.Field(alias="fullList")
-    type: typing.Literal["doublyLinkedListNodeValue"] = "doublyLinkedListNodeValue"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -124,9 +117,9 @@ class DebugVariableValue_NullValue(UniversalBaseModel):
 
 
 class DebugVariableValue_GenericValue(UniversalBaseModel):
+    type: typing.Literal["genericValue"] = "genericValue"
     stringified_type: typing.Optional[str] = pydantic.Field(alias="stringifiedType", default=None)
     stringified_value: str = pydantic.Field(alias="stringifiedValue")
-    type: typing.Literal["genericValue"] = "genericValue"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -152,6 +145,6 @@ DebugVariableValue = typing.Union[
     DebugVariableValue_GenericValue,
 ]
 from .debug_key_value_pairs import DebugKeyValuePairs  # noqa: E402
-from .debug_map_value import DebugMapValue  # noqa: E402
 
-update_forward_refs(DebugVariableValue_ListValue, DebugKeyValuePairs=DebugKeyValuePairs)
+update_forward_refs(DebugVariableValue_MapValue)
+update_forward_refs(DebugVariableValue_ListValue)

@@ -13,7 +13,7 @@
 <dd>
 
 ```python
-from seed.client import SeedUnknownAsAny
+from seed import SeedUnknownAsAny
 
 client = SeedUnknownAsAny(
     base_url="https://yourhost.com/path/to/api",
@@ -36,7 +36,61 @@ client.unknown.post(
 <dl>
 <dd>
 
-**request:** `typing.Any` 
+**request:** `typing.Optional[typing.Any]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.unknown.<a href="src/seed/unknown/client.py">post_object</a>(...)</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedUnknownAsAny
+
+client = SeedUnknownAsAny(
+    base_url="https://yourhost.com/path/to/api",
+)
+client.unknown.post_object()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**unknown:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>

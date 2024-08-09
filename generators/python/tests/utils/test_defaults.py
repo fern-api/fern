@@ -15,7 +15,7 @@ def test_defaulted_object() -> None:
 def test_defaulted_object_with_defaults() -> None:
     obj_with_defaults = ObjectWithDefaults()
 
-    assert obj_with_defaults.decimal == 1
+    assert obj_with_defaults.decimal == 1.1
     assert obj_with_defaults.string == "here's a sentence!"
     assert obj_with_defaults.required_string == "I neeeeeeeeeed this!"
 

@@ -13,10 +13,10 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedBytes"
+                    "from seed import SeedBytes"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedBytes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedBytes(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -52,10 +52,10 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedBytes"
+                        "from seed import AsyncSeedBytes"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedBytes(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedBytes(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

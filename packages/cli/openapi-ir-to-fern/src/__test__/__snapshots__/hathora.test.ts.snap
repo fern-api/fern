@@ -230,7 +230,7 @@ exports[`open api parser hathora docs 1`] = `
         "base-path": "",
         "endpoints": {
           "LoginAnonymous": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.LoginAnonymousRequestNotFoundError",
@@ -259,7 +259,7 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "LoginGoogle": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.LoginGoogleRequestUnauthorizedError",
@@ -302,7 +302,7 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "LoginNickname": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.LoginNicknameRequestNotFoundError",
@@ -744,7 +744,7 @@ exports[`open api parser hathora docs 1`] = `
         "base-path": "",
         "endpoints": {
           "GetPingServiceEndpoints": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "examples": [
               {
@@ -779,7 +779,7 @@ exports[`open api parser hathora docs 1`] = `
         "base-path": "",
         "endpoints": {
           "CreatePrivateLobbyDeprecated": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -827,7 +827,7 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "CreatePublicLobbyDeprecated": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -875,7 +875,7 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "ListActivePublicLobbiesDeprecated": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -947,7 +947,7 @@ exports[`open api parser hathora docs 1`] = `
         "base-path": "",
         "endpoints": {
           "CreateLobby": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.CreateLobbyRequestUnauthorizedError",
@@ -1021,7 +1021,7 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "CreateLocalLobby": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -1094,7 +1094,7 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "CreatePrivateLobby": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -1167,7 +1167,7 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "CreatePublicLobby": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -1240,7 +1240,7 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "GetLobbyInfo": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.GetLobbyInfoRequestNotFoundError",
@@ -1283,7 +1283,7 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "ListActivePublicLobbies": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "examples": [
               {
@@ -1846,7 +1846,7 @@ exports[`open api parser hathora docs 1`] = `
             },
           },
           "GetConnectionInfo": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.GetConnectionInfoRequestBadRequestError",
@@ -3004,7 +3004,7 @@ exports[`open api parser hathora simple 1`] = `
         "base-path": "",
         "endpoints": {
           "LoginAnonymous": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -3033,7 +3033,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "LoginGoogle": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.UnauthorizedError",
@@ -3076,7 +3076,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "LoginNickname": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -3518,7 +3518,7 @@ exports[`open api parser hathora simple 1`] = `
         "base-path": "",
         "endpoints": {
           "GetPingServiceEndpoints": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "examples": [
               {
@@ -3553,7 +3553,7 @@ exports[`open api parser hathora simple 1`] = `
         "base-path": "",
         "endpoints": {
           "CreatePrivateLobbyDeprecated": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -3601,7 +3601,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "CreatePublicLobbyDeprecated": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -3649,7 +3649,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "ListActivePublicLobbiesDeprecated": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -3721,7 +3721,7 @@ exports[`open api parser hathora simple 1`] = `
         "base-path": "",
         "endpoints": {
           "CreateLobby": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.UnauthorizedError",
@@ -3795,7 +3795,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "CreateLocalLobby": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -3868,7 +3868,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "CreatePrivateLobby": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -3941,7 +3941,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "CreatePublicLobby": {
-            "auth": true,
+            "auth": false,
             "availability": "deprecated",
             "docs": undefined,
             "errors": [
@@ -4014,7 +4014,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "GetLobbyInfo": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.NotFoundError",
@@ -4057,7 +4057,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "ListActivePublicLobbies": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "examples": [
               {
@@ -4620,7 +4620,7 @@ exports[`open api parser hathora simple 1`] = `
             },
           },
           "GetConnectionInfo": {
-            "auth": true,
+            "auth": false,
             "docs": undefined,
             "errors": [
               "root.BadRequestError",

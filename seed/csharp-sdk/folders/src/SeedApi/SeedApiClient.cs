@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using SeedApi.A;
 using SeedApi.Core;
@@ -15,6 +16,7 @@ public partial class SeedApiClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         A = new AClient(_client);
@@ -25,10 +27,26 @@ public partial class SeedApiClient
 
     public FolderClient Folder { get; init; }
 
-    public async Task FooAsync()
+    public async Task FooAsync(RequestOptions? options = null)
     {
-        await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Post, Path = "" }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "",
+                Options = options
+            }
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
         );
     }
 }

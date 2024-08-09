@@ -1,3 +1,6 @@
+export * from "./ProgrammingLanguage";
+export * from "./AnalyticsConfig";
+export * from "./SegmentConfig";
 export * from "./DocsConfiguration";
 export * from "./TabId";
 export * from "./TabConfig";
@@ -20,7 +23,8 @@ export * from "./BackgroundImageConfiguration";
 export * from "./BackgroundImageThemedConfig";
 export * from "./DocsTypographyConfig";
 export * from "./LayoutConfig";
-export * from "./SidebarOrHeaderPlacement";
+export * from "./SearchbarPlacement";
+export * from "./TabsPlacement";
 export * from "./ContentAlignment";
 export * from "./HeaderPosition";
 export * from "./FontConfig";

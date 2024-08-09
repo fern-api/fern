@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
@@ -23,6 +22,7 @@ public class ObjectClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-optional-field",
                 Body = request
@@ -31,7 +31,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -43,6 +43,7 @@ public class ObjectClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-required-field",
                 Body = request
@@ -51,7 +52,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithRequiredField>(responseBody)!;
+            return JsonUtils.Deserialize<ObjectWithRequiredField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -61,6 +62,7 @@ public class ObjectClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-map-of-map",
                 Body = request
@@ -69,7 +71,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithMapOfMap>(responseBody)!;
+            return JsonUtils.Deserialize<ObjectWithMapOfMap>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -81,6 +83,7 @@ public class ObjectClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-nested-with-optional-field",
                 Body = request
@@ -89,7 +92,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<NestedObjectWithOptionalField>(responseBody)!;
+            return JsonUtils.Deserialize<NestedObjectWithOptionalField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -102,6 +105,7 @@ public class ObjectClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"/object/get-and-return-nested-with-required-field/{string_}",
                 Body = request
@@ -110,7 +114,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+            return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -122,6 +126,7 @@ public class ObjectClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-nested-with-required-field-list",
                 Body = request
@@ -130,7 +135,7 @@ public class ObjectClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
+            return JsonUtils.Deserialize<NestedObjectWithRequiredField>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

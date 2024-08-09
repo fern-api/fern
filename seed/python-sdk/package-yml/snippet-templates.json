@@ -13,10 +13,10 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedPackageYml"
+                    "from seed import SeedPackageYml"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -68,10 +68,10 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedPackageYml"
+                        "from seed import AsyncSeedPackageYml"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -135,10 +135,10 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedPackageYml"
+                    "from seed import SeedPackageYml"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -174,10 +174,10 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedPackageYml"
+                        "from seed import AsyncSeedPackageYml"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedPackageYml(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedPackageYml(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

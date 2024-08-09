@@ -4,30 +4,43 @@ from __future__ import annotations
 
 import typing
 
+import pydantic
+
 from .....commons.types.language import Language
-from .....core.pydantic_utilities import pydantic_v1
-from .basic_custom_files import BasicCustomFiles
-from .file_info_v_2 import FileInfoV2
+from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from .basic_test_case_template import BasicTestCaseTemplate
 from .files import Files
+from .non_void_function_signature import NonVoidFunctionSignature
 
 
-class CustomFiles_Basic(BasicCustomFiles):
+class CustomFiles_Basic(UniversalBaseModel):
     type: typing.Literal["basic"] = "basic"
+    method_name: str = pydantic.Field(alias="methodName")
+    signature: NonVoidFunctionSignature
+    additional_files: typing.Dict[Language, Files] = pydantic.Field(alias="additionalFiles")
+    basic_test_case_template: BasicTestCaseTemplate = pydantic.Field(alias="basicTestCaseTemplate")
 
-    class Config:
-        frozen = True
-        smart_union = True
-        allow_population_by_field_name = True
-        populate_by_name = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
+            extra = pydantic.Extra.allow
 
 
-class CustomFiles_Custom(pydantic_v1.BaseModel):
-    type: typing.Literal["custom"] = "custom"
+class CustomFiles_Custom(UniversalBaseModel):
     value: typing.Dict[Language, Files]
+    type: typing.Literal["custom"] = "custom"
 
-    class Config:
-        frozen = True
-        smart_union = True
+    if IS_PYDANTIC_V2:
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(frozen=True)  # type: ignore # Pydantic v2
+    else:
+
+        class Config:
+            frozen = True
+            smart_union = True
 
 
 CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]

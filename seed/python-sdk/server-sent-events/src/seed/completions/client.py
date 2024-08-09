@@ -37,7 +37,7 @@ class CompletionsClient:
 
         Examples
         --------
-        from seed.client import SeedServerSentEvents
+        from seed import SeedServerSentEvents
 
         client = SeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",
@@ -92,7 +92,7 @@ class AsyncCompletionsClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedServerSentEvents
+        from seed import AsyncSeedServerSentEvents
 
         client = AsyncSeedServerSentEvents(
             base_url="https://yourhost.com/path/to/api",

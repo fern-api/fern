@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 
 #nullable enable
 
@@ -8,23 +7,23 @@ namespace SeedTrace;
 public record ExecutionSessionState
 {
     [JsonPropertyName("lastTimeContacted")]
-    public string? LastTimeContacted { get; init; }
+    public string? LastTimeContacted { get; set; }
 
     /// <summary>
     /// The auto-generated session id. Formatted as a uuid.
     /// </summary>
     [JsonPropertyName("sessionId")]
-    public required string SessionId { get; init; }
+    public required string SessionId { get; set; }
 
     [JsonPropertyName("isWarmInstance")]
-    public required bool IsWarmInstance { get; init; }
+    public required bool IsWarmInstance { get; set; }
 
     [JsonPropertyName("awsTaskId")]
-    public string? AwsTaskId { get; init; }
+    public string? AwsTaskId { get; set; }
 
     [JsonPropertyName("language")]
-    public required Language Language { get; init; }
+    public required Language Language { get; set; }
 
     [JsonPropertyName("status")]
-    public required ExecutionSessionStatus Status { get; init; }
+    public required ExecutionSessionStatus Status { get; set; }
 }

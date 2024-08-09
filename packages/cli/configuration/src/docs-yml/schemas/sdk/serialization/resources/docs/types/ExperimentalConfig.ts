@@ -14,10 +14,12 @@ export const ExperimentalConfig: core.serialization.ObjectSchema<
         "mdx-components",
         core.serialization.list(core.serialization.string()).optional()
     ),
+    disableStreamToggle: core.serialization.property("disable-stream-toggle", core.serialization.boolean().optional()),
 });
 
 export declare namespace ExperimentalConfig {
     interface Raw {
         "mdx-components"?: string[] | null;
+        "disable-stream-toggle"?: boolean | null;
     }
 }

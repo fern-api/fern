@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
 
 #nullable enable
 
@@ -12,8 +11,8 @@ public record TraceResponsesPage
     /// The offset is the id of the next trace response to load.
     /// </summary>
     [JsonPropertyName("offset")]
-    public int? Offset { get; init; }
+    public int? Offset { get; set; }
 
     [JsonPropertyName("traceResponses")]
-    public IEnumerable<TraceResponse> TraceResponses { get; init; } = new List<TraceResponse>();
+    public IEnumerable<TraceResponse> TraceResponses { get; set; } = new List<TraceResponse>();
 }

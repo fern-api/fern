@@ -166,7 +166,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                     this.generatedSdkClientClass
                 )
             }),
-            responseType: "streaming",
+            responseType: "sse",
             withCredentials: this.includeCredentialsOnCrossOriginRequests
         };
 

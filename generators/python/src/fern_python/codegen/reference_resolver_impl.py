@@ -68,7 +68,8 @@ class ReferenceResolverImpl(ReferenceResolver):
                     import_ = dataclasses.replace(
                         import_,
                         alias=construct_import_alias_for_collision(original_reference.import_),
-                    )
+                    )  # type: ignore
+                    # see https://github.com/python/mypy/pull/15962 for the mypy issue
 
                 self._original_import_to_resolved_import[original_reference.import_] = ResolvedImport(
                     import_=import_,
@@ -78,6 +79,7 @@ class ReferenceResolverImpl(ReferenceResolver):
     def resolve_reference(self, reference: AST.Reference) -> str:
         if self._original_import_to_resolved_import is None:
             raise RuntimeError("References have not yet been resolved.")
+
         resolved_import = (
             self._original_import_to_resolved_import[reference.import_] if reference.import_ is not None else None
         )
@@ -86,13 +88,21 @@ class ReferenceResolverImpl(ReferenceResolver):
             if resolved_import is not None
             else reference.qualified_name_excluding_import
         )
-        return ".".join(
+        resolved_reference = ".".join(
             self._construct_qualified_name_for_reference(
                 AST.Reference(
                     qualified_name_excluding_import=resolved_qualified_name_excluding_import,
                     import_=resolved_import.import_ if resolved_import is not None else None,
                 )
             )
+        )
+
+        # Here we string-reference a type reference if the import is marked for `if TYPE_CHECKING` or if the import
+        # is deferred until after the current declaration (e.g. for circular references when defining Pydantic models).
+        return (
+            f'"{resolved_reference}"'
+            if reference.import_if_type_checking or reference.must_import_after_current_declaration
+            else resolved_reference
         )
 
     def resolve_import(self, import_: AST.ReferenceImport) -> ResolvedImport:

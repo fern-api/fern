@@ -74,9 +74,50 @@ types:
     properties:
       queryParameterName: string
 
+  # Effectively pulled from the IR, since it matches the extension schema so closely
   OauthSecurityScheme:
+    docs: | 
+      Note that this config is expected to be "unresolved", for example, the OAS extension takes in an endpoint as `GET https://example.com/token`
+      whereas within the openapi-ir-to-fern package, we expect to consume and resolve this to a package path in the fern definition.
+    union:
+      clientCredentials: OAuthClientCredentials
+      unrecognized: FallbackOAuthScheme
+
+  FallbackOAuthScheme:
     properties:
       scopesEnum: optional<finalIr.EnumSchema>
+
+  OAuthClientCredentials:
+    properties:
+      clientIdEnvVar: optional<string>
+      clientSecretEnvVar: optional<string>
+      tokenPrefix: optional<string>
+      scopes: optional<list<string>>
+      tokenEndpoint: OAuthTokenEndpoint
+      refreshEndpoint: optional<OAuthRefreshEndpoint>
+  OAuthTokenEndpoint:
+    properties:
+      endpointReference: string
+      requestProperties: OAuthAccessTokenRequestProperties
+      responseProperties: OAuthAccessTokenResponseProperties
+  OAuthRefreshEndpoint:
+    properties:
+      endpointReference: string
+      requestProperties: OAuthRefreshTokenRequestProperties
+      responseProperties: OAuthAccessTokenResponseProperties
+  OAuthAccessTokenRequestProperties:
+    properties:
+      clientId: string
+      clientSecret: string
+      scopes: optional<string>
+  OAuthAccessTokenResponseProperties:
+    properties:
+      accessToken: string
+      expiresIn: optional<string>
+      refreshToken: optional<string>
+  OAuthRefreshTokenRequestProperties:
+    properties:
+      refreshToken: string
 
   StatusCode:
     type: integer

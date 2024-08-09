@@ -29,7 +29,7 @@ class SeedIdempotencyHeaders:
 
     Examples
     --------
-    from seed.client import SeedIdempotencyHeaders
+    from seed import SeedIdempotencyHeaders
 
     client = SeedIdempotencyHeaders(
         token="YOUR_TOKEN",
@@ -81,7 +81,7 @@ class AsyncSeedIdempotencyHeaders:
 
     Examples
     --------
-    from seed.client import AsyncSeedIdempotencyHeaders
+    from seed import AsyncSeedIdempotencyHeaders
 
     client = AsyncSeedIdempotencyHeaders(
         token="YOUR_TOKEN",

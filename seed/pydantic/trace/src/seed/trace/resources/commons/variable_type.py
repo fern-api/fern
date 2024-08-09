@@ -6,7 +6,7 @@ import typing
 
 import pydantic
 
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
 class VariableType_IntegerType(UniversalBaseModel):
@@ -65,9 +65,9 @@ class VariableType_CharType(UniversalBaseModel):
 
 
 class VariableType_ListType(UniversalBaseModel):
-    value_type: VariableType = pydantic.Field(alias="valueType")
-    is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength", default=None)
     type: typing.Literal["listType"] = "listType"
+    value_type: "VariableType" = pydantic.Field(alias="valueType")
+    is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength", default=None)
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -78,9 +78,9 @@ class VariableType_ListType(UniversalBaseModel):
 
 
 class VariableType_MapType(UniversalBaseModel):
-    key_type: VariableType = pydantic.Field(alias="keyType")
-    value_type: VariableType = pydantic.Field(alias="valueType")
     type: typing.Literal["mapType"] = "mapType"
+    key_type: "VariableType" = pydantic.Field(alias="keyType")
+    value_type: "VariableType" = pydantic.Field(alias="valueType")
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -135,3 +135,5 @@ VariableType = typing.Union[
     VariableType_SinglyLinkedListType,
     VariableType_DoublyLinkedListType,
 ]
+update_forward_refs(VariableType_ListType)
+update_forward_refs(VariableType_MapType)

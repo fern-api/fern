@@ -42,6 +42,7 @@ export class Reference {
      *     await client.reference.send({
      *         prompt: "You are a helpful assistant",
      *         stream: false,
+     *         context: "You're super wise",
      *         query: "What is the weather today"
      *     })
      */
@@ -62,6 +63,7 @@ export class Reference {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/literal",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/literal/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

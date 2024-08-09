@@ -4,8 +4,8 @@ import datetime
 import typing
 import uuid
 
-from seed.client import AsyncSeedExhaustive, SeedExhaustive
-from seed.types import ObjectWithOptionalField
+from seed import AsyncSeedExhaustive, SeedExhaustive
+from seed.types.object import ObjectWithOptionalField
 
 from .utilities import validate_response
 

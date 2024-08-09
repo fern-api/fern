@@ -34,7 +34,7 @@ class BasicAuthClient:
 
         Examples
         --------
-        from seed.client import SeedBasicAuth
+        from seed import SeedBasicAuth
 
         client = SeedBasicAuth(
             username="YOUR_USERNAME",
@@ -59,14 +59,14 @@ class BasicAuthClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def post_with_basic_auth(
-        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with basic auth scheme
 
         Parameters
         ----------
-        request : typing.Any
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -77,7 +77,7 @@ class BasicAuthClient:
 
         Examples
         --------
-        from seed.client import SeedBasicAuth
+        from seed import SeedBasicAuth
 
         client = SeedBasicAuth(
             username="YOUR_USERNAME",
@@ -127,7 +127,7 @@ class AsyncBasicAuthClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedBasicAuth
+        from seed import AsyncSeedBasicAuth
 
         client = AsyncSeedBasicAuth(
             username="YOUR_USERNAME",
@@ -158,14 +158,14 @@ class AsyncBasicAuthClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def post_with_basic_auth(
-        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+        self, *, request: typing.Optional[typing.Any] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> bool:
         """
         POST request with basic auth scheme
 
         Parameters
         ----------
-        request : typing.Any
+        request : typing.Optional[typing.Any]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -178,7 +178,7 @@ class AsyncBasicAuthClient:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedBasicAuth
+        from seed import AsyncSeedBasicAuth
 
         client = AsyncSeedBasicAuth(
             username="YOUR_USERNAME",

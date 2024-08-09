@@ -1,30 +1,20 @@
 from typing import Literal, Tuple
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources.config import GeneratorConfig
+from fern.generator_exec.config import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.generators.pydantic_model.type_declaration_handler.undiscriminated_union_generator import (
-    UndiscriminatedUnionSnippetGenerator,
-)
-from fern_python.generators.sdk import custom_config
-from fern_python.snippet import (
-    SnippetRegistry,
-    SnippetWriter,
-    TypeDeclarationSnippetGenerator,
-)
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
+from fern_python.snippet import SnippetRegistry, SnippetWriter
 from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import PydanticGeneratorContext, PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig
 from .type_declaration_handler import (
-    AliasSnippetGenerator,
-    DiscriminatedUnionSnippetGenerator,
-    EnumSnippetGenerator,
-    ObjectSnippetGenerator,
     TypeDeclarationHandler,
+    TypeDeclarationSnippetGeneratorBuilder,
 )
 from .type_declaration_referencer import TypeDeclarationReferencer
 
@@ -47,8 +37,13 @@ class PydanticModelGenerator(AbstractGenerator):
         generator_config: GeneratorConfig,
         ir: ir_types.IntermediateRepresentation,
     ) -> Tuple[str, ...]:
+        custom_config = PydanticModelCustomConfig.parse_obj(generator_config.custom_config or {})
+        if custom_config.package_name is not None:
+            return (custom_config.package_name,)
+
+        cleaned_org_name = self._clean_organization_name(generator_config.organization)
         return (
-            generator_config.organization,
+            cleaned_org_name,
             ir.api_name.snake_case.safe_name,
         )
 
@@ -63,7 +58,9 @@ class PydanticModelGenerator(AbstractGenerator):
         custom_config = PydanticModelCustomConfig.parse_obj(generator_config.custom_config or {})
         context = PydanticGeneratorContextImpl(
             ir=ir,
-            type_declaration_referencer=TypeDeclarationReferencer(),
+            type_declaration_referencer=TypeDeclarationReferencer(
+                use_typeddict_requests=custom_config.use_typeddict_requests, types=ir.types
+            ),
             generator_config=generator_config,
             project_module_path=self.get_relative_path_to_project_for_publish(
                 generator_config=generator_config,
@@ -71,6 +68,8 @@ class PydanticModelGenerator(AbstractGenerator):
             ),
             allow_skipping_validation=custom_config.skip_validation,
             allow_leveraging_defaults=custom_config.use_provided_defaults,
+            use_typeddict_requests=custom_config.use_typeddict_requests,
+            use_str_enums=custom_config.use_str_enums,
         )
         snippet_registry = SnippetRegistry()
         snippet_writer = self._build_snippet_writer(
@@ -109,6 +108,9 @@ class PydanticModelGenerator(AbstractGenerator):
                 snippet_writer=snippet_writer,
             )
 
+    def _should_generate_typedict(self, context: PydanticGeneratorContext, type_: ir_types.Type) -> bool:
+        return context.use_typeddict_requests and FernTypedDict.can_be_typeddict(type_, context.ir.types)
+
     def _generate_type(
         self,
         project: Project,
@@ -119,16 +121,41 @@ class PydanticModelGenerator(AbstractGenerator):
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
     ) -> None:
-        filepath = context.get_filepath_for_type_id(type_id=type.name.type_id)
+        # TODO: Actually flag typeddicts if they're request object ONLY, right now we just always create
+        # the typeddict for any object. This is fine for now, but we should be able to filter the types down.
+
+        # Write the typeddict request
+        if self._should_generate_typedict(context=context, type_=type.shape):
+            typeddict_filepath = context.get_filepath_for_type_id(type_id=type.name.type_id, as_request=True)
+            typeddict_source_file = SourceFileFactory.create(
+                project=project, filepath=typeddict_filepath, generator_exec_wrapper=generator_exec_wrapper
+            )
+
+            typeddict_handler = TypeDeclarationHandler(
+                declaration=type,
+                context=context,
+                custom_config=custom_config,
+                source_file=typeddict_source_file,
+                snippet_writer=snippet_writer,
+                generate_typeddict_request=True,
+            )
+            typeddict_handler.run()
+
+            project.write_source_file(source_file=typeddict_source_file, filepath=typeddict_filepath)
+
+        # Write the pydantic model
+        filepath = context.get_filepath_for_type_id(type_id=type.name.type_id, as_request=False)
         source_file = SourceFileFactory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
+
         type_declaration_handler = TypeDeclarationHandler(
             declaration=type,
             context=context,
             custom_config=custom_config,
             source_file=source_file,
             snippet_writer=snippet_writer,
+            generate_typeddict_request=False,
         )
         generated_type = type_declaration_handler.run()
         if generated_type.snippet is not None:
@@ -161,30 +188,11 @@ class PydanticModelGenerator(AbstractGenerator):
             improved_imports=improved_imports,
         )
 
-        type_declaration_snippet_generator = TypeDeclarationSnippetGenerator(
-            alias=lambda example: AliasSnippetGenerator(
-                snippet_writer=snippet_writer,
-                example=example,
-            ).generate_snippet(),
-            enum=lambda name, example: EnumSnippetGenerator(
-                snippet_writer=snippet_writer, name=name, example=example, use_str_enums=use_str_enums
-            ).generate_snippet(),
-            object=lambda name, example: ObjectSnippetGenerator(
-                snippet_writer=snippet_writer,
-                name=name,
-                example=example,
-            ).generate_snippet(),
-            discriminated_union=lambda name, example: DiscriminatedUnionSnippetGenerator(
-                snippet_writer=snippet_writer,
-                name=name,
-                example=example,
-            ).generate_snippet(),
-            undiscriminated_union=lambda name, example: UndiscriminatedUnionSnippetGenerator(
-                snippet_writer=snippet_writer,
-                name=name,
-                example=example,
-            ).generate_snippet(),
+        builder = TypeDeclarationSnippetGeneratorBuilder(
+            context=context,
+            snippet_writer=snippet_writer,
         )
+        type_declaration_snippet_generator = builder.get_generator()
 
         snippet_writer._type_declaration_snippet_generator = type_declaration_snippet_generator
 

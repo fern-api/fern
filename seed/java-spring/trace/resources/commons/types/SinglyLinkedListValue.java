@@ -94,7 +94,7 @@ public final class SinglyLinkedListValue {
     }
 
     public Builder head(NodeId head) {
-      this.head = Optional.of(head);
+      this.head = Optional.ofNullable(head);
       return this;
     }
 

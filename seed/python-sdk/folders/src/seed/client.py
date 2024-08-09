@@ -32,7 +32,7 @@ class SeedApi:
 
     Examples
     --------
-    from seed.client import SeedApi
+    from seed import SeedApi
 
     client = SeedApi(
         base_url="https://yourhost.com/path/to/api",
@@ -73,7 +73,7 @@ class SeedApi:
 
         Examples
         --------
-        from seed.client import SeedApi
+        from seed import SeedApi
 
         client = SeedApi(
             base_url="https://yourhost.com/path/to/api",
@@ -110,7 +110,7 @@ class AsyncSeedApi:
 
     Examples
     --------
-    from seed.client import AsyncSeedApi
+    from seed import AsyncSeedApi
 
     client = AsyncSeedApi(
         base_url="https://yourhost.com/path/to/api",
@@ -153,7 +153,7 @@ class AsyncSeedApi:
         --------
         import asyncio
 
-        from seed.client import AsyncSeedApi
+        from seed import AsyncSeedApi
 
         client = AsyncSeedApi(
             base_url="https://yourhost.com/path/to/api",

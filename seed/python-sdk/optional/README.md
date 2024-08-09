@@ -16,7 +16,7 @@ pip install fern_optional
 Instantiate and use the client with the following:
 
 ```python
-from seed.client import SeedObjectsWithImports
+from seed import SeedObjectsWithImports
 
 client = SeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
@@ -33,7 +33,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed.client import AsyncSeedObjectsWithImports
+from seed import AsyncSeedObjectsWithImports
 
 client = AsyncSeedObjectsWithImports(
     base_url="https://yourhost.com/path/to/api",
@@ -55,7 +55,7 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```python
-from .api_error import ApiError
+from seed.core.api_error import ApiError
 
 try:
     client.optional.send_optional_body()
@@ -82,7 +82,7 @@ Use the `max_retries` request option to configure this behavior.
 
 ```python
 client.optional.send_optional_body({
-    max_retries=1
+    "max_retries": 1
 })
 ```
 
@@ -92,14 +92,17 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed.client import SeedObjectsWithImports
+from seed import SeedObjectsWithImports
 
-client = SeedObjectsWithImports(..., { timeout=20.0 }, )
+client = SeedObjectsWithImports(
+    ...,
+    timeout=20.0,
+)
 
 
 # Override timeout for a specific method
 client.optional.send_optional_body({
-    timeout_in_seconds=1
+    "timeout_in_seconds": 1
 })
 ```
 
@@ -109,11 +112,11 @@ You can override the `httpx` client to customize it for your use-case. Some comm
 and transports.
 ```python
 import httpx
-from seed.client import SeedObjectsWithImports
+from seed import SeedObjectsWithImports
 
 client = SeedObjectsWithImports(
     ...,
-    http_client=httpx.Client(
+    httpx_client=httpx.Client(
         proxies="http://my.test.proxy.example.com",
         transport=httpx.HTTPTransport(local_address="0.0.0.0"),
     ),

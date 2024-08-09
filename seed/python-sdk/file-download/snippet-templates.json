@@ -13,10 +13,10 @@
         "snippetTemplate": {
             "clientInstantiation": {
                 "imports": [
-                    "from seed.client import SeedFileDownload"
+                    "from seed import SeedFileDownload"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedFileDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedFileDownload(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -35,10 +35,10 @@
             "async": {
                 "clientInstantiation": {
                     "imports": [
-                        "from seed.client import AsyncSeedFileDownload"
+                        "from seed import AsyncSeedFileDownload"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedFileDownload(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedFileDownload(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

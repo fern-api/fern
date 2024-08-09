@@ -10,10 +10,17 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
     core.serialization
         .union("type", {
             integer: core.serialization.lazyObject(async () => (await import("../../..")).IntegerType),
-            double: core.serialization.lazyObject(async () => (await import("../../..")).DoubleType),
-            string: core.serialization.lazyObject(async () => (await import("../../..")).StringType),
-            boolean: core.serialization.lazyObject(async () => (await import("../../..")).BooleanType),
             long: core.serialization.lazyObject(async () => (await import("../../..")).LongType),
+            uint: core.serialization.lazyObject(async () => (await import("../../..")).UintType),
+            uint64: core.serialization.lazyObject(async () => (await import("../../..")).Uint64Type),
+            float: core.serialization.lazyObject(async () => (await import("../../..")).FloatType),
+            double: core.serialization.lazyObject(async () => (await import("../../..")).DoubleType),
+            boolean: core.serialization.lazyObject(async () => (await import("../../..")).BooleanType),
+            string: core.serialization.lazyObject(async () => (await import("../../..")).StringType),
+            date: core.serialization.lazyObject(async () => (await import("../../..")).DateType),
+            dateTime: core.serialization.lazyObject(async () => (await import("../../..")).DateTimeType),
+            uuid: core.serialization.lazyObject(async () => (await import("../../..")).UuidType),
+            base64: core.serialization.lazyObject(async () => (await import("../../..")).Base64Type),
             bigInteger: core.serialization.lazyObject(async () => (await import("../../..")).BigIntegerType),
         })
         .transform<FernIr.PrimitiveTypeV2>({
@@ -21,14 +28,28 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
                 switch (value.type) {
                     case "integer":
                         return FernIr.PrimitiveTypeV2.integer(value);
-                    case "double":
-                        return FernIr.PrimitiveTypeV2.double(value);
-                    case "string":
-                        return FernIr.PrimitiveTypeV2.string(value);
-                    case "boolean":
-                        return FernIr.PrimitiveTypeV2.boolean(value);
                     case "long":
                         return FernIr.PrimitiveTypeV2.long(value);
+                    case "uint":
+                        return FernIr.PrimitiveTypeV2.uint(value);
+                    case "uint64":
+                        return FernIr.PrimitiveTypeV2.uint64(value);
+                    case "float":
+                        return FernIr.PrimitiveTypeV2.float(value);
+                    case "double":
+                        return FernIr.PrimitiveTypeV2.double(value);
+                    case "boolean":
+                        return FernIr.PrimitiveTypeV2.boolean(value);
+                    case "string":
+                        return FernIr.PrimitiveTypeV2.string(value);
+                    case "date":
+                        return FernIr.PrimitiveTypeV2.date(value);
+                    case "dateTime":
+                        return FernIr.PrimitiveTypeV2.dateTime(value);
+                    case "uuid":
+                        return FernIr.PrimitiveTypeV2.uuid(value);
+                    case "base64":
+                        return FernIr.PrimitiveTypeV2.base64(value);
                     case "bigInteger":
                         return FernIr.PrimitiveTypeV2.bigInteger(value);
                     default:
@@ -41,30 +62,65 @@ export const PrimitiveTypeV2: core.serialization.Schema<serializers.PrimitiveTyp
 export declare namespace PrimitiveTypeV2 {
     type Raw =
         | PrimitiveTypeV2.Integer
-        | PrimitiveTypeV2.Double
-        | PrimitiveTypeV2.String
-        | PrimitiveTypeV2.Boolean
         | PrimitiveTypeV2.Long
+        | PrimitiveTypeV2.Uint
+        | PrimitiveTypeV2.Uint64
+        | PrimitiveTypeV2.Float
+        | PrimitiveTypeV2.Double
+        | PrimitiveTypeV2.Boolean
+        | PrimitiveTypeV2.String
+        | PrimitiveTypeV2.Date
+        | PrimitiveTypeV2.DateTime
+        | PrimitiveTypeV2.Uuid
+        | PrimitiveTypeV2.Base64
         | PrimitiveTypeV2.BigInteger;
 
     interface Integer extends serializers.IntegerType.Raw {
         type: "integer";
     }
 
-    interface Double extends serializers.DoubleType.Raw {
-        type: "double";
+    interface Long extends serializers.LongType.Raw {
+        type: "long";
     }
 
-    interface String extends serializers.StringType.Raw {
-        type: "string";
+    interface Uint extends serializers.UintType.Raw {
+        type: "uint";
+    }
+
+    interface Uint64 extends serializers.Uint64Type.Raw {
+        type: "uint64";
+    }
+
+    interface Float extends serializers.FloatType.Raw {
+        type: "float";
+    }
+
+    interface Double extends serializers.DoubleType.Raw {
+        type: "double";
     }
 
     interface Boolean extends serializers.BooleanType.Raw {
         type: "boolean";
     }
 
-    interface Long extends serializers.LongType.Raw {
-        type: "long";
+    interface String extends serializers.StringType.Raw {
+        type: "string";
+    }
+
+    interface Date extends serializers.DateType.Raw {
+        type: "date";
+    }
+
+    interface DateTime extends serializers.DateTimeType.Raw {
+        type: "dateTime";
+    }
+
+    interface Uuid extends serializers.UuidType.Raw {
+        type: "uuid";
+    }
+
+    interface Base64 extends serializers.Base64Type.Raw {
+        type: "base64";
     }
 
     interface BigInteger extends serializers.BigIntegerType.Raw {

@@ -1,4 +1,4 @@
-using SeedAuthEnvironmentVariables;
+using System;
 using SeedAuthEnvironmentVariables.Core;
 
 #nullable enable
@@ -25,6 +25,7 @@ public partial class SeedAuthEnvironmentVariablesClient
                 { "X-FERN-API-KEY", apiKey },
                 { "X-Fern-Language", "C#" },
             },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

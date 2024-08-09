@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExhaustive.Core;
 
 #nullable enable
@@ -20,6 +19,7 @@ public class UnionClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/union",
                 Body = request
@@ -28,7 +28,7 @@ public class UnionClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<object>(responseBody)!;
+            return JsonUtils.Deserialize<object>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

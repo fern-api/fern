@@ -86,8 +86,6 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -103,8 +101,6 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -214,8 +210,6 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -231,8 +225,6 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",

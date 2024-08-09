@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using SeedExhaustive.Core;
 
 #nullable enable
@@ -23,6 +22,7 @@ public class NoAuthClient
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/no-auth",
                 Body = request
@@ -31,7 +31,7 @@ public class NoAuthClient
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody)!;
+            return JsonUtils.Deserialize<bool>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

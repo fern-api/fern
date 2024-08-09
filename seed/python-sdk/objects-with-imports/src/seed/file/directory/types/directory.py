@@ -14,8 +14,8 @@ class Directory(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import File
-    from seed.file import Directory
+    from seed.file import File
+    from seed.file.directory import Directory
 
     Directory(
         name="root",
@@ -43,7 +43,7 @@ class Directory(UniversalBaseModel):
 
     name: str
     files: typing.Optional[typing.List[File]] = None
-    directories: typing.Optional[typing.List[Directory]] = None
+    directories: typing.Optional[typing.List["Directory"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

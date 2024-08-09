@@ -13,7 +13,7 @@ class Tree(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples import Node, Tree
+    from seed.examples.resources import Node, Tree
 
     Tree(
         nodes=[
@@ -27,7 +27,7 @@ class Tree(UniversalBaseModel):
     )
     """
 
-    nodes: typing.Optional[typing.List[Node]] = None
+    nodes: typing.Optional[typing.List["Node"]] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

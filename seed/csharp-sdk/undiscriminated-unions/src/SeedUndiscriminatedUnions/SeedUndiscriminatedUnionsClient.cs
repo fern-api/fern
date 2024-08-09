@@ -1,4 +1,4 @@
-using SeedUndiscriminatedUnions;
+using System;
 using SeedUndiscriminatedUnions.Core;
 
 #nullable enable
@@ -13,6 +13,7 @@ public partial class SeedUndiscriminatedUnionsClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Union = new UnionClient(_client);

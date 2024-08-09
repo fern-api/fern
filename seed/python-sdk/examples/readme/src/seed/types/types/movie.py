@@ -13,7 +13,7 @@ class Movie(UniversalBaseModel):
     """
     Examples
     --------
-    from seed import Movie
+    from seed.types import Movie
 
     Movie(
         id="movie-c06a4ad7",
@@ -42,7 +42,7 @@ class Movie(UniversalBaseModel):
     type: typing.Literal["movie"] = "movie"
     tag: Tag
     book: typing.Optional[str] = None
-    metadata: typing.Dict[str, typing.Any]
+    metadata: typing.Dict[str, typing.Optional[typing.Any]]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)  # type: ignore # Pydantic v2

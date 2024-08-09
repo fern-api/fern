@@ -50,6 +50,9 @@ jobs:
           cd tests/utils/example_models
           fern generate --group dummy_types --local
 
+          cd ../typeddict_models
+          fern generate --group dummy_td_types --local
+
       - name: Install Dependencies - Pydantic V1
         working-directory: ./generators/python
         run: |
@@ -58,18 +61,16 @@ jobs:
           poetry install
       - name: Unit Test - Pydantic V1
         working-directory: ./generators/python
-        run: poetry run pytest -sv
+        # We have to ignore these tests as they pull in the custom config which uses a model validator,
+        # the syntax of which is not valid in Pydantic V1, now that we've moved to V2.
+        run: poetry run pytest -sv --ignore ./tests/utils/casing --ignore ./tests/sdk
 
       - name: Install Dependencies - Pydantic V2
         working-directory: ./generators/python
         run: |
-          poetry remove fern-fern-generator-exec-sdk
-          poetry add pydantic=^2.8
+          poetry add pydantic=^2.8.2
           poetry lock
           poetry install
       - name: Unit Test - Pydantic V2
         working-directory: ./generators/python
-        # Run specific tests:
-        #   Some tests pull in dependencies that have older versions of internal SDKs installed, which are
-        #   incompatible with Pydantic V2 outright (specifically the use of __root__ in unions with utils).
-        run: poetry run pytest -sv ./tests/utils/ --ignore ./tests/utils/casing
+        run: poetry run pytest -sv

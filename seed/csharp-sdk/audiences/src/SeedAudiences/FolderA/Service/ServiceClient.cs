@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using SeedAudiences.Core;
-using SeedAudiences.FolderA;
 
 #nullable enable
 
@@ -16,16 +15,34 @@ public class ServiceClient
         _client = client;
     }
 
-    public async Task<Response> GetDirectThreadAsync()
+    public async Task<Response> GetDirectThreadAsync(RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "",
+                Options = options
+            }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Response>(responseBody)!;
+            try
+            {
+                return JsonUtils.Deserialize<Response>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedAudiencesException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedAudiencesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

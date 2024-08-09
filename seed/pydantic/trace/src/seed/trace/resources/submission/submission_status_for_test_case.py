@@ -13,9 +13,9 @@ from .test_case_result_with_stdout import TestCaseResultWithStdout
 
 
 class SubmissionStatusForTestCase_Graded(UniversalBaseModel):
+    type: typing.Literal["graded"] = "graded"
     result: TestCaseResult
     stdout: str
-    type: typing.Literal["graded"] = "graded"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
@@ -31,9 +31,9 @@ class SubmissionStatusForTestCase_GradedV2(UniversalBaseModel):
 
 
 class SubmissionStatusForTestCase_Traced(UniversalBaseModel):
+    type: typing.Literal["traced"] = "traced"
     result: TestCaseResultWithStdout
     trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
-    type: typing.Literal["traced"] = "traced"
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

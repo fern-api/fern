@@ -13,6 +13,7 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
         enum: (enum_) => {
             return {
                 type: "enum",
+                default: enum_.default != null ? enum_.default.name.wireValue : undefined,
                 values: enum_.values.map(
                     (value): APIV1Write.EnumValue => ({
                         description: value.docs ?? undefined,
@@ -176,6 +177,13 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                     integer: () => {
                         return convertInteger(primitive.v2);
                     },
+                    float: () => {
+                        // TODO: Add support for float types in FDR. We render them as double for now
+                        // (they have the same JSON representation).
+                        return {
+                            type: "double"
+                        };
+                    },
                     double: () => {
                         return convertDouble(primitive.v2);
                     },
@@ -213,9 +221,18 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                         };
                     },
                     bigInteger: () => {
-                        // TODO(amckinney): Add support for bigInteger in FDR.
                         return {
-                            type: "string"
+                            type: "bigInteger"
+                        };
+                    },
+                    uint: () => {
+                        return {
+                            type: "uint"
+                        };
+                    },
+                    uint64: () => {
+                        return {
+                            type: "uint64"
                         };
                     },
                     _other: () => {

@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, cast
 
-from fern.generator_exec.resources import (
+from fern.generator_exec import (
     BasicLicense,
     GithubOutputMode,
     LicenseConfig,
