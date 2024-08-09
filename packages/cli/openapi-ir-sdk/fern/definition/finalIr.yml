@@ -195,6 +195,7 @@ types:
       offset: string
       results: string
       step: optional<string>
+      hasNextPage: optional<string>
 
   CustomCodeSample:
     availability: in-development
