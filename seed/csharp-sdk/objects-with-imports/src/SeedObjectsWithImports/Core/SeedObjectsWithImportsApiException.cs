@@ -1,7 +1,3 @@
-using SeedObjectsWithImports.Core;
-
-#nullable enable
-
 namespace SeedObjectsWithImports.Core;
 
 /// <summary>

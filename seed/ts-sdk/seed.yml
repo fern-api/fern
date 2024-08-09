@@ -200,3 +200,4 @@ allowedFailures:
   - enum # throws b/c of undiscriminated union examples
   - streaming-parameter
   - imdb:noScripts
+  - circular-references

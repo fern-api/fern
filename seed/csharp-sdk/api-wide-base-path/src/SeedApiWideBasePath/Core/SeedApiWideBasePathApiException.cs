@@ -1,7 +1,3 @@
-using SeedApiWideBasePath.Core;
-
-#nullable enable
-
 namespace SeedApiWideBasePath.Core;
 
 /// <summary>

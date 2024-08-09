@@ -1,6 +1,6 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { TypeId } from "@fern-fern/ir-sdk/api";
+import { FernFilepath, TypeId } from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 
 export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelCustomConfigSchema> {
@@ -32,5 +32,9 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
 
     public getExtraDependencies(): Record<string, string> {
         return {};
+    }
+
+    override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
+        return fernFilepath.packagePath.map((segmentName) => segmentName.pascalCase.safeName);
     }
 }

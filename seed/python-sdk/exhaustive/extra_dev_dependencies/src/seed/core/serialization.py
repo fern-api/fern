@@ -25,7 +25,10 @@ class FieldMetadata:
 
 
 def convert_and_respect_annotation_metadata(
-    *, object_: typing.Any, annotation: typing.Any, inner_type: typing.Optional[typing.Any] = None
+    *,
+    object_: typing.Any,
+    annotation: typing.Any,
+    inner_type: typing.Optional[typing.Any] = None,
 ) -> typing.Any:
     """
     Respect the metadata annotations on a field, such as aliasing. This function effectively

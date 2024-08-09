@@ -1,7 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
 using SeedTrace.Core;
-using SeedTrace.V2;
 
 #nullable enable
 

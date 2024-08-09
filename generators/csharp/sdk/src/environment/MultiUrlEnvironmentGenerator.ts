@@ -73,7 +73,9 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
 
         return new CSharpFile({
             clazz: class_,
-            directory: RelativeFilePath.of(this.context.getCoreDirectory())
+            directory: RelativeFilePath.of(this.context.getCoreDirectory()),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            namespace: this.context.getNamespace()
         });
     }
 

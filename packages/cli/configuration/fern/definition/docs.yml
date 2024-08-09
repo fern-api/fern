@@ -20,6 +20,14 @@ types:
       - jvm
       - ts
       - js
+
+  AnalyticsConfig:
+    properties:
+      segment: optional<SegmentConfig>
+
+  SegmentConfig:
+    properties:
+      write-key: string
       
   DocsConfiguration:
     properties:
@@ -27,6 +35,11 @@ types:
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
+      analytics: 
+        type: optional<AnalyticsConfig>
+        docs: |
+          The `analytics` object allows you to configure analytics for your docs site.
+          Currently, only Segment is supported.
 
       # navigation
       tabs: optional<map<TabId, TabConfig>>

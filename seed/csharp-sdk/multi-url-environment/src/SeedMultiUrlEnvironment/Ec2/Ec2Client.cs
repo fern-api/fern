@@ -1,5 +1,4 @@
 using System.Net.Http;
-using SeedMultiUrlEnvironment;
 using SeedMultiUrlEnvironment.Core;
 
 #nullable enable

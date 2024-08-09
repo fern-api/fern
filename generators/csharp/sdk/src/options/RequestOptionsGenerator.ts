@@ -42,7 +42,9 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         return new CSharpFile({
             clazz: class_,
-            directory: this.context.getCoreDirectory()
+            directory: this.context.getCoreDirectory(),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            namespace: this.context.getNamespace()
         });
     }
 

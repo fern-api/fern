@@ -38,6 +38,7 @@ class ReadmeSnippetBuilder:
         endpoint_metadata: EndpointMetadataCollector,
         generated_root_client: GeneratedRootClient,
         api_error_reference: AST.ClassReference,
+        source_file_factory: SourceFileFactory,
         pagination_enabled: Union[bool, None] = False,
     ):
         self._ir = ir
@@ -47,6 +48,8 @@ class ReadmeSnippetBuilder:
         # is a recipe of disaster given how easy it is to forget to check these
         # flags and how many places need this context.
         self._pagination_enabled = pagination_enabled
+
+        self._source_file_factory = source_file_factory
 
         self._root_client = generated_root_client
         self._endpoint_metadata = endpoint_metadata
@@ -99,7 +102,7 @@ class ReadmeSnippetBuilder:
         self,
         expr: AST.Expression,
     ) -> str:
-        snippet = SourceFileFactory.create_snippet()
+        snippet = self._source_file_factory.create_snippet()
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet.to_str()

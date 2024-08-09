@@ -1,7 +1,3 @@
-using SeedPlainText.Core;
-
-#nullable enable
-
 namespace SeedPlainText.Core;
 
 /// <summary>

@@ -16,7 +16,7 @@
                     "from seed import SeedEnum"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -187,7 +187,7 @@
                         "from seed import AsyncSeedEnum"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -370,7 +370,7 @@
                     "from seed import SeedEnum"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -541,7 +541,7 @@
                         "from seed import AsyncSeedEnum"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -724,7 +724,7 @@
                     "from seed import SeedEnum"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -895,7 +895,7 @@
                         "from seed import AsyncSeedEnum"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -1078,7 +1078,7 @@
                     "from seed import SeedEnum"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -1249,7 +1249,7 @@
                         "from seed import AsyncSeedEnum"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

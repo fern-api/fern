@@ -1,7 +1,3 @@
-using SeedOauthClientCredentialsEnvironmentVariables.Core;
-
-#nullable enable
-
 namespace SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 /// <summary>

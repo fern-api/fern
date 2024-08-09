@@ -27,14 +27,29 @@ export interface SingleNamespaceAPIDefinition {
 export interface APIDefinitionSettings {
     shouldUseTitleAsName: boolean | undefined;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean | undefined;
+    asyncApiMessageNaming: "v1" | "v2" | undefined;
 }
 
 export interface APIDefinitionLocation {
-    path: string;
+    schema: APIDefinitionSchema;
     origin: string | undefined;
     overrides: string | undefined;
     audiences: string[] | undefined;
     settings: APIDefinitionSettings | undefined;
+}
+
+export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema;
+
+export interface ProtoAPIDefinitionSchema {
+    type: "protobuf";
+    root: string;
+    target: string;
+    localGeneration: boolean;
+}
+
+export interface OSSAPIDefinitionSchema {
+    type: "oss";
+    path: string;
 }
 
 export interface GeneratorGroup {

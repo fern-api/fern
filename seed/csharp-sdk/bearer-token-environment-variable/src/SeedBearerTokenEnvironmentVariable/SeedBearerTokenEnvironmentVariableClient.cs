@@ -1,5 +1,4 @@
 using System;
-using SeedBearerTokenEnvironmentVariable;
 using SeedBearerTokenEnvironmentVariable.Core;
 
 #nullable enable

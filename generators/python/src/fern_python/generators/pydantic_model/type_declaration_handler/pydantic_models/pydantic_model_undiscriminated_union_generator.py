@@ -38,7 +38,12 @@ class PydanticModelUndiscriminatedUnionGenerator(AbstractUndiscriminatedUnionGen
         self._source_file.add_declaration(
             AST.TypeAliasDeclaration(
                 type_hint=AST.TypeHint.union(
-                    *(self._context.get_type_hint_for_type_reference(member.type) for member in self._union.members)
+                    *(
+                        self._context.get_type_hint_for_type_reference(
+                            member.type, as_if_type_checking_import=member.is_circular_reference
+                        )
+                        for member in self._members
+                    )
                 ),
                 name=self._context.get_class_name_for_type_id(self._name.type_id, as_request=False),
             ),

@@ -8,6 +8,7 @@ from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 from ..core_utilities import CoreUtilities
 
@@ -22,6 +23,7 @@ class PydanticGeneratorContext(ABC):
         allow_skipping_validation: bool,
         use_typeddict_requests: bool,
         use_str_enums: bool,
+        skip_formatting: bool,
     ):
         self.ir = ir
         self.generator_config = generator_config
@@ -32,6 +34,7 @@ class PydanticGeneratorContext(ABC):
         self.use_typeddict_requests = use_typeddict_requests
         self.type_declaration_referencer = type_declaration_referencer
         self.use_str_enums = use_str_enums
+        self.source_file_factory = SourceFileFactory(should_format=not skip_formatting)
 
     @abstractmethod
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
@@ -68,6 +71,12 @@ class PydanticGeneratorContext(ABC):
 
     @abstractmethod
     def does_type_reference_other_type(self, type_id: ir_types.TypeId, other_type_id: ir_types.TypeId) -> bool:
+        ...
+
+    @abstractmethod
+    def does_type_reference_reference_other_type(
+        self, type_reference: ir_types.TypeReference, other_type_id: ir_types.TypeId
+    ) -> bool:
         ...
 
     @abstractmethod

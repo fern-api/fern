@@ -1,7 +1,3 @@
-using SeedUnions.Core;
-
-#nullable enable
-
 namespace SeedUnions.Core;
 
 /// <summary>

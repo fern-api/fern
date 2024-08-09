@@ -59,7 +59,7 @@ export async function parseDocsConfiguration({
         colors,
         typography: rawTypography,
         layout,
-
+        analytics: analyticsConfig,
         /* integrations */
         integrations,
 
@@ -142,6 +142,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout),
+        analyticsConfig: rawDocsConfiguration.analytics,
 
         /* integrations */
         integrations,

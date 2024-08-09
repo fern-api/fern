@@ -1,4 +1,6 @@
 export * from "./ProgrammingLanguage";
+export * from "./AnalyticsConfig";
+export * from "./SegmentConfig";
 export * from "./DocsConfiguration";
 export * from "./TabId";
 export * from "./TabConfig";

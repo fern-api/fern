@@ -27,11 +27,15 @@ if IS_PYDANTIC_V2:
     from pydantic.v1.typing import (  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
         get_args as get_args,
     )
-    from pydantic.v1.typing import get_origin as get_origin  # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
+        get_origin as get_origin,
+    )
     from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
         is_literal_type as is_literal_type,
     )
-    from pydantic.v1.typing import is_union as is_union  # pyright: ignore[reportMissingImports] # Pydantic v2
+    from pydantic.v1.typing import (  # pyright: ignore[reportMissingImports] # Pydantic v2
+        is_union as is_union,
+    )
     from pydantic.v1.fields import ModelField as ModelField  # type: ignore # pyright: ignore[reportMissingImports] # Pydantic v2
 else:
     from pydantic.datetime_parse import parse_date as parse_date  # type: ignore # Pydantic v1
@@ -90,15 +94,27 @@ class UniversalBaseModel(pydantic.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
     def json(self, **kwargs: typing.Any) -> str:
-        kwargs_with_defaults: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
+        kwargs_with_defaults: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
         if IS_PYDANTIC_V2:
             return super().model_dump_json(**kwargs_with_defaults)  # type: ignore # Pydantic v2
         else:
             return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        kwargs_with_defaults_exclude_unset: typing.Any = {"by_alias": True, "exclude_unset": True, **kwargs}
-        kwargs_with_defaults_exclude_none: typing.Any = {"by_alias": True, "exclude_none": True, **kwargs}
+        kwargs_with_defaults_exclude_unset: typing.Any = {
+            "by_alias": True,
+            "exclude_unset": True,
+            **kwargs,
+        }
+        kwargs_with_defaults_exclude_none: typing.Any = {
+            "by_alias": True,
+            "exclude_none": True,
+            **kwargs,
+        }
 
         if IS_PYDANTIC_V2:
             return deep_union_pydantic_dicts(
@@ -107,7 +123,8 @@ class UniversalBaseModel(pydantic.BaseModel):
             )
         else:
             return deep_union_pydantic_dicts(
-                super().dict(**kwargs_with_defaults_exclude_unset), super().dict(**kwargs_with_defaults_exclude_none)
+                super().dict(**kwargs_with_defaults_exclude_unset),
+                super().dict(**kwargs_with_defaults_exclude_none),
             )
 
 
@@ -123,9 +140,9 @@ else:
 
 
 def encode_by_type(o: typing.Any) -> typing.Any:
-    encoders_by_class_tuples: typing.Dict[
-        typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]
-    ] = defaultdict(tuple)
+    encoders_by_class_tuples: typing.Dict[typing.Callable[[typing.Any], typing.Any], typing.Tuple[typing.Any, ...]] = (
+        defaultdict(tuple)
+    )
     for type_, encoder in encoders_by_type.items():
         encoders_by_class_tuples[encoder] += (type_,)
 
@@ -136,18 +153,20 @@ def encode_by_type(o: typing.Any) -> typing.Any:
             return encoder(o)
 
 
-def update_forward_refs(model: typing.Type["Model"], **localns: typing.Any) -> None:
+def update_forward_refs(model: typing.Type["Model"]) -> None:
     if IS_PYDANTIC_V2:
-        model.model_rebuild(force=True, raise_errors=False)  # type: ignore # Pydantic v2
+        model.model_rebuild(raise_errors=False)  # type: ignore # Pydantic v2
     else:
-        model.update_forward_refs(**localns)
+        model.update_forward_refs()
 
 
 # Mirrors Pydantic's internal typing
 AnyCallable = typing.Callable[..., typing.Any]
 
 
-def universal_root_validator(pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_root_validator(
+    pre: bool = False,
+) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         @wraps(func)
         def validate(*args: typing.Any, **kwargs: typing.Any) -> AnyCallable:

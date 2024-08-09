@@ -1,5 +1,4 @@
 using System;
-using SeedQueryParameters;
 using SeedQueryParameters.Core;
 
 #nullable enable

@@ -1,7 +1,3 @@
-using SeedExtends.Core;
-
-#nullable enable
-
 namespace SeedExtends.Core;
 
 /// <summary>

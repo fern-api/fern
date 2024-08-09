@@ -13,6 +13,7 @@ export interface Document {
 
 export interface Message {
     messageId: string;
+    name?: string;
     summary?: string;
     payload: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
 }

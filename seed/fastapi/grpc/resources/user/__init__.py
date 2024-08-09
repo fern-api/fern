@@ -3,4 +3,10 @@
 from .service import CreateUserRequest
 from .types import CreateUserResponse, Metadata, MetadataValue, User
 
-__all__ = ["CreateUserRequest", "CreateUserResponse", "Metadata", "MetadataValue", "User"]
+__all__ = [
+    "CreateUserRequest",
+    "CreateUserResponse",
+    "Metadata",
+    "MetadataValue",
+    "User",
+]

@@ -168,7 +168,7 @@ export class ApiReferenceNodeConverter {
         const maybeFullSlug =
             pkg.overviewAbsolutePath != null ? this.markdownFilesToFullSlugs.get(pkg.overviewAbsolutePath) : undefined;
 
-        const subpackage = this.#holder.getSubpackage(pkg.package);
+        const subpackage = this.#holder.getSubpackageByIdOrLocator(pkg.package);
 
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
@@ -263,17 +263,21 @@ export class ApiReferenceNodeConverter {
 
         const nodeId = idgen.append(`section:${kebabCase(section.title)}`);
 
-        const subpackages = section.referencedSubpackages.filter((subpackageId) => {
-            const subpackage = this.#holder.getSubpackage(subpackageId);
-            if (subpackage == null) {
-                this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
-                return false;
-            }
-            return true;
-        });
+        const subpackageIds = section.referencedSubpackages
+            .map((locator) => {
+                const subpackage = this.#holder.getSubpackageByIdOrLocator(locator);
+                return subpackage != null ? ApiDefinitionHolder.getSubpackageId(subpackage) : undefined;
+            })
+            .filter((subpackageId) => {
+                if (subpackageId == null) {
+                    this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
+                }
+                return subpackageId != null;
+            })
+            .filter(isNonNullish);
 
-        this.#nodeIdToSubpackageId.set(nodeId.get(), subpackages);
-        subpackages.forEach((subpackageId) => {
+        this.#nodeIdToSubpackageId.set(nodeId.get(), subpackageIds);
+        subpackageIds.forEach((subpackageId) => {
             if (this.#visitedSubpackages.has(subpackageId)) {
                 this.taskContext.logger.error(
                     `Duplicate subpackage found in the API Reference layout: ${subpackageId}`
@@ -315,7 +319,7 @@ export class ApiReferenceNodeConverter {
         unknownIdentifier = unknownIdentifier.trim();
         // unknownIdentifier could either be a package, endpoint, websocket, or webhook.
         // We need to determine which one it is.
-        const subpackage = this.#holder.getSubpackage(unknownIdentifier);
+        const subpackage = this.#holder.getSubpackageByIdOrLocator(unknownIdentifier);
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
             const subpackageNodeId = idgen.append(subpackageId);
@@ -588,7 +592,7 @@ export class ApiReferenceNodeConverter {
                 return;
             }
 
-            const subpackage = this.#holder.getSubpackage(subpackageId);
+            const subpackage = this.#holder.getSubpackageByIdOrLocator(subpackageId);
             if (subpackage == null) {
                 this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
                 return;
@@ -635,7 +639,9 @@ export class ApiReferenceNodeConverter {
         parentSlug: FernNavigation.SlugGenerator
     ): FernNavigation.ApiPackageChild[] {
         const pkg =
-            packageId != null ? this.#holder.resolveSubpackage(this.#holder.getSubpackage(packageId)) : undefined;
+            packageId != null
+                ? this.#holder.resolveSubpackage(this.#holder.getSubpackageByIdOrLocator(packageId))
+                : undefined;
 
         if (pkg == null) {
             this.taskContext.logger.error(`Subpackage ${packageId} not found in ${this.apiDefinitionId}`);
