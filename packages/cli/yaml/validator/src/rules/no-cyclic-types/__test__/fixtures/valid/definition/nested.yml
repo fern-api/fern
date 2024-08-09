@@ -2,7 +2,7 @@ types:
   Animal:
     discriminated: false
     union:
-      - list<map<string, set<Animal>>>
+      - set<Animal>
       - Dog
       - string
   Dog:

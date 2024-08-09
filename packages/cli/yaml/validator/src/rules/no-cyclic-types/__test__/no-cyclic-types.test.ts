@@ -43,46 +43,6 @@ describe("no-cyclic-types", () => {
         });
     });
 
-    it("list", async () => {
-        const violations = await getViolationsForRule({
-            rule: NoCyclicTypesRule,
-            absolutePathToWorkspace: join(
-                AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of("fixtures"),
-                RelativeFilePath.of("list")
-            )
-        });
-        expect(violations).toContainEqual({
-            message: "Circular type detected: Node -> foo -> list<Node> -> items -> Node",
-            nodePath: ["types", "Node"],
-            relativeFilepath: RelativeFilePath.of("list.yml"),
-            severity: "error"
-        });
-    });
-
-    it("map", async () => {
-        const violations = await getViolationsForRule({
-            rule: NoCyclicTypesRule,
-            absolutePathToWorkspace: join(
-                AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of("fixtures"),
-                RelativeFilePath.of("map")
-            )
-        });
-        expect(violations).toContainEqual({
-            message: "Circular type detected: Node -> foo -> map<Node, string> -> key -> Node",
-            nodePath: ["types", "Node"],
-            relativeFilepath: "map.yml",
-            severity: "error"
-        });
-        expect(violations).toContainEqual({
-            message: "Circular type detected: AlsoNode -> bar -> map<string, AlsoNode> -> value -> AlsoNode",
-            nodePath: ["types", "AlsoNode"],
-            relativeFilepath: "map.yml",
-            severity: "error"
-        });
-    });
-
     it("union", async () => {
         const violations = await getViolationsForRule({
             rule: NoCyclicTypesRule,
@@ -93,50 +53,21 @@ describe("no-cyclic-types", () => {
             )
         });
         expect(violations).toContainEqual({
-            message: "Circular type detected: Animal -> union -> Animal",
+            message: "Circular type detected: Animal -> union -> AlsoAnimal -> child -> Animal",
             nodePath: ["types", "Animal"],
-            relativeFilepath: RelativeFilePath.of("discriminated.yml"),
+            relativeFilepath: "discriminated.yml",
+            severity: "error"
+        });
+        expect(violations).toContainEqual({
+            message: "Circular type detected: AlsoAnimal -> union -> AlsoAnimal",
+            nodePath: ["types", "AlsoAnimal"],
+            relativeFilepath: "tree.yml",
             severity: "error"
         });
         expect(violations).toContainEqual({
             message: "Circular type detected: Animal -> union -> Animal",
             nodePath: ["types", "Animal"],
-            relativeFilepath: RelativeFilePath.of("undiscriminated.yml"),
-            severity: "error"
-        });
-    });
-
-    it("nested", async () => {
-        const violations = await getViolationsForRule({
-            rule: NoCyclicTypesRule,
-            absolutePathToWorkspace: join(
-                AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of("fixtures"),
-                RelativeFilePath.of("nested")
-            )
-        });
-        expect(violations).toContainEqual({
-            message: "Circular type detected: Animal -> union -> set<Animal> -> items -> Animal",
-            nodePath: ["types", "Animal"],
-            relativeFilepath: "nested.yml",
-            severity: "error"
-        });
-    });
-
-    it("veryNested", async () => {
-        const violations = await getViolationsForRule({
-            rule: NoCyclicTypesRule,
-            absolutePathToWorkspace: join(
-                AbsoluteFilePath.of(__dirname),
-                RelativeFilePath.of("fixtures"),
-                RelativeFilePath.of("nested")
-            )
-        });
-
-        expect(violations).toContainEqual({
-            message: "Circular type detected: Animal -> union -> set<Animal> -> items -> Animal",
-            nodePath: ["types", "Animal"],
-            relativeFilepath: "nested.yml",
+            relativeFilepath: "undiscriminated.yml",
             severity: "error"
         });
     });
@@ -148,6 +79,18 @@ describe("no-cyclic-types", () => {
                 AbsoluteFilePath.of(__dirname),
                 RelativeFilePath.of("fixtures"),
                 RelativeFilePath.of("valid")
+            )
+        });
+        expect(violations).toEqual([]);
+    });
+
+    it("validUnion", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoCyclicTypesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("validUnion")
             )
         });
         expect(violations).toEqual([]);

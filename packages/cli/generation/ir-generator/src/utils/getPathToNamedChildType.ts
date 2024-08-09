@@ -34,7 +34,7 @@ declare type UnionValue =
 
 interface ResolvedTypeWithKeys {
     keys: string[];
-    type: ResolvedType;
+    type: ResolvedType | null;
 }
 
 interface TypeParams {
@@ -64,22 +64,37 @@ export function getPathToNamedChildType(args: PathToNamedChildTypeArgs): string[
     if (resolvedType == null) {
         return null;
     }
-    const firstIterationIsNotNamedType = seen.size === 1 && resolvedType._type !== "named";
-    if (firstIterationIsNotNamedType) {
+    if (resolvedType._type !== "named") {
         return null;
     }
 
     const typeParams = getChildTypes(resolvedType, args, fileContext).flatMap(getTypeParams);
 
+    // If this is a union type, every object path must be cyclic in order for the type to be considered an invalid cyclic type. This is also why we ignore container types, since they can be empty.
+    const isUnion =
+        isRawDiscriminatedUnionDefinition(resolvedType.declaration) ||
+        isRawUndiscriminatedUnionDefinition(resolvedType.declaration);
+
+    let foundPath: string[] | null = null;
+
     for (const type of typeParams) {
-        if (type == null || type.filePath !== args.filepathOfDeclaration) {
+        if (type == null || type.type._type !== "named" || type.filePath !== args.filepathOfDeclaration) {
+            if (isUnion) {
+                return null;
+            }
             continue;
         }
-        // we already check for cyclic imports, so we can skip cross-file checks
         if (args.childName === type.name) {
-            return [...type.keys, type.name as string];
+            foundPath = [...type.keys, type.name as string];
+            if (!isUnion) {
+                return foundPath;
+            }
+            continue;
         }
         if (seen.has(type.name)) {
+            if (isUnion) {
+                return null;
+            }
             continue;
         }
         seen.add(type.name);
@@ -96,10 +111,18 @@ export function getPathToNamedChildType(args: PathToNamedChildTypeArgs): string[
         });
         if (foundType != null) {
             foundType.unshift(...type.keys, type.name);
-            return foundType;
+            if (isUnion) {
+                foundPath = foundType;
+                continue;
+            } else {
+                return foundType;
+            }
+        }
+        if (isUnion) {
+            return null;
         }
     }
-    return null;
+    return foundPath;
 }
 
 function getChildTypes(
@@ -108,8 +131,6 @@ function getChildTypes(
     fileContext: FernFileContext
 ): TypeOrProperty[] {
     switch (t._type) {
-        case "container":
-            return unboxContainerTypes(t);
         case "named":
             if (isRawObjectDefinition(t.declaration)) {
                 return getAllPropertiesForType(args) as TypeOrProperty[];
@@ -133,14 +154,10 @@ function unboxUnionTypes(
         if (typeof value === "string") {
             const resolvedType = typeResolver.resolveType({ type: value, file: context });
             if (resolvedType != null) {
-                if (resolvedType._type === "container") {
-                    return unboxContainerTypes(resolvedType, ["union", value]) as TypeOrProperty[];
-                } else if (resolvedType._type === "named") {
-                    return [{ keys: ["union"], type: resolvedType }];
-                }
+                return [{ keys: ["union"], type: resolvedType }];
             }
         }
-        return [] as TypeOrProperty[];
+        return [{ keys: ["union"], type: null }];
     };
     if (isRawDiscriminatedUnionDefinition(union.declaration)) {
         const declaration = union.declaration as RawSchemas.DiscriminatedUnionSchema;
@@ -155,34 +172,6 @@ function unboxUnionTypes(
     return [];
 }
 
-function unboxContainerTypes(container: ResolvedType, keys: string[] = []): ResolvedTypeWithKeys[] {
-    if (container._type !== "container") {
-        return [];
-    }
-    const unboxResolvedType = (type: ResolvedType, k: string[]) => {
-        if (type._type === "container") {
-            return unboxContainerTypes(type, k);
-        }
-        return [
-            {
-                keys: k,
-                type
-            }
-        ];
-    };
-    switch (container.container._type) {
-        case "literal":
-            return [] as ResolvedTypeWithKeys[];
-        case "map":
-            return [
-                ...unboxResolvedType(container.container.keyType, [...keys, "key"]),
-                ...unboxResolvedType(container.container.valueType, [...keys, "value"])
-            ];
-        default:
-            return unboxResolvedType(container.container.itemType, [...keys, "items"]);
-    }
-}
-
 function getTypeParams(t: TypeOrProperty): TypeParams | null {
     const isObjectProperty = (t as ObjectPropertyWithPath).propertyType !== undefined;
     if (isObjectProperty) {
@@ -195,7 +184,7 @@ function getTypeParams(t: TypeOrProperty): TypeParams | null {
     } else {
         t = t as ResolvedTypeWithKeys;
         // we recursively unbox container types, so we only need to walk the remaining named types
-        const isNotNamedType = t.type._type !== "named";
+        const isNotNamedType = t.type == null || t.type._type !== "named";
         if (isNotNamedType) {
             return null;
         }

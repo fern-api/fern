@@ -1,10 +1,9 @@
 types:
-  Name: string
   Animal:
     discriminant: type2
     union:
       dog: Animal
-      person:
-        type: Name
-        key: value2
-      cat: {}
+      person: AlsoAnimal
+  AlsoAnimal:
+    properties:
+      child: Animal
