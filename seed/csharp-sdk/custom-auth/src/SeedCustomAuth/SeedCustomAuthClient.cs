@@ -5,10 +5,8 @@ using SeedCustomAuth.Core;
 
 namespace SeedCustomAuth;
 
-public partial class SeedCustomAuthClient
+internal partial class SeedCustomAuthClient
 {
-    private RawClient _client;
-
     public SeedCustomAuthClient(
         string? customAuthScheme = null,
         ClientOptions? clientOptions = null
@@ -26,6 +24,8 @@ public partial class SeedCustomAuthClient
         CustomAuth = new CustomAuthClient(_client);
         Errors = new ErrorsClient(_client);
     }
+
+    public RawClient _client;
 
     public CustomAuthClient CustomAuth { get; init; }
 

@@ -15,9 +15,4 @@ public class SeedAliasExtendsApiException(string message, int statusCode, object
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body { get; } = body;
-
-    public override string ToString()
-    {
-        return $"SeedAliasExtendsApiException {{ message: {Message}, statusCode: {StatusCode}, body: {Body} }}";
-    }
 }

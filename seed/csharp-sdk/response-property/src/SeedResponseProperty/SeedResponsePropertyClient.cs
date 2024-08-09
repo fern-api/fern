@@ -5,10 +5,8 @@ using SeedResponseProperty.Core;
 
 namespace SeedResponseProperty;
 
-public partial class SeedResponsePropertyClient
+internal partial class SeedResponsePropertyClient
 {
-    private RawClient _client;
-
     public SeedResponsePropertyClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedResponsePropertyClient
         );
         Service = new ServiceClient(_client);
     }
+
+    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 }

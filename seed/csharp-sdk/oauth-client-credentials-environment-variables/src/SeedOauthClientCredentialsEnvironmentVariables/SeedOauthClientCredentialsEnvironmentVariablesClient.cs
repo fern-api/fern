@@ -5,10 +5,8 @@ using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
-public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
+internal partial class SeedOauthClientCredentialsEnvironmentVariablesClient
 {
-    private RawClient _client;
-
     public SeedOauthClientCredentialsEnvironmentVariablesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedOauthClientCredentialsEnvironmentVariablesClient
         );
         Auth = new AuthClient(_client);
     }
+
+    public RawClient _client;
 
     public AuthClient Auth { get; init; }
 }

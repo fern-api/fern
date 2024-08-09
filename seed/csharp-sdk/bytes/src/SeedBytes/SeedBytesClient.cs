@@ -5,10 +5,8 @@ using SeedBytes.Core;
 
 namespace SeedBytes;
 
-public partial class SeedBytesClient
+internal partial class SeedBytesClient
 {
-    private RawClient _client;
-
     public SeedBytesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedBytesClient
         );
         Service = new ServiceClient(_client);
     }
+
+    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 }

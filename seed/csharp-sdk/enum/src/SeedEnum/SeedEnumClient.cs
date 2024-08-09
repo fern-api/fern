@@ -5,10 +5,8 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public partial class SeedEnumClient
+internal partial class SeedEnumClient
 {
-    private RawClient _client;
-
     public SeedEnumClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -20,6 +18,8 @@ public partial class SeedEnumClient
         PathParam = new PathParamClient(_client);
         QueryParam = new QueryParamClient(_client);
     }
+
+    public RawClient _client;
 
     public InlinedRequestClient InlinedRequest { get; init; }
 

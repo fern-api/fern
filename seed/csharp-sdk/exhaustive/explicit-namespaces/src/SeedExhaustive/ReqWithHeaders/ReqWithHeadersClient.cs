@@ -5,11 +5,11 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.ReqWithHeaders;
 
-public class ReqWithHeadersClient
+public partial class ReqWithHeadersClient
 {
     private RawClient _client;
 
-    public ReqWithHeadersClient(RawClient client)
+    internal ReqWithHeadersClient(RawClient client)
     {
         _client = client;
     }

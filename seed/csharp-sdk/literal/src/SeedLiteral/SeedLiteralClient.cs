@@ -5,10 +5,8 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public partial class SeedLiteralClient
+internal partial class SeedLiteralClient
 {
-    private RawClient _client;
-
     public SeedLiteralClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -27,6 +25,8 @@ public partial class SeedLiteralClient
         Query = new QueryClient(_client);
         Reference = new ReferenceClient(_client);
     }
+
+    public RawClient _client;
 
     public HeadersClient Headers { get; init; }
 

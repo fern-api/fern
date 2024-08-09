@@ -5,10 +5,8 @@ using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
 
-public partial class SeedUndiscriminatedUnionsClient
+internal partial class SeedUndiscriminatedUnionsClient
 {
-    private RawClient _client;
-
     public SeedUndiscriminatedUnionsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedUndiscriminatedUnionsClient
         );
         Union = new UnionClient(_client);
     }
+
+    public RawClient _client;
 
     public UnionClient Union { get; init; }
 }

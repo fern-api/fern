@@ -6,11 +6,11 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public class MigrationClient
+public partial class MigrationClient
 {
     private RawClient _client;
 
-    public MigrationClient(RawClient client)
+    internal MigrationClient(RawClient client)
     {
         _client = client;
     }

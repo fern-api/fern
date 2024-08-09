@@ -5,10 +5,8 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class SeedApiClient
+internal partial class SeedApiClient
 {
-    private RawClient _client;
-
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedApiClient
         );
         User = new UserClient(_client);
     }
+
+    public RawClient _client;
 
     public UserClient User { get; init; }
 }

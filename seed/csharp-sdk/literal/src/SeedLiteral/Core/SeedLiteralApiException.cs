@@ -15,9 +15,4 @@ public class SeedLiteralApiException(string message, int statusCode, object body
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body { get; } = body;
-
-    public override string ToString()
-    {
-        return $"SeedLiteralApiException {{ message: {Message}, statusCode: {StatusCode}, body: {Body} }}";
-    }
 }

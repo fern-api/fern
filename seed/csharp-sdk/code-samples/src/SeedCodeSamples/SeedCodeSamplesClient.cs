@@ -5,10 +5,8 @@ using SeedCodeSamples.Core;
 
 namespace SeedCodeSamples;
 
-public partial class SeedCodeSamplesClient
+internal partial class SeedCodeSamplesClient
 {
-    private RawClient _client;
-
     public SeedCodeSamplesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedCodeSamplesClient
         );
         Service = new ServiceClient(_client);
     }
+
+    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 }

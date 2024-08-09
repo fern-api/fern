@@ -5,11 +5,11 @@ using SeedApi.Core;
 
 namespace SeedApi.Folder;
 
-public class FolderClient
+public partial class FolderClient
 {
     private RawClient _client;
 
-    public FolderClient(RawClient client)
+    internal FolderClient(RawClient client)
     {
         _client = client;
         Service = new ServiceClient(_client);

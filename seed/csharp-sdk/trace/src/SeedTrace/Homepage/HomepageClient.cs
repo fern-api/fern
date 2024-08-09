@@ -6,11 +6,11 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public class HomepageClient
+public partial class HomepageClient
 {
     private RawClient _client;
 
-    public HomepageClient(RawClient client)
+    internal HomepageClient(RawClient client)
     {
         _client = client;
     }

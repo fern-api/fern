@@ -5,10 +5,8 @@ using SeedStreaming.Core;
 
 namespace SeedStreaming;
 
-public partial class SeedStreamingClient
+internal partial class SeedStreamingClient
 {
-    private RawClient _client;
-
     public SeedStreamingClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedStreamingClient
         );
         Dummy = new DummyClient(_client);
     }
+
+    public RawClient _client;
 
     public DummyClient Dummy { get; init; }
 }

@@ -5,10 +5,8 @@ using SeedUnions.Core;
 
 namespace SeedUnions;
 
-public partial class SeedUnionsClient
+internal partial class SeedUnionsClient
 {
-    private RawClient _client;
-
     public SeedUnionsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -19,6 +17,8 @@ public partial class SeedUnionsClient
         Types = new TypesClient(_client);
         Union = new UnionClient(_client);
     }
+
+    public RawClient _client;
 
     public TypesClient Types { get; init; }
 

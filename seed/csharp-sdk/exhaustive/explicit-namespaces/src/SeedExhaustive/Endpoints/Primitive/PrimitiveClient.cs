@@ -6,11 +6,11 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Primitive;
 
-public class PrimitiveClient
+public partial class PrimitiveClient
 {
     private RawClient _client;
 
-    public PrimitiveClient(RawClient client)
+    internal PrimitiveClient(RawClient client)
     {
         _client = client;
     }

@@ -5,10 +5,8 @@ using SeedMultiLineDocs.Core;
 
 namespace SeedMultiLineDocs;
 
-public partial class SeedMultiLineDocsClient
+internal partial class SeedMultiLineDocsClient
 {
-    private RawClient _client;
-
     public SeedMultiLineDocsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedMultiLineDocsClient
         );
         User = new UserClient(_client);
     }
+
+    public RawClient _client;
 
     public UserClient User { get; init; }
 }

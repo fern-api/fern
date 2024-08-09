@@ -5,10 +5,8 @@ using SeedBearerTokenEnvironmentVariable.Core;
 
 namespace SeedBearerTokenEnvironmentVariable;
 
-public partial class SeedBearerTokenEnvironmentVariableClient
+internal partial class SeedBearerTokenEnvironmentVariableClient
 {
-    private RawClient _client;
-
     public SeedBearerTokenEnvironmentVariableClient(
         string? apiKey = null,
         ClientOptions? clientOptions = null
@@ -29,6 +27,8 @@ public partial class SeedBearerTokenEnvironmentVariableClient
         );
         Service = new ServiceClient(_client);
     }
+
+    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 

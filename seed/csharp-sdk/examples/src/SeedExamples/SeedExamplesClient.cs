@@ -10,10 +10,8 @@ using SeedExamples.Health;
 
 namespace SeedExamples;
 
-public partial class SeedExamplesClient
+internal partial class SeedExamplesClient
 {
-    private RawClient _client;
-
     public SeedExamplesClient(string token, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -27,6 +25,8 @@ public partial class SeedExamplesClient
         Service = new ServiceClient(_client);
         Types = new TypesClient(_client);
     }
+
+    public RawClient _client;
 
     public CommonsClient Commons { get; init; }
 

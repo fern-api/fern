@@ -5,10 +5,8 @@ using SeedExtraProperties.Core;
 
 namespace SeedExtraProperties;
 
-public partial class SeedExtraPropertiesClient
+internal partial class SeedExtraPropertiesClient
 {
-    private RawClient _client;
-
     public SeedExtraPropertiesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedExtraPropertiesClient
         );
         User = new UserClient(_client);
     }
+
+    public RawClient _client;
 
     public UserClient User { get; init; }
 }

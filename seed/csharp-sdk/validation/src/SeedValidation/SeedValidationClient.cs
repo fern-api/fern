@@ -7,10 +7,8 @@ using SeedValidation.Core;
 
 namespace SeedValidation;
 
-public partial class SeedValidationClient
+internal partial class SeedValidationClient
 {
-    private RawClient _client;
-
     public SeedValidationClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -19,6 +17,8 @@ public partial class SeedValidationClient
             clientOptions ?? new ClientOptions()
         );
     }
+
+    public RawClient _client;
 
     public async Task<Type> CreateAsync(CreateRequest request, RequestOptions? options = null)
     {

@@ -7,10 +7,8 @@ using SeedPackageYml.Core;
 
 namespace SeedPackageYml;
 
-public partial class SeedPackageYmlClient
+internal partial class SeedPackageYmlClient
 {
-    private RawClient _client;
-
     public SeedPackageYmlClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -20,6 +18,8 @@ public partial class SeedPackageYmlClient
         );
         Service = new ServiceClient(_client);
     }
+
+    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 

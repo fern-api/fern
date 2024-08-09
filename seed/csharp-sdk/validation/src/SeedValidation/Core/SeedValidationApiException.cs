@@ -15,9 +15,4 @@ public class SeedValidationApiException(string message, int statusCode, object b
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body { get; } = body;
-
-    public override string ToString()
-    {
-        return $"SeedValidationApiException {{ message: {Message}, statusCode: {StatusCode}, body: {Body} }}";
-    }
 }

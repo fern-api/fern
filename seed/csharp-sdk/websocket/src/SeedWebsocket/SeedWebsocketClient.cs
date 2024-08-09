@@ -5,10 +5,8 @@ using SeedWebsocket.Core;
 
 namespace SeedWebsocket;
 
-public partial class SeedWebsocketClient
+internal partial class SeedWebsocketClient
 {
-    private RawClient _client;
-
     public SeedWebsocketClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedWebsocketClient
         );
         Realtime = new RealtimeClient(_client);
     }
+
+    public RawClient _client;
 
     public RealtimeClient Realtime { get; init; }
 }

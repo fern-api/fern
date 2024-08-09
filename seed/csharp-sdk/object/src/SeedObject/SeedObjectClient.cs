@@ -5,10 +5,8 @@ using SeedObject.Core;
 
 namespace SeedObject;
 
-public partial class SeedObjectClient
+internal partial class SeedObjectClient
 {
-    private RawClient _client;
-
     public SeedObjectClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -17,4 +15,6 @@ public partial class SeedObjectClient
             clientOptions ?? new ClientOptions()
         );
     }
+
+    public RawClient _client;
 }

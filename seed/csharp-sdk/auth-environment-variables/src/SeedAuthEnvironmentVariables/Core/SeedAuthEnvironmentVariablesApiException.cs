@@ -15,9 +15,4 @@ public class SeedAuthEnvironmentVariablesApiException(string message, int status
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body { get; } = body;
-
-    public override string ToString()
-    {
-        return $"SeedAuthEnvironmentVariablesApiException {{ message: {Message}, statusCode: {StatusCode}, body: {Body} }}";
-    }
 }

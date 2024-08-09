@@ -8,10 +8,8 @@ using SeedAudiences.FolderC;
 
 namespace SeedAudiences;
 
-public partial class SeedAudiencesClient
+internal partial class SeedAudiencesClient
 {
-    private RawClient _client;
-
     public SeedAudiencesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -25,6 +23,8 @@ public partial class SeedAudiencesClient
         FolderC = new FolderCClient(_client);
         Foo = new FooClient(_client);
     }
+
+    public RawClient _client;
 
     public CommonsClient Commons { get; init; }
 

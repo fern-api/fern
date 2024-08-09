@@ -5,10 +5,8 @@ using SeedNoEnvironment.Core;
 
 namespace SeedNoEnvironment;
 
-public partial class SeedNoEnvironmentClient
+internal partial class SeedNoEnvironmentClient
 {
-    private RawClient _client;
-
     public SeedNoEnvironmentClient(string? token = null, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -22,6 +20,8 @@ public partial class SeedNoEnvironmentClient
         );
         Dummy = new DummyClient(_client);
     }
+
+    public RawClient _client;
 
     public DummyClient Dummy { get; init; }
 }

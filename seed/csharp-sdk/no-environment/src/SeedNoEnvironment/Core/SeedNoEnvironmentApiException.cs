@@ -15,9 +15,4 @@ public class SeedNoEnvironmentApiException(string message, int statusCode, objec
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body { get; } = body;
-
-    public override string ToString()
-    {
-        return $"SeedNoEnvironmentApiException {{ message: {Message}, statusCode: {StatusCode}, body: {Body} }}";
-    }
 }

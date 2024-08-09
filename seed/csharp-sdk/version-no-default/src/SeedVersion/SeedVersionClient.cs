@@ -5,10 +5,8 @@ using SeedVersion.Core;
 
 namespace SeedVersion;
 
-public partial class SeedVersionClient
+internal partial class SeedVersionClient
 {
-    private RawClient _client;
-
     public SeedVersionClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,6 +16,8 @@ public partial class SeedVersionClient
         );
         User = new UserClient(_client);
     }
+
+    public RawClient _client;
 
     public UserClient User { get; init; }
 }
