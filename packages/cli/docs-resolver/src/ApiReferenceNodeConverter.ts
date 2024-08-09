@@ -114,9 +114,7 @@ export class ApiReferenceNodeConverter {
     ): FernNavigation.ApiPackageChild[] {
         apiDefinitionPackage = this.#holder.resolveSubpackage(apiDefinitionPackage);
         const apiDefinitionPackageId =
-            apiDefinitionPackage != null
-                ? ApiDefinitionHolder.getSubpackageId(apiDefinitionPackage)
-                : undefined;
+            apiDefinitionPackage != null ? ApiDefinitionHolder.getSubpackageId(apiDefinitionPackage) : undefined;
         return navigation
             .map((item) =>
                 visitDiscriminatedUnion(item)._visit<FernNavigation.ApiPackageChild | undefined>({
