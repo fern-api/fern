@@ -72,7 +72,7 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
                     key,
                     contents_expectation.get(idx)[0]  # type: ignore
                     if contents_expectation.get(idx) is not None
-                    else None, 
+                    else None,
                 ): cast_field(
                     value,
                     contents_expectation.get(idx)[1]  # type: ignore

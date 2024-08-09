@@ -364,7 +364,7 @@ class SnippetTestFactory:
                         f"# Type ignore to avoid mypy complaining about the function not being meant to return a value"
                     )
                     writer.write(f"assert (")
-                    with writer.indent(): 
+                    with writer.indent():
                         writer.write_node(sync_expression)
                         writer.write(" # type: ignore[func-returns-value]")
                     writer.write_newline_if_last_line_not()
@@ -398,7 +398,7 @@ class SnippetTestFactory:
                             f"# Type ignore to avoid mypy complaining about the function not being meant to return a value"
                         )
                     writer.write(f"assert (")
-                    with writer.indent(): 
+                    with writer.indent():
                         writer.write_node(async_expression)
                         writer.write(" # type: ignore[func-returns-value]")
                     writer.write_newline_if_last_line_not()

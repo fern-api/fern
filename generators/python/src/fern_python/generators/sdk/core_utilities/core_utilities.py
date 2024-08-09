@@ -551,7 +551,7 @@ class CoreUtilities:
             )
 
         return AST.Expression(AST.CodeWriter(write))
-    
+
     def get_parse_obj_as(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
