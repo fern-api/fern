@@ -79,20 +79,22 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getAllNamespaceSegmentsAndTypes(): Set<string | ClassReference> {
         if (this.allNamespaceSegmentsAndTypes == null) {
-            const namespaces: (string | ClassReference)[] = [];
-            for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
-                const namespaceSegments = this.getFullNamespaceSegments(subpackage.fernFilepath);
-                if (namespaceSegments != null) {
-                    namespaces.push(...namespaceSegments);
-                }
-            }
-            for (const [_, typeDeclaration] of Object.entries(this.ir.types)) {
-                this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
-                namespaces.push(this.csharpTypeMapper.convertToClassReference(typeDeclaration.name));
-            }
-            this.allNamespaceSegmentsAndTypes = new Set(namespaces);
+            this.allNamespaceSegmentsAndTypes = new Set(
+                Object.values(this.ir.subpackages).flatMap((subpackage) =>
+                    this.getFullNamespaceSegments(subpackage.fernFilepath)
+                )
+            );
         }
         return this.allNamespaceSegmentsAndTypes;
+    }
+
+    public getAllClassReferencesForTypes(): Map<string, string> {
+        return new Map(
+            Object.values(this.ir.types).map((typeDeclaration) => {
+                const classReference = this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
+                return [classReference.name, classReference.namespace];
+            })
+        );
     }
 
     public getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
