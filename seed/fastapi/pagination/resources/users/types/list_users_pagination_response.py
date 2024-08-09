@@ -2,6 +2,10 @@
 
 from ....core.pydantic_utilities import UniversalBaseModel
 import typing
+<<<<<<< HEAD
+=======
+import pydantic
+>>>>>>> bb549f4937 ((feat, python): move to ruff for formatting (#4219))
 from .page import Page
 import pydantic
 from .user import User
@@ -9,7 +13,9 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 
 
 class ListUsersPaginationResponse(UniversalBaseModel):
-    has_next_page: typing.Optional[bool] = pydantic.Field(alias="hasNextPage", default=None)
+    has_next_page: typing.Optional[bool] = pydantic.Field(
+        alias="hasNextPage", default=None
+    )
     page: typing.Optional[Page] = None
     total_count: int = pydantic.Field()
     """

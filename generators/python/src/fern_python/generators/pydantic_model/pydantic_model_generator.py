@@ -70,7 +70,10 @@ class PydanticModelGenerator(AbstractGenerator):
             use_typeddict_requests=custom_config.use_typeddict_requests,
             use_str_enums=custom_config.use_str_enums,
             skip_formatting=custom_config.skip_formatting,
+<<<<<<< HEAD
             union_naming_version=custom_config.union_naming,
+=======
+>>>>>>> bb549f4937 ((feat, python): move to ruff for formatting (#4219))
         )
         snippet_registry = SnippetRegistry(source_file_factory=context.source_file_factory)
         snippet_writer = self._build_snippet_writer(
