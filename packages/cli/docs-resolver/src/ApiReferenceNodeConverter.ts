@@ -1,6 +1,4 @@
 import { docsYml } from "@fern-api/configuration";
-import { PlaygroundSettings } from "@fern-api/configuration/src/docs-yml/schemas";
-// import { PlaygroundSettings } from "@fern-api/configuration/src/docs-yml/schemas";
 import { isNonNullish } from "@fern-api/core-utils";
 import { APIV1Read, FernNavigation, titleCase, visitDiscriminatedUnion } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, relative, RelativeFilePath } from "@fern-api/fs-utils";
@@ -652,7 +650,9 @@ export class ApiReferenceNodeConverter {
         return this.#convertApiDefinitionPackage(pkg, parentSlug);
     }
 
-    #convertPlaygroundSettings(playgroundSettings?: PlaygroundSettings): FernNavigation.PlaygroundSettings | undefined {
+    #convertPlaygroundSettings(
+        playgroundSettings?: docsYml.RawSchemas.PlaygroundSettings
+    ): FernNavigation.PlaygroundSettings | undefined {
         if (playgroundSettings) {
             return {
                 environments:
