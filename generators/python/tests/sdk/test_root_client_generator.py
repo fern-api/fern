@@ -50,7 +50,7 @@ def test_generated_root_client_builder() -> None:
     )
     generated_root_client = builder.build()
 
-    snippet = SourceFileFactory(should_format=True).create_snippet()
+    snippet = SourceFileFactory.create_snippet()
     snippet.add_expression(generated_root_client.sync_instantiation)
     assert (
         snippet.to_str()
@@ -64,7 +64,7 @@ client = Acme(
 """
     )
 
-    async_snippet = SourceFileFactory(should_format=True).create_snippet()
+    async_snippet = SourceFileFactory.create_snippet()
     async_snippet.add_expression(generated_root_client.async_instantiation)
     assert (
         async_snippet.to_str()

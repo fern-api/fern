@@ -8,11 +8,6 @@ from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
-<<<<<<< HEAD
-from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
-=======
->>>>>>> bb549f4937 ((feat, python): move to ruff for formatting (#4219))
-from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 from ..core_utilities import CoreUtilities
 
@@ -27,11 +22,6 @@ class PydanticGeneratorContext(ABC):
         allow_skipping_validation: bool,
         use_typeddict_requests: bool,
         use_str_enums: bool,
-        skip_formatting: bool,
-<<<<<<< HEAD
-        union_naming_version: UnionNamingVersions,
-=======
->>>>>>> bb549f4937 ((feat, python): move to ruff for formatting (#4219))
     ):
         self.ir = ir
         self.generator_config = generator_config
@@ -42,11 +32,6 @@ class PydanticGeneratorContext(ABC):
         self.use_typeddict_requests = use_typeddict_requests
         self.type_declaration_referencer = type_declaration_referencer
         self.use_str_enums = use_str_enums
-        self.source_file_factory = SourceFileFactory(should_format=not skip_formatting)
-<<<<<<< HEAD
-        self.union_naming_version: UnionNamingVersions = union_naming_version
-=======
->>>>>>> bb549f4937 ((feat, python): move to ruff for formatting (#4219))
 
     @abstractmethod
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:

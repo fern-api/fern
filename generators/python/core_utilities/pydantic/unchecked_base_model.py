@@ -34,9 +34,7 @@ Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 class UncheckedBaseModel(UniversalBaseModel):
     if IS_PYDANTIC_V2:
-        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(
-            extra="allow"
-        )  # type: ignore # Pydantic v2
+        model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2
     else:
 
         class Config:
@@ -44,9 +42,7 @@ class UncheckedBaseModel(UniversalBaseModel):
 
     @classmethod
     def model_construct(
-        cls: typing.Type["Model"],
-        _fields_set: typing.Optional[typing.Set[str]] = None,
-        **values: typing.Any,
+        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
     ) -> "Model":
         # Fallback construct function to the specified override below.
         return cls.construct(_fields_set=_fields_set, **values)
@@ -55,9 +51,7 @@ class UncheckedBaseModel(UniversalBaseModel):
     # Implementation taken from: https://github.com/pydantic/pydantic/issues/1168#issuecomment-817742836
     @classmethod
     def construct(
-        cls: typing.Type["Model"],
-        _fields_set: typing.Optional[typing.Set[str]] = None,
-        **values: typing.Any,
+        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
     ) -> "Model":
         m = cls.__new__(cls)
         fields_values = {}
@@ -265,12 +259,9 @@ def _get_is_populate_by_name(model: typing.Type["Model"]) -> bool:
 
 PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]
 
-
 # Pydantic V1 swapped the typing of __fields__'s values from ModelField to FieldInfo
 # And so we try to handle both V1 cases, as well as V2 (FieldInfo from model.model_fields)
-def _get_model_fields(
-    model: typing.Type["Model"],
-) -> typing.Mapping[str, PydanticField]:
+def _get_model_fields(model: typing.Type["Model"]) -> typing.Mapping[str, PydanticField]:
     if IS_PYDANTIC_V2:
         return model.model_fields  # type: ignore # Pydantic v2
     else:

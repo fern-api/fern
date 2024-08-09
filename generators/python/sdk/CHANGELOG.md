@@ -27,18 +27,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.6.0] - 2024-08-08
 
 - Feat: The generator now respects returning nested properties, these can be specified via:
-
+  
   In OpenAPI below, we'd like to only return the property `jobId` from the `Job` object we get back from our server to our SDK users:
-
   ```yaml
   my/endpoint:
     get:
       x-fern-sdk-return-value: jobId
       response: Job
   ```
-
   For a similar situation using the Fern definition:
-
   ```yaml
   endpoints:
     getJob:
@@ -48,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         type: Job
         property: jobId
   ```
+
 
 - Fix: The underlying content no longer sends empty JSON bodies, instead it'll pass a `None` value to httpx
 
