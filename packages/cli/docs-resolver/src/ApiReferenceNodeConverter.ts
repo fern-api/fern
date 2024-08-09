@@ -655,11 +655,9 @@ export class ApiReferenceNodeConverter {
     #convertPlaygroundSettings(playgroundSettings?: PlaygroundSettings): FernNavigation.PlaygroundSettings | undefined {
         if (playgroundSettings) {
             return {
-                allowedEnvironments:
-                    playgroundSettings.allowedEnvironments &&
-                    playgroundSettings.allowedEnvironments.map((environmentId) =>
-                        FernNavigation.EnvironmentId(environmentId)
-                    ),
+                environments:
+                    playgroundSettings.environments &&
+                    playgroundSettings.environments.map((environmentId) => FernNavigation.EnvironmentId(environmentId)),
                 button:
                     playgroundSettings.button && playgroundSettings.button.href
                         ? { href: FernNavigation.Url(playgroundSettings.button.href) }
