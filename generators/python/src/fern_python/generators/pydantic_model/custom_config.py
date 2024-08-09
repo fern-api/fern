@@ -6,6 +6,8 @@ import pydantic
 
 from ...external_dependencies.pydantic import PydanticVersionCompatibility
 
+UnionNamingVersions = Literal["v0", "v1"]
+
 
 class BasePydanticModelCustomConfig(pydantic.BaseModel):
     version: PydanticVersionCompatibility = PydanticVersionCompatibility.Both
@@ -16,6 +18,19 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
     use_str_enums: bool = True
 
     wrapped_aliases: bool = False
+
+    union_naming: UnionNamingVersions = "v0"
+    """
+    If you are dealing with discriminated union members that already have the discriminant property on them (and they're only used in one union)
+    you should prefer the global API config within your generators.yml:
+    ```yaml
+    - name: fernapi/fern-python-sdk
+      version: 3.0.0-rc0
+      api:
+        settings:
+          unions: v1
+    ```
+    """
 
     @pydantic.model_validator(mode="after")
     def check_wrapped_aliases_v1_only(self) -> Self:

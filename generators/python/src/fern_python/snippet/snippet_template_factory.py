@@ -418,6 +418,7 @@ class SnippetTemplateFactory:
                 example=None,
                 example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
+                union_naming_version=self._context.custom_config.pydantic_config.union_naming,
             ).generate_snippet_template()
         else:
             get_template_string = lambda snippet_template_str: (
@@ -429,6 +430,7 @@ class SnippetTemplateFactory:
                 example=None,
                 example_expression=AST.Expression(TEMPLATE_SENTINEL),
                 single_union_type=sut,
+                union_naming_version=self._context.custom_config.pydantic_config.union_naming,
             ).generate_snippet_template()
 
         if sut_shape.properties_type == "samePropertiesAsObject":

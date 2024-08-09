@@ -33,6 +33,7 @@ class FastApiGeneratorContext(ABC):
             use_typeddict_requests=False,
             use_str_enums=use_str_enums,
             skip_formatting=custom_config.skip_formatting,
+            union_naming_version=custom_config.pydantic_config.union_naming,
         )
         self.core_utilities = CoreUtilities()
         self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)
