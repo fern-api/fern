@@ -15,12 +15,14 @@ export function getRefreshTokenConfiguration({
     securityScheme: OpenAPIV3.SecuritySchemeObject;
     context: AbstractOpenAPIV3ParserContext;
 }): RefreshTokenEndpointSchema | undefined {
-    return getExtensionAndValidate<RefreshTokenEndpointSchema>(
-        securityScheme,
-        FernOpenAPIExtension.FERN_OAUTH_REFRESH_TOKEN_ENDPOINT,
-        RefreshTokenEndpointSchema,
-        context
-    );
+    return securityScheme.type === "oauth2" && securityScheme.flows.clientCredentials != null
+        ? getExtensionAndValidate<RefreshTokenEndpointSchema>(
+              securityScheme.flows.clientCredentials,
+              FernOpenAPIExtension.FERN_OAUTH_REFRESH_TOKEN_ENDPOINT,
+              RefreshTokenEndpointSchema,
+              context
+          )
+        : undefined;
 }
 
 export function getAccessTokenConfiguration({
@@ -30,12 +32,14 @@ export function getAccessTokenConfiguration({
     securityScheme: OpenAPIV3.SecuritySchemeObject;
     context: AbstractOpenAPIV3ParserContext;
 }): AccessTokenEndpointSchema | undefined {
-    return getExtensionAndValidate<AccessTokenEndpointSchema>(
-        securityScheme,
-        FernOpenAPIExtension.FERN_OAUTH_ACCESS_TOKEN_ENDPOINT,
-        AccessTokenEndpointSchema,
-        context
-    );
+    return securityScheme.type === "oauth2" && securityScheme.flows.clientCredentials != null
+        ? getExtensionAndValidate<AccessTokenEndpointSchema>(
+              securityScheme.flows.clientCredentials,
+              FernOpenAPIExtension.FERN_OAUTH_ACCESS_TOKEN_ENDPOINT,
+              AccessTokenEndpointSchema,
+              context
+          )
+        : undefined;
 }
 
 export function getFullOAuthConfiguration({

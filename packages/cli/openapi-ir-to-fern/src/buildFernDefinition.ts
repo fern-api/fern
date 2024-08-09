@@ -27,7 +27,6 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
     buildEnvironments(context);
     buildGlobalHeaders(context);
     buildIdempotencyHeaders(context);
-    buildAuthSchemes(context);
     buildVariables(context);
     if (context.ir.basePath != null) {
         context.builder.setBasePath(context.ir.basePath);
@@ -77,6 +76,8 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
             });
         }
     }
+
+    buildAuthSchemes(context);
 
     return context.builder.build();
 }

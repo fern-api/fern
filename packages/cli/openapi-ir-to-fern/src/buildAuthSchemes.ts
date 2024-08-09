@@ -162,7 +162,9 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                 }
 
                 if (maybeAccessTokenEndpointFernReference == null) {
-                    throw new Error("Failed to resolve the provided access token endpoint.");
+                    throw new Error(
+                        `Failed to resolve the provided access token endpoint: method - ${atMethod} url - ${atUrl}.`
+                    );
                 }
 
                 context.builder.addAuthScheme({

@@ -75,18 +75,6 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint docs 1`] = `
       },
     },
     "types": {
-      "OauthScope": {
-        "enum": [
-          {
-            "docs": "something witty about this scope",
-            "value": "scope1",
-          },
-          {
-            "docs": "something else about this one",
-            "value": "scope2",
-          },
-        ],
-      },
       "PostRefreshResponse": {
         "docs": undefined,
         "properties": {
@@ -104,10 +92,41 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint docs 1`] = `
     },
   },
   "rootApiFile": {
-    "auth": "BearerAuthScheme",
     "auth-schemes": {
-      "BearerAuthScheme": {
-        "scheme": "bearer",
+      "OAuthScheme": {
+        "client-id-env": undefined,
+        "client-secret-env": undefined,
+        "get-token": {
+          "endpoint": "root.postToken",
+          "request-properties": {
+            "client-id": "$query.client_id",
+            "client-secret": "$query.client_secret",
+            "scopes": "$query.scopes",
+          },
+          "response-properties": {
+            "access-token": "$response.access_token",
+            "expires-in": undefined,
+            "refresh-token": "$response.refresh_token",
+          },
+        },
+        "refresh-token": {
+          "endpoint": "root.postRefresh",
+          "request-properties": {
+            "refresh-token": "$query.refresh_token",
+          },
+          "response-properties": {
+            "access-token": "$response.access_token",
+            "expires-in": undefined,
+            "refresh-token": "$response.refresh_token",
+          },
+        },
+        "scheme": "oauth",
+        "scopes": [
+          "scope1",
+          "scope2",
+        ],
+        "token-prefix": undefined,
+        "type": "client-credentials",
       },
     },
     "display-name": "Test extension \`x-fern-access-token-endpoint\`.",
@@ -194,18 +213,6 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint simple 1`] = 
       },
     },
     "types": {
-      "OauthScope": {
-        "enum": [
-          {
-            "docs": "something witty about this scope",
-            "value": "scope1",
-          },
-          {
-            "docs": "something else about this one",
-            "value": "scope2",
-          },
-        ],
-      },
       "PostRefreshResponse": {
         "docs": undefined,
         "properties": {
@@ -223,10 +230,41 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint simple 1`] = 
     },
   },
   "rootApiFile": {
-    "auth": "BearerAuthScheme",
     "auth-schemes": {
-      "BearerAuthScheme": {
-        "scheme": "bearer",
+      "OAuthScheme": {
+        "client-id-env": undefined,
+        "client-secret-env": undefined,
+        "get-token": {
+          "endpoint": "root.postToken",
+          "request-properties": {
+            "client-id": "$query.client_id",
+            "client-secret": "$query.client_secret",
+            "scopes": "$query.scopes",
+          },
+          "response-properties": {
+            "access-token": "$response.access_token",
+            "expires-in": undefined,
+            "refresh-token": "$response.refresh_token",
+          },
+        },
+        "refresh-token": {
+          "endpoint": "root.postRefresh",
+          "request-properties": {
+            "refresh-token": "$query.refresh_token",
+          },
+          "response-properties": {
+            "access-token": "$response.access_token",
+            "expires-in": undefined,
+            "refresh-token": "$response.refresh_token",
+          },
+        },
+        "scheme": "oauth",
+        "scopes": [
+          "scope1",
+          "scope2",
+        ],
+        "token-prefix": undefined,
+        "type": "client-credentials",
       },
     },
     "display-name": "Test extension \`x-fern-access-token-endpoint\`.",

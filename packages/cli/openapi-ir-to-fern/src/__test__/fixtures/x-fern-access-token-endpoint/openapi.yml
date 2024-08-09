@@ -2,32 +2,6 @@ openapi: 3.1.0
 info:
   title: Test extension `x-fern-access-token-endpoint`.
   version: 1.0.0
-x-fern-oauth:
-  - flow: clientCredentials
-    clientId:
-      name: username
-      env: MY_CLIENT_ID
-    clientSecret:
-      name: password
-      env: MY_CLIENT_ID
-    tokenPrefix: Bearer
-    getToken:
-      endpoint: GET https://example.com/token
-      request:
-        clientId: $query.client_id
-        clientSecret: $query.client_secret
-        scopes: $query.scopes
-      response:
-        accessToken: $response.access_token
-        refreshToken: $response.refresh_token
-    refreshToken:
-      endpoint: GET /refresh
-      request:
-        refreshToken: $query.refresh_token
-      response:
-        accessToken: $response.access_token
-        refreshToken: $response.refresh_token
-    scopes: ["scope1", "scope2"]
 paths:
   "/refresh":
     post:
