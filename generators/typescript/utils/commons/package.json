@@ -17,7 +17,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "yarn compile && vitest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
@@ -59,6 +59,7 @@
     "memfs": "^3.4.1",
     "organize-imports-cli": "^0.10.0",
     "package-json-type": "^1.0.3",
-    "prettier": "^2.7.1"
+    "prettier": "^2.7.1",
+    "vitest": "^2.0.5"
   }
 }

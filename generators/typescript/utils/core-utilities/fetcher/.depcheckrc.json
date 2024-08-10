@@ -1,6 +1,5 @@
 {
   "ignores": [
-    "@types/jest",
     "@types/node",
     "@types/jest",
     "@types/node",
