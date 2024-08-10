@@ -14,3 +14,5 @@ export {
 } from "./types/Workspace";
 export * from "./utils";
 export * from "./workspaces";
+export { AbstractAPIWorkspace } from "./workspaces/AbstractAPIWorkspace";
+export { type APIWorkspace } from "./workspaces/APIWorkspace";

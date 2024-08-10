@@ -39,7 +39,8 @@ export async function previewDocsWorkspace({
                     workspace: docsWorkspace,
                     context,
                     logWarnings: true,
-                    logSummary: false
+                    logSummary: false,
+                    loadAPIWorkspace: project.loadAPIWorkspace
                 });
                 for (const apiWorkspace of project.apiWorkspaces) {
                     await cliContext.runTaskForWorkspace(apiWorkspace, async (apiWorkspaceContext) => {

@@ -1,4 +1,4 @@
-import { validateVersionConfigFileSchema } from "@fern-api/yaml-schema";
+import { validateVersionConfigFileSchema } from "../../docsAst/validateVersionConfig";
 import { Rule } from "../../Rule";
 
 export const ValidateVersionFileRule: Rule = {
