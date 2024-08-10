@@ -1,4 +1,5 @@
 /* eslint-disable jest/expect-expect */
+/* eslint-disable jest/no-disabled-tests */
 
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loadApis } from "@fern-api/project-loader";
