@@ -65,7 +65,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src={'test4.md'} />
         `;
 
-        const markdownLoader = jest.fn().mockResolvedValue("test content");
+        const markdownLoader = vitest.fn().mockResolvedValue("test content");
 
         await replaceReferencedMarkdown({
             markdown,

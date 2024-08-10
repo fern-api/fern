@@ -1,1 +1,1 @@
-export const format = jest.fn((code: string) => code);
+export const format = vitest.fn((code: string) => code);

@@ -3676,12 +3676,10 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/venus-api-sdk": 0.0.38
-    "@types/jest": ^29.5.12
     "@types/jsonwebtoken": ^9.0.6
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     jsonwebtoken: ^9.0.2
     jwks-rsa: ^3.1.0
     organize-imports-cli: ^0.10.0
@@ -3705,7 +3703,6 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     form-data: 4.0.0
-    jest: ^29.7.0
     js-base64: ^3.7.6
     node-fetch: 2.7.0
     organize-imports-cli: ^0.10.0
@@ -3763,7 +3760,6 @@ __metadata:
     "@types/boxen": ^3.0.1
     "@types/get-port": ^4.2.0
     "@types/is-ci": ^3.0.4
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/latest-version": ^4.0.1
     "@types/lodash-es": ^4.17.12
@@ -3784,7 +3780,6 @@ __metadata:
     get-port: ^7.1.0
     immer: ^9.0.15
     is-ci: ^3.0.1
-    jest: ^29.7.0
     js-yaml: ^4.1.0
     latest-version: ^9.0.0
     lodash-es: ^4.17.21
@@ -3816,7 +3811,6 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/fiddle-sdk": 0.0.584
     "@types/dockerode": ^3.3.9
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -3825,7 +3819,6 @@ __metadata:
     dockerode: ^4.0.2
     eslint: ^8.56.0
     find-up: ^6.3.0
-    jest: ^29.7.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -3841,13 +3834,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core-utils@workspace:packages/commons/core-utils"
   dependencies:
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@types/ua-parser-js": ^0.7.39
     "@types/whatwg-mimetype": ^3.0.2
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     strip-ansi: ^7.1.0
@@ -3866,11 +3857,9 @@ __metadata:
     "@fern-api/venus-api-sdk": 0.0.38
     "@fern-fern/fdr-test-sdk": ^0.0.5297
     "@fern-fern/fiddle-sdk": 0.0.584
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -3887,7 +3876,6 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/ir-sdk": ^53.2.0
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -3908,12 +3896,10 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@types/dockerode": ^3.3.9
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     dockerode: ^4.0.2
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
@@ -3930,13 +3916,11 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/diff": ^5.2.1
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     diff: ^5.2.0
     eslint: ^8.56.0
     gray-matter: ^4.0.3
-    jest: ^29.7.0
     mdast-util-from-markdown: ^2.0.1
     mdast-util-mdx: ^3.0.0
     micromark-extension-mdx: ^2.1.0
@@ -3963,7 +3947,6 @@ __metadata:
     "@types/cors": ^2.8.13
     "@types/decompress": ^4.2.7
     "@types/express": ^4.17.21
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@types/uuid": ^9.0.8
     "@types/ws": ^8.5.10
@@ -3974,7 +3957,6 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     express: ^4.19.2
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
@@ -4001,14 +3983,12 @@ __metadata:
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     dayjs: ^1.11.11
     depcheck: ^1.4.6
     eslint: ^8.56.0
     gray-matter: ^4.0.3
-    jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -4062,7 +4042,6 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-typescript/fetcher": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     "@types/node-fetch": 2.6.9
@@ -4070,7 +4049,6 @@ __metadata:
     eslint: ^8.56.0
     execa: ^5.1.1
     form-data: 4.0.0
-    jest: ^29.7.0
     jest-environment-jsdom: ^29.7.0
     js-yaml: ^4.1.0
     node-fetch: 2.7.0
@@ -4110,7 +4088,6 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/ir-sdk": ^53.2.0
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
@@ -4139,7 +4116,6 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": ^53.2.0
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -4170,7 +4146,6 @@ __metadata:
     "@fern-api/ruby-generator-cli": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": ^39
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
@@ -4201,7 +4176,6 @@ __metadata:
     "@fern-api/ruby-generator-cli": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": ^39
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
@@ -4224,13 +4198,11 @@ __metadata:
   resolution: "@fern-api/fs-utils@workspace:packages/commons/fs-utils"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
     glob: ^8.0.3
     glob-promise: ^5.0.0
-    jest: ^29.7.0
     json-stream-stringify: ^3.0.1
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -4250,7 +4222,6 @@ __metadata:
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": 0.0.3294
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -4277,7 +4248,6 @@ __metadata:
     "@fern-api/yaml-formatter": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/fs-extra": ^11.0.1
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -4286,7 +4256,6 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     fs-extra: ^11.1.1
-    jest: ^29.7.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -4309,7 +4278,6 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/object-hash": ^3.0.6
@@ -4317,7 +4285,6 @@ __metadata:
     "@types/url-join": 4.0.1
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     lodash-es: ^4.17.21
     object-hash: ^3.0.0
     organize-imports-cli: ^0.10.0
@@ -4393,12 +4360,10 @@ __metadata:
     "@fern-fern/ir-v7-model": 0.0.2
     "@fern-fern/ir-v8-model": 0.0.1
     "@fern-fern/ir-v9-model": 0.0.1
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -4411,11 +4376,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/ir-sdk@workspace:packages/ir-sdk"
   dependencies:
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -4429,12 +4392,10 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@types/prettier": ^2.7.1
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -4449,11 +4410,9 @@ __metadata:
   resolution: "@fern-api/loadable@workspace:packages/commons/loadable"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -4476,14 +4435,12 @@ __metadata:
     "@fern-fern/fiddle-sdk": 0.0.584
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@types/decompress": ^4.2.7
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.4
     chalk: ^5.3.0
     decompress: ^4.2.1
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
@@ -4497,12 +4454,10 @@ __metadata:
   resolution: "@fern-api/logger@workspace:packages/cli/logger"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -4515,12 +4470,10 @@ __metadata:
   resolution: "@fern-api/logging-execa@workspace:packages/commons/logging-execa"
   dependencies:
     "@fern-api/logger": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
     execa: ^5.1.1
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
@@ -4539,7 +4492,6 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@types/boxen": ^3.0.1
     "@types/inquirer": ^9.0.7
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@types/qs": 6.9.15
     axios: ^0.28.0
@@ -4548,7 +4500,6 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     inquirer: ^9.2.23
-    jest: ^29.7.0
     open: ^8.4.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -4565,7 +4516,6 @@ __metadata:
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@types/express": ^4.17.21
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/url-join": 4.0.1
@@ -4573,7 +4523,6 @@ __metadata:
     eslint: ^8.56.0
     express: ^4.19.2
     get-port: ^7.1.0
-    jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -4589,7 +4538,6 @@ __metadata:
   dependencies:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.2828
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -4616,11 +4564,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-ir-sdk@workspace:packages/cli/openapi-ir-sdk"
   dependencies:
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -4640,12 +4586,10 @@ __metadata:
     "@fern-api/openapi-parser": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -4666,7 +4610,6 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@redocly/openapi-core": ^1.4.1
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/lodash": ^4.17.4
     "@types/lodash-es": ^4.17.12
@@ -4674,7 +4617,6 @@ __metadata:
     "@types/swagger2openapi": ^7.0.4
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     openapi-types: ^12.1.3
@@ -4694,12 +4636,10 @@ __metadata:
     "@fern-api/auth": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@types/uuid": ^9.0.8
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     posthog-node: ^3.1.2
     prettier: ^2.7.1
@@ -4716,7 +4656,6 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.2828
     "@fern-fern/postman-sdk": 0.0.46
-    "@types/jest": ^29.5.12
     "@types/lodash": ^4.17.4
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -4745,12 +4684,10 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -4771,12 +4708,10 @@ __metadata:
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -4805,7 +4740,6 @@ __metadata:
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": 0.0.584
     "@types/decompress": ^4.2.7
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/mime-types": ^2.1.4
@@ -4819,7 +4753,6 @@ __metadata:
     eslint: ^8.56.0
     form-data: 4.0.0
     image-size: ^1.1.1
-    jest: ^29.7.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     mime-types: ^2.1.35
@@ -4842,7 +4775,6 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": ^39
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -4866,7 +4798,6 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/ir-sdk": ^39
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -4885,7 +4816,6 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/json-schema": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -4897,7 +4827,6 @@ __metadata:
     eslint: ^8.56.0
     execa: ^5.1.1
     immer: ^9.0.15
-    jest: ^29.7.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -4925,7 +4854,6 @@ __metadata:
     "@fern-fern/fiddle-sdk": 0.0.584
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@types/find-up": ^4.0.0
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -4939,7 +4867,6 @@ __metadata:
     esbuild: ^0.15.7
     eslint: ^8.56.0
     find-up: ^6.3.0
-    jest: ^29.7.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -4958,11 +4885,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/semver-utils@workspace:packages/cli/semver-utils"
   dependencies:
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     semver-diff: ^4.0.0
@@ -4977,7 +4902,6 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
@@ -4999,11 +4923,9 @@ __metadata:
   resolution: "@fern-api/task-context@workspace:packages/cli/task-context"
   dependencies:
     "@fern-api/logger": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -5019,7 +4941,6 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -5046,13 +4967,11 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -5091,7 +5010,6 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/fiddle-sdk": 0.0.584
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -5101,7 +5019,6 @@ __metadata:
     chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
     object-hash: ^3.0.0
@@ -5124,13 +5041,11 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     "@types/prettier": ^2.7.1
     chalk: ^5.3.0
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
@@ -5150,7 +5065,6 @@ __metadata:
     "@fern-fern/docs-config": 0.0.80
     "@fern-fern/legacy-docs-config": 0.0.58
     "@types/inquirer": ^9.0.7
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     chalk: ^5.3.0
@@ -5160,7 +5074,6 @@ __metadata:
     glob: ^8.0.3
     glob-promise: ^5.0.0
     inquirer: ^9.2.23
-    jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -5692,7 +5605,6 @@ __metadata:
   dependencies:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5716,7 +5628,6 @@ __metadata:
     "@fern-fern/ir-sdk": 53.4.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5734,11 +5645,9 @@ __metadata:
   dependencies:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-morph: ^15.1.0
@@ -5753,7 +5662,6 @@ __metadata:
   dependencies:
     "@babel/preset-env": ^7.24.3
     "@babel/preset-typescript": ^7.24.1
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     buffer: ^6.0.3
     depcheck: ^1.4.6
@@ -5771,7 +5679,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/base-core-utilities@workspace:generators/typescript/utils/core-utilities/base"
   dependencies:
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5789,7 +5696,6 @@ __metadata:
   dependencies:
     "@babel/preset-env": ^7.24.3
     "@babel/preset-typescript": ^7.24.1
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5814,7 +5720,6 @@ __metadata:
     "@fern-typescript/zurg": "workspace:*"
     "@types/decompress": ^4.2.7
     "@types/esutils": ^2.0.0
-    "@types/jest": ^29.5.12
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
@@ -5849,7 +5754,6 @@ __metadata:
     "@fern-fern/generator-exec-sdk": ^0.0.898
     "@fern-fern/ir-sdk": 53.4.0
     "@fern-typescript/commons": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5871,7 +5775,6 @@ __metadata:
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
     "@fern-typescript/union-generator": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5891,7 +5794,6 @@ __metadata:
     "@fern-fern/ir-sdk": 53.4.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5913,7 +5815,6 @@ __metadata:
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5934,7 +5835,6 @@ __metadata:
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5956,7 +5856,6 @@ __metadata:
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -5980,7 +5879,6 @@ __metadata:
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/express-generator": "workspace:*"
     "@ts-morph/common": ^0.23.0
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.4
@@ -6020,7 +5918,6 @@ __metadata:
     "@fern-typescript/type-reference-converters": "workspace:*"
     "@fern-typescript/type-reference-example-generator": "workspace:*"
     "@fern-typescript/type-schema-generator": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6040,7 +5937,6 @@ __metadata:
     "@fern-fern/ir-sdk": 53.4.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6060,7 +5956,6 @@ __metadata:
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6081,7 +5976,6 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -6104,7 +5998,6 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6145,7 +6038,6 @@ __metadata:
     prettier: ^2.7.1
     qs: 6.12.1
     typescript: 4.6.4
-    vitest: ^2.0.5
   languageName: unknown
   linkType: soft
 
@@ -6156,7 +6048,6 @@ __metadata:
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6176,7 +6067,6 @@ __metadata:
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6197,7 +6087,6 @@ __metadata:
     "@fern-fern/ir-sdk": 53.4.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6216,7 +6105,6 @@ __metadata:
   dependencies:
     "@fern-fern/ir-sdk": 53.4.0
     "@fern-typescript/commons": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6237,7 +6125,6 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6262,7 +6149,6 @@ __metadata:
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
     "@fern-typescript/union-schema-generator": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6283,7 +6169,6 @@ __metadata:
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6305,7 +6190,6 @@ __metadata:
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6330,7 +6214,6 @@ __metadata:
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/sdk-generator": "workspace:*"
     "@ts-morph/common": ^0.23.0
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.12
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.4
@@ -6378,7 +6261,6 @@ __metadata:
     "@fern-typescript/type-reference-converters": "workspace:*"
     "@fern-typescript/type-reference-example-generator": "workspace:*"
     "@fern-typescript/type-schema-generator": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/jest-specific-snapshot": ^0.5.9
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.12
@@ -6411,7 +6293,6 @@ __metadata:
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6432,7 +6313,6 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/union-generator": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6452,7 +6332,6 @@ __metadata:
     "@fern-fern/ir-sdk": 53.4.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6473,7 +6352,6 @@ __metadata:
     "@fern-fern/ir-sdk": 53.4.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6495,7 +6373,6 @@ __metadata:
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@fern-typescript/union-schema-generator": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6516,7 +6393,6 @@ __metadata:
     "@fern-fern/ir-sdk": 53.4.0
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6537,7 +6413,6 @@ __metadata:
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6554,7 +6429,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/utils@workspace:generators/typescript/utils/core-utilities/utils"
   dependencies:
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -6572,7 +6446,6 @@ __metadata:
   dependencies:
     "@babel/preset-env": ^7.24.3
     "@babel/preset-typescript": ^7.24.1
-    "@types/jest": ^29.5.12
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -13761,7 +13634,6 @@ env-cmd@toddbluhm/env-cmd:
     "@fern-fern/generator-exec-sdk": ^0.0.816
     "@fern-fern/ir-v39-sdk": ^0.0.1
     "@types/is-ci": ^3.0.4
-    "@types/jest": ^29.5.12
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
     "@typescript-eslint/eslint-plugin": ^5.27.1
@@ -13778,7 +13650,6 @@ env-cmd@toddbluhm/env-cmd:
     execa: ^5.1.1
     immer: ^9.0.15
     is-ci: ^3.0.1
-    jest: ^29.7.0
     jsonc-parser: ~3.3.0
     lint-staged: ^13.0.3
     lodash-es: ^4.17.21
