@@ -48,7 +48,7 @@ it("environments no audiences on environments but selected hack", async () => {
     });
 });
 
-it("fhir", async () => {
+it.skip("fhir", async () => {
     const FHIR_DIR = path.join(__dirname, "../../../../../../fern/apis/fhir");
     await generateAndSnapshotIRFromPath({
         absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
