@@ -839,6 +839,10 @@
                               "step": {
                                 "type": "string",
                                 "description": "The path to the request property for the page step."
+                              },
+                              "has-next-page": {
+                                "type": "string",
+                                "description": "The path to the response property indicating next page presence."
                               }
                             },
                             "required": ["offset", "results"],

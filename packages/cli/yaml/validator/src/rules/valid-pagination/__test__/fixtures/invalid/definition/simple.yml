@@ -6,6 +6,7 @@ types:
         type: integer
         docs: The totall number of /users
       data: list<User>
+      hasNextPage: boolean
       valid: boolean
 
   Page: 
@@ -70,6 +71,7 @@ service:
       pagination: 
         offset: $request.starting_after
         results: $response.data
+        has-next-page: $response.hasNextPage
       method: GET
       path: ""
       request: 
