@@ -128,6 +128,20 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getJTokenClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "JToken",
+            namespace: "Newtonsoft.Json.Linq"
+        });
+    }
+
+    public getFluentAssetionsJsonClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "",
+            namespace: "FluentAssertions.Json"
+        });
+    }
+
     public getCollectionItemSerializerReference(
         itemType: csharp.ClassReference,
         serializer: csharp.ClassReference
