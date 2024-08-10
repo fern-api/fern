@@ -64,7 +64,9 @@ export async function updateApiSpec({
                     if (generatorsYml.isRawProtobufAPIDefinitionSchema(api)) {
                         continue;
                     }
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const origin = (api as any)?.origin;
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     const path = (api as any)?.path;
                     if (typeof api !== "string" && origin != null && path != null) {
                         cliContext.logger.info(`Origin found, fetching spec from ${origin}`);
