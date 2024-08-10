@@ -1,5 +1,4 @@
 import { Project } from "@fern-api/project-loader";
-import { AbstractAPIWorkspace } from "@fern-api/workspace-loader/src/workspaces/AbstractAPIWorkspace";
 import { CliContext } from "../../cli-context/CliContext";
 import { validateAPIWorkspaceAndLogIssues } from "./validateAPIWorkspaceAndLogIssues";
 import { validateDocsWorkspaceAndLogIssues } from "./validateDocsWorkspaceAndLogIssues";
