@@ -16,7 +16,7 @@ export interface DocsWorkspace {
     config: docsYml.RawSchemas.DocsConfiguration;
 }
 
-export type Spec = OpenAPISpec | ProtobufSpec;
+export type Spec = OpenAPISpec | ProtobufSpec | FernDefinitionSpec;
 
 export interface OpenAPISpec {
     type: "openapi";
@@ -33,6 +33,11 @@ export interface ProtobufSpec {
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     generateLocally: boolean;
     settings?: SpecImportSettings;
+}
+
+export interface FernDefinitionSpec {
+    type: "fern";
+    absoluteFilepathToDefinitionDirectory: AbsoluteFilePath;
 }
 
 export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;

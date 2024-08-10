@@ -12,6 +12,7 @@ import {
     GeneratorInvocation,
     GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
+import { isRawFernAPIDefinitionSchema } from "./isRawFernAPIDefinitionSchema";
 import { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
@@ -110,6 +111,17 @@ async function parseAPIConfiguration(
                     asyncApiMessageNaming: undefined
                 }
             });
+        } else if (isRawFernAPIDefinitionSchema(apiConfiguration)) {
+            apiDefinitions.push({
+                schema: {
+                    type: "fern",
+                    path: apiConfiguration.fern
+                },
+                origin: undefined,
+                overrides: undefined,
+                audiences: [],
+                settings: undefined
+            });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
                 if (typeof definition === "string") {
@@ -138,11 +150,18 @@ async function parseAPIConfiguration(
                         origin: undefined,
                         overrides: definition.proto.overrides,
                         audiences: [],
-                        settings: {
-                            shouldUseTitleAsName: undefined,
-                            shouldUseUndiscriminatedUnionsWithLiterals: undefined,
-                            asyncApiMessageNaming: undefined
-                        }
+                        settings: undefined
+                    });
+                } else if (isRawFernAPIDefinitionSchema(definition)) {
+                    apiDefinitions.push({
+                        schema: {
+                            type: "fern",
+                            path: definition.fern
+                        },
+                        origin: undefined,
+                        overrides: undefined,
+                        audiences: [],
+                        settings: undefined
                     });
                 } else {
                     apiDefinitions.push({

@@ -38,7 +38,7 @@ export interface APIDefinitionLocation {
     settings: APIDefinitionSettings | undefined;
 }
 
-export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema;
+export type APIDefinitionSchema = ProtoAPIDefinitionSchema | OSSAPIDefinitionSchema | FernAPIDefinitionSchema;
 
 export interface ProtoAPIDefinitionSchema {
     type: "protobuf";
@@ -49,6 +49,11 @@ export interface ProtoAPIDefinitionSchema {
 
 export interface OSSAPIDefinitionSchema {
     type: "oss";
+    path: string;
+}
+
+export interface FernAPIDefinitionSchema {
+    type: "fern";
     path: string;
 }
 

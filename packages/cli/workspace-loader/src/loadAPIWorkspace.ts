@@ -86,49 +86,85 @@ export async function loadAPIWorkspace({
                     }
                 });
                 continue;
-            }
-            const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
-            if (!(await doesPathExist(absoluteFilepath))) {
-                return {
-                    didSucceed: false,
-                    failures: {
-                        [RelativeFilePath.of(definition.schema.path)]: {
-                            type: WorkspaceLoaderFailureType.FILE_MISSING
+            } else if (definition.schema.type === "fern") {
+                const absoluteFilepathToDefinitionDirectory = join(
+                    absolutePathToWorkspace,
+                    RelativeFilePath.of(definition.schema.path)
+                );
+                if (!(await doesPathExist(absoluteFilepathToDefinitionDirectory))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.path)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
                         }
-                    }
-                };
-            }
-            if (
-                definition.overrides != null &&
-                absoluteFilepathToOverrides != null &&
-                !(await doesPathExist(absoluteFilepathToOverrides))
-            ) {
-                return {
-                    didSucceed: false,
-                    failures: {
-                        [RelativeFilePath.of(definition.overrides)]: {
-                            type: WorkspaceLoaderFailureType.FILE_MISSING
-                        }
-                    }
-                };
-            }
-            specs.push({
-                type: "openapi",
-                absoluteFilepath,
-                absoluteFilepathToOverrides,
-                settings: {
-                    audiences: definition.audiences ?? [],
-                    shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
-                    shouldUseUndiscriminatedUnionsWithLiterals:
-                        definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
-                    asyncApiNaming: definition.settings?.asyncApiMessageNaming
-                },
-                source: {
-                    type: "openapi",
-                    file: absoluteFilepath
+                    };
                 }
-            });
+                specs.push({
+                    type: "fern",
+                    absoluteFilepathToDefinitionDirectory
+                });
+            } else {
+                const absoluteFilepath = join(absolutePathToWorkspace, RelativeFilePath.of(definition.schema.path));
+                if (!(await doesPathExist(absoluteFilepath))) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.schema.path)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
+                        }
+                    };
+                }
+                if (
+                    definition.overrides != null &&
+                    absoluteFilepathToOverrides != null &&
+                    !(await doesPathExist(absoluteFilepathToOverrides))
+                ) {
+                    return {
+                        didSucceed: false,
+                        failures: {
+                            [RelativeFilePath.of(definition.overrides)]: {
+                                type: WorkspaceLoaderFailureType.FILE_MISSING
+                            }
+                        }
+                    };
+                }
+                specs.push({
+                    type: "openapi",
+                    absoluteFilepath,
+                    absoluteFilepathToOverrides,
+                    settings: {
+                        audiences: definition.audiences ?? [],
+                        shouldUseTitleAsName: definition.settings?.shouldUseTitleAsName ?? true,
+                        shouldUseUndiscriminatedUnionsWithLiterals:
+                            definition.settings?.shouldUseUndiscriminatedUnionsWithLiterals ?? false,
+                        asyncApiNaming: definition.settings?.asyncApiMessageNaming
+                    },
+                    source: {
+                        type: "openapi",
+                        file: absoluteFilepath
+                    }
+                });
+            }
         }
+
+        if (specs[0]?.type === "fern") {
+            const fernWorkspace = new LazyFernWorkspace({
+                absoluteFilepath: specs[0].absoluteFilepathToDefinitionDirectory,
+                generatorsConfiguration,
+                workspaceName,
+                changelog,
+                context,
+                cliVersion
+            });
+            return {
+                didSucceed: true,
+                workspace: fernWorkspace
+            };
+        }
+
         return {
             didSucceed: true,
             workspace: new OSSWorkspace({

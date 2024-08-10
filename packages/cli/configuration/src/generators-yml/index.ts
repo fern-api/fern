@@ -18,7 +18,8 @@ export {
     loadGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
 } from "./loadGeneratorsConfiguration";
-export { type APIConfigurationSchema, type ProtobufAPIDefinitionSchema } from "./schemas/APIConfigurationSchema";
+export { type APIConfigurationSchema } from "./schemas/APIConfigurationSchema";
+export { type ProtobufAPIDefinitionSchema } from "./schemas/apis/ProtobufDefinitionSchema";
 export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 export { type GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 export {

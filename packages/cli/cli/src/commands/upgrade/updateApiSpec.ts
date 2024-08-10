@@ -64,11 +64,13 @@ export async function updateApiSpec({
                     if (generatorsYml.isRawProtobufAPIDefinitionSchema(api)) {
                         continue;
                     }
-                    if (typeof api !== "string" && api.origin != null) {
-                        cliContext.logger.info(`Origin found, fetching spec from ${api.origin}`);
+                    const origin = (api as any)?.origin;
+                    const path = (api as any)?.path;
+                    if (typeof api !== "string" && origin != null && path != null) {
+                        cliContext.logger.info(`Origin found, fetching spec from ${origin}`);
                         await fetchAndWriteFile(
-                            api.origin,
-                            join(workspace.absoluteFilepath, RelativeFilePath.of(api.path)),
+                            origin,
+                            join(workspace.absoluteFilepath, RelativeFilePath.of(path)),
                             cliContext.logger
                         );
                     }
