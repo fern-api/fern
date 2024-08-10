@@ -654,18 +654,37 @@ export class ApiReferenceNodeConverter {
         playgroundSettings?: docsYml.RawSchemas.PlaygroundSettings
     ): FernNavigation.PlaygroundSettings | undefined {
         if (playgroundSettings) {
+            const maybeApiSpecificationEnvironments = this.workspace.definition.rootApiFile.contents.environments;
+            if (!maybeApiSpecificationEnvironments) {
+                this.taskContext.logger.error(
+                    "Cannot specify playground environments if there are no environments supplied in the API specification."
+                );
+            } else {
+                const validEnvironmentIds = Object.keys(maybeApiSpecificationEnvironments);
+                playgroundSettings.environments?.forEach((environment) => {
+                    if (!validEnvironmentIds.includes(environment)) {
+                        this.taskContext.logger.error(
+                            `Invalid environment id supplied in playground settings: ${environment}`
+                        );
+                    }
+                });
+            }
+
             return {
                 environments:
-                    playgroundSettings.environments &&
-                    playgroundSettings.environments.map((environmentId) => FernNavigation.EnvironmentId(environmentId)),
+                    playgroundSettings.environments && playgroundSettings.environments.length > 0
+                        ? playgroundSettings.environments.map((environmentId) =>
+                              FernNavigation.EnvironmentId(environmentId)
+                          )
+                        : undefined,
                 button:
-                    playgroundSettings.button && playgroundSettings.button.href
+                    playgroundSettings.button != null && playgroundSettings.button.href
                         ? { href: FernNavigation.Url(playgroundSettings.button.href) }
                         : undefined
             };
-        } else {
-            return undefined;
         }
+
+        return;
     }
 
     private mergeEndpointPairs(children: FernNavigation.ApiPackageChild[]): FernNavigation.ApiPackageChild[] {
