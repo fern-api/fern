@@ -6,11 +6,11 @@ using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
-public class AuthClient
+public partial class AuthClient
 {
     private RawClient _client;
 
-    public AuthClient(RawClient client)
+    internal AuthClient(RawClient client)
     {
         _client = client;
     }

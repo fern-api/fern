@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improvement: Get better Unit Testing JSON comparison results by using `FluentAssertions`.
 
+## [0.11.0 - 2024-08-09]
+
+- Improvement: Mark internal files `internal`.
+- Improvement: Make all client classes `Partial`.
+- Improvement: Don't override `toString` on Exceptions
+
 ## [0.10.0 - 2024-08-07]
 
 - Fix: Fix a bug where conflicting class names and namespaces cause compile to fail.

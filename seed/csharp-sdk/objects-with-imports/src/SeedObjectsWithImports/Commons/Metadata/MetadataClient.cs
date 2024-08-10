@@ -4,11 +4,11 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports.Commons;
 
-public class MetadataClient
+public partial class MetadataClient
 {
     private RawClient _client;
 
-    public MetadataClient(RawClient client)
+    internal MetadataClient(RawClient client)
     {
         _client = client;
     }

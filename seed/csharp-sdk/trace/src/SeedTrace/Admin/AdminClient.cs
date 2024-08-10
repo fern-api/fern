@@ -5,11 +5,11 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public class AdminClient
+public partial class AdminClient
 {
     private RawClient _client;
 
-    public AdminClient(RawClient client)
+    internal AdminClient(RawClient client)
     {
         _client = client;
     }

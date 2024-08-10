@@ -6,11 +6,11 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
-public class UsersClient
+public partial class UsersClient
 {
     private RawClient _client;
 
-    public UsersClient(RawClient client)
+    internal UsersClient(RawClient client)
     {
         _client = client;
     }

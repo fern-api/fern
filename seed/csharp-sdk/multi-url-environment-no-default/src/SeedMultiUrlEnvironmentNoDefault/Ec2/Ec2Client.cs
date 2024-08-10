@@ -5,11 +5,11 @@ using SeedMultiUrlEnvironmentNoDefault.Core;
 
 namespace SeedMultiUrlEnvironmentNoDefault;
 
-public class Ec2Client
+public partial class Ec2Client
 {
     private RawClient _client;
 
-    public Ec2Client(RawClient client)
+    internal Ec2Client(RawClient client)
     {
         _client = client;
     }

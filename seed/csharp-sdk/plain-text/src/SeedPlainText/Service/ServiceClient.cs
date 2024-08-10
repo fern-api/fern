@@ -5,11 +5,11 @@ using SeedPlainText.Core;
 
 namespace SeedPlainText;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }

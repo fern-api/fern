@@ -6,11 +6,11 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
 
-public class OptionalClient
+public partial class OptionalClient
 {
     private RawClient _client;
 
-    public OptionalClient(RawClient client)
+    internal OptionalClient(RawClient client)
     {
         _client = client;
     }

@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace SeedIdempotencyHeaders.Core;
 
-public class DateTimeSerializer : JsonConverter<DateTime>
+internal class DateTimeSerializer : JsonConverter<DateTime>
 {
     public override DateTime Read(
         ref Utf8JsonReader reader,
