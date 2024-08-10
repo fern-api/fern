@@ -819,6 +819,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "FindBlocksResponseTransitioned",
                 "groupName": null,
                 "key": {
@@ -974,6 +975,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "commonProperties": [],
                     "description": null,
                     "discriminantProperty": "type",
+                    "encoding": null,
                     "generatedName": "FindBlocksResponseFieldsItem",
                     "groupName": null,
                     "nameOverride": null,
@@ -2891,6 +2893,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "schema": {
                           "availability": null,
                           "description": null,
+                          "encoding": null,
                           "generatedName": "GetFlowResponseBlocksItemTransitioned",
                           "groupName": null,
                           "key": {
@@ -3046,6 +3049,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "commonProperties": [],
                               "description": null,
                               "discriminantProperty": "type",
+                              "encoding": null,
                               "generatedName": "GetFlowResponseBlocksItemFieldsItem",
                               "groupName": null,
                               "nameOverride": null,

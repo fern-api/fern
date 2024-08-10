@@ -11728,6 +11728,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11740,6 +11741,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11752,6 +11754,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11764,6 +11767,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11776,6 +11780,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11788,6 +11793,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11800,6 +11806,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11812,6 +11819,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11824,6 +11832,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11836,6 +11845,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11848,6 +11858,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11860,6 +11871,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11872,6 +11884,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -11884,6 +11897,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12164,6 +12178,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12188,6 +12203,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12200,6 +12216,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12214,6 +12231,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12226,6 +12244,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12241,6 +12260,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12282,6 +12302,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12294,6 +12315,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12306,6 +12328,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12318,6 +12341,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12330,6 +12354,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12342,6 +12367,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12354,6 +12380,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12397,6 +12424,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12418,6 +12446,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12439,6 +12468,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12451,6 +12481,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12463,6 +12494,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12477,6 +12509,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12489,6 +12522,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12504,6 +12538,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12516,6 +12551,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12528,6 +12564,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12631,6 +12668,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12643,6 +12681,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12655,6 +12694,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12667,6 +12707,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12679,6 +12720,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12837,6 +12879,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12849,6 +12892,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12861,6 +12905,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12873,6 +12918,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12885,6 +12931,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12897,6 +12944,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12909,6 +12957,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12921,6 +12970,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12944,6 +12994,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12956,6 +13007,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12968,6 +13020,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12980,6 +13033,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -12992,6 +13046,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13004,6 +13059,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13018,6 +13074,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13030,6 +13087,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13045,6 +13103,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13057,6 +13116,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13069,6 +13129,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13092,6 +13153,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13104,6 +13166,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13116,6 +13179,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13135,6 +13199,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13147,6 +13212,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13159,6 +13225,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13171,6 +13238,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13183,6 +13251,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13195,6 +13264,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13207,6 +13277,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13219,6 +13290,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13231,6 +13303,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13243,6 +13316,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13255,6 +13329,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13267,6 +13342,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13279,6 +13355,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13291,6 +13368,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13303,6 +13381,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13315,6 +13394,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13327,6 +13407,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13339,6 +13420,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13351,6 +13433,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13451,7 +13534,10 @@ Some entities, such as Organizations, may contain members that exist without any
       "Identity": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": [
           "map<string, unknown>",
           "KratosIdentity",
@@ -13472,6 +13558,7 @@ Some entities, such as Organizations, may contain members that exist without any
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13718,6 +13805,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13730,6 +13818,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13742,6 +13831,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13754,6 +13844,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13766,6 +13857,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13778,6 +13870,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13790,6 +13883,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13802,6 +13896,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13814,6 +13909,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -13826,6 +13922,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14074,6 +14171,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14086,6 +14184,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14098,6 +14197,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14110,6 +14210,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14132,6 +14233,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14145,6 +14247,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14157,6 +14260,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14169,6 +14273,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14181,6 +14286,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14204,6 +14310,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14216,6 +14323,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14247,6 +14355,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14259,6 +14368,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14271,6 +14381,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14285,6 +14396,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14297,6 +14409,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14312,6 +14425,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14722,6 +14836,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14734,6 +14849,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14746,6 +14862,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14760,6 +14877,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14772,6 +14890,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14787,6 +14906,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14799,6 +14919,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14849,6 +14970,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14861,6 +14983,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14873,6 +14996,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14885,6 +15009,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14897,6 +15022,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14909,6 +15035,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14921,6 +15048,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14933,6 +15061,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14945,6 +15074,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14957,6 +15087,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14969,6 +15100,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14981,6 +15113,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -14993,6 +15126,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15005,6 +15139,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15193,6 +15328,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15205,6 +15341,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15217,6 +15354,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15231,6 +15369,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15243,6 +15382,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15258,6 +15398,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15486,6 +15627,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15498,6 +15640,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15521,6 +15664,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15533,6 +15677,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15545,6 +15690,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15557,6 +15703,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15569,6 +15716,7 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -15620,7 +15768,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -25161,6 +25312,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -25799,6 +25951,7 @@ This may be combined with \`remove_all\` to replace the member's entire role lis
         "base-properties": {},
         "discriminant": "reason",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "rightbrain/openapi.yml",
         },
@@ -25899,7 +26052,10 @@ Some entities, such as Organizations, may contain members that exist without any
       "Identity": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": [
           "map<string, unknown>",
           "KratosIdentity",
@@ -27308,7 +27464,10 @@ https://github.com/ory/kratos/blob/master/selfservice/hook/web_hook.go",
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rightbrain/openapi.yml",
+        },
         "union": [
           "string",
           "integer",

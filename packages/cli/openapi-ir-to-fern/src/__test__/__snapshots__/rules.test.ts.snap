@@ -41,7 +41,10 @@ exports[`rules rules docs 1`] = `
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
         "union": [
           "Schema",
           "GetExampleResponseMessage",
@@ -173,7 +176,10 @@ exports[`rules rules simple 1`] = `
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
         "union": [
           "Schema",
           "GetExampleResponseMessage",

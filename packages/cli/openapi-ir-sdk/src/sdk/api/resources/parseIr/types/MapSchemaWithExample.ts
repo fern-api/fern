@@ -8,7 +8,8 @@ export interface MapSchemaWithExample
     extends FernOpenapiIr.WithSdkGroupName,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithDescription,
-        FernOpenapiIr.WithAvailability {
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithEncoding {
     key: FernOpenapiIr.PrimitiveSchemaWithExample;
     value: FernOpenapiIr.SchemaWithExample;
     example: unknown | undefined;

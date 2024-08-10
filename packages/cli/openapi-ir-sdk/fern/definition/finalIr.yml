@@ -593,6 +593,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithEncoding
     properties:
       key: PrimitiveSchema
       value: Schema
@@ -670,6 +671,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithEncoding
       - commons.WithSource
     properties:
       discriminantProperty: string
@@ -687,6 +689,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithEncoding
       - commons.WithSource
     properties:
       schemas: list<Schema>

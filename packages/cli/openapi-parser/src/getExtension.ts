@@ -1,6 +1,6 @@
+import { Logger } from "@fern-api/logger";
 import { compact } from "lodash-es";
 import { z } from "zod";
-import { AbstractOpenAPIV3ParserContext } from "./openapi/v3/AbstractOpenAPIV3ParserContext";
 import { OpenAPIExtension } from "./openapi/v3/extensions/extensions";
 import { FernOpenAPIExtension } from "./openapi/v3/extensions/fernExtensions";
 import { TypedExtensionId } from "./openapi/v3/extensions/id";
@@ -37,7 +37,7 @@ export function getExtensionAndValidate<T>(
     object: object,
     extension: Extension<T>,
     schema: z.ZodSchema,
-    context: AbstractOpenAPIV3ParserContext,
+    logger: Logger,
     breadcrumbs: string | string[] = []
 ): T | undefined {
     try {
@@ -47,7 +47,7 @@ export function getExtensionAndValidate<T>(
         }
     } catch (e) {
         const breadcrumb = compact(breadcrumbs).join(" -> ");
-        context.logger.error(`${breadcrumb.length > 0 ? `${breadcrumb}: ` : ""}Failed to parse ${extension}`);
+        logger.error(`${breadcrumb.length > 0 ? `${breadcrumb}: ` : ""}Failed to parse ${extension}`);
     }
     return undefined;
 }

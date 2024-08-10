@@ -228,6 +228,7 @@ export function getSchemaFromFernType({
                           description,
                           availability,
                           groupName,
+                          encoding: undefined,
                           example: undefined
                       })
                     : undefined,

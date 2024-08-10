@@ -4,27 +4,33 @@ import { ResolvedSource } from "../resolvers/ResolvedSource";
 import { CASINGS_GENERATOR } from "../utils/getAllPropertiesForObject";
 import { convertProtobufFile } from "./convertProtobufFile";
 
-export function convertProtobufType({
-    source,
+export function convertSourceToProtobufType({
     name,
-    encoding
+    source
 }: {
-    source: ResolvedSource.Protobuf;
     name: string;
-    encoding: RawSchemas.EncodingSchema | undefined;
+    source: ResolvedSource.Protobuf;
 }): ProtobufType {
-    if (encoding != null && encoding.proto != null && encoding.proto.type != null) {
-        const wellKnownType = maybeConvertWellKnownProtobufType({ type: encoding.proto.type });
-        if (wellKnownType != null) {
-            return wellKnownType;
-        }
-    }
     return ProtobufType.userDefined({
         file: convertProtobufFile({ source }),
         // Use the global casings generator so that the name is not
         // affected by the user's casing settings (e.g. smart-casing).
         name: CASINGS_GENERATOR.generateName(name)
     });
+}
+
+export function maybeConvertEncodingToProtobufType({
+    encoding
+}: {
+    encoding: RawSchemas.EncodingSchema;
+}): ProtobufType | undefined {
+    if (encoding.proto != null && encoding.proto.type != null) {
+        const wellKnownType = maybeConvertWellKnownProtobufType({ type: encoding.proto.type });
+        if (wellKnownType != null) {
+            return wellKnownType;
+        }
+    }
+    return undefined;
 }
 
 function maybeConvertWellKnownProtobufType({ type }: { type: string }): ProtobufType | undefined {

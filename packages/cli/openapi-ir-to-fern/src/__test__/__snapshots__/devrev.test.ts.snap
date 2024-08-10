@@ -4162,6 +4162,7 @@ login screen as a login option.
         "docs": "Connection object that specifies the configuration for an
 authentication connection that is set up for a Dev organization.
 ",
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -4582,6 +4583,7 @@ it would appear on the login button as 'Log in to abclogin'.
         "discriminant": "type",
         "docs": "Request to create a new enterprise authentication connection.
 ",
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -4664,6 +4666,7 @@ it would appear on the login button as 'Log in to abclogin'.
         "docs": "Request to update an enterprise authentication connection for a Dev
 organization.
 ",
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -5169,6 +5172,7 @@ always be returned in the specified sort-by order.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -5227,6 +5231,7 @@ always be returned in the specified sort-by order.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -5265,6 +5270,7 @@ always be returned in the specified sort-by order.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -5379,6 +5385,7 @@ sort order. If not set, then no prior elements exist.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -5736,6 +5743,7 @@ will appear in the response.
         },
         "discriminant": "type",
         "docs": "The request to create a timeline entry for an object.",
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -5816,6 +5824,7 @@ sort order. If not set, then no prior elements exist.
         },
         "discriminant": "type",
         "docs": "The request to update a timeline entry.",
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -5880,6 +5889,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -5969,6 +5979,7 @@ default visibility.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -6282,6 +6293,7 @@ issues.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -6408,6 +6420,7 @@ sort order. If not set, then no prior elements exist.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -6540,6 +6553,7 @@ empty.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -6641,6 +6655,7 @@ unique.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -9350,6 +9365,7 @@ login screen as a login option.
         "docs": "Connection object that specifies the configuration for an
 authentication connection that is set up for a Dev organization.
 ",
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -9770,6 +9786,7 @@ it would appear on the login button as 'Log in to abclogin'.
         "discriminant": "type",
         "docs": "Request to create a new enterprise authentication connection.
 ",
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -9852,6 +9869,7 @@ it would appear on the login button as 'Log in to abclogin'.
         "docs": "Request to update an enterprise authentication connection for a Dev
 organization.
 ",
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -10357,6 +10375,7 @@ always be returned in the specified sort-by order.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -10415,6 +10434,7 @@ always be returned in the specified sort-by order.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -10453,6 +10473,7 @@ always be returned in the specified sort-by order.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -10567,6 +10588,7 @@ sort order. If not set, then no prior elements exist.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -10924,6 +10946,7 @@ will appear in the response.
         },
         "discriminant": "type",
         "docs": "The request to create a timeline entry for an object.",
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -11004,6 +11027,7 @@ sort order. If not set, then no prior elements exist.
         },
         "discriminant": "type",
         "docs": "The request to update a timeline entry.",
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -11068,6 +11092,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -11157,6 +11182,7 @@ default visibility.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -11470,6 +11496,7 @@ issues.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -11596,6 +11623,7 @@ sort order. If not set, then no prior elements exist.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -11728,6 +11756,7 @@ empty.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },
@@ -11829,6 +11858,7 @@ unique.
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "devrev/openapi.yml",
         },

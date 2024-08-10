@@ -175,6 +175,7 @@ types:
       - commons.WithName
       - commons.WithDescription
       - commons.WithAvailability
+      - commons.WithEncoding
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
@@ -263,6 +264,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithEncoding
       - commons.WithSource
     properties:
       discriminantProperty: string
@@ -280,6 +282,7 @@ types:
       - commons.WithName
       - commons.WithSdkGroupName
       - commons.WithAvailability
+      - commons.WithEncoding
       - commons.WithSource
     properties:
       schemas: list<SchemaWithExample>

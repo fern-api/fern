@@ -75,6 +75,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "Conversation",
         "groupName": null,
         "nameOverride": null,

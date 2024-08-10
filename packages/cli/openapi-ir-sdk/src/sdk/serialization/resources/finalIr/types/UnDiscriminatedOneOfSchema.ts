@@ -17,6 +17,7 @@ export const UnDiscriminatedOneOfSchema: core.serialization.ObjectSchema<
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithEncoding))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace UnDiscriminatedOneOfSchema {
@@ -25,6 +26,7 @@ export declare namespace UnDiscriminatedOneOfSchema {
             serializers.WithName.Raw,
             serializers.WithSdkGroupName.Raw,
             serializers.WithAvailability.Raw,
+            serializers.WithEncoding.Raw,
             serializers.WithSource.Raw {
         schemas: serializers.Schema.Raw[];
     }

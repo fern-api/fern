@@ -40724,6 +40724,7 @@ exports[`open api parser deel parse open api 1`] = `
       "value": {
         "availability": null,
         "description": "Search form should include parameters varied based on usage of cursor for pagination. NOTE: that all query parameters are based on strings",
+        "encoding": null,
         "generatedName": "ContractSearchForm",
         "groupName": null,
         "nameOverride": null,
@@ -40755,7 +40756,10 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "reference",
           },
         ],
-        "source": null,
+        "source": {
+          "file": "deel/openapi.yml",
+          "type": "openapi",
+        },
         "type": "undisciminated",
       },
     },
@@ -40930,6 +40934,7 @@ exports[`open api parser deel parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ContractSearchFormWithoutCursorTypes",
                 "groupName": null,
                 "nameOverride": null,
@@ -40961,7 +40966,10 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "deel/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -40986,6 +40994,7 @@ exports[`open api parser deel parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ContractSearchFormWithoutCursorStatuses",
                 "groupName": null,
                 "nameOverride": null,
@@ -41017,7 +41026,10 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "deel/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -41106,6 +41118,7 @@ exports[`open api parser deel parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ContractSearchFormWithoutCursorCountries",
                 "groupName": null,
                 "nameOverride": null,
@@ -41137,7 +41150,10 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "deel/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -41162,6 +41178,7 @@ exports[`open api parser deel parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ContractSearchFormWithoutCursorCurrencies",
                 "groupName": null,
                 "nameOverride": null,
@@ -41193,7 +41210,10 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "deel/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -41910,6 +41930,7 @@ exports[`open api parser deel parse open api 1`] = `
       "value": {
         "availability": null,
         "description": null,
+        "encoding": null,
         "generatedName": "ContractToCreate",
         "groupName": null,
         "nameOverride": null,
@@ -41967,7 +41988,10 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "reference",
           },
         ],
-        "source": null,
+        "source": {
+          "file": "deel/openapi.yml",
+          "type": "openapi",
+        },
         "type": "undisciminated",
       },
     },
@@ -53615,6 +53639,7 @@ exports[`open api parser deel parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ExchangeRatesRates",
               "groupName": null,
               "key": {
@@ -55649,6 +55674,7 @@ exports[`open api parser deel parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "HrisDirectEmployeeJobInformation",
               "groupName": null,
               "nameOverride": null,
@@ -55680,7 +55706,10 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "deel/openapi.yml",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -55720,6 +55749,7 @@ exports[`open api parser deel parse open api 1`] = `
               "commonProperties": [],
               "description": null,
               "discriminantProperty": "employment_type",
+              "encoding": null,
               "generatedName": "HrisDirectEmployeeContract",
               "groupName": null,
               "nameOverride": null,
@@ -58336,6 +58366,7 @@ exports[`open api parser deel parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "InvoiceAdjustmentSearchContainerContractTypes",
                 "groupName": null,
                 "nameOverride": null,
@@ -58367,7 +58398,10 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "deel/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -58392,6 +58426,7 @@ exports[`open api parser deel parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "InvoiceAdjustmentSearchContainerTypes",
                 "groupName": null,
                 "nameOverride": null,
@@ -58423,7 +58458,10 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "deel/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -58448,6 +58486,7 @@ exports[`open api parser deel parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "InvoiceAdjustmentSearchContainerStatuses",
                 "groupName": null,
                 "nameOverride": null,
@@ -58479,7 +58518,10 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "deel/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -70373,6 +70415,7 @@ exports[`open api parser deel parse open api 1`] = `
         "value": {
           "availability": null,
           "description": "ID of an existing timesheet record",
+          "encoding": null,
           "generatedName": "TimesheetIdItemsItem",
           "groupName": null,
           "nameOverride": null,
@@ -70411,7 +70454,10 @@ exports[`open api parser deel parse open api 1`] = `
               "type": "primitive",
             },
           ],
-          "source": null,
+          "source": {
+            "file": "deel/openapi.yml",
+            "type": "openapi",
+          },
           "type": "undisciminated",
         },
       },
@@ -71023,6 +71069,7 @@ exports[`open api parser deel parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TimesheetSearchContainerContractTypes",
                 "groupName": null,
                 "nameOverride": null,
@@ -71054,7 +71101,10 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "deel/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -71079,6 +71129,7 @@ exports[`open api parser deel parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TimesheetSearchContainerTypes",
                 "groupName": null,
                 "nameOverride": null,
@@ -71110,7 +71161,10 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "deel/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -71135,6 +71189,7 @@ exports[`open api parser deel parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TimesheetSearchContainerStatuses",
                 "groupName": null,
                 "nameOverride": null,
@@ -71166,7 +71221,10 @@ exports[`open api parser deel parse open api 1`] = `
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "deel/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -71640,6 +71698,7 @@ exports[`open api parser deel parse open api 1`] = `
       "value": {
         "availability": null,
         "description": "Unique identifier of this resource.",
+        "encoding": null,
         "generatedName": "UniqueObjectIdentifier",
         "groupName": null,
         "nameOverride": null,
@@ -71678,7 +71737,10 @@ exports[`open api parser deel parse open api 1`] = `
             "type": "primitive",
           },
         ],
-        "source": null,
+        "source": {
+          "file": "deel/openapi.yml",
+          "type": "openapi",
+        },
         "type": "undisciminated",
       },
     },

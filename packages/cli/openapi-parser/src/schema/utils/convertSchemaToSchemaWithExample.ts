@@ -100,6 +100,7 @@ export function convertSchemaToSchemaWithExample(schema: Schema): SchemaWithExam
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
+                encoding: schema.encoding,
                 example: undefined
             });
         case "reference":
@@ -201,6 +202,7 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                     })
                 ),
                 groupName: oneOfSchema.groupName,
+                encoding: oneOfSchema.encoding,
                 source: oneOfSchema.source
             });
         case "undisciminated":
@@ -211,6 +213,7 @@ function convertToOneOf(oneOfSchema: OneOfSchema): OneOfSchemaWithExample {
                 nameOverride: oneOfSchema.nameOverride,
                 schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaToSchemaWithExample(oneOfSchema)),
                 groupName: oneOfSchema.groupName,
+                encoding: oneOfSchema.encoding,
                 source: oneOfSchema.source
             });
         default:

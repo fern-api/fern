@@ -1021,6 +1021,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "hume/openapi.yaml",
         },
@@ -1067,6 +1068,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "base-properties": {},
         "discriminant": "status",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "hume/openapi.yaml",
         },
@@ -2280,6 +2282,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "hume/openapi.yaml",
         },
@@ -2326,6 +2329,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "base-properties": {},
         "discriminant": "status",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "hume/openapi.yaml",
         },
