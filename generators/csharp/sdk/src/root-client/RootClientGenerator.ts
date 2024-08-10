@@ -60,12 +60,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             name: this.context.getRootClientClassName(),
             namespace: this.context.getNamespace(),
             partial: true,
-            access: "internal"
+            access: "public"
         });
 
         class_.addField(
             csharp.field({
-                access: "public",
+                access: "private",
                 name: "_client",
                 type: csharp.Type.reference(this.context.getRawClientClassReference())
             })
