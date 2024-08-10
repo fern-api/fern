@@ -2,10 +2,11 @@ import { docsYml } from "@fern-api/configuration";
 import { parseImagePaths, replaceReferencedCode, replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { NodePath } from "@fern-api/yaml-schema/src/NodePath";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-import { NodePath } from "../NodePath";
+import { APIWorkspaceLoader } from "./APIWorkspaceLoader";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 
@@ -14,7 +15,8 @@ export async function visitDocsConfigFileYamlAst(
     visitor: Partial<DocsConfigFileAstVisitor>,
     absoluteFilepathToConfiguration: AbsoluteFilePath,
     absolutePathToFernFolder: AbsoluteFilePath,
-    context: TaskContext
+    context: TaskContext,
+    loadAPIWorkspace: APIWorkspaceLoader
 ): Promise<void> {
     await visitor.file?.(
         {
@@ -181,7 +183,8 @@ export async function visitDocsConfigFileYamlAst(
             navigation: contents.navigation,
             visitor,
             nodePath: ["navigation"],
-            absoluteFilepathToConfiguration
+            absoluteFilepathToConfiguration,
+            loadAPIWorkspace
         });
     }
 
@@ -266,7 +269,8 @@ export async function visitDocsConfigFileYamlAst(
                         navigation: parsedVersionFile.contents.navigation,
                         visitor,
                         nodePath: ["navigation"],
-                        absoluteFilepathToConfiguration: absoluteFilepath
+                        absoluteFilepathToConfiguration: absoluteFilepath,
+                        loadAPIWorkspace
                     });
                 }
             })
@@ -302,12 +306,14 @@ async function visitNavigation({
     navigation,
     visitor,
     nodePath,
-    absoluteFilepathToConfiguration
+    absoluteFilepathToConfiguration,
+    loadAPIWorkspace
 }: {
     navigation: docsYml.RawSchemas.NavigationConfig;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
+    loadAPIWorkspace: APIWorkspaceLoader;
 }): Promise<void> {
     if (navigationConfigIsTabbed(navigation)) {
         await Promise.all(
@@ -319,7 +325,8 @@ async function visitNavigation({
                                 navigationItem: item,
                                 visitor,
                                 nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
-                                absoluteFilepathToConfiguration
+                                absoluteFilepathToConfiguration,
+                                loadAPIWorkspace
                             });
                         })
                     );
@@ -333,7 +340,8 @@ async function visitNavigation({
                     navigationItem: item,
                     visitor,
                     nodePath: [...nodePath, `${itemIdx}`],
-                    absoluteFilepathToConfiguration
+                    absoluteFilepathToConfiguration,
+                    loadAPIWorkspace
                 });
             })
         );
@@ -344,12 +352,14 @@ async function visitNavigationItem({
     navigationItem,
     visitor,
     nodePath,
-    absoluteFilepathToConfiguration
+    absoluteFilepathToConfiguration,
+    loadAPIWorkspace
 }: {
     navigationItem: docsYml.RawSchemas.NavigationItem;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
+    loadAPIWorkspace: APIWorkspaceLoader;
 }): Promise<void> {
     if (navigationItemIsPage(navigationItem)) {
         await visitFilepath({
@@ -380,10 +390,24 @@ async function visitNavigationItem({
                     navigationItem: item,
                     visitor,
                     nodePath: [...nodePath, "section", "contents", `${itemIdx}`],
-                    absoluteFilepathToConfiguration
+                    absoluteFilepathToConfiguration,
+                    loadAPIWorkspace
                 });
             })
         );
+    }
+
+    if (navigationItemIsApi(navigationItem)) {
+        const workspace = loadAPIWorkspace(navigationItem.apiName != null ? navigationItem.apiName : undefined);
+        if (workspace != null) {
+            await visitor.apiSection?.(
+                {
+                    config: navigationItem,
+                    workspace
+                },
+                [...nodePath, "api"]
+            );
+        }
     }
 }
 
@@ -421,6 +445,13 @@ function navigationItemIsSection(
 ): item is docsYml.RawSchemas.SectionConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (item as docsYml.RawSchemas.SectionConfiguration).section != null;
+}
+
+function navigationItemIsApi(
+    item: docsYml.RawSchemas.NavigationItem
+): item is docsYml.RawSchemas.ApiReferenceConfiguration {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    return (item as docsYml.RawSchemas.ApiReferenceConfiguration).api != null;
 }
 
 function navigationConfigIsTabbed(

@@ -1,4 +1,5 @@
 import { Project } from "@fern-api/project-loader";
+import { AbstractAPIWorkspace } from "@fern-api/workspace-loader/src/workspaces/AbstractAPIWorkspace";
 import { CliContext } from "../../cli-context/CliContext";
 import { validateAPIWorkspaceAndLogIssues } from "./validateAPIWorkspaceAndLogIssues";
 import { validateDocsWorkspaceAndLogIssues } from "./validateDocsWorkspaceAndLogIssues";
@@ -15,7 +16,12 @@ export async function validateWorkspaces({
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-            await validateDocsWorkspaceAndLogIssues({ workspace: docsWorkspace, context, logWarnings });
+            await validateDocsWorkspaceAndLogIssues({
+                workspace: docsWorkspace,
+                context,
+                logWarnings,
+                loadAPIWorkspace: project.loadAPIWorkspace
+            });
         });
     }
 

@@ -3841,12 +3841,15 @@ __metadata:
   resolution: "@fern-api/docs-validator@workspace:packages/cli/yaml/docs-validator"
   dependencies:
     "@fern-api/configuration": "workspace:*"
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/docs-markdown-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
     "@types/jest": ^29.5.12
+    "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     "@types/tinycolor2": ^1.4.6
     chardet: ^2.0.0
@@ -3854,6 +3857,7 @@ __metadata:
     eslint: ^8.56.0
     file-type: ^19.0.0
     jest: ^29.7.0
+    js-yaml: ^4.1.0
     next-mdx-remote: ^5.0.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
