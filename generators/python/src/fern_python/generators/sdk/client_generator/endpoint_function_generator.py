@@ -31,7 +31,6 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url_property_name,
 )
 from fern_python.snippet import SnippetWriter
-from fern_python.source_file_factory import SourceFileFactory
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from .generated_root_client import GeneratedRootClient
@@ -662,7 +661,7 @@ class EndpointFunctionGenerator:
                 # Include a dashed line between the endpoint snippet and the rest of the docs, if any.
                 writer.write_line("Examples")
                 writer.write_line("--------")
-                source_file = SourceFileFactory.create_snippet()
+                source_file = self._context.source_file_factory.create_snippet()
                 source_file.add_expression(snippet)
                 snippet_docstring = source_file.to_str()
                 writer.write(snippet_docstring)
