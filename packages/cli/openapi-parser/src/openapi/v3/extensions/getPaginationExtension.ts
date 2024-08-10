@@ -16,15 +16,7 @@ declare namespace Raw {
         offset: string;
         results: string;
         step: string | undefined;
-<<<<<<< HEAD
-<<<<<<< HEAD
         "has-next-page": string | undefined;
-=======
-        "has-next-page":  string | undefined;
->>>>>>> cc42781fd5 (add next page property to ir)
-=======
-        "has-next-page": string | undefined;
->>>>>>> 0c1487606b (fix)
     }
 }
 
