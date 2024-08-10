@@ -7754,15 +7754,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash-es@npm:^4.17.6":
-  version: 4.17.7
-  resolution: "@types/lodash-es@npm:4.17.7"
-  dependencies:
-    "@types/lodash": "npm:*"
-  checksum: 10/ee91425e3e67dff94dad6555a1ff8766449e7993904858cfffe8a8a9179fd04a0f8169896c845e014221e31346a5b956a447d7d428ab9c068a5691f00ee26aef
-  languageName: node
-  linkType: hard
-
 "@types/lodash@npm:*":
   version: 4.14.182
   resolution: "@types/lodash@npm:4.14.182"
@@ -13287,7 +13278,7 @@ env-cmd@toddbluhm/env-cmd:
     "@fern-fern/ir-v39-sdk": "npm:^0.0.1"
     "@types/is-ci": "npm:^3.0.4"
     "@types/jest": "npm:^29.5.12"
-    "@types/lodash-es": "npm:^4.17.6"
+    "@types/lodash-es": "npm:^4.17.12"
     "@types/node": "npm:^18.7.18"
     "@typescript-eslint/eslint-plugin": "npm:^5.27.1"
     "@typescript-eslint/parser": "npm:^6.21.0"
