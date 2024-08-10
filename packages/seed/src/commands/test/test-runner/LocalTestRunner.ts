@@ -1,8 +1,10 @@
 import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
 import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
 import { LocalTaskHandler } from "@fern-api/local-workspace-runner/src/LocalTaskHandler";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { getAbsolutePathToProtobufSource } from "@fern-api/workspace-loader";
 import * as GeneratorExecSerialization from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import path from "path";
@@ -52,6 +54,8 @@ export class LocalTestRunner extends TestRunner {
         const localOutputDirectory = await tmp.dir();
         const absolutePathToLocalOutputDirectory = AbsoluteFilePath.of(localOutputDirectory.path);
 
+        const maybeAbsolutePathToProtobufSource = getAbsolutePathToProtobufSource(fernWorkspace);
+
         const generatorInvocation = getGeneratorInvocation({
             absolutePathToOutput: absolutePathToLocalOutputDirectory,
             docker: this.getParsedDockerName(),
@@ -64,6 +68,7 @@ export class LocalTestRunner extends TestRunner {
             publishMetadata,
             readme
         });
+
         const ir = await getIntermediateRepresentation({
             workspace: fernWorkspace,
             audiences: {
@@ -73,7 +78,11 @@ export class LocalTestRunner extends TestRunner {
             irVersionOverride: irVersion,
             generatorInvocation,
             packageName: undefined,
-            version: undefined
+            version: undefined,
+            sourceConfig:
+                maybeAbsolutePathToProtobufSource != null
+                    ? this.getSourceConfigForAbsolutePathToProtobufSource(maybeAbsolutePathToProtobufSource)
+                    : undefined
         });
         let generatorConfig = getGeneratorConfig({
             generatorInvocation,
@@ -158,5 +167,18 @@ export class LocalTestRunner extends TestRunner {
             );
         }
         return this.generator.workspaceConfig.local;
+    }
+
+    private getSourceConfigForAbsolutePathToProtobufSource(
+        aboslutePathToProtobufSource: AbsoluteFilePath
+    ): SourceConfig {
+        return {
+            sources: [
+                ApiDefinitionSource.proto({
+                    id: "local",
+                    protoRootUrl: `file:///${aboslutePathToProtobufSource}`
+                })
+            ]
+        };
     }
 }

@@ -7,7 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { isRawProtobufSourceSchema, visitDefinitionFileYamlAst } from "@fern-api/yaml-schema";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
-import { APIChangelog, FernDefinition, Spec } from "../types/Workspace";
+import { APIChangelog, FernDefinition, Source, Spec } from "../types/Workspace";
 import { getAllOpenAPISpecs } from "../utils/getAllOpenAPISpecs";
 import { AbstractAPIWorkspace } from "./AbstractAPIWorkspace";
 import { FernWorkspace } from "./FernWorkspace";
@@ -119,7 +119,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         settings?: OSSWorkspace.Settings
     ): Promise<FernWorkspace> {
         const definition = await this.getDefinition({ context }, settings);
-        return new FernWorkspace({
+        const workspace = new FernWorkspace({
             absoluteFilepath: this.absoluteFilepath,
             workspaceName: this.workspaceName,
             generatorsConfiguration: this.generatorsConfiguration,
@@ -129,6 +129,8 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             definition,
             changelog: this.changelog
         });
+        workspace.sources = this.getSources();
+        return workspace;
     }
 
     public getAbsoluteFilepaths(): AbsoluteFilePath[] {
@@ -141,6 +143,22 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
                 ])
                 .filter(isNonNullish)
         ];
+    }
+
+    public getSources(): Source[] {
+        return this.specs.map((spec) => {
+            if (spec.type === "protobuf") {
+                return {
+                    type: "protobuf",
+                    root: spec.absoluteFilepathToProtobufRoot,
+                    file: spec.absoluteFilepathToProtobufTarget
+                };
+            }
+            return {
+                type: "openapi",
+                file: spec.absoluteFilepath
+            };
+        });
     }
 }
 

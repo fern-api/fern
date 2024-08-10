@@ -49,6 +49,7 @@ export interface OpenAPISource {
 
 export interface ProtobufSource {
     type: "protobuf";
+    root: AbsoluteFilePath;
     file: AbsoluteFilePath;
 }
 

@@ -1,12 +1,18 @@
 import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
+import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, getAbsolutePathToProtobufSource } from "@fern-api/workspace-loader";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import tmp, { DirectoryResult } from "tmp-promise";
-import { DOCKER_CODEGEN_OUTPUT_DIRECTORY, DOCKER_GENERATOR_CONFIG_PATH, DOCKER_PATH_TO_IR } from "./constants";
+import {
+    DOCKER_CODEGEN_OUTPUT_DIRECTORY,
+    DOCKER_GENERATOR_CONFIG_PATH,
+    DOCKER_PATH_TO_IR,
+    DOCKER_PROTOBUF_SOURCE_DIRECTORY
+} from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
 import { LocalTaskHandler } from "./LocalTaskHandler";
@@ -53,6 +59,7 @@ export async function writeFilesToDiskAndRunGenerator({
     generateOauthClients: boolean;
     generatePaginatedClients: boolean;
 }): Promise<GeneratorRunResponse> {
+    const absolutePathToProtobufSource = getAbsolutePathToProtobufSource(workspace);
     const absolutePathToIr = await writeIrToFile({
         workspace,
         audiences,
@@ -60,7 +67,8 @@ export async function writeFilesToDiskAndRunGenerator({
         workspaceTempDir,
         context,
         irVersionOverride,
-        outputVersionOverride
+        outputVersionOverride,
+        absolutePathToProtobufSource
     });
     context.logger.debug("Wrote IR to: " + absolutePathToIr);
 
@@ -75,8 +83,6 @@ export async function writeFilesToDiskAndRunGenerator({
     });
     const absolutePathToTmpOutputDirectory = AbsoluteFilePath.of(tmpOutputDirectory.path);
     context.logger.debug("Will write output to: " + absolutePathToTmpOutputDirectory);
-
-    const absolutePathToFernDefinition = workspace.definition.absoluteFilepath;
 
     let absolutePathToTmpSnippetJSON = undefined;
     if (absolutePathToLocalSnippetJSON != null) {
@@ -102,6 +108,7 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
+        absolutePathToProtobufSource,
         workspaceName: workspace.definition.rootApiFile.contents.name,
         organization,
         outputVersion: outputVersionOverride,
@@ -137,7 +144,8 @@ async function writeIrToFile({
     workspaceTempDir,
     context,
     irVersionOverride,
-    outputVersionOverride
+    outputVersionOverride,
+    absolutePathToProtobufSource
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
@@ -146,6 +154,7 @@ async function writeIrToFile({
     context: TaskContext;
     irVersionOverride: string | undefined;
     outputVersionOverride: string | undefined;
+    absolutePathToProtobufSource: AbsoluteFilePath | undefined;
 }): Promise<AbsoluteFilePath> {
     const intermediateRepresentation = await getIntermediateRepresentation({
         workspace,
@@ -154,7 +163,8 @@ async function writeIrToFile({
         context,
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
-        version: outputVersionOverride
+        version: outputVersionOverride,
+        sourceConfig: absolutePathToProtobufSource != null ? getProtobufSourceConfig() : undefined
     });
     context.logger.debug("Migrated IR");
     const irFile = await tmp.file({
@@ -177,6 +187,7 @@ export declare namespace runGenerator {
         absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
         absolutePathToWriteConfigJson: AbsoluteFilePath;
+        absolutePathToProtobufSource: AbsoluteFilePath | undefined;
         keepDocker: boolean;
         context: TaskContext;
         generatorInvocation: generatorsYml.GeneratorInvocation;
@@ -195,6 +206,7 @@ export async function runGenerator({
     absolutePathToSnippetTemplates,
     absolutePathToIr,
     absolutePathToWriteConfigJson,
+    absolutePathToProtobufSource,
     keepDocker,
     generatorInvocation,
     writeUnitTests,
@@ -209,6 +221,9 @@ export async function runGenerator({
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
         `${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`
     ];
+    if (absolutePathToProtobufSource != null) {
+        binds.push(`${absolutePathToProtobufSource}:${DOCKER_PROTOBUF_SOURCE_DIRECTORY}:ro`);
+    }
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
         generatorInvocation,
         customConfig,
@@ -241,4 +256,15 @@ export async function runGenerator({
         binds,
         removeAfterCompletion: !keepDocker
     });
+}
+
+function getProtobufSourceConfig(): SourceConfig {
+    return {
+        sources: [
+            ApiDefinitionSource.proto({
+                id: "local",
+                protoRootUrl: `file:///${DOCKER_PROTOBUF_SOURCE_DIRECTORY}`
+            })
+        ]
+    };
 }

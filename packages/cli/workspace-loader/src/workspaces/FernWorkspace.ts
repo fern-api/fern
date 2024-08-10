@@ -6,7 +6,7 @@ import { handleFailedWorkspaceParserResultRaw } from "../handleFailedWorkspacePa
 import { listFernFiles } from "../listFernFiles";
 import { parseYamlFiles } from "../parseYamlFiles";
 import { processPackageMarkers } from "../processPackageMarkers";
-import { APIChangelog, FernDefinition } from "../types/Workspace";
+import { APIChangelog, FernDefinition, Source } from "../types/Workspace";
 import { validateStructureOfYamlFiles } from "../validateStructureOfYamlFiles";
 import { AbstractAPIWorkspace } from "./AbstractAPIWorkspace";
 import { OSSWorkspace } from "./OSSWorkspace";
@@ -26,6 +26,7 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
     public dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     public definition: FernDefinition;
     public changelog: APIChangelog | undefined;
+    public sources: Source[] = [];
 
     constructor({
         absoluteFilepath,
@@ -54,6 +55,10 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
 
     public getAbsoluteFilepaths(): AbsoluteFilePath[] {
         return [this.absoluteFilepath];
+    }
+
+    public getSources(): Source[] {
+        return this.sources;
     }
 }
 
