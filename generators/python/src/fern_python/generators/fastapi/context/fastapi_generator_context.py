@@ -4,8 +4,6 @@ import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
-from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
-from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 from ...context import PydanticGeneratorContextImpl
 from ..core_utilities import CoreUtilities
@@ -18,7 +16,6 @@ class FastApiGeneratorContext(ABC):
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         project_module_path: AST.ModulePath,
-        custom_config: FastAPICustomConfig,
         use_str_enums: bool,
     ):
         self.ir = ir
@@ -32,11 +29,8 @@ class FastApiGeneratorContext(ABC):
             allow_leveraging_defaults=False,
             use_typeddict_requests=False,
             use_str_enums=use_str_enums,
-            skip_formatting=custom_config.skip_formatting,
-            union_naming_version=custom_config.pydantic_config.union_naming,
         )
         self.core_utilities = CoreUtilities()
-        self.source_file_factory = SourceFileFactory(should_format=not custom_config.skip_formatting)
 
     @abstractmethod
     def get_filepath_for_service(self, service_name: ir_types.DeclaredServiceName) -> Filepath:

@@ -12,6 +12,7 @@ from fern_python.generators.sdk.client_generator.endpoint_metadata_collector imp
     ParameterMetadata,
 )
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 
 class ReferenceSectionBuilder:
@@ -63,7 +64,7 @@ class ReferenceSectionBuilder:
         self,
         expr: AST.Expression,
     ) -> str:
-        snippet = self.context.source_file_factory.create_snippet()
+        snippet = SourceFileFactory.create_snippet()
         snippet.add_expression(expr)
         # For some reason we're appending newlines to snippets, so we need to strip them for tempaltes
         return snippet.to_str(include_imports=False).strip()

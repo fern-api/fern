@@ -3,6 +3,7 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies import FastAPI, Starlette
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
+from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import FastApiGeneratorContext
 from .service_initializer import ServiceInitializer
@@ -35,7 +36,7 @@ class RegisterFileGenerator:
             directories=(),
             file=Filepath.FilepathPart(module_name=RegisterFileGenerator._MODULE_NAME),
         )
-        source_file = self._context.source_file_factory.create(
+        source_file = SourceFileFactory.create(
             project=project, generator_exec_wrapper=generator_exec_wrapper, filepath=filepath
         )
         source_file.add_declaration(declaration=self._get_register_method(), should_export=False)

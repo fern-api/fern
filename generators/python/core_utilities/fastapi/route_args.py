@@ -54,11 +54,7 @@ def route_args(
         setattr(
             endpoint_function,
             FERN_CONFIG_KEY,
-            RouteArgs(
-                openapi_extra=openapi_extra,
-                tags=tags,
-                include_in_schema=include_in_schema,
-            ),
+            RouteArgs(openapi_extra=openapi_extra, tags=tags, include_in_schema=include_in_schema),
         )
         return endpoint_function
 

@@ -5,7 +5,6 @@ from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
-from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
 
 from .pydantic_generator_context import PydanticGeneratorContext
 from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
@@ -22,8 +21,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         allow_leveraging_defaults: bool,
         use_typeddict_requests: bool,
         use_str_enums: bool,
-        skip_formatting: bool,
-        union_naming_version: UnionNamingVersions,
         reserved_names: Optional[Set[str]] = None,
     ):
         super().__init__(
@@ -33,8 +30,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
             use_typeddict_requests=use_typeddict_requests,
             type_declaration_referencer=type_declaration_referencer,
             use_str_enums=use_str_enums,
-            skip_formatting=skip_formatting,
-            union_naming_version=union_naming_version,
         )
         self._type_reference_to_type_hint_converter = TypeReferenceToTypeHintConverter(
             type_declaration_referencer=type_declaration_referencer, context=self
