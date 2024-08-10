@@ -6,11 +6,11 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public class ImdbClient
+public partial class ImdbClient
 {
     private RawClient _client;
 
-    public ImdbClient(RawClient client)
+    internal ImdbClient(RawClient client)
     {
         _client = client;
     }

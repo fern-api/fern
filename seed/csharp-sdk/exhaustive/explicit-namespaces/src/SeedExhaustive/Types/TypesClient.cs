@@ -7,11 +7,11 @@ using SeedExhaustive.Types.Union;
 
 namespace SeedExhaustive.Types;
 
-public class TypesClient
+public partial class TypesClient
 {
     private RawClient _client;
 
-    public TypesClient(RawClient client)
+    internal TypesClient(RawClient client)
     {
         _client = client;
         Enum = new EnumClient(_client);

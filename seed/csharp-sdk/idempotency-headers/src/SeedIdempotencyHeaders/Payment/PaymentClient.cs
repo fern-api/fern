@@ -6,11 +6,11 @@ using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
 
-public class PaymentClient
+public partial class PaymentClient
 {
     private RawClient _client;
 
-    public PaymentClient(RawClient client)
+    internal PaymentClient(RawClient client)
     {
         _client = client;
     }

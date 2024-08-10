@@ -6,11 +6,11 @@ using SeedCustomAuth.Core;
 
 namespace SeedCustomAuth;
 
-public class CustomAuthClient
+public partial class CustomAuthClient
 {
     private RawClient _client;
 
-    public CustomAuthClient(RawClient client)
+    internal CustomAuthClient(RawClient client)
     {
         _client = client;
     }

@@ -6,11 +6,11 @@ using SeedErrorProperty.Core;
 
 namespace SeedErrorProperty;
 
-public class PropertyBasedErrorClient
+public partial class PropertyBasedErrorClient
 {
     private RawClient _client;
 
-    public PropertyBasedErrorClient(RawClient client)
+    internal PropertyBasedErrorClient(RawClient client)
     {
         _client = client;
     }

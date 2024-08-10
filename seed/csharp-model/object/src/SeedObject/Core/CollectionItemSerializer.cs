@@ -10,7 +10,7 @@ namespace SeedObject.Core;
 /// </summary>
 /// <typeparam name="TDatatype">Type of item to convert.</typeparam>
 /// <typeparam name="TConverterType">Converter to use for individual items.</typeparam>
-public class CollectionItemSerializer<TDatatype, TConverterType>
+internal class CollectionItemSerializer<TDatatype, TConverterType>
     : JsonConverter<IEnumerable<TDatatype>>
     where TConverterType : JsonConverter
 {

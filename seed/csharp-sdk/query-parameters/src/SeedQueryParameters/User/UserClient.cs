@@ -6,11 +6,11 @@ using SeedQueryParameters.Core;
 
 namespace SeedQueryParameters;
 
-public class UserClient
+public partial class UserClient
 {
     private RawClient _client;
 
-    public UserClient(RawClient client)
+    internal UserClient(RawClient client)
     {
         _client = client;
     }

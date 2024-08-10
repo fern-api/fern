@@ -6,11 +6,11 @@ using SeedMultiUrlEnvironmentNoDefault.Core;
 
 namespace SeedMultiUrlEnvironmentNoDefault;
 
-public class S3Client
+public partial class S3Client
 {
     private RawClient _client;
 
-    public S3Client(RawClient client)
+    internal S3Client(RawClient client)
     {
         _client = client;
     }

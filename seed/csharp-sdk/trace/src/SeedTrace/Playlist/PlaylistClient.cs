@@ -6,11 +6,11 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public class PlaylistClient
+public partial class PlaylistClient
 {
     private RawClient _client;
 
-    public PlaylistClient(RawClient client)
+    internal PlaylistClient(RawClient client)
     {
         _client = client;
     }

@@ -38,7 +38,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.classReference,
-            partial: false,
+            partial: true,
             access: "public"
         });
 
@@ -84,7 +84,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
 
     private getConstructorMethod(): csharp.Class.Constructor {
         return {
-            access: "public",
+            access: "internal",
             parameters: [
                 csharp.parameter({
                     name: "client",

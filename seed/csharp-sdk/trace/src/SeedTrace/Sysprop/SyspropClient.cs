@@ -6,11 +6,11 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public class SyspropClient
+public partial class SyspropClient
 {
     private RawClient _client;
 
-    public SyspropClient(RawClient client)
+    internal SyspropClient(RawClient client)
     {
         _client = client;
     }

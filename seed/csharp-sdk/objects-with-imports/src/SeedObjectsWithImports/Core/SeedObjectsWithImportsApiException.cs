@@ -15,9 +15,4 @@ public class SeedObjectsWithImportsApiException(string message, int statusCode, 
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body { get; } = body;
-
-    public override string ToString()
-    {
-        return $"SeedObjectsWithImportsApiException {{ message: {Message}, statusCode: {StatusCode}, body: {Body} }}";
-    }
 }

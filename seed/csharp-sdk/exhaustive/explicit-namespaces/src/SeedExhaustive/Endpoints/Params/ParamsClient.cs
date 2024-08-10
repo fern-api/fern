@@ -6,11 +6,11 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Endpoints.Params;
 
-public class ParamsClient
+public partial class ParamsClient
 {
     private RawClient _client;
 
-    public ParamsClient(RawClient client)
+    internal ParamsClient(RawClient client)
     {
         _client = client;
     }

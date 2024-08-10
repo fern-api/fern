@@ -6,11 +6,11 @@ using SeedAudiences.Core;
 
 namespace SeedAudiences;
 
-public class FooClient
+public partial class FooClient
 {
     private RawClient _client;
 
-    public FooClient(RawClient client)
+    internal FooClient(RawClient client)
     {
         _client = client;
     }

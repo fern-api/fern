@@ -15,9 +15,4 @@ public class SeedOauthClientCredentialsApiException(string message, int statusCo
     /// The body of the response that triggered the exception.
     /// </summary>
     public object Body { get; } = body;
-
-    public override string ToString()
-    {
-        return $"SeedOauthClientCredentialsApiException {{ message: {Message}, statusCode: {StatusCode}, body: {Body} }}";
-    }
 }
