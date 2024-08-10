@@ -71599,6 +71599,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "AmlRecordAml",
               "groupName": null,
               "key": {
@@ -71770,6 +71771,7 @@ exports[`open api parser aries parse open api 1`] = `
     "ActionMenuModulesResult": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ActionMenuModulesResult",
       "groupName": null,
       "key": {
@@ -72001,6 +72003,7 @@ exports[`open api parser aries parse open api 1`] = `
     "AdminReset": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "AdminReset",
       "groupName": null,
       "key": {
@@ -72029,6 +72032,7 @@ exports[`open api parser aries parse open api 1`] = `
     "AdminShutdown": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "AdminShutdown",
       "groupName": null,
       "key": {
@@ -72587,6 +72591,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "JSON-serialized data",
+              "encoding": null,
               "generatedName": "AttachDecoratorDataJson",
               "groupName": null,
               "key": {
@@ -73157,6 +73162,7 @@ exports[`open api parser aries parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AttributeMimeTypesResultResults",
                 "groupName": null,
                 "key": {
@@ -73214,6 +73220,7 @@ exports[`open api parser aries parse open api 1`] = `
     "BasicMessageModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "BasicMessageModuleResponse",
       "groupName": null,
       "key": {
@@ -73475,6 +73482,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Credential revocation ids by revocation registry id: omit for all, specify null or empty list for all pending per revocation registry",
+              "encoding": null,
               "generatedName": "ClearPendingRevocationsRequestPurge",
               "groupName": null,
               "key": {
@@ -74819,6 +74827,7 @@ exports[`open api parser aries parse open api 1`] = `
     "ConnectionModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ConnectionModuleResponse",
       "groupName": null,
       "key": {
@@ -77685,6 +77694,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "CredentialContextItem",
               "groupName": null,
               "key": {
@@ -77722,6 +77732,7 @@ exports[`open api parser aries parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "CredentialCredentialSubject",
             "groupName": null,
             "key": {
@@ -77846,6 +77857,7 @@ exports[`open api parser aries parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": "The JSON-LD Verifiable Credential Issuer. Either string of object with id field.",
+            "encoding": null,
             "generatedName": "CredentialIssuer",
             "groupName": null,
             "key": {
@@ -78063,6 +78075,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Signature type: CL for Camenisch-Lysyanskaya",
+              "encoding": null,
               "generatedName": "CredentialDefinitionType",
               "groupName": null,
               "key": {
@@ -81005,6 +81018,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "DisclosuresDisclosuresItem",
               "groupName": null,
               "key": {
@@ -81295,6 +81309,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Const",
+              "encoding": null,
               "generatedName": "FilterConst",
               "groupName": null,
               "key": {
@@ -81346,6 +81361,7 @@ exports[`open api parser aries parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": "Enum",
+                "encoding": null,
                 "generatedName": "FilterEnumItem",
                 "groupName": null,
                 "key": {
@@ -81391,6 +81407,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "ExclusiveMaximum",
+              "encoding": null,
               "generatedName": "FilterExclusiveMaximum",
               "groupName": null,
               "key": {
@@ -81435,6 +81452,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "ExclusiveMinimum",
+              "encoding": null,
               "generatedName": "FilterExclusiveMinimum",
               "groupName": null,
               "key": {
@@ -81544,6 +81562,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Maximum",
+              "encoding": null,
               "generatedName": "FilterMaximum",
               "groupName": null,
               "key": {
@@ -81621,6 +81640,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Minimum",
+              "encoding": null,
               "generatedName": "FilterMinimum",
               "groupName": null,
               "key": {
@@ -82103,6 +82123,7 @@ exports[`open api parser aries parse open api 1`] = `
     "HolderModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "HolderModuleResponse",
       "groupName": null,
       "key": {
@@ -82343,6 +82364,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Attribute names and value",
+              "encoding": null,
               "generatedName": "IndyCredInfoAttrs",
               "groupName": null,
               "key": {
@@ -83038,6 +83060,7 @@ exports[`open api parser aries parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": "Credential attributes",
+            "encoding": null,
             "generatedName": "IndyCredentialValues",
             "groupName": null,
             "key": {
@@ -83223,6 +83246,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "IndyEqProofM",
               "groupName": null,
               "key": {
@@ -83310,6 +83334,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "IndyEqProofRevealedAttrs",
               "groupName": null,
               "key": {
@@ -83507,6 +83532,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "IndyGeProofR",
               "groupName": null,
               "key": {
@@ -83562,6 +83588,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "IndyGeProofT",
               "groupName": null,
               "key": {
@@ -83617,6 +83644,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "IndyGeProofU",
               "groupName": null,
               "key": {
@@ -83959,6 +83987,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "IndyNonRevocProofCList",
               "groupName": null,
               "key": {
@@ -84014,6 +84043,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "IndyNonRevocProofXList",
               "groupName": null,
               "key": {
@@ -84611,6 +84641,7 @@ exports[`open api parser aries parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": "Nested object mapping proof request attribute referents to requested-attribute specifiers",
+            "encoding": null,
             "generatedName": "IndyPresSpecRequestedAttributes",
             "groupName": null,
             "key": {
@@ -84655,6 +84686,7 @@ exports[`open api parser aries parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": "Nested object mapping proof request predicate referents to requested-predicate specifiers",
+            "encoding": null,
             "generatedName": "IndyPresSpecRequestedPredicates",
             "groupName": null,
             "key": {
@@ -84699,6 +84731,7 @@ exports[`open api parser aries parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": "Self-attested attributes to build into proof",
+            "encoding": null,
             "generatedName": "IndyPresSpecSelfAttestedAttributes",
             "groupName": null,
             "key": {
@@ -85595,6 +85628,7 @@ exports[`open api parser aries parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "IndyProofReqAttrSpecRestrictionsItem",
                 "groupName": null,
                 "key": {
@@ -85932,6 +85966,7 @@ exports[`open api parser aries parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "IndyProofReqPredSpecRestrictionsItem",
                 "groupName": null,
                 "key": {
@@ -86195,6 +86230,7 @@ exports[`open api parser aries parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": "Requested attribute specifications of proof request",
+            "encoding": null,
             "generatedName": "IndyProofRequestRequestedAttributes",
             "groupName": null,
             "key": {
@@ -86239,6 +86275,7 @@ exports[`open api parser aries parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": "Requested predicate specifications of proof request",
+            "encoding": null,
             "generatedName": "IndyProofRequestRequestedPredicates",
             "groupName": null,
             "key": {
@@ -86443,6 +86480,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Proof requested proof predicates.",
+              "encoding": null,
               "generatedName": "IndyProofRequestedProofPredicates",
               "groupName": null,
               "key": {
@@ -86502,6 +86540,7 @@ exports[`open api parser aries parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": "Proof requested proof revealed attribute groups",
+                "encoding": null,
                 "generatedName": "IndyProofRequestedProofRevealedAttrGroups",
                 "groupName": null,
                 "key": {
@@ -86570,6 +86609,7 @@ exports[`open api parser aries parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": "Proof requested proof revealed attributes",
+                "encoding": null,
                 "generatedName": "IndyProofRequestedProofRevealedAttrs",
                 "groupName": null,
                 "key": {
@@ -86909,6 +86949,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Indy proof requested proof revealed attr groups group value",
+              "encoding": null,
               "generatedName": "IndyProofRequestedProofRevealedAttrGroupValues",
               "groupName": null,
               "key": {
@@ -88115,6 +88156,7 @@ exports[`open api parser aries parse open api 1`] = `
     "IntroModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "IntroModuleResponse",
       "groupName": null,
       "key": {
@@ -88749,6 +88791,7 @@ exports[`open api parser aries parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": "Either a DIDComm service object (as per RFC0067) or a DID string.",
+                "encoding": null,
                 "generatedName": "InvitationMessageServicesItem",
                 "groupName": null,
                 "key": {
@@ -89208,6 +89251,7 @@ exports[`open api parser aries parse open api 1`] = `
     "IssueCredentialModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "IssueCredentialModuleResponse",
       "groupName": null,
       "key": {
@@ -91245,6 +91289,7 @@ exports[`open api parser aries parse open api 1`] = `
     "LedgerModulesResult": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "LedgerModulesResult",
       "groupName": null,
       "key": {
@@ -93246,6 +93291,7 @@ exports[`open api parser aries parse open api 1`] = `
     "MultitenantModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "MultitenantModuleResponse",
       "groupName": null,
       "key": {
@@ -93804,6 +93850,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Input parameter values",
+              "encoding": null,
               "generatedName": "PerformRequestParams",
               "groupName": null,
               "key": {
@@ -94579,6 +94626,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Credential revocation ids by revocation registry id",
+              "encoding": null,
               "generatedName": "PublishRevocationsRrid2Crid",
               "groupName": null,
               "key": {
@@ -95869,6 +95917,7 @@ exports[`open api parser aries parse open api 1`] = `
     "RevocationModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "RevocationModuleResponse",
       "groupName": null,
       "key": {
@@ -98927,6 +98976,7 @@ exports[`open api parser aries parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TransactionRecordFormatsItem",
                 "groupName": null,
                 "key": {
@@ -102980,6 +103030,7 @@ exports[`open api parser aries parse open api 1`] = `
     "V10PresentProofModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "V10PresentProofModuleResponse",
       "groupName": null,
       "key": {
@@ -109259,6 +109310,7 @@ exports[`open api parser aries parse open api 1`] = `
     "V20IssueCredentialModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "V20IssueCredentialModuleResponse",
       "groupName": null,
       "key": {
@@ -111710,6 +111762,7 @@ exports[`open api parser aries parse open api 1`] = `
     "V20PresentProofModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "V20PresentProofModuleResponse",
       "groupName": null,
       "key": {
@@ -111875,6 +111928,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "VcRecordCredTags",
               "groupName": null,
               "key": {
@@ -112698,6 +112752,7 @@ exports[`open api parser aries parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Tag filter",
+              "encoding": null,
               "generatedName": "W3CCredentialsListRequestTagQuery",
               "groupName": null,
               "key": {
@@ -112840,6 +112895,7 @@ exports[`open api parser aries parse open api 1`] = `
     "WalletModuleResponse": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "WalletModuleResponse",
       "groupName": null,
       "key": {

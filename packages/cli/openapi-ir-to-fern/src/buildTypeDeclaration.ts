@@ -28,6 +28,7 @@ import {
 } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
+import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
@@ -458,6 +459,7 @@ export function buildOneOfTypeDeclaration({
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
+    const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
     if (schema.type === "discriminated") {
         const baseProperties: Record<string, RawSchemas.ObjectPropertySchema> = {};
         for (const property of schema.commonProperties) {
@@ -482,6 +484,7 @@ export function buildOneOfTypeDeclaration({
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
                 union,
+                encoding,
                 source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
             }
         };
@@ -503,6 +506,7 @@ export function buildOneOfTypeDeclaration({
             discriminated: false,
             docs: schema.description ?? undefined,
             union,
+            encoding,
             source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
         }
     };

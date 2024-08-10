@@ -147,6 +147,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -1602,6 +1603,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -2593,6 +2595,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -3149,6 +3152,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -3697,6 +3701,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -6169,6 +6174,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -8428,6 +8434,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -10287,6 +10294,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -11981,6 +11989,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -13067,6 +13076,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -14093,6 +14103,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -15132,6 +15143,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -15929,6 +15941,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -16454,6 +16467,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -17524,6 +17538,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -18056,6 +18071,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -18624,6 +18640,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -18887,6 +18904,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -19815,6 +19833,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -20765,6 +20784,7 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -23253,6 +23273,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -24841,6 +24862,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -25906,6 +25928,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -27167,6 +27190,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -27937,6 +27961,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -28918,6 +28943,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -29518,6 +29544,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -30119,6 +30146,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -30745,6 +30773,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -31679,6 +31708,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -32242,6 +32272,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -32796,6 +32827,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -33375,6 +33407,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -34473,6 +34506,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -35143,6 +35177,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -35807,6 +35842,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -36496,6 +36532,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -37203,6 +37240,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -38104,6 +38142,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -38664,6 +38703,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -39824,6 +39864,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -40650,6 +40691,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -41821,6 +41863,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -42687,6 +42730,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -43324,6 +43368,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -43945,6 +43990,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -44591,6 +44637,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -46043,6 +46090,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -47309,6 +47357,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -49777,6 +49826,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -51415,6 +51465,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -52472,6 +52523,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -53802,6 +53854,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -55279,6 +55332,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -56624,6 +56678,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -59849,6 +59904,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -61900,6 +61956,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -63982,6 +64039,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "BadRequestErrorBodyData",
                     "groupName": null,
                     "key": {
@@ -79962,6 +80020,7 @@ Other details about this invoice",
             "value": {
               "availability": null,
               "description": "Optional metadata to add to a location. Keys must be strings and values should be arrays of strings.",
+              "encoding": null,
               "generatedName": "CreateLocationMetadata",
               "groupName": null,
               "key": {
@@ -85253,6 +85312,7 @@ Other details about this invoice",
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "GenericObjectRefId",
                 "groupName": null,
                 "nameOverride": null,
@@ -85291,7 +85351,10 @@ Other details about this invoice",
                     "type": "primitive",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "flexport/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -87765,6 +87828,7 @@ Other details about this invoice",
       "availability": null,
       "description": "Set of custom key-values specific to the object. The keys are strings and values are arrays of strings. The set of valid keys is always the consignee's list of keys, even if call was made by a different party.
 ",
+      "encoding": null,
       "generatedName": "Metadata",
       "groupName": null,
       "key": {
@@ -87795,6 +87859,7 @@ Other details about this invoice",
       "value": {
         "availability": null,
         "description": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
+        "encoding": null,
         "generatedName": "MetadataCreate",
         "groupName": null,
         "nameOverride": null,
@@ -87954,7 +88019,10 @@ Other details about this invoice",
             },
           },
         ],
-        "source": null,
+        "source": {
+          "file": "flexport/openapi.yml",
+          "type": "openapi",
+        },
         "type": "undisciminated",
       },
     },
@@ -88644,6 +88712,7 @@ Other details about this invoice",
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "OceanShipmentContainerLegDatesItem",
                 "groupName": null,
                 "key": {
@@ -89721,6 +89790,7 @@ Other details about this invoice",
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "PlaceDetailsItem",
                     "groupName": null,
                     "nameOverride": null,
@@ -89765,7 +89835,10 @@ Other details about this invoice",
                         "type": "reference",
                       },
                     ],
-                    "source": null,
+                    "source": {
+                      "file": "flexport/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "undisciminated",
                   },
                 },
@@ -97519,6 +97592,7 @@ Other details about this invoice",
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ShipmentEventDataResource",
                 "groupName": null,
                 "nameOverride": null,
@@ -97563,7 +97637,10 @@ Other details about this invoice",
                     "type": "reference",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "flexport/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -101055,6 +101132,7 @@ Other details about this invoice",
             "value": {
               "availability": null,
               "description": "Metadata to replace existing metadata. Keys must be strings and values should be arrays.",
+              "encoding": null,
               "generatedName": "UpdateLocationMetadata",
               "groupName": null,
               "key": {
@@ -101432,6 +101510,7 @@ Other details about this invoice",
             "value": {
               "availability": null,
               "description": "Metadata to replace existing metadata. Keys should be strings and values should be arrays. All existing metadata will be replaced by the passed in object.",
+              "encoding": null,
               "generatedName": "UpdateShipmentMetadata",
               "groupName": null,
               "key": {

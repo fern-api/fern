@@ -12636,6 +12636,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "value": {
               "availability": null,
               "description": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
+              "encoding": null,
               "generatedName": "ApiProblemAttributes",
               "groupName": null,
               "key": {

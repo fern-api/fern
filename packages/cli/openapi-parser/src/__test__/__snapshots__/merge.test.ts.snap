@@ -32623,6 +32623,7 @@ View a list of your organization's \`LinkedAccount\` objects.",
             "value": {
               "availability": null,
               "description": "Mapping of API endpoints to documentation urls for support. Example: {'GET': [['/common-model-scopes', 'https://docs.merge.dev/accounting/common-model-scopes/#common_model_scopes_retrieve'],['/common-model-actions', 'https://docs.merge.dev/accounting/common-model-actions/#common_model_actions_retrieve']], 'POST': []}",
+              "encoding": null,
               "generatedName": "AccountIntegrationApiEndpointsToDocumentationUrls",
               "groupName": null,
               "key": {
@@ -33140,6 +33141,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
 
 * \`SAVINGS\` - SAVINGS
 * \`CHECKING\` - CHECKING",
+                  "encoding": null,
                   "generatedName": "BankInfoAccountType",
                   "groupName": null,
                   "nameOverride": null,
@@ -33174,7 +33176,10 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -33295,6 +33300,7 @@ Fetch from the \`LIST BankInfo\` endpoint and filter by \`ID\` to show all bank 
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "BankInfoFieldMappings",
                 "groupName": null,
                 "key": {
@@ -33813,6 +33819,7 @@ Fetch from the \`LIST Benefits\` endpoint and filter by \`ID\` to show all benef
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "BenefitFieldMappings",
                 "groupName": null,
                 "key": {
@@ -34521,6 +34528,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "CompanyFieldMappings",
                 "groupName": null,
                 "key": {
@@ -34779,6 +34787,7 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
 * \`FLOAT\` - FLOAT
 * \`STRING\` - STRING
 * \`LIST_OF_STRINGS\` - LIST_OF_STRINGS",
+              "encoding": null,
               "generatedName": "ConditionSchemaConditionType",
               "groupName": null,
               "nameOverride": null,
@@ -34813,7 +34822,10 @@ Fetch from the \`LIST Companies\` endpoint and filter by \`ID\` to show all comp
                   "type": "primitive",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "merge/hris.yml",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -38675,6 +38687,7 @@ Create a \`DataPassthrough\` to get team hierarchies from your Rippling integrat
               "value": {
                 "availability": null,
                 "description": "The headers to use for the request (Merge will handle the account's authorization headers). \`Content-Type\` header is required for passthrough. Choose content type corresponding to expected format of receiving server.",
+                "encoding": null,
                 "generatedName": "DataPassthroughRequestHeaders",
                 "groupName": null,
                 "key": {
@@ -39279,6 +39292,7 @@ Fetch from the \`LIST Deductions\` endpoint and filter by \`ID\` to show all ded
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "DeductionFieldMappings",
                 "groupName": null,
                 "key": {
@@ -39563,6 +39577,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
 * \`REIMBURSEMENT\` - REIMBURSEMENT
 * \`OVERTIME\` - OVERTIME
 * \`BONUS\` - BONUS",
+                  "encoding": null,
                   "generatedName": "EarningType",
                   "groupName": null,
                   "nameOverride": null,
@@ -39597,7 +39612,10 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -39683,6 +39701,7 @@ Fetch from the \`LIST Earnings\` endpoint and filter by \`ID\` to show all earni
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "EarningFieldMappings",
                 "groupName": null,
                 "key": {
@@ -40654,6 +40673,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`NON-BINARY\` - NON-BINARY
 * \`OTHER\` - OTHER
 * \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
+                  "encoding": null,
                   "generatedName": "EmployeeGender",
                   "groupName": null,
                   "nameOverride": null,
@@ -40688,7 +40708,10 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -40739,6 +40762,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`TWO_OR_MORE_RACES\` - TWO_OR_MORE_RACES
 * \`WHITE\` - WHITE
 * \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
+                  "encoding": null,
                   "generatedName": "EmployeeEthnicity",
                   "groupName": null,
                   "nameOverride": null,
@@ -40773,7 +40797,10 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -40818,6 +40845,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`MARRIED_FILING_SEPARATELY\` - MARRIED_FILING_SEPARATELY
 * \`HEAD_OF_HOUSEHOLD\` - HEAD_OF_HOUSEHOLD
 * \`QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD\` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
+                  "encoding": null,
                   "generatedName": "EmployeeMaritalStatus",
                   "groupName": null,
                   "nameOverride": null,
@@ -40852,7 +40880,10 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -41033,6 +41064,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`ACTIVE\` - ACTIVE
 * \`PENDING\` - PENDING
 * \`INACTIVE\` - INACTIVE",
+                  "encoding": null,
                   "generatedName": "EmployeeEmploymentStatus",
                   "groupName": null,
                   "nameOverride": null,
@@ -41067,7 +41099,10 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -41173,6 +41208,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
               "value": {
                 "availability": null,
                 "description": "Custom fields configured for a given model.",
+                "encoding": null,
                 "generatedName": "EmployeeCustomFields",
                 "groupName": null,
                 "key": {
@@ -41280,6 +41316,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "EmployeeFieldMappings",
                 "groupName": null,
                 "key": {
@@ -41942,6 +41979,7 @@ Fetch from the \`LIST EmployeePayrollRun\` endpoint and filter by \`ID\` to show
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "EmployeePayrollRunFieldMappings",
                 "groupName": null,
                 "key": {
@@ -42771,6 +42809,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`NON-BINARY\` - NON-BINARY
 * \`OTHER\` - OTHER
 * \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
+                  "encoding": null,
                   "generatedName": "EmployeeRequestGender",
                   "groupName": null,
                   "nameOverride": null,
@@ -42805,7 +42844,10 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -42856,6 +42898,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`TWO_OR_MORE_RACES\` - TWO_OR_MORE_RACES
 * \`WHITE\` - WHITE
 * \`PREFER_NOT_TO_DISCLOSE\` - PREFER_NOT_TO_DISCLOSE",
+                  "encoding": null,
                   "generatedName": "EmployeeRequestEthnicity",
                   "groupName": null,
                   "nameOverride": null,
@@ -42890,7 +42933,10 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -42935,6 +42981,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`MARRIED_FILING_SEPARATELY\` - MARRIED_FILING_SEPARATELY
 * \`HEAD_OF_HOUSEHOLD\` - HEAD_OF_HOUSEHOLD
 * \`QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD\` - QUALIFYING_WIDOW_OR_WIDOWER_WITH_DEPENDENT_CHILD",
+                  "encoding": null,
                   "generatedName": "EmployeeRequestMaritalStatus",
                   "groupName": null,
                   "nameOverride": null,
@@ -42969,7 +43016,10 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -43115,6 +43165,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
 * \`ACTIVE\` - ACTIVE
 * \`PENDING\` - PENDING
 * \`INACTIVE\` - INACTIVE",
+                  "encoding": null,
                   "generatedName": "EmployeeRequestEmploymentStatus",
                   "groupName": null,
                   "nameOverride": null,
@@ -43149,7 +43200,10 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -43255,6 +43309,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "EmployeeRequestIntegrationParams",
                 "groupName": null,
                 "key": {
@@ -43307,6 +43362,7 @@ Fetch from the \`LIST Employee\` endpoint and filter by \`ID\` to show all emplo
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "EmployeeRequestLinkedAccountParams",
                 "groupName": null,
                 "key": {
@@ -43731,6 +43787,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`QUARTER\` - QUARTER
 * \`EVERY_SIX_MONTHS\` - EVERY_SIX_MONTHS
 * \`YEAR\` - YEAR",
+                  "encoding": null,
                   "generatedName": "EmploymentPayPeriod",
                   "groupName": null,
                   "nameOverride": null,
@@ -43765,7 +43822,10 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -43818,6 +43878,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`THIRTEEN-MONTHLY\` - THIRTEEN-MONTHLY
 * \`PRO_RATA\` - PRO_RATA
 * \`SEMIMONTHLY\` - SEMIMONTHLY",
+                  "encoding": null,
                   "generatedName": "EmploymentPayFrequency",
                   "groupName": null,
                   "nameOverride": null,
@@ -43852,7 +43913,10 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -44499,6 +44563,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`ZWD\` - Zimbabwean Dollar (1980–2008)
 * \`ZWR\` - Zimbabwean Dollar (2008)
 * \`ZWL\` - Zimbabwean Dollar (2009)",
+                  "encoding": null,
                   "generatedName": "EmploymentPayCurrency",
                   "groupName": null,
                   "nameOverride": null,
@@ -44533,7 +44598,10 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -44616,6 +44684,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`SALARIED_NONEXEMPT\` - SALARIED_NONEXEMPT
 * \`NONEXEMPT\` - NONEXEMPT
 * \`OWNER\` - OWNER",
+                  "encoding": null,
                   "generatedName": "EmploymentFlsaStatus",
                   "groupName": null,
                   "nameOverride": null,
@@ -44650,7 +44719,10 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -44730,6 +44802,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
 * \`INTERN\` - INTERN
 * \`CONTRACTOR\` - CONTRACTOR
 * \`FREELANCE\` - FREELANCE",
+                  "encoding": null,
                   "generatedName": "EmploymentEmploymentType",
                   "groupName": null,
                   "nameOverride": null,
@@ -44764,7 +44837,10 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -44850,6 +44926,7 @@ Fetch from the \`LIST Employments\` endpoint and filter by \`ID\` to show all em
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "EmploymentFieldMappings",
                 "groupName": null,
                 "key": {
@@ -46089,6 +46166,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
 * \`COST_CENTER\` - COST_CENTER
 * \`BUSINESS_UNIT\` - BUSINESS_UNIT
 * \`GROUP\` - GROUP",
+                  "encoding": null,
                   "generatedName": "GroupType",
                   "groupName": null,
                   "nameOverride": null,
@@ -46123,7 +46201,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -46209,6 +46290,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "GroupFieldMappings",
                 "groupName": null,
                 "key": {
@@ -46395,6 +46477,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "IgnoreCommonModelRequestReason",
               "groupName": null,
               "nameOverride": null,
@@ -46429,7 +46512,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
                   "type": "primitive",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "merge/hris.yml",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -46537,6 +46623,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
 
 * \`ONGOING\` - ONGOING
 * \`RESOLVED\` - RESOLVED",
+                "encoding": null,
                 "generatedName": "IssueStatus",
                 "groupName": null,
                 "nameOverride": null,
@@ -46571,7 +46658,10 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
                     "type": "primitive",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "merge/hris.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -46618,6 +46708,7 @@ Fetch from the \`LIST Employee\` endpoint and expand groups to view an employee'
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "IssueEndUser",
               "groupName": null,
               "key": {
@@ -48297,6 +48388,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
 * \`YE\` - Yemen
 * \`ZM\` - Zambia
 * \`ZW\` - Zimbabwe",
+                  "encoding": null,
                   "generatedName": "LocationCountry",
                   "groupName": null,
                   "nameOverride": null,
@@ -48331,7 +48423,10 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -48370,6 +48465,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
 
 * \`HOME\` - HOME
 * \`WORK\` - WORK",
+                  "encoding": null,
                   "generatedName": "LocationLocationType",
                   "groupName": null,
                   "nameOverride": null,
@@ -48404,7 +48500,10 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -48490,6 +48589,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "LocationFieldMappings",
                 "groupName": null,
                 "key": {
@@ -48716,6 +48816,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "MetaResponseRequestSchema",
             "groupName": null,
             "key": {
@@ -48759,6 +48860,7 @@ Fetch from the \`LIST Locations\` endpoint and filter by \`ID\` to show all offi
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "MetaResponseRemoteFieldClasses",
               "groupName": null,
               "key": {
@@ -49213,6 +49315,7 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
 * \`RAW\` - RAW
 * \`BASE64\` - BASE64
 * \`GZIP_BASE64\` - GZIP_BASE64",
+                  "encoding": null,
                   "generatedName": "MultipartFormFieldRequestEncoding",
                   "groupName": null,
                   "nameOverride": null,
@@ -49247,7 +49350,10 @@ Create a \`MultipartFormField\` to define a multipart form entry.",
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -56340,6 +56446,7 @@ Fetch from the \`LIST PayGroup\` endpoint and filter by \`ID\` to show all pay g
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PayGroupFieldMappings",
                 "groupName": null,
                 "key": {
@@ -56685,6 +56792,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
 * \`APPROVED\` - APPROVED
 * \`FAILED\` - FAILED
 * \`CLOSED\` - CLOSED",
+                  "encoding": null,
                   "generatedName": "PayrollRunRunState",
                   "groupName": null,
                   "nameOverride": null,
@@ -56719,7 +56827,10 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -56764,6 +56875,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
 * \`CORRECTION\` - CORRECTION
 * \`TERMINATION\` - TERMINATION
 * \`SIGN_ON_BONUS\` - SIGN_ON_BONUS",
+                  "encoding": null,
                   "generatedName": "PayrollRunRunType",
                   "groupName": null,
                   "nameOverride": null,
@@ -56798,7 +56910,10 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -56989,6 +57104,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PayrollRunFieldMappings",
                 "groupName": null,
                 "key": {
@@ -57274,6 +57390,7 @@ Fetch from the \`LIST PayrollRuns\` endpoint and filter by \`ID\` to show all pa
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "RemoteDataData",
               "groupName": null,
               "key": {
@@ -57542,6 +57659,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "RemoteResponseResponseHeaders",
               "groupName": null,
               "key": {
@@ -57588,6 +57706,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "RemoteResponseResponseType",
                 "groupName": null,
                 "nameOverride": null,
@@ -57622,7 +57741,10 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
                     "type": "primitive",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "merge/hris.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -57645,6 +57767,7 @@ View the \`RemoteResponse\` returned from your \`DataPassthrough\`.",
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "RemoteResponseHeaders",
               "groupName": null,
               "key": {
@@ -58700,6 +58823,7 @@ Fetch from the \`LIST Taxes\` endpoint and filter by \`ID\` to show all taxes.",
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TaxFieldMappings",
                 "groupName": null,
                 "key": {
@@ -59026,6 +59150,7 @@ If you're building a way to filter by \`Team\`, you'd hit the \`GET Teams\` endp
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TeamFieldMappings",
                 "groupName": null,
                 "key": {
@@ -59311,6 +59436,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`DECLINED\` - DECLINED
 * \`CANCELLED\` - CANCELLED
 * \`DELETED\` - DELETED",
+                  "encoding": null,
                   "generatedName": "TimeOffStatus",
                   "groupName": null,
                   "nameOverride": null,
@@ -59345,7 +59471,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -59424,6 +59553,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 
 * \`HOURS\` - HOURS
 * \`DAYS\` - DAYS",
+                  "encoding": null,
                   "generatedName": "TimeOffUnits",
                   "groupName": null,
                   "nameOverride": null,
@@ -59458,7 +59588,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -59546,6 +59679,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`JURY_DUTY\` - JURY_DUTY
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
+                  "encoding": null,
                   "generatedName": "TimeOffRequestType",
                   "groupName": null,
                   "nameOverride": null,
@@ -59580,7 +59714,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -59736,6 +59873,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TimeOffFieldMappings",
                 "groupName": null,
                 "key": {
@@ -60065,6 +60203,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
 * \`JURY_DUTY\` - JURY_DUTY
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
+                  "encoding": null,
                   "generatedName": "TimeOffBalancePolicyType",
                   "groupName": null,
                   "nameOverride": null,
@@ -60099,7 +60238,10 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -60185,6 +60327,7 @@ Fetch from the \`LIST TimeOffBalances\` endpoint and filter by \`ID\` to show al
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TimeOffBalanceFieldMappings",
                 "groupName": null,
                 "key": {
@@ -60436,6 +60579,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`DECLINED\` - DECLINED
 * \`CANCELLED\` - CANCELLED
 * \`DELETED\` - DELETED",
+                  "encoding": null,
                   "generatedName": "TimeOffRequestStatus",
                   "groupName": null,
                   "nameOverride": null,
@@ -60470,7 +60614,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -60549,6 +60696,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 
 * \`HOURS\` - HOURS
 * \`DAYS\` - DAYS",
+                  "encoding": null,
                   "generatedName": "TimeOffRequestUnits",
                   "groupName": null,
                   "nameOverride": null,
@@ -60583,7 +60731,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -60671,6 +60822,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
 * \`JURY_DUTY\` - JURY_DUTY
 * \`VOLUNTEER\` - VOLUNTEER
 * \`BEREAVEMENT\` - BEREAVEMENT",
+                  "encoding": null,
                   "generatedName": "TimeOffRequestRequestType",
                   "groupName": null,
                   "nameOverride": null,
@@ -60705,7 +60857,10 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
                       "type": "primitive",
                     },
                   ],
-                  "source": null,
+                  "source": {
+                    "file": "merge/hris.yml",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -60806,6 +60961,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TimeOffRequestIntegrationParams",
                 "groupName": null,
                 "key": {
@@ -60858,6 +61014,7 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TimeOffRequestLinkedAccountParams",
                 "groupName": null,
                 "key": {

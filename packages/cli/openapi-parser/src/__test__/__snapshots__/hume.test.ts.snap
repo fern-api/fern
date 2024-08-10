@@ -1786,6 +1786,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "Empty": {
       "availability": null,
       "description": "To include predictions for this model type, set this field to \`{}\`. It is currently not configurable further.",
+      "encoding": null,
       "generatedName": "Empty",
       "groupName": null,
       "key": {
@@ -4427,6 +4428,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
     "Null": {
       "availability": null,
       "description": "No associated metadata for this model. Value will be \`null\`.",
+      "encoding": null,
       "generatedName": "Null",
       "groupName": null,
       "key": {
@@ -5731,6 +5733,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "Source",
         "groupName": null,
         "nameOverride": null,
@@ -5933,6 +5936,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "status",
+        "encoding": null,
         "generatedName": "State",
         "groupName": null,
         "nameOverride": null,

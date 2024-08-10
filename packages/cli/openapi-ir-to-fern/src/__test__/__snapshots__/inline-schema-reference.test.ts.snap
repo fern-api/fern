@@ -38,7 +38,10 @@ exports[`open api parser inline-schema-reference docs 1`] = `
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "inline-schema-reference/openapi.yml",
+        },
         "union": [
           "NotFound",
           "Schema1",
@@ -134,7 +137,10 @@ exports[`open api parser inline-schema-reference simple 1`] = `
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "inline-schema-reference/openapi.yml",
+        },
         "union": [
           "NotFound",
           "Schema1",

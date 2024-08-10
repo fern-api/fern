@@ -1803,6 +1803,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
           "base-properties": {},
           "discriminant": "evaluator_type",
           "docs": undefined,
+          "encoding": undefined,
           "source": {
             "openapi": "humanloop/openapi.yml",
           },
@@ -1816,6 +1817,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
           "base-properties": {},
           "discriminant": "evaluator_type",
           "docs": undefined,
+          "encoding": undefined,
           "source": {
             "openapi": "humanloop/openapi.yml",
           },
@@ -3636,7 +3638,10 @@ within the Prompt for monitoring purposes.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "literal<"none">",
             "literal<"auto">",
@@ -3651,7 +3656,10 @@ within the Prompt for monitoring purposes.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "literal<"none">",
             "literal<"auto">",
@@ -3662,7 +3670,10 @@ within the Prompt for monitoring purposes.",
         "PromptRequestStop": {
           "discriminated": false,
           "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "string",
             "list<string>",
@@ -3671,7 +3682,10 @@ within the Prompt for monitoring purposes.",
         "PromptsCallResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "root.PromptCallResponse",
             "root.PromptCallStreamResponse",
@@ -3680,7 +3694,10 @@ within the Prompt for monitoring purposes.",
         "Template": {
           "discriminated": false,
           "docs": "For chat endpoint, provide a Chat template. For completion endpoint, provide a Prompt template. Input variables within the template should be specified with double curly bracket syntax: {{INPUT_NAME}}.",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "string",
             "list<root.ChatMessage>",
@@ -5268,6 +5285,7 @@ in the Evaluation Report.",
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "humanloop/openapi.yml",
         },
@@ -5313,6 +5331,7 @@ in the Evaluation Report.",
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "humanloop/openapi.yml",
         },
@@ -5369,6 +5388,7 @@ in the Evaluation Report.",
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "humanloop/openapi.yml",
         },
@@ -5383,7 +5403,10 @@ in the Evaluation Report.",
       "Content": {
         "discriminated": false,
         "docs": "The content of the message.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<ChatMessageWithToolCallContentItem>",
@@ -5412,7 +5435,10 @@ in the Evaluation Report.",
       "CreateDatapointRequestTargetValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -5532,7 +5558,10 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
       "DatapointResponseTargetValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -5629,7 +5658,10 @@ in the inheriting classes with documentation and appropriate Field definitions."
       "EvaluatedVersionResponse": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -5808,7 +5840,10 @@ function.",
       "EvaluatorActivationDeactivationRequestEvaluatorsToActivateItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "MonitoringEvaluatorVersionRequest",
           "MonitoringEvaluatorEnvironmentRequest",
@@ -5817,7 +5852,10 @@ function.",
       "EvaluatorActivationDeactivationRequestEvaluatorsToDeactivateItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "MonitoringEvaluatorVersionRequest",
           "MonitoringEvaluatorEnvironmentRequest",
@@ -6023,7 +6061,10 @@ function.",
       "FeedbackResponseType": {
         "discriminated": false,
         "docs": "The type of feedback. The default feedback types available are 'rating', 'action', 'issue', 'correction', and 'comment'.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "FeedbackType",
           "string",
@@ -6032,7 +6073,10 @@ function.",
       "FeedbackResponseValue": {
         "discriminated": false,
         "docs": "The feedback value to set. This would be the appropriate text for 'correction' or 'comment', or a label to apply for 'rating', 'action', or 'issue'.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "double",
           "string",
@@ -6070,7 +6114,10 @@ function.",
       "FeedbackTypeModelType": {
         "discriminated": false,
         "docs": "The type of feedback. The default feedback types available are 'rating', 'action', 'issue', 'correction', and 'comment'.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "FeedbackType",
           "string",
@@ -6080,7 +6127,10 @@ function.",
       "File": {
         "discriminated": false,
         "docs": "The File that the deployed Version belongs to.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -6218,7 +6268,10 @@ function.",
       "Judgment": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "boolean",
           "double",
@@ -6522,7 +6575,10 @@ Used by a File's PAPV (Positive Action Per View) metric.",
       "LogResponseToolChoice": {
         "discriminated": false,
         "docs": "Controls how the model uses tools. The following options are supported: 'none' forces the model to not call a tool; the default when no tools are provided as part of the model config. 'auto' the model can decide to call one of the provided tools; the default when tools are provided as part of the model config. Providing {'type': 'function', 'function': {name': <TOOL_NAME>}} forces the model to use the named function.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -6626,7 +6682,10 @@ Used by a File's PAPV (Positive Action Per View) metric.",
       "ModelConfigRequestStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -6635,7 +6694,10 @@ Used by a File's PAPV (Positive Action Per View) metric.",
       "ModelConfigRequestToolsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "LinkedToolRequest",
           "ModelConfigToolRequest",
@@ -6736,7 +6798,10 @@ Contains fields that are common to all (i.e. both chat and complete) endpoints."
       "ModelConfigResponseStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -7154,7 +7219,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -7306,7 +7374,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
       "PromptKernelRequestStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -7440,7 +7511,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -7571,7 +7645,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
       "PromptResponseStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -7633,6 +7710,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "base-properties": {},
         "discriminant": "evaluator_type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "humanloop/openapi.yml",
         },
@@ -7645,7 +7723,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
       "Template": {
         "discriminated": false,
         "docs": "For chat endpoint, provide a Chat template. For completion endpoint, provide a Prompt template. Input variables within the template should be specified with double curly bracket syntax: {{INPUT_NAME}}.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<ChatMessage>",
@@ -8021,7 +8102,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -8030,7 +8114,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "Value": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "boolean",
           "double",
@@ -8039,7 +8126,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "Version": {
         "discriminated": false,
         "docs": "The specific Version being referenced.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -8079,6 +8169,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "humanloop/openapi.yml",
         },
@@ -8110,7 +8201,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "VersionStatsEvaluatorVersionStatsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "NumericEvaluatorVersionStats",
           "BooleanEvaluatorVersionStats",
@@ -9954,6 +10048,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
           "base-properties": {},
           "discriminant": "evaluator_type",
           "docs": undefined,
+          "encoding": undefined,
           "source": {
             "openapi": "humanloop/openapi.yml",
           },
@@ -9967,6 +10062,7 @@ By default the deployed version of the Evaluator is returned. Use the query para
           "base-properties": {},
           "discriminant": "evaluator_type",
           "docs": undefined,
+          "encoding": undefined,
           "source": {
             "openapi": "humanloop/openapi.yml",
           },
@@ -11787,7 +11883,10 @@ within the Prompt for monitoring purposes.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "literal<"none">",
             "literal<"auto">",
@@ -11802,7 +11901,10 @@ within the Prompt for monitoring purposes.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "literal<"none">",
             "literal<"auto">",
@@ -11813,7 +11915,10 @@ within the Prompt for monitoring purposes.",
         "PromptRequestStop": {
           "discriminated": false,
           "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "string",
             "list<string>",
@@ -11822,7 +11927,10 @@ within the Prompt for monitoring purposes.",
         "PromptsCallResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "root.PromptCallResponse",
             "root.PromptCallStreamResponse",
@@ -11831,7 +11939,10 @@ within the Prompt for monitoring purposes.",
         "Template": {
           "discriminated": false,
           "docs": "For chat endpoint, provide a Chat template. For completion endpoint, provide a Prompt template. Input variables within the template should be specified with double curly bracket syntax: {{INPUT_NAME}}.",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "string",
             "list<root.ChatMessage>",
@@ -13154,6 +13265,7 @@ in the Evaluation Report.",
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "humanloop/openapi.yml",
         },
@@ -13199,6 +13311,7 @@ in the Evaluation Report.",
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "humanloop/openapi.yml",
         },
@@ -13255,6 +13368,7 @@ in the Evaluation Report.",
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "humanloop/openapi.yml",
         },
@@ -13269,7 +13383,10 @@ in the Evaluation Report.",
       "Content": {
         "discriminated": false,
         "docs": "The content of the message.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<ChatMessageWithToolCallContentItem>",
@@ -13298,7 +13415,10 @@ in the Evaluation Report.",
       "CreateDatapointRequestTargetValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -13418,7 +13538,10 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
       "DatapointResponseTargetValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -13515,7 +13638,10 @@ in the inheriting classes with documentation and appropriate Field definitions."
       "EvaluatedVersionResponse": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -13694,7 +13820,10 @@ function.",
       "EvaluatorActivationDeactivationRequestEvaluatorsToActivateItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "MonitoringEvaluatorVersionRequest",
           "MonitoringEvaluatorEnvironmentRequest",
@@ -13703,7 +13832,10 @@ function.",
       "EvaluatorActivationDeactivationRequestEvaluatorsToDeactivateItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "MonitoringEvaluatorVersionRequest",
           "MonitoringEvaluatorEnvironmentRequest",
@@ -13909,7 +14041,10 @@ function.",
       "FeedbackResponseType": {
         "discriminated": false,
         "docs": "The type of feedback. The default feedback types available are 'rating', 'action', 'issue', 'correction', and 'comment'.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "FeedbackType",
           "string",
@@ -13918,7 +14053,10 @@ function.",
       "FeedbackResponseValue": {
         "discriminated": false,
         "docs": "The feedback value to set. This would be the appropriate text for 'correction' or 'comment', or a label to apply for 'rating', 'action', or 'issue'.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "double",
           "string",
@@ -13956,7 +14094,10 @@ function.",
       "FeedbackTypeModelType": {
         "discriminated": false,
         "docs": "The type of feedback. The default feedback types available are 'rating', 'action', 'issue', 'correction', and 'comment'.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "FeedbackType",
           "string",
@@ -13966,7 +14107,10 @@ function.",
       "File": {
         "discriminated": false,
         "docs": "The File that the deployed Version belongs to.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -14104,7 +14248,10 @@ function.",
       "Judgment": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "boolean",
           "double",
@@ -14408,7 +14555,10 @@ Used by a File's PAPV (Positive Action Per View) metric.",
       "LogResponseToolChoice": {
         "discriminated": false,
         "docs": "Controls how the model uses tools. The following options are supported: 'none' forces the model to not call a tool; the default when no tools are provided as part of the model config. 'auto' the model can decide to call one of the provided tools; the default when tools are provided as part of the model config. Providing {'type': 'function', 'function': {name': <TOOL_NAME>}} forces the model to use the named function.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -14512,7 +14662,10 @@ Used by a File's PAPV (Positive Action Per View) metric.",
       "ModelConfigRequestStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -14521,7 +14674,10 @@ Used by a File's PAPV (Positive Action Per View) metric.",
       "ModelConfigRequestToolsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "LinkedToolRequest",
           "ModelConfigToolRequest",
@@ -14622,7 +14778,10 @@ Contains fields that are common to all (i.e. both chat and complete) endpoints."
       "ModelConfigResponseStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -15040,7 +15199,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -15192,7 +15354,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
       "PromptKernelRequestStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -15326,7 +15491,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -15457,7 +15625,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
       "PromptResponseStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -15519,6 +15690,7 @@ Observability is implemented by running monitoring Evaluators on Logs.",
         "base-properties": {},
         "discriminant": "evaluator_type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "humanloop/openapi.yml",
         },
@@ -15531,7 +15703,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
       "Template": {
         "discriminated": false,
         "docs": "For chat endpoint, provide a Chat template. For completion endpoint, provide a Prompt template. Input variables within the template should be specified with double curly bracket syntax: {{INPUT_NAME}}.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<ChatMessage>",
@@ -15907,7 +16082,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -15916,7 +16094,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "Value": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "boolean",
           "double",
@@ -15925,7 +16106,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "Version": {
         "discriminated": false,
         "docs": "The specific Version being referenced.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -15965,6 +16149,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "humanloop/openapi.yml",
         },
@@ -15996,7 +16181,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "VersionStatsEvaluatorVersionStatsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "NumericEvaluatorVersionStats",
           "BooleanEvaluatorVersionStats",

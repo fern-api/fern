@@ -1058,6 +1058,7 @@ exports[`polytomic polytomic parse open api 1`] = `
             "value": {
               "availability": null,
               "description": "Application context.",
+              "encoding": null,
               "generatedName": "RestErrResponseContext",
               "groupName": null,
               "key": {
@@ -1457,6 +1458,7 @@ exports[`polytomic polytomic parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "V2CreateConnectionRequestSchemaConfiguration",
               "groupName": null,
               "key": {
@@ -1831,6 +1833,7 @@ exports[`polytomic polytomic parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "V2CreateConnectionResponseSchemaConfiguration",
                 "groupName": null,
                 "key": {

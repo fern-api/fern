@@ -9909,7 +9909,10 @@ exports[`open api parser deel docs 1`] = `
       "ContractSearchForm": {
         "discriminated": false,
         "docs": "Search form should include parameters varied based on usage of cursor for pagination. NOTE: that all query parameters are based on strings",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractSearchFormWithCursor",
           "ContractSearchFormWithoutCursor",
@@ -9990,7 +9993,10 @@ exports[`open api parser deel docs 1`] = `
       "ContractSearchFormWithoutCursorCountries": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "CountryCodeList",
           "CountryCode",
@@ -9999,7 +10005,10 @@ exports[`open api parser deel docs 1`] = `
       "ContractSearchFormWithoutCursorCurrencies": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "CurrencyCodeList",
           "CurrencyCodeRequired",
@@ -10008,7 +10017,10 @@ exports[`open api parser deel docs 1`] = `
       "ContractSearchFormWithoutCursorStatuses": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractStatusEnumList",
           "ContractStatusEnum",
@@ -10017,7 +10029,10 @@ exports[`open api parser deel docs 1`] = `
       "ContractSearchFormWithoutCursorTypes": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractTypeEnum",
           "ContractTypeEnumList",
@@ -10126,7 +10141,10 @@ exports[`open api parser deel docs 1`] = `
       "ContractToCreate": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractToCreatePayAsYouGoTimeBased",
           "ContractToCreatePaygTasks",
@@ -12357,6 +12375,7 @@ exports[`open api parser deel docs 1`] = `
         "base-properties": {},
         "discriminant": "employment_type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "deel/openapi.yml",
         },
@@ -12439,7 +12458,10 @@ exports[`open api parser deel docs 1`] = `
       "HrisDirectEmployeeJobInformation": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "HrisJobInformationTitleId",
           "HrisJobInformationTitleName",
@@ -12798,7 +12820,10 @@ exports[`open api parser deel docs 1`] = `
       "InvoiceAdjustmentSearchContainerContractTypes": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractTypeEnumList",
           "ContractTypeEnum",
@@ -12807,7 +12832,10 @@ exports[`open api parser deel docs 1`] = `
       "InvoiceAdjustmentSearchContainerStatuses": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "InvoiceAdjustmentStatusEnumList",
           "optional<InvoiceAdjustmentStatusEnum>",
@@ -12816,7 +12844,10 @@ exports[`open api parser deel docs 1`] = `
       "InvoiceAdjustmentSearchContainerTypes": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "InvoiceAdjustmentTypeEnumList",
           "InvoiceAdjustmentTypeEnum",
@@ -14722,7 +14753,10 @@ exports[`open api parser deel docs 1`] = `
       "TimesheetIdItemsItem": {
         "discriminated": false,
         "docs": "ID of an existing timesheet record",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "double",
           "string",
@@ -14835,7 +14869,10 @@ exports[`open api parser deel docs 1`] = `
       "TimesheetSearchContainerContractTypes": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractTypeEnumList",
           "ContractTypeEnum",
@@ -14844,7 +14881,10 @@ exports[`open api parser deel docs 1`] = `
       "TimesheetSearchContainerStatuses": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "TimesheetStatusEnumList",
           "optional<TimesheetStatusEnum>",
@@ -14853,7 +14893,10 @@ exports[`open api parser deel docs 1`] = `
       "TimesheetSearchContainerTypes": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "TimesheetTypeEnumList",
           "TimesheetTypeEnum",
@@ -14916,7 +14959,10 @@ exports[`open api parser deel docs 1`] = `
       "UniqueObjectIdentifier": {
         "discriminated": false,
         "docs": "Unique identifier of this resource.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "string",
           "double",
@@ -22454,7 +22500,10 @@ exports[`open api parser deel simple 1`] = `
       "ContractSearchForm": {
         "discriminated": false,
         "docs": "Search form should include parameters varied based on usage of cursor for pagination. NOTE: that all query parameters are based on strings",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractSearchFormWithCursor",
           "ContractSearchFormWithoutCursor",
@@ -22535,7 +22584,10 @@ exports[`open api parser deel simple 1`] = `
       "ContractSearchFormWithoutCursorCountries": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "CountryCodeList",
           "CountryCode",
@@ -22544,7 +22596,10 @@ exports[`open api parser deel simple 1`] = `
       "ContractSearchFormWithoutCursorCurrencies": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "CurrencyCodeList",
           "CurrencyCodeRequired",
@@ -22553,7 +22608,10 @@ exports[`open api parser deel simple 1`] = `
       "ContractSearchFormWithoutCursorStatuses": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractStatusEnumList",
           "ContractStatusEnum",
@@ -22562,7 +22620,10 @@ exports[`open api parser deel simple 1`] = `
       "ContractSearchFormWithoutCursorTypes": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractTypeEnum",
           "ContractTypeEnumList",
@@ -22671,7 +22732,10 @@ exports[`open api parser deel simple 1`] = `
       "ContractToCreate": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractToCreatePayAsYouGoTimeBased",
           "ContractToCreatePaygTasks",
@@ -24902,6 +24966,7 @@ exports[`open api parser deel simple 1`] = `
         "base-properties": {},
         "discriminant": "employment_type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "deel/openapi.yml",
         },
@@ -24984,7 +25049,10 @@ exports[`open api parser deel simple 1`] = `
       "HrisDirectEmployeeJobInformation": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "HrisJobInformationTitleId",
           "HrisJobInformationTitleName",
@@ -25343,7 +25411,10 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceAdjustmentSearchContainerContractTypes": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractTypeEnumList",
           "ContractTypeEnum",
@@ -25352,7 +25423,10 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceAdjustmentSearchContainerStatuses": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "InvoiceAdjustmentStatusEnumList",
           "optional<InvoiceAdjustmentStatusEnum>",
@@ -25361,7 +25435,10 @@ exports[`open api parser deel simple 1`] = `
       "InvoiceAdjustmentSearchContainerTypes": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "InvoiceAdjustmentTypeEnumList",
           "InvoiceAdjustmentTypeEnum",
@@ -27267,7 +27344,10 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetIdItemsItem": {
         "discriminated": false,
         "docs": "ID of an existing timesheet record",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "double",
           "string",
@@ -27380,7 +27460,10 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetSearchContainerContractTypes": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "ContractTypeEnumList",
           "ContractTypeEnum",
@@ -27389,7 +27472,10 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetSearchContainerStatuses": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "TimesheetStatusEnumList",
           "optional<TimesheetStatusEnum>",
@@ -27398,7 +27484,10 @@ exports[`open api parser deel simple 1`] = `
       "TimesheetSearchContainerTypes": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "TimesheetTypeEnumList",
           "TimesheetTypeEnum",
@@ -27461,7 +27550,10 @@ exports[`open api parser deel simple 1`] = `
       "UniqueObjectIdentifier": {
         "discriminated": false,
         "docs": "Unique identifier of this resource.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "deel/openapi.yml",
+        },
         "union": [
           "string",
           "double",

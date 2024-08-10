@@ -8,7 +8,8 @@ export interface MapSchema
     extends FernOpenapiIr.WithDescription,
         FernOpenapiIr.WithName,
         FernOpenapiIr.WithSdkGroupName,
-        FernOpenapiIr.WithAvailability {
+        FernOpenapiIr.WithAvailability,
+        FernOpenapiIr.WithEncoding {
     key: FernOpenapiIr.PrimitiveSchema;
     value: FernOpenapiIr.Schema;
 }

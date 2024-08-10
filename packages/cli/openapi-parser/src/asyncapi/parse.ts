@@ -302,6 +302,7 @@ function convertMessageToSchema({
             wrapAsNullable: false,
             breadcrumbs,
             context,
+            encoding: undefined,
             source,
             subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
         });
