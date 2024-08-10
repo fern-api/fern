@@ -1,6 +1,5 @@
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
-import { HttpRequestSchema } from "@fern-api/yaml-schema/src/schemas";
 import { RuleViolation } from "../../Rule";
 import { getAllPropertiesForRawObjectSchema, validatePropertyInType } from "./validatePropertyInType";
 
@@ -10,7 +9,7 @@ export declare namespace ValidatePropertyInRequest {
         path: string[];
         typeResolver: TypeResolver;
         file: FernFileContext;
-        request: HttpRequestSchema;
+        request: RawSchemas.HttpRequestSchema;
         validate: ({ resolvedType }: { resolvedType: ResolvedType | undefined }) => RuleViolation[];
     }
 }
