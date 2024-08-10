@@ -2,8 +2,10 @@ import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-genera
 import { RawSchemas } from "@fern-api/yaml-schema";
 import chalk from "chalk";
 import { RuleViolation } from "../../Rule";
+import { getPathFromSelector } from "../../utils/property-validator/getPathFromSelector";
+import { validatePropertyInType } from "../../utils/property-validator/validatePropertyInType";
 import { maybeFileFromResolvedType, maybePrimitiveType, resolveResponseType } from "../../utils/propertyValidatorUtils";
-import { validateRequestProperty, validateResponseProperty, validateResultsProperty } from "./validateUtils";
+import { validateRequestProperty, validateResultsProperty } from "./validateUtils";
 
 export function validateOffsetPagination({
     endpointId,
@@ -136,7 +138,6 @@ function isValidOffsetType({ resolvedType }: { resolvedType: ResolvedType | unde
 }
 
 function validateHasNextPageProperty({
-    endpointId,
     resolvedResponseType,
     typeResolver,
     file,
@@ -151,23 +152,22 @@ function validateHasNextPageProperty({
     if (offsetPagination["has-next-page"] == null) {
         return [];
     }
-    return validateResponseProperty({
-        endpointId,
+    return validatePropertyInType({
         typeResolver,
         file,
-        responseProperty: offsetPagination["has-next-page"],
-        resolvedResponseType,
-        propertyValidator: {
-            propertyID: "has-next-page",
-            validate: isValidHasNextPageType
+        path: getPathFromSelector(offsetPagination["has-next-page"]),
+        resolvedType: resolvedResponseType,
+        validate: ({ resolvedType }) => {
+            const primitiveType = maybePrimitiveType(resolvedType);
+            if (primitiveType !== "BOOLEAN") {
+                return [
+                    {
+                        message: `"has-next-page" selector, ${offsetPagination["has-next-page"]}, does not point to a boolean property`,
+                        severity: "error"
+                    }
+                ];
+            }
+            return [];
         }
     });
-}
-
-function isValidHasNextPageType({ resolvedType }: { resolvedType: ResolvedType | undefined }): boolean {
-    const primitiveType = maybePrimitiveType(resolvedType);
-    if (primitiveType == null) {
-        return false;
-    }
-    return primitiveType === "BOOLEAN";
 }
