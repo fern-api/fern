@@ -9,7 +9,7 @@ import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getPropertiesByAudience } from "../../utils/getPropertiesByAudience";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
-import { convertProtobufType } from "../convertProtobufType";
+import { convertSourceToProtobufType, maybeConvertEncodingToProtobufType } from "../convertProtobufType";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertDiscriminatedUnionTypeDeclaration } from "./convertDiscriminatedUnionTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
@@ -127,7 +127,18 @@ async function convertTypeDeclarationSource({
     typeName: string;
     sourceResolver: SourceResolver;
 }): Promise<Source | undefined> {
-    if (typeof typeDeclaration === "string" || typeDeclaration.source == null) {
+    if (typeof typeDeclaration === "string" || (typeDeclaration.source == null && typeDeclaration.encoding == null)) {
+        return undefined;
+    }
+    if (typeDeclaration.encoding != null) {
+        const maybeProtobufType = maybeConvertEncodingToProtobufType({
+            encoding: typeDeclaration.encoding
+        });
+        if (maybeProtobufType != null) {
+            return Source.proto(maybeProtobufType);
+        }
+    }
+    if (typeDeclaration.source == null) {
         return undefined;
     }
     const resolvedSource = await sourceResolver.resolveSourceOrThrow({
@@ -138,10 +149,9 @@ async function convertTypeDeclarationSource({
         return undefined;
     }
     return Source.proto(
-        convertProtobufType({
+        convertSourceToProtobufType({
             source: resolvedSource,
-            name: typeName,
-            encoding: typeDeclaration.encoding
+            name: typeName
         })
     );
 }

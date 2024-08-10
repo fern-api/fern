@@ -25,6 +25,7 @@ import {
     buildOneOfTypeDeclaration
 } from "./buildTypeDeclaration";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import {
     getDefaultFromTypeReference,
@@ -448,14 +449,21 @@ export function buildMapTypeReference({
         declarationFile,
         context
     });
+    const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
     const type = `map<${getTypeFromTypeReference(keyTypeReference)}, ${getTypeFromTypeReference(valueTypeReference)}>`;
-    if (schema.description == null) {
+    if (schema.description == null && encoding == null) {
         return type;
     }
-    return {
-        docs: schema.description,
+    const result: RawSchemas.TypeReferenceWithDocsSchema = {
         type
     };
+    if (schema.description != null) {
+        result.docs = schema.description;
+    }
+    if (schema.encoding != null) {
+        result.encoding = encoding;
+    }
+    return result;
 }
 
 export function buildOptionalTypeReference({

@@ -5581,6 +5581,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "CreatePrivateLobbyRequestInitialConfig",
                 "groupName": null,
                 "key": {
@@ -6083,6 +6084,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "CreatePublicLobbyRequestInitialConfig",
                 "groupName": null,
                 "key": {
@@ -6585,6 +6587,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "CreateLocalLobbyRequestInitialConfig",
                 "groupName": null,
                 "key": {
@@ -7153,6 +7156,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "CreateLobbyRequestInitialConfig",
                 "groupName": null,
                 "key": {
@@ -8016,6 +8020,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "schema": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "SetLobbyStateRequestState",
                 "groupName": null,
                 "key": {
@@ -12312,6 +12317,7 @@ exports[`open api parser hathora parse open api 1`] = `
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "status",
+        "encoding": null,
         "generatedName": "ConnectionInfo",
         "groupName": null,
         "nameOverride": null,
@@ -12865,6 +12871,7 @@ exports[`open api parser hathora parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "LobbyState",
               "groupName": null,
               "key": {
@@ -12902,6 +12909,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "LobbyInitialConfig",
             "groupName": null,
             "key": {

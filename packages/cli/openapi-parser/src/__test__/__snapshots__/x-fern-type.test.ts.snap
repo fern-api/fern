@@ -16,6 +16,7 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
     "BaseUser": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "BaseUser",
       "groupName": null,
       "key": {

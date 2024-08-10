@@ -8898,6 +8898,7 @@ exports[`seam seam parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": null,
+                  "encoding": null,
                   "generatedName": "ConnectWebviewsCreateRequestCustomMetadata",
                   "groupName": null,
                   "key": {
@@ -8929,6 +8930,7 @@ exports[`seam seam parse open api 1`] = `
                       "value": {
                         "availability": null,
                         "description": null,
+                        "encoding": null,
                         "generatedName": "ConnectWebviewsCreateRequestCustomMetadataValue",
                         "groupName": null,
                         "nameOverride": null,
@@ -8986,7 +8988,10 @@ exports[`seam seam parse open api 1`] = `
                             },
                           },
                         ],
-                        "source": null,
+                        "source": {
+                          "file": "seam/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "undisciminated",
                       },
                     },
@@ -10008,6 +10013,7 @@ exports[`seam seam parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": "Returns devices where the webview's custom_metadata contains all of the provided key/value pairs.",
+                  "encoding": null,
                   "generatedName": "ConnectWebviewsListRequestCustomMetadataHas",
                   "groupName": null,
                   "key": {
@@ -10032,6 +10038,7 @@ exports[`seam seam parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "ConnectWebviewsListRequestCustomMetadataHasValue",
                       "groupName": null,
                       "nameOverride": null,
@@ -10065,7 +10072,10 @@ exports[`seam seam parse open api 1`] = `
                           "type": "primitive",
                         },
                       ],
-                      "source": null,
+                      "source": {
+                        "file": "seam/openapi.json",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -10667,6 +10677,7 @@ exports[`seam seam parse open api 1`] = `
           "value": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "ConnectedAccountsGetRequest",
             "groupName": null,
             "nameOverride": null,
@@ -10754,7 +10765,10 @@ exports[`seam seam parse open api 1`] = `
                 "type": "object",
               },
             ],
-            "source": null,
+            "source": {
+              "file": "seam/openapi.json",
+              "type": "openapi",
+            },
             "type": "undisciminated",
           },
         },
@@ -11052,6 +11066,7 @@ exports[`seam seam parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": "Returns devices where the account's custom_metadata contains all of the provided key/value pairs.",
+                  "encoding": null,
                   "generatedName": "ConnectedAccountsListRequestCustomMetadataHas",
                   "groupName": null,
                   "key": {
@@ -11076,6 +11091,7 @@ exports[`seam seam parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "ConnectedAccountsListRequestCustomMetadataHasValue",
                       "groupName": null,
                       "nameOverride": null,
@@ -11109,7 +11125,10 @@ exports[`seam seam parse open api 1`] = `
                           "type": "primitive",
                         },
                       ],
-                      "source": null,
+                      "source": {
+                        "file": "seam/openapi.json",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -11520,6 +11539,7 @@ exports[`seam seam parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": null,
+                  "encoding": null,
                   "generatedName": "ConnectedAccountsUpdateRequestCustomMetadata",
                   "groupName": null,
                   "key": {
@@ -11551,6 +11571,7 @@ exports[`seam seam parse open api 1`] = `
                       "value": {
                         "availability": null,
                         "description": null,
+                        "encoding": null,
                         "generatedName": "ConnectedAccountsUpdateRequestCustomMetadataValue",
                         "groupName": null,
                         "nameOverride": null,
@@ -11608,7 +11629,10 @@ exports[`seam seam parse open api 1`] = `
                             },
                           },
                         ],
-                        "source": null,
+                        "source": {
+                          "file": "seam/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "undisciminated",
                       },
                     },
@@ -15429,6 +15453,7 @@ exports[`seam seam parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": null,
+                  "encoding": null,
                   "generatedName": "DevicesListRequestCustomMetadataHas",
                   "groupName": null,
                   "key": {
@@ -15453,6 +15478,7 @@ exports[`seam seam parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "DevicesListRequestCustomMetadataHasValue",
                       "groupName": null,
                       "nameOverride": null,
@@ -15486,7 +15512,10 @@ exports[`seam seam parse open api 1`] = `
                           "type": "primitive",
                         },
                       ],
-                      "source": null,
+                      "source": {
+                        "file": "seam/openapi.json",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -16462,6 +16491,7 @@ exports[`seam seam parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": null,
+                  "encoding": null,
                   "generatedName": "DevicesUpdateRequestCustomMetadata",
                   "groupName": null,
                   "key": {
@@ -16493,6 +16523,7 @@ exports[`seam seam parse open api 1`] = `
                       "value": {
                         "availability": null,
                         "description": null,
+                        "encoding": null,
                         "generatedName": "DevicesUpdateRequestCustomMetadataValue",
                         "groupName": null,
                         "nameOverride": null,
@@ -16550,7 +16581,10 @@ exports[`seam seam parse open api 1`] = `
                             },
                           },
                         ],
-                        "source": null,
+                        "source": {
+                          "file": "seam/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "undisciminated",
                       },
                     },
@@ -17291,6 +17325,7 @@ exports[`seam seam parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "EventsListRequestBetweenItem",
                       "groupName": null,
                       "nameOverride": null,
@@ -17323,7 +17358,10 @@ exports[`seam seam parse open api 1`] = `
                           "type": "primitive",
                         },
                       ],
-                      "source": null,
+                      "source": {
+                        "file": "seam/openapi.json",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -24284,6 +24322,7 @@ exports[`seam seam parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": null,
+                  "encoding": null,
                   "generatedName": "LocksListRequestCustomMetadataHas",
                   "groupName": null,
                   "key": {
@@ -24308,6 +24347,7 @@ exports[`seam seam parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "LocksListRequestCustomMetadataHasValue",
                       "groupName": null,
                       "nameOverride": null,
@@ -24341,7 +24381,10 @@ exports[`seam seam parse open api 1`] = `
                           "type": "primitive",
                         },
                       ],
-                      "source": null,
+                      "source": {
+                        "file": "seam/openapi.json",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -31036,6 +31079,7 @@ exports[`seam seam parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": null,
+                  "encoding": null,
                   "generatedName": "ThermostatsListRequestCustomMetadataHas",
                   "groupName": null,
                   "key": {
@@ -31060,6 +31104,7 @@ exports[`seam seam parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "ThermostatsListRequestCustomMetadataHasValue",
                       "groupName": null,
                       "nameOverride": null,
@@ -31093,7 +31138,10 @@ exports[`seam seam parse open api 1`] = `
                           "type": "primitive",
                         },
                       ],
-                      "source": null,
+                      "source": {
+                        "file": "seam/openapi.json",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -33654,6 +33702,7 @@ exports[`seam seam parse open api 1`] = `
           "value": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "UserIdentitiesGetRequest",
             "groupName": null,
             "nameOverride": null,
@@ -33741,7 +33790,10 @@ exports[`seam seam parse open api 1`] = `
                 "type": "object",
               },
             ],
-            "source": null,
+            "source": {
+              "file": "seam/openapi.json",
+              "type": "openapi",
+            },
             "type": "undisciminated",
           },
         },
@@ -55869,6 +55921,7 @@ exports[`seam seam parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": null,
+                  "encoding": null,
                   "generatedName": "UnmanagedListRequestCustomMetadataHas",
                   "groupName": null,
                   "key": {
@@ -55893,6 +55946,7 @@ exports[`seam seam parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "UnmanagedListRequestCustomMetadataHasValue",
                       "groupName": null,
                       "nameOverride": null,
@@ -55926,7 +55980,10 @@ exports[`seam seam parse open api 1`] = `
                           "type": "primitive",
                         },
                       ],
-                      "source": null,
+                      "source": {
+                        "file": "seam/openapi.json",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -66710,6 +66767,7 @@ exports[`seam seam parse open api 1`] = `
                 "commonProperties": [],
                 "description": null,
                 "discriminantProperty": "error_code",
+                "encoding": null,
                 "generatedName": "AcsSystemErrorsItem",
                 "groupName": null,
                 "nameOverride": null,
@@ -67675,6 +67733,7 @@ exports[`seam seam parse open api 1`] = `
       "value": {
         "availability": null,
         "description": null,
+        "encoding": null,
         "generatedName": "ActionAttempt",
         "groupName": null,
         "nameOverride": null,
@@ -74904,7 +74963,10 @@ exports[`seam seam parse open api 1`] = `
             "type": "object",
           },
         ],
-        "source": null,
+        "source": {
+          "file": "seam/openapi.json",
+          "type": "openapi",
+        },
         "type": "undisciminated",
       },
     },
@@ -76136,6 +76198,7 @@ exports[`seam seam parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "ConnectWebviewCustomMetadata",
             "groupName": null,
             "key": {
@@ -76160,6 +76223,7 @@ exports[`seam seam parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ConnectWebviewCustomMetadataValue",
                 "groupName": null,
                 "nameOverride": null,
@@ -76193,7 +76257,10 @@ exports[`seam seam parse open api 1`] = `
                     "type": "primitive",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "seam/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -76671,6 +76738,7 @@ exports[`seam seam parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "ConnectedAccountCustomMetadata",
             "groupName": null,
             "key": {
@@ -76695,6 +76763,7 @@ exports[`seam seam parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ConnectedAccountCustomMetadataValue",
                 "groupName": null,
                 "nameOverride": null,
@@ -76728,7 +76797,10 @@ exports[`seam seam parse open api 1`] = `
                     "type": "primitive",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "seam/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -82791,6 +82863,7 @@ exports[`seam seam parse open api 1`] = `
                       "value": {
                         "availability": null,
                         "description": null,
+                        "encoding": null,
                         "generatedName": "DevicePropertiesCodeConstraintsItem",
                         "groupName": null,
                         "nameOverride": null,
@@ -83085,7 +83158,10 @@ exports[`seam seam parse open api 1`] = `
                             "type": "object",
                           },
                         ],
-                        "source": null,
+                        "source": {
+                          "file": "seam/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "undisciminated",
                       },
                     },
@@ -83700,6 +83776,7 @@ exports[`seam seam parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "DeviceCustomMetadata",
             "groupName": null,
             "key": {
@@ -83724,6 +83801,7 @@ exports[`seam seam parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "DeviceCustomMetadataValue",
                 "groupName": null,
                 "nameOverride": null,
@@ -83757,7 +83835,10 @@ exports[`seam seam parse open api 1`] = `
                     "type": "primitive",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "seam/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -86152,6 +86233,7 @@ exports[`seam seam parse open api 1`] = `
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "PhoneCustomMetadata",
             "groupName": null,
             "key": {
@@ -86176,6 +86258,7 @@ exports[`seam seam parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PhoneCustomMetadataValue",
                 "groupName": null,
                 "nameOverride": null,
@@ -86209,7 +86292,10 @@ exports[`seam seam parse open api 1`] = `
                     "type": "primitive",
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "seam/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },

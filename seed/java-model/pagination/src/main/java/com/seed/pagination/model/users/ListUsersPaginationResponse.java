@@ -18,16 +18,25 @@ import java.util.Optional;
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListUsersPaginationResponse.Builder.class)
 public final class ListUsersPaginationResponse {
+    private final Optional<Boolean> hasNextPage;
+
     private final Optional<Page> page;
 
     private final int totalCount;
 
     private final List<User> data;
 
-    private ListUsersPaginationResponse(Optional<Page> page, int totalCount, List<User> data) {
+    private ListUsersPaginationResponse(
+            Optional<Boolean> hasNextPage, Optional<Page> page, int totalCount, List<User> data) {
+        this.hasNextPage = hasNextPage;
         this.page = page;
         this.totalCount = totalCount;
         this.data = data;
+    }
+
+    @JsonProperty("hasNextPage")
+    public Optional<Boolean> getHasNextPage() {
+        return hasNextPage;
     }
 
     @JsonProperty("page")
@@ -55,12 +64,15 @@ public final class ListUsersPaginationResponse {
     }
 
     private boolean equalTo(ListUsersPaginationResponse other) {
-        return page.equals(other.page) && totalCount == other.totalCount && data.equals(other.data);
+        return hasNextPage.equals(other.hasNextPage)
+                && page.equals(other.page)
+                && totalCount == other.totalCount
+                && data.equals(other.data);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.page, this.totalCount, this.data);
+        return Objects.hash(this.hasNextPage, this.page, this.totalCount, this.data);
     }
 
     @java.lang.Override
@@ -81,6 +93,10 @@ public final class ListUsersPaginationResponse {
     public interface _FinalStage {
         ListUsersPaginationResponse build();
 
+        _FinalStage hasNextPage(Optional<Boolean> hasNextPage);
+
+        _FinalStage hasNextPage(Boolean hasNextPage);
+
         _FinalStage page(Optional<Page> page);
 
         _FinalStage page(Page page);
@@ -100,10 +116,13 @@ public final class ListUsersPaginationResponse {
 
         private Optional<Page> page = Optional.empty();
 
+        private Optional<Boolean> hasNextPage = Optional.empty();
+
         private Builder() {}
 
         @java.lang.Override
         public Builder from(ListUsersPaginationResponse other) {
+            hasNextPage(other.getHasNextPage());
             page(other.getPage());
             totalCount(other.getTotalCount());
             data(other.getData());
@@ -155,8 +174,21 @@ public final class ListUsersPaginationResponse {
         }
 
         @java.lang.Override
+        public _FinalStage hasNextPage(Boolean hasNextPage) {
+            this.hasNextPage = Optional.ofNullable(hasNextPage);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "hasNextPage", nulls = Nulls.SKIP)
+        public _FinalStage hasNextPage(Optional<Boolean> hasNextPage) {
+            this.hasNextPage = hasNextPage;
+            return this;
+        }
+
+        @java.lang.Override
         public ListUsersPaginationResponse build() {
-            return new ListUsersPaginationResponse(page, totalCount, data);
+            return new ListUsersPaginationResponse(hasNextPage, page, totalCount, data);
         }
     }
 }

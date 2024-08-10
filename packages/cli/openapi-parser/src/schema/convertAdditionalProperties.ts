@@ -1,5 +1,6 @@
 import {
     Availability,
+    Encoding,
     PrimitiveSchemaValueWithExample,
     PrimitiveSchemaWithExample,
     SchemaWithExample,
@@ -22,6 +23,7 @@ export function convertAdditionalProperties({
     context,
     groupName,
     example,
+    encoding,
     source
 }: {
     nameOverride: string | undefined;
@@ -34,6 +36,7 @@ export function convertAdditionalProperties({
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
+    encoding: Encoding | undefined;
     source: Source;
 }): SchemaWithExample {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties)) {
@@ -67,7 +70,8 @@ export function convertAdditionalProperties({
                 groupName: undefined
             }),
             groupName,
-            example
+            example,
+            encoding
         });
     }
     return wrapMap({
@@ -93,7 +97,8 @@ export function convertAdditionalProperties({
         },
         valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"], source),
         groupName,
-        example
+        example,
+        encoding
     });
 }
 
@@ -106,7 +111,8 @@ export function wrapMap({
     description,
     availability,
     groupName,
-    example
+    example,
+    encoding
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -117,6 +123,7 @@ export function wrapMap({
     availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
+    encoding: Encoding | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -130,6 +137,7 @@ export function wrapMap({
                 key: keySchema,
                 value: valueSchema,
                 groupName,
+                encoding,
                 example
             }),
             description,
@@ -145,6 +153,7 @@ export function wrapMap({
         key: keySchema,
         value: valueSchema,
         groupName,
+        encoding,
         example
     });
 }

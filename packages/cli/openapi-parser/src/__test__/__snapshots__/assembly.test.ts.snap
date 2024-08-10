@@ -240,6 +240,7 @@ The parameter should map to a JSON encoded list of strings.
         "value": {
           "availability": null,
           "description": "Send messages to the WebSocket",
+          "encoding": null,
           "generatedName": "sendMessage",
           "groupName": null,
           "nameOverride": "sendMessage",
@@ -271,7 +272,10 @@ The parameter should map to a JSON encoded list of strings.
               "type": "reference",
             },
           ],
-          "source": null,
+          "source": {
+            "file": "assembly/asyncapi.yml",
+            "type": "openapi",
+          },
           "type": "undisciminated",
         },
       },
@@ -284,6 +288,7 @@ The parameter should map to a JSON encoded list of strings.
         "value": {
           "availability": null,
           "description": "Receive messages from the WebSocket",
+          "encoding": null,
           "generatedName": "receiveMessage",
           "groupName": null,
           "nameOverride": "receiveMessage",
@@ -354,7 +359,10 @@ The parameter should map to a JSON encoded list of strings.
               "type": "reference",
             },
           ],
-          "source": null,
+          "source": {
+            "file": "assembly/asyncapi.yml",
+            "type": "openapi",
+          },
           "type": "undisciminated",
         },
       },
@@ -8399,6 +8407,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "schema": {
             "availability": null,
             "description": "A summary of the Content Moderation confidence results for the entire audio file",
+            "encoding": null,
             "generatedName": "ContentSafetyLabelResultSummary",
             "groupName": null,
             "key": {
@@ -8447,6 +8456,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "schema": {
             "availability": null,
             "description": "A summary of the Content Moderation severity results for the entire audio file",
+            "encoding": null,
             "generatedName": "ContentSafetyLabelResultSeverityScoreSummary",
             "groupName": null,
             "key": {
@@ -10462,6 +10472,7 @@ Valid values are in the range [0, 1] inclusive.
               "value": {
                 "availability": null,
                 "description": "Context to provide the model. This can be a string or a free-form JSON value.",
+                "encoding": null,
                 "generatedName": "LemurBaseParametersContext",
                 "groupName": null,
                 "nameOverride": null,
@@ -10485,6 +10496,7 @@ Valid values are in the range [0, 1] inclusive.
                   {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "LemurBaseParametersContextOne",
                     "groupName": null,
                     "key": {
@@ -10511,7 +10523,10 @@ Valid values are in the range [0, 1] inclusive.
                     },
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -10752,6 +10767,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "value": {
                 "availability": null,
                 "description": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
+                "encoding": null,
                 "generatedName": "LemurQuestionContext",
                 "groupName": null,
                 "nameOverride": null,
@@ -10775,6 +10791,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                   {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "LemurQuestionContextOne",
                     "groupName": null,
                     "key": {
@@ -10801,7 +10818,10 @@ Can be any value between 0.0 and 1.0 inclusive.
                     },
                   },
                 ],
-                "source": null,
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -12387,6 +12407,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "value": {
         "availability": null,
         "description": null,
+        "encoding": null,
         "generatedName": "RealtimeMessage",
         "groupName": null,
         "nameOverride": null,
@@ -12457,7 +12478,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "reference",
           },
         ],
-        "source": null,
+        "source": {
+          "file": "assembly/asyncapi.yml",
+          "type": "openapi",
+        },
         "type": "undisciminated",
       },
     },
@@ -12507,6 +12531,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "value": {
         "availability": null,
         "description": null,
+        "encoding": null,
         "generatedName": "RealtimeTranscript",
         "groupName": null,
         "nameOverride": null,
@@ -12538,7 +12563,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "reference",
           },
         ],
-        "source": null,
+        "source": {
+          "file": "assembly/asyncapi.yml",
+          "type": "openapi",
+        },
         "type": "undisciminated",
       },
     },
@@ -15204,6 +15232,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                     "schema": {
                       "availability": null,
                       "description": "The overall relevance of topic to the entire audio file",
+                      "encoding": null,
                       "generatedName": "TranscriptIabCategoriesResultSummary",
                       "groupName": null,
                       "key": {

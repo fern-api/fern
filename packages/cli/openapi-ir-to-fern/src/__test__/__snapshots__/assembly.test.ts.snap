@@ -448,7 +448,10 @@ The parameter should map to a JSON encoded list of strings.
         "receiveMessage": {
           "discriminated": false,
           "docs": "Receive messages from the WebSocket",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "assembly/asyncapi.yml",
+          },
           "union": [
             "root.SessionBegins",
             "root.PartialTranscript",
@@ -460,7 +463,10 @@ The parameter should map to a JSON encoded list of strings.
         "sendMessage": {
           "discriminated": false,
           "docs": "Send messages to the WebSocket",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "assembly/asyncapi.yml",
+          },
           "union": [
             "root.AudioData",
             "root.TerminateSession",
@@ -2556,7 +2562,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "LemurBaseParametersContext": {
         "discriminated": false,
         "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
         "union": [
           "string",
           "map<string, unknown>",
@@ -2645,7 +2654,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "LemurQuestionContext": {
         "discriminated": false,
         "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
         "union": [
           "string",
           "map<string, unknown>",
@@ -2858,7 +2870,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "RealtimeMessage": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
         "union": [
           "SessionBegins",
           "PartialTranscript",
@@ -2882,7 +2897,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "RealtimeTranscript": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
         "union": [
           "PartialTranscript",
           "FinalTranscript",
@@ -4270,7 +4288,10 @@ The parameter should map to a JSON encoded list of strings.
         "receiveMessage": {
           "discriminated": false,
           "docs": "Receive messages from the WebSocket",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "assembly/asyncapi.yml",
+          },
           "union": [
             "root.SessionBegins",
             "root.PartialTranscript",
@@ -4282,7 +4303,10 @@ The parameter should map to a JSON encoded list of strings.
         "sendMessage": {
           "discriminated": false,
           "docs": "Send messages to the WebSocket",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "assembly/asyncapi.yml",
+          },
           "union": [
             "root.AudioData",
             "root.TerminateSession",
@@ -5853,7 +5877,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "LemurBaseParametersContext": {
         "discriminated": false,
         "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
         "union": [
           "string",
           "map<string, unknown>",
@@ -5942,7 +5969,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "LemurQuestionContext": {
         "discriminated": false,
         "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
         "union": [
           "string",
           "map<string, unknown>",
@@ -6155,7 +6185,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "RealtimeMessage": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
         "union": [
           "SessionBegins",
           "PartialTranscript",
@@ -6179,7 +6212,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "RealtimeTranscript": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
         "union": [
           "PartialTranscript",
           "FinalTranscript",

@@ -5580,6 +5580,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Configuration representing how documents should be indexed",
+            "encoding": null,
             "generatedName": "DocumentIndexCreateRequestIndexingConfig",
             "groupName": null,
             "key": {
@@ -5821,6 +5822,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Configuration representing how documents should be indexed",
+            "encoding": null,
             "generatedName": "DocumentIndexReadIndexingConfig",
             "groupName": null,
             "key": {
@@ -6813,6 +6815,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
+            "encoding": null,
             "generatedName": "GenerateRequestInputValues",
             "groupName": null,
             "key": {
@@ -7769,6 +7772,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Key/value pairs for each variable found within the model version's prompt template.",
+            "encoding": null,
             "generatedName": "ModelVersionCompilePromptRequestRequestInputValues",
             "groupName": null,
             "key": {
@@ -8226,6 +8230,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ModelVersionExecConfigParametersLogitBias",
                 "groupName": null,
                 "key": {
@@ -8966,6 +8971,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "NormalizedTokenLogProbsTopLogprobs",
               "groupName": null,
               "key": {
@@ -9934,6 +9940,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PromptTemplateBlockPropertiesFunctionParameters",
                 "groupName": null,
                 "key": {
@@ -10270,6 +10277,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PromptTemplateBlockPropertiesRequestFunctionParameters",
                 "groupName": null,
                 "key": {
@@ -10914,6 +10922,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "RegisterPromptModelParametersRequestLogitBias",
                 "groupName": null,
                 "key": {
@@ -11305,6 +11314,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "availability": null,
               "description": "Optionally include additional metadata to store along with the prompt.",
+              "encoding": null,
               "generatedName": "RegisterPromptRequestRequestMeta",
               "groupName": null,
               "key": {
@@ -12642,6 +12652,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "SearchNodeResultDataResultsItem",
               "groupName": null,
               "key": {
@@ -14155,6 +14166,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "TerminalNodeJsonResultValue",
             "groupName": null,
             "key": {
@@ -14271,6 +14283,7 @@ Upload a document to be indexed and used for search.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "TerminalNodeResultOutput",
         "groupName": null,
         "nameOverride": null,
@@ -14479,6 +14492,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
+            "encoding": null,
             "generatedName": "TestSuiteTestCaseInputValues",
             "groupName": null,
             "key": {
@@ -14625,6 +14639,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
+            "encoding": null,
             "generatedName": "TestSuiteTestCaseRequestInputValues",
             "groupName": null,
             "key": {
@@ -15416,6 +15431,7 @@ Upload a document to be indexed and used for search.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "WorkflowNodeResultData",
         "groupName": null,
         "nameOverride": null,
@@ -15864,6 +15880,7 @@ Upload a document to be indexed and used for search.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "WorkflowRequestInputRequest",
         "groupName": null,
         "nameOverride": null,
@@ -15959,6 +15976,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "WorkflowRequestJsonInputRequestValue",
             "groupName": null,
             "key": {
@@ -16211,6 +16229,7 @@ Upload a document to be indexed and used for search.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "WorkflowResultEventOutputData",
         "groupName": null,
         "nameOverride": null,
@@ -16553,6 +16572,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "WorkflowResultEventOutputDataJsonValue",
               "groupName": null,
               "key": {
@@ -16744,6 +16764,7 @@ Upload a document to be indexed and used for search.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "WorkflowStreamEvent",
         "groupName": null,
         "nameOverride": null,

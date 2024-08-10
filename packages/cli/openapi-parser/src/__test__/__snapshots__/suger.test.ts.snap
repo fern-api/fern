@@ -27200,6 +27200,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "AzureProductPropertyLeveledCategories",
               "groupName": null,
               "key": {
@@ -27244,6 +27245,7 @@ exports[`open api parser suger parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "AzureProductPropertyLeveledIndustries",
               "groupName": null,
               "key": {
@@ -33524,6 +33526,7 @@ BatchMeterUsage call with this list as input in the BatchMeterUsageRequest.",
     "middleware.Metadata": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "MiddlewareMetadata",
       "groupName": null,
       "key": {
@@ -39799,6 +39802,7 @@ in the google.rpc.Status.details field, or localized by the client.",
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "SharedCreateUsageRecordGroupParamsRecords",
             "groupName": null,
             "key": {
@@ -47908,6 +47912,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "SharedMeteringUsageRecordGroupRecords",
               "groupName": null,
               "key": {
@@ -48078,6 +48083,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "availability": null,
               "description": "The original records reported by the customer before convertion. If no dimension mapping is applied, this field is the same as the records field.",
+              "encoding": null,
               "generatedName": "SharedMeteringUsageRecordGroupMetaInfoOriginRecords",
               "groupName": null,
               "key": {
@@ -48508,6 +48514,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "availability": null,
               "description": "The credit usage records in the map of <DimensionKey, Count>",
+              "encoding": null,
               "generatedName": "SharedMeteringUsageRecordReportInfoCreditRecords",
               "groupName": null,
               "key": {
@@ -48564,6 +48571,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "availability": null,
               "description": "The unit price of each dimension in the map of <DimensionKey, UnitPrice>",
+              "encoding": null,
               "generatedName": "SharedMeteringUsageRecordReportInfoDimensionUnitPrice",
               "groupName": null,
               "key": {
@@ -48676,6 +48684,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "availability": null,
               "description": "The included usage records in the map of <DimensionKey, Count>",
+              "encoding": null,
               "generatedName": "SharedMeteringUsageRecordReportInfoIncludedRecords",
               "groupName": null,
               "key": {
@@ -48732,6 +48741,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "availability": null,
               "description": "The reported usage records in the map of <DimensionKey, Count>",
+              "encoding": null,
               "generatedName": "SharedMeteringUsageRecordReportInfoReportedRecords",
               "groupName": null,
               "key": {
@@ -50701,6 +50711,7 @@ This field is present only if the product has usage-based billing configured.",
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "SharedProductInfoAttributes",
               "groupName": null,
               "key": {

@@ -1,6 +1,7 @@
 import {
     AllOfPropertyConflict,
     Availability,
+    Encoding,
     NamedFullExample,
     ObjectPropertyConflictInfo,
     ObjectPropertyWithExample,
@@ -43,6 +44,7 @@ export function convertObject({
     fullExamples,
     additionalProperties,
     availability,
+    encoding,
     source
 }: {
     nameOverride: string | undefined;
@@ -59,6 +61,7 @@ export function convertObject({
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     availability: Availability | undefined;
+    encoding: Encoding | undefined;
     source: Source;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];

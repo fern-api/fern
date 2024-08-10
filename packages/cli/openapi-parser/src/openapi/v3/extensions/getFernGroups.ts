@@ -24,6 +24,6 @@ export function getFernGroups({
         document,
         FernOpenAPIExtension.GROUPS,
         XFernGroupsSchema,
-        context
+        context.logger
     );
 }

@@ -15363,6 +15363,7 @@ login screen as a login option.
 authentication connection that is set up for a Dev organization.
 ",
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "AuthConnection",
         "groupName": null,
         "nameOverride": null,
@@ -15874,6 +15875,7 @@ authentication connection.
     "auth-connection-options-social": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "AuthConnectionOptionsSocial",
       "groupName": null,
       "key": {
@@ -17895,6 +17897,7 @@ it would appear on the login button as 'Log in to abclogin'.
         "description": "Request to create a new enterprise authentication connection.
 ",
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "DevOrgAuthConnectionsCreateRequest",
         "groupName": null,
         "nameOverride": null,
@@ -18339,6 +18342,7 @@ it would appear on the login button as 'Log in to abclogin'.
 organization.
 ",
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "DevOrgAuthConnectionsUpdateRequest",
         "groupName": null,
         "nameOverride": null,
@@ -18775,6 +18779,7 @@ sort order. If not set, then no prior elements exist.
     "empty": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "Empty",
       "groupName": null,
       "key": {
@@ -18902,6 +18907,7 @@ sort order. If not set, then no prior elements exist.
     "error-bad-request-bad-request": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ErrorBadRequestBadRequest",
       "groupName": null,
       "key": {
@@ -19068,6 +19074,7 @@ sort order. If not set, then no prior elements exist.
     "error-bad-request-parse-error": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ErrorBadRequestParseError",
       "groupName": null,
       "key": {
@@ -19327,6 +19334,7 @@ sort order. If not set, then no prior elements exist.
     "error-forbidden-forbidden": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ErrorForbiddenForbidden",
       "groupName": null,
       "key": {
@@ -19396,6 +19404,7 @@ sort order. If not set, then no prior elements exist.
     "error-internal-server-error-internal-error": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ErrorInternalServerErrorInternalError",
       "groupName": null,
       "key": {
@@ -19465,6 +19474,7 @@ sort order. If not set, then no prior elements exist.
     "error-not-found-not-found": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ErrorNotFoundNotFound",
       "groupName": null,
       "key": {
@@ -19534,6 +19544,7 @@ sort order. If not set, then no prior elements exist.
     "error-service-unavailable-service-unavailable": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ErrorServiceUnavailableServiceUnavailable",
       "groupName": null,
       "key": {
@@ -19603,6 +19614,7 @@ sort order. If not set, then no prior elements exist.
     "error-too-many-requests-too-many-requests": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ErrorTooManyRequestsTooManyRequests",
       "groupName": null,
       "key": {
@@ -19684,6 +19696,7 @@ sort order. If not set, then no prior elements exist.
     "error-unauthorized-unauthenticated": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ErrorUnauthorizedUnauthenticated",
       "groupName": null,
       "key": {
@@ -20414,6 +20427,7 @@ sort order. If not set, then no prior elements exist.
     "external-identity": {
       "availability": null,
       "description": "External identity of a user.",
+      "encoding": null,
       "generatedName": "ExternalIdentity",
       "groupName": null,
       "key": {
@@ -20836,6 +20850,7 @@ always be returned in the specified sort-by order.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "OrgSummary",
         "groupName": null,
         "nameOverride": null,
@@ -20880,6 +20895,7 @@ always be returned in the specified sort-by order.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "Part",
         "groupName": null,
         "nameOverride": "part",
@@ -21194,6 +21210,7 @@ always be returned in the specified sort-by order.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "PartSummary",
         "groupName": null,
         "nameOverride": null,
@@ -21406,6 +21423,7 @@ always be returned in the specified sort-by order.
         ],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "PartsCreateRequest",
         "groupName": null,
         "nameOverride": null,
@@ -21649,6 +21667,7 @@ always be returned in the specified sort-by order.
     "parts-create-request-product": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "PartsCreateRequestProduct",
       "groupName": null,
       "key": {
@@ -21756,6 +21775,7 @@ always be returned in the specified sort-by order.
     "parts-delete-response": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "PartsDeleteResponse",
       "groupName": null,
       "key": {
@@ -22038,6 +22058,7 @@ sort order. If not set, then no prior elements exist.
         ],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "PartsUpdateRequest",
         "groupName": null,
         "nameOverride": null,
@@ -22118,6 +22139,7 @@ sort order. If not set, then no prior elements exist.
     "parts-update-request-capability": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "PartsUpdateRequestCapability",
       "groupName": null,
       "key": {
@@ -22190,6 +22212,7 @@ sort order. If not set, then no prior elements exist.
     "parts-update-request-feature": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "PartsUpdateRequestFeature",
       "groupName": null,
       "key": {
@@ -22277,6 +22300,7 @@ empty.
     "parts-update-request-product": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "PartsUpdateRequestProduct",
       "groupName": null,
       "key": {
@@ -22795,6 +22819,7 @@ records.
     "rev-orgs-delete-response": {
       "availability": null,
       "description": "The response to deleting a Rev organization.",
+      "encoding": null,
       "generatedName": "RevOrgsDeleteResponse",
       "groupName": null,
       "key": {
@@ -24028,6 +24053,7 @@ permitted.
     "tags-delete-response": {
       "availability": null,
       "description": "The response for deleting a tag.",
+      "encoding": null,
       "generatedName": "TagsDeleteResponse",
       "groupName": null,
       "key": {
@@ -24760,6 +24786,7 @@ will appear in the response.
             "value": {
               "availability": null,
               "description": "The SnapKit Body of the comment.",
+              "encoding": null,
               "generatedName": "TimelineCommentSnapKitBody",
               "groupName": null,
               "key": {
@@ -24886,6 +24913,7 @@ will appear in the response.
         ],
         "description": "The request to create a timeline entry for an object.",
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "TimelineEntriesCreateRequest",
         "groupName": null,
         "nameOverride": null,
@@ -25039,6 +25067,7 @@ will appear in the response.
             "value": {
               "availability": null,
               "description": "The SnapKit body of the comment.",
+              "encoding": null,
               "generatedName": "TimelineEntriesCreateRequestTimelineCommentSnapKitBody",
               "groupName": null,
               "key": {
@@ -25302,6 +25331,7 @@ sort order. If not set, then no prior elements exist.
         ],
         "description": "The request to update a timeline entry.",
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "TimelineEntriesUpdateRequest",
         "groupName": null,
         "nameOverride": null,
@@ -25444,6 +25474,7 @@ sort order. If not set, then no prior elements exist.
             "value": {
               "availability": null,
               "description": "The SnapKit body of the comment.",
+              "encoding": null,
               "generatedName": "TimelineEntriesUpdateRequestTimelineCommentSnapKitBody",
               "groupName": null,
               "key": {
@@ -25677,6 +25708,7 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "TimelineEntry",
         "groupName": null,
         "nameOverride": null,
@@ -26239,6 +26271,7 @@ default visibility.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "UserSummary",
         "groupName": null,
         "nameOverride": null,
@@ -27760,6 +27793,7 @@ response.
     "webhooks-delete-response": {
       "availability": null,
       "description": "The response to deleting the webhook.",
+      "encoding": null,
       "generatedName": "WebhooksDeleteResponse",
       "groupName": null,
       "key": {
@@ -28263,6 +28297,7 @@ event types. Note this is mutually exclusive with 'add' and
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "Work",
         "groupName": null,
         "nameOverride": "work",
@@ -28906,6 +28941,7 @@ issues.
         ],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "WorksCreateRequest",
         "groupName": null,
         "nameOverride": null,
@@ -29214,6 +29250,7 @@ issues.
     "works-delete-response": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "WorksDeleteResponse",
       "groupName": null,
       "key": {
@@ -29693,6 +29730,7 @@ sort order. If not set, then no prior elements exist.
         ],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "WorksUpdateRequest",
         "groupName": null,
         "nameOverride": null,
