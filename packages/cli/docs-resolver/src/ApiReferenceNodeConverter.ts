@@ -672,7 +672,7 @@ export class ApiReferenceNodeConverter {
 
             return {
                 environments:
-                    playgroundSettings.environments && playgroundSettings.environments.length > 0
+                    playgroundSettings.environments != null && playgroundSettings.environments.length > 0
                         ? playgroundSettings.environments.map((environmentId) =>
                               FernNavigation.EnvironmentId(environmentId)
                           )
