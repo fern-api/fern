@@ -5,8 +5,10 @@ using SeedFileDownload.Core;
 
 namespace SeedFileDownload;
 
-internal partial class SeedFileDownloadClient
+public partial class SeedFileDownloadClient
 {
+    private RawClient _client;
+
     public SeedFileDownloadClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedFileDownloadClient
         );
         Service = new ServiceClient(_client);
     }
-
-    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 }

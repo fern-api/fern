@@ -6,8 +6,10 @@ using SeedTrace.V2;
 
 namespace SeedTrace;
 
-internal partial class SeedTraceClient
+public partial class SeedTraceClient
 {
+    private RawClient _client;
+
     public SeedTraceClient(
         string token,
         string? xRandomHeader = null,
@@ -34,8 +36,6 @@ internal partial class SeedTraceClient
         Submission = new SubmissionClient(_client);
         Sysprop = new SyspropClient(_client);
     }
-
-    public RawClient _client;
 
     public V2Client V2 { get; init; }
 

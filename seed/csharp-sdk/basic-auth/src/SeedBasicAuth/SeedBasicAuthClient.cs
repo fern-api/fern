@@ -5,8 +5,10 @@ using SeedBasicAuth.Core;
 
 namespace SeedBasicAuth;
 
-internal partial class SeedBasicAuthClient
+public partial class SeedBasicAuthClient
 {
+    private RawClient _client;
+
     public SeedBasicAuthClient(
         string? username = null,
         string? password = null,
@@ -21,8 +23,6 @@ internal partial class SeedBasicAuthClient
         BasicAuth = new BasicAuthClient(_client);
         Errors = new ErrorsClient(_client);
     }
-
-    public RawClient _client;
 
     public BasicAuthClient BasicAuth { get; init; }
 

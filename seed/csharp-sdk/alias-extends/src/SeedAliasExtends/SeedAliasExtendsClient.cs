@@ -6,8 +6,10 @@ using SeedAliasExtends.Core;
 
 namespace SeedAliasExtends;
 
-internal partial class SeedAliasExtendsClient
+public partial class SeedAliasExtendsClient
 {
+    private RawClient _client;
+
     public SeedAliasExtendsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedAliasExtendsClient
             clientOptions ?? new ClientOptions()
         );
     }
-
-    public RawClient _client;
 
     public async Task ExtendedInlineRequestBodyAsync(
         InlinedChildRequest request,

@@ -5,8 +5,10 @@ using SeedQueryParameters.Core;
 
 namespace SeedQueryParameters;
 
-internal partial class SeedQueryParametersClient
+public partial class SeedQueryParametersClient
 {
+    private RawClient _client;
+
     public SeedQueryParametersClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedQueryParametersClient
         );
         User = new UserClient(_client);
     }
-
-    public RawClient _client;
 
     public UserClient User { get; init; }
 }

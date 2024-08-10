@@ -5,8 +5,10 @@ using SeedPlainText.Core;
 
 namespace SeedPlainText;
 
-internal partial class SeedPlainTextClient
+public partial class SeedPlainTextClient
 {
+    private RawClient _client;
+
     public SeedPlainTextClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedPlainTextClient
         );
         Service = new ServiceClient(_client);
     }
-
-    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 }

@@ -6,8 +6,10 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
 
-internal partial class SeedObjectsWithImportsClient
+public partial class SeedObjectsWithImportsClient
 {
+    private RawClient _client;
+
     public SeedObjectsWithImportsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,8 +20,6 @@ internal partial class SeedObjectsWithImportsClient
         Commons = new CommonsClient(_client);
         File = new FileClient(_client);
     }
-
-    public RawClient _client;
 
     public CommonsClient Commons { get; init; }
 

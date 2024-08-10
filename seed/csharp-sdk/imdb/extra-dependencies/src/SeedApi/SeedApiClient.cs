@@ -5,8 +5,10 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-internal partial class SeedApiClient
+public partial class SeedApiClient
 {
+    private RawClient _client;
+
     public SeedApiClient(string token, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedApiClient
         );
         Imdb = new ImdbClient(_client);
     }
-
-    public RawClient _client;
 
     public ImdbClient Imdb { get; init; }
 }

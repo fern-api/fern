@@ -5,8 +5,10 @@ using SeedUnknownAsAny.Core;
 
 namespace SeedUnknownAsAny;
 
-internal partial class SeedUnknownAsAnyClient
+public partial class SeedUnknownAsAnyClient
 {
+    private RawClient _client;
+
     public SeedUnknownAsAnyClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedUnknownAsAnyClient
         );
         Unknown = new UnknownClient(_client);
     }
-
-    public RawClient _client;
 
     public UnknownClient Unknown { get; init; }
 }

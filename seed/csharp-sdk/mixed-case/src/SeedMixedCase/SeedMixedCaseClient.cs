@@ -5,8 +5,10 @@ using SeedMixedCase.Core;
 
 namespace SeedMixedCase;
 
-internal partial class SeedMixedCaseClient
+public partial class SeedMixedCaseClient
 {
+    private RawClient _client;
+
     public SeedMixedCaseClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedMixedCaseClient
         );
         Service = new ServiceClient(_client);
     }
-
-    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 }

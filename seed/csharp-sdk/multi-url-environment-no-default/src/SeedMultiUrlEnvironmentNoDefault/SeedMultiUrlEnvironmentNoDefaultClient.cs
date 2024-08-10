@@ -5,8 +5,10 @@ using SeedMultiUrlEnvironmentNoDefault.Core;
 
 namespace SeedMultiUrlEnvironmentNoDefault;
 
-internal partial class SeedMultiUrlEnvironmentNoDefaultClient
+public partial class SeedMultiUrlEnvironmentNoDefaultClient
 {
+    private RawClient _client;
+
     public SeedMultiUrlEnvironmentNoDefaultClient(
         string? token = null,
         ClientOptions? clientOptions = null
@@ -24,8 +26,6 @@ internal partial class SeedMultiUrlEnvironmentNoDefaultClient
         Ec2 = new Ec2Client(_client);
         S3 = new S3Client(_client);
     }
-
-    public RawClient _client;
 
     public Ec2Client Ec2 { get; init; }
 

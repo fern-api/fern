@@ -5,8 +5,10 @@ using SeedErrorProperty.Core;
 
 namespace SeedErrorProperty;
 
-internal partial class SeedErrorPropertyClient
+public partial class SeedErrorPropertyClient
 {
+    private RawClient _client;
+
     public SeedErrorPropertyClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -17,8 +19,6 @@ internal partial class SeedErrorPropertyClient
         Errors = new ErrorsClient(_client);
         PropertyBasedError = new PropertyBasedErrorClient(_client);
     }
-
-    public RawClient _client;
 
     public ErrorsClient Errors { get; init; }
 

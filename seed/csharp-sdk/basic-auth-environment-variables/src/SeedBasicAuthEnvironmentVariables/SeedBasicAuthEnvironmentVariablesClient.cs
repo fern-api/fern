@@ -5,8 +5,10 @@ using SeedBasicAuthEnvironmentVariables.Core;
 
 namespace SeedBasicAuthEnvironmentVariables;
 
-internal partial class SeedBasicAuthEnvironmentVariablesClient
+public partial class SeedBasicAuthEnvironmentVariablesClient
 {
+    private RawClient _client;
+
     public SeedBasicAuthEnvironmentVariablesClient(
         string? username = null,
         string? password = null,
@@ -29,8 +31,6 @@ internal partial class SeedBasicAuthEnvironmentVariablesClient
         BasicAuth = new BasicAuthClient(_client);
         Errors = new ErrorsClient(_client);
     }
-
-    public RawClient _client;
 
     public BasicAuthClient BasicAuth { get; init; }
 

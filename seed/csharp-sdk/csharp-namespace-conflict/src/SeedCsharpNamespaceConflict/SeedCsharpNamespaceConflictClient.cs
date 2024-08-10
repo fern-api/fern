@@ -7,8 +7,10 @@ using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict;
 
-internal partial class SeedCsharpNamespaceConflictClient
+public partial class SeedCsharpNamespaceConflictClient
 {
+    private RawClient _client;
+
     public SeedCsharpNamespaceConflictClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -18,14 +20,9 @@ internal partial class SeedCsharpNamespaceConflictClient
         );
         A = new AClient(_client);
         B = new BClient(_client);
-        Tasktest = new TasktestClient(_client);
     }
-
-    public RawClient _client;
 
     public AClient A { get; init; }
 
     public BClient B { get; init; }
-
-    public TasktestClient Tasktest { get; init; }
 }

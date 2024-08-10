@@ -12,8 +12,10 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive;
 
-internal partial class SeedExhaustiveClient
+public partial class SeedExhaustiveClient
 {
+    private RawClient _client;
+
     public SeedExhaustiveClient(string token, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -29,8 +31,6 @@ internal partial class SeedExhaustiveClient
         ReqWithHeaders = new ReqWithHeadersClient(_client);
         Types = new TypesClient(_client);
     }
-
-    public RawClient _client;
 
     public EndpointsClient Endpoints { get; init; }
 

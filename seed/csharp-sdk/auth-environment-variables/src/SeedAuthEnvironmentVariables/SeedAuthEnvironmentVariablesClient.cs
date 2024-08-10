@@ -5,8 +5,10 @@ using SeedAuthEnvironmentVariables.Core;
 
 namespace SeedAuthEnvironmentVariables;
 
-internal partial class SeedAuthEnvironmentVariablesClient
+public partial class SeedAuthEnvironmentVariablesClient
 {
+    private RawClient _client;
+
     public SeedAuthEnvironmentVariablesClient(
         string xAnotherHeader,
         string? apiKey = null,
@@ -28,8 +30,6 @@ internal partial class SeedAuthEnvironmentVariablesClient
         );
         Service = new ServiceClient(_client);
     }
-
-    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 

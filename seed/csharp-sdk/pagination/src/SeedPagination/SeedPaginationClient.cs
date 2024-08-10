@@ -5,8 +5,10 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
-internal partial class SeedPaginationClient
+public partial class SeedPaginationClient
 {
+    private RawClient _client;
+
     public SeedPaginationClient(string token, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedPaginationClient
         );
         Users = new UsersClient(_client);
     }
-
-    public RawClient _client;
 
     public UsersClient Users { get; init; }
 }

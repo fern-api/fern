@@ -7,8 +7,10 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-internal partial class SeedApiClient
+public partial class SeedApiClient
 {
+    private RawClient _client;
+
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -17,8 +19,6 @@ internal partial class SeedApiClient
             clientOptions ?? new ClientOptions()
         );
     }
-
-    public RawClient _client;
 
     public async Task<Account> GetAccountAsync(string accountId, RequestOptions? options = null)
     {

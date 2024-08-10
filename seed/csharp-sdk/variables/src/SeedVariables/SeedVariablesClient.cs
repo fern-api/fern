@@ -5,8 +5,10 @@ using SeedVariables.Core;
 
 namespace SeedVariables;
 
-internal partial class SeedVariablesClient
+public partial class SeedVariablesClient
 {
+    private RawClient _client;
+
     public SeedVariablesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedVariablesClient
         );
         Service = new ServiceClient(_client);
     }
-
-    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 }

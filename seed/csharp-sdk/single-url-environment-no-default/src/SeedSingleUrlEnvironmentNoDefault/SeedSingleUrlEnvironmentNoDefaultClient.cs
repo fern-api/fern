@@ -5,8 +5,10 @@ using SeedSingleUrlEnvironmentNoDefault.Core;
 
 namespace SeedSingleUrlEnvironmentNoDefault;
 
-internal partial class SeedSingleUrlEnvironmentNoDefaultClient
+public partial class SeedSingleUrlEnvironmentNoDefaultClient
 {
+    private RawClient _client;
+
     public SeedSingleUrlEnvironmentNoDefaultClient(
         string? token = null,
         ClientOptions? clientOptions = null
@@ -23,8 +25,6 @@ internal partial class SeedSingleUrlEnvironmentNoDefaultClient
         );
         Dummy = new DummyClient(_client);
     }
-
-    public RawClient _client;
 
     public DummyClient Dummy { get; init; }
 }

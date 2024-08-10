@@ -6,8 +6,10 @@ using SeedOauthClientCredentials.Core;
 
 namespace SeedOauthClientCredentials;
 
-internal partial class SeedOauthClientCredentialsClient
+public partial class SeedOauthClientCredentialsClient
 {
+    private RawClient _client;
+
     public SeedOauthClientCredentialsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -17,8 +19,6 @@ internal partial class SeedOauthClientCredentialsClient
         );
         Auth = new AuthClient(_client);
     }
-
-    public RawClient _client;
 
     public AuthClient Auth { get; init; }
 }

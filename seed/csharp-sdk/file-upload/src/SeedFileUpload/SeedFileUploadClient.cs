@@ -5,8 +5,10 @@ using SeedFileUpload.Core;
 
 namespace SeedFileUpload;
 
-internal partial class SeedFileUploadClient
+public partial class SeedFileUploadClient
 {
+    private RawClient _client;
+
     public SeedFileUploadClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedFileUploadClient
         );
         Service = new ServiceClient(_client);
     }
-
-    public RawClient _client;
 
     public ServiceClient Service { get; init; }
 }

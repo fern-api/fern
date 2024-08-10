@@ -6,8 +6,10 @@ using SeedAlias.Core;
 
 namespace SeedAlias;
 
-internal partial class SeedAliasClient
+public partial class SeedAliasClient
 {
+    private RawClient _client;
+
     public SeedAliasClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -16,8 +18,6 @@ internal partial class SeedAliasClient
             clientOptions ?? new ClientOptions()
         );
     }
-
-    public RawClient _client;
 
     public async Task GetAsync(string typeId, RequestOptions? options = null)
     {

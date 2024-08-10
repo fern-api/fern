@@ -5,8 +5,10 @@ using SeedIdempotencyHeaders.Core;
 
 namespace SeedIdempotencyHeaders;
 
-internal partial class SeedIdempotencyHeadersClient
+public partial class SeedIdempotencyHeadersClient
 {
+    private RawClient _client;
+
     public SeedIdempotencyHeadersClient(string? token = null, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
@@ -20,8 +22,6 @@ internal partial class SeedIdempotencyHeadersClient
         );
         Payment = new PaymentClient(_client);
     }
-
-    public RawClient _client;
 
     public PaymentClient Payment { get; init; }
 }
