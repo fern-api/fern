@@ -14,8 +14,8 @@
     "!generators/**/dist"
   ],
   "scripts": {
-    "clean": "yarn workspaces foreach -A --verbose --parallel --topological-dev run clean",
-    "compile": "yarn workspaces foreach -Rpt --exclude @fern-api/template-codegen --verbose --parallel --topological-dev run compile",
+    "clean": "yarn workspaces foreach -A --exclude fern -p run clean",
+    "compile": "yarn workspaces foreach -A --exclude fern -p run compile",
     "test": "yarn compile && jest --passWithNoTests",
     "test:ete": "yarn workspace @fern-api/cli dist:cli:dev && yarn workspace @fern-api/seed-cli dist:cli && yarn workspace @fern-api/ete-tests test",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path .eslintignore",
@@ -35,7 +35,7 @@
     "fern-dev:build": "yarn workspace @fern-api/cli dist:cli:dev && echo $(yarn workspace @fern-api/cli bin fern:dev)",
     "fern-local:build": "yarn workspace @fern-api/cli dist:cli:local && echo $(yarn workspace @fern-api/cli bin fern:local)",
     "seed:build": "yarn workspace @fern-api/seed-cli dist:cli && echo $(yarn workspace @fern-api/seed-cli bin seed)",
-    "publish": "yarn workspaces foreach --no-private --parallel --verbose npm publish --access public",
+    "publish": "yarn workspaces foreach -A --exclude fern --no-private -p --verbose npm publish --access public",
     "add-workspace": "yarn mrlint add-workspace",
     "fern-script": "yarn workspace @fern-api/scripts dist:cli && node $(yarn workspace @fern-api/scripts bin fern-scripts)",
     "generate-json-schema": "yarn fern-script write-json-schema fern.schema.json",
