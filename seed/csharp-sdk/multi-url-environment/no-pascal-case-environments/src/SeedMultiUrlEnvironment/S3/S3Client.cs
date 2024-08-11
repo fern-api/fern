@@ -46,7 +46,7 @@ public partial class S3Client
         throw new SeedMultiUrlEnvironmentApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

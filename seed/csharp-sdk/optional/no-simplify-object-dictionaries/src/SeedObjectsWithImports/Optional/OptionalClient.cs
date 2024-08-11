@@ -46,7 +46,7 @@ public partial class OptionalClient
         throw new SeedObjectsWithImportsApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

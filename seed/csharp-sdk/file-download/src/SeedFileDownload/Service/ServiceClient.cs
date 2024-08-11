@@ -29,7 +29,7 @@ public partial class ServiceClient
         throw new SeedFileDownloadApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

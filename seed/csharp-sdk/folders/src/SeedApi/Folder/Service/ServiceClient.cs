@@ -35,7 +35,7 @@ public partial class ServiceClient
         throw new SeedApiApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -71,7 +71,7 @@ public partial class ServiceClient
         throw new SeedApiApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

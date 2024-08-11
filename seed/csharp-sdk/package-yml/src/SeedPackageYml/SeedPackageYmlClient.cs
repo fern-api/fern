@@ -55,7 +55,7 @@ public partial class SeedPackageYmlClient
         throw new SeedPackageYmlApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

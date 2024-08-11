@@ -34,7 +34,7 @@ public partial class ServiceClient
         throw new SeedBytesApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

@@ -59,7 +59,7 @@ public partial class CustomAuthClient
         throw new SeedCustomAuthApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -110,7 +110,7 @@ public partial class CustomAuthClient
         throw new SeedCustomAuthApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

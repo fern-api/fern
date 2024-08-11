@@ -37,7 +37,7 @@ public partial class FolderClient
         throw new SeedApiApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

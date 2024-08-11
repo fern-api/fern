@@ -43,7 +43,7 @@ public partial class ReferenceClient
         throw new SeedLiteralApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

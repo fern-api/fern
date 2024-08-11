@@ -34,7 +34,7 @@ public partial class BClient
         throw new SeedApiApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }
