@@ -43,7 +43,7 @@ public partial class UnknownClient
         throw new SeedUnknownAsAnyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -78,7 +78,7 @@ public partial class UnknownClient
         throw new SeedUnknownAsAnyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

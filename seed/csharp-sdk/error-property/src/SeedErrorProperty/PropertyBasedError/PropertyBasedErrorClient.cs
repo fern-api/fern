@@ -45,7 +45,7 @@ public partial class PropertyBasedErrorClient
         throw new SeedErrorPropertyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

@@ -42,7 +42,7 @@ public partial class UserClient
         throw new SeedVersionApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

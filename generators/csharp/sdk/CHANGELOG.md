@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0 - 2024-08-11]
+
+- Improvement: If a generated client receieves a generic error response, the string response is used directly in the resulting Exception rather than attempting to deserialize it to an `object`.
+
 ## [1.0.0 - 2024-08-11]
 
 - Break: The C# SDK is now on major version 1. To take this upgrade without any breaks, please add the following configuration to your `generators.yml` file:

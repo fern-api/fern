@@ -46,7 +46,7 @@ public partial class QueryParamClient
         throw new SeedEnumApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -84,7 +84,7 @@ public partial class QueryParamClient
         throw new SeedEnumApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }
