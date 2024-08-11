@@ -13,13 +13,13 @@ class Type(UniversalBaseModel):
 
     Examples
     --------
-    from seed.validation import Type
+    from seed.validation import Shape, Type
 
     Type(
         decimal=1.1,
         even=2,
         name="rules",
-        shape="SQUARE",
+        shape=Shape.SQUARE,
     )
     """
 

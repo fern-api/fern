@@ -4,6 +4,8 @@ import typing
 from .key import Key
 
 """
-{"name": "exampleName", "value": "exampleValue"}
+from seed.undiscriminated_unions.resources.union import KeyType
+
+{KeyType.NAME: "exampleName", KeyType.VALUE: "exampleValue"}
 """
 Metadata = typing.Dict[Key, str]
