@@ -18,7 +18,7 @@ generators:
       simplify-object-dictionaries: false
 ```
 
-- Improvement: Core classes that exposed publicly are now in the root namespace rather than the Core namespace.
+- Improvement: Core classes that are exposed publicly are now in the root namespace rather than the Core namespace.
 - Improvement: Types that were previously generated as `Dictionary<string, object?>` are now simplified to just `object`.
 - Improvement: Environment names are now Pascal-cased.
 - Feature: Generating specific error types can now be turned off via the following config:
