@@ -5,17 +5,10 @@
   "author": "Birch Solutions, Inc.",
   "private": true,
   "scripts": {
-<<<<<<< HEAD
-    "clean": "yarn workspaces foreach -A -p -v  --exclude fern -p run clean",
-    "compile": "yarn workspaces foreach -A -p -v --exclude fern -p run compile",
-    "test": "yarn compile && jest --passWithNoTests",
-    "test:ete": "yarn workspace @fern-api/cli dist:cli:dev && yarn workspace @fern-api/seed-cli dist:cli && yarn workspace @fern-api/ete-tests test",
-=======
     "clean": "pnpm -r clean",
     "compile": "pnpm -r --no-bail compile",
     "test": "pnpm -r --no-bail test",
     "test:ete": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test",
->>>>>>> 038e2e528b (pnpm migration)
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path .eslintignore",
     "lint:eslint:fix": "pnpm lint:eslint --fix",
     "lint:style": "stylelint 'packages/**/src/**/*.scss' --allow-empty-input --max-warnings 0",
@@ -23,56 +16,30 @@
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore",
     "format:fix": "pnpm format --ignore-path ./shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
-<<<<<<< HEAD
-    "depcheck": "yarn workspaces foreach -A -p -v --exclude fern --exclude @fern-api/template-codegen  run depcheck",
-    "codegen:local": "yarn fern:local generate",
-    "fern:local": "yarn workspace @fern-api/cli dist:cli:prod && FERN_NO_VERSION_REDIRECTION=true node $(yarn workspace @fern-api/cli bin fern:prod)",
-    "fern-dev:local": "yarn workspace @fern-api/cli dist:cli:dev && FERN_NO_VERSION_REDIRECTION=true node $(yarn workspace @fern-api/cli bin fern:dev)",
-    "fern:build": "POSTHOG_API_KEY=\"\" yarn workspace @fern-api/cli dist:cli:prod && echo $(yarn workspace @fern-api/cli bin fern:prod)",
-    "fern-dev:build": "yarn workspace @fern-api/cli dist:cli:dev && echo $(yarn workspace @fern-api/cli bin fern:dev)",
-    "fern-local:build": "yarn workspace @fern-api/cli dist:cli:local && echo $(yarn workspace @fern-api/cli bin fern:local)",
-    "seed:build": "yarn workspace @fern-api/seed-cli dist:cli && echo $(yarn workspace @fern-api/seed-cli bin seed)",
-    "publish": "yarn workspaces foreach -A --exclude fern --no-private -p --verbose npm publish --access public",
     "add-workspace": "yarn mrlint add-workspace",
-    "fern-script": "yarn workspace @fern-api/scripts dist:cli && node $(yarn workspace @fern-api/scripts bin fern-scripts)",
-    "generate-json-schema": "yarn fern-script write-json-schema fern.schema.json",
-    "generate-json-schema:dev": "yarn fern-script write-json-schema fern.schema.dev.json",
-    "check-cli-release-blockers": "yarn fern-script check-cli-release-blockers",
-    "check-docs-release-blockers": "yarn fern-script check-docs-release-blockers",
-    "root-package:check": "yarn fern-script check-root-package",
-    "root-package:fix": "yarn root-package:check --fix",
     "demo-setup": "yarn workspace @fern-api/demo-setup dist:cli && node $(yarn workspace @fern-api/demo-setup bin demo-setup)",
-    "seed": "node $(yarn workspace @fern-api/seed-cli bin seed)",
-    "seed:local": "yarn workspace @fern-api/seed-cli dist:cli && node $(yarn workspace @fern-api/seed-cli bin seed)",
-    "ir:generate": "yarn workspace @fern-api/ir-sdk generate",
-    "openapi-ir:generate": "yarn workspace @fern-api/openapi-ir-sdk generate",
-    "seed-config:generate": "yarn workspace @fern-api/seed-cli generate",
-    "docs-config:generate": "yarn workspace @fern-api/configuration generate"
-=======
-    "depcheck": "pnpm workspaces foreach --exclude @fern-api/template-codegen --verbose --parallel run depcheck",
+    "depcheck": "pnpm -r --no-bail depcheck",
     "codegen:local": "pnpm fern:local generate",
-    "fern:local": "pnpm workspace @fern-api/cli dist:cli:prod && FERN_NO_VERSION_REDIRECTION=true node $(pnpm workspace @fern-api/cli bin fern:prod)",
-    "fern-dev:local": "pnpm workspace @fern-api/cli dist:cli:dev && FERN_NO_VERSION_REDIRECTION=true node $(pnpm workspace @fern-api/cli bin fern:dev)",
-    "fern:build": "POSTHOG_API_KEY=\"\" pnpm workspace @fern-api/cli dist:cli:prod && echo $(pnpm workspace @fern-api/cli bin fern:prod)",
-    "fern-dev:build": "pnpm workspace @fern-api/cli dist:cli:dev && echo $(pnpm workspace @fern-api/cli bin fern:dev)",
-    "fern-local:build": "pnpm workspace @fern-api/cli dist:cli:local && echo $(pnpm workspace @fern-api/cli bin fern:local)",
-    "seed:build": "pnpm workspace @fern-api/seed-cli dist:cli && echo $(pnpm workspace @fern-api/seed-cli bin seed)",
-    "publish": "pnpm workspaces foreach --no-private --parallel --verbose npm publish --access public",
-    "fern-script": "pnpm workspace @fern-api/scripts dist:cli && node $(pnpm workspace @fern-api/scripts bin fern-scripts)",
+    "fern:local": "pnpm --filter @fern-api/cli dist:cli:prod && FERN_NO_VERSION_REDIRECTION=true node $(pnpm --filter @fern-api/cli bin fern:prod)",
+    "fern-dev:local": "pnpm --filter @fern-api/cli dist:cli:dev && FERN_NO_VERSION_REDIRECTION=true node $(pnpm --filter @fern-api/cli bin fern:dev)",
+    "fern:build": "POSTHOG_API_KEY=\"\" pnpm --filter @fern-api/cli dist:cli:prod && echo $(pnpm --filter @fern-api/cli bin fern:prod)",
+    "fern-dev:build": "pnpm --filter @fern-api/cli dist:cli:dev && echo $(pnpm --filter @fern-api/cli bin fern:dev)",
+    "fern-local:build": "pnpm --filter @fern-api/cli dist:cli:local && echo $(pnpm --filter @fern-api/cli bin fern:local)",
+    "seed:build": "pnpm --filter @fern-api/seed-cli dist:cli && echo $(pnpm --filter @fern-api/seed-cli bin seed)",
+    "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
+    "fern-script": "pnpm --filter @fern-api/scripts dist:cli && node $(pnpm --filter @fern-api/scripts bin fern-scripts)",
     "generate-json-schema": "pnpm fern-script write-json-schema fern.schema.json",
     "generate-json-schema:dev": "pnpm fern-script write-json-schema fern.schema.dev.json",
     "check-cli-release-blockers": "pnpm fern-script check-cli-release-blockers",
     "check-docs-release-blockers": "pnpm fern-script check-docs-release-blockers",
     "root-package:check": "pnpm fern-script check-root-package",
     "root-package:fix": "pnpm root-package:check --fix",
-    "demo-setup": "pnpm workspace @fern-api/demo-setup dist:cli && node $(pnpm workspace @fern-api/demo-setup bin demo-setup)",
-    "seed": "node $(pnpm workspace @fern-api/seed-cli bin seed)",
-    "seed:local": "pnpm workspace @fern-api/seed-cli dist:cli && node $(pnpm workspace @fern-api/seed-cli bin seed)",
-    "ir:generate": "pnpm workspace @fern-api/ir-sdk generate",
-    "openapi-ir:generate": "pnpm workspace @fern-api/openapi-ir-sdk generate",
-    "seed-config:generate": "pnpm workspace @fern-api/seed-cli generate",
-    "docs-config:generate": "pnpm workspace @fern-api/configuration generate"
->>>>>>> 038e2e528b (pnpm migration)
+    "seed": "node $(pnpm --filter @fern-api/seed-cli bin seed)",
+    "seed:local": "pnpm --filter @fern-api/seed-cli dist:cli && node $(pnpm --filter @fern-api/seed-cli bin seed)",
+    "ir:generate": "pnpm --filter @fern-api/ir-sdk generate",
+    "openapi-ir:generate": "pnpm --filter @fern-api/openapi-ir-sdk generate",
+    "seed-config:generate": "pnpm --filter @fern-api/seed-cli generate",
+    "docs-config:generate": "pnpm --filter @fern-api/configuration generate"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
@@ -118,21 +85,17 @@
     "json5": "2.2.2",
     "yaml": "2.3.3"
   },
-<<<<<<< HEAD
-  "packageManager": "yarn@4.4.0",
-=======
->>>>>>> 038e2e528b (pnpm migration)
   "dependenciesMeta": {
     "jsonc-parser@2.2.1": {
       "unplugged": true
     }
   },
   "dependencies": {
-    "@fern-api/logging-execa": "workspace:^",
+    "@fern-api/logging-execa": "--filter:^",
     "@fern-fern/generator-exec-sdk": "^0.0.816",
     "@fern-fern/ir-v39-sdk": "^0.0.1",
     "import-local": "^3.2.0",
     "terminal-link": "^3.0.0",
-    "workspace": "^0.0.1-preview.1"
+    "--filter": "^0.0.1-preview.1"
   }
 }
