@@ -7,7 +7,8 @@ import { TaskContext } from "@fern-api/task-context";
 import { isRawProtobufSourceSchema, visitDefinitionFileYamlAst } from "@fern-api/yaml-schema";
 import yaml from "js-yaml";
 import { mapValues as mapValuesLodash } from "lodash-es";
-import { APIChangelog, FernDefinition, Source, Spec } from "../types/Workspace";
+import { v4 as uuidv4 } from "uuid";
+import { APIChangelog, FernDefinition, IdentifiableSource, Spec } from "../types/Workspace";
 import { getAllOpenAPISpecs } from "../utils/getAllOpenAPISpecs";
 import { AbstractAPIWorkspace } from "./AbstractAPIWorkspace";
 import { FernWorkspace } from "./FernWorkspace";
@@ -48,6 +49,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
     public specs: Spec[];
     public changelog: APIChangelog | undefined;
     public generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
+    public sources: IdentifiableSource[];
 
     constructor({ absoluteFilepath, workspaceName, specs, changelog, generatorsConfiguration }: OSSWorkspace.Args) {
         super();
@@ -56,6 +58,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         this.specs = specs;
         this.changelog = changelog;
         this.generatorsConfiguration = generatorsConfiguration;
+        this.sources = this.convertSpecsToIdentifiableSources(specs);
     }
 
     public async getDefinition(
@@ -119,7 +122,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         settings?: OSSWorkspace.Settings
     ): Promise<FernWorkspace> {
         const definition = await this.getDefinition({ context }, settings);
-        const workspace = new FernWorkspace({
+        return new FernWorkspace({
             absoluteFilepath: this.absoluteFilepath,
             workspaceName: this.workspaceName,
             generatorsConfiguration: this.generatorsConfiguration,
@@ -127,10 +130,9 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
                 dependencies: {}
             },
             definition,
-            changelog: this.changelog
+            changelog: this.changelog,
+            sources: this.sources
         });
-        workspace.sources = this.getSources();
-        return workspace;
     }
 
     public getAbsoluteFilepaths(): AbsoluteFilePath[] {
@@ -145,20 +147,28 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         ];
     }
 
-    public getSources(): Source[] {
-        return this.specs.map((spec) => {
-            if (spec.type === "protobuf") {
-                return {
-                    type: "protobuf",
-                    root: spec.absoluteFilepathToProtobufRoot,
-                    file: spec.absoluteFilepathToProtobufTarget
-                };
+    public getSources(): IdentifiableSource[] {
+        return this.sources;
+    }
+
+    private convertSpecsToIdentifiableSources(specs: Spec[]): IdentifiableSource[] {
+        const seen = new Set<string>();
+        const result: IdentifiableSource[] = [];
+        return specs.reduce((acc, spec) => {
+            const absoluteFilePath =
+                spec.type === "protobuf" ? spec.absoluteFilepathToProtobufRoot : spec.absoluteFilepath;
+
+            if (!seen.has(absoluteFilePath)) {
+                seen.add(absoluteFilePath);
+                acc.push({
+                    type: spec.type,
+                    id: uuidv4(),
+                    absoluteFilePath
+                });
             }
-            return {
-                type: "openapi",
-                file: spec.absoluteFilepath
-            };
-        });
+
+            return acc;
+        }, result);
     }
 }
 

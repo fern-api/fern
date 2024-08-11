@@ -8004,6 +8004,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/node", "npm:18.7.18"],\
             ["@types/object-hash", "npm:3.0.6"],\
             ["@types/tar", "npm:6.1.11"],\
+            ["@types/uuid", "npm:9.0.8"],\
             ["axios", "npm:0.28.0"],\
             ["chalk", "npm:5.3.0"],\
             ["depcheck", "npm:1.4.6"],\
@@ -8017,6 +8018,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["tar", "npm:6.2.1"],\
             ["tmp-promise", "npm:3.0.3"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
+            ["uuid", "npm:9.0.1"],\
             ["zod", "npm:3.22.4"]\
           ],\
           "linkType": "SOFT"\

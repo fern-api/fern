@@ -3,7 +3,8 @@ import { runDocker } from "@fern-api/docker-utils";
 import { AbsoluteFilePath, waitUntilPathExists } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace, getAbsolutePathToProtobufSource } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
+import { IdentifiableSource } from "@fern-api/workspace-loader/src/types/Workspace";
 import * as FernGeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import tmp, { DirectoryResult } from "tmp-promise";
@@ -11,7 +12,7 @@ import {
     DOCKER_CODEGEN_OUTPUT_DIRECTORY,
     DOCKER_GENERATOR_CONFIG_PATH,
     DOCKER_PATH_TO_IR,
-    DOCKER_PROTOBUF_SOURCE_DIRECTORY
+    DOCKER_SOURCES_DIRECTORY
 } from "./constants";
 import { getGeneratorConfig } from "./getGeneratorConfig";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
@@ -59,7 +60,6 @@ export async function writeFilesToDiskAndRunGenerator({
     generateOauthClients: boolean;
     generatePaginatedClients: boolean;
 }): Promise<GeneratorRunResponse> {
-    const absolutePathToProtobufSource = getAbsolutePathToProtobufSource(workspace);
     const absolutePathToIr = await writeIrToFile({
         workspace,
         audiences,
@@ -67,8 +67,7 @@ export async function writeFilesToDiskAndRunGenerator({
         workspaceTempDir,
         context,
         irVersionOverride,
-        outputVersionOverride,
-        absolutePathToProtobufSource
+        outputVersionOverride
     });
     context.logger.debug("Wrote IR to: " + absolutePathToIr);
 
@@ -108,7 +107,6 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToSnippetTemplates: absolutePathToTmpSnippetTemplatesJSON,
         absolutePathToIr,
         absolutePathToWriteConfigJson,
-        absolutePathToProtobufSource,
         workspaceName: workspace.definition.rootApiFile.contents.name,
         organization,
         outputVersion: outputVersionOverride,
@@ -117,7 +115,8 @@ export async function writeFilesToDiskAndRunGenerator({
         context,
         writeUnitTests,
         generateOauthClients,
-        generatePaginatedClients
+        generatePaginatedClients,
+        sources: workspace.getSources()
     });
 
     const taskHandler = new LocalTaskHandler({
@@ -144,8 +143,7 @@ async function writeIrToFile({
     workspaceTempDir,
     context,
     irVersionOverride,
-    outputVersionOverride,
-    absolutePathToProtobufSource
+    outputVersionOverride
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
@@ -154,7 +152,6 @@ async function writeIrToFile({
     context: TaskContext;
     irVersionOverride: string | undefined;
     outputVersionOverride: string | undefined;
-    absolutePathToProtobufSource: AbsoluteFilePath | undefined;
 }): Promise<AbsoluteFilePath> {
     const intermediateRepresentation = await getIntermediateRepresentation({
         workspace,
@@ -164,7 +161,7 @@ async function writeIrToFile({
         irVersionOverride,
         packageName: generatorsYml.getPackageName({ generatorInvocation }),
         version: outputVersionOverride,
-        sourceConfig: absolutePathToProtobufSource != null ? getProtobufSourceConfig() : undefined
+        sourceConfig: getSourceConfig(workspace)
     });
     context.logger.debug("Migrated IR");
     const irFile = await tmp.file({
@@ -187,13 +184,13 @@ export declare namespace runGenerator {
         absolutePathToSnippet: AbsoluteFilePath | undefined;
         absolutePathToSnippetTemplates: AbsoluteFilePath | undefined;
         absolutePathToWriteConfigJson: AbsoluteFilePath;
-        absolutePathToProtobufSource: AbsoluteFilePath | undefined;
         keepDocker: boolean;
         context: TaskContext;
         generatorInvocation: generatorsYml.GeneratorInvocation;
         writeUnitTests: boolean;
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
+        sources: IdentifiableSource[];
     }
 }
 
@@ -206,12 +203,12 @@ export async function runGenerator({
     absolutePathToSnippetTemplates,
     absolutePathToIr,
     absolutePathToWriteConfigJson,
-    absolutePathToProtobufSource,
     keepDocker,
     generatorInvocation,
     writeUnitTests,
     generateOauthClients,
-    generatePaginatedClients
+    generatePaginatedClients,
+    sources
 }: runGenerator.Args): Promise<void> {
     const { name, version, config: customConfig } = generatorInvocation;
     const imageName = `${name}:${version}`;
@@ -221,9 +218,10 @@ export async function runGenerator({
         `${absolutePathToIr}:${DOCKER_PATH_TO_IR}:ro`,
         `${absolutePathToOutput}:${DOCKER_CODEGEN_OUTPUT_DIRECTORY}`
     ];
-    if (absolutePathToProtobufSource != null) {
-        binds.push(`${absolutePathToProtobufSource}:${DOCKER_PROTOBUF_SOURCE_DIRECTORY}:ro`);
+    for (const source of sources) {
+        binds.push(`${source.absoluteFilePath}:${getDockerDestinationForSource(source)}:ro`);
     }
+
     const { config, binds: bindsForGenerators } = getGeneratorConfig({
         generatorInvocation,
         customConfig,
@@ -258,13 +256,20 @@ export async function runGenerator({
     });
 }
 
-function getProtobufSourceConfig(): SourceConfig {
+function getSourceConfig(workspace: FernWorkspace): SourceConfig {
     return {
-        sources: [
-            ApiDefinitionSource.proto({
-                id: "local",
-                protoRootUrl: `file:///${DOCKER_PROTOBUF_SOURCE_DIRECTORY}`
-            })
-        ]
+        sources: workspace.getSources().map((source) => {
+            if (source.type === "protobuf") {
+                ApiDefinitionSource.proto({
+                    id: source.id,
+                    protoRootUrl: `file:///${getDockerDestinationForSource(source)}`
+                });
+            }
+            return ApiDefinitionSource.openapi();
+        })
     };
+}
+
+function getDockerDestinationForSource(source: IdentifiableSource): string {
+    return `${DOCKER_SOURCES_DIRECTORY}/${source.id}`;
 }

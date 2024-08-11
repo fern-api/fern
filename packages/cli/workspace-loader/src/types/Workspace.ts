@@ -35,6 +35,12 @@ export interface ProtobufSpec {
     settings?: SpecImportSettings;
 }
 
+export interface IdentifiableSource {
+    type: "asyncapi" | "openapi" | "protobuf";
+    id: string;
+    absoluteFilePath: AbsoluteFilePath;
+}
+
 export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
 
 export interface AsyncAPISource {

@@ -1,4 +1,3 @@
-export { getAbsolutePathToProtobufSource } from "./getAbsolutePathToProtobufSource";
 export { getAllDefinitionFiles } from "./getAllDefinitionFiles";
 export { getAllNamedDefinitionFiles } from "./getAllNamedDefinitionFiles";
 export { getAllOpenAPISpecs } from "./getAllOpenAPISpecs";
