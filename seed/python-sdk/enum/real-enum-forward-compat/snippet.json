@@ -1,0 +1,61 @@
+{
+    "types": {
+        "type_:Operand": "\">\"\n",
+        "type_:Color": "\"red\"\n",
+        "type_:ColorOrOperand": "\"red\"\n"
+    },
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/inlined",
+                "method": "POST",
+                "identifier_override": "endpoint_inlined-request.send"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.inlined_request.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.inlined_request.send(\n        operand=\">\",\n        operand_or_color=\"red\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
+                "method": "POST",
+                "identifier_override": "endpoint_path-param.send"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.path_param.send(\n    operand=\">\",\n    maybe_operand=\"less_than\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.path_param.send(\n        operand=\">\",\n        maybe_operand=\"less_than\",\n        operand_or_color=\"red\",\n        maybe_operand_or_color=\"red\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/query",
+                "method": "POST",
+                "identifier_override": "endpoint_query-param.send"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send(\n    operand=\">\",\n    operand_or_color=\"red\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query_param.send(\n        operand=\">\",\n        operand_or_color=\"red\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/query-list",
+                "method": "POST",
+                "identifier_override": "endpoint_query-param.sendList"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.query_param.send_list(\n    operand=\">\",\n    maybe_operand=\">\",\n    operand_or_color=\"red\",\n    maybe_operand_or_color=\"red\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.query_param.send_list(\n        operand=\">\",\n        maybe_operand=\">\",\n        operand_or_color=\"red\",\n        maybe_operand_or_color=\"red\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

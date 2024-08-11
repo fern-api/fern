@@ -1,4 +1,4 @@
-from typing import Optional, Sequence
+from typing import Optional, Sequence, Union
 
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...type_hint import TypeHint
@@ -14,7 +14,7 @@ class FunctionSignature(AstNode):
         include_args: bool = False,
         named_parameters: Optional[Sequence[NamedFunctionParameter]] = None,
         include_kwargs: bool = False,
-        return_type: Optional[TypeHint] = None,
+        return_type: Optional[Union[TypeHint, str]] = None,
     ):
         self.parameters = parameters or []
         self.include_args = include_args
@@ -31,7 +31,7 @@ class FunctionSignature(AstNode):
             metadata.update(parameter.get_metadata())
         for named_parameter in self.named_parameters:
             metadata.update(named_parameter.get_metadata())
-        if self.return_type is not None:
+        if self.return_type is not None and isinstance(self.return_type, AstNode):
             metadata.update(self.return_type.get_metadata())
         return metadata
 
@@ -73,5 +73,8 @@ class FunctionSignature(AstNode):
         writer.write(")")
         if self.return_type is not None:
             writer.write(" -> ")
-            writer.write_node(self.return_type)
+            if isinstance(self.return_type, str):
+                writer.write(self.return_type)
+            else:
+                writer.write_node(self.return_type)
         writer.write(":")
