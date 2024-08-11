@@ -54,7 +54,7 @@ class BasePydanticModelCustomConfig(pydantic.BaseModel):
             raise ValueError(
                 "Wrapped aliases are only supported in Pydantic V1, please update your `version` field to be 'v1' to continue using wrapped aliases."
             )
-        
+
         if self.enum_type != "literals":
             self.use_str_enums = False
         else:
