@@ -16,6 +16,9 @@ async function main() {
         bundle: true,
         external: ["cpu-features"],
         plugins: [pnpPlugin()],
+        loader: {
+            ".node": "file"
+        },
         define: {
             "process.env.CLI_NAME": JSON.stringify("seed"),
             "process.env.CLI_VERSION": JSON.stringify(packageJson.version),
