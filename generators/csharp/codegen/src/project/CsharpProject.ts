@@ -4,8 +4,6 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
-import { pipeline } from "stream";
-import { promisify } from "util";
 import { AsIsFiles } from "../AsIs";
 import { AbstractCsharpGeneratorContext } from "../cli";
 import { BaseCsharpCustomConfigSchema } from "../custom-config";
@@ -15,8 +13,6 @@ import { File } from "./File";
 const SRC_DIRECTORY_NAME = "src";
 const PROTOBUF_DIRECTORY_NAME = "proto";
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
-
-const streamPipeline = promisify(pipeline);
 
 export const CORE_DIRECTORY_NAME = "Core";
 export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
@@ -248,10 +244,6 @@ class CsharpProjectFilepaths {
 
     public getSourceFileDirectory(): RelativeFilePath {
         return RelativeFilePath.of(SRC_DIRECTORY_NAME);
-    }
-
-    public getProtobufDirectory(): RelativeFilePath {
-        return RelativeFilePath.of(PROTOBUF_DIRECTORY_NAME);
     }
 
     public getCoreFilesDirectory(): RelativeFilePath {

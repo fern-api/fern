@@ -38,7 +38,7 @@ export class SourceFetcher {
             return [];
         }
 
-        this.context.logger.debug(`Copying protobuf source files ...`);
+        this.context.logger.debug("Copying protobuf source files ...");
 
         this.context.logger.debug(`mkdir ${absolutePathToProtoDirectory}`);
         await mkdir(absolutePathToProtoDirectory, { recursive: true });
@@ -66,7 +66,7 @@ export class SourceFetcher {
         protobufSourceURL: string;
     }): Promise<void> {
         // Note that we use `find` in combination with `cp` because the alternative
-        // is not supported in every environment. Behaviorally this is equivalent to
+        // is not supported in every environment. This is behaviorally equivalent to
         // the following:
         //
         //  `cp -r ${protobufSourceURL}/* ${absolutePathToProtoDirectory}`
@@ -125,6 +125,8 @@ export class SourceFetcher {
             throw new Error(`Failed to download source. Status: ${response.status}, ${response.statusText}`);
         }
         const fileStream = createWriteStream(destinationPath);
+
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         await promisify(pipeline)(response.body as any, fileStream);
     }
 
