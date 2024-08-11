@@ -4274,6 +4274,7 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/ir-migrations": "workspace:*"
+    "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
@@ -4704,6 +4705,7 @@ __metadata:
     "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/local-workspace-runner": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
@@ -4878,6 +4880,7 @@ __metadata:
     "@types/node": "npm:^18.7.18"
     "@types/object-hash": "npm:^3.0.6"
     "@types/tar": "npm:^6.1.11"
+    "@types/uuid": "npm:^9.0.8"
     axios: "npm:^0.28.0"
     chalk: "npm:^5.3.0"
     depcheck: "npm:^1.4.6"
@@ -4891,6 +4894,7 @@ __metadata:
     tar: "npm:^6.2.1"
     tmp-promise: "npm:^3.0.3"
     typescript: "npm:4.6.4"
+    uuid: "npm:^9.0.1"
     zod: "npm:^3.22.3"
   languageName: unknown
   linkType: soft

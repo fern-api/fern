@@ -7360,6 +7360,7 @@ const RAW_RUNTIME_STATE =
           ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
           ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
           ["@fern-api/ir-migrations", "workspace:packages/cli/generation/ir-migrations"],\
+          ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
           ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
           ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
           ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
@@ -7818,6 +7819,7 @@ const RAW_RUNTIME_STATE =
           ["@fern-api/configuration", "workspace:packages/cli/configuration"],\
           ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
           ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+          ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
           ["@fern-api/local-workspace-runner", "workspace:packages/cli/generation/local-generation/local-workspace-runner"],\
           ["@fern-api/logger", "workspace:packages/cli/logger"],\
           ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
@@ -8001,6 +8003,7 @@ const RAW_RUNTIME_STATE =
           ["@types/node", "npm:18.7.18"],\
           ["@types/object-hash", "npm:3.0.6"],\
           ["@types/tar", "npm:6.1.11"],\
+          ["@types/uuid", "npm:9.0.8"],\
           ["axios", "npm:0.28.0"],\
           ["chalk", "npm:5.3.0"],\
           ["depcheck", "npm:1.4.6"],\
@@ -8014,6 +8017,7 @@ const RAW_RUNTIME_STATE =
           ["tar", "npm:6.2.1"],\
           ["tmp-promise", "npm:3.0.3"],\
           ["typescript", "patch:typescript@npm%3A4.6.4#optional!builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
+          ["uuid", "npm:9.0.1"],\
           ["zod", "npm:3.22.4"]\
         ],\
         "linkType": "SOFT"\
