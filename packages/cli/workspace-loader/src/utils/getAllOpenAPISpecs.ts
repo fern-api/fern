@@ -39,6 +39,7 @@ export async function convertProtobufToOpenAPI({
         settings: protobufSpec.settings,
         source: {
             type: "protobuf",
+            root: protobufSpec.absoluteFilepathToProtobufRoot,
             file: protobufSpec.absoluteFilepathToProtobufTarget
         }
     };

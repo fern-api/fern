@@ -6,10 +6,15 @@ export { getValidAbsolutePathToOpenAPI as loadOpenAPIFile } from "./loadOpenAPIF
 export { type FernFile, type ParsedFernFile } from "./types/FernFile";
 export { WorkspaceLoaderFailureType, type WorkspaceLoader } from "./types/Result";
 export {
+    type AsyncAPISource,
     type DocsWorkspace,
     type FernDefinition,
     type FernWorkspaceMetadata,
+    type IdentifiableSource,
     type OnDiskNamedDefinitionFile,
+    type OpenAPISource,
+    type ProtobufSource,
+    type Source,
     type Workspace
 } from "./types/Workspace";
 export * from "./utils";

@@ -9,15 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improvement: If a generated client receieves a generic error response, the string response is used directly in the resulting Exception rather than attempting to deserialize it to an `object`.
 
-```yml
-generators:
-  - name: fernapi/fern-csharp-sdk
-    config:
-      root-namespace-for-core-classes: false
-      pascal-case-environments: false
-      simplify-object-dictionaries: false
-```
-
 ## [1.0.0 - 2024-08-11]
 
 - Break: The C# SDK is now on major version 1. To take this upgrade without any breaks, please add the following configuration to your `generators.yml` file:
