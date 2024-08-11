@@ -96,7 +96,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 value: convertSchemaWithExampleToSchema(schema.value),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                encoding: schema.encoding
             });
         case "reference":
             return Schema.reference({
@@ -182,6 +183,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                     })
                 ),
                 groupName: oneOfSchema.groupName,
+                encoding: oneOfSchema.encoding,
                 source: oneOfSchema.source
             });
         case "undisciminated":
@@ -192,7 +194,8 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 nameOverride: oneOfSchema.nameOverride,
                 schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema)),
                 groupName: oneOfSchema.groupName,
-                source: undefined // TODO: Add to undiscriminated
+                encoding: oneOfSchema.encoding,
+                source: oneOfSchema.source
             });
         default:
             assertNever(oneOfSchema);

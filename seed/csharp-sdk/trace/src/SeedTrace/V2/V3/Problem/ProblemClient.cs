@@ -1,16 +1,17 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedTrace;
 using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2.V3;
 
-public class ProblemClient
+public partial class ProblemClient
 {
     private RawClient _client;
 
-    public ProblemClient(RawClient client)
+    internal ProblemClient(RawClient client)
     {
         _client = client;
     }

@@ -62,6 +62,9 @@ exports[`x-fern-pagination x-fern-pagination docs 1`] = `
         "properties": {
           "hasMore": "optional<boolean>",
         },
+        "source": {
+          "openapi": "x-fern-pagination/openapi.yml",
+        },
       },
       "User": {
         "docs": undefined,
@@ -166,6 +169,9 @@ exports[`x-fern-pagination x-fern-pagination simple 1`] = `
         "docs": undefined,
         "properties": {
           "hasMore": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "x-fern-pagination/openapi.yml",
         },
       },
       "User": {

@@ -19,5 +19,5 @@ public record UserModel
     public float? Weight { get; set; }
 
     [JsonPropertyName("metadata")]
-    public Dictionary<string, object?>? Metadata { get; set; }
+    public object? Metadata { get; set; }
 }

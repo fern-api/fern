@@ -6,11 +6,11 @@ using SeedUnknownAsAny.Core;
 
 namespace SeedUnknownAsAny;
 
-public class UnknownClient
+public partial class UnknownClient
 {
     private RawClient _client;
 
-    public UnknownClient(RawClient client)
+    internal UnknownClient(RawClient client)
     {
         _client = client;
     }

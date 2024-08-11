@@ -1138,7 +1138,10 @@ exports[`open api parser superagent docs 1`] = `
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -2207,7 +2210,10 @@ exports[`open api parser superagent simple 1`] = `
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
         "union": [
           "string",
           "integer",

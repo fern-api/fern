@@ -6,11 +6,11 @@ using SeedBasicAuth.Core;
 
 namespace SeedBasicAuth;
 
-public class BasicAuthClient
+public partial class BasicAuthClient
 {
     private RawClient _client;
 
-    public BasicAuthClient(RawClient client)
+    internal BasicAuthClient(RawClient client)
     {
         _client = client;
     }

@@ -24,6 +24,7 @@ export const DiscriminatedOneOfSchemaWithExample: core.serialization.ObjectSchem
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithName))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSdkGroupName))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithAvailability))
+    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithEncoding))
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithSource));
 
 export declare namespace DiscriminatedOneOfSchemaWithExample {
@@ -32,6 +33,7 @@ export declare namespace DiscriminatedOneOfSchemaWithExample {
             serializers.WithName.Raw,
             serializers.WithSdkGroupName.Raw,
             serializers.WithAvailability.Raw,
+            serializers.WithEncoding.Raw,
             serializers.WithSource.Raw {
         discriminantProperty: string;
         commonProperties: serializers.CommonPropertyWithExample.Raw[];

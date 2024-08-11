@@ -6,11 +6,11 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public class QueryParamClient
+public partial class QueryParamClient
 {
     private RawClient _client;
 
-    public QueryParamClient(RawClient client)
+    internal QueryParamClient(RawClient client)
     {
         _client = client;
     }

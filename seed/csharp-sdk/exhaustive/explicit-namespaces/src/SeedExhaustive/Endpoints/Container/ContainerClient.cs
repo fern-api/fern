@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
 
@@ -7,11 +8,11 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Endpoints.Container;
 
-public class ContainerClient
+public partial class ContainerClient
 {
     private RawClient _client;
 
-    public ContainerClient(RawClient client)
+    internal ContainerClient(RawClient client)
     {
         _client = client;
     }

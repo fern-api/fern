@@ -72,7 +72,13 @@ export async function loadProject({
     return {
         config: await fernConfigJson.loadProjectConfig({ directory: fernDirectory, context }),
         apiWorkspaces,
-        docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context })
+        docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context }),
+        loadAPIWorkspace: (name: string | undefined): APIWorkspace | undefined => {
+            if (name == null) {
+                return apiWorkspaces[0];
+            }
+            return apiWorkspaces.find((workspace) => workspace.workspaceName === name);
+        }
     };
 }
 

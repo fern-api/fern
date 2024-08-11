@@ -6,11 +6,11 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public class HeadersClient
+public partial class HeadersClient
 {
     private RawClient _client;
 
-    public HeadersClient(RawClient client)
+    internal HeadersClient(RawClient client)
     {
         _client = client;
     }

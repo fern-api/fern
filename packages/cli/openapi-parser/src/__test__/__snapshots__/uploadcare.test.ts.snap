@@ -263,6 +263,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -502,7 +503,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -632,6 +636,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -767,7 +772,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -1485,6 +1493,7 @@ To upload large files, 3 requests are sent in sequence:
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -1763,7 +1772,10 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -1893,6 +1905,7 @@ To upload large files, 3 requests are sent in sequence:
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -2028,7 +2041,10 @@ To upload large files, 3 requests are sent in sequence:
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -2937,6 +2953,7 @@ upload session to assemble all the file parts into a single resulting file.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -3085,7 +3102,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -3127,6 +3147,7 @@ upload session to assemble all the file parts into a single resulting file.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -3158,7 +3179,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -4268,6 +4292,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -4572,7 +4597,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -4702,6 +4730,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -4837,7 +4866,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -6081,6 +6113,7 @@ to the value of the \`check_URL_duplicates\` parameter.
           "value": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "FromUrlUploadResponse",
             "groupName": null,
             "nameOverride": null,
@@ -6112,7 +6145,10 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "type": "reference",
               },
             ],
-            "source": null,
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "undisciminated",
           },
         },
@@ -7393,6 +7429,7 @@ Log.d("TAG", status.toString())
           "value": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "FromUrlUploadStatusResponse",
             "groupName": null,
             "nameOverride": null,
@@ -7463,7 +7500,10 @@ Log.d("TAG", status.toString())
                 "type": "reference",
               },
             ],
-            "source": null,
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "undisciminated",
           },
         },
@@ -7535,6 +7575,7 @@ Log.d("TAG", status.toString())
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -7579,7 +7620,10 @@ Log.d("TAG", status.toString())
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -7621,6 +7665,7 @@ Log.d("TAG", status.toString())
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -7652,7 +7697,10 @@ Log.d("TAG", status.toString())
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -8579,6 +8627,7 @@ is to create a new one.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -8701,7 +8750,10 @@ is to create a new one.
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -8820,6 +8872,7 @@ is to create a new one.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -8942,7 +8995,10 @@ is to create a new one.
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -9906,6 +9962,7 @@ number of the files in the group, etc).
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -9937,7 +9994,10 @@ number of the files in the group, etc).
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -9979,6 +10039,7 @@ number of the files in the group, etc).
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -10010,7 +10071,10 @@ number of the files in the group, etc).
                   "type": "reference",
                 },
               ],
-              "source": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -13790,6 +13854,7 @@ that are tool old (or that have not been created at all).
       "value": {
         "availability": null,
         "description": "Arbitrary metadata associated with a file.",
+        "encoding": null,
         "generatedName": "Metadata",
         "groupName": null,
         "key": {

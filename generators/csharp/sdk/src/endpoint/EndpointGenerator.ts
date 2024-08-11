@@ -179,7 +179,11 @@ export class EndpointGenerator {
                     `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
                 );
             }
-            if (endpoint.errors.length > 0 && this.context.ir.errorDiscriminationStrategy.type === "statusCode") {
+            if (
+                endpoint.errors.length > 0 &&
+                this.context.ir.errorDiscriminationStrategy.type === "statusCode" &&
+                (this.context.customConfig["generate-error-types"] ?? true)
+            ) {
                 writer.writeLine("try");
                 writer.writeLine("{");
                 writer.indent();

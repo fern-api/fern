@@ -1,15 +1,16 @@
 using System.Net.Http;
+using SeedApi;
 using SeedApi.Core;
 
 #nullable enable
 
 namespace SeedApi.Folder;
 
-public class FolderClient
+public partial class FolderClient
 {
     private RawClient _client;
 
-    public FolderClient(RawClient client)
+    internal FolderClient(RawClient client)
     {
         _client = client;
         Service = new ServiceClient(_client);

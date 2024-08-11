@@ -63,6 +63,7 @@
                                 "description": "The name of the Protobuf type (e.g. google.protobuf.Struct)."
                               }
                             },
+                            "required": ["type"],
                             "additionalProperties": false
                           }
                         },
@@ -108,6 +109,9 @@
                               "properties": {
                                 "type": { "type": "string" },
                                 "default": {},
+                                "encoding": {
+                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                                },
                                 "validation": {
                                   "anyOf": [
                                     {
@@ -407,6 +411,9 @@
                         "properties": {
                           "type": { "type": "string" },
                           "default": {},
+                          "encoding": {
+                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                          },
                           "validation": {
                             "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
                           },
@@ -447,6 +454,9 @@
                     "properties": {
                       "type": { "type": "string" },
                       "default": {},
+                      "encoding": {
+                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                      },
                       "validation": {
                         "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
                       },
@@ -527,6 +537,9 @@
                                   "properties": {
                                     "type": { "type": "string" },
                                     "default": {},
+                                    "encoding": {
+                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                                    },
                                     "validation": {
                                       "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
                                     },
@@ -839,6 +852,10 @@
                               "step": {
                                 "type": "string",
                                 "description": "The path to the request property for the page step."
+                              },
+                              "has-next-page": {
+                                "type": "string",
+                                "description": "The path to the response property indicating next page presence."
                               }
                             },
                             "required": ["offset", "results"],

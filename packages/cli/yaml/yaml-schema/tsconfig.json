@@ -4,10 +4,7 @@
   "include": ["./src/**/*"],
   "references": [
     { "path": "../../../commons/core-utils" },
-    { "path": "../../../commons/fs-utils" },
     { "path": "../../../ir-sdk" },
-    { "path": "../../configuration" },
-    { "path": "../../docs-markdown-utils" },
-    { "path": "../../task-context" }
+    { "path": "../../configuration" }
   ]
 }

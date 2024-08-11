@@ -6,11 +6,11 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public class ReferenceClient
+public partial class ReferenceClient
 {
     private RawClient _client;
 
-    public ReferenceClient(RawClient client)
+    internal ReferenceClient(RawClient client)
     {
         _client = client;
     }

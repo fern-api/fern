@@ -13,6 +13,7 @@ const SRC_DIRECTORY_NAME = "src";
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 
 export const CORE_DIRECTORY_NAME = "Core";
+export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
 /**
  * In memory representation of a C# project.
  */
@@ -233,6 +234,14 @@ class CsharpProjectFilepaths {
 
     public getCoreFilesDirectory(): RelativeFilePath {
         return join(this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
+    }
+
+    public getPublicCoreFilesDirectory(): RelativeFilePath {
+        return join(
+            this.getProjectDirectory(),
+            RelativeFilePath.of(CORE_DIRECTORY_NAME),
+            RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME)
+        );
     }
 
     public getTestFilesDirectory(): RelativeFilePath {

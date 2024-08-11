@@ -4,11 +4,11 @@ using SeedExamples.Core;
 
 namespace SeedExamples.Commons;
 
-public class CommonsClient
+public partial class CommonsClient
 {
     private RawClient _client;
 
-    public CommonsClient(RawClient client)
+    internal CommonsClient(RawClient client)
     {
         _client = client;
         Types = new TypesClient(_client);

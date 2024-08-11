@@ -1,6 +1,7 @@
 import {
     Availability,
     CommonPropertyWithExample,
+    Encoding,
     OneOfSchemaWithExample,
     SchemaWithExample,
     SdkGroupName,
@@ -23,6 +24,7 @@ export function convertDiscriminatedOneOf({
     discriminator,
     context,
     groupName,
+    encoding,
     source
 }: {
     nameOverride: string | undefined;
@@ -36,6 +38,7 @@ export function convertDiscriminatedOneOf({
     discriminator: OpenAPIV3.DiscriminatorObject;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
+    encoding: Encoding | undefined;
     source: Source;
 }): SchemaWithExample {
     const discriminant = discriminator.propertyName;
@@ -48,6 +51,7 @@ export function convertDiscriminatedOneOf({
                 false,
                 context,
                 [schema],
+                encoding,
                 source
             );
             context.markReferencedByDiscriminatedUnion(
@@ -99,6 +103,7 @@ export function convertDiscriminatedOneOfWithVariants({
     variants,
     context,
     groupName,
+    encoding,
     source
 }: {
     nameOverride: string | undefined;
@@ -113,12 +118,20 @@ export function convertDiscriminatedOneOfWithVariants({
     variants: Record<string, OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject>;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
+    encoding: Encoding | undefined;
     source: Source;
 }): SchemaWithExample {
     const unionSubTypes = Object.fromEntries(
         Object.entries(variants).map(([discriminantValue, schema]) => {
             if (isReferenceObject(schema)) {
-                const subtypeReference = convertReferenceObject(schema, false, context, [schema.$ref], source);
+                const subtypeReference = convertReferenceObject(
+                    schema,
+                    false,
+                    context,
+                    [schema.$ref],
+                    encoding,
+                    source
+                );
                 context.markReferencedByDiscriminatedUnion(schema, discriminant, 1);
                 return [discriminantValue, subtypeReference];
             } else {
@@ -127,6 +140,7 @@ export function convertDiscriminatedOneOfWithVariants({
                     false,
                     context,
                     [...breadcrumbs, discriminantValue],
+                    encoding,
                     source,
                     new Set([discriminant])
                 );
@@ -197,6 +211,7 @@ export function wrapDiscriminantedOneOf({
                     schemas: subtypes,
                     commonProperties: properties,
                     groupName,
+                    encoding: undefined,
                     source
                 })
             ),
@@ -215,6 +230,7 @@ export function wrapDiscriminantedOneOf({
             schemas: subtypes,
             commonProperties: properties,
             groupName,
+            encoding: undefined,
             source
         })
     );

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.GeneralErrors;
 
@@ -7,11 +8,11 @@ using SeedExhaustive.GeneralErrors;
 
 namespace SeedExhaustive.NoAuth;
 
-public class NoAuthClient
+public partial class NoAuthClient
 {
     private RawClient _client;
 
-    public NoAuthClient(RawClient client)
+    internal NoAuthClient(RawClient client)
     {
         _client = client;
     }

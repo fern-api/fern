@@ -6,19 +6,16 @@ using SeedObjectsWithImports.Core;
 
 namespace SeedObjectsWithImports;
 
-public class OptionalClient
+public partial class OptionalClient
 {
     private RawClient _client;
 
-    public OptionalClient(RawClient client)
+    internal OptionalClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<string> SendOptionalBodyAsync(
-        Dictionary<string, object?>? request,
-        RequestOptions? options = null
-    )
+    public async Task<string> SendOptionalBodyAsync(object? request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

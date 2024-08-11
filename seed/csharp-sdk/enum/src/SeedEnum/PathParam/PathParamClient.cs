@@ -6,11 +6,11 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public class PathParamClient
+public partial class PathParamClient
 {
     private RawClient _client;
 
-    public PathParamClient(RawClient client)
+    internal PathParamClient(RawClient client)
     {
         _client = client;
     }

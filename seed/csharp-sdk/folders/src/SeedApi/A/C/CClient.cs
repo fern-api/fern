@@ -1,15 +1,16 @@
 using System.Net.Http;
+using SeedApi;
 using SeedApi.Core;
 
 #nullable enable
 
 namespace SeedApi.A.C;
 
-public class CClient
+public partial class CClient
 {
     private RawClient _client;
 
-    public CClient(RawClient client)
+    internal CClient(RawClient client)
     {
         _client = client;
     }

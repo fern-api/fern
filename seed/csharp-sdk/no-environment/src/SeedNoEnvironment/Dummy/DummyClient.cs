@@ -6,11 +6,11 @@ using SeedNoEnvironment.Core;
 
 namespace SeedNoEnvironment;
 
-public class DummyClient
+public partial class DummyClient
 {
     private RawClient _client;
 
-    public DummyClient(RawClient client)
+    internal DummyClient(RawClient client)
     {
         _client = client;
     }

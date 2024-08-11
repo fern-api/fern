@@ -1,16 +1,17 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 
 #nullable enable
 
 namespace SeedExhaustive.Endpoints.Primitive;
 
-public class PrimitiveClient
+public partial class PrimitiveClient
 {
     private RawClient _client;
 
-    public PrimitiveClient(RawClient client)
+    internal PrimitiveClient(RawClient client)
     {
         _client = client;
     }

@@ -110,6 +110,7 @@ export async function visitTypeDeclaration({
                                     });
                                 },
                                 audiences: noop,
+                                encoding: noop,
                                 default: noop,
                                 validation: noop
                             });

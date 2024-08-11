@@ -1,16 +1,17 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 
 #nullable enable
 
 namespace SeedExhaustive.Endpoints.Union;
 
-public class UnionClient
+public partial class UnionClient
 {
     private RawClient _client;
 
-    public UnionClient(RawClient client)
+    internal UnionClient(RawClient client)
     {
         _client = client;
     }

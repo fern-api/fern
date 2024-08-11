@@ -6,11 +6,11 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public class InlinedClient
+public partial class InlinedClient
 {
     private RawClient _client;
 
-    public InlinedClient(RawClient client)
+    internal InlinedClient(RawClient client)
     {
         _client = client;
     }

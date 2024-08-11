@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Enum;
 
@@ -7,11 +8,11 @@ using SeedExhaustive.Types.Enum;
 
 namespace SeedExhaustive.Endpoints.Enum;
 
-public class EnumClient
+public partial class EnumClient
 {
     private RawClient _client;
 
-    public EnumClient(RawClient client)
+    internal EnumClient(RawClient client)
     {
         _client = client;
     }

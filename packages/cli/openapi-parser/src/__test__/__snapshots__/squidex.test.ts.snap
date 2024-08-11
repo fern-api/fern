@@ -22250,6 +22250,7 @@ You will be assigned as owner of the new team automatically.",
         "schema": {
           "availability": null,
           "description": null,
+          "encoding": null,
           "generatedName": "RulesGetActionsResponse",
           "groupName": null,
           "key": {
@@ -43502,6 +43503,7 @@ You will be assigned as owner of the new team automatically.",
         "schema": {
           "availability": null,
           "description": null,
+          "encoding": null,
           "generatedName": "AssetsGetTagsResponse",
           "groupName": null,
           "key": {
@@ -43784,6 +43786,7 @@ You will be assigned as owner of the new team automatically.",
         "schema": {
           "availability": null,
           "description": null,
+          "encoding": null,
           "generatedName": "AssetsPutTagResponse",
           "groupName": null,
           "key": {
@@ -60072,6 +60075,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "value": {
                 "availability": null,
                 "description": "The asset metadata.",
+                "encoding": null,
                 "generatedName": "AnnotateAssetDtoMetadata",
                 "groupName": null,
                 "key": {
@@ -60478,6 +60482,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "availability": null,
             "description": "The properties from the role.",
+            "encoding": null,
             "generatedName": "AppDtoRoleProperties",
             "groupName": null,
             "key": {
@@ -61373,6 +61378,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "availability": null,
             "description": "The asset metadata.",
+            "encoding": null,
             "generatedName": "AssetDtoMetadata",
             "groupName": null,
             "key": {
@@ -64611,6 +64617,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "value": {
                 "availability": null,
                 "description": "The asset metadata.",
+                "encoding": null,
                 "generatedName": "BulkUpdateAssetsJobDtoMetadata",
                 "groupName": null,
                 "key": {
@@ -65578,6 +65585,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "availability": null,
             "description": "The statistics by date and group.",
+            "encoding": null,
             "generatedName": "CallsUsageDtoDtoDetails",
             "groupName": null,
             "key": {
@@ -66966,6 +66974,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "ConfigurePreviewUrlsDto": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ConfigurePreviewUrlsDto",
       "groupName": null,
       "key": {
@@ -67245,6 +67254,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "ContentData": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ContentData",
       "groupName": null,
       "key": {
@@ -67849,6 +67859,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "ContentFieldData": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ContentFieldData",
       "groupName": null,
       "key": {
@@ -70423,6 +70434,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "ExposedValues": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ExposedValues",
       "groupName": null,
       "key": {
@@ -71080,6 +71092,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         ],
         "description": null,
         "discriminantProperty": "fieldType",
+        "encoding": null,
         "generatedName": "FieldPropertiesDto",
         "groupName": null,
         "nameOverride": null,
@@ -72084,6 +72097,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "LocalizedValueOfNullableBoolean": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "LocalizedValueOfNullableBoolean",
       "groupName": null,
       "key": {
@@ -72127,6 +72141,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "LocalizedValueOfNullableDouble": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "LocalizedValueOfNullableDouble",
       "groupName": null,
       "key": {
@@ -72175,6 +72190,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "LocalizedValueOfNullableInstant": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "LocalizedValueOfNullableInstant",
       "groupName": null,
       "key": {
@@ -72217,6 +72233,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "LocalizedValueOfReadonlyListOfString": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "LocalizedValueOfReadonlyListOfString",
       "groupName": null,
       "key": {
@@ -72264,6 +72281,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
     "LocalizedValueOfString": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "LocalizedValueOfString",
       "groupName": null,
       "key": {
@@ -75391,6 +75409,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "availability": null,
             "description": "The links.",
+            "encoding": null,
             "generatedName": "ResourceLinks",
             "groupName": null,
             "key": {
@@ -75954,6 +75973,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "availability": null,
             "description": "Associated list of UI properties.",
+            "encoding": null,
             "generatedName": "RoleDtoProperties",
             "groupName": null,
             "key": {
@@ -76053,6 +76073,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "actionType",
+        "encoding": null,
         "generatedName": "RuleActionDto",
         "groupName": null,
         "nameOverride": null,
@@ -77732,6 +77753,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "triggerType",
+        "encoding": null,
         "generatedName": "RuleTriggerDto",
         "groupName": null,
         "nameOverride": null,
@@ -78521,6 +78543,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "availability": null,
             "description": "The preview Urls.",
+            "encoding": null,
             "generatedName": "SchemaDtoPreviewUrls",
             "groupName": null,
             "key": {
@@ -83854,6 +83877,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "value": {
               "availability": null,
               "description": "Associated list of UI properties.",
+              "encoding": null,
               "generatedName": "UpdateRoleDtoProperties",
               "groupName": null,
               "key": {
@@ -84592,6 +84616,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
           "schema": {
             "availability": null,
             "description": "The workflow steps.",
+            "encoding": null,
             "generatedName": "UpdateWorkflowDtoSteps",
             "groupName": null,
             "key": {
@@ -85019,6 +85044,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
               "value": {
                 "availability": null,
                 "description": "The optional preview urls.",
+                "encoding": null,
                 "generatedName": "UpsertSchemaDtoPreviewUrls",
                 "groupName": null,
                 "key": {
@@ -86238,6 +86264,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "value": {
               "availability": null,
               "description": "The workflow steps.",
+              "encoding": null,
               "generatedName": "WorkflowDtoSteps",
               "groupName": null,
               "key": {
@@ -86387,6 +86414,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "value": {
               "availability": null,
               "description": "The transitions.",
+              "encoding": null,
               "generatedName": "WorkflowStepDtoTransitions",
               "groupName": null,
               "key": {

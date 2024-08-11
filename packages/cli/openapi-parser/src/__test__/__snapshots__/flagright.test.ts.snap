@@ -8442,6 +8442,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "commonProperties": [],
                   "description": null,
                   "discriminantProperty": "method",
+                  "encoding": null,
                   "generatedName": "BusinessOptionalSavedPaymentDetailsItem",
                   "groupName": null,
                   "nameOverride": null,
@@ -21336,6 +21337,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "ListKeyMetadata": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ListKeyMetadata",
       "groupName": null,
       "key": {
@@ -25509,6 +25511,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "commonProperties": [],
                 "description": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
                 "discriminantProperty": "method",
+                "encoding": null,
                 "generatedName": "TransactionUpdatableOriginPaymentDetails",
                 "groupName": null,
                 "nameOverride": null,
@@ -25661,6 +25664,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "commonProperties": [],
                 "description": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
                 "discriminantProperty": "method",
+                "encoding": null,
                 "generatedName": "TransactionUpdatableDestinationPaymentDetails",
                 "groupName": null,
                 "nameOverride": null,

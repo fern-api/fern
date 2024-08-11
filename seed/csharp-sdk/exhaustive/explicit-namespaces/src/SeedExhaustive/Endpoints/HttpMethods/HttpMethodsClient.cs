@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
 
@@ -7,11 +8,11 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Endpoints.HttpMethods;
 
-public class HttpMethodsClient
+public partial class HttpMethodsClient
 {
     private RawClient _client;
 
-    public HttpMethodsClient(RawClient client)
+    internal HttpMethodsClient(RawClient client)
     {
         _client = client;
     }
