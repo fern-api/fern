@@ -123,6 +123,9 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
+      
+      - name: Compile
+        run: pnpm compile
 
       - name: Run ETE tests
         env:
