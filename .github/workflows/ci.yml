@@ -107,7 +107,7 @@ jobs:
         run: go install github.com/google/gnostic/cmd/protoc-gen-openapi@v0.7.0
 
       - name: Run tests
-        run: pnpm test --maxWorkers 15 --ci --silent
+        run: pnpm test
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
