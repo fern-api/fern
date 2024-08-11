@@ -1,16 +1,24 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { createWriteStream } from "fs";
+import { mkdir, readdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
 import path from "path";
+import { pipeline } from "stream";
+import { promisify } from "util";
 import { AsIsFiles } from "../AsIs";
 import { AbstractCsharpGeneratorContext } from "../cli";
 import { BaseCsharpCustomConfigSchema } from "../custom-config";
 import { CSharpFile } from "./CSharpFile";
 import { File } from "./File";
 
+const LOCAL_FILE_SCHEME = "file:///";
 const SRC_DIRECTORY_NAME = "src";
+const PROTOBUF_DIRECTORY_NAME = "proto";
+const PROTOBUF_ZIP_FILENAME = "proto.zip";
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
+
+const streamPipeline = promisify(pipeline);
 
 export const CORE_DIRECTORY_NAME = "Core";
 /**
@@ -110,6 +118,8 @@ export class CsharpProject {
         this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);
         await mkdir(absolutePathToProjectDirectory, { recursive: true });
 
+        const protobufSourceFilePaths = await this.copyProtobufSources();
+
         const csproj = new CsProj({
             version: this.context.config.output?.mode._visit({
                 downloadFiles: () => undefined,
@@ -132,7 +142,8 @@ export class CsharpProject {
                 publish: () => undefined,
                 _other: () => undefined
             }),
-            context: this.context
+            context: this.context,
+            protobufSourceFilePaths
         });
         const templateCsProjContents = csproj.toString();
         await writeFile(
@@ -208,6 +219,135 @@ export class CsharpProject {
             replaceTemplate({ contents, namespace: this.context.getCoreNamespace() })
         );
     }
+
+    private async copyProtobufSources(): Promise<RelativeFilePath[]> {
+        const protobufSourceURLs: string[] = [];
+        for (const source of this.context.ir.sourceConfig?.sources ?? []) {
+            if (source.type === "proto") {
+                protobufSourceURLs.push(source.protoRootUrl);
+            }
+        }
+
+        console.log("Source config", JSON.stringify(this.context.ir.sourceConfig));
+
+        if (protobufSourceURLs.length === 0) {
+            return [];
+        }
+
+        const absolutePathToProtoDirectory = join(
+            this.absolutePathToOutputDirectory,
+            this.filepaths.getProtobufDirectory()
+        );
+        this.context.logger.debug(`mkdir ${absolutePathToProtoDirectory}`);
+        await mkdir(absolutePathToProtoDirectory, { recursive: true });
+
+        for (const protobufSourceURL of protobufSourceURLs) {
+            if (this.isLocalSourceURL(protobufSourceURL)) {
+                const cleanProtobufSourceURL = protobufSourceURL.replace(LOCAL_FILE_SCHEME, "");
+                await this.copyLocalProtobufSource({
+                    absolutePathToProtoDirectory,
+                    protobufSourceURL: cleanProtobufSourceURL
+                });
+                continue;
+            }
+            await this.copyRemoteProtobufSource({ absolutePathToProtoDirectory, protobufSourceURL });
+        }
+
+        return this.findFiles(absolutePathToProtoDirectory);
+    }
+
+    private async copyLocalProtobufSource({
+        absolutePathToProtoDirectory,
+        protobufSourceURL
+    }: {
+        absolutePathToProtoDirectory: AbsoluteFilePath;
+        protobufSourceURL: string;
+    }): Promise<void> {
+        // Note that we use `find` in combination with `cp` because the alternative
+        // is not supported in every environment. Behaviorally this is equivalent to
+        // the following:
+        //
+        //  `cp -r ${protobufSourceURL}/* ${absolutePathToProtoDirectory}`
+        this.context.logger.debug(`Copying source from ${protobufSourceURL} to ${absolutePathToProtoDirectory}`);
+        await loggingExeca(
+            this.context.logger,
+            "sh",
+            [
+                "-c",
+                `find ${protobufSourceURL} -mindepth 1 -maxdepth 1 -exec cp -r {} ${absolutePathToProtoDirectory}/ \\;`
+            ],
+            {
+                doNotPipeOutput: true
+            }
+        );
+    }
+
+    private async copyRemoteProtobufSource({
+        absolutePathToProtoDirectory,
+        protobufSourceURL
+    }: {
+        absolutePathToProtoDirectory: AbsoluteFilePath;
+        protobufSourceURL: string;
+    }): Promise<void> {
+        await this.downloadSource({
+            downloadURL: protobufSourceURL,
+            destinationPath: "."
+        });
+
+        this.context.logger.debug(`Unzipping source from ${PROTOBUF_ZIP_FILENAME} to ${absolutePathToProtoDirectory}`);
+        await loggingExeca(
+            this.context.logger,
+            "unzip",
+            ["-o", PROTOBUF_ZIP_FILENAME, "-d", absolutePathToProtoDirectory],
+            {
+                doNotPipeOutput: true
+            }
+        );
+
+        this.context.logger.debug(`Removing ${PROTOBUF_ZIP_FILENAME}`);
+        await loggingExeca(this.context.logger, "rm", ["-f", PROTOBUF_ZIP_FILENAME], {
+            doNotPipeOutput: true
+        });
+    }
+
+    private async downloadSource({
+        downloadURL,
+        destinationPath
+    }: {
+        downloadURL: string;
+        destinationPath: string;
+    }): Promise<void> {
+        this.context.logger.debug(`Downloading ${downloadURL} to ${destinationPath}`);
+        const response = await fetch(downloadURL);
+        if (!response.ok) {
+            throw new Error(`Failed to download source. Status: ${response.status}, ${response.statusText}`);
+        }
+        const fileStream = createWriteStream(destinationPath);
+        await streamPipeline(response.body as any, fileStream);
+    }
+
+    async findFiles(absoluteFilePath: AbsoluteFilePath): Promise<RelativeFilePath[]> {
+        const absoluteFilePaths: AbsoluteFilePath[] = [];
+
+        const listFiles = async (currentDirectory: AbsoluteFilePath): Promise<void> => {
+            const entries = await readdir(currentDirectory, { withFileTypes: true });
+            for (const entry of entries) {
+                const absoluteFilePath = join(currentDirectory, RelativeFilePath.of(entry.name));
+                if (entry.isDirectory()) {
+                    await listFiles(absoluteFilePath);
+                    continue;
+                }
+                absoluteFilePaths.push(absoluteFilePath);
+            }
+        };
+        await listFiles(absoluteFilePath);
+
+        return absoluteFilePaths.map((file) => relative(absoluteFilePath, file));
+    }
+
+    private isLocalSourceURL(sourceURL: string): boolean {
+        return sourceURL.startsWith(LOCAL_FILE_SCHEME);
+    }
 }
 
 function replaceTemplate({ contents, namespace }: { contents: string; namespace: string }): string {
@@ -231,6 +371,10 @@ class CsharpProjectFilepaths {
         return RelativeFilePath.of(SRC_DIRECTORY_NAME);
     }
 
+    public getProtobufDirectory(): RelativeFilePath {
+        return RelativeFilePath.of(PROTOBUF_DIRECTORY_NAME);
+    }
+
     public getCoreFilesDirectory(): RelativeFilePath {
         return join(this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
     }
@@ -250,6 +394,7 @@ declare namespace CsProj {
         license?: string;
         githubUrl?: string;
         context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        protobufSourceFilePaths: RelativeFilePath[];
     }
 }
 
@@ -260,12 +405,14 @@ class CsProj {
     private license: string | undefined;
     private githubUrl: string | undefined;
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private protobufSourceFilePaths: RelativeFilePath[];
 
-    public constructor({ version, license, githubUrl, context }: CsProj.Args) {
+    public constructor({ version, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
         this.version = version;
         this.license = license;
         this.githubUrl = githubUrl;
         this.context = context;
+        this.protobufSourceFilePaths = protobufSourceFilePaths;
     }
 
     public toString(): string {
@@ -305,7 +452,7 @@ class CsProj {
     <ItemGroup>
         ${dependencies.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
     </ItemGroup>
-
+${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${FOUR_SPACES}`)}
     <ItemGroup>
         <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
@@ -323,6 +470,40 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
+        return result;
+    }
+
+    private getProtobufDependencies(protobufSourceFilePaths: RelativeFilePath[]): string[] {
+        if (protobufSourceFilePaths.length === 0) {
+            return [];
+        }
+
+        const pathToProtobufDirectory = `..\\..\\${PROTOBUF_DIRECTORY_NAME}`;
+
+        const result: string[] = [];
+
+        result.push("");
+        result.push("<ItemGroup>");
+        result.push('    <PackageReference Include="Google.Protobuf" Version="3.27.2" />');
+        result.push('    <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />');
+        result.push('    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />');
+        result.push('    <PackageReference Include="Grpc.Tools" Version="2.64.0">');
+        result.push(
+            "        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>"
+        );
+        result.push("        <PrivateAssets>all</PrivateAssets>");
+        result.push("    </PackageReference>");
+        result.push("</ItemGroup>\n");
+
+        result.push("<ItemGroup>");
+        for (const protobufSourceFilePath of protobufSourceFilePaths) {
+            const protobufSourceWindowsPath = this.relativePathToWindowsPath(protobufSourceFilePath);
+            result.push(
+                `    <Protobuf Include="${pathToProtobufDirectory}\\${protobufSourceWindowsPath}" GrpcServices="Client" ProtoRoot="${pathToProtobufDirectory}"></Protobuf>`
+            );
+        }
+        result.push("</ItemGroup>\n");
+
         return result;
     }
 
@@ -356,5 +537,9 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         }
 
         return result;
+    }
+
+    private relativePathToWindowsPath(relativePath: RelativeFilePath): RelativeFilePath {
+        return RelativeFilePath.of(relativePath.replace("/", "\\"));
     }
 }
