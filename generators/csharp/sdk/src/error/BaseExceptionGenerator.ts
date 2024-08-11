@@ -26,14 +26,15 @@ export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomC
         });
         return new CSharpFile({
             clazz: class_,
-            directory: this.context.getCoreDirectory(),
+            directory: this.context.getPublicCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
-            namespace: this.context.getNamespace()
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getCoreFilesDirectory(),
+            this.context.project.filepaths.getPublicCoreFilesDirectory(),
             RelativeFilePath.of(`${this.context.getBaseExceptionClassReference().name}.cs`)
         );
     }

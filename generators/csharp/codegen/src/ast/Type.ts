@@ -170,10 +170,21 @@ export class Type extends AstNode {
                 writer.write(">");
                 break;
             case "map":
+                const keyType = this.internalType.keyType;
+                const valueType = this.internalType.valueType;
+                if (
+                    writer.getSimplifyObjectDictionaries() &&
+                    keyType.internalType.type === "string" &&
+                    valueType.internalType.type === "optional" &&
+                    valueType.internalType.value.internalType.type === "object"
+                ) {
+                    writer.write("object");
+                    break;
+                }
                 writer.write("Dictionary<");
-                this.internalType.keyType.write(writer);
+                keyType.write(writer);
                 writer.write(", ");
-                this.internalType.valueType.write(writer);
+                valueType.write(writer);
                 writer.write(">");
                 break;
             case "optional":

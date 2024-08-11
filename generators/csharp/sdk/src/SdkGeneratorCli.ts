@@ -120,9 +120,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const baseApiException = new BaseApiExceptionGenerator(context);
         context.project.addSourceFiles(baseApiException.generate());
 
-        for (const [_, _error] of Object.entries(context.ir.errors)) {
-            const errorGenerator = new ErrorGenerator(context, _error);
-            context.project.addSourceFiles(errorGenerator.generate());
+        if (context.customConfig["generate-error-types"] ?? true) {
+            for (const _error of Object.values(context.ir.errors)) {
+                const errorGenerator = new ErrorGenerator(context, _error);
+                context.project.addSourceFiles(errorGenerator.generate());
+            }
         }
 
         const rootClient = new RootClientGenerator(context);

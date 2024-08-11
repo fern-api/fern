@@ -34,7 +34,10 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
             class_.addField(
                 csharp.field({
                     access: "public",
-                    name: environment.name.screamingSnakeCase.safeName,
+                    name:
+                        this.context.customConfig["pascal-case-environments"] ?? true
+                            ? environment.name.pascalCase.safeName
+                            : environment.name.camelCase.safeName,
                     static_: true,
                     type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
                     initializer: csharp.codeblock((writer) => {
@@ -73,15 +76,16 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
 
         return new CSharpFile({
             clazz: class_,
-            directory: RelativeFilePath.of(this.context.getCoreDirectory()),
+            directory: RelativeFilePath.of(this.context.getPublicCoreDirectory()),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
-            namespace: this.context.getNamespace()
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getCoreFilesDirectory(),
+            this.context.project.filepaths.getPublicCoreFilesDirectory(),
             RelativeFilePath.of(`${this.context.getEnvironmentsClassReference().name}.cs`)
         );
     }
