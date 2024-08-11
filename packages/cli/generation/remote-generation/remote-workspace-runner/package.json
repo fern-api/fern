@@ -57,7 +57,6 @@
   },
   "devDependencies": {
     "@types/decompress": "^4.2.7",
-    "@types/jest": "^29.5.12",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "@types/mime-types": "^2.1.4",
@@ -67,11 +66,9 @@
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "globals": "link:@types/vitest/globals",
-    "jest": "^29.7.0",
     "lodash-es": "^4.17.21",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
-    "ts-jest": "^29.2.4",
     "typescript": "4.6.4",
     "vitest": "^2.0.5"
   }

@@ -60,8 +60,6 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.24.3",
-    "@babel/preset-typescript": "^7.24.1",
     "@types/jest": "^29.5.12",
     "@types/jest-specific-snapshot": "^0.5.9",
     "@types/js-yaml": "^4.0.8",
