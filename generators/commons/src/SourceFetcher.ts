@@ -1,6 +1,5 @@
 import { AbsoluteFilePath, join, relative, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { SourceConfig } from "@fern-fern/ir-sdk/api";
 import { createWriteStream } from "fs";
 import { mkdir, readdir } from "fs/promises";
 import { pipeline } from "stream";
@@ -9,6 +8,21 @@ import { AbstractGeneratorContext } from "./AbstractGeneratorContext";
 
 const LOCAL_FILE_SCHEME = "file:///";
 const PROTOBUF_ZIP_FILENAME = "proto.zip";
+
+export interface SourceConfig {
+    sources: ApiDefinitionSource[];
+}
+
+export type ApiDefinitionSource = ProtoDefinitionSource | OpenAPIDefinitionSource;
+
+export interface ProtoDefinitionSource {
+    type: "proto";
+    protoRootUrl: string;
+}
+
+export interface OpenAPIDefinitionSource {
+    type: "openapi";
+}
 
 export class SourceFetcher {
     private context: AbstractGeneratorContext;

@@ -7132,7 +7132,6 @@ const RAW_RUNTIME_STATE =
           ["@fern-api/logger", "workspace:packages/cli/logger"],\
           ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
           ["@fern-fern/generator-exec-sdk", "npm:0.0.898"],\
-          ["@fern-fern/ir-sdk", "npm:53.5.0"],\
           ["@types/jest", "npm:29.5.12"],\
           ["@types/node", "npm:18.7.18"],\
           ["depcheck", "npm:1.4.6"],\

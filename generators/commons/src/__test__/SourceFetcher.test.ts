@@ -1,5 +1,4 @@
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
-import { ApiDefinitionSource } from "@fern-fern/ir-sdk/api";
 import path from "path";
 import { AbstractGeneratorContext } from "../AbstractGeneratorContext";
 import { SourceFetcher } from "../SourceFetcher";
@@ -17,10 +16,10 @@ it("fetch proto.zip", async () => {
         context,
         sourceConfig: {
             sources: [
-                ApiDefinitionSource.proto({
-                    id: "test",
+                {
+                    type: "proto",
                     protoRootUrl: `https://${AWS_BUCKET_NAME}.s3.amazonaws.com/${AWS_OBJECT_KEY}`
-                })
+                }
             ]
         }
     });
