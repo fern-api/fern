@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../../../commons/fs-utils" },
     { "path": "../../../../commons/logging-execa" },
+    { "path": "../../../../ir-sdk" },
     { "path": "../../../configuration" },
     { "path": "../../../task-context" },
     { "path": "../../../workspace-loader" },
