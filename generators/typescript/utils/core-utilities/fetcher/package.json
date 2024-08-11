@@ -32,8 +32,6 @@
     "qs": "6.12.1"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.24.3",
-    "@babel/preset-typescript": "^7.24.1",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/multer": "^1.4.11",
