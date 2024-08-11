@@ -18,8 +18,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "jest --passWithNoTests",
-    "test2": "vitest --run",
+    "test": "vitest --run src/utils/__test__",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -43,18 +42,12 @@
     "url-join": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/preset-env": "^7.23.9",
-    "@babel/preset-typescript": "^7.23.0",
-    "@babel/traverse": "7.23.2",
     "@fern-api/workspace-loader": "workspace:*",
-    "@types/jest": "^29.5.12",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "globals": "link:@types/vitest/globals",
-    "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "typescript": "4.6.4",
