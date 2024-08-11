@@ -169,7 +169,7 @@ export class Type extends AstNode {
                 this.internalType.value.write(writer);
                 writer.write(">");
                 break;
-            case "map":
+            case "map": {
                 const keyType = this.internalType.keyType;
                 const valueType = this.internalType.valueType;
                 if (
@@ -187,6 +187,7 @@ export class Type extends AstNode {
                 valueType.write(writer);
                 writer.write(">");
                 break;
+            }
             case "optional":
                 this.internalType.value.write(writer, this);
                 // avoid double optional
