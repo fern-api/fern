@@ -87,7 +87,7 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
         });
 
         if (modifySourceFilepath != null) {
-            doModifySourceFilepaths({ definition, modifySourceFilepath });
+            await doModifySourceFilepaths({ definition, modifySourceFilepath });
         }
 
         return {
@@ -188,7 +188,7 @@ export function getOSSWorkspaceSettingsFromGeneratorInvocation(
     return result;
 }
 
-function doModifySourceFilepaths({
+async function doModifySourceFilepaths({
     definition,
     modifySourceFilepath
 }: {
@@ -199,7 +199,7 @@ function doModifySourceFilepaths({
     definitionFiles.push(definition.packageMarkerFile);
 
     for (const definitionFile of definitionFiles) {
-        visitDefinitionFileYamlAst(definitionFile, {
+        await visitDefinitionFileYamlAst(definitionFile, {
             typeDeclaration: ({ declaration }) => {
                 if (typeof declaration === "string" || declaration.source == null) {
                     return;

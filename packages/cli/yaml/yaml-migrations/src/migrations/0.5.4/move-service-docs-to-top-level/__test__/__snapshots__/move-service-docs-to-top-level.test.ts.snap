@@ -1,4 +1,19 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`change-services-key-to-service > simple 1`] = `
+"docs: i am service docs
+imports: {}
+
+# services!
+service:
+  base-path: /
+  auth: false
+  endpoints: {}
+
+types:
+  MyAlias: string
+"
+`;
 
 exports[`change-services-key-to-service simple 1`] = `
 "docs: i am service docs
