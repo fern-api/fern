@@ -2,14 +2,14 @@ namespace SeedMultiUrlEnvironment;
 
 public class SeedMultiUrlEnvironmentEnvironment
 {
-    public static SeedMultiUrlEnvironmentEnvironment production =
+    public static SeedMultiUrlEnvironmentEnvironment PRODUCTION =
         new SeedMultiUrlEnvironmentEnvironment
         {
             Ec2 = "https://ec2.aws.com",
             S3 = "https://s3.aws.com"
         };
 
-    public static SeedMultiUrlEnvironmentEnvironment staging =
+    public static SeedMultiUrlEnvironmentEnvironment STAGING =
         new SeedMultiUrlEnvironmentEnvironment
         {
             Ec2 = "https://staging.ec2.aws.com",

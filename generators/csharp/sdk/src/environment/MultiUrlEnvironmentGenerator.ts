@@ -37,7 +37,7 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<
                     name:
                         this.context.customConfig["pascal-case-environments"] ?? true
                             ? environment.name.pascalCase.safeName
-                            : environment.name.camelCase.safeName,
+                            : environment.name.screamingSnakeCase.safeName,
                     static_: true,
                     type: csharp.Type.reference(this.context.getEnvironmentsClassReference()),
                     initializer: csharp.codeblock((writer) => {

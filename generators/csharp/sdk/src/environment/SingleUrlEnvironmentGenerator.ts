@@ -37,7 +37,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
                     name:
                         this.context.customConfig["pascal-case-environments"] ?? true
                             ? environment.name.pascalCase.safeName
-                            : environment.name.camelCase.safeName,
+                            : environment.name.screamingSnakeCase.safeName,
                     static_: true,
                     type: csharp.Type.string(),
                     initializer: csharp.codeblock(`"${environment.url}"`)
