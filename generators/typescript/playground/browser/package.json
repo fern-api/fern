@@ -27,9 +27,9 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "start": "yarn compile && vite",
-    "build": "yarn compile && vite build",
-    "preview": "yarn compile && vite preview"
+    "start": "pnpm compile && vite",
+    "build": "pnpm compile && vite build",
+    "preview": "pnpm compile && vite preview"
   },
   "dependencies": {
     "form-data": "4.0.0",

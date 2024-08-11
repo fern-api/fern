@@ -33,9 +33,9 @@
     "env:dev": "env-cmd -r .env-cmdrc.cjs -e dev",
     "env:local": "env-cmd -r .env-cmdrc.cjs -e local",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "dist:cli:dev": "pnpm compile && pnpm env:dev node build.dev.cjs",
-    "dist:cli:local": "pnpm compile && pnpm env:local node build.local.cjs",
-    "dist:cli:prod": "pnpm compile && pnpm env:prod node build.prod.cjs",
+    "dist:cli:dev": "pnpm compile &&  pnpm env:dev node build.dev.cjs",
+    "dist:cli:local": "pnpm compile &&  pnpm env:local node build.local.cjs",
+    "dist:cli:prod": "pnpm compile &&  pnpm env:prod node build.prod.cjs",
     "publish:cli:dev": "pnpm dist:cli:dev && cd dist/dev && pnpm npm publish",
     "publish:cli:local": "pnpm dist:cli:local && cd dist/local && pnpm npm publish",
     "publish:cli:prod": "pnpm dist:cli:prod && cd dist/prod && pnpm npm publish"

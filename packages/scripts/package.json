@@ -28,7 +28,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "dist:cli": "yarn compile && node build.cjs",
+    "dist:cli": "pnpm compile && node build.cjs",
     "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
   },
   "dependencies": {

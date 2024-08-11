@@ -29,7 +29,7 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
-    "dist:cli": "yarn compile && node build.cjs",
+    "dist:cli": "pnpm compile && node build.cjs",
     "publish:cli": "yarn dist:cli && cd dist && yarn npm publish",
     "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-postman:latest .",
     "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-postman:${0} ."
