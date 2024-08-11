@@ -33,9 +33,9 @@
                             "isOptional": true,
                             "templateString": "operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"",
-                                "=": "\"=\"",
-                                "less_than": "\"less_than\""
+                                ">": "Operand.GREATER_THAN",
+                                "=": "Operand.EQUAL_TO",
+                                "less_than": "Operand.LESS_THAN"
                             },
                             "templateInput": {
                                 "location": "BODY",
@@ -51,9 +51,9 @@
                             "isOptional": true,
                             "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"",
-                                "=": "\"=\"",
-                                "less_than": "\"less_than\""
+                                ">": "Operand.GREATER_THAN",
+                                "=": "Operand.EQUAL_TO",
+                                "less_than": "Operand.LESS_THAN"
                             },
                             "templateInput": {
                                 "location": "BODY",
@@ -79,8 +79,8 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            "red": "\"red\"",
-                                            "blue": "\"blue\""
+                                            "red": "Color.RED",
+                                            "blue": "Color.BLUE"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -99,9 +99,9 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            ">": "\">\"",
-                                            "=": "\"=\"",
-                                            "less_than": "\"less_than\""
+                                            ">": "Operand.GREATER_THAN",
+                                            "=": "Operand.EQUAL_TO",
+                                            "less_than": "Operand.LESS_THAN"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -135,8 +135,8 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            "red": "\"red\"",
-                                            "blue": "\"blue\""
+                                            "red": "Color.RED",
+                                            "blue": "Color.BLUE"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -155,9 +155,9 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            ">": "\">\"",
-                                            "=": "\"=\"",
-                                            "less_than": "\"less_than\""
+                                            ">": "Operand.GREATER_THAN",
+                                            "=": "Operand.EQUAL_TO",
+                                            "less_than": "Operand.LESS_THAN"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -204,9 +204,9 @@
                                 "isOptional": true,
                                 "templateString": "operand=$FERN_INPUT",
                                 "values": {
-                                    ">": "\">\"",
-                                    "=": "\"=\"",
-                                    "less_than": "\"less_than\""
+                                    ">": "Operand.GREATER_THAN",
+                                    "=": "Operand.EQUAL_TO",
+                                    "less_than": "Operand.LESS_THAN"
                                 },
                                 "templateInput": {
                                     "location": "BODY",
@@ -222,9 +222,9 @@
                                 "isOptional": true,
                                 "templateString": "maybe_operand=$FERN_INPUT",
                                 "values": {
-                                    ">": "\">\"",
-                                    "=": "\"=\"",
-                                    "less_than": "\"less_than\""
+                                    ">": "Operand.GREATER_THAN",
+                                    "=": "Operand.EQUAL_TO",
+                                    "less_than": "Operand.LESS_THAN"
                                 },
                                 "templateInput": {
                                     "location": "BODY",
@@ -250,8 +250,8 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                "red": "\"red\"",
-                                                "blue": "\"blue\""
+                                                "red": "Color.RED",
+                                                "blue": "Color.BLUE"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -270,9 +270,9 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                ">": "\">\"",
-                                                "=": "\"=\"",
-                                                "less_than": "\"less_than\""
+                                                ">": "Operand.GREATER_THAN",
+                                                "=": "Operand.EQUAL_TO",
+                                                "less_than": "Operand.LESS_THAN"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -306,8 +306,8 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                "red": "\"red\"",
-                                                "blue": "\"blue\""
+                                                "red": "Color.RED",
+                                                "blue": "Color.BLUE"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -326,9 +326,9 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                ">": "\">\"",
-                                                "=": "\"=\"",
-                                                "less_than": "\"less_than\""
+                                                ">": "Operand.GREATER_THAN",
+                                                "=": "Operand.EQUAL_TO",
+                                                "less_than": "Operand.LESS_THAN"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -387,9 +387,9 @@
                             "isOptional": true,
                             "templateString": "operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"",
-                                "=": "\"=\"",
-                                "less_than": "\"less_than\""
+                                ">": "Operand.GREATER_THAN",
+                                "=": "Operand.EQUAL_TO",
+                                "less_than": "Operand.LESS_THAN"
                             },
                             "templateInput": {
                                 "location": "PATH",
@@ -405,9 +405,9 @@
                             "isOptional": true,
                             "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"",
-                                "=": "\"=\"",
-                                "less_than": "\"less_than\""
+                                ">": "Operand.GREATER_THAN",
+                                "=": "Operand.EQUAL_TO",
+                                "less_than": "Operand.LESS_THAN"
                             },
                             "templateInput": {
                                 "location": "PATH",
@@ -433,8 +433,8 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            "red": "\"red\"",
-                                            "blue": "\"blue\""
+                                            "red": "Color.RED",
+                                            "blue": "Color.BLUE"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -453,9 +453,9 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            ">": "\">\"",
-                                            "=": "\"=\"",
-                                            "less_than": "\"less_than\""
+                                            ">": "Operand.GREATER_THAN",
+                                            "=": "Operand.EQUAL_TO",
+                                            "less_than": "Operand.LESS_THAN"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -489,8 +489,8 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            "red": "\"red\"",
-                                            "blue": "\"blue\""
+                                            "red": "Color.RED",
+                                            "blue": "Color.BLUE"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -509,9 +509,9 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            ">": "\">\"",
-                                            "=": "\"=\"",
-                                            "less_than": "\"less_than\""
+                                            ">": "Operand.GREATER_THAN",
+                                            "=": "Operand.EQUAL_TO",
+                                            "less_than": "Operand.LESS_THAN"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -558,9 +558,9 @@
                                 "isOptional": true,
                                 "templateString": "operand=$FERN_INPUT",
                                 "values": {
-                                    ">": "\">\"",
-                                    "=": "\"=\"",
-                                    "less_than": "\"less_than\""
+                                    ">": "Operand.GREATER_THAN",
+                                    "=": "Operand.EQUAL_TO",
+                                    "less_than": "Operand.LESS_THAN"
                                 },
                                 "templateInput": {
                                     "location": "PATH",
@@ -576,9 +576,9 @@
                                 "isOptional": true,
                                 "templateString": "maybe_operand=$FERN_INPUT",
                                 "values": {
-                                    ">": "\">\"",
-                                    "=": "\"=\"",
-                                    "less_than": "\"less_than\""
+                                    ">": "Operand.GREATER_THAN",
+                                    "=": "Operand.EQUAL_TO",
+                                    "less_than": "Operand.LESS_THAN"
                                 },
                                 "templateInput": {
                                     "location": "PATH",
@@ -604,8 +604,8 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                "red": "\"red\"",
-                                                "blue": "\"blue\""
+                                                "red": "Color.RED",
+                                                "blue": "Color.BLUE"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -624,9 +624,9 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                ">": "\">\"",
-                                                "=": "\"=\"",
-                                                "less_than": "\"less_than\""
+                                                ">": "Operand.GREATER_THAN",
+                                                "=": "Operand.EQUAL_TO",
+                                                "less_than": "Operand.LESS_THAN"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -660,8 +660,8 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                "red": "\"red\"",
-                                                "blue": "\"blue\""
+                                                "red": "Color.RED",
+                                                "blue": "Color.BLUE"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -680,9 +680,9 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                ">": "\">\"",
-                                                "=": "\"=\"",
-                                                "less_than": "\"less_than\""
+                                                ">": "Operand.GREATER_THAN",
+                                                "=": "Operand.EQUAL_TO",
+                                                "less_than": "Operand.LESS_THAN"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -741,9 +741,9 @@
                             "isOptional": true,
                             "templateString": "operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"",
-                                "=": "\"=\"",
-                                "less_than": "\"less_than\""
+                                ">": "Operand.GREATER_THAN",
+                                "=": "Operand.EQUAL_TO",
+                                "less_than": "Operand.LESS_THAN"
                             },
                             "templateInput": {
                                 "location": "QUERY",
@@ -759,9 +759,9 @@
                             "isOptional": true,
                             "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"",
-                                "=": "\"=\"",
-                                "less_than": "\"less_than\""
+                                ">": "Operand.GREATER_THAN",
+                                "=": "Operand.EQUAL_TO",
+                                "less_than": "Operand.LESS_THAN"
                             },
                             "templateInput": {
                                 "location": "QUERY",
@@ -787,8 +787,8 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            "red": "\"red\"",
-                                            "blue": "\"blue\""
+                                            "red": "Color.RED",
+                                            "blue": "Color.BLUE"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -807,9 +807,9 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            ">": "\">\"",
-                                            "=": "\"=\"",
-                                            "less_than": "\"less_than\""
+                                            ">": "Operand.GREATER_THAN",
+                                            "=": "Operand.EQUAL_TO",
+                                            "less_than": "Operand.LESS_THAN"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -843,8 +843,8 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            "red": "\"red\"",
-                                            "blue": "\"blue\""
+                                            "red": "Color.RED",
+                                            "blue": "Color.BLUE"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -863,9 +863,9 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            ">": "\">\"",
-                                            "=": "\"=\"",
-                                            "less_than": "\"less_than\""
+                                            ">": "Operand.GREATER_THAN",
+                                            "=": "Operand.EQUAL_TO",
+                                            "less_than": "Operand.LESS_THAN"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -912,9 +912,9 @@
                                 "isOptional": true,
                                 "templateString": "operand=$FERN_INPUT",
                                 "values": {
-                                    ">": "\">\"",
-                                    "=": "\"=\"",
-                                    "less_than": "\"less_than\""
+                                    ">": "Operand.GREATER_THAN",
+                                    "=": "Operand.EQUAL_TO",
+                                    "less_than": "Operand.LESS_THAN"
                                 },
                                 "templateInput": {
                                     "location": "QUERY",
@@ -930,9 +930,9 @@
                                 "isOptional": true,
                                 "templateString": "maybe_operand=$FERN_INPUT",
                                 "values": {
-                                    ">": "\">\"",
-                                    "=": "\"=\"",
-                                    "less_than": "\"less_than\""
+                                    ">": "Operand.GREATER_THAN",
+                                    "=": "Operand.EQUAL_TO",
+                                    "less_than": "Operand.LESS_THAN"
                                 },
                                 "templateInput": {
                                     "location": "QUERY",
@@ -958,8 +958,8 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                "red": "\"red\"",
-                                                "blue": "\"blue\""
+                                                "red": "Color.RED",
+                                                "blue": "Color.BLUE"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -978,9 +978,9 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                ">": "\">\"",
-                                                "=": "\"=\"",
-                                                "less_than": "\"less_than\""
+                                                ">": "Operand.GREATER_THAN",
+                                                "=": "Operand.EQUAL_TO",
+                                                "less_than": "Operand.LESS_THAN"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -1014,8 +1014,8 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                "red": "\"red\"",
-                                                "blue": "\"blue\""
+                                                "red": "Color.RED",
+                                                "blue": "Color.BLUE"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -1034,9 +1034,9 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                ">": "\">\"",
-                                                "=": "\"=\"",
-                                                "less_than": "\"less_than\""
+                                                ">": "Operand.GREATER_THAN",
+                                                "=": "Operand.EQUAL_TO",
+                                                "less_than": "Operand.LESS_THAN"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -1095,9 +1095,9 @@
                             "isOptional": true,
                             "templateString": "operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"",
-                                "=": "\"=\"",
-                                "less_than": "\"less_than\""
+                                ">": "Operand.GREATER_THAN",
+                                "=": "Operand.EQUAL_TO",
+                                "less_than": "Operand.LESS_THAN"
                             },
                             "templateInput": {
                                 "location": "QUERY",
@@ -1113,9 +1113,9 @@
                             "isOptional": true,
                             "templateString": "maybe_operand=$FERN_INPUT",
                             "values": {
-                                ">": "\">\"",
-                                "=": "\"=\"",
-                                "less_than": "\"less_than\""
+                                ">": "Operand.GREATER_THAN",
+                                "=": "Operand.EQUAL_TO",
+                                "less_than": "Operand.LESS_THAN"
                             },
                             "templateInput": {
                                 "location": "QUERY",
@@ -1141,8 +1141,8 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            "red": "\"red\"",
-                                            "blue": "\"blue\""
+                                            "red": "Color.RED",
+                                            "blue": "Color.BLUE"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -1161,9 +1161,9 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            ">": "\">\"",
-                                            "=": "\"=\"",
-                                            "less_than": "\"less_than\""
+                                            ">": "Operand.GREATER_THAN",
+                                            "=": "Operand.EQUAL_TO",
+                                            "less_than": "Operand.LESS_THAN"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -1197,8 +1197,8 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            "red": "\"red\"",
-                                            "blue": "\"blue\""
+                                            "red": "Color.RED",
+                                            "blue": "Color.BLUE"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -1217,9 +1217,9 @@
                                         "isOptional": true,
                                         "templateString": "$FERN_INPUT",
                                         "values": {
-                                            ">": "\">\"",
-                                            "=": "\"=\"",
-                                            "less_than": "\"less_than\""
+                                            ">": "Operand.GREATER_THAN",
+                                            "=": "Operand.EQUAL_TO",
+                                            "less_than": "Operand.LESS_THAN"
                                         },
                                         "templateInput": {
                                             "location": "RELATIVE",
@@ -1266,9 +1266,9 @@
                                 "isOptional": true,
                                 "templateString": "operand=$FERN_INPUT",
                                 "values": {
-                                    ">": "\">\"",
-                                    "=": "\"=\"",
-                                    "less_than": "\"less_than\""
+                                    ">": "Operand.GREATER_THAN",
+                                    "=": "Operand.EQUAL_TO",
+                                    "less_than": "Operand.LESS_THAN"
                                 },
                                 "templateInput": {
                                     "location": "QUERY",
@@ -1284,9 +1284,9 @@
                                 "isOptional": true,
                                 "templateString": "maybe_operand=$FERN_INPUT",
                                 "values": {
-                                    ">": "\">\"",
-                                    "=": "\"=\"",
-                                    "less_than": "\"less_than\""
+                                    ">": "Operand.GREATER_THAN",
+                                    "=": "Operand.EQUAL_TO",
+                                    "less_than": "Operand.LESS_THAN"
                                 },
                                 "templateInput": {
                                     "location": "QUERY",
@@ -1312,8 +1312,8 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                "red": "\"red\"",
-                                                "blue": "\"blue\""
+                                                "red": "Color.RED",
+                                                "blue": "Color.BLUE"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -1332,9 +1332,9 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                ">": "\">\"",
-                                                "=": "\"=\"",
-                                                "less_than": "\"less_than\""
+                                                ">": "Operand.GREATER_THAN",
+                                                "=": "Operand.EQUAL_TO",
+                                                "less_than": "Operand.LESS_THAN"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -1368,8 +1368,8 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                "red": "\"red\"",
-                                                "blue": "\"blue\""
+                                                "red": "Color.RED",
+                                                "blue": "Color.BLUE"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",
@@ -1388,9 +1388,9 @@
                                             "isOptional": true,
                                             "templateString": "$FERN_INPUT",
                                             "values": {
-                                                ">": "\">\"",
-                                                "=": "\"=\"",
-                                                "less_than": "\"less_than\""
+                                                ">": "Operand.GREATER_THAN",
+                                                "=": "Operand.EQUAL_TO",
+                                                "less_than": "Operand.LESS_THAN"
                                             },
                                             "templateInput": {
                                                 "location": "RELATIVE",

@@ -13,7 +13,7 @@ class Directory(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.objects_with_imports.resources.file import File, FileInfo
+    from seed.objects_with_imports.resources.file import File
     from seed.objects_with_imports.resources.file.resources.directory import (
         Directory,
     )
@@ -24,7 +24,7 @@ class Directory(UniversalBaseModel):
             File(
                 name="file.txt",
                 contents="...",
-                info=FileInfo.REGULAR,
+                info="REGULAR",
             )
         ],
         directories=[
@@ -34,7 +34,7 @@ class Directory(UniversalBaseModel):
                     File(
                         name="another_file.txt",
                         contents="...",
-                        info=FileInfo.REGULAR,
+                        info="REGULAR",
                     )
                 ],
             )

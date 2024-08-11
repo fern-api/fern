@@ -44,16 +44,16 @@ class PathParamClient:
 
         Examples
         --------
-        from seed import SeedEnum
+        from seed import Color, Operand, SeedEnum
 
         client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
         client.path_param.send(
-            operand=">",
-            maybe_operand="less_than",
-            operand_or_color="red",
-            maybe_operand_or_color="red",
+            operand=Operand.GREATER_THAN,
+            maybe_operand=Operand.LESS_THAN,
+            operand_or_color=Color.RED,
+            maybe_operand_or_color=Color.RED,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -105,7 +105,7 @@ class AsyncPathParamClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedEnum
+        from seed import AsyncSeedEnum, Color, Operand
 
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
@@ -114,10 +114,10 @@ class AsyncPathParamClient:
 
         async def main() -> None:
             await client.path_param.send(
-                operand=">",
-                maybe_operand="less_than",
-                operand_or_color="red",
-                maybe_operand_or_color="red",
+                operand=Operand.GREATER_THAN,
+                maybe_operand=Operand.LESS_THAN,
+                operand_or_color=Color.RED,
+                maybe_operand_or_color=Color.RED,
             )
 
 

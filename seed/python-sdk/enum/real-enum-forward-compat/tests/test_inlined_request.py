@@ -2,16 +2,18 @@
 
 from seed import SeedEnum
 from seed import AsyncSeedEnum
+from seed import Operand
+from seed import Color
 
 
 async def test_send(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.inlined_request.send(operand=">", operand_or_color="red")  # type: ignore[func-returns-value]
+        client.inlined_request.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.inlined_request.send(operand=">", operand_or_color="red")  # type: ignore[func-returns-value]
+        await async_client.inlined_request.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED)  # type: ignore[func-returns-value]
         is None
     )

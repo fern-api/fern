@@ -2,17 +2,19 @@
 
 from seed import SeedEnum
 from seed import AsyncSeedEnum
+from seed import Operand
+from seed import Color
 
 
 async def test_send(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
-        client.query_param.send(operand=">", operand_or_color="red")  # type: ignore[func-returns-value]
+        client.query_param.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED)  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
-        await async_client.query_param.send(operand=">", operand_or_color="red")  # type: ignore[func-returns-value]
+        await async_client.query_param.send(operand=Operand.GREATER_THAN, operand_or_color=Color.RED)  # type: ignore[func-returns-value]
         is None
     )
 
@@ -21,14 +23,20 @@ async def test_send_list(client: SeedEnum, async_client: AsyncSeedEnum) -> None:
     # Type ignore to avoid mypy complaining about the function not being meant to return a value
     assert (
         client.query_param.send_list(
-            operand=">", maybe_operand=">", operand_or_color="red", maybe_operand_or_color="red"
+            operand=Operand.GREATER_THAN,
+            maybe_operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+            maybe_operand_or_color=Color.RED,
         )  # type: ignore[func-returns-value]
         is None
     )
 
     assert (
         await async_client.query_param.send_list(
-            operand=">", maybe_operand=">", operand_or_color="red", maybe_operand_or_color="red"
+            operand=Operand.GREATER_THAN,
+            maybe_operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+            maybe_operand_or_color=Color.RED,
         )  # type: ignore[func-returns-value]
         is None
     )

@@ -43,14 +43,14 @@ class QueryParamClient:
 
         Examples
         --------
-        from seed import SeedEnum
+        from seed import Color, Operand, SeedEnum
 
         client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
         client.query_param.send(
-            operand=">",
-            operand_or_color="red",
+            operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -101,16 +101,16 @@ class QueryParamClient:
 
         Examples
         --------
-        from seed import SeedEnum
+        from seed import Color, Operand, SeedEnum
 
         client = SeedEnum(
             base_url="https://yourhost.com/path/to/api",
         )
         client.query_param.send_list(
-            operand=">",
-            maybe_operand=">",
-            operand_or_color="red",
-            maybe_operand_or_color="red",
+            operand=Operand.GREATER_THAN,
+            maybe_operand=Operand.GREATER_THAN,
+            operand_or_color=Color.RED,
+            maybe_operand_or_color=Color.RED,
         )
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -168,7 +168,7 @@ class AsyncQueryParamClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedEnum
+        from seed import AsyncSeedEnum, Color, Operand
 
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
@@ -177,8 +177,8 @@ class AsyncQueryParamClient:
 
         async def main() -> None:
             await client.query_param.send(
-                operand=">",
-                operand_or_color="red",
+                operand=Operand.GREATER_THAN,
+                operand_or_color=Color.RED,
             )
 
 
@@ -234,7 +234,7 @@ class AsyncQueryParamClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedEnum
+        from seed import AsyncSeedEnum, Color, Operand
 
         client = AsyncSeedEnum(
             base_url="https://yourhost.com/path/to/api",
@@ -243,10 +243,10 @@ class AsyncQueryParamClient:
 
         async def main() -> None:
             await client.query_param.send_list(
-                operand=">",
-                maybe_operand=">",
-                operand_or_color="red",
-                maybe_operand_or_color="red",
+                operand=Operand.GREATER_THAN,
+                maybe_operand=Operand.GREATER_THAN,
+                operand_or_color=Color.RED,
+                maybe_operand_or_color=Color.RED,
             )
 
 

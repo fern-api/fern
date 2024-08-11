@@ -13,7 +13,9 @@ class Operand(str, enum.Enum):
 
     Examples
     --------
-    ">"
+    from seed import Operand
+
+    Operand.GREATER_THAN
     """
 
     GREATER_THAN = ">"

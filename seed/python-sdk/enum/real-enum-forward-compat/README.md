@@ -16,14 +16,14 @@ pip install fern_enum
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedEnum
+from seed import Color, Operand, SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 client.inlined_request.send(
-    operand=">",
-    operand_or_color="red",
+    operand=Operand.GREATER_THAN,
+    operand_or_color=Color.RED,
 )
 ```
 
@@ -34,7 +34,7 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedEnum
+from seed import AsyncSeedEnum, Color, Operand
 
 client = AsyncSeedEnum(
     base_url="https://yourhost.com/path/to/api",
@@ -43,8 +43,8 @@ client = AsyncSeedEnum(
 
 async def main() -> None:
     await client.inlined_request.send(
-        operand=">",
-        operand_or_color="red",
+        operand=Operand.GREATER_THAN,
+        operand_or_color=Color.RED,
     )
 
 

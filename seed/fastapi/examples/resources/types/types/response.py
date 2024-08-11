@@ -11,19 +11,19 @@ class Response(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples import BasicType, ComplexType, Identifier
+    from seed.examples import Identifier
     from seed.examples.resources.types import Response
 
     Response(
         response="Initializing...",
         identifiers=[
             Identifier(
-                type=BasicType.PRIMITIVE,
+                type="primitive",
                 value="example",
                 label="Primitive",
             ),
             Identifier(
-                type=ComplexType.UNKNOWN,
+                type="unknown",
                 value="{}",
                 label="Unknown",
             ),

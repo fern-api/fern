@@ -49,11 +49,11 @@ fixtures:
       outputFolder: strenum
     - customConfig:
         pydantic_config:
-          enum_type: "forward_compatible_python_enum"
+          enum_type: "forward_compatible_python_enums"
       outputFolder: real-enum-forward-compat
     - customConfig:
         pydantic_config:
-          enum_type: "python_enum"
+          enum_type: "python_enums"
       outputFolder: real-enum
   exhaustive:
     - customConfig: null

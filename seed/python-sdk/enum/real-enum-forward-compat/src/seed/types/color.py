@@ -10,7 +10,9 @@ class Color(str, enum.Enum):
     """
     Examples
     --------
-    "red"
+    from seed import Color
+
+    Color.RED
     """
 
     RED = "red"

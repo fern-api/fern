@@ -13,14 +13,14 @@
 <dd>
 
 ```python
-from seed import SeedEnum
+from seed import Color, Operand, SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 client.inlined_request.send(
-    operand=">",
-    operand_or_color="red",
+    operand=Operand.GREATER_THAN,
+    operand_or_color=Color.RED,
 )
 
 ```
@@ -95,16 +95,16 @@ client.inlined_request.send(
 <dd>
 
 ```python
-from seed import SeedEnum
+from seed import Color, Operand, SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 client.path_param.send(
-    operand=">",
-    maybe_operand="less_than",
-    operand_or_color="red",
-    maybe_operand_or_color="red",
+    operand=Operand.GREATER_THAN,
+    maybe_operand=Operand.LESS_THAN,
+    operand_or_color=Color.RED,
+    maybe_operand_or_color=Color.RED,
 )
 
 ```
@@ -179,14 +179,14 @@ client.path_param.send(
 <dd>
 
 ```python
-from seed import SeedEnum
+from seed import Color, Operand, SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 client.query_param.send(
-    operand=">",
-    operand_or_color="red",
+    operand=Operand.GREATER_THAN,
+    operand_or_color=Color.RED,
 )
 
 ```
@@ -260,16 +260,16 @@ client.query_param.send(
 <dd>
 
 ```python
-from seed import SeedEnum
+from seed import Color, Operand, SeedEnum
 
 client = SeedEnum(
     base_url="https://yourhost.com/path/to/api",
 )
 client.query_param.send_list(
-    operand=">",
-    maybe_operand=">",
-    operand_or_color="red",
-    maybe_operand_or_color="red",
+    operand=Operand.GREATER_THAN,
+    maybe_operand=Operand.GREATER_THAN,
+    operand_or_color=Color.RED,
+    maybe_operand_or_color=Color.RED,
 )
 
 ```

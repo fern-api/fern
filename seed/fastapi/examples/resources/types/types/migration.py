@@ -11,11 +11,11 @@ class Migration(UniversalBaseModel):
     """
     Examples
     --------
-    from seed.examples.resources.types import Migration, MigrationStatus
+    from seed.examples.resources.types import Migration
 
     Migration(
         name="001_init",
-        status=MigrationStatus.RUNNING,
+        status="RUNNING",
     )
     """
 
