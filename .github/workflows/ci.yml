@@ -71,6 +71,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Compile
+        run: pnpm compile
+
   eslint:
     runs-on: ubuntu-latest
     steps:
@@ -172,7 +175,7 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
-        
+
       - name: Load NVM
         run: |
           source /home/runner/.nvm/nvm.sh
