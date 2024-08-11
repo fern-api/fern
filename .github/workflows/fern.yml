@@ -14,13 +14,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
       - name: Install
-        run: pnpm install
+        uses: ./.github/actions/install
 
       - name: Check API definition is valid
         env:

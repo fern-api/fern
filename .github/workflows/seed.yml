@@ -81,13 +81,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -117,13 +112,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -153,13 +143,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -196,13 +181,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -239,13 +219,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -282,13 +257,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -318,13 +288,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -354,13 +319,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -390,13 +350,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -426,13 +381,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -462,13 +412,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -498,13 +443,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -534,13 +474,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -570,13 +505,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -606,13 +536,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -642,13 +567,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -678,13 +598,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
-
-      - name: pnpm Install
-        run: pnpm install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
