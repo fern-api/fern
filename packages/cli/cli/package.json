@@ -105,7 +105,6 @@
     "@types/tar": "^6.1.11",
     "@types/validate-npm-package-name": "^4.0.0",
     "@types/yargs": "^17.0.28",
-    "@pnpmpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
     "env-cmd": "toddbluhm/env-cmd",
     "esbuild": "^0.15.7",

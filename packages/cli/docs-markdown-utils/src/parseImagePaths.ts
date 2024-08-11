@@ -1,6 +1,6 @@
-import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import grayMatter from "gray-matter";
 import { fromMarkdown } from "mdast-util-from-markdown";
 import { mdxFromMarkdown } from "mdast-util-mdx";
@@ -373,7 +373,7 @@ function trimAnchor(text: unknown): string | undefined {
 }
 
 function visitFrontmatterImages(
-    data: Record<string, string | DocsV1Write.FileIdOrUrl>,
+    data: Record<string, string | CjsFdrSdk.docs.v1.commons.FileIdOrUrl>,
     keys: string[],
     mapImage: (image: string | undefined) => string | undefined
 ) {
