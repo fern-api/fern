@@ -93,7 +93,7 @@ export class SourceFetcher {
     }): Promise<void> {
         await this.downloadSource({
             downloadURL: protobufSourceURL,
-            destinationPath: "."
+            destinationPath: PROTOBUF_ZIP_FILENAME
         });
 
         this.context.logger.debug(`Unzipping source from ${PROTOBUF_ZIP_FILENAME} to ${absolutePathToProtoDirectory}`);
