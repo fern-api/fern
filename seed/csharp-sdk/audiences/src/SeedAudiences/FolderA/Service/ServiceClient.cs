@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedAudiences;
 using SeedAudiences.Core;
 
 #nullable enable

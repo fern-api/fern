@@ -1,4 +1,5 @@
 using System.Net.Http;
+using SeedTrace;
 using SeedTrace.Core;
 using SeedTrace.V2.V3;
 
