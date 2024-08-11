@@ -4060,7 +4060,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/generator-exec-sdk": "npm:^0.0.898"
-    "@fern-fern/ir-sdk": "npm:0.0.3294"
+    "@fern-fern/ir-sdk": "npm:^53.5.0"
     "@types/jest": "npm:^29.5.12"
     "@types/node": "npm:^18.7.18"
     depcheck: "npm:^1.4.6"
@@ -5041,13 +5041,6 @@ __metadata:
   version: 0.0.2828
   resolution: "@fern-fern/ir-sdk@npm:0.0.2828"
   checksum: 10/3de1246865ecb03f3a8def8423379ceb6d52ff9c5cf829f6e39539c843b240ef1e6e1061f211d8f58b2d49d315ee9db9b3749c1fb83b031044b4d80f93fc4e72
-  languageName: node
-  linkType: hard
-
-"@fern-fern/ir-sdk@npm:0.0.3294":
-  version: 0.0.3294
-  resolution: "@fern-fern/ir-sdk@npm:0.0.3294"
-  checksum: 10/015567f82fe2c98851a3ac05c1d4bda50ee66ec48f983db680f39b0ebde076d47e78d9e00850b3e3e26e5260e6b650df2f0dc6a259fbb1fe3eea792b539e072c
   languageName: node
   linkType: hard
 

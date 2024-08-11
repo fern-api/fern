@@ -7132,7 +7132,7 @@ const RAW_RUNTIME_STATE =
           ["@fern-api/logger", "workspace:packages/cli/logger"],\
           ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
           ["@fern-fern/generator-exec-sdk", "npm:0.0.898"],\
-          ["@fern-fern/ir-sdk", "npm:0.0.3294"],\
+          ["@fern-fern/ir-sdk", "npm:53.5.0"],\
           ["@types/jest", "npm:29.5.12"],\
           ["@types/node", "npm:18.7.18"],\
           ["depcheck", "npm:1.4.6"],\
@@ -8178,13 +8178,6 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-0.0.2828-43f6c61c8e-3de1246865.zip/node_modules/@fern-fern/ir-sdk/",\
         "packageDependencies": [\
           ["@fern-fern/ir-sdk", "npm:0.0.2828"]\
-        ],\
-        "linkType": "HARD"\
-      }],\
-      ["npm:0.0.3294", {\
-        "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-0.0.3294-fcd876af76-015567f82f.zip/node_modules/@fern-fern/ir-sdk/",\
-        "packageDependencies": [\
-          ["@fern-fern/ir-sdk", "npm:0.0.3294"]\
         ],\
         "linkType": "HARD"\
       }],\
