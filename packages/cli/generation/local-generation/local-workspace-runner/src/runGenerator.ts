@@ -260,7 +260,7 @@ function getSourceConfig(workspace: FernWorkspace): SourceConfig {
     return {
         sources: workspace.getSources().map((source) => {
             if (source.type === "protobuf") {
-                ApiDefinitionSource.proto({
+                return ApiDefinitionSource.proto({
                     id: source.id,
                     protoRootUrl: `file:///${getDockerDestinationForSource(source)}`
                 });
