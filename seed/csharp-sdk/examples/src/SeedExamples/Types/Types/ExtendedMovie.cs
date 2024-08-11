@@ -37,5 +37,5 @@ public record ExtendedMovie
     public string? Book { get; set; }
 
     [JsonPropertyName("metadata")]
-    public Dictionary<string, object?> Metadata { get; set; } = new Dictionary<string, object?>();
+    public object Metadata { get; set; } = new Dictionary<string, object?>();
 }

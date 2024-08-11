@@ -78,7 +78,8 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
             clazz: class_,
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
-            namespace: this.context.getNamespace()
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 

@@ -10,6 +10,7 @@ export {
     type DocsWorkspace,
     type FernDefinition,
     type FernWorkspaceMetadata,
+    type IdentifiableSource,
     type OnDiskNamedDefinitionFile,
     type OpenAPISource,
     type ProtobufSource,

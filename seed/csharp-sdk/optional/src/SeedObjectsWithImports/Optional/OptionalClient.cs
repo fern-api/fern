@@ -15,10 +15,7 @@ public partial class OptionalClient
         _client = client;
     }
 
-    public async Task<string> SendOptionalBodyAsync(
-        Dictionary<string, object?>? request,
-        RequestOptions? options = null
-    )
+    public async Task<string> SendOptionalBodyAsync(object? request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

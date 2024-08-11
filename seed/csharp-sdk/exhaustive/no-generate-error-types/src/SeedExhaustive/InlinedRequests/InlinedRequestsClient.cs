@@ -1,0 +1,56 @@
+using System.Net.Http;
+using System.Text.Json;
+using SeedExhaustive.Core;
+using SeedExhaustive.Types;
+
+#nullable enable
+
+namespace SeedExhaustive;
+
+public partial class InlinedRequestsClient
+{
+    private RawClient _client;
+
+    internal InlinedRequestsClient(RawClient client)
+    {
+        _client = client;
+    }
+
+    /// <summary>
+    /// POST with custom object in request body, response is an object
+    /// </summary>
+    public async Task<ObjectWithOptionalField> PostWithObjectBodyandResponseAsync(
+        PostWithObjectBody request,
+        RequestOptions? options = null
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "/req-bodies/object",
+                Body = request,
+                Options = options
+            }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedExhaustiveException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedExhaustiveApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
+    }
+}

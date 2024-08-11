@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Enum;
 
