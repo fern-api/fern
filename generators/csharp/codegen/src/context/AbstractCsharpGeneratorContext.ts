@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import {
     FernFilepath,
@@ -21,7 +21,7 @@ import {
 } from "../AsIs";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
-import { CORE_DIRECTORY_NAME } from "../project/CsharpProject";
+import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
 export abstract class AbstractCsharpGeneratorContext<
@@ -183,6 +183,10 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getCoreDirectory(): RelativeFilePath {
         return RelativeFilePath.of(CORE_DIRECTORY_NAME);
+    }
+
+    public getPublicCoreDirectory(): RelativeFilePath {
+        return join(this.getCoreDirectory(), RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME));
     }
 
     public getAsUndiscriminatedUnionTypeDeclaration(

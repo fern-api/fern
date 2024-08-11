@@ -19,5 +19,5 @@ public record CreateRequest
     public float? Weight { get; set; }
 
     [JsonPropertyName("metadata")]
-    public Dictionary<string, object?>? Metadata { get; set; }
+    public object? Metadata { get; set; }
 }

@@ -13,7 +13,7 @@ public record TestCaseV2
     public required object Implementation { get; set; }
 
     [JsonPropertyName("arguments")]
-    public Dictionary<string, object?> Arguments { get; set; } = new Dictionary<string, object?>();
+    public object Arguments { get; set; } = new Dictionary<string, object?>();
 
     [JsonPropertyName("expects")]
     public TestCaseExpects? Expects { get; set; }
