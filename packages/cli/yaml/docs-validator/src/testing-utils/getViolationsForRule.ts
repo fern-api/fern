@@ -33,7 +33,7 @@ export async function getViolationsForRule({
 
     const violations = await runRulesOnDocsWorkspace({
         workspace: project.docsWorkspaces,
-        context: context,
+        context,
         rules: [rule],
         loadApiWorkspace: project.loadAPIWorkspace
     });
