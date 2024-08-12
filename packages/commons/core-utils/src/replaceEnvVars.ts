@@ -12,6 +12,17 @@ import { mapValues } from "./objects/mapValues";
  */
 export const ENV_VAR_REGEX = /\$\{(\w+)\}/g;
 
+/**
+ * Immutably substitutes templated environment variables in the parameter with their values.
+ *
+ * If `substituteAsEmpty` is true, the variable is always replaced with an empty string, even if it is defined.
+ *
+ * `context.onError` is called when the environment variable is not defined and `substituteAsEmpty` is false.
+ * @param content
+ * @param context
+ * @param options
+ * @returns `content` with the templated variables substituted.
+ */
 export function replaceEnvVariables<T>(
     content: T,
     context: { onError: (message?: string) => unknown | void | never },
