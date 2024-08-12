@@ -49,7 +49,7 @@ public partial class S3Client
         throw new SeedMultiUrlEnvironmentNoDefaultApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

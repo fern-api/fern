@@ -1,5 +1,5 @@
-import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { Audiences } from "../commons";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
 import { DocsInstance, ExperimentalConfig, PlaygroundSettings, VersionAvailability } from "./schemas";
@@ -14,28 +14,28 @@ export interface ParsedDocsConfiguration {
     /* navigation */
     landingPage: DocsNavigationItem.Page | undefined;
     navigation: DocsNavigationConfiguration;
-    navbarLinks: DocsV1Write.NavbarLink[] | undefined;
-    footerLinks: DocsV1Write.FooterLink[] | undefined;
+    navbarLinks: CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined;
+    footerLinks: CjsFdrSdk.docs.v1.commons.FooterLink[] | undefined;
 
     /* seo */
     metadata: ParsedMetadataConfig | undefined;
-    redirects: DocsV1Write.RedirectConfig[] | undefined;
+    redirects: CjsFdrSdk.docs.v1.commons.RedirectConfig[] | undefined;
 
     /* branding */
     logo: Logo | undefined;
     favicon: AbsoluteFilePath | undefined;
     backgroundImage: BackgroundImage | undefined;
-    colors: DocsV1Write.ColorsConfigV3 | undefined;
+    colors: CjsFdrSdk.docs.v1.write.ColorsConfigV3 | undefined;
     typography: TypographyConfig | undefined;
-    layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
-    defaultLanguage: DocsV1Write.ProgrammingLanguage | undefined;
-    analyticsConfig: DocsV1Write.AnalyticsConfig | undefined;
+    layout: WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.DocsLayoutConfig> | undefined;
+    defaultLanguage: CjsFdrSdk.docs.v1.commons.ProgrammingLanguage | undefined;
+    analyticsConfig: CjsFdrSdk.docs.v1.commons.AnalyticsConfig | undefined;
 
     /* integrations */
-    integrations: DocsV1Write.IntegrationsConfig | undefined;
+    integrations: CjsFdrSdk.docs.v1.commons.IntegrationsConfig | undefined;
 
     /* scripts */
-    css: DocsV1Write.CssConfig | undefined;
+    css: CjsFdrSdk.docs.v1.commons.CssConfig | undefined;
     js: JavascriptConfig | undefined;
 
     experimental: ExperimentalConfig | undefined;
@@ -43,11 +43,11 @@ export interface ParsedDocsConfiguration {
 
 export interface AbsoluteJsFileConfig {
     absolutePath: AbsoluteFilePath;
-    strategy?: DocsV1Write.JsScriptStrategy;
+    strategy?: CjsFdrSdk.docs.v1.commons.JsScriptStrategy;
 }
 
 export interface JavascriptConfig {
-    remote?: DocsV1Write.JsRemoteConfig[];
+    remote?: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[];
     files: AbsoluteJsFileConfig[];
 }
 
@@ -57,7 +57,10 @@ export interface DocsColorsConfiguration {
 }
 
 export interface ParsedMetadataConfig
-    extends Omit<WithoutQuestionMarks<DocsV1Write.MetadataConfig>, "og:image" | "og:logo" | "twitter:image"> {
+    extends Omit<
+        WithoutQuestionMarks<CjsFdrSdk.docs.v1.commons.MetadataConfig>,
+        "og:image" | "og:logo" | "twitter:image"
+    > {
     "og:image": FilepathOrUrl | undefined;
     "og:logo": FilepathOrUrl | undefined;
     "twitter:image": FilepathOrUrl | undefined;
@@ -66,19 +69,19 @@ export interface ParsedMetadataConfig
 export type ColorConfiguration =
     | {
           type: "themed";
-          dark: DocsV1Write.RgbaColor | undefined;
-          light: DocsV1Write.RgbaColor | undefined;
+          dark: CjsFdrSdk.docs.v1.commons.RgbaColor | undefined;
+          light: CjsFdrSdk.docs.v1.commons.RgbaColor | undefined;
       }
     | {
           type: "unthemed";
-          color: DocsV1Write.RgbaColor | undefined;
+          color: CjsFdrSdk.docs.v1.commons.RgbaColor | undefined;
       };
 
 export interface Logo {
     dark: AbsoluteFilePath | undefined;
     light: AbsoluteFilePath | undefined;
-    height: DocsV1Write.Height | undefined;
-    href: DocsV1Write.Url | undefined;
+    height: CjsFdrSdk.docs.v1.write.Height | undefined;
+    href: CjsFdrSdk.docs.v1.commons.Url | undefined;
 }
 
 export interface BackgroundImage {
@@ -89,7 +92,7 @@ export interface BackgroundImage {
 export interface FontConfig {
     name: string | undefined;
     variants: FontVariant[];
-    display: DocsV1Write.FontDisplay | undefined;
+    display: CjsFdrSdk.docs.v1.commons.FontDisplay | undefined;
     fallback: string[] | undefined;
     fontVariationSettings: string | undefined;
 }
@@ -97,7 +100,7 @@ export interface FontConfig {
 export interface FontVariant {
     absolutePath: AbsoluteFilePath;
     weight: string[] | undefined;
-    style: DocsV1Write.FontStyle | undefined;
+    style: CjsFdrSdk.docs.v1.commons.FontStyle | undefined;
 }
 
 export interface TypographyConfig {

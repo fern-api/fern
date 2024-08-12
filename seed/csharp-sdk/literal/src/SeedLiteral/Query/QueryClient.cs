@@ -50,7 +50,7 @@ public partial class QueryClient
         throw new SeedLiteralApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

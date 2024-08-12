@@ -72,7 +72,7 @@ public partial class UnionClient
         throw new SeedUndiscriminatedUnionsApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -107,7 +107,7 @@ public partial class UnionClient
         throw new SeedUndiscriminatedUnionsApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

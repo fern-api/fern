@@ -1,4 +1,79 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`x-fern-ignore-schema > x-fern-ignore-schema > parse open api 1`] = `
+{
+  "apiVersion": null,
+  "basePath": null,
+  "channel": [],
+  "description": null,
+  "endpoints": [],
+  "globalHeaders": [],
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [],
+  "schemas": {
+    "SchemaToKeep": {
+      "additionalProperties": false,
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "availability": null,
+      "description": null,
+      "generatedName": "SchemaToKeep",
+      "groupName": null,
+      "nameOverride": null,
+      "properties": [
+        {
+          "audiences": [],
+          "availability": null,
+          "conflict": {},
+          "generatedName": "schemaToKeepId",
+          "key": "id",
+          "nameOverride": null,
+          "schema": {
+            "availability": null,
+            "description": null,
+            "generatedName": "schemaToKeepId",
+            "groupName": null,
+            "nameOverride": null,
+            "type": "optional",
+            "value": {
+              "availability": null,
+              "description": null,
+              "generatedName": "SchemaToKeepId",
+              "groupName": null,
+              "nameOverride": null,
+              "schema": {
+                "default": null,
+                "format": "uuid",
+                "maxLength": null,
+                "minLength": null,
+                "pattern": null,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "source": {
+        "file": "x-fern-ignore-schema/openapi.yml",
+        "type": "openapi",
+      },
+      "type": "object",
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {
+    "orderedTagIds": null,
+    "tagsById": {},
+  },
+  "title": "Test extension \`x-fern-ignore\` for schemas",
+  "variables": {},
+  "webhooks": [],
+}
+`;
 
 exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
 {

@@ -31,10 +31,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: "pnpm"
 
       - name: Install Deps
-        run: yarn install
+        run: pnpm install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -51,8 +51,8 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn workspace @fern-api/cli dist:cli:dev
+          pnpm --filter @fern-api/cli dist:cli:dev
           cd test-definitions
-          FERN_NO_VERSION_REDIRECTION=true node $(yarn workspace @fern-api/cli bin fern:dev) check
+          FERN_NO_VERSION_REDIRECTION=true node $(pnpm --filter @fern-api/cli bin fern:dev) check
           cd ../test-definitions-openapi
-          FERN_NO_VERSION_REDIRECTION=true node $(yarn workspace @fern-api/cli bin fern:dev) check
+          FERN_NO_VERSION_REDIRECTION=true node $(pnpm --filter @fern-api/cli bin fern:dev) check

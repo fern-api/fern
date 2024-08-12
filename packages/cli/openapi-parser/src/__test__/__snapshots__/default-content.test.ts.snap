@@ -1,4 +1,117 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`open api parser > default-content > parse open api 1`] = `
+{
+  "apiVersion": null,
+  "basePath": null,
+  "channel": [],
+  "description": null,
+  "endpoints": [
+    {
+      "audiences": [],
+      "authed": false,
+      "availability": null,
+      "description": null,
+      "errors": {},
+      "examples": [],
+      "generatedRequestName": "GenerateContentRequest",
+      "headers": [],
+      "idempotent": null,
+      "internal": null,
+      "method": "POST",
+      "operationId": "GenerateContent",
+      "pagination": null,
+      "path": "/generateContent",
+      "pathParameters": [
+        {
+          "availability": null,
+          "description": null,
+          "name": "model",
+          "schema": {
+            "availability": null,
+            "description": null,
+            "generatedName": "GenerateContentRequestModel",
+            "groupName": null,
+            "nameOverride": null,
+            "schema": {
+              "default": null,
+              "format": null,
+              "maxLength": null,
+              "minLength": null,
+              "pattern": null,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+          "source": {
+            "file": "default-content/openapi.yml",
+            "type": "openapi",
+          },
+          "variableReference": null,
+        },
+      ],
+      "queryParameters": [],
+      "request": null,
+      "requestNameOverride": null,
+      "response": {
+        "description": "Successful operation",
+        "responseProperty": null,
+        "schema": {
+          "availability": null,
+          "description": null,
+          "generatedName": "GenerateContentResponse",
+          "groupName": null,
+          "nameOverride": null,
+          "schema": "GenerateContentResponse",
+          "source": {
+            "file": "default-content/openapi.yml",
+            "type": "openapi",
+          },
+          "type": "reference",
+        },
+        "source": {
+          "file": "default-content/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "json",
+      },
+      "sdkName": null,
+      "server": [],
+      "source": {
+        "file": "default-content/openapi.yml",
+        "type": "openapi",
+      },
+      "summary": null,
+      "tags": [
+        "generativelanguage",
+      ],
+    },
+  ],
+  "globalHeaders": [],
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "GenerateContentResponse",
+  ],
+  "schemas": {},
+  "securitySchemes": {},
+  "servers": [
+    {
+      "description": null,
+      "name": null,
+      "url": "https://ai.com",
+    },
+  ],
+  "tags": {
+    "orderedTagIds": null,
+    "tagsById": {},
+  },
+  "title": "Default Content Type",
+  "variables": {},
+  "webhooks": [],
+}
+`;
 
 exports[`open api parser default-content parse open api 1`] = `
 {

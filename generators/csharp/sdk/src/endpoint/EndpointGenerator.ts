@@ -212,8 +212,7 @@ export class EndpointGenerator {
             writer.write(
                 `($"Error with status code {${RESPONSE_VARIABLE_NAME}.StatusCode}", ${RESPONSE_VARIABLE_NAME}.StatusCode, `
             );
-            writer.writeNode(this.context.getJsonUtilsClassReference());
-            writer.writeTextStatement(`.Deserialize<object>(${RESPONSE_BODY_VARIABLE_NAME}))`);
+            writer.writeTextStatement(`${RESPONSE_BODY_VARIABLE_NAME})`);
         });
     }
 

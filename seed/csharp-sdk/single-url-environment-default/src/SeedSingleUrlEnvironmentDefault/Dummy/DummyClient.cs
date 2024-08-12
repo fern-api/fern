@@ -45,7 +45,7 @@ public partial class DummyClient
         throw new SeedSingleUrlEnvironmentDefaultApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }
