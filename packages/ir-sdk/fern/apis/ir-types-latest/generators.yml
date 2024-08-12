@@ -3,7 +3,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.8.13
+        version:  0.38.6
         output:
           location: local-file-system
           path: ../../../src/sdk
@@ -14,7 +14,7 @@ groups:
   node:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.8.13
+        version:  0.38.6
         output:
           location: npm
           url: npm.buildwithfern.com
