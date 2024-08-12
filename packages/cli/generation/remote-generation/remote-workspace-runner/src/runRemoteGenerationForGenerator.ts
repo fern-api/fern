@@ -183,7 +183,9 @@ async function computeSemanticVersion({
     return response.body.version;
 }
 
-function convertToFdrApiDefinitionSources(sources: IdentifiableSource[]): Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.Source> {
+function convertToFdrApiDefinitionSources(
+    sources: IdentifiableSource[]
+): Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.Source> {
     return Object.fromEntries(
         Object.values(sources).map((source) => [
             source.id,
