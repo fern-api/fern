@@ -224,7 +224,7 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
             return await IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
                 unrecognizedObjectKeys: "strip"
             });
-        }
+        };
         for (const migration of this.migrations) {
             if (!shouldMigrate(migration)) {
                 break;
