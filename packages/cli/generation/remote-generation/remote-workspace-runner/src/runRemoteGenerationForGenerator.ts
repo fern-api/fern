@@ -75,11 +75,18 @@ export async function runRemoteGenerationForGenerator({
         sourceUploads = response.body.sources;
     }
 
-    if (sourceUploads != null) {
-        const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
-        const sourceConfig = await uploadSources({ context: interactiveTaskContext, sourceUploader, sourceUploads });
+    const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
+    if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
+        // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
+        // files are required for successful code generation.
+        interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
+    }
 
-        interactiveTaskContext.logger.debug(`Setting IR source configuration ...`);
+    if (sourceUploads != null) {
+        interactiveTaskContext.logger.debug("Uploading source files ...");
+        const sourceConfig = await sourceUploader.uploadSources(sourceUploads);
+
+        interactiveTaskContext.logger.debug("Setting IR source configuration ...");
         ir.sourceConfig = sourceConfig;
     }
 
@@ -186,7 +193,7 @@ async function uploadSources({
     sourceUploader: SourceUploader;
     sourceUploads: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload>;
 }): Promise<SourceConfig> {
-    if (sourceUploader.sourceTypes.has("protobuf")) {
+    if (Object.keys(sourceUploads).length == 0 && sourceUploader.sourceTypes.has("protobuf")) {
         // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
         // files are required for successful code generation.
         context.failAndThrow("Did not successfully upload Protobuf source files.");

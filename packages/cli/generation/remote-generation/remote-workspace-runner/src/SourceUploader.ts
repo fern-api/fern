@@ -65,7 +65,9 @@ export class SourceUploader {
         }
         return {
             absoluteFilePath: source.absoluteFilePath,
-            cleanup: async () => {}
+            cleanup: async () => {
+                // Do nothing.
+            }
         };
     }
 
