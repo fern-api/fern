@@ -1,8 +1,8 @@
 import { FernToken } from "@fern-api/auth";
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
 import { publishDocs } from "./publishDocs";
-import { substituteEnvVariables } from "./substituteEnvVariables";
 
 export async function runRemoteGenerationForDocsWorkspace({
     organization,
@@ -23,6 +23,8 @@ export async function runRemoteGenerationForDocsWorkspace({
 }): Promise<void> {
     const instances = docsWorkspace.config.instances;
 
+    console.log(docsWorkspace.config.analytics);
+
     // Substitute templated environment variables:
     // If the run is a preview, we'll substitute ALL environment variables as empty strings
     //
@@ -31,7 +33,15 @@ export async function runRemoteGenerationForDocsWorkspace({
     //
     // Although this logic is separate from generating a remote, placing it here helps us
     // avoid making cascading changes to other workflows.
-    docsWorkspace = substituteEnvVariables(docsWorkspace, context, { substituteAsEmpty: preview });
+    // docsWorkspace = substituteEnvVariables(docsWorkspace, context, { substituteAsEmpty: preview });
+    docsWorkspace = replaceEnvVariables(
+        docsWorkspace,
+        // Wrap in a closure for correct binding of `this` downstream
+        { onError: (e) => context.failAndThrow(e) },
+        { substituteAsEmpty: preview }
+    );
+
+    console.log(docsWorkspace.config.analytics);
 
     if (instances.length === 0) {
         context.failAndThrow("No instances specified in docs.yml! Cannot register docs.");
