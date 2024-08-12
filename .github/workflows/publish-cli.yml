@@ -57,7 +57,7 @@ jobs:
 
       - name: Add version to dev package.json's
         run: |
-          git_version=${{ github.ref_name }}
+          git_version="$(./scripts/git-version.sh)"
           
           cd packages/cli/cli
           mv package.json package.json.tmp
@@ -131,6 +131,9 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
 
       - name: Install
         uses: ./.github/actions/install
