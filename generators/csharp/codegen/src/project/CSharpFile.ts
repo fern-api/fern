@@ -25,7 +25,14 @@ export declare namespace CSharpFile {
 }
 
 export class CSharpFile extends File {
-    constructor({ clazz, directory, allNamespaceSegments, allTypeClassReferences, namespace, customConfig }: CSharpFile.Args) {
+    constructor({
+        clazz,
+        directory,
+        allNamespaceSegments,
+        allTypeClassReferences,
+        namespace,
+        customConfig
+    }: CSharpFile.Args) {
         super(
             `${clazz.name}.cs`,
             directory,
