@@ -50,14 +50,14 @@
     "@fern-typescript/type-reference-converters": "workspace:*",
     "@fern-typescript/type-reference-example-generator": "workspace:*",
     "@fern-typescript/type-schema-generator": "workspace:*",
-    "@types/uuid": "^9.0.8",
+    "@types/uuid": "^10.0.0",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "tmp-promise": "^3.0.3",
     "ts-morph": "^15.1.0",
     "ts-poet": "^6.7.0",
     "url-join": "^5.0.0",
-    "uuid": "^9.0.1"
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
