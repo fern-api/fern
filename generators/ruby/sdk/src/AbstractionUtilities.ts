@@ -1215,12 +1215,7 @@ export function getOauthRefreshTokenFunctionMetadata({
     };
 }
 
-
-function generatePathTemplate(
-    templateString: string,
-    pathParameters: PathParameter[],
-    basePath?: HttpPath
-): string {
+function generatePathTemplate(templateString: string, pathParameters: PathParameter[], basePath?: HttpPath): string {
     if (basePath === undefined) {
         return "";
     }
