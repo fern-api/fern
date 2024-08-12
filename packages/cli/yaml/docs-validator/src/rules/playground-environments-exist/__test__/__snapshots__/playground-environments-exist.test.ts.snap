@@ -3,7 +3,7 @@
 exports[`playground-environments-exist > no environments in api definition 1`] = `
 [
   {
-    "message": "Staging are not valid environments",
+    "message": "The API does not contain the Staging environment. ",
     "nodePath": [
       "navigation",
       "0",
@@ -18,7 +18,7 @@ exports[`playground-environments-exist > no environments in api definition 1`] =
 exports[`playground-environments-exist > non existent environment specified 1`] = `
 [
   {
-    "message": "Staging are not valid environments. Choose from Production, Dev",
+    "message": "The API does not contain the Staging environment. Existing enviroments include Production, Dev.",
     "nodePath": [
       "navigation",
       "0",

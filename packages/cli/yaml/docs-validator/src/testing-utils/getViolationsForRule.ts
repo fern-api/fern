@@ -35,7 +35,7 @@ export async function getViolationsForRule({
         workspace: project.docsWorkspaces,
         context: context,
         rules: [rule],
-        loadApiWorkspace: project.loadAPIWorkspace,
+        loadApiWorkspace: project.loadAPIWorkspace
     });
 
     return violations.map((violation) => ({
