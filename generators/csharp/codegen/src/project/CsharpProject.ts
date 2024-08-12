@@ -23,6 +23,7 @@ export class CsharpProject {
     private testFiles: CSharpFile[] = [];
     private sourceFiles: CSharpFile[] = [];
     private coreFiles: File[] = [];
+    private publicCoreFiles: File[] = [];
     private absolutePathToOutputDirectory: AbsoluteFilePath;
     private sourceFetcher: SourceFetcher;
     public readonly filepaths: CsharpProjectFilepaths;
@@ -41,6 +42,10 @@ export class CsharpProject {
 
     public addCoreFiles(file: File): void {
         this.coreFiles.push(file);
+    }
+
+    public addPublicCoreFiles(file: File): void {
+        this.publicCoreFiles.push(file);
     }
 
     public addSourceFiles(file: CSharpFile): void {
@@ -75,8 +80,22 @@ export class CsharpProject {
             await file.write(absolutePathToTestProjectDirectory);
         }
 
-        for (const file of this.context.getAsIsFiles()) {
-            this.coreFiles.push(await this.createCoreAsIsFile(file));
+        for (const filename of this.context.getCoreAsIsFiles()) {
+            this.coreFiles.push(
+                await this.createAsIsFile({
+                    filename,
+                    namespace: this.context.getCoreNamespace()
+                })
+            );
+        }
+
+        for (const filename of this.context.getPublicCoreAsIsFiles()) {
+            this.publicCoreFiles.push(
+                await this.createAsIsFile({
+                    filename,
+                    namespace: this.context.getNamespace()
+                })
+            );
         }
 
         const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
@@ -94,6 +113,7 @@ export class CsharpProject {
         await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
 
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
+        await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
         await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
             doNotPipeOutput: true,
@@ -215,18 +235,51 @@ export class CsharpProject {
         return absolutePathToCoreDirectory;
     }
 
-    private async createCoreAsIsFile(filename: string): Promise<File> {
+    private async createPublicCoreDirectory({
+        absolutePathToProjectDirectory
+    }: {
+        absolutePathToProjectDirectory: AbsoluteFilePath;
+    }): Promise<AbsoluteFilePath> {
+        const absolutePathToPublicCoreDirectory = join(
+            absolutePathToProjectDirectory,
+            RelativeFilePath.of(CORE_DIRECTORY_NAME),
+            RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME)
+        );
+        this.context.logger.debug(`mkdir ${absolutePathToPublicCoreDirectory}`);
+        await mkdir(absolutePathToPublicCoreDirectory, { recursive: true });
+
+        for (const file of this.publicCoreFiles) {
+            await file.write(absolutePathToPublicCoreDirectory);
+        }
+
+        return absolutePathToPublicCoreDirectory;
+    }
+
+    private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
-            replaceTemplate({ contents, namespace: this.context.getCoreNamespace() })
+            replaceTemplate({
+                contents,
+                grpc: this.context.hasGrpcEndpoints(),
+                namespace
+            })
         );
     }
 }
 
-function replaceTemplate({ contents, namespace }: { contents: string; namespace: string }): string {
+function replaceTemplate({
+    contents,
+    grpc,
+    namespace
+}: {
+    contents: string;
+    grpc: boolean;
+    namespace: string;
+}): string {
     return template(contents)({
+        grpc,
         namespace
     });
 }
@@ -378,8 +431,9 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         for (const protobufSourceFilePath of protobufSourceFilePaths) {
             const protobufSourceWindowsPath = this.relativePathToWindowsPath(protobufSourceFilePath);
             result.push(
-                `    <Protobuf Include="${pathToProtobufDirectory}\\${protobufSourceWindowsPath}" GrpcServices="Client" ProtoRoot="${pathToProtobufDirectory}"></Protobuf>`
+                `    <Protobuf Include="${pathToProtobufDirectory}\\${protobufSourceWindowsPath}" GrpcServices="Client" ProtoRoot="${pathToProtobufDirectory}">`
             );
+            result.push(`    </Protobuf>`);
         }
         result.push("</ItemGroup>\n");
 
@@ -419,6 +473,6 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
     }
 
     private relativePathToWindowsPath(relativePath: RelativeFilePath): RelativeFilePath {
-        return RelativeFilePath.of(relativePath.replace("/", "\\"));
+        return RelativeFilePath.of(path.win32.normalize(relativePath));
     }
 }

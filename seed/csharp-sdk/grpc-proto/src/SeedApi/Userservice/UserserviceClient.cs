@@ -6,11 +6,11 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public partial class UserClient
+public partial class UserserviceClient
 {
     private RawClient _client;
 
-    internal UserClient(RawClient client)
+    internal UserserviceClient(RawClient client)
     {
         _client = client;
     }

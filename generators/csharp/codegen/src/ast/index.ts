@@ -1,4 +1,5 @@
 export { Annotation } from "./Annotation";
+export { type Argument, type Arguments, type NamedArgument, type UnnamedArgument } from "./Argument";
 export { Class } from "./Class";
 export { ClassInstantiation } from "./ClassInstantiation";
 export { ClassReference } from "./ClassReference";
@@ -17,5 +18,6 @@ export { Method, MethodType } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
 export { Parameter } from "./Parameter";
 export { Set } from "./Set";
+export { Ternary } from "./Ternary";
 export { TestClass } from "./TestClass";
 export { Type } from "./Type";

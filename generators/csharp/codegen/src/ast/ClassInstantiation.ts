@@ -1,5 +1,5 @@
+import { Arguments, NamedArgument, UnnamedArgument, isNamedArgument } from "./Argument";
 import { ClassReference } from "./ClassReference";
-import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -9,20 +9,11 @@ export declare namespace ClassInstantiation {
         // A map of the field for the class and the value to be assigned to it.
         arguments_: Arguments;
     }
-
-    type Arguments = NamedArgument[] | UnnamedArgument[];
-
-    interface NamedArgument {
-        name: string;
-        assignment: CodeBlock;
-    }
-
-    type UnnamedArgument = CodeBlock;
 }
 
 export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
-    public readonly arguments_: ClassInstantiation.NamedArgument[] | ClassInstantiation.UnnamedArgument[];
+    public readonly arguments_: NamedArgument[] | UnnamedArgument[];
 
     constructor({ classReference, arguments_ }: ClassInstantiation.Args) {
         super();
@@ -64,10 +55,4 @@ export class ClassInstantiation extends AstNode {
             writer.write(")");
         }
     }
-}
-
-function isNamedArgument(
-    argument: ClassInstantiation.NamedArgument | ClassInstantiation.UnnamedArgument
-): argument is ClassInstantiation.NamedArgument {
-    return (argument as ClassInstantiation.NamedArgument)?.name != null;
 }

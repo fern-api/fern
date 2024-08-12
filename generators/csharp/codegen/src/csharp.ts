@@ -15,6 +15,7 @@ import {
     MethodInvocation,
     Parameter,
     Set,
+    Ternary,
     TestClass,
     Type
 } from "./ast";
@@ -83,6 +84,10 @@ export function set(args: Set.Args): Set {
     return new Set(args);
 }
 
+export function ternary(args: Ternary.Args): Ternary {
+    return new Ternary(args);
+}
+
 export function enumInstantiation(args: EnumInstantiation.Args): EnumInstantiation {
     return new EnumInstantiation(args);
 }
@@ -103,6 +108,10 @@ export {
     MethodType,
     Parameter,
     Type,
-    Writer
+    Writer,
+    type Argument,
+    type Arguments,
+    type NamedArgument,
+    type UnnamedArgument
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";
