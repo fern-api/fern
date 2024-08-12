@@ -237,7 +237,7 @@ function isValidDate(value: unknown): boolean {
 
 function dateishCustomizer(value: unknown, other: unknown): boolean {
     if (isValidDate(value) && isValidDate(other)) {
-        const valueDate = new Date(value as string)
+        const valueDate = new Date(value as string);
         const otherDate = new Date(other as string);
         // Is variance less than a day
         return valueDate.getTime() - otherDate.getTime() >= 24 * 60 * 60 * 1000;
