@@ -26,30 +26,3 @@ components:
       x-fern-type-name: Error
 "
 `;
-
-exports[`overrides petstore 1`] = `
-"paths:
-  /pets:
-    get:
-      x-fern-sdk-group-name:
-        - pets
-      x-fern-sdk-method-name: listPets
-    post:
-      x-fern-sdk-group-name:
-        - pets
-      x-fern-sdk-method-name: createPets
-  /pets/{petId}:
-    get:
-      x-fern-sdk-group-name:
-        - pets
-      x-fern-sdk-method-name: showPetById
-components:
-  schemas:
-    Pet:
-      x-fern-type-name: Pet
-    Pets:
-      x-fern-type-name: Pets
-    Error:
-      x-fern-type-name: Error
-"
-`;

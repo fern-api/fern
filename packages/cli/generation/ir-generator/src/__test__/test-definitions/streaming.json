@@ -1535,7 +1535,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "Default",
                                 "name": {
                                     "originalName": "Default",
                                     "camelCase": {
