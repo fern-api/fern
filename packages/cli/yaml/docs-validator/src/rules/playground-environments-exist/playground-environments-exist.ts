@@ -1,7 +1,7 @@
 import { Rule, RuleViolation } from "../../Rule";
 
 export const PlaygroundEnvironmentsExistRule: Rule = {
-    name: "environments-exist",
+    name: "playground-environments-exist",
     create: () => {
         return {
             apiSection: async ({ workspace, context, config }) => {
@@ -13,7 +13,8 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
                         return [
                             {
                                 severity: "error",
-                                message: `Cannot specify playground environments if there are no environments supplied in the API specification.`
+                                message:
+                                    "Cannot specify playground environments if there are no environments supplied in the API specification."
                             }
                         ];
                     }
