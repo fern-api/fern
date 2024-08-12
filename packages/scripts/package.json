@@ -50,7 +50,6 @@
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
     "ts-jest": "^29.2.4",
-    "ts-node": "^10.9.2",
     "tsup": "^8.0.2",
     "typescript": "4.6.4"
   }

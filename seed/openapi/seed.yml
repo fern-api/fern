@@ -1,6 +1,6 @@
 irVersion: v23
 docker: fernapi/fern-openapi:latest
-dockerCommand: yarn workspace @fern-api/openapi-generator dockerTagLatest
+dockerCommand: pnpm --filter @fern-api/openapi-generator dockerTagLatest
 generatorType: Documentation
 defaultOutputMode: local_files
 fixtures:
