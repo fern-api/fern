@@ -654,22 +654,6 @@ export class ApiReferenceNodeConverter {
         playgroundSettings?: docsYml.RawSchemas.PlaygroundSettings
     ): FernNavigation.PlaygroundSettings | undefined {
         if (playgroundSettings) {
-            const maybeApiSpecificationEnvironments = this.workspace.definition.rootApiFile.contents.environments;
-            if (!maybeApiSpecificationEnvironments) {
-                this.taskContext.logger.error(
-                    "Cannot specify playground environments if there are no environments supplied in the API specification."
-                );
-            } else {
-                const validEnvironmentIds = Object.keys(maybeApiSpecificationEnvironments);
-                playgroundSettings.environments?.forEach((environment) => {
-                    if (!validEnvironmentIds.includes(environment)) {
-                        this.taskContext.logger.error(
-                            `Invalid environment id supplied in playground settings: ${environment}`
-                        );
-                    }
-                });
-            }
-
             return {
                 environments:
                     playgroundSettings.environments != null && playgroundSettings.environments.length > 0
