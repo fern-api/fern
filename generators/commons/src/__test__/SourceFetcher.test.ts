@@ -11,6 +11,7 @@ const FIXTURES = AbsoluteFilePath.of(path.join(__dirname, "fixtures"));
 class DummyAbstractGeneratorContext extends AbstractGeneratorContext {}
 
 it("fetch proto.zip", async () => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const context = new DummyAbstractGeneratorContext(undefined as any, undefined as any);
     const sourceFetcher = new SourceFetcher({
         context,
