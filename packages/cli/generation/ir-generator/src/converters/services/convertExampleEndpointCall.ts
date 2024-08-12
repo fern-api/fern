@@ -32,7 +32,7 @@ import { getPropertyName } from "../type-declarations/convertObjectTypeDeclarati
 import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
 import { getQueryParameterName } from "./convertQueryParameter";
 
-function hashJSON(obj: any): string {
+function hashJSON(obj: unknown): string {
     const jsonString = JSON.stringify(obj);
     return crypto.createHash("sha256").update(jsonString).digest("hex");
 }
