@@ -10,7 +10,7 @@ import { TaskContext } from "@fern-api/task-context";
 import express, { Request, Response } from "express";
 import getPort from "get-port";
 import { IncomingHttpHeaders, Server } from "http";
-import { isEqual, noop } from "lodash-es";
+import { isEqualWith, noop } from "lodash-es";
 import urlJoin from "url-join";
 
 type RequestHandler = (req: Request, res: Response) => void;
@@ -230,14 +230,27 @@ function getRequestHandler(endpoints: HttpEndpoint[]): RequestHandler {
     };
 }
 
+function isValidDate(value: unknown): boolean {
+    const date = new Date(value as string);
+    return !isNaN(date.getTime());
+}
+
+function dateishCustomizer(value: unknown, other: unknown): boolean {
+    if (isValidDate(value)) {
+        return new Date(value as string) === new Date(other as string);
+    }
+    return value === other;
+}
+
 function isRequestMatch(req: Request, example: ExampleEndpointCall): boolean {
     return (
         validatePathParameters(example, req) &&
         validateQueryParameters(example, req) &&
         validateHeaders(example, req.headers) &&
         validateRequestBody(example, req)
-    );
-}
+    )}
+
+
 
 function validatePathParameters(example: ExampleEndpointCall, req: Request): boolean {
     const examplePathParameters = examplePathParametersToRecord([
@@ -249,7 +262,7 @@ function validatePathParameters(example: ExampleEndpointCall, req: Request): boo
         return false;
     }
     if (Object.keys(examplePathParameters).length > 0) {
-        if (!isEqual(req.params, examplePathParameters)) {
+        if (!isEqualWith(req.params, examplePathParameters, dateishCustomizer)) {
             return false;
         }
     }
@@ -272,7 +285,7 @@ function validateQueryParameters(example: ExampleEndpointCall, req: Request): bo
     }
 
     // TODO: confirm how deep-object query params works with this.
-    return isEqual(req.query, stringifiedQueryParams);
+    return isEqualWith(exampleQueryParameters, stringifiedQueryParams, dateishCustomizer);
 }
 
 function validateHeaders(example: ExampleEndpointCall, headers: IncomingHttpHeaders): boolean {
@@ -300,7 +313,7 @@ function validateRequestBody(example: ExampleEndpointCall, req: Request): boolea
             req.body[key] = value.toISOString();
         }
     }
-    return isEqual(req.body, example.request.jsonExample);
+    return isEqualWith(req.body, example.request.jsonExample, dateishCustomizer);
 }
 
 // ExampleWithWireValue is implemented by both example headers and example query parameters.
