@@ -52,16 +52,5 @@ require("./bundle.cjs");`
         )
     );
 
-    // write empty yarn.lock so yarn doesn't try to associate this package with the monorepo
-    await writeFile("yarn.lock", "");
 
-    // install package into new yarn.lock
-    // YARN_ENABLE_IMMUTABLE_INSTALLS=false so we can modify yarn.lock even when in CI
-    const { exec } = require("child_process");
-    exec("YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install", undefined, (error) => {
-        if (error != null) {
-            console.error(error);
-            process.exit(1);
-        }
-    });
 }
