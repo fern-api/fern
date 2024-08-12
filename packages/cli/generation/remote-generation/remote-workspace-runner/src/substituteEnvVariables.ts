@@ -1,6 +1,15 @@
 import { TaskContext } from "@fern-api/task-context";
 import { isPlainObject, mapValues } from "lodash-es";
 
+/**
+ * Captures templates inside "${}"
+ * e.g. ${OPENAI_API_KEY}
+ *
+ * Example usage:
+ * ```ts
+ * "someContent".replace(ENV_VAR_REGEX, (substring, envVarName) => { ... });
+ * ```
+ */
 const ENV_VAR_REGEX = /\$\{(\w+)\}/g;
 
 export declare namespace SubstituteEnvVariables {
