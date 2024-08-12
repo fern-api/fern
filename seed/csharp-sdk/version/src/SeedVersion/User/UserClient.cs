@@ -1,17 +1,16 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedVersion;
 using SeedVersion.Core;
 
 #nullable enable
 
 namespace SeedVersion;
 
-public class UserClient
+public partial class UserClient
 {
     private RawClient _client;
 
-    public UserClient(RawClient client)
+    internal UserClient(RawClient client)
     {
         _client = client;
     }
@@ -43,7 +42,7 @@ public class UserClient
         throw new SeedVersionApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

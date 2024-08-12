@@ -86,8 +86,13 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": null,
-            "transport": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_service.downloadFile",
@@ -168,7 +173,7 @@
                                         }
                                     }
                                 },
-                                "id": "c21947025727b053a8b7537f70ceb5b345a66d1e",
+                                "id": "0dca4ad3c1dba49129cf64de6dd3ad1ef505eda1",
                                 "docs": null
                             }
                         }
@@ -320,7 +325,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

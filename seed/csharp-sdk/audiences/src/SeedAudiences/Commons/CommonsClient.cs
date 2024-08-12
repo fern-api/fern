@@ -4,11 +4,11 @@ using SeedAudiences.Core;
 
 namespace SeedAudiences;
 
-public class CommonsClient
+public partial class CommonsClient
 {
     private RawClient _client;
 
-    public CommonsClient(RawClient client)
+    internal CommonsClient(RawClient client)
     {
         _client = client;
     }

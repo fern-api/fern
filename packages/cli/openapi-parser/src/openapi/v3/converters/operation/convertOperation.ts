@@ -80,7 +80,8 @@ export function convertOperation({
     if (convertToWebhook) {
         const webhook = convertWebhookOperation({
             context,
-            operationContext
+            operationContext,
+            source: context.source
         });
         return webhook != null ? { type: "webhook", value: webhook } : undefined;
     }
@@ -106,7 +107,8 @@ export function convertOperation({
         const asyncAndSync = convertAsyncSyncOperation({
             context,
             operationContext,
-            asyncExtension
+            asyncExtension,
+            source: context.source
         });
         return {
             type: "async",
@@ -118,7 +120,8 @@ export function convertOperation({
     const convertedHttpOperation = convertHttpOperation({
         context,
         operationContext,
-        streamFormat: undefined
+        streamFormat: undefined,
+        source: context.source
     });
     return { type: "http", value: convertedHttpOperation };
 }

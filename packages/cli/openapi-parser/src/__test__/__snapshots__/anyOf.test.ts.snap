@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser anyOf parse open api 1`] = `
+exports[`open api parser > anyOf > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -61,7 +61,15 @@ exports[`open api parser anyOf parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Request",
+          "source": {
+            "file": "anyOf/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "anyOf/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -76,12 +84,24 @@ exports[`open api parser anyOf parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Response",
+          "source": {
+            "file": "anyOf/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "anyOf/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "anyOf/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -147,6 +167,10 @@ exports[`open api parser anyOf parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "anyOf/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Response": {
@@ -203,6 +227,256 @@ exports[`open api parser anyOf parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "anyOf/openapi.yml",
+        "type": "openapi",
+      },
+      "type": "object",
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {
+    "orderedTagIds": null,
+    "tagsById": {},
+  },
+  "title": "Test spec for \`description\` settings defined in anyOf.",
+  "variables": {},
+  "webhooks": [],
+}
+`;
+
+exports[`open api parser anyOf parse open api 1`] = `
+{
+  "apiVersion": null,
+  "basePath": null,
+  "channel": [],
+  "description": null,
+  "endpoints": [
+    {
+      "audiences": [],
+      "authed": false,
+      "availability": null,
+      "description": null,
+      "errors": {},
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "double",
+                  "value": 1.1,
+                },
+              },
+            },
+            "type": "object",
+          },
+          "type": "full",
+        },
+      ],
+      "generatedRequestName": "GetRequest",
+      "headers": [],
+      "idempotent": null,
+      "internal": null,
+      "method": "GET",
+      "operationId": "Get",
+      "pagination": null,
+      "path": "/get",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": {
+        "additionalProperties": false,
+        "contentType": null,
+        "description": null,
+        "schema": {
+          "availability": null,
+          "description": null,
+          "generatedName": "GetRequest",
+          "groupName": null,
+          "nameOverride": null,
+          "schema": "Request",
+          "source": {
+            "file": "anyOf/openapi.yml",
+            "type": "openapi",
+          },
+          "type": "reference",
+        },
+        "source": {
+          "file": "anyOf/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "json",
+      },
+      "requestNameOverride": null,
+      "response": {
+        "description": "A simple API response.",
+        "responseProperty": null,
+        "schema": {
+          "availability": null,
+          "description": null,
+          "generatedName": "GetResponse",
+          "groupName": null,
+          "nameOverride": null,
+          "schema": "Response",
+          "source": {
+            "file": "anyOf/openapi.yml",
+            "type": "openapi",
+          },
+          "type": "reference",
+        },
+        "source": {
+          "file": "anyOf/openapi.yml",
+          "type": "openapi",
+        },
+        "type": "json",
+      },
+      "sdkName": null,
+      "server": [],
+      "source": {
+        "file": "anyOf/openapi.yml",
+        "type": "openapi",
+      },
+      "summary": null,
+      "tags": [],
+    },
+  ],
+  "globalHeaders": [],
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [
+    "Response",
+  ],
+  "schemas": {
+    "Request": {
+      "additionalProperties": false,
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "availability": null,
+      "description": "A generic request type used throughout the API.
+",
+      "generatedName": "Request",
+      "groupName": null,
+      "nameOverride": null,
+      "properties": [
+        {
+          "audiences": [],
+          "availability": null,
+          "conflict": {},
+          "generatedName": "requestId",
+          "key": "id",
+          "nameOverride": null,
+          "schema": {
+            "availability": null,
+            "description": null,
+            "generatedName": "requestId",
+            "groupName": null,
+            "nameOverride": null,
+            "type": "optional",
+            "value": {
+              "availability": null,
+              "description": "An optional string value.
+",
+              "generatedName": "RequestId",
+              "groupName": null,
+              "nameOverride": null,
+              "type": "nullable",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "RequestId",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "format": null,
+                  "maxLength": null,
+                  "minLength": null,
+                  "pattern": null,
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+      ],
+      "source": {
+        "file": "anyOf/openapi.yml",
+        "type": "openapi",
+      },
+      "type": "object",
+    },
+    "Response": {
+      "additionalProperties": false,
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "availability": null,
+      "description": "A generic response type used throughout the API.
+",
+      "generatedName": "Response",
+      "groupName": null,
+      "nameOverride": null,
+      "properties": [
+        {
+          "audiences": [],
+          "availability": null,
+          "conflict": {},
+          "generatedName": "responseValue",
+          "key": "value",
+          "nameOverride": null,
+          "schema": {
+            "availability": null,
+            "description": null,
+            "generatedName": "responseValue",
+            "groupName": null,
+            "nameOverride": null,
+            "type": "optional",
+            "value": {
+              "availability": null,
+              "description": "An optional numerical value.
+",
+              "generatedName": "ResponseValue",
+              "groupName": null,
+              "nameOverride": null,
+              "type": "nullable",
+              "value": {
+                "availability": null,
+                "description": null,
+                "generatedName": "ResponseValue",
+                "groupName": null,
+                "nameOverride": null,
+                "schema": {
+                  "default": null,
+                  "exclusiveMaximum": null,
+                  "exclusiveMinimum": null,
+                  "maximum": null,
+                  "minimum": null,
+                  "multipleOf": null,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+      ],
+      "source": {
+        "file": "anyOf/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

@@ -1,5 +1,4 @@
-using SeedExhaustive.Core;
-using SeedExhaustive.Types.Object;
+using SeedExhaustive;
 
 #nullable enable
 

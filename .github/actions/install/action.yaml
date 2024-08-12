@@ -1,0 +1,21 @@
+name: Install Repo
+description: Install the ts toolchain and dependencies
+
+runs:
+  using: "composite"
+
+  steps:
+    - name: ⎔ Setup pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: 9.4.0
+
+    - name: ⎔ Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+        cache: pnpm
+
+    - name: 📥 Install dependencies
+      shell: bash
+      run: pnpm install

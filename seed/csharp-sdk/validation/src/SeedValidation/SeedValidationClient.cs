@@ -1,7 +1,6 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
-using SeedValidation;
 using SeedValidation.Core;
 
 #nullable enable
@@ -49,7 +48,7 @@ public partial class SeedValidationClient
         throw new SeedValidationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -85,7 +84,7 @@ public partial class SeedValidationClient
         throw new SeedValidationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

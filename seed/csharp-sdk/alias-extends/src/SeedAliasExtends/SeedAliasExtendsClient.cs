@@ -1,6 +1,6 @@
 using System;
 using System.Net.Http;
-using SeedAliasExtends;
+using System.Threading.Tasks;
 using SeedAliasExtends.Core;
 
 #nullable enable
@@ -43,7 +43,7 @@ public partial class SeedAliasExtendsClient
         throw new SeedAliasExtendsApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

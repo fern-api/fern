@@ -1,17 +1,18 @@
 using System.Net.Http;
+using System.Threading.Tasks;
+using SeedTrace;
 using SeedTrace.Core;
-using SeedTrace.V2;
 using SeedTrace.V2.V3;
 
 #nullable enable
 
 namespace SeedTrace.V2;
 
-public class V2Client
+public partial class V2Client
 {
     private RawClient _client;
 
-    public V2Client(RawClient client)
+    internal V2Client(RawClient client)
     {
         _client = client;
         Problem = new ProblemClient(_client);
@@ -41,7 +42,7 @@ public class V2Client
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

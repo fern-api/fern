@@ -1,7 +1,6 @@
 from fern_python.codegen import AST, Filepath, Project
 from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import FastApiGeneratorContext
 from .basic_auth_generator import BasicAuthGenerator
@@ -68,7 +67,7 @@ class SecurityFileGenerator:
         parsed_auth_type = auth_generator.get_parsed_auth_type()
 
         security_filepath = SecurityFileGenerator._get_filepath(context=self._context)
-        source_file = SourceFileFactory.create(
+        source_file = self._context.source_file_factory.create(
             project=project,
             generator_exec_wrapper=generator_exec_wrapper,
             filepath=security_filepath,

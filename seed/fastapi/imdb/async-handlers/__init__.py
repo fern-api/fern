@@ -3,4 +3,11 @@
 from .resources import CreateMovieRequest, Movie, MovieDoesNotExistError, MovieId, imdb
 from .security import ApiAuth
 
-__all__ = ["ApiAuth", "CreateMovieRequest", "Movie", "MovieDoesNotExistError", "MovieId", "imdb"]
+__all__ = [
+    "ApiAuth",
+    "CreateMovieRequest",
+    "Movie",
+    "MovieDoesNotExistError",
+    "MovieId",
+    "imdb",
+]

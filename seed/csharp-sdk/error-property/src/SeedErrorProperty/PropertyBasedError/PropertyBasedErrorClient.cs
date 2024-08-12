@@ -6,11 +6,11 @@ using SeedErrorProperty.Core;
 
 namespace SeedErrorProperty;
 
-public class PropertyBasedErrorClient
+public partial class PropertyBasedErrorClient
 {
     private RawClient _client;
 
-    public PropertyBasedErrorClient(RawClient client)
+    internal PropertyBasedErrorClient(RawClient client)
     {
         _client = client;
     }
@@ -45,7 +45,7 @@ public class PropertyBasedErrorClient
         throw new SeedErrorPropertyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

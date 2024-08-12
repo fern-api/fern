@@ -45,7 +45,8 @@ describe("Fern Definition Builder", () => {
             schema: {
                 method: "GET",
                 path: "/users"
-            }
+            },
+            source: undefined
         });
         const definition = builder.build();
         expect(definition.rootApiFile.environments != null).toEqual(true);

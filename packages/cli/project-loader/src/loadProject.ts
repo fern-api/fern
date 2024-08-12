@@ -1,9 +1,13 @@
 import {
     APIS_DIRECTORY,
+    ASYNCAPI_DIRECTORY,
+    DEFINITION_DIRECTORY,
     fernConfigJson,
     FERN_DIRECTORY,
     generatorsYml,
-    getFernDirectory
+    GENERATORS_CONFIGURATION_FILENAME,
+    getFernDirectory,
+    OPENAPI_DIRECTORY
 } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -46,19 +50,35 @@ export async function loadProject({
         return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`);
     }
 
-    const apiWorkspaces = await loadApis({
-        cliName,
-        fernDirectory,
-        cliVersion,
-        context,
-        commandLineApiWorkspace,
-        defaultToAllApiWorkspaces
-    });
+    let apiWorkspaces: APIWorkspace[] = [];
+
+    if (
+        (await doesPathExist(join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY)))) ||
+        doesPathExist(join(fernDirectory, RelativeFilePath.of(DEFINITION_DIRECTORY))) ||
+        doesPathExist(join(fernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))) ||
+        doesPathExist(join(fernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY))) ||
+        doesPathExist(join(fernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)))
+    ) {
+        apiWorkspaces = await loadApis({
+            cliName,
+            fernDirectory,
+            cliVersion,
+            context,
+            commandLineApiWorkspace,
+            defaultToAllApiWorkspaces
+        });
+    }
 
     return {
         config: await fernConfigJson.loadProjectConfig({ directory: fernDirectory, context }),
         apiWorkspaces,
-        docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context })
+        docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context }),
+        loadAPIWorkspace: (name: string | undefined): APIWorkspace | undefined => {
+            if (name == null) {
+                return apiWorkspaces[0];
+            }
+            return apiWorkspaces.find((workspace) => workspace.workspaceName === name);
+        }
     };
 }
 

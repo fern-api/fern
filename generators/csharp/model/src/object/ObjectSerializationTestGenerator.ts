@@ -82,17 +82,11 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                 );
                 writer.newLine();
 
-                writer.write("Assert.That(");
-                const jTokenClassReference = csharp.classReference({
-                    name: "JToken",
-                    namespace: "Newtonsoft.Json.Linq"
-                });
-                writer.writeNode(jTokenClassReference);
-                writer.write(".DeepEquals(");
-                writer.writeNode(jTokenClassReference);
-                writer.write(".Parse(inputJson), ");
-                writer.writeNode(jTokenClassReference);
-                writer.writeTextStatement(".Parse(serializedJson)))");
+                writer.addReference(this.context.getFluentAssetionsJsonClassReference());
+                writer.writeNode(this.context.getJTokenClassReference());
+                writer.write(".Parse(inputJson).Should().BeEquivalentTo(");
+                writer.writeNode(this.context.getJTokenClassReference());
+                writer.writeTextStatement(".Parse(serializedJson))");
             });
             const testNumber = this.testInputs.length > 1 ? `_${index + 1}` : "";
             testClass.addTestMethod({
@@ -102,7 +96,11 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
         });
         return new CSharpFile({
             clazz: testClass.getClass(),
-            directory: SERIALIZATION_TEST_FOLDER
+            directory: SERIALIZATION_TEST_FOLDER,
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 

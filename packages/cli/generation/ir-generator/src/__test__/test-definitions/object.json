@@ -960,7 +960,10 @@
             "referencedTypes": [
                 "type_:Name"
             ],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -3176,7 +3179,10 @@
                 "extendedProperties": []
             },
             "referencedTypes": [],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -3414,7 +3420,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

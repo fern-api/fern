@@ -27,8 +27,7 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
 
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
-            name: REQUEST_OPTIONS_CLASS_NAME,
-            namespace: this.context.getCoreNamespace(),
+            ...this.context.getRequestOptionsClassReference(),
             partial: true,
             access: "public"
         });
@@ -42,13 +41,17 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         return new CSharpFile({
             clazz: class_,
-            directory: this.context.getCoreDirectory()
+            directory: this.context.getPublicCoreDirectory(),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getCoreFilesDirectory(),
+            this.context.project.filepaths.getPublicCoreFilesDirectory(),
             RelativeFilePath.of(`${REQUEST_OPTIONS_CLASS_NAME}.cs`)
         );
     }

@@ -49,6 +49,7 @@ export class Auth {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/oauth-client-credentials-default",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/oauth-client-credentials-default/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

@@ -1,15 +1,17 @@
 using System.Net.Http;
+using System.Threading.Tasks;
+using SeedApi;
 using SeedApi.Core;
 
 #nullable enable
 
 namespace SeedApi.A.B;
 
-public class BClient
+public partial class BClient
 {
     private RawClient _client;
 
-    public BClient(RawClient client)
+    internal BClient(RawClient client)
     {
         _client = client;
     }
@@ -33,7 +35,7 @@ public class BClient
         throw new SeedApiApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

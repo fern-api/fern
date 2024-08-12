@@ -100,6 +100,7 @@ class GeneratorCli:
             generated_root_client=generated_root_client,
             api_error_reference=self._context.core_utilities.get_reference_to_api_error(as_snippet=True),
             endpoint_metadata=self._endpoint_metadata,
+            source_file_factory=self._context.source_file_factory,
         )
         readme_config_filepath = self._write_readme_config(
             snippets=readme_snippet_builder.build_readme_snippets(),

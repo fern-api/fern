@@ -47,6 +47,14 @@ fixtures:
         pydantic_config:
           use_str_enums: true
       outputFolder: strenum
+    - customConfig:
+        pydantic_config:
+          enum_type: "forward_compatible_python_enums"
+      outputFolder: real-enum-forward-compat
+    - customConfig:
+        pydantic_config:
+          enum_type: "python_enums"
+      outputFolder: real-enum
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
@@ -124,7 +132,11 @@ fixtures:
     - customConfig:
         pydantic_config:
           include_union_utils: true
-      outputFolder: union-utils 
+      outputFolder: union-utils
+    - customConfig:
+        pydantic_config:
+          union_naming: v1
+      outputFolder: union-naming-v1
   validation:
     - customConfig: null
       outputFolder: no-custom-config
@@ -177,17 +189,17 @@ allowedFailures:
   - exhaustive:pydantic-v1-wrapped
 
   # TODO(FER-1837): Address this list
-  - response-property
   - websocket
   - exhaustive:union-utils
   - extra-properties
   - trace
-  - circular-references-advanced
+
   # Remove the following fixtures soon as a CLI is released with
   # default enum value support, the latest primitive types, and gRPC
   # configuration. This otherwise causes a 'fern check' issue when
   # 'fern test' is run.
   - grpc
+  - grpc-proto
   - object
   - validation:no-custom-config
   - validation:with-defaults
@@ -201,3 +213,6 @@ allowedFailures:
   # We are not generating the correct snippets for union-utils
   # types (e.g. we generate `Shape_Square` instead of Shape.factory.square())
   - unions:union-utils
+
+  # Complex circular refs
+  - simple-fhir

@@ -14,7 +14,7 @@ from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
 
 from ....context import PydanticGeneratorContext
-from ...custom_config import PydanticModelCustomConfig
+from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..abc.abstract_type_generator import AbstractTypeGenerator
 
 
@@ -73,13 +73,19 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
 
             if shape.properties_type == "singleProperty":
                 self._all_referenced_types.append(shape.type)
+                is_type_circular_reference = self._context.does_type_reference_reference_other_type(
+                    shape.type, self._name.type_id
+                )
 
                 single_property_property_fields: List[PydanticField] = [
                     PydanticField(
                         name=shape.name.name.snake_case.safe_name,
                         pascal_case_field_name=shape.name.name.pascal_case.safe_name,
                         json_field_name=shape.name.wire_value,
-                        type_hint=self._context.get_type_hint_for_type_reference(type_reference=shape.type),
+                        type_hint=self._context.get_type_hint_for_type_reference(
+                            type_reference=shape.type,
+                            must_import_after_current_declaration=lambda _: is_type_circular_reference,
+                        ),
                     ),
                     PydanticField(
                         name=get_discriminant_parameter_name(self._union.discriminant),
@@ -134,6 +140,7 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                 ]
                 object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
                 for object_property in object_properties:
+                    self._all_referenced_types.append(object_property.value_type)
                     same_properties_as_object_property_fields.append(
                         FernAwarePydanticField(
                             name=object_property.name.name.snake_case.safe_name,
@@ -145,7 +152,9 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
 
                 single_union_type_references.append(
                     self._generate_same_properties_as_object_member(
-                        class_name=member_class_name, properties=same_properties_as_object_property_fields
+                        member_type_id=shape.type_id,
+                        class_name=member_class_name,
+                        properties=same_properties_as_object_property_fields,
                     )
                 )
 
@@ -210,7 +219,7 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
 
     @abstractmethod
     def _generate_same_properties_as_object_member(
-        self, class_name: str, properties: List[FernAwarePydanticField]
+        self, member_type_id: ir_types.TypeId, class_name: str, properties: List[FernAwarePydanticField]
     ) -> LocalClassReference:
         ...
 
@@ -322,6 +331,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
         example: Optional[ir_types.ExampleUnionType],
         use_typeddict_request: bool,
         as_request: bool,
+        union_naming_version: UnionNamingVersions,
         example_expression: Optional[AST.Expression] = None,
         single_union_type: Optional[ir_types.SingleUnionType] = None,
     ):
@@ -335,6 +345,7 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
         self.sut = single_union_type
         self.as_request = as_request
         self.use_typeddict_request = use_typeddict_request
+        self.union_naming_version: UnionNamingVersions = union_naming_version
 
     def generate_snippet_template(self) -> Union[AST.Expression, None]:
         sut = self.sut
@@ -430,16 +441,23 @@ class AbstractDiscriminatedUnionSnippetGenerator(AbstractTypeSnippetGenerator, A
                     ),
                 ),
                 named_import=get_single_union_type_class_name(
-                    name=name, wire_discriminant_value=wire_discriminant_value
+                    name=name,
+                    wire_discriminant_value=wire_discriminant_value,
+                    union_naming_version=self.union_naming_version,
                 ),
             ),
         )
 
 
+# TODO: For V1 naming, we should take into account if the new name introduces a conflcit with an existing class name
 def get_single_union_type_class_name(
-    name: ir_types.DeclaredTypeName, wire_discriminant_value: ir_types.NameAndWireValue
+    name: ir_types.DeclaredTypeName,
+    wire_discriminant_value: ir_types.NameAndWireValue,
+    union_naming_version: UnionNamingVersions,
 ) -> str:
-    return f"{get_union_class_name(name)}_{wire_discriminant_value.name.pascal_case.unsafe_name}"
+    wire_value = wire_discriminant_value.name.pascal_case.unsafe_name
+    union_name = get_union_class_name(name)
+    return f"{union_name}_{wire_value}" if union_naming_version == "v0" else f"{wire_value}{union_name}"
 
 
 def get_union_class_name(name: ir_types.DeclaredTypeName) -> str:

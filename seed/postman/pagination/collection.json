@@ -223,6 +223,45 @@
         },
         {
           "_type": "endpoint",
+          "name": "List With Offset Pagination Has Next Page",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?page=&limit=&order=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "",
+                  "description": "Defaults to first page"
+                },
+                {
+                  "key": "limit",
+                  "value": "",
+                  "description": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
+                },
+                {
+                  "key": "order",
+                  "value": "",
+                  "description": null
+                }
+              ],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
           "name": "List With Extended Results",
           "request": {
             "description": null,

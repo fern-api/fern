@@ -1,16 +1,16 @@
 using System.Net.Http;
-using SeedMultiUrlEnvironmentNoDefault;
+using System.Threading.Tasks;
 using SeedMultiUrlEnvironmentNoDefault.Core;
 
 #nullable enable
 
 namespace SeedMultiUrlEnvironmentNoDefault;
 
-public class Ec2Client
+public partial class Ec2Client
 {
     private RawClient _client;
 
-    public Ec2Client(RawClient client)
+    internal Ec2Client(RawClient client)
     {
         _client = client;
     }
@@ -35,7 +35,7 @@ public class Ec2Client
         throw new SeedMultiUrlEnvironmentNoDefaultApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

@@ -1,17 +1,16 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedCustomAuth;
 using SeedCustomAuth.Core;
 
 #nullable enable
 
 namespace SeedCustomAuth;
 
-public class CustomAuthClient
+public partial class CustomAuthClient
 {
     private RawClient _client;
 
-    public CustomAuthClient(RawClient client)
+    internal CustomAuthClient(RawClient client)
     {
         _client = client;
     }
@@ -60,7 +59,7 @@ public class CustomAuthClient
         throw new SeedCustomAuthApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -111,7 +110,7 @@ public class CustomAuthClient
         throw new SeedCustomAuthApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

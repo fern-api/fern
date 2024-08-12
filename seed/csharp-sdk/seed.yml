@@ -1,7 +1,7 @@
 
 irVersion: v53
 docker: fernapi/fern-csharp-sdk:latest
-dockerCommand: yarn workspace @fern-api/fern-csharp-sdk dockerTagLatest
+dockerCommand: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
@@ -12,7 +12,7 @@ scripts:
 local: 
   workingDirectory: generators/csharp
   buildCommand: 
-    - yarn workspace @fern-api/fern-csharp-sdk dist:cli
+    - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
   runCommand: node sdk/dist/bundle.cjs
 fixtures: 
   imdb:
@@ -27,10 +27,24 @@ fixtures:
         base-api-exception-class-name: CustomApiException
         base-exception-class-name: CustomException
       outputFolder: exception-class-names
+  multi-url-environment:
+    - customConfig:
+        pascal-case-environments: false
+      outputFolder: no-pascal-case-environments
   exhaustive:
     - customConfig:
         explicit-namespaces: true
       outputFolder: explicit-namespaces
+    - customConfig:
+        root-namespace-for-core-classes: false
+      outputFolder: no-root-namespace-for-core-classes
+    - customConfig:
+        generate-error-types: false
+      outputFolder: no-generate-error-types
+  optional:
+    - customConfig:
+        simplify-object-dictionaries: false
+      outputFolder: no-simplify-object-dictionaries
 allowedFailures:
   - objects-with-imports
   - examples

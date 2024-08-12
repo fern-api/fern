@@ -15,7 +15,12 @@ export async function validateWorkspaces({
     const docsWorkspace = project.docsWorkspaces;
     if (docsWorkspace != null) {
         await cliContext.runTaskForWorkspace(docsWorkspace, async (context) => {
-            await validateDocsWorkspaceAndLogIssues({ workspace: docsWorkspace, context, logWarnings });
+            await validateDocsWorkspaceAndLogIssues({
+                workspace: docsWorkspace,
+                context,
+                logWarnings,
+                loadAPIWorkspace: project.loadAPIWorkspace
+            });
         });
     }
 

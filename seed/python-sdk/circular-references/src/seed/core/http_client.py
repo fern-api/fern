@@ -90,7 +90,8 @@ def _should_retry(response: httpx.Response) -> bool:
 
 
 def remove_omit_from_dict(
-    original: typing.Dict[str, typing.Optional[typing.Any]], omit: typing.Optional[typing.Any]
+    original: typing.Dict[str, typing.Optional[typing.Any]],
+    omit: typing.Optional[typing.Any],
 ) -> typing.Dict[str, typing.Any]:
     if omit is None:
         return original
@@ -142,7 +143,8 @@ def get_request_body(
         # If both data and json are None, we send json data in the event extra properties are specified
         json_body = maybe_filter_request_body(json, request_options, omit)
 
-    return json_body, data_body
+    # If you have an empty JSON body, you should just send None
+    return (json_body if json_body != {} else None), data_body if data_body != {} else None
 
 
 class HttpClient:

@@ -1,3 +1,6 @@
+export * from "./ProgrammingLanguage";
+export * from "./AnalyticsConfig";
+export * from "./SegmentConfig";
 export * from "./DocsConfiguration";
 export * from "./TabId";
 export * from "./TabConfig";
@@ -62,3 +65,5 @@ export * from "./TwitterCardSetting";
 export * from "./RedirectConfig";
 export * from "./IntegrationsConfig";
 export * from "./ExperimentalConfig";
+export * from "./PlaygroundSettings";
+export * from "./PlaygroundButtonSettings";

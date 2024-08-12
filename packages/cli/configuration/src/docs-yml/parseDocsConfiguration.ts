@@ -1,7 +1,7 @@
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
-import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
@@ -46,6 +46,7 @@ export async function parseDocsConfiguration({
         navigation: rawNavigation,
         navbarLinks,
         footerLinks,
+        defaultLanguage,
 
         /* seo */
         metadata: rawMetadata,
@@ -58,7 +59,7 @@ export async function parseDocsConfiguration({
         colors,
         typography: rawTypography,
         layout,
-
+        analytics: analyticsConfig,
         /* integrations */
         integrations,
 
@@ -128,6 +129,7 @@ export async function parseDocsConfiguration({
         navigation,
         navbarLinks: convertNavbarLinks(navbarLinks),
         footerLinks: convertFooterLinks(footerLinks),
+        defaultLanguage,
 
         /* seo */
         metadata,
@@ -140,6 +142,7 @@ export async function parseDocsConfiguration({
         colors: convertColorsConfiguration(colors, context),
         typography,
         layout: convertLayoutConfig(layout),
+        analyticsConfig: rawDocsConfiguration.analytics,
 
         /* integrations */
         integrations,
@@ -218,7 +221,7 @@ async function convertJsConfig(
     js: RawDocs.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): Promise<JavascriptConfig> {
-    const remote: DocsV1Write.JsRemoteConfig[] = [];
+    const remote: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[] = [];
     const files: AbsoluteJsFileConfig[] = [];
     if (js == null) {
         return { files: [] };
@@ -258,23 +261,27 @@ function convertLayoutConfig(layout: RawDocs.LayoutConfig | undefined): ParsedDo
 
         searchbarPlacement:
             layout.searchbarPlacement === "header"
-                ? DocsV1Write.SearchbarPlacement.Header
+                ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Header
                 : layout.searchbarPlacement === "header-tabs"
-                ? DocsV1Write.SearchbarPlacement.HeaderTabs
-                : DocsV1Write.SearchbarPlacement.Sidebar,
+                ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
+                : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
         tabsPlacement:
-            layout.tabsPlacement === "header" ? DocsV1Write.TabsPlacement.Header : DocsV1Write.TabsPlacement.Sidebar,
+            layout.tabsPlacement === "header"
+                ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
+                : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar,
         contentAlignment:
             layout.contentAlignment === "left"
-                ? DocsV1Write.ContentAlignment.Left
-                : DocsV1Write.ContentAlignment.Center,
+                ? CjsFdrSdk.docs.v1.commons.ContentAlignment.Left
+                : CjsFdrSdk.docs.v1.commons.ContentAlignment.Center,
         headerPosition:
-            layout.headerPosition === "static" ? DocsV1Write.HeaderPosition.Absolute : DocsV1Write.HeaderPosition.Fixed,
+            layout.headerPosition === "static"
+                ? CjsFdrSdk.docs.v1.commons.HeaderPosition.Absolute
+                : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
         disableHeader: layout.disableHeader ?? false
     };
 }
 
-function parseSizeConfig(sizeAsString: string | undefined): DocsV1Write.SizeConfig | undefined {
+function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.commons.SizeConfig | undefined {
     if (sizeAsString == null) {
         return undefined;
     }
@@ -620,7 +627,8 @@ async function convertNavigationItem({
             skipUrlSlug: rawConfig.skipSlug ?? false,
             flattened: rawConfig.flattened ?? false,
             alphabetized: rawConfig.alphabetized ?? false,
-            paginated: rawConfig.paginated ?? false
+            paginated: rawConfig.paginated ?? false,
+            playground: rawConfig.playground
         };
     }
     if (isRawLinkConfig(rawConfig)) {
@@ -703,7 +711,8 @@ function parseApiReferenceLayoutItem(
                 slug: item.slug,
                 hidden: item.hidden,
                 skipUrlSlug: item.skipSlug,
-                icon: item.icon
+                icon: item.icon,
+                playground: item.playground
             }
         ];
     } else if (isRawApiRefEndpointConfiguration(item)) {
@@ -714,7 +723,8 @@ function parseApiReferenceLayoutItem(
                 title: item.title,
                 icon: item.icon,
                 slug: item.slug,
-                hidden: item.hidden
+                hidden: item.hidden,
+                playground: item.playground
             }
         ];
     }
@@ -730,7 +740,8 @@ function parseApiReferenceLayoutItem(
                 slug: value.slug,
                 hidden: value.hidden,
                 skipUrlSlug: value.skipSlug,
-                icon: value.icon
+                icon: value.icon,
+                playground: value.playground
             };
         }
         return {
@@ -742,7 +753,8 @@ function parseApiReferenceLayoutItem(
             hidden: false,
             slug: undefined,
             skipUrlSlug: false,
-            icon: undefined
+            icon: undefined,
+            playground: undefined
         };
     });
 }
@@ -825,8 +837,10 @@ function isTabbedNavigationConfig(
     );
 }
 
-function convertNavbarLinks(navbarLinks: RawDocs.NavbarLink[] | undefined): DocsV1Write.NavbarLink[] | undefined {
-    return navbarLinks?.map((navbarLink): DocsV1Write.NavbarLink => {
+function convertNavbarLinks(
+    navbarLinks: RawDocs.NavbarLink[] | undefined
+): CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined {
+    return navbarLinks?.map((navbarLink): CjsFdrSdk.docs.v1.commons.NavbarLink => {
         if (navbarLink.type === "github") {
             return { type: "github", url: navbarLink.value };
         }
@@ -842,12 +856,14 @@ function convertNavbarLinks(navbarLinks: RawDocs.NavbarLink[] | undefined): Docs
     });
 }
 
-function convertFooterLinks(footerLinks: RawDocs.FooterLinksConfig | undefined): DocsV1Write.FooterLink[] | undefined {
+function convertFooterLinks(
+    footerLinks: RawDocs.FooterLinksConfig | undefined
+): CjsFdrSdk.docs.v1.commons.FooterLink[] | undefined {
     if (footerLinks == null) {
         return undefined;
     }
 
-    const links: DocsV1Write.FooterLink[] = [];
+    const links: CjsFdrSdk.docs.v1.commons.FooterLink[] = [];
 
     (Object.keys(footerLinks) as (keyof RawDocs.FooterLinksConfig)[]).forEach((key) => {
         const link = footerLinks[key];

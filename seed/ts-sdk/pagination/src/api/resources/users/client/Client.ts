@@ -68,6 +68,7 @@ export class Users {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern/pagination",
                     "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -142,6 +143,7 @@ export class Users {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern/pagination",
                     "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -233,6 +235,7 @@ export class Users {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern/pagination",
                     "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -309,6 +312,7 @@ export class Users {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern/pagination",
                     "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -398,6 +402,95 @@ export class Users {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern/pagination",
                     "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
+                    "X-Fern-Runtime": core.RUNTIME.type,
+                    "X-Fern-Runtime-Version": core.RUNTIME.version,
+                },
+                contentType: "application/json",
+                queryParameters: _queryParams,
+                requestType: "json",
+                timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                maxRetries: requestOptions?.maxRetries,
+                abortSignal: requestOptions?.abortSignal,
+            });
+            if (_response.ok) {
+                return serializers.ListUsersPaginationResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                });
+            }
+            if (_response.error.reason === "status-code") {
+                throw new errors.SeedPaginationError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                });
+            }
+            switch (_response.error.reason) {
+                case "non-json":
+                    throw new errors.SeedPaginationError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.rawBody,
+                    });
+                case "timeout":
+                    throw new errors.SeedPaginationTimeoutError();
+                case "unknown":
+                    throw new errors.SeedPaginationError({
+                        message: _response.error.errorMessage,
+                    });
+            }
+        };
+        let _offset = request?.page != null ? request?.page : 1;
+        return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+            response: await list(request),
+            hasNextPage: (response) => (response?.data ?? []).length > 0,
+            getItems: (response) => response?.data ?? [],
+            loadPage: (response) => {
+                _offset += response?.data != null ? response.data.length : 1;
+                return list(core.setObjectProperty(request, "page", _offset));
+            },
+        });
+    }
+
+    /**
+     * @param {SeedPagination.ListWithOffsetPaginationHasNextPageRequest} request
+     * @param {Users.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listWithOffsetPaginationHasNextPage({
+     *         page: 1,
+     *         limit: 1,
+     *         order: SeedPagination.Order.Asc
+     *     })
+     */
+    public async listWithOffsetPaginationHasNextPage(
+        request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest = {},
+        requestOptions?: Users.RequestOptions
+    ): Promise<core.Page<SeedPagination.User>> {
+        const list = async (
+            request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest
+        ): Promise<SeedPagination.ListUsersPaginationResponse> => {
+            const { page, limit, order } = request;
+            const _queryParams: Record<string, string | string[] | object | object[]> = {};
+            if (page != null) {
+                _queryParams["page"] = page.toString();
+            }
+            if (limit != null) {
+                _queryParams["limit"] = limit.toString();
+            }
+            if (order != null) {
+                _queryParams["order"] = order;
+            }
+            const _response = await core.fetcher({
+                url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+                method: "GET",
+                headers: {
+                    Authorization: await this._getAuthorizationHeader(),
+                    "X-Fern-Language": "JavaScript",
+                    "X-Fern-SDK-Name": "@fern/pagination",
+                    "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -477,6 +570,7 @@ export class Users {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern/pagination",
                     "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -552,6 +646,7 @@ export class Users {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern/pagination",
                     "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -629,6 +724,7 @@ export class Users {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "@fern/pagination",
                     "X-Fern-SDK-Version": "0.0.1",
+                    "User-Agent": "@fern/pagination/0.0.1",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },

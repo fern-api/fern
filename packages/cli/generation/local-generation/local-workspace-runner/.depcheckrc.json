@@ -1,1 +1,11 @@
-{ "ignores": ["@types/jest", "@types/node", "@types/tmp"], "ignore-patterns": ["lib"] }
+{
+    "ignores": [
+        "@types/jest",
+        "globals",
+        "@types/node",
+        "@types/tmp"
+    ],
+    "ignore-patterns": [
+        "lib"
+    ]
+}

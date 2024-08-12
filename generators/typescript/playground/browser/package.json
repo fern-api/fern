@@ -18,7 +18,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
@@ -27,9 +27,9 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "start": "yarn compile && vite",
-    "build": "yarn compile && vite build",
-    "preview": "yarn compile && vite preview"
+    "start": "pnpm compile && vite",
+    "build": "pnpm compile && vite build",
+    "preview": "pnpm compile && vite preview"
   },
   "dependencies": {
     "form-data": "4.0.0",

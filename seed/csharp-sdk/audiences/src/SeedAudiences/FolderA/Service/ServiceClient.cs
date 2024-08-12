@@ -1,17 +1,17 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedAudiences;
 using SeedAudiences.Core;
-using SeedAudiences.FolderA;
 
 #nullable enable
 
 namespace SeedAudiences.FolderA;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
@@ -43,7 +43,7 @@ public class ServiceClient
         throw new SeedAudiencesApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

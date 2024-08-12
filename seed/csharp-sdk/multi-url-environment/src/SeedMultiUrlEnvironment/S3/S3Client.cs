@@ -1,17 +1,16 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedMultiUrlEnvironment;
 using SeedMultiUrlEnvironment.Core;
 
 #nullable enable
 
 namespace SeedMultiUrlEnvironment;
 
-public class S3Client
+public partial class S3Client
 {
     private RawClient _client;
 
-    public S3Client(RawClient client)
+    internal S3Client(RawClient client)
     {
         _client = client;
     }

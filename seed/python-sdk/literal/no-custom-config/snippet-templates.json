@@ -16,7 +16,7 @@
                     "from seed import SeedLiteral"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedLiteral(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -55,7 +55,7 @@
                         "from seed import AsyncSeedLiteral"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedLiteral(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -106,7 +106,7 @@
                     "from seed import SeedLiteral"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedLiteral(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -161,7 +161,7 @@
                         "from seed import AsyncSeedLiteral"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedLiteral(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -228,7 +228,7 @@
                     "from seed import SeedLiteral"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedLiteral(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -250,7 +250,7 @@
                         "from seed import AsyncSeedLiteral"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedLiteral(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -284,7 +284,7 @@
                     "from seed import SeedLiteral"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedLiteral(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -323,7 +323,7 @@
                         "from seed import AsyncSeedLiteral"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedLiteral(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"
@@ -374,7 +374,7 @@
                     "from seed import SeedLiteral"
                 ],
                 "isOptional": true,
-                "templateString": "client = SeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "templateString": "client = SeedLiteral(base_url=\"https://yourhost.com/path/to/api\", )",
                 "templateInputs": [],
                 "inputDelimiter": ",",
                 "type": "generic"
@@ -413,7 +413,7 @@
                         "from seed import AsyncSeedLiteral"
                     ],
                     "isOptional": true,
-                    "templateString": "client = AsyncSeedLiteral(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                    "templateString": "client = AsyncSeedLiteral(base_url=\"https://yourhost.com/path/to/api\", )",
                     "templateInputs": [],
                     "inputDelimiter": ",",
                     "type": "generic"

@@ -1,17 +1,16 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedQueryParameters;
 using SeedQueryParameters.Core;
 
 #nullable enable
 
 namespace SeedQueryParameters;
 
-public class UserClient
+public partial class UserClient
 {
     private RawClient _client;
 
-    public UserClient(RawClient client)
+    internal UserClient(RawClient client)
     {
         _client = client;
     }
@@ -73,7 +72,7 @@ public class UserClient
         throw new SeedQueryParametersApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

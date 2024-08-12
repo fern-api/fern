@@ -1,4 +1,154 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`x-fern-audiences > x-fern-audiences > docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "getV1Users": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/v1/users",
+          "request": {
+            "body": {
+              "properties": {
+                "private_property": "optional<string>",
+                "public_property": {
+                  "audiences": [
+                    "public",
+                  ],
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "GetV1UsersRequest",
+            "query-parameters": undefined,
+          },
+        },
+      },
+      "source": {
+        "openapi": "x-fern-audiences/openapi.yml",
+      },
+    },
+    "types": {
+      "BaseUser": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "audiences": [
+              "public",
+            ],
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+        },
+        "source": {
+          "openapi": "x-fern-audiences/openapi.yml",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-audiences\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-audiences > x-fern-audiences > simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "getV1Users": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/v1/users",
+          "request": {
+            "body": {
+              "properties": {
+                "private_property": "optional<string>",
+                "public_property": {
+                  "audiences": [
+                    "public",
+                  ],
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "GetV1UsersRequest",
+            "query-parameters": undefined,
+          },
+        },
+      },
+      "source": {
+        "openapi": "x-fern-audiences/openapi.yml",
+      },
+    },
+    "types": {
+      "BaseUser": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "audiences": [
+              "public",
+            ],
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+        },
+        "source": {
+          "openapi": "x-fern-audiences/openapi.yml",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-audiences\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
 
 exports[`x-fern-audiences x-fern-audiences docs 1`] = `
 {
@@ -38,6 +188,9 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "x-fern-audiences/openapi.yml",
+      },
     },
     "types": {
       "BaseUser": {
@@ -55,6 +208,9 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-audiences/openapi.yml",
         },
       },
     },
@@ -107,6 +263,9 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "x-fern-audiences/openapi.yml",
+      },
     },
     "types": {
       "BaseUser": {
@@ -124,6 +283,9 @@ exports[`x-fern-audiences x-fern-audiences simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-audiences/openapi.yml",
         },
       },
     },

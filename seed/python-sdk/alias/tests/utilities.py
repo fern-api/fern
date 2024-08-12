@@ -3,8 +3,9 @@
 import typing
 import uuid
 
-import pydantic
 from dateutil import parser
+
+import pydantic
 
 
 def cast_field(json_expectation: typing.Any, type_expectation: typing.Any) -> typing.Any:
@@ -44,7 +45,9 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
                     if isinstance(entry_expectation, dict):
                         is_container_of_complex_type = True
                         validate_response(
-                            response=response[idx], json_expectation=ex, type_expectations=entry_expectation
+                            response=response[idx],
+                            json_expectation=ex,
+                            type_expectations=entry_expectation,
                         )
                     else:
                         cast_json_expectation.append(cast_field(ex, entry_expectation))
@@ -56,7 +59,10 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
             # if any of the values of the set have a type_expectation of a dict, we're assuming it's a pydantic
             # model and keeping it a list.
             if container_expectation != "set" or not any(
-                map(lambda value: isinstance(value, dict), list(contents_expectation.values()))
+                map(
+                    lambda value: isinstance(value, dict),
+                    list(contents_expectation.values()),
+                )
             ):
                 json_expectation = cast_field(json_expectation, container_expectation)
     elif isinstance(type_expectation, tuple):
@@ -65,9 +71,15 @@ def validate_field(response: typing.Any, json_expectation: typing.Any, type_expe
         if isinstance(contents_expectation, dict):
             json_expectation = {
                 cast_field(
-                    key, contents_expectation.get(idx)[0] if contents_expectation.get(idx) is not None else None  # type: ignore
+                    key,
+                    contents_expectation.get(idx)[0]  # type: ignore
+                    if contents_expectation.get(idx) is not None
+                    else None,
                 ): cast_field(
-                    value, contents_expectation.get(idx)[1] if contents_expectation.get(idx) is not None else None  # type: ignore
+                    value,
+                    contents_expectation.get(idx)[1]  # type: ignore
+                    if contents_expectation.get(idx) is not None
+                    else None,
                 )
                 for idx, (key, value) in enumerate(json_expectation.items())
             }
@@ -96,7 +108,11 @@ def validate_response(response: typing.Any, json_expectation: typing.Any, type_e
         and not isinstance(response, dict)
         and not issubclass(type(response), pydantic.BaseModel)
     ):
-        validate_field(response=response, json_expectation=json_expectation, type_expectation=type_expectations)
+        validate_field(
+            response=response,
+            json_expectation=json_expectation,
+            type_expectation=type_expectations,
+        )
         return
 
     if isinstance(response, list):
@@ -108,7 +124,9 @@ def validate_response(response: typing.Any, json_expectation: typing.Any, type_e
             content_expectation = type_expectations[1]
         for idx, item in enumerate(response):
             validate_response(
-                response=item, json_expectation=json_expectation[idx], type_expectations=content_expectation[idx]
+                response=item,
+                json_expectation=json_expectation[idx],
+                type_expectations=content_expectation[idx],
             )
     else:
         response_json = response
@@ -128,10 +146,16 @@ def validate_response(response: typing.Any, json_expectation: typing.Any, type_e
             # Otherwise, we're just validating a single field that's a pydantic model.
             if isinstance(value, dict) and not isinstance(type_expectation, tuple):
                 validate_response(
-                    response=response_json[key], json_expectation=value, type_expectations=type_expectation
+                    response=response_json[key],
+                    json_expectation=value,
+                    type_expectations=type_expectation,
                 )
             else:
-                validate_field(response=response_json[key], json_expectation=value, type_expectation=type_expectation)
+                validate_field(
+                    response=response_json[key],
+                    json_expectation=value,
+                    type_expectation=type_expectation,
+                )
 
             # Ensure there are no additional fields here either
             del response_json[key]

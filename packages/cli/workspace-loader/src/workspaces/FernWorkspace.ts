@@ -6,7 +6,7 @@ import { handleFailedWorkspaceParserResultRaw } from "../handleFailedWorkspacePa
 import { listFernFiles } from "../listFernFiles";
 import { parseYamlFiles } from "../parseYamlFiles";
 import { processPackageMarkers } from "../processPackageMarkers";
-import { APIChangelog, FernDefinition } from "../types/Workspace";
+import { APIChangelog, FernDefinition, IdentifiableSource } from "../types/Workspace";
 import { validateStructureOfYamlFiles } from "../validateStructureOfYamlFiles";
 import { AbstractAPIWorkspace } from "./AbstractAPIWorkspace";
 import { OSSWorkspace } from "./OSSWorkspace";
@@ -15,6 +15,7 @@ export declare namespace FernWorkspace {
     export interface Args extends LazyFernWorkspace.BaseArgs {
         dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
         definition: FernDefinition;
+        sources: IdentifiableSource[] | undefined;
     }
 }
 
@@ -26,6 +27,7 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
     public dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     public definition: FernDefinition;
     public changelog: APIChangelog | undefined;
+    public sources: IdentifiableSource[];
 
     constructor({
         absoluteFilepath,
@@ -33,7 +35,8 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
         generatorsConfiguration,
         dependenciesConfiguration,
         definition,
-        changelog
+        changelog,
+        sources
     }: FernWorkspace.Args) {
         super();
         this.absoluteFilepath = absoluteFilepath;
@@ -42,6 +45,7 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
         this.generatorsConfiguration = generatorsConfiguration;
         this.dependenciesConfiguration = dependenciesConfiguration;
         this.definition = definition;
+        this.sources = sources ?? [];
     }
 
     public async getDefinition(): Promise<FernDefinition> {
@@ -50,6 +54,14 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
 
     public async toFernWorkspace(): Promise<FernWorkspace> {
         return this;
+    }
+
+    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
+        return [this.absoluteFilepath];
+    }
+
+    public getSources(): IdentifiableSource[] {
+        return this.sources;
     }
 }
 
@@ -158,12 +170,17 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
                     packageMarkers: processPackageMarkersResult.packageMarkers,
                     importedDefinitions: processPackageMarkersResult.importedDefinitions
                 },
-                changelog: this.changelog
+                changelog: this.changelog,
+                sources: undefined
             });
 
             this.fernWorkspaces[key] = workspace;
         }
 
         return workspace;
+    }
+
+    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
+        return [this.absoluteFilepath];
     }
 }

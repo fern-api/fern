@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
 import fern.ir.resources as ir_types
-from typing_extensions import Never
 
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
@@ -32,7 +31,6 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url_property_name,
 )
 from fern_python.snippet import SnippetWriter
-from fern_python.source_file_factory import SourceFileFactory
 
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from .generated_root_client import GeneratedRootClient
@@ -663,7 +661,7 @@ class EndpointFunctionGenerator:
                 # Include a dashed line between the endpoint snippet and the rest of the docs, if any.
                 writer.write_line("Examples")
                 writer.write_line("--------")
-                source_file = SourceFileFactory.create_snippet()
+                source_file = self._context.source_file_factory.create_snippet()
                 source_file.add_expression(snippet)
                 snippet_docstring = source_file.to_str()
                 writer.write(snippet_docstring)
@@ -1020,8 +1018,24 @@ class EndpointFunctionGenerator:
             response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 response.response_body_type,
             ),
-            nested_property_as_response=lambda _: raise_json_nested_property_as_response_unsupported(),
+            # TODO: What is the case where you have a nested property as response, but no response property configured?
+            nested_property_as_response=lambda response: self._get_nested_json_response_type(response),
         )
+
+    def _get_nested_json_response_type(self, response: ir_types.JsonResponseBodyWithProperty) -> AST.TypeHint:
+        response_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+            response.response_body_type
+        )
+        property_type = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+            response.response_property.value_type
+            if response.response_property is not None
+            else response.response_body_type
+        )
+
+        if response_type.is_optional and not property_type.is_optional:
+            return AST.TypeHint.optional(property_type)
+
+        return property_type
 
     def _get_streaming_response_body_type(
         self, *, stream_response: ir_types.StreamingResponse, is_async: bool
@@ -1661,7 +1675,3 @@ def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.Typ
         if container_as_union.type == "optional":
             return unwrap_optional_type(container_as_union.optional)
     return type_reference
-
-
-def raise_json_nested_property_as_response_unsupported() -> Never:
-    raise RuntimeError("nested property json response is unsupported")

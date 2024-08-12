@@ -1,5 +1,4 @@
 using System;
-using SeedResponseProperty;
 using SeedResponseProperty.Core;
 
 #nullable enable

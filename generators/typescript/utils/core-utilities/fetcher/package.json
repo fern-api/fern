@@ -16,7 +16,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../../shared/.prettierignore \"**\"",
@@ -32,8 +32,6 @@
     "qs": "6.12.1"
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.24.3",
-    "@babel/preset-typescript": "^7.24.1",
     "@types/express": "^4.17.21",
     "@types/jest": "^29.5.12",
     "@types/multer": "^1.4.11",
@@ -43,8 +41,10 @@
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "express": "^4.19.2",
+    "fetch-mock-jest": "^1.5.1",
     "form-data": "4.0.0",
     "jest": "^29.7.0",
+    "ts-jest": "^29.2.4",
     "jest-environment-jsdom": "^29.7.0",
     "multer": "^1.4.5-lts.1",
     "organize-imports-cli": "^0.10.0",

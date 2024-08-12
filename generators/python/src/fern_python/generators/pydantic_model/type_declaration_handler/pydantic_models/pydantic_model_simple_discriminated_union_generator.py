@@ -14,7 +14,7 @@ from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
 
 from ....context import PydanticGeneratorContext
-from ...custom_config import PydanticModelCustomConfig
+from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..discriminated_union.simple_discriminated_union_generator import (
     AbstractDiscriminatedUnionSnippetGenerator,
     AbstractSimpleDiscriminatedUnionGenerator,
@@ -82,7 +82,9 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
         return type_hint
 
     def _generate_member_name(self, single_union_type: ir_types.SingleUnionType) -> str:
-        return get_single_union_type_class_name(self._name, single_union_type.discriminant_value)
+        return get_single_union_type_class_name(
+            self._name, single_union_type.discriminant_value, self._custom_config.union_naming
+        )
 
     def _generate_no_property_member(
         self, class_name: str, discriminant_field: FernAwarePydanticField
@@ -108,6 +110,8 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
         properties: List[PydanticField],
         fern_aware_properties: List[FernAwarePydanticField],
     ) -> LocalClassReference:
+        # TODO: turn this into a FernAwarePydanticModel to be able to handle circular references
+        # correctly with types in that single property.
         with PydanticModel(
             version=self._custom_config.version,
             name=class_name,
@@ -126,7 +130,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             for pydantic_field in properties:
                 internal_pydantic_model_for_single_union_type.add_field(pydantic_field)
 
-            self._update_forward_refs(
+            self._update_forward_refs_for_single_property_member(
                 internal_pydantic_model_for_single_union_type=internal_pydantic_model_for_single_union_type,
                 single_union_type=single_union_type,
             )
@@ -134,10 +138,11 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             return internal_pydantic_model_for_single_union_type.to_reference()
 
     def _generate_same_properties_as_object_member(
-        self, class_name: str, properties: List[FernAwarePydanticField]
+        self, member_type_id: ir_types.TypeId, class_name: str, properties: List[FernAwarePydanticField]
     ) -> LocalClassReference:
         with FernAwarePydanticModel(
             type_name=None,
+            original_type_id=member_type_id,
             class_name=class_name,
             context=self._context,
             custom_config=self._custom_config,
@@ -153,56 +158,46 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
 
     def _finish(self, type_alias_declaration: AST.TypeAliasDeclaration) -> None:
         for referenced_type in self._all_referenced_types:
-            for type_id in self._context.get_type_names_in_type_reference(referenced_type):
+            # There are some types that will not cause their dependent types to rebuild
+            # for example other unions, and so to make sure those types are rebuilt
+            # we import them all here.
+            for type_id in self._context.maybe_get_type_ids_for_type_reference(referenced_type) or []:
                 type_alias_declaration.add_ghost_reference(
                     self._context.get_class_reference_for_type_id(
                         type_id,
                         must_import_after_current_declaration=lambda other_type_name: self._context.does_type_reference_other_type(
-                            other_type_name.type_id, type_id
+                            type_id=other_type_name.type_id, other_type_id=self._name.type_id
                         ),
                         as_request=False,
                     ),
                 )
 
-    def _update_forward_refs(
+    # Really needed since we're not using a FernAwarePydanticModel for single property members
+    #
+    # We create objects for single property union members, which means that
+    # the IR will not immediately contain this new type to do an appropriate circular reference check
+    # and so we need to us the type of the Union itself to appropriately detect circular imports.
+    #
+    # The addition of the ghost references is done within AbstractSimpleDiscriminatedUnionGenerator._finish
+    def _update_forward_refs_for_single_property_member(
         self,
         internal_pydantic_model_for_single_union_type: PydanticModel,
         single_union_type: ir_types.SingleUnionType,
     ) -> None:
-        # if any of our fields are forward refs, we need to call
-        # update_forwards_refs()
-
-        # we assume that the forward-refed types are the ones
-        # that circularly reference this union type
         referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
-            same_properties_as_object=lambda type_name: self._context.get_referenced_types(type_name.type_id),
-            single_property=lambda single_property: self._context.get_referenced_types_of_type_reference(
-                single_property.type
+            same_properties_as_object=lambda _: set(),
+            single_property=lambda single_property: set(
+                self._context.get_referenced_types_of_type_reference(single_property.type) or []
             ),
             no_properties=lambda: set(),
         )
-        forward_refed_types = [
-            referenced_type_id
-            for referenced_type_id in referenced_type_ids
-            if (
-                referenced_type_id not in self._extended_types
-                or (referenced_type_id in self._extended_types and referenced_type_id in self._property_type_ids)
-            )
-            and referenced_type_id != self._name.type_id
-            and self._context.does_type_reference_other_type(referenced_type_id, self._name.type_id)
-        ]
-        if len(forward_refed_types) > 0:
-            # when calling update_forward_refs, Pydantic will throw
-            # if an inherited field's type is not defined in this
-            # file. https://github.com/pydantic/pydantic/issues/4902.
-            # as a workaround, we explicitly pass references to update_forward_refs
-            # so they are in scope
-            internal_pydantic_model_for_single_union_type.update_forward_refs(
-                {
-                    self._context.get_class_reference_for_type_id(type_id, as_request=False)
-                    for type_id in forward_refed_types
-                }
-            )
+
+        for referenced_type_id in referenced_type_ids:
+            if self._context.does_type_reference_other_type(
+                type_id=referenced_type_id, other_type_id=self._name.type_id
+            ):
+                internal_pydantic_model_for_single_union_type.update_forward_refs()
+                break
 
 
 class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnippetGenerator):
@@ -211,6 +206,7 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
         example: Optional[ir_types.ExampleUnionType],
+        union_naming_version: UnionNamingVersions,
         example_expression: Optional[AST.Expression] = None,
         single_union_type: Optional[ir_types.SingleUnionType] = None,
     ):
@@ -222,6 +218,7 @@ class PydanticModelDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnion
             single_union_type=single_union_type,
             use_typeddict_request=False,
             as_request=False,
+            union_naming_version=union_naming_version,
         )
 
     def _get_snippet_for_union_with_same_properties_as_object(

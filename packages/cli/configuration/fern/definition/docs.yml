@@ -4,12 +4,42 @@ docs: |-
   The docs schema is intended to be human-readable and hand-maintained, by using human-friendly undiscriminated unions and optional properties.
 
 types:
+  ProgrammingLanguage:
+    enum:
+      - typescript
+      - javascript
+      - python
+      - java
+      - go
+      - ruby
+      - csharp
+      - nodets
+      - nodejs
+      - dotnet
+      - curl
+      - jvm
+      - ts
+      - js
+
+  AnalyticsConfig:
+    properties:
+      segment: optional<SegmentConfig>
+
+  SegmentConfig:
+    properties:
+      write-key: string
+      
   DocsConfiguration:
     properties:
       instances: list<DocsInstance>
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
+      analytics: 
+        type: optional<AnalyticsConfig>
+        docs: |
+          The `analytics` object allows you to configure analytics for your docs site.
+          Currently, only Segment is supported.
 
       # navigation
       tabs: optional<map<TabId, TabConfig>>
@@ -21,6 +51,7 @@ types:
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
       experimental: optional<ExperimentalConfig>
+      "default-language": optional<ProgrammingLanguage>
 
       # seo
       metadata: optional<MetadataConfig>
@@ -480,6 +511,9 @@ types:
         availability: in-development
         type: optional<boolean>
         docs: If true, the API reference will be paginated rather than displayed in a single page (long-scrolling).
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affects all endpoints.
 
   ApiReferenceLayoutItem:
     docs: |
@@ -513,6 +547,9 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affects all endpoints.
 
   ApiReferencePackageConfiguration:
     discriminated: false
@@ -532,6 +569,9 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that is applied only to descendants of this api package.
 
   ApiReferenceEndpointConfiguration:
     properties:
@@ -540,6 +580,9 @@ types:
       slug: optional<string>
       icon: optional<string>
       hidden: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affect this endpoint specifically.
 
   LinkConfiguration:
     properties:
@@ -837,3 +880,15 @@ types:
           If `disable-stream-toggle` is set to true, the stream toggle will be disabled.
 
           This behavior is unstable and may change in the future.
+
+  PlaygroundSettings:
+    properties:
+      environments:
+        type: optional<list<string>>
+        docs: A list of environment IDs that are allowed to be used in the playground.
+          If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
+      button: optional<PlaygroundButtonSettings>
+
+  PlaygroundButtonSettings:
+    properties:
+      href: optional<string>

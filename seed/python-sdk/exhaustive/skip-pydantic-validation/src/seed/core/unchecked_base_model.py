@@ -5,9 +5,10 @@ import inspect
 import typing
 import uuid
 
-import pydantic
 import typing_extensions
 from pydantic_core import PydanticUndefined
+
+import pydantic
 
 from .pydantic_utilities import (
     IS_PYDANTIC_V2,
@@ -43,7 +44,9 @@ class UncheckedBaseModel(UniversalBaseModel):
 
     @classmethod
     def model_construct(
-        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+        cls: typing.Type["Model"],
+        _fields_set: typing.Optional[typing.Set[str]] = None,
+        **values: typing.Any,
     ) -> "Model":
         # Fallback construct function to the specified override below.
         return cls.construct(_fields_set=_fields_set, **values)
@@ -52,7 +55,9 @@ class UncheckedBaseModel(UniversalBaseModel):
     # Implementation taken from: https://github.com/pydantic/pydantic/issues/1168#issuecomment-817742836
     @classmethod
     def construct(
-        cls: typing.Type["Model"], _fields_set: typing.Optional[typing.Set[str]] = None, **values: typing.Any
+        cls: typing.Type["Model"],
+        _fields_set: typing.Optional[typing.Set[str]] = None,
+        **values: typing.Any,
     ) -> "Model":
         m = cls.__new__(cls)
         fields_values = {}
@@ -263,7 +268,9 @@ PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]
 
 # Pydantic V1 swapped the typing of __fields__'s values from ModelField to FieldInfo
 # And so we try to handle both V1 cases, as well as V2 (FieldInfo from model.model_fields)
-def _get_model_fields(model: typing.Type["Model"]) -> typing.Mapping[str, PydanticField]:
+def _get_model_fields(
+    model: typing.Type["Model"],
+) -> typing.Mapping[str, PydanticField]:
     if IS_PYDANTIC_V2:
         return model.model_fields  # type: ignore # Pydantic v2
     else:

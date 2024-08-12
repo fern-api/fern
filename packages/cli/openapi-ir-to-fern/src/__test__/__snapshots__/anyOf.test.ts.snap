@@ -1,4 +1,154 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`anyOf > anyOf > docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "Get": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/get",
+          "request": {
+            "body": {
+              "properties": {
+                "id": {
+                  "docs": "An optional string value.
+",
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "Request",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "A simple API response.",
+            "type": "Response",
+          },
+        },
+      },
+      "source": {
+        "openapi": "anyOf/openapi.yml",
+      },
+    },
+    "types": {
+      "Response": {
+        "docs": "A generic response type used throughout the API.
+",
+        "properties": {
+          "value": {
+            "docs": "An optional numerical value.
+",
+            "type": "optional<double>",
+          },
+        },
+        "source": {
+          "openapi": "anyOf/openapi.yml",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test spec for \`description\` settings defined in anyOf.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`anyOf > anyOf > simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "Get": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+              "response": {
+                "body": {
+                  "value": 1.1,
+                },
+              },
+            },
+          ],
+          "method": "GET",
+          "pagination": undefined,
+          "path": "/get",
+          "request": {
+            "body": {
+              "properties": {
+                "id": {
+                  "docs": "An optional string value.
+",
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "Request",
+            "query-parameters": undefined,
+          },
+          "response": {
+            "docs": "A simple API response.",
+            "type": "Response",
+          },
+        },
+      },
+      "source": {
+        "openapi": "anyOf/openapi.yml",
+      },
+    },
+    "types": {
+      "Response": {
+        "docs": "A generic response type used throughout the API.
+",
+        "properties": {
+          "value": {
+            "docs": "An optional numerical value.
+",
+            "type": "optional<double>",
+          },
+        },
+        "source": {
+          "openapi": "anyOf/openapi.yml",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test spec for \`description\` settings defined in anyOf.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
 
 exports[`anyOf anyOf docs 1`] = `
 {
@@ -44,6 +194,9 @@ exports[`anyOf anyOf docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "anyOf/openapi.yml",
+      },
     },
     "types": {
       "Response": {
@@ -55,6 +208,9 @@ exports[`anyOf anyOf docs 1`] = `
 ",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "anyOf/openapi.yml",
         },
       },
     },
@@ -113,6 +269,9 @@ exports[`anyOf anyOf simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "anyOf/openapi.yml",
+      },
     },
     "types": {
       "Response": {
@@ -124,6 +283,9 @@ exports[`anyOf anyOf simple 1`] = `
 ",
             "type": "optional<double>",
           },
+        },
+        "source": {
+          "openapi": "anyOf/openapi.yml",
         },
       },
     },

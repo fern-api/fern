@@ -14,10 +14,18 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Install Fern
-        run: npm install -g fern-api
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Check API definition is valid
         env:
           FORCE_COLOR: "2"
-        run: fern check
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+          POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+        run: |
+          pnpm --filter @fern-api/cli dist:cli:prod
+          cli_path="$(pnpm --filter @fern-api/cli bin fern:prod)"
+          node $cli_path check
+

@@ -1,17 +1,18 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
+using SeedExhaustive;
 using SeedExhaustive.Core;
-using SeedExhaustive.Endpoints.Params;
 
 #nullable enable
 
 namespace SeedExhaustive.Endpoints.Params;
 
-public class ParamsClient
+public partial class ParamsClient
 {
     private RawClient _client;
 
-    public ParamsClient(RawClient client)
+    internal ParamsClient(RawClient client)
     {
         _client = client;
     }
@@ -46,7 +47,7 @@ public class ParamsClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -76,7 +77,7 @@ public class ParamsClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -109,7 +110,7 @@ public class ParamsClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -142,7 +143,7 @@ public class ParamsClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -181,7 +182,7 @@ public class ParamsClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

@@ -1,17 +1,16 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedAuthEnvironmentVariables;
 using SeedAuthEnvironmentVariables.Core;
 
 #nullable enable
 
 namespace SeedAuthEnvironmentVariables;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
@@ -49,7 +48,7 @@ public class ServiceClient
         throw new SeedAuthEnvironmentVariablesApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -94,7 +93,7 @@ public class ServiceClient
         throw new SeedAuthEnvironmentVariablesApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

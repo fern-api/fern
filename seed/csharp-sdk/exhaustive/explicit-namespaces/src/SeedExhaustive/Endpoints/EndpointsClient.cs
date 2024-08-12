@@ -11,11 +11,11 @@ using SeedExhaustive.Endpoints.Union;
 
 namespace SeedExhaustive.Endpoints;
 
-public class EndpointsClient
+public partial class EndpointsClient
 {
     private RawClient _client;
 
-    public EndpointsClient(RawClient client)
+    internal EndpointsClient(RawClient client)
     {
         _client = client;
         Container = new ContainerClient(_client);

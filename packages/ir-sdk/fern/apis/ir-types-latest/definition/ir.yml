@@ -110,6 +110,16 @@ types:
       language: string
       sdkName: string
       sdkVersion: string
+      userAgent: optional<UserAgent>
+  UserAgent: 
+    properties: 
+      header: 
+        type: literal<"User-Agent">
+        docs: The user agent header for ease of access to generators. 
+      value: 
+        type: string
+        docs: Formatted as "<package>/<version>"
+
   ApiVersionScheme:
     docs: |
       The available set of versions for the API. This is used to generate a special

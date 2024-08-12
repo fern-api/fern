@@ -57,6 +57,16 @@ type ListUsersOffsetPaginationRequest struct {
 	StartingAfter *string `query:"starting_after"`
 }
 
+type ListWithOffsetPaginationHasNextPageRequest struct {
+	// Defaults to first page
+	Page *int `query:"page"`
+	// The maxiumum number of elements to return.
+	// This is also used as the step size in this
+	// paginated endpoint.
+	Limit *int   `query:"limit"`
+	Order *Order `query:"order"`
+}
+
 type ListUsersOffsetStepPaginationRequest struct {
 	// Defaults to first page
 	Page *int `query:"page"`
@@ -139,7 +149,8 @@ func (l *ListUsersExtendedResponse) String() string {
 }
 
 type ListUsersPaginationResponse struct {
-	Page *Page `json:"page,omitempty" url:"page,omitempty"`
+	HasNextPage *bool `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
+	Page        *Page `json:"page,omitempty" url:"page,omitempty"`
 	// The totall number of /users
 	TotalCount int     `json:"total_count" url:"total_count"`
 	Data       []*User `json:"data,omitempty" url:"data,omitempty"`

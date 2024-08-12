@@ -220,10 +220,11 @@ class IntermediateRepresentationMigratorImpl implements IntermediateRepresentati
         targetGenerator: GeneratorNameAndVersion | undefined;
     }): MigratedIntermediateMigration<Migrated> {
         let migrated: unknown = intermediateRepresentation;
-        let jsonify: () => Promise<unknown> = () =>
-            IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
+        let jsonify: () => Promise<unknown> = async () => {
+            return await IrSerialization.IntermediateRepresentation.jsonOrThrow(migrated, {
                 unrecognizedObjectKeys: "strip"
             });
+        };
         for (const migration of this.migrations) {
             if (!shouldMigrate(migration)) {
                 break;

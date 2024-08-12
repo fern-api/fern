@@ -81,7 +81,8 @@ func (l *ListUsersExtendedResponse) String() string {
 }
 
 type ListUsersPaginationResponse struct {
-	Page *Page `json:"page,omitempty" url:"page,omitempty"`
+	HasNextPage *bool `json:"hasNextPage,omitempty" url:"hasNextPage,omitempty"`
+	Page        *Page `json:"page,omitempty" url:"page,omitempty"`
 	// The totall number of /users
 	TotalCount int     `json:"total_count" url:"total_count"`
 	Data       []*User `json:"data,omitempty" url:"data,omitempty"`

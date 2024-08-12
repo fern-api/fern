@@ -1,16 +1,15 @@
 using SeedExamples.Core;
-using SeedExamples.File;
 using SeedExamples.File.Notification;
 
 #nullable enable
 
 namespace SeedExamples.File;
 
-public class FileClient
+public partial class FileClient
 {
     private RawClient _client;
 
-    public FileClient(RawClient client)
+    internal FileClient(RawClient client)
     {
         _client = client;
         Notification = new NotificationClient(_client);

@@ -1,7 +1,3 @@
-using SeedQueryParameters;
-
-#nullable enable
-
 namespace SeedQueryParameters;
 
 public record GetUsersRequest

@@ -16,17 +16,56 @@ export interface DocsWorkspace {
     config: docsYml.RawSchemas.DocsConfiguration;
 }
 
-export interface Spec {
+export type Spec = OpenAPISpec | ProtobufSpec;
+
+export interface OpenAPISpec {
+    type: "openapi";
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    source: Source;
     settings?: SpecImportSettings;
+}
+
+export interface ProtobufSpec {
+    type: "protobuf";
+    absoluteFilepathToProtobufRoot: AbsoluteFilePath;
+    absoluteFilepathToProtobufTarget: AbsoluteFilePath;
+    absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
+    generateLocally: boolean;
+    settings?: SpecImportSettings;
+}
+
+export interface IdentifiableSource {
+    type: "asyncapi" | "openapi" | "protobuf";
+    id: string;
+    absoluteFilePath: AbsoluteFilePath;
+}
+
+export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
+
+export interface AsyncAPISource {
+    type: "asyncapi";
+    file: AbsoluteFilePath;
+}
+
+export interface OpenAPISource {
+    type: "openapi";
+    file: AbsoluteFilePath;
+}
+
+export interface ProtobufSource {
+    type: "protobuf";
+    root: AbsoluteFilePath;
+    file: AbsoluteFilePath;
 }
 
 export interface SpecImportSettings {
     audiences: string[];
     shouldUseTitleAsName: boolean;
     shouldUseUndiscriminatedUnionsWithLiterals: boolean;
+    asyncApiNaming?: "v1" | "v2";
 }
+
 export interface APIChangelog {
     files: ChangelogFile[];
 }

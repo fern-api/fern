@@ -1,16 +1,16 @@
 using System.Net.Http;
-using SeedNurseryApi;
+using System.Threading.Tasks;
 using SeedNurseryApi.Core;
 
 #nullable enable
 
 namespace SeedNurseryApi;
 
-public class PackageClient
+public partial class PackageClient
 {
     private RawClient _client;
 
-    public PackageClient(RawClient client)
+    internal PackageClient(RawClient client)
     {
         _client = client;
     }
@@ -37,7 +37,7 @@ public class PackageClient
         throw new SeedNurseryApiApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }
