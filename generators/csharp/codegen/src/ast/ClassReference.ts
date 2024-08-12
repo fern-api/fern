@@ -108,6 +108,8 @@ export class ClassReference extends AstNode {
         if (matchingNamespaces == null) {
             return false;
         }
+        // If there's a ClassReference besides the one that we're writing with the same name,
+        // then there may be conflict and return true
         const matchingNamespacesCopy = new Set(matchingNamespaces);
         matchingNamespacesCopy.delete(this.namespace);
         return matchingNamespacesCopy.size > 0;
