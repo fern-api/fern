@@ -13,8 +13,7 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
                     return [
                         {
                             severity: "error",
-                            message:
-                                `${playgroundEnvironmentIds.join(", ")} are not valid environments`
+                            message: `${playgroundEnvironmentIds.join(", ")} are not valid environments`
                         }
                     ];
                 }
@@ -22,14 +21,17 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
             }
 
             const availableEnvironmentIds = new Set(Object.keys(apiSpecificationEnvironments));
-            const violations: RuleViolation[] = playgroundEnvironmentIds
-                .filter((id) => !availableEnvironmentIds.has(id))
-                .map((id) => ({
-                    severity: "error",
-                    message: `${invalidEnvironmentIds.join(", ")} are not valid environments. Choose from ${availableEnvironmentIds.join(", ")}`
-                }));
-
-            return violations;
+            const violatingIds = playgroundEnvironmentIds.filter((id) => !availableEnvironmentIds.has(id));
+            return violatingIds.length > 0
+                ? [
+                      {
+                          severity: "error",
+                          message: `${violatingIds.join(", ")} are not valid environments. Choose from ${Array.from(
+                              availableEnvironmentIds
+                          ).join(", ")}`
+                      }
+                  ]
+                : [];
         }
     })
 };
