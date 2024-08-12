@@ -249,7 +249,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             )
         );
 
-        // hasNextPage checks if the items are not empty        
+        // hasNextPage checks if the items are not empty
         const itemsProperty = this.getNameFromWireValue({ name: offset.results.property.name, context });
         const itemsPropertyPathComponents = [
             "response",
@@ -288,7 +288,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 ts.factory.createIdentifier(hasNextPageProperty)
             );
             hasNextPage = ts.factory.createBinaryExpression(
-                hasNextPagePropertyAccess, 
+                hasNextPagePropertyAccess,
                 ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
                 hasNextPage
             );

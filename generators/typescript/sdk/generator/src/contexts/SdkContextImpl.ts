@@ -1,5 +1,5 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Constants, IntermediateRepresentation, TypeReference } from "@fern-fern/ir-sdk/api";
+import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
     createExternalDependencies,
