@@ -2,33 +2,9 @@ name: ci
 
 on:
   push:
-    paths:
-      - "pnpm-lock.yaml"
-      - "packages/**"
-      # IR snapshot tests run on test definitions
-      - "test-definitions/**"
-      # Add any generators that are written in TypeScript
-      - "generators/openapi/**"
-      - "generators/postman/**"
-      - "generators/ruby/**"
-      - "generators/typescript/**"
-      - "generators/csharp/**"
-      - "generators/swift/**"
     branches:
       - main
   pull_request:
-    paths:
-      - "pnpm-lock.yaml"
-      - "packages/**"
-      # IR snapshot tests run on test definitions
-      - "test-definitions/**"
-      # Add any generators that are written in TypeScript
-      - "generators/openapi/**"
-      - "generators/postman/**"
-      - "generators/ruby/**"
-      - "generators/typescript/**"
-      - "generators/csharp/**"
-      - "generators/swift/**"
     branches:
       - main
 
@@ -158,7 +134,7 @@ jobs:
           cli_path="./packages/cli/cli/dist/dev/bundle.cjs"
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
 
-  changes:
+  ts-generator-changes:
     runs-on: ubuntu-latest
     outputs:
       typescript: ${{ steps.filter.outputs.typescript }}
@@ -173,7 +149,7 @@ jobs:
 
   node-version-tests:
     runs-on: ubuntu-latest
-    needs: changes
+    needs: ts-generator-changes
     if: ${{ needs.changes.outputs.typescript == 'true' }}
     steps:
       - name: Checkout repo
@@ -195,7 +171,7 @@ jobs:
 
   cloudflare-startup-tests:
     runs-on: ubuntu-latest
-    needs: changes
+    needs: ts-generator-changes
     if: ${{ needs.changes.outputs.typescript == 'true' }}
     steps:
       - name: Checkout repo
@@ -209,7 +185,7 @@ jobs:
 
   browser-startup-tests:
     runs-on: ubuntu-latest
-    needs: changes
+    needs: ts-generator-changes
     if: ${{ needs.changes.outputs.typescript == 'true' }}
     steps:
       - name: Checkout repo
