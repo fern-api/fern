@@ -30,9 +30,9 @@
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
     "dist:cli": "pnpm compile && node build.cjs",
-    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish",
-    "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:latest .",
-    "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:${0} ."
+    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
+    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:latest .",
+    "dockerTagVersion": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:${0} ."
   },
   "dependencies": {
     "@fern-api/generator-commons": "workspace:*",

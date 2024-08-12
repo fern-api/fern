@@ -30,7 +30,7 @@
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
     "dist:cli": "pnpm compile && node build.cjs && cp -R ../../test-definitions/fern dist",
-    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish --access public",
+    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish --access public",
     "generate": "fern generate --local"
   },
   "dependencies": {

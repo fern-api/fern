@@ -26,7 +26,7 @@
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
     "dist:cli": "tsup ./src/cli.ts --cjsInterop --format cjs",
-    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
+    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish"
   },
   "devDependencies": {
     "@fern-api/fs-utils": "workspace:*",
