@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser vocode parse open api 1`] = `
+exports[`open api parser > vocode > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -35,7 +35,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -169,6 +177,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -200,6 +212,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -214,12 +230,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "PhoneNumberPage",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "List Numbers",
       "tags": [
         "numbers",
@@ -243,7 +271,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -279,6 +315,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -293,12 +333,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "PhoneNumber",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Get Number",
       "tags": [
         "numbers",
@@ -333,12 +385,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "PhoneNumber",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Buy Number",
       "tags": [
         "numbers",
@@ -362,7 +426,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -398,6 +470,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": {
@@ -411,7 +487,15 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "UpdateNumberRequest",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -426,12 +510,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "PhoneNumber",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Update Number",
       "tags": [
         "numbers",
@@ -455,7 +551,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -491,6 +595,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -505,12 +613,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "PhoneNumber",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Cancel Number",
       "tags": [
         "numbers",
@@ -534,7 +654,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -707,6 +835,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -738,6 +870,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -752,12 +888,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "CallPage",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "List Calls",
       "tags": [
         "calls",
@@ -781,7 +929,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -817,6 +973,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -831,12 +991,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Call",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Get Call",
       "tags": [
         "calls",
@@ -860,7 +1032,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -896,6 +1076,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -910,12 +1094,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Call",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "End Call",
       "tags": [
         "calls",
@@ -939,7 +1135,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -965,7 +1169,15 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "CreateCallRequest",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -980,12 +1192,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Call",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Create Call",
       "tags": [
         "calls",
@@ -1009,7 +1233,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1085,6 +1317,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -1097,10 +1333,18 @@ exports[`open api parser vocode parse open api 1`] = `
           "nameOverride": null,
           "type": "unknown",
         },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
+        },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Get Recording",
       "tags": [
         "calls",
@@ -1176,12 +1420,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Usage",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Get Usage",
       "tags": [
         "usage",
@@ -1205,7 +1461,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1241,6 +1505,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -1255,6 +1523,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "commonProperties": [],
             "description": null,
             "discriminantProperty": "type",
+            "encoding": null,
             "generatedName": "GetActionResponse",
             "groupName": null,
             "nameOverride": null,
@@ -1266,6 +1535,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "DTMFAction",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "action_end_conversation": {
@@ -1275,6 +1548,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "EndConversationAction",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "action_transfer_call": {
@@ -1284,16 +1561,32 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "TransferCallAction",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "discriminated",
           },
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Get Action",
       "tags": [
         "actions",
@@ -1317,7 +1610,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1403,6 +1704,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -1434,6 +1739,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -1448,12 +1757,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "ActionPage",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "List Actions",
       "tags": [
         "actions",
@@ -1477,7 +1798,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1503,7 +1832,15 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "ActionParamsRequest",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1518,6 +1855,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "commonProperties": [],
             "description": null,
             "discriminantProperty": "type",
+            "encoding": null,
             "generatedName": "CreateActionResponse",
             "groupName": null,
             "nameOverride": null,
@@ -1529,6 +1867,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "DTMFAction",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "action_end_conversation": {
@@ -1538,6 +1880,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "EndConversationAction",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "action_transfer_call": {
@@ -1547,16 +1893,32 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "TransferCallAction",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "discriminated",
           },
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Create Action",
       "tags": [
         "actions",
@@ -1580,7 +1942,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1616,6 +1986,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": {
@@ -1629,7 +2003,15 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "ActionUpdateParamsRequest",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1644,6 +2026,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "commonProperties": [],
             "description": null,
             "discriminantProperty": "type",
+            "encoding": null,
             "generatedName": "UpdateActionResponse",
             "groupName": null,
             "nameOverride": null,
@@ -1655,6 +2038,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "DTMFAction",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "action_end_conversation": {
@@ -1664,6 +2051,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "EndConversationAction",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "action_transfer_call": {
@@ -1673,16 +2064,32 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "TransferCallAction",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "discriminated",
           },
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Update Action",
       "tags": [
         "actions",
@@ -1706,7 +2113,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1742,6 +2157,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -1756,12 +2175,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Agent",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Get Agent",
       "tags": [
         "agents",
@@ -1785,7 +2216,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1946,6 +2385,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -1977,6 +2420,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -1991,12 +2438,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "AgentPage",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "List Agents",
       "tags": [
         "agents",
@@ -2020,7 +2479,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2046,7 +2513,15 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "AgentParams",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2061,12 +2536,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Agent",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Create Agent",
       "tags": [
         "agents",
@@ -2090,7 +2577,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2126,6 +2621,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": {
@@ -2139,7 +2638,15 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "AgentUpdateParams",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2154,12 +2661,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Agent",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Update Agent",
       "tags": [
         "agents",
@@ -2183,7 +2702,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2219,6 +2746,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -2233,6 +2764,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "commonProperties": [],
             "description": null,
             "discriminantProperty": "type",
+            "encoding": null,
             "generatedName": "GetVoiceResponse",
             "groupName": null,
             "nameOverride": null,
@@ -2244,6 +2776,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "AzureVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "voice_eleven_labs": {
@@ -2253,6 +2789,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ElevenLabsVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "voice_play_ht": {
@@ -2262,6 +2802,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "PlayHtVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "voice_rime": {
@@ -2271,16 +2815,32 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "RimeVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "discriminated",
           },
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Get Voice",
       "tags": [
         "voices",
@@ -2304,7 +2864,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2390,6 +2958,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -2421,6 +2993,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -2435,12 +3011,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "VoicePage",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "List Voices",
       "tags": [
         "voices",
@@ -2464,7 +3052,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2490,7 +3086,15 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "VoiceParamsRequest",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2505,6 +3109,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "commonProperties": [],
             "description": null,
             "discriminantProperty": "type",
+            "encoding": null,
             "generatedName": "CreateVoiceResponse",
             "groupName": null,
             "nameOverride": null,
@@ -2516,6 +3121,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "AzureVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "voice_eleven_labs": {
@@ -2525,6 +3134,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ElevenLabsVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "voice_play_ht": {
@@ -2534,6 +3147,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "PlayHtVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "voice_rime": {
@@ -2543,16 +3160,32 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "RimeVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "discriminated",
           },
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Create Voice",
       "tags": [
         "voices",
@@ -2576,7 +3209,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2612,6 +3253,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": {
@@ -2625,7 +3270,15 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "VoiceUpdateParamsRequest",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2640,6 +3293,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "commonProperties": [],
             "description": null,
             "discriminantProperty": "type",
+            "encoding": null,
             "generatedName": "UpdateVoiceResponse",
             "groupName": null,
             "nameOverride": null,
@@ -2651,6 +3305,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "AzureVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "voice_eleven_labs": {
@@ -2660,6 +3318,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ElevenLabsVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "voice_play_ht": {
@@ -2669,6 +3331,10 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "PlayHtVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               "voice_rime": {
@@ -2678,16 +3344,32 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "RimeVoice",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "discriminated",
           },
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Update Voice",
       "tags": [
         "voices",
@@ -2711,7 +3393,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2808,6 +3498,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -2822,12 +3516,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Webhook",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Get Webhook",
       "tags": [
         "webhooks",
@@ -2851,7 +3557,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2977,6 +3691,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -3008,6 +3726,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -3022,12 +3744,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "WebhookPage",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "List Webhooks",
       "tags": [
         "webhooks",
@@ -3051,7 +3785,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -3147,7 +3889,15 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "WebhookParams",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3162,12 +3912,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Webhook",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Create Webhook",
       "tags": [
         "webhooks",
@@ -3191,7 +3953,15 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "HTTPValidationError",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -3291,6 +4061,10 @@ exports[`open api parser vocode parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": {
@@ -3304,7 +4078,15 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "WebhookUpdateParams",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3319,12 +4101,24 @@ exports[`open api parser vocode parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "Webhook",
+          "source": {
+            "file": "vocode/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Update Webhook",
       "tags": [
         "webhooks",
@@ -3401,6 +4195,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "commonProperties": [],
                 "description": null,
                 "discriminantProperty": "type",
+                "encoding": null,
                 "generatedName": "ActionPageItemsItem",
                 "groupName": null,
                 "nameOverride": null,
@@ -3412,6 +4207,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "DTMFAction",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "action_end_conversation": {
@@ -3421,6 +4220,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "EndConversationAction",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "action_transfer_call": {
@@ -3430,8 +4233,16 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "TransferCallAction",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
+                },
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
                 },
                 "type": "discriminated",
               },
@@ -3509,6 +4320,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ActionParamsRequest": {
@@ -3518,6 +4333,7 @@ exports[`open api parser vocode parse open api 1`] = `
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "ActionParamsRequest",
         "groupName": null,
         "nameOverride": "ActionParamsRequest",
@@ -3529,6 +4345,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "DTMFActionParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "action_end_conversation": {
@@ -3538,6 +4358,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "EndConversationActionParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "action_transfer_call": {
@@ -3547,8 +4371,16 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "TransferCallActionParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -3560,6 +4392,7 @@ exports[`open api parser vocode parse open api 1`] = `
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "ActionUpdateParamsRequest",
         "groupName": null,
         "nameOverride": "ActionUpdateParamsRequest",
@@ -3571,6 +4404,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "DTMFActionUpdateParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "action_end_conversation": {
@@ -3580,6 +4417,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "EndConversationActionUpdateParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "action_transfer_call": {
@@ -3589,8 +4430,16 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "TransferCallActionUpdateParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -3698,6 +4547,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Language",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3723,6 +4576,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "commonProperties": [],
                 "description": null,
                 "discriminantProperty": "type",
+                "encoding": null,
                 "generatedName": "AgentActionsItem",
                 "groupName": null,
                 "nameOverride": null,
@@ -3734,6 +4588,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "DTMFAction",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "action_end_conversation": {
@@ -3743,6 +4601,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "EndConversationAction",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "action_transfer_call": {
@@ -3752,8 +4614,16 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "TransferCallAction",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
+                },
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
                 },
                 "type": "discriminated",
               },
@@ -3774,6 +4644,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "commonProperties": [],
               "description": null,
               "discriminantProperty": "type",
+              "encoding": null,
               "generatedName": "AgentVoice",
               "groupName": null,
               "nameOverride": "Voice",
@@ -3785,6 +4656,10 @@ exports[`open api parser vocode parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "AzureVoice",
+                  "source": {
+                    "file": "vocode/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 "voice_eleven_labs": {
@@ -3794,6 +4669,10 @@ exports[`open api parser vocode parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "ElevenLabsVoice",
+                  "source": {
+                    "file": "vocode/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 "voice_play_ht": {
@@ -3803,6 +4682,10 @@ exports[`open api parser vocode parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "PlayHtVoice",
+                  "source": {
+                    "file": "vocode/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 "voice_rime": {
@@ -3812,8 +4695,16 @@ exports[`open api parser vocode parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "RimeVoice",
+                  "source": {
+                    "file": "vocode/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
+              },
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
               },
               "type": "discriminated",
             },
@@ -3872,6 +4763,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Webhook",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3897,6 +4792,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "PineconeVectorDatabase",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -3922,11 +4821,19 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "InterruptSensitivity",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "AgentPage": {
@@ -3960,6 +4867,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "NormalizedAgent",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4035,6 +4946,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "AgentParams": {
@@ -4092,6 +5007,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Language",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4122,6 +5041,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": null,
+                  "encoding": null,
                   "generatedName": "AgentParamsActionsItem",
                   "groupName": null,
                   "nameOverride": null,
@@ -4149,6 +5069,7 @@ exports[`open api parser vocode parse open api 1`] = `
                         "commonProperties": [],
                         "description": null,
                         "discriminantProperty": "type",
+                        "encoding": null,
                         "generatedName": "AgentParamsActionsItemOne",
                         "groupName": null,
                         "nameOverride": null,
@@ -4160,6 +5081,10 @@ exports[`open api parser vocode parse open api 1`] = `
                             "groupName": null,
                             "nameOverride": null,
                             "schema": "DTMFActionParams",
+                            "source": {
+                              "file": "vocode/openapi.json",
+                              "type": "openapi",
+                            },
                             "type": "reference",
                           },
                           "action_end_conversation": {
@@ -4169,6 +5094,10 @@ exports[`open api parser vocode parse open api 1`] = `
                             "groupName": null,
                             "nameOverride": null,
                             "schema": "EndConversationActionParams",
+                            "source": {
+                              "file": "vocode/openapi.json",
+                              "type": "openapi",
+                            },
                             "type": "reference",
                           },
                           "action_transfer_call": {
@@ -4178,13 +5107,25 @@ exports[`open api parser vocode parse open api 1`] = `
                             "groupName": null,
                             "nameOverride": null,
                             "schema": "TransferCallActionParams",
+                            "source": {
+                              "file": "vocode/openapi.json",
+                              "type": "openapi",
+                            },
                             "type": "reference",
                           },
+                        },
+                        "source": {
+                          "file": "vocode/openapi.json",
+                          "type": "openapi",
                         },
                         "type": "discriminated",
                       },
                     },
                   ],
+                  "source": {
+                    "file": "vocode/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -4203,6 +5144,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "AgentParamsVoice",
               "groupName": null,
               "nameOverride": "Voice",
@@ -4230,6 +5172,7 @@ exports[`open api parser vocode parse open api 1`] = `
                     "commonProperties": [],
                     "description": null,
                     "discriminantProperty": "type",
+                    "encoding": null,
                     "generatedName": "AgentParamsVoiceOne",
                     "groupName": null,
                     "nameOverride": null,
@@ -4241,6 +5184,10 @@ exports[`open api parser vocode parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": "AzureVoiceParams",
+                        "source": {
+                          "file": "vocode/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "reference",
                       },
                       "voice_eleven_labs": {
@@ -4250,6 +5197,10 @@ exports[`open api parser vocode parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": "ElevenLabsVoiceParams",
+                        "source": {
+                          "file": "vocode/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "reference",
                       },
                       "voice_play_ht": {
@@ -4259,6 +5210,10 @@ exports[`open api parser vocode parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": "PlayHtVoiceParams",
+                        "source": {
+                          "file": "vocode/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "reference",
                       },
                       "voice_rime": {
@@ -4268,13 +5223,25 @@ exports[`open api parser vocode parse open api 1`] = `
                         "groupName": null,
                         "nameOverride": null,
                         "schema": "RimeVoiceParams",
+                        "source": {
+                          "file": "vocode/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "reference",
                       },
+                    },
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
                     },
                     "type": "discriminated",
                   },
                 },
               ],
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
@@ -4330,6 +5297,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AgentParamsWebhook",
                 "groupName": null,
                 "nameOverride": "Webhook",
@@ -4357,9 +5325,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "WebhookParams",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -4384,6 +5360,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AgentParamsVectorDatabase",
                 "groupName": null,
                 "nameOverride": null,
@@ -4411,9 +5388,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "PineconeVectorDatabaseParams",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -4440,11 +5425,19 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "InterruptSensitivity",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "AgentUpdateParams": {
@@ -4476,6 +5469,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AgentUpdateParamsPrompt",
                 "groupName": null,
                 "nameOverride": "Prompt",
@@ -4503,9 +5497,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -4530,6 +5532,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AgentUpdateParamsLanguage",
                 "groupName": null,
                 "nameOverride": "Language",
@@ -4541,6 +5544,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Language",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   {
@@ -4550,9 +5557,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -4577,6 +5592,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AgentUpdateParamsActions",
                 "groupName": null,
                 "nameOverride": "Actions",
@@ -4593,6 +5609,7 @@ exports[`open api parser vocode parse open api 1`] = `
                       "value": {
                         "availability": null,
                         "description": null,
+                        "encoding": null,
                         "generatedName": "AgentUpdateParamsActionsItem",
                         "groupName": null,
                         "nameOverride": null,
@@ -4620,6 +5637,7 @@ exports[`open api parser vocode parse open api 1`] = `
                               "commonProperties": [],
                               "description": null,
                               "discriminantProperty": "type",
+                              "encoding": null,
                               "generatedName": "AgentUpdateParamsActionsItemOne",
                               "groupName": null,
                               "nameOverride": null,
@@ -4631,6 +5649,10 @@ exports[`open api parser vocode parse open api 1`] = `
                                   "groupName": null,
                                   "nameOverride": null,
                                   "schema": "DTMFActionUpdateParams",
+                                  "source": {
+                                    "file": "vocode/openapi.json",
+                                    "type": "openapi",
+                                  },
                                   "type": "reference",
                                 },
                                 "action_end_conversation": {
@@ -4640,6 +5662,10 @@ exports[`open api parser vocode parse open api 1`] = `
                                   "groupName": null,
                                   "nameOverride": null,
                                   "schema": "EndConversationActionUpdateParams",
+                                  "source": {
+                                    "file": "vocode/openapi.json",
+                                    "type": "openapi",
+                                  },
                                   "type": "reference",
                                 },
                                 "action_transfer_call": {
@@ -4649,13 +5675,25 @@ exports[`open api parser vocode parse open api 1`] = `
                                   "groupName": null,
                                   "nameOverride": null,
                                   "schema": "TransferCallActionUpdateParams",
+                                  "source": {
+                                    "file": "vocode/openapi.json",
+                                    "type": "openapi",
+                                  },
                                   "type": "reference",
                                 },
+                              },
+                              "source": {
+                                "file": "vocode/openapi.json",
+                                "type": "openapi",
                               },
                               "type": "discriminated",
                             },
                           },
                         ],
+                        "source": {
+                          "file": "vocode/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "undisciminated",
                       },
                     },
@@ -4667,9 +5705,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -4694,6 +5740,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AgentUpdateParamsVoice",
                 "groupName": null,
                 "nameOverride": "Voice",
@@ -4721,6 +5768,7 @@ exports[`open api parser vocode parse open api 1`] = `
                       "commonProperties": [],
                       "description": null,
                       "discriminantProperty": "type",
+                      "encoding": null,
                       "generatedName": "AgentUpdateParamsVoiceOne",
                       "groupName": null,
                       "nameOverride": null,
@@ -4732,6 +5780,10 @@ exports[`open api parser vocode parse open api 1`] = `
                           "groupName": null,
                           "nameOverride": null,
                           "schema": "AzureVoiceUpdateParams",
+                          "source": {
+                            "file": "vocode/openapi.json",
+                            "type": "openapi",
+                          },
                           "type": "reference",
                         },
                         "voice_eleven_labs": {
@@ -4741,6 +5793,10 @@ exports[`open api parser vocode parse open api 1`] = `
                           "groupName": null,
                           "nameOverride": null,
                           "schema": "ElevenLabsVoiceUpdateParams",
+                          "source": {
+                            "file": "vocode/openapi.json",
+                            "type": "openapi",
+                          },
                           "type": "reference",
                         },
                         "voice_play_ht": {
@@ -4750,6 +5806,10 @@ exports[`open api parser vocode parse open api 1`] = `
                           "groupName": null,
                           "nameOverride": null,
                           "schema": "PlayHtVoiceUpdateParams",
+                          "source": {
+                            "file": "vocode/openapi.json",
+                            "type": "openapi",
+                          },
                           "type": "reference",
                         },
                         "voice_rime": {
@@ -4759,8 +5819,16 @@ exports[`open api parser vocode parse open api 1`] = `
                           "groupName": null,
                           "nameOverride": null,
                           "schema": "RimeVoiceUpdateParams",
+                          "source": {
+                            "file": "vocode/openapi.json",
+                            "type": "openapi",
+                          },
                           "type": "reference",
                         },
+                      },
+                      "source": {
+                        "file": "vocode/openapi.json",
+                        "type": "openapi",
                       },
                       "type": "discriminated",
                     },
@@ -4772,9 +5840,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -4799,6 +5875,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AgentUpdateParamsInitialMessage",
                 "groupName": null,
                 "nameOverride": null,
@@ -4826,9 +5903,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -4853,6 +5938,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AgentUpdateParamsWebhook",
                 "groupName": null,
                 "nameOverride": "Webhook",
@@ -4880,6 +5966,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "WebhookUpdateParams",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   {
@@ -4889,9 +5979,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -4916,6 +6014,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AgentUpdateParamsVectorDatabase",
                 "groupName": null,
                 "nameOverride": null,
@@ -4943,6 +6042,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "PineconeVectorDatabaseUpdateParams",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   {
@@ -4952,9 +6055,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -4979,6 +6090,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AgentUpdateParamsInterruptSensitivity",
                 "groupName": null,
                 "nameOverride": null,
@@ -4990,6 +6102,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "InterruptSensitivity",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   {
@@ -4999,15 +6115,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "AzureVoice": {
@@ -5159,6 +6287,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "AzureVoiceParams": {
@@ -5262,6 +6394,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "AzureVoiceUpdateParams": {
@@ -5293,6 +6429,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AzureVoiceUpdateParamsVoiceName",
                 "groupName": null,
                 "nameOverride": null,
@@ -5320,9 +6457,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -5347,6 +6492,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AzureVoiceUpdateParamsPitch",
                 "groupName": null,
                 "nameOverride": "Pitch",
@@ -5375,9 +6521,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -5402,6 +6556,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "AzureVoiceUpdateParamsRate",
                 "groupName": null,
                 "nameOverride": "Rate",
@@ -5430,15 +6585,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Call": {
@@ -5520,6 +6687,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "CallStatus",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -5678,6 +6849,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Agent",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -5760,6 +6935,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CallPage": {
@@ -5793,6 +6972,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "NormalizedCall",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -5868,6 +7051,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CallStatus": {
@@ -5877,6 +7064,10 @@ exports[`open api parser vocode parse open api 1`] = `
       "generatedName": "CallStatus",
       "groupName": null,
       "nameOverride": "CallStatus",
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -5988,6 +7179,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Language",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -6018,6 +7213,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "value": {
                   "availability": null,
                   "description": null,
+                  "encoding": null,
                   "generatedName": "CreateCallAgentParamsActionsItem",
                   "groupName": null,
                   "nameOverride": null,
@@ -6045,6 +7241,7 @@ exports[`open api parser vocode parse open api 1`] = `
                         "commonProperties": [],
                         "description": null,
                         "discriminantProperty": "type",
+                        "encoding": null,
                         "generatedName": "CreateCallAgentParamsActionsItemOne",
                         "groupName": null,
                         "nameOverride": null,
@@ -6056,6 +7253,10 @@ exports[`open api parser vocode parse open api 1`] = `
                             "groupName": null,
                             "nameOverride": null,
                             "schema": "DTMFActionParams",
+                            "source": {
+                              "file": "vocode/openapi.json",
+                              "type": "openapi",
+                            },
                             "type": "reference",
                           },
                           "action_end_conversation": {
@@ -6065,6 +7266,10 @@ exports[`open api parser vocode parse open api 1`] = `
                             "groupName": null,
                             "nameOverride": null,
                             "schema": "EndConversationActionParams",
+                            "source": {
+                              "file": "vocode/openapi.json",
+                              "type": "openapi",
+                            },
                             "type": "reference",
                           },
                           "action_transfer_call": {
@@ -6074,13 +7279,25 @@ exports[`open api parser vocode parse open api 1`] = `
                             "groupName": null,
                             "nameOverride": null,
                             "schema": "TransferCallActionParams",
+                            "source": {
+                              "file": "vocode/openapi.json",
+                              "type": "openapi",
+                            },
                             "type": "reference",
                           },
+                        },
+                        "source": {
+                          "file": "vocode/openapi.json",
+                          "type": "openapi",
                         },
                         "type": "discriminated",
                       },
                     },
                   ],
+                  "source": {
+                    "file": "vocode/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "undisciminated",
                 },
               },
@@ -6106,6 +7323,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "CreateCallAgentParamsVoice",
                 "groupName": null,
                 "nameOverride": "Voice",
@@ -6133,6 +7351,7 @@ exports[`open api parser vocode parse open api 1`] = `
                       "commonProperties": [],
                       "description": null,
                       "discriminantProperty": "type",
+                      "encoding": null,
                       "generatedName": "CreateCallAgentParamsVoiceOne",
                       "groupName": null,
                       "nameOverride": null,
@@ -6144,6 +7363,10 @@ exports[`open api parser vocode parse open api 1`] = `
                           "groupName": null,
                           "nameOverride": null,
                           "schema": "AzureVoiceParams",
+                          "source": {
+                            "file": "vocode/openapi.json",
+                            "type": "openapi",
+                          },
                           "type": "reference",
                         },
                         "voice_eleven_labs": {
@@ -6153,6 +7376,10 @@ exports[`open api parser vocode parse open api 1`] = `
                           "groupName": null,
                           "nameOverride": null,
                           "schema": "ElevenLabsVoiceParams",
+                          "source": {
+                            "file": "vocode/openapi.json",
+                            "type": "openapi",
+                          },
                           "type": "reference",
                         },
                         "voice_play_ht": {
@@ -6162,6 +7389,10 @@ exports[`open api parser vocode parse open api 1`] = `
                           "groupName": null,
                           "nameOverride": null,
                           "schema": "PlayHtVoiceParams",
+                          "source": {
+                            "file": "vocode/openapi.json",
+                            "type": "openapi",
+                          },
                           "type": "reference",
                         },
                         "voice_rime": {
@@ -6171,13 +7402,25 @@ exports[`open api parser vocode parse open api 1`] = `
                           "groupName": null,
                           "nameOverride": null,
                           "schema": "RimeVoiceParams",
+                          "source": {
+                            "file": "vocode/openapi.json",
+                            "type": "openapi",
+                          },
                           "type": "reference",
                         },
+                      },
+                      "source": {
+                        "file": "vocode/openapi.json",
+                        "type": "openapi",
                       },
                       "type": "discriminated",
                     },
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -6234,6 +7477,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "CreateCallAgentParamsWebhook",
                 "groupName": null,
                 "nameOverride": "Webhook",
@@ -6261,9 +7505,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "WebhookParams",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -6288,6 +7540,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "CreateCallAgentParamsVectorDatabase",
                 "groupName": null,
                 "nameOverride": null,
@@ -6315,9 +7568,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "PineconeVectorDatabaseParams",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -6344,11 +7605,19 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "InterruptSensitivity",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CreateCallRequest": {
@@ -6421,6 +7690,7 @@ exports[`open api parser vocode parse open api 1`] = `
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "CreateCallRequestAgent",
               "groupName": null,
               "nameOverride": "Agent",
@@ -6448,14 +7718,26 @@ exports[`open api parser vocode parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "CreateCallAgentParams",
+                  "source": {
+                    "file": "vocode/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DTMFAction": {
@@ -6537,11 +7819,19 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "EmptyActionConfig",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DTMFActionParams": {
@@ -6575,11 +7865,19 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "EmptyActionConfig",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DTMFActionUpdateParams": {
@@ -6611,6 +7909,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "DtmfActionUpdateParamsConfig",
                 "groupName": null,
                 "nameOverride": "Config",
@@ -6622,6 +7921,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "EmptyActionConfig",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   {
@@ -6631,15 +7934,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ElevenLabsVoice": {
@@ -6815,6 +8130,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ElevenLabsVoiceParams": {
@@ -6942,6 +8261,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ElevenLabsVoiceUpdateParams": {
@@ -6973,6 +8296,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ElevenLabsVoiceUpdateParamsVoiceId",
                 "groupName": null,
                 "nameOverride": null,
@@ -7000,9 +8324,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -7027,6 +8359,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ElevenLabsVoiceUpdateParamsStability",
                 "groupName": null,
                 "nameOverride": "Stability",
@@ -7055,9 +8388,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -7082,6 +8423,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ElevenLabsVoiceUpdateParamsSimilarityBoost",
                 "groupName": null,
                 "nameOverride": null,
@@ -7110,9 +8452,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -7137,6 +8487,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ElevenLabsVoiceUpdateParamsApiKey",
                 "groupName": null,
                 "nameOverride": null,
@@ -7164,15 +8515,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "EmptyActionConfig": {
@@ -7185,6 +8548,10 @@ exports[`open api parser vocode parse open api 1`] = `
       "groupName": null,
       "nameOverride": "EmptyActionConfig",
       "properties": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "EndConversationAction": {
@@ -7266,11 +8633,19 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "EmptyActionConfig",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "EndConversationActionParams": {
@@ -7304,11 +8679,19 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "EmptyActionConfig",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "EndConversationActionUpdateParams": {
@@ -7340,6 +8723,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "EndConversationActionUpdateParamsConfig",
                 "groupName": null,
                 "nameOverride": "Config",
@@ -7351,6 +8735,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "EmptyActionConfig",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   {
@@ -7360,15 +8748,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "EventType": {
@@ -7378,6 +8778,10 @@ exports[`open api parser vocode parse open api 1`] = `
       "generatedName": "EventType",
       "groupName": null,
       "nameOverride": "EventType",
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -7467,6 +8871,10 @@ exports[`open api parser vocode parse open api 1`] = `
       "generatedName": "HttpMethod",
       "groupName": null,
       "nameOverride": "HTTPMethod",
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -7535,12 +8943,20 @@ exports[`open api parser vocode parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ValidationError",
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "InterruptSensitivity": {
@@ -7550,6 +8966,10 @@ exports[`open api parser vocode parse open api 1`] = `
       "generatedName": "InterruptSensitivity",
       "groupName": null,
       "nameOverride": "InterruptSensitivity",
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -7587,6 +9007,10 @@ exports[`open api parser vocode parse open api 1`] = `
       "generatedName": "Language",
       "groupName": null,
       "nameOverride": "Language",
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -7733,6 +9157,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Language",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7876,6 +9304,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "NormalizedAgentVectorDatabase",
                 "groupName": null,
                 "nameOverride": null,
@@ -7903,9 +9332,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "PineconeVectorDatabaseParams",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -7932,11 +9369,19 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "InterruptSensitivity",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "NormalizedCall": {
@@ -8018,6 +9463,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "CallStatus",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8265,6 +9714,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "NormalizedPhoneNumber": {
@@ -8434,6 +9887,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PhoneNumber": {
@@ -8568,6 +10025,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "Agent",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -8596,6 +10057,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PhoneNumberPage": {
@@ -8629,6 +10094,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "NormalizedPhoneNumber",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8704,6 +10173,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PineconeVectorDatabase": {
@@ -8857,6 +10330,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PineconeVectorDatabaseParams": {
@@ -8962,6 +10439,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PineconeVectorDatabaseUpdateParams": {
@@ -9013,6 +10494,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PineconeVectorDatabaseUpdateParamsIndex",
                 "groupName": null,
                 "nameOverride": "Index",
@@ -9040,9 +10522,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -9067,6 +10557,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PineconeVectorDatabaseUpdateParamsApiKey",
                 "groupName": null,
                 "nameOverride": null,
@@ -9094,9 +10585,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -9121,6 +10620,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PineconeVectorDatabaseUpdateParamsApiEnvironment",
                 "groupName": null,
                 "nameOverride": null,
@@ -9148,15 +10648,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PlanType": {
@@ -9166,6 +10678,10 @@ exports[`open api parser vocode parse open api 1`] = `
       "generatedName": "PlanType",
       "groupName": null,
       "nameOverride": "PlanType",
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -9340,6 +10856,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PlayHtVoiceParams": {
@@ -9425,6 +10945,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PlayHtVoiceUpdateParams": {
@@ -9456,6 +10980,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PlayHtVoiceUpdateParamsVoiceId",
                 "groupName": null,
                 "nameOverride": null,
@@ -9483,9 +11008,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -9510,6 +11043,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PlayHtVoiceUpdateParamsApiUserId",
                 "groupName": null,
                 "nameOverride": null,
@@ -9537,9 +11071,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -9564,6 +11106,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PlayHtVoiceUpdateParamsApiKey",
                 "groupName": null,
                 "nameOverride": null,
@@ -9591,15 +11134,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RimeVoice": {
@@ -9685,6 +11240,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RimeVoiceParams": {
@@ -9722,6 +11281,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RimeVoiceUpdateParams": {
@@ -9753,6 +11316,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "RimeVoiceUpdateParamsSpeaker",
                 "groupName": null,
                 "nameOverride": "Speaker",
@@ -9780,15 +11344,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransferCallAction": {
@@ -9863,10 +11439,18 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "TransferCallConfig",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransferCallActionParams": {
@@ -9893,10 +11477,18 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "TransferCallConfig",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransferCallActionUpdateParams": {
@@ -9928,6 +11520,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "TransferCallActionUpdateParamsConfig",
                 "groupName": null,
                 "nameOverride": "Config",
@@ -9939,6 +11532,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "TransferCallConfig",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   {
@@ -9948,15 +11545,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransferCallConfig": {
@@ -9994,6 +11603,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Undefined": {
@@ -10006,6 +11619,10 @@ exports[`open api parser vocode parse open api 1`] = `
       "groupName": null,
       "nameOverride": "Undefined",
       "properties": [],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UpdateNumberRequest": {
@@ -10037,6 +11654,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "UpdateNumberRequestLabel",
                 "groupName": null,
                 "nameOverride": "Label",
@@ -10064,9 +11682,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -10091,6 +11717,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "UpdateNumberRequestInboundAgent",
                 "groupName": null,
                 "nameOverride": null,
@@ -10118,6 +11745,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "AgentUpdateParams",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   {
@@ -10127,15 +11758,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Usage": {
@@ -10186,6 +11829,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "PlanType",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10240,6 +11887,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ValidationError": {
@@ -10271,6 +11922,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ValidationErrorLocItem",
                 "groupName": null,
                 "nameOverride": null,
@@ -10309,6 +11961,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "type": "primitive",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -10363,6 +12019,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "VoicePage": {
@@ -10396,6 +12056,7 @@ exports[`open api parser vocode parse open api 1`] = `
                 "commonProperties": [],
                 "description": null,
                 "discriminantProperty": "type",
+                "encoding": null,
                 "generatedName": "VoicePageItemsItem",
                 "groupName": null,
                 "nameOverride": null,
@@ -10407,6 +12068,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "AzureVoice",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "voice_eleven_labs": {
@@ -10416,6 +12081,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "ElevenLabsVoice",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "voice_play_ht": {
@@ -10425,6 +12094,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "PlayHtVoice",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "voice_rime": {
@@ -10434,8 +12107,16 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "RimeVoice",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
+                },
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
                 },
                 "type": "discriminated",
               },
@@ -10513,6 +12194,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "VoiceParamsRequest": {
@@ -10522,6 +12207,7 @@ exports[`open api parser vocode parse open api 1`] = `
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "VoiceParamsRequest",
         "groupName": null,
         "nameOverride": "VoiceParamsRequest",
@@ -10533,6 +12219,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AzureVoiceParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "voice_eleven_labs": {
@@ -10542,6 +12232,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ElevenLabsVoiceParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "voice_play_ht": {
@@ -10551,6 +12245,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "PlayHtVoiceParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "voice_rime": {
@@ -10560,8 +12258,16 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RimeVoiceParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -10573,6 +12279,7 @@ exports[`open api parser vocode parse open api 1`] = `
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "VoiceUpdateParamsRequest",
         "groupName": null,
         "nameOverride": "VoiceUpdateParamsRequest",
@@ -10584,6 +12291,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "AzureVoiceUpdateParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "voice_eleven_labs": {
@@ -10593,6 +12304,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ElevenLabsVoiceUpdateParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "voice_play_ht": {
@@ -10602,6 +12317,10 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "PlayHtVoiceUpdateParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "voice_rime": {
@@ -10611,8 +12330,16 @@ exports[`open api parser vocode parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "RimeVoiceUpdateParams",
+            "source": {
+              "file": "vocode/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "vocode/openapi.json",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -10696,6 +12423,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "EventType",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -10745,11 +12476,19 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "HTTPMethod",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WebhookPage": {
@@ -10783,6 +12522,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "Webhook",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -10858,6 +12601,10 @@ exports[`open api parser vocode parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WebhookParams": {
@@ -10891,6 +12638,10 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "EventType",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -10940,11 +12691,19 @@ exports[`open api parser vocode parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "HTTPMethod",
+              "source": {
+                "file": "vocode/openapi.json",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WebhookUpdateParams": {
@@ -10976,6 +12735,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "WebhookUpdateParamsSubscriptions",
                 "groupName": null,
                 "nameOverride": "Subscriptions",
@@ -10994,6 +12754,10 @@ exports[`open api parser vocode parse open api 1`] = `
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "EventType",
+                      "source": {
+                        "file": "vocode/openapi.json",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -11004,9 +12768,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -11031,6 +12803,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "WebhookUpdateParamsUrl",
                 "groupName": null,
                 "nameOverride": "Url",
@@ -11058,9 +12831,17 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -11085,6 +12866,7 @@ exports[`open api parser vocode parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "WebhookUpdateParamsMethod",
                 "groupName": null,
                 "nameOverride": "Method",
@@ -11096,6 +12878,10 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "HTTPMethod",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   {
@@ -11105,15 +12891,27 @@ exports[`open api parser vocode parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "Undefined",
+                    "source": {
+                      "file": "vocode/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 ],
+                "source": {
+                  "file": "vocode/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vocode/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

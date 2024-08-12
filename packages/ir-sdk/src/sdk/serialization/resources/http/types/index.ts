@@ -1,5 +1,7 @@
 export * from "./HttpService";
 export * from "./DeclaredServiceName";
+export * from "./Transport";
+export * from "./GrpcTransport";
 export * from "./HttpEndpoint";
 export * from "./EndpointName";
 export * from "./HttpPath";
@@ -53,6 +55,7 @@ export * from "./ExampleCodeSampleSdk";
 export * from "./SupportedSdkLanguage";
 export * from "./ExamplePathParameter";
 export * from "./ExampleQueryParameter";
+export * from "./ExampleQueryParameterShape";
 export * from "./ExampleHeader";
 export * from "./ExampleRequestBody";
 export * from "./ExampleInlinedRequestBody";

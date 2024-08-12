@@ -4,6 +4,7 @@ import {
     migrateIntermediateRepresentationForGenerator,
     migrateIntermediateRepresentationThroughVersion
 } from "@fern-api/ir-migrations";
+import { SourceConfig } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 
@@ -12,13 +13,19 @@ export async function getIntermediateRepresentation({
     audiences,
     generatorInvocation,
     context,
-    irVersionOverride
+    irVersionOverride,
+    version,
+    packageName,
+    sourceConfig
 }: {
     workspace: FernWorkspace;
     audiences: Audiences;
     generatorInvocation: generatorsYml.GeneratorInvocation;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    version: string | undefined;
+    packageName: string | undefined;
+    sourceConfig: SourceConfig | undefined;
 }): Promise<unknown> {
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
@@ -27,8 +34,13 @@ export async function getIntermediateRepresentation({
         keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
         disableExamples: generatorInvocation.disableExamples,
-        readme: generatorInvocation.readme
+        readme: generatorInvocation.readme,
+        version,
+        packageName
     });
+    if (sourceConfig != null) {
+        intermediateRepresentation.sourceConfig = sourceConfig;
+    }
     context.logger.debug("Generated IR");
     const migratedIntermediateRepresentation =
         irVersionOverride != null

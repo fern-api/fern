@@ -12,7 +12,7 @@ from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
 
 from ....context import PydanticGeneratorContext
-from ...custom_config import PydanticModelCustomConfig
+from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..discriminated_union.simple_discriminated_union_generator import (
     AbstractDiscriminatedUnionSnippetGenerator,
     AbstractSimpleDiscriminatedUnionGenerator,
@@ -63,7 +63,12 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
         return type_hint  # noop
 
     def _generate_member_name(self, single_union_type: ir_types.SingleUnionType) -> str:
-        return get_single_union_type_class_name(self._name, single_union_type.discriminant_value) + "Params"
+        return (
+            get_single_union_type_class_name(
+                self._name, single_union_type.discriminant_value, self._custom_config.union_naming
+            )
+            + "Params"
+        )
 
     def _generate_no_property_member(
         self, class_name: str, discriminant_field: FernAwarePydanticField
@@ -93,6 +98,7 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
             source_file=self._source_file,
             docstring=None,
             should_export=True,
+            container_type_id=self._name.type_id,
         ) as member_typed_dict:
             for field in fern_aware_properties:
                 member_typed_dict.add_field(**vars(field))
@@ -100,7 +106,7 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
             return member_typed_dict.to_reference()
 
     def _generate_same_properties_as_object_member(
-        self, class_name: str, properties: List[FernAwarePydanticField]
+        self, member_type_id: ir_types.TypeId, class_name: str, properties: List[FernAwarePydanticField]
     ) -> LocalClassReference:
         with FernTypedDict(
             class_name=class_name,
@@ -109,6 +115,7 @@ class TypeddictSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnio
             source_file=self._source_file,
             docstring=None,
             should_export=True,
+            original_type_id=member_type_id,
         ) as member_typed_dict:
             for field in properties:
                 member_typed_dict.add_field(**vars(field))
@@ -124,6 +131,7 @@ class TypeddictDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnip
         snippet_writer: SnippetWriter,
         name: ir_types.DeclaredTypeName,
         example: Optional[ir_types.ExampleUnionType],
+        union_naming_version: UnionNamingVersions,
         example_expression: Optional[AST.Expression] = None,
         single_union_type: Optional[ir_types.SingleUnionType] = None,
     ):
@@ -135,6 +143,7 @@ class TypeddictDiscriminatedUnionSnippetGenerator(AbstractDiscriminatedUnionSnip
             single_union_type=single_union_type,
             use_typeddict_request=True,
             as_request=True,
+            union_naming_version=union_naming_version,
         )
 
     def _get_snippet_for_union_with_same_properties_as_object(

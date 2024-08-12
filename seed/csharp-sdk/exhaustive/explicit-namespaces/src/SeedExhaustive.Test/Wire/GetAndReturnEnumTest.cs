@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedExhaustive.Core;
-using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Test.Wire;
 using SeedExhaustive.Types.Enum;
 
@@ -38,6 +38,6 @@ public class GetAndReturnEnumTest : BaseWireTest
             );
 
         var response = Client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny).Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

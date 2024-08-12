@@ -6,6 +6,7 @@ import {
     Schema,
     SchemaId,
     SchemaWithExample,
+    Source,
     WebsocketChannel,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir-sdk";
@@ -15,13 +16,14 @@ import { getExtension } from "../getExtension";
 import { ParseOpenAPIOptions } from "../options";
 import { convertAvailability } from "../schema/convertAvailability";
 import { convertSchema } from "../schema/convertSchemas";
-import { convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOneOf";
+import { convertUndiscriminatedOneOf, UndiscriminatedOneOfPrefix } from "../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
 import { ExampleWebsocketSessionFactory } from "./ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "./fernExtensions";
 import { getFernExamples, WebsocketSessionExampleExtension } from "./getFernExamples";
+import { ParseAsyncAPIOptions } from "./options";
 import { AsyncAPIV2 } from "./v2";
 
 export interface AsyncAPIIntermediateRepresentation {
@@ -33,16 +35,23 @@ export interface AsyncAPIIntermediateRepresentation {
 export function parseAsyncAPI({
     document,
     taskContext,
-    options
+    options,
+    source,
+    asyncApiOptions
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
     options: ParseOpenAPIOptions;
+    source: Source;
+    asyncApiOptions: ParseAsyncAPIOptions;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
     if (document.tags?.[0] != null) {
         breadcrumbs.push(document.tags[0].name);
-    } else {
+    } else if (asyncApiOptions.naming !== "v2") {
+        // In improved naming, we allow you to not have any prefixes here at all
+        // by not specifying tags. Without useImprovedMessageNaming, and no tags,
+        // we do still prefix with "Websocket".
         breadcrumbs.push("websocket");
     }
 
@@ -56,7 +65,7 @@ export function parseAsyncAPI({
     let parsedChannel: WebsocketChannel | undefined = undefined;
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        const convertedSchema = convertSchema(schema, false, context, [schemaId]);
+        const convertedSchema = convertSchema(schema, false, context, [schemaId], source);
         schemas[schemaId] = convertedSchema;
     }
 
@@ -76,7 +85,7 @@ export function parseAsyncAPI({
                     description: parameter.description,
                     schema:
                         parameter.schema != null
-                            ? convertSchema(parameter.schema, false, context, breadcrumbs)
+                            ? convertSchema(parameter.schema, false, context, breadcrumbs, source)
                             : SchemaWithExample.primitive({
                                   schema: PrimitiveSchemaValueWithExample.string({
                                       default: undefined,
@@ -93,7 +102,8 @@ export function parseAsyncAPI({
                                   nameOverride: undefined
                               }),
                     variableReference: undefined,
-                    availability: convertAvailability(parameter)
+                    availability: convertAvailability(parameter),
+                    source
                 });
             }
         }
@@ -105,11 +115,12 @@ export function parseAsyncAPI({
                 const resolvedHeader = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
                 headers.push({
                     name,
-                    schema: convertSchema(resolvedHeader, !required.includes(name), context, breadcrumbs),
+                    schema: convertSchema(resolvedHeader, !required.includes(name), context, breadcrumbs, source),
                     description: resolvedHeader.description,
                     parameterNameOverride: undefined,
                     env: undefined,
-                    availability: convertAvailability(resolvedHeader)
+                    availability: convertAvailability(resolvedHeader),
+                    source
                 });
             }
         }
@@ -123,10 +134,17 @@ export function parseAsyncAPI({
                     : schema;
                 queryParameters.push({
                     name,
-                    schema: convertSchema(resolvedQueryParameter, !required.includes(name), context, breadcrumbs),
+                    schema: convertSchema(
+                        resolvedQueryParameter,
+                        !required.includes(name),
+                        context,
+                        breadcrumbs,
+                        source
+                    ),
                     description: resolvedQueryParameter.description,
                     parameterNameOverride: undefined,
-                    availability: convertAvailability(resolvedQueryParameter)
+                    availability: convertAvailability(resolvedQueryParameter),
+                    source
                 });
             }
         }
@@ -137,7 +155,10 @@ export function parseAsyncAPI({
                 generatedName: channel.publish.operationId ?? "PublishEvent",
                 event: channel.publish,
                 breadcrumbs,
-                context
+                context,
+                source,
+                options,
+                asyncApiOptions
             });
         }
 
@@ -147,7 +168,10 @@ export function parseAsyncAPI({
                 generatedName: channel.subscribe.operationId ?? "SubscribeEvent",
                 event: channel.subscribe,
                 breadcrumbs,
-                context
+                context,
+                source,
+                options,
+                asyncApiOptions
             });
         }
 
@@ -164,7 +188,8 @@ export function parseAsyncAPI({
                         queryParameters
                     },
                     publish: publishSchema,
-                    subscribe: subscribeSchema
+                    subscribe: subscribeSchema,
+                    source
                 });
             } else {
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({
@@ -210,7 +235,8 @@ export function parseAsyncAPI({
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 path: channelPath,
                 description: undefined,
-                examples
+                examples,
+                source
             };
             break;
         }
@@ -229,22 +255,41 @@ function convertMessageToSchema({
     generatedName,
     event,
     context,
-    breadcrumbs
+    breadcrumbs,
+    source,
+    options,
+    asyncApiOptions
 }: {
     breadcrumbs: string[];
     generatedName: string;
     event: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent;
     context: AsyncAPIV2ParserContext;
+    source: Source;
+    options: ParseOpenAPIOptions;
+    asyncApiOptions: ParseAsyncAPIOptions;
 }): SchemaWithExample | undefined {
     if (event.message.oneOf != null) {
         const subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
+        const prefixes: UndiscriminatedOneOfPrefix[] = [];
         for (const schema of event.message.oneOf) {
             let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
+            let namePrefix: UndiscriminatedOneOfPrefix = { type: "notFound" };
             if (isReferenceObject(schema)) {
-                resolvedSchema = context.resolveMessageReference(schema).payload;
+                const resolvedMessage = context.resolveMessageReference(schema);
+                if (!isReferenceObject(resolvedMessage.payload) && asyncApiOptions.naming === "v2") {
+                    namePrefix = resolvedMessage.name ? { type: "name", name: resolvedMessage.name } : namePrefix;
+                    resolvedSchema = {
+                        ...resolvedMessage.payload,
+                        title: resolvedMessage.name ?? resolvedMessage.payload.title,
+                        description: resolvedMessage.name ?? resolvedMessage.payload.description
+                    };
+                } else {
+                    resolvedSchema = resolvedMessage.payload;
+                }
             } else {
                 resolvedSchema = schema;
             }
+            prefixes.push(namePrefix);
             subtypes.push(resolvedSchema);
         }
         return convertUndiscriminatedOneOf({
@@ -256,7 +301,10 @@ function convertMessageToSchema({
             groupName: undefined,
             wrapAsNullable: false,
             breadcrumbs,
-            context
+            context,
+            encoding: undefined,
+            source,
+            subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
         });
     }
     return undefined;

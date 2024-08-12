@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser defaults parse open api 1`] = `
+exports[`open api parser > defaults > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -112,6 +112,10 @@ exports[`open api parser defaults parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "defaults/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

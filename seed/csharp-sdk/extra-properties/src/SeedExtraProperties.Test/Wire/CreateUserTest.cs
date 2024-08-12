@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExtraProperties;
-using SeedExtraProperties.Core;
-using SeedExtraProperties.Test.Utils;
 using SeedExtraProperties.Test.Wire;
 
 #nullable enable
@@ -53,6 +53,6 @@ public class CreateUserTest : BaseWireTest
                 }
             )
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

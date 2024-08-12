@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMixedCase;
-using SeedMixedCase.Core;
-using SeedMixedCase.Test.Utils;
 using SeedMixedCase.Test.Wire;
 
 #nullable enable
@@ -48,10 +48,10 @@ public class ListResourcesTest : BaseWireTest
 
         var response = Client
             .Service.ListResourcesAsync(
-                new ListResourcesRequest { PageLimit = 1, BeforeDate = new DateOnly(2023, 1, 14) }
+                new ListResourcesRequest { PageLimit = 1, BeforeDate = new DateOnly(2023, 1, 15) }
             )
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 
     [Test]
@@ -91,9 +91,9 @@ public class ListResourcesTest : BaseWireTest
 
         var response = Client
             .Service.ListResourcesAsync(
-                new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2022, 12, 31) }
+                new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
             )
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

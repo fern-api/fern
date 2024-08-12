@@ -14,3 +14,11 @@ types:
       - NUMBER
   ObjectValue:
     properties: {}
+  JsonLike:
+    discriminated: false
+    union:
+      - list<JsonLike>
+      - map<string, JsonLike>
+      - string
+      - integer
+      - boolean

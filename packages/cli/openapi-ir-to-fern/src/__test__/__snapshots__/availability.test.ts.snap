@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`availability availability docs 1`] = `
+exports[`availability > availability > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -229,6 +229,9 @@ exports[`availability availability docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "availability/openapi.yml",
+      },
     },
     "types": {
       "DeprecatedParam": "string",
@@ -237,12 +240,18 @@ exports[`availability availability docs 1`] = `
         "properties": {
           "not_deprecated_setting": "optional<boolean>",
         },
+        "source": {
+          "openapi": "availability/openapi.yml",
+        },
       },
       "WholeDeprecatedSettings": {
         "availability": "deprecated",
         "docs": undefined,
         "properties": {
           "fine_setting": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "availability/openapi.yml",
         },
       },
     },
@@ -257,7 +266,7 @@ exports[`availability availability docs 1`] = `
 }
 `;
 
-exports[`availability availability simple 1`] = `
+exports[`availability > availability > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -486,6 +495,9 @@ exports[`availability availability simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "availability/openapi.yml",
+      },
     },
     "types": {
       "DeprecatedParam": "string",
@@ -494,12 +506,18 @@ exports[`availability availability simple 1`] = `
         "properties": {
           "not_deprecated_setting": "optional<boolean>",
         },
+        "source": {
+          "openapi": "availability/openapi.yml",
+        },
       },
       "WholeDeprecatedSettings": {
         "availability": "deprecated",
         "docs": undefined,
         "properties": {
           "fine_setting": "optional<boolean>",
+        },
+        "source": {
+          "openapi": "availability/openapi.yml",
         },
       },
     },

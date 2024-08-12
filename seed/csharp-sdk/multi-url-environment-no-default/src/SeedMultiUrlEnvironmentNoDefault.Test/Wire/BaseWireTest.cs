@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using SeedMultiUrlEnvironmentNoDefault;
-using SeedMultiUrlEnvironmentNoDefault.Core;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;

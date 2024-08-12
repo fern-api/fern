@@ -1,17 +1,16 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedApi;
 using SeedApi.Core;
 
 #nullable enable
 
 namespace SeedApi;
 
-public class ImdbClient
+public partial class ImdbClient
 {
     private RawClient _client;
 
-    public ImdbClient(RawClient client)
+    internal ImdbClient(RawClient client)
     {
         _client = client;
     }
@@ -50,7 +49,7 @@ public class ImdbClient
         throw new CustomApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -93,7 +92,7 @@ public class ImdbClient
         throw new CustomApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

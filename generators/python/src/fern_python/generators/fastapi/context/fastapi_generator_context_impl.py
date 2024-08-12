@@ -2,6 +2,7 @@ import fern.ir.resources as ir_types
 from fern.generator_exec import GeneratorConfig
 
 from fern_python.codegen import AST, Filepath
+from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 
 from ..declaration_referencers import (
     ErrorDeclarationReferencer,
@@ -18,12 +19,14 @@ class FastApiGeneratorContextImpl(FastApiGeneratorContext):
         ir: ir_types.IntermediateRepresentation,
         generator_config: GeneratorConfig,
         project_module_path: AST.ModulePath,
+        custom_config: FastAPICustomConfig,
         use_str_enums: bool,
     ):
         super().__init__(
             ir=ir,
             generator_config=generator_config,
             project_module_path=project_module_path,
+            custom_config=custom_config,
             use_str_enums=use_str_enums,
         )
         self._service_declaration_referencer = ServiceDeclarationReferencer()

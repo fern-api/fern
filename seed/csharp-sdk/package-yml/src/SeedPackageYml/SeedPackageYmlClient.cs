@@ -1,7 +1,6 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
-using SeedPackageYml;
 using SeedPackageYml.Core;
 
 #nullable enable
@@ -56,7 +55,7 @@ public partial class SeedPackageYmlClient
         throw new SeedPackageYmlApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

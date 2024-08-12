@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`update-directory-structure multiple-apis 1`] = `
+exports[`update-directory-structure > multiple-apis 1`] = `
 [
   {
     "contents": [
@@ -269,7 +269,7 @@ groups:
 ]
 `;
 
-exports[`update-directory-structure multiple-apis-with-docs 1`] = `
+exports[`update-directory-structure > multiple-apis-with-docs 1`] = `
 [
   {
     "contents": [
@@ -507,7 +507,7 @@ instances:
 ]
 `;
 
-exports[`update-directory-structure single-api 1`] = `
+exports[`update-directory-structure > single-api 1`] = `
 [
   {
     "contents": [
@@ -619,7 +619,7 @@ groups:
 ]
 `;
 
-exports[`update-directory-structure single-api-with-docs 1`] = `
+exports[`update-directory-structure > single-api-with-docs 1`] = `
 [
   {
     "contents": [

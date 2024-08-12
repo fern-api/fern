@@ -146,7 +146,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         const maybeOverrideName = this.customConfig["base-exception-class-name"];
         return csharp.classReference({
             name: maybeOverrideName ?? this.getExceptionPrefix() + "Exception",
-            namespace: this.getCoreNamespace()
+            namespace: this.getNamespaceForPublicCoreClasses()
         });
     }
 
@@ -154,7 +154,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         const maybeOverrideName = this.customConfig["base-api-exception-class-name"];
         return csharp.classReference({
             name: maybeOverrideName ?? this.getExceptionPrefix() + "ApiException",
-            namespace: this.getCoreNamespace()
+            namespace: this.getNamespaceForPublicCoreClasses()
         });
     }
 
@@ -185,8 +185,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         }
         return csharp.classReference({
             name: environmentsClassName,
-            namespace: this.getCoreNamespace()
+            namespace: this.getNamespaceForPublicCoreClasses()
         });
+    }
+
+    public getNamespaceForPublicCoreClasses(): string {
+        return this.customConfig["root-namespace-for-core-classes"] ?? true
+            ? this.getNamespace()
+            : this.getCoreNamespace();
     }
 
     public getBaseWireTestClassReference(): csharp.ClassReference {
@@ -199,14 +205,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     public getClientOptionsClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: CLIENT_OPTIONS_CLASS_NAME,
-            namespace: this.getCoreNamespace()
+            namespace: this.getNamespaceForPublicCoreClasses()
         });
     }
 
     public getRequestOptionsClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: REQUEST_OPTIONS_CLASS_NAME,
-            namespace: this.getCoreNamespace()
+            namespace: this.getNamespaceForPublicCoreClasses()
         });
     }
 
@@ -231,10 +237,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["extra-dependencies"] ?? {};
     }
 
-    private getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
-        const parts =
+    override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
+        const segmentNames =
             this.customConfig["explicit-namespaces"] === true ? fernFilepath.allParts : fernFilepath.packagePath;
-        return [this.getNamespace(), ...parts.map((path) => path.pascalCase.safeName)].join(".");
+        return segmentNames.map((segmentName) => segmentName.pascalCase.safeName);
     }
 
     public isOptional(typeReference: TypeReference): boolean {

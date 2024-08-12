@@ -2,6 +2,7 @@
 
 require_relative "../../requests"
 require "json"
+require_relative "types/my_object"
 require "async"
 
 module SeedUnknownAsAnyClient
@@ -37,6 +38,30 @@ module SeedUnknownAsAnyClient
       end
       JSON.parse(response.body)
     end
+
+    # @param request [Hash] Request of type SeedUnknownAsAnyClient::Unknown::MyObject, as a Hash
+    #   * :unknown (Object)
+    # @param request_options [SeedUnknownAsAnyClient::RequestOptions]
+    # @return [Array<Object>]
+    # @example
+    #  unknown_as_any = SeedUnknownAsAnyClient::Client.new(base_url: "https://api.example.com")
+    #  unknown_as_any.unknown.post_object(request: {  })
+    def post_object(request:, request_options: nil)
+      response = @request_client.conn.post do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+        req.url "#{@request_client.get_url(request_options: request_options)}/with-object"
+      end
+      JSON.parse(response.body)
+    end
   end
 
   class AsyncUnknownClient
@@ -69,6 +94,33 @@ module SeedUnknownAsAnyClient
           end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/"
+        end
+        parsed_json = JSON.parse(response.body)
+        parsed_json
+      end
+    end
+
+    # @param request [Hash] Request of type SeedUnknownAsAnyClient::Unknown::MyObject, as a Hash
+    #   * :unknown (Object)
+    # @param request_options [SeedUnknownAsAnyClient::RequestOptions]
+    # @return [Array<Object>]
+    # @example
+    #  unknown_as_any = SeedUnknownAsAnyClient::Client.new(base_url: "https://api.example.com")
+    #  unknown_as_any.unknown.post_object(request: {  })
+    def post_object(request:, request_options: nil)
+      Async do
+        response = @request_client.conn.post do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
+          req.url "#{@request_client.get_url(request_options: request_options)}/with-object"
         end
         parsed_json = JSON.parse(response.body)
         parsed_json

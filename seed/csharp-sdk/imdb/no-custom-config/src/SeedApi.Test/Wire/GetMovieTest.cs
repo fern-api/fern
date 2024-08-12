@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedApi.Core;
-using SeedApi.Test.Utils;
 using SeedApi.Test.Wire;
 
 #nullable enable
@@ -31,6 +31,6 @@ public class GetMovieTest : BaseWireTest
             );
 
         var response = Client.Imdb.GetMovieAsync("string").Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

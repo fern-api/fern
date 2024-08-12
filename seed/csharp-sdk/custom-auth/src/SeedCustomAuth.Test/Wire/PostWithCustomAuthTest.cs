@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedCustomAuth.Core;
-using SeedCustomAuth.Test.Utils;
 using SeedCustomAuth.Test.Wire;
 
 #nullable enable
@@ -43,6 +43,6 @@ public class PostWithCustomAuthTest : BaseWireTest
                 new Dictionary<object, object?>() { { "key", "value" }, }
             )
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

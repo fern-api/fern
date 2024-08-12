@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedBearerTokenEnvironmentVariable.Core;
-using SeedBearerTokenEnvironmentVariable.Test.Utils;
 using SeedBearerTokenEnvironmentVariable.Test.Wire;
 
 #nullable enable
@@ -27,6 +27,6 @@ public class GetWithBearerTokenTest : BaseWireTest
             );
 
         var response = Client.Service.GetWithBearerTokenAsync().Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

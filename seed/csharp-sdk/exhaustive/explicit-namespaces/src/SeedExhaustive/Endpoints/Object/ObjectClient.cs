@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
 
@@ -7,11 +8,11 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.Endpoints.Object;
 
-public class ObjectClient
+public partial class ObjectClient
 {
     private RawClient _client;
 
-    public ObjectClient(RawClient client)
+    internal ObjectClient(RawClient client)
     {
         _client = client;
     }
@@ -47,7 +48,7 @@ public class ObjectClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -82,7 +83,7 @@ public class ObjectClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -117,7 +118,7 @@ public class ObjectClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -152,7 +153,7 @@ public class ObjectClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -188,7 +189,7 @@ public class ObjectClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -223,7 +224,7 @@ public class ObjectClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

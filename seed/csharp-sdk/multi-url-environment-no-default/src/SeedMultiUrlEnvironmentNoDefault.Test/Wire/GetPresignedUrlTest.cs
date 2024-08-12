@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMultiUrlEnvironmentNoDefault;
-using SeedMultiUrlEnvironmentNoDefault.Core;
-using SeedMultiUrlEnvironmentNoDefault.Test.Utils;
 using SeedMultiUrlEnvironmentNoDefault.Test.Wire;
 
 #nullable enable
@@ -42,6 +42,6 @@ public class GetPresignedUrlTest : BaseWireTest
         var response = Client
             .S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "string" })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

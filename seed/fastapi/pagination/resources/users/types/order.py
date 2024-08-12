@@ -10,7 +10,9 @@ class Order(str, enum.Enum):
     ASC = "asc"
     DESC = "desc"
 
-    def visit(self, asc: typing.Callable[[], T_Result], desc: typing.Callable[[], T_Result]) -> T_Result:
+    def visit(
+        self, asc: typing.Callable[[], T_Result], desc: typing.Callable[[], T_Result]
+    ) -> T_Result:
         if self is Order.ASC:
             return asc()
         if self is Order.DESC:

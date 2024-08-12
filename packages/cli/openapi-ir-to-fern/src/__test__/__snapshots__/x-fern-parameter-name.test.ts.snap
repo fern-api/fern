@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
+exports[`x-fern-parameter-name > x-fern-parameter-name > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -48,6 +48,9 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "x-fern-parameter-name/openapi.yml",
+      },
     },
   },
   "rootApiFile": {
@@ -60,7 +63,7 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
 }
 `;
 
-exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
+exports[`x-fern-parameter-name > x-fern-parameter-name > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -99,6 +102,9 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
             "type": "string",
           },
         },
+      },
+      "source": {
+        "openapi": "x-fern-parameter-name/openapi.yml",
       },
     },
   },

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migrateFromV9ToV8 migrates maps to list 1`] = `
+exports[`migrateFromV9ToV8 > migrates maps to list 1`] = `
 {
   "apiDisplayName": undefined,
   "apiDocs": undefined,
@@ -88,6 +88,7 @@ exports[`migrateFromV9ToV8 migrates maps to list 1`] = `
       "language": "X-Fern-Language",
       "sdkName": "X-Fern-SDK-Name",
       "sdkVersion": "X-Fern-SDK-Version",
+      "userAgent": undefined,
     },
   },
   "serviceTypeReferenceInfo": {

@@ -1,17 +1,16 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedMultiUrlEnvironmentNoDefault;
 using SeedMultiUrlEnvironmentNoDefault.Core;
 
 #nullable enable
 
 namespace SeedMultiUrlEnvironmentNoDefault;
 
-public class S3Client
+public partial class S3Client
 {
     private RawClient _client;
 
-    public S3Client(RawClient client)
+    internal S3Client(RawClient client)
     {
         _client = client;
     }
@@ -50,7 +49,7 @@ public class S3Client
         throw new SeedMultiUrlEnvironmentNoDefaultApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

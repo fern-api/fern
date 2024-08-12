@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedMixedCase.Core;
-using SeedMixedCase.Test.Utils;
 using SeedMixedCase.Test.Wire;
 
 #nullable enable
@@ -40,7 +40,7 @@ public class GetResourceTest : BaseWireTest
             );
 
         var response = Client.Service.GetResourceAsync("string").Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 
     [Test]
@@ -73,6 +73,6 @@ public class GetResourceTest : BaseWireTest
             );
 
         var response = Client.Service.GetResourceAsync("rsc-xyz").Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

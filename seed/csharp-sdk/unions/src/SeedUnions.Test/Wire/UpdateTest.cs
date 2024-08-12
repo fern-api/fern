@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedUnions;
-using SeedUnions.Core;
-using SeedUnions.Test.Utils;
 using SeedUnions.Test.Wire;
 
 #nullable enable
@@ -42,6 +42,6 @@ public class UpdateTest : BaseWireTest
             );
 
         var response = Client.Union.UpdateAsync(new Circle { Id = "string", Radius = 1.1 }).Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

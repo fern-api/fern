@@ -46,6 +46,37 @@
             }
           },
           "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Post Object",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/with-object",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "with-object"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
         }
       ]
     }

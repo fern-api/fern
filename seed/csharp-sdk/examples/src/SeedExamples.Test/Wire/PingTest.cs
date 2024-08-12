@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedExamples.Core;
-using SeedExamples.Test.Utils;
 using SeedExamples.Test.Wire;
 
 #nullable enable
@@ -27,7 +27,7 @@ public class PingTest : BaseWireTest
             );
 
         var response = Client.Health.Service.PingAsync().Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 
     [Test]
@@ -47,6 +47,6 @@ public class PingTest : BaseWireTest
             );
 
         var response = Client.Health.Service.PingAsync().Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

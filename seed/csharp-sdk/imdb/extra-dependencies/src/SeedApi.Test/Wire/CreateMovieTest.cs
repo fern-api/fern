@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedApi;
-using SeedApi.Core;
-using SeedApi.Test.Utils;
 using SeedApi.Test.Wire;
 
 #nullable enable
@@ -43,6 +43,6 @@ public class CreateMovieTest : BaseWireTest
         var response = Client
             .Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Rating = 1.1 })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

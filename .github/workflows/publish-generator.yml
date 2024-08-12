@@ -265,13 +265,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -281,7 +276,7 @@ jobs:
 
       - name: Build CLI
         working-directory: ./generators/openapi
-        run: yarn dist:cli
+        run: pnpm dist:cli
 
       - name: Print Version
         if: ${{ inputs.generator != 'openapi' }}
@@ -324,13 +319,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -340,7 +330,7 @@ jobs:
 
       - name: Build CLI
         working-directory: ./generators/postman
-        run: yarn dist:cli
+        run: pnpm dist:cli
 
       - name: Print Version
         if: ${{ inputs.generator != 'postman' }}
@@ -383,10 +373,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -394,12 +382,9 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-      - name: Install
-        run: yarn install
-
       - name: Build CLI
         working-directory: ./generators/ruby/model
-        run: yarn dist:cli
+        run: pnpm dist:cli
 
       - name: Print Version
         if: ${{ inputs.generator != 'ruby-model' }}
@@ -442,10 +427,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -453,12 +436,9 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-      - name: Install
-        run: yarn install
-
       - name: Build CLI
         working-directory: ./generators/ruby/sdk
-        run: yarn dist:cli
+        run: pnpm dist:cli
 
       - name: Print Version
         if: ${{ inputs.generator != 'ruby-sdk' }}
@@ -654,13 +634,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
 
       - name: Print Version
         if: ${{ inputs.generator != 'ts-sdk' }}
@@ -689,7 +664,7 @@ jobs:
 
       - name: Publish fernapi/fern-typescript-express-sdk docker
         run: |
-          yarn workspace @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
+          pnpm workspace @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
           docker push fernapi/fern-typescript-express:"$VERSION"
 
   ts-browser-sdk:
@@ -702,13 +677,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
 
       - name: Print Version
         if: ${{ inputs.generator != 'ts-sdk' }}
@@ -737,7 +707,7 @@ jobs:
 
       - name: Publish fernapi/fern-typescript-node-sdk docker
         run: |
-          yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
+          pnpm workspace @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
           docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
 
   ts-node-sdk:
@@ -750,13 +720,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
 
       - name: Print Version
         if: ${{ inputs.generator != 'ts-sdk' }}
@@ -785,7 +750,7 @@ jobs:
 
       - name: Publish fernapi/fern-typescript-node-sdk docker
         run: |
-          yarn workspace @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
+          pnpm workspace @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
           docker push fernapi/fern-typescript-node-sdk:"$VERSION"
 
   go-sdk:
@@ -945,10 +910,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -956,12 +919,9 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-      - name: Install
-        run: yarn install
-
       - name: Build CLI
         working-directory: ./generators/csharp/model
-        run: yarn dist:cli
+        run: pnpm dist:cli
 
       - name: Print Version
         if: ${{ inputs.generator != 'csharp-model' }}
@@ -1004,10 +964,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
@@ -1015,12 +973,9 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-      - name: Install
-        run: yarn install
-
       - name: Build CLI
         working-directory: ./generators/csharp/sdk
-        run: yarn dist:cli
+        run: pnpm dist:cli
 
       - name: Print Version
         if: ${{ inputs.generator != 'csharp-sdk' }}

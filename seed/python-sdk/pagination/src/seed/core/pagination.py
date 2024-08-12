@@ -2,8 +2,9 @@
 
 import typing
 
-import pydantic
 from typing_extensions import Self
+
+import pydantic
 
 # Generic to represent the underlying type of the results within a page
 T = typing.TypeVar("T")

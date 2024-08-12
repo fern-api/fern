@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser permit docs 1`] = `
+exports[`open api parser > permit > docs 1`] = `
 {
   "definitionFiles": {
     "bulkOperations.yml": {
@@ -304,6 +304,9 @@ exports[`open api parser permit docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
     "conditionSetRules.yml": {
@@ -558,6 +561,9 @@ If the permission is not granted, it is skipped.",
               "query-parameters": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -1473,11 +1479,18 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "types": {
         "ListConditionSetsResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultConditionSetRead",
             "list<root.ConditionSetRead>",
@@ -2021,6 +2034,9 @@ allowed.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "types": {
         "EnvironmentCopyConflictStrategy": {
@@ -2030,6 +2046,9 @@ allowed.",
             "fail",
             "overwrite",
           ],
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
         },
       },
     },
@@ -2334,6 +2353,9 @@ authenticated actor (i.e: human team member or api key).",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
     "projects.yml": {
@@ -2635,6 +2657,9 @@ Every project is a separate silo, and has its own unique set of environments and
               "type": "root.ProjectRead",
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -3018,6 +3043,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
     "resourceActions.yml": {
@@ -3384,6 +3412,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
     "resourceAttributes.yml": {
@@ -3716,6 +3747,9 @@ Fields that will be provided will be completely overwritten.",
               "type": "root.ResourceAttributeRead",
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -4064,6 +4098,9 @@ Fields that will be provided will be completely overwritten.",
               "type": "root.ResourceInstanceRead",
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -4774,6 +4811,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
     "resources.yml": {
@@ -5473,11 +5513,18 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "types": {
         "ListResourcesResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultResourceRead",
             "list<root.ResourceRead>",
@@ -5774,6 +5821,9 @@ If the role is not actually assigned, will return 404.",
               "body": "root.RoleAssignmentRemove",
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -6442,11 +6492,18 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "types": {
         "ListRolesResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultRoleRead",
             "list<root.RoleRead>",
@@ -6947,11 +7004,18 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "types": {
         "ListTenantsResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultTenantRead",
             "list<root.TenantRead>",
@@ -7282,6 +7346,9 @@ Fields that will be provided will be completely overwritten.",
               "type": "root.ResourceAttributeRead",
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -7981,6 +8048,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
   },
@@ -8511,6 +8581,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ActionBlockRead": {
         "docs": undefined,
@@ -8539,6 +8612,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "AddRolePermissions": {
         "docs": undefined,
@@ -8547,6 +8623,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "List of permissions to assign to the role. If a permission is already granted to the role it is skipped. Each permission can be either a resource action id, or \`{resource_key}:{action_key}\`, i.e: the "permission name".",
             "type": "list<string>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "AttributeBlockEditable": {
@@ -8560,6 +8639,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
             "type": "AttributeType",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "AttributeBlockRead": {
@@ -8588,6 +8670,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "AttributeType",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "AttributeType": {
         "docs": "supported attribute primitives",
@@ -8599,6 +8684,9 @@ Fields that will be provided will be completely overwritten.",
           "array",
           "json",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "BulkRoleAssignmentReport": {
         "docs": undefined,
@@ -8608,6 +8696,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "BulkRoleUnAssignmentReport": {
         "docs": undefined,
@@ -8616,6 +8707,9 @@ Fields that will be provided will be completely overwritten.",
             "default": 0,
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ConditionSetRead": {
@@ -8714,6 +8808,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ConditionSetRuleRead": {
         "docs": undefined,
@@ -8783,6 +8880,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ConditionSetType": {
         "docs": "An enumeration.",
@@ -8790,6 +8890,9 @@ Fields that will be provided will be completely overwritten.",
           "userset",
           "resourceset",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "EnvironmentCopyScope": {
         "docs": undefined,
@@ -8811,6 +8914,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "optional<EnvironmentCopyScopeFilters>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "EnvironmentCopyScopeFilters": {
         "docs": undefined,
@@ -8824,6 +8930,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "EnvironmentCopyTarget": {
         "docs": undefined,
@@ -8836,6 +8945,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Description of the environment to create. This environment must not already exist.",
             "type": "optional<EnvironmentCreate>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "EnvironmentCreate": {
@@ -8871,6 +8983,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "the settings for this environment",
             "type": "optional<map<string, unknown>>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "EnvironmentRead": {
@@ -8938,6 +9053,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Date and time when the environment was last updated/modified (ISO_8601 format).",
             "type": "datetime",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "EnvironmentStats": {
@@ -9008,11 +9126,17 @@ Fields that will be provided will be completely overwritten.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "HTTPValidationError": {
         "docs": undefined,
         "properties": {
           "detail": "optional<list<ValidationError>>",
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "IdentityRead": {
@@ -9048,6 +9172,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Unique User Id of this identity in the identity provider (including the provider type)",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "InviteRead": {
@@ -9120,6 +9247,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "InviteStatus",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "InviteStatus": {
         "docs": "An enumeration.",
@@ -9129,6 +9259,9 @@ Fields that will be provided will be completely overwritten.",
           "failed",
           "canceled",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "JwksObj": {
         "docs": undefined,
@@ -9137,6 +9270,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "The keys to match against the request headers",
             "type": "list<map<string, unknown>>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "MemberAccessLevel": {
@@ -9147,6 +9283,9 @@ Fields that will be provided will be completely overwritten.",
           "read",
           "no_access",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "MemberAccessObj": {
         "docs": "An enumeration.",
@@ -9155,6 +9294,9 @@ Fields that will be provided will be completely overwritten.",
           "project",
           "env",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "OnboardingStep": {
         "docs": "An enumeration.",
@@ -9168,6 +9310,9 @@ Fields that will be provided will be completely overwritten.",
           "connect_sdk",
           "done",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "OrgMemberReadWithGrants": {
         "docs": undefined,
@@ -9250,6 +9395,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "map<string, unknown>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "OrganizationRead": {
         "docs": undefined,
@@ -9288,6 +9436,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Date and time when the organization was last updated/modified (ISO_8601 format).",
             "type": "datetime",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "OrganizationReadWithAPIKey": {
@@ -9338,6 +9489,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "PDPConfigRead": {
         "docs": undefined,
@@ -9384,6 +9538,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "PaginatedResultConditionSetRead": {
         "docs": undefined,
@@ -9413,6 +9570,9 @@ Fields that will be provided will be completely overwritten.",
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "PaginatedResultResourceRead": {
@@ -9444,6 +9604,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "PaginatedResultResourceRoleRead": {
         "docs": undefined,
@@ -9473,6 +9636,9 @@ Fields that will be provided will be completely overwritten.",
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "PaginatedResultRoleRead": {
@@ -9504,6 +9670,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "PaginatedResultTenantRead": {
         "docs": undefined,
@@ -9534,6 +9703,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "PaginatedResultUserRead": {
         "docs": undefined,
@@ -9563,6 +9735,9 @@ Fields that will be provided will be completely overwritten.",
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "Permission": {
@@ -9603,6 +9778,9 @@ Fields that will be provided will be completely overwritten.",
           },
           "project_key": "optional<string>",
           "project_name": "optional<string>",
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ProjectRead": {
@@ -9673,6 +9851,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "RelationsBlock": {
         "docs": "A actions definition block, typically contained within a resource type definition block.
@@ -9686,6 +9867,9 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or \`{resource_key}:{action_key}\`,i.e: the "permission name".",
             "type": "list<string>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ResourceActionGroupRead": {
@@ -9773,6 +9957,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ResourceActionRead": {
         "docs": undefined,
@@ -9856,6 +10043,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ResourceAttributeCreate": {
         "docs": undefined,
@@ -9878,6 +10068,9 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
             "type": "AttributeType",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ResourceAttributeRead": {
@@ -9962,6 +10155,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ResourceAttributeUpdate": {
         "docs": undefined,
@@ -9974,6 +10170,9 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
             "type": "optional<AttributeType>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ResourceInstanceRead": {
@@ -10064,6 +10263,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ResourceRead": {
         "docs": undefined,
@@ -10145,11 +10347,17 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ResourceRoleList": {
         "docs": undefined,
         "properties": {
           "roles": "Roles",
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ResourceRoleRead": {
@@ -10238,6 +10446,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "RoleAssignmentCreate": {
         "docs": undefined,
@@ -10254,6 +10465,9 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "the user the role will be assigned to (accepts either the user id or the user key)",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "RoleAssignmentRead": {
@@ -10346,6 +10560,9 @@ The actions represents the ways you can interact with a protected resource.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "RoleAssignmentRemove": {
         "docs": undefined,
@@ -10363,6 +10580,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "RoleBlock": {
         "docs": undefined,
@@ -10376,11 +10596,17 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "RoleList": {
         "docs": undefined,
         "properties": {
           "roles": "Roles",
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "RoleRead": {
@@ -10459,10 +10685,17 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "Roles": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
         "union": [
           "list<RoleRead>",
           "PaginatedResultRoleRead",
@@ -10528,6 +10761,9 @@ The actions represents the ways you can interact with a protected resource.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "TenantCreate": {
         "docs": undefined,
@@ -10555,14 +10791,23 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "TenantCreateBulkOperationResult": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "TenantDeleteBulkOperationResult": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "TenantRead": {
         "docs": undefined,
@@ -10636,6 +10881,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserCreate": {
         "docs": undefined,
@@ -10673,14 +10921,23 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserCreateBulkOperationResult": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserDeleteBulkOperationResult": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserInTenant": {
         "docs": undefined,
@@ -10697,6 +10954,9 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "The tenant key which the user is associated with",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "UserRead": {
@@ -10774,10 +11034,16 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "optional<list<UserRole>>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserReplaceBulkOperationResult": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserRole": {
         "docs": undefined,
@@ -10791,6 +11057,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserStatus": {
         "docs": "An enumeration.",
@@ -10798,6 +11067,9 @@ The actions represents the ways you can interact with a protected resource.",
           "active",
           "pending",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -10806,10 +11078,17 @@ The actions represents the ways you can interact with a protected resource.",
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
         "union": [
           "string",
           "integer",
@@ -10837,7 +11116,7 @@ The actions represents the ways you can interact with a protected resource.",
 }
 `;
 
-exports[`open api parser permit simple 1`] = `
+exports[`open api parser > permit > simple 1`] = `
 {
   "definitionFiles": {
     "bulkOperations.yml": {
@@ -11141,6 +11420,9 @@ exports[`open api parser permit simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
     "conditionSetRules.yml": {
@@ -11395,6 +11677,9 @@ If the permission is not granted, it is skipped.",
               "query-parameters": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -12310,11 +12595,18 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "types": {
         "ListConditionSetsResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultConditionSetRead",
             "list<root.ConditionSetRead>",
@@ -12858,6 +13150,9 @@ allowed.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "types": {
         "EnvironmentCopyConflictStrategy": {
@@ -12867,6 +13162,9 @@ allowed.",
             "fail",
             "overwrite",
           ],
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
         },
       },
     },
@@ -13171,6 +13469,9 @@ authenticated actor (i.e: human team member or api key).",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
     "projects.yml": {
@@ -13472,6 +13773,9 @@ Every project is a separate silo, and has its own unique set of environments and
               "type": "root.ProjectRead",
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -13855,6 +14159,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
     "resourceActions.yml": {
@@ -14221,6 +14528,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
     "resourceAttributes.yml": {
@@ -14553,6 +14863,9 @@ Fields that will be provided will be completely overwritten.",
               "type": "root.ResourceAttributeRead",
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -14901,6 +15214,9 @@ Fields that will be provided will be completely overwritten.",
               "type": "root.ResourceInstanceRead",
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -15611,6 +15927,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
     "resources.yml": {
@@ -16310,11 +16629,18 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "types": {
         "ListResourcesResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultResourceRead",
             "list<root.ResourceRead>",
@@ -16611,6 +16937,9 @@ If the role is not actually assigned, will return 404.",
               "body": "root.RoleAssignmentRemove",
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -17279,11 +17608,18 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "types": {
         "ListRolesResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultRoleRead",
             "list<root.RoleRead>",
@@ -17784,11 +18120,18 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "types": {
         "ListTenantsResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultTenantRead",
             "list<root.TenantRead>",
@@ -18119,6 +18462,9 @@ Fields that will be provided will be completely overwritten.",
               "type": "root.ResourceAttributeRead",
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
     },
@@ -18818,6 +19164,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
     },
   },
@@ -18842,6 +19191,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "a more descriptive name for the action",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ActionBlockRead": {
@@ -18871,6 +19223,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "AddRolePermissions": {
         "docs": undefined,
@@ -18879,6 +19234,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "List of permissions to assign to the role. If a permission is already granted to the role it is skipped. Each permission can be either a resource action id, or \`{resource_key}:{action_key}\`, i.e: the "permission name".",
             "type": "list<string>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "AttributeBlockEditable": {
@@ -18892,6 +19250,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
             "type": "AttributeType",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "AttributeBlockRead": {
@@ -18920,6 +19281,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "AttributeType",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "AttributeType": {
         "docs": "supported attribute primitives",
@@ -18931,6 +19295,9 @@ Fields that will be provided will be completely overwritten.",
           "array",
           "json",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "BulkRoleAssignmentReport": {
         "docs": undefined,
@@ -18940,6 +19307,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "optional<integer>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "BulkRoleUnAssignmentReport": {
         "docs": undefined,
@@ -18948,6 +19318,9 @@ Fields that will be provided will be completely overwritten.",
             "default": 0,
             "type": "optional<integer>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ConditionSetRead": {
@@ -19046,6 +19419,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ConditionSetRuleRead": {
         "docs": undefined,
@@ -19115,6 +19491,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ConditionSetType": {
         "docs": "An enumeration.",
@@ -19122,6 +19501,9 @@ Fields that will be provided will be completely overwritten.",
           "userset",
           "resourceset",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "EnvironmentCopyScope": {
         "docs": undefined,
@@ -19143,6 +19525,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "optional<EnvironmentCopyScopeFilters>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "EnvironmentCopyScopeFilters": {
         "docs": undefined,
@@ -19156,6 +19541,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "EnvironmentCopyTarget": {
         "docs": undefined,
@@ -19168,6 +19556,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Description of the environment to create. This environment must not already exist.",
             "type": "optional<EnvironmentCreate>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "EnvironmentCreate": {
@@ -19203,6 +19594,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "the settings for this environment",
             "type": "optional<map<string, unknown>>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "EnvironmentRead": {
@@ -19270,6 +19664,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Date and time when the environment was last updated/modified (ISO_8601 format).",
             "type": "datetime",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "EnvironmentStats": {
@@ -19340,11 +19737,17 @@ Fields that will be provided will be completely overwritten.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "HTTPValidationError": {
         "docs": undefined,
         "properties": {
           "detail": "optional<list<ValidationError>>",
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "IdentityRead": {
@@ -19380,6 +19783,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Unique User Id of this identity in the identity provider (including the provider type)",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "InviteRead": {
@@ -19452,6 +19858,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "InviteStatus",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "InviteStatus": {
         "docs": "An enumeration.",
@@ -19461,6 +19870,9 @@ Fields that will be provided will be completely overwritten.",
           "failed",
           "canceled",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "JwksObj": {
         "docs": undefined,
@@ -19469,6 +19881,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "The keys to match against the request headers",
             "type": "list<map<string, unknown>>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "MemberAccessLevel": {
@@ -19479,6 +19894,9 @@ Fields that will be provided will be completely overwritten.",
           "read",
           "no_access",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "MemberAccessObj": {
         "docs": "An enumeration.",
@@ -19487,6 +19905,9 @@ Fields that will be provided will be completely overwritten.",
           "project",
           "env",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "OnboardingStep": {
         "docs": "An enumeration.",
@@ -19500,6 +19921,9 @@ Fields that will be provided will be completely overwritten.",
           "connect_sdk",
           "done",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "OrgMemberReadWithGrants": {
         "docs": undefined,
@@ -19582,6 +20006,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "map<string, unknown>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "OrganizationRead": {
         "docs": undefined,
@@ -19620,6 +20047,9 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Date and time when the organization was last updated/modified (ISO_8601 format).",
             "type": "datetime",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "OrganizationReadWithAPIKey": {
@@ -19670,6 +20100,9 @@ Fields that will be provided will be completely overwritten.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "PDPConfigRead": {
         "docs": undefined,
@@ -19716,6 +20149,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "PaginatedResultConditionSetRead": {
         "docs": undefined,
@@ -19745,6 +20181,9 @@ Fields that will be provided will be completely overwritten.",
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "PaginatedResultResourceRead": {
@@ -19776,6 +20215,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "PaginatedResultResourceRoleRead": {
         "docs": undefined,
@@ -19805,6 +20247,9 @@ Fields that will be provided will be completely overwritten.",
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "PaginatedResultRoleRead": {
@@ -19836,6 +20281,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "PaginatedResultTenantRead": {
         "docs": undefined,
@@ -19866,6 +20314,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "PaginatedResultUserRead": {
         "docs": undefined,
@@ -19895,6 +20346,9 @@ Fields that will be provided will be completely overwritten.",
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "Permission": {
@@ -19935,6 +20389,9 @@ Fields that will be provided will be completely overwritten.",
           },
           "project_key": "optional<string>",
           "project_name": "optional<string>",
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ProjectRead": {
@@ -20005,6 +20462,9 @@ Fields that will be provided will be completely overwritten.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "RelationsBlock": {
         "docs": "A actions definition block, typically contained within a resource type definition block.
@@ -20018,6 +20478,9 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "List of permissions to remove from the role. If a permission is not found it is skipped. Each permission can be either a resource action id, or \`{resource_key}:{action_key}\`,i.e: the "permission name".",
             "type": "list<string>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ResourceActionGroupRead": {
@@ -20105,6 +20568,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ResourceActionRead": {
         "docs": undefined,
@@ -20188,6 +20654,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ResourceAttributeCreate": {
         "docs": undefined,
@@ -20210,6 +20679,9 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
             "type": "AttributeType",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ResourceAttributeRead": {
@@ -20294,6 +20766,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ResourceAttributeUpdate": {
         "docs": undefined,
@@ -20306,6 +20781,9 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "The type of the attribute, we currently support: \`bool\`, \`number\` (ints, floats), \`time\` (a timestamp), \`string\`, and \`json\`.",
             "type": "optional<AttributeType>",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ResourceInstanceRead": {
@@ -20396,6 +20874,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ResourceRead": {
         "docs": undefined,
@@ -20477,11 +20958,17 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ResourceRoleList": {
         "docs": undefined,
         "properties": {
           "roles": "Roles",
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "ResourceRoleRead": {
@@ -20570,6 +21057,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "RoleAssignmentCreate": {
         "docs": undefined,
@@ -20586,6 +21076,9 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "the user the role will be assigned to (accepts either the user id or the user key)",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "RoleAssignmentRead": {
@@ -20678,6 +21171,9 @@ The actions represents the ways you can interact with a protected resource.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "RoleAssignmentRemove": {
         "docs": undefined,
@@ -20695,6 +21191,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "RoleBlock": {
         "docs": undefined,
@@ -20708,11 +21207,17 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "optional<list<string>>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "RoleList": {
         "docs": undefined,
         "properties": {
           "roles": "Roles",
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "RoleRead": {
@@ -20791,10 +21296,17 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "Roles": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
         "union": [
           "list<RoleRead>",
           "PaginatedResultRoleRead",
@@ -20860,6 +21372,9 @@ The actions represents the ways you can interact with a protected resource.",
             },
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "TenantCreate": {
         "docs": undefined,
@@ -20887,14 +21402,23 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "TenantCreateBulkOperationResult": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "TenantDeleteBulkOperationResult": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "TenantRead": {
         "docs": undefined,
@@ -20968,6 +21492,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserCreate": {
         "docs": undefined,
@@ -21005,14 +21532,23 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserCreateBulkOperationResult": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserDeleteBulkOperationResult": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserInTenant": {
         "docs": undefined,
@@ -21029,6 +21565,9 @@ The actions represents the ways you can interact with a protected resource.",
             "docs": "The tenant key which the user is associated with",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "permit/openapi.json",
         },
       },
       "UserRead": {
@@ -21106,10 +21645,16 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "optional<list<UserRole>>",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserReplaceBulkOperationResult": {
         "docs": undefined,
         "properties": {},
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserRole": {
         "docs": undefined,
@@ -21123,6 +21668,9 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "UserStatus": {
         "docs": "An enumeration.",
@@ -21130,6 +21678,9 @@ The actions represents the ways you can interact with a protected resource.",
           "active",
           "pending",
         ],
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -21138,10 +21689,17 @@ The actions represents the ways you can interact with a protected resource.",
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
         "union": [
           "string",
           "integer",

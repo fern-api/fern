@@ -111,6 +111,13 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_ec2.bootInstance",
@@ -346,7 +353,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "5065b5e5ea240f7a5c685a0fada7bc576b98b4e8",
+                                "id": "006c01898a728862ec9eb9bd18d3054f9ecb22fd",
                                 "docs": null
                             }
                         }
@@ -411,6 +418,13 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_s3.getPresignedUrl",
@@ -674,7 +688,7 @@
                                         }
                                     }
                                 },
-                                "id": "63c11ce696f291333c2d6f00ff85245dc5757403",
+                                "id": "c087a501436edb99a8f37ac198915f4983926a2f",
                                 "docs": null
                             }
                         }
@@ -831,6 +845,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {
         "subpackage_ec2": {
             "name": {
@@ -1006,7 +1021,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedCodeSamples;
-using SeedCodeSamples.Core;
-using SeedCodeSamples.Test.Utils;
 using SeedCodeSamples.Test.Wire;
 
 #nullable enable
@@ -43,7 +43,7 @@ public class HelloTest : BaseWireTest
             );
 
         var response = Client.Service.HelloAsync(new MyRequest { NumEvents = 5 }).Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 
     [Test]
@@ -78,6 +78,6 @@ public class HelloTest : BaseWireTest
             );
 
         var response = Client.Service.HelloAsync(new MyRequest { NumEvents = 5 }).Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

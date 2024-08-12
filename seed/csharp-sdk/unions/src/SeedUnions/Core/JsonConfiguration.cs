@@ -3,7 +3,7 @@ using System.Text.Json.Serialization;
 
 namespace SeedUnions.Core;
 
-public static class JsonOptions
+internal static class JsonOptions
 {
     public static readonly JsonSerializerOptions JsonSerializerOptions;
 
@@ -18,7 +18,7 @@ public static class JsonOptions
     }
 }
 
-public static class JsonUtils
+internal static class JsonUtils
 {
     public static string Serialize<T>(T obj)
     {

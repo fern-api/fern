@@ -1,17 +1,17 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedTrace;
 using SeedTrace.Core;
-using SeedTrace.V2.V3;
 
 #nullable enable
 
 namespace SeedTrace.V2.V3;
 
-public class ProblemClient
+public partial class ProblemClient
 {
     private RawClient _client;
 
-    public ProblemClient(RawClient client)
+    internal ProblemClient(RawClient client)
     {
         _client = client;
     }
@@ -48,7 +48,7 @@ public class ProblemClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -82,7 +82,7 @@ public class ProblemClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -119,7 +119,7 @@ public class ProblemClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -157,7 +157,7 @@ public class ProblemClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

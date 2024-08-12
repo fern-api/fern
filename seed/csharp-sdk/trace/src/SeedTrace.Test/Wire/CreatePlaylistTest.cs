@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace;
-using SeedTrace.Core;
-using SeedTrace.Test.Utils;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -56,8 +56,8 @@ public class CreatePlaylistTest : BaseWireTest
                 1,
                 new CreatePlaylistRequest
                 {
-                    Datetime = new DateTime(2024, 01, 15, 04, 30, 00, 000),
-                    OptionalDatetime = new DateTime(2024, 01, 15, 04, 30, 00, 000),
+                    Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+                    OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
                     Body = new PlaylistCreateRequest
                     {
                         Name = "string",
@@ -66,6 +66,6 @@ public class CreatePlaylistTest : BaseWireTest
                 }
             )
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

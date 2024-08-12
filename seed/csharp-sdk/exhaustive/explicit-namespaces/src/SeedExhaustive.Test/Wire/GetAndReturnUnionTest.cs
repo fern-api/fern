@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedExhaustive.Core;
-using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Test.Wire;
 using SeedExhaustive.Types.Union;
 
@@ -48,6 +48,6 @@ public class GetAndReturnUnionTest : BaseWireTest
         var response = Client
             .Endpoints.Union.GetAndReturnUnionAsync(new Dog { Name = "string", LikesToWoof = true })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

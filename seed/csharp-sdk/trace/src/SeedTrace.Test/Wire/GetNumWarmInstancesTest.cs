@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedTrace.Core;
-using SeedTrace.Test.Utils;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -34,6 +34,6 @@ public class GetNumWarmInstancesTest : BaseWireTest
             );
 
         var response = Client.Sysprop.GetNumWarmInstancesAsync().Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

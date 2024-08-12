@@ -1,17 +1,16 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedBasicAuth;
 using SeedBasicAuth.Core;
 
 #nullable enable
 
 namespace SeedBasicAuth;
 
-public class BasicAuthClient
+public partial class BasicAuthClient
 {
     private RawClient _client;
 
-    public BasicAuthClient(RawClient client)
+    internal BasicAuthClient(RawClient client)
     {
         _client = client;
     }
@@ -60,7 +59,7 @@ public class BasicAuthClient
         throw new SeedBasicAuthApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -111,7 +110,7 @@ public class BasicAuthClient
         throw new SeedBasicAuthApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

@@ -86,6 +86,13 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_optional.sendOptionalBody",
@@ -352,7 +359,7 @@
                                         }
                                     }
                                 },
-                                "id": "efb98960fb1978384183f71ac2b33c63113068e5",
+                                "id": "914ea499fb0e16267469dd60f9f74cf7b43999b3",
                                 "docs": null
                             }
                         }
@@ -402,6 +409,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {
         "subpackage_optional": {
             "name": {
@@ -503,7 +511,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

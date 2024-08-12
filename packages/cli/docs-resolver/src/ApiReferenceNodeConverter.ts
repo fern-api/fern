@@ -83,7 +83,7 @@ export class ApiReferenceNodeConverter {
             title: this.apiSection.title,
             apiDefinitionId: this.apiDefinitionId,
             overviewPageId: this.#overviewPageId,
-            disableLongScrolling: this.apiSection.paginated,
+            paginated: this.apiSection.paginated,
             slug: this.#slug.get(),
             icon: this.apiSection.icon,
             hidden: this.apiSection.hidden,
@@ -100,7 +100,8 @@ export class ApiReferenceNodeConverter {
             children: this.#children,
             availability: undefined,
             pointsTo,
-            noindex: undefined
+            noindex: undefined,
+            playground: this.#convertPlaygroundSettings(this.apiSection.playground)
         };
     }
 
@@ -165,7 +166,7 @@ export class ApiReferenceNodeConverter {
         const maybeFullSlug =
             pkg.overviewAbsolutePath != null ? this.markdownFilesToFullSlugs.get(pkg.overviewAbsolutePath) : undefined;
 
-        const subpackage = this.#holder.getSubpackage(pkg.package);
+        const subpackage = this.#holder.getSubpackageByIdOrLocator(pkg.package);
 
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
@@ -211,7 +212,8 @@ export class ApiReferenceNodeConverter {
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
-                noindex: undefined
+                noindex: undefined,
+                playground: this.#convertPlaygroundSettings(pkg.playground)
             };
         } else {
             this.taskContext.logger.warn(
@@ -236,7 +238,8 @@ export class ApiReferenceNodeConverter {
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
-                noindex: undefined
+                noindex: undefined,
+                playground: this.#convertPlaygroundSettings(pkg.playground)
             };
         }
     }
@@ -258,17 +261,21 @@ export class ApiReferenceNodeConverter {
 
         const nodeId = idgen.append(`section:${kebabCase(section.title)}`);
 
-        const subpackages = section.referencedSubpackages.filter((subpackageId) => {
-            const subpackage = this.#holder.getSubpackage(subpackageId);
-            if (subpackage == null) {
-                this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
-                return false;
-            }
-            return true;
-        });
+        const subpackageIds = section.referencedSubpackages
+            .map((locator) => {
+                const subpackage = this.#holder.getSubpackageByIdOrLocator(locator);
+                return subpackage != null ? ApiDefinitionHolder.getSubpackageId(subpackage) : undefined;
+            })
+            .filter((subpackageId) => {
+                if (subpackageId == null) {
+                    this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
+                }
+                return subpackageId != null;
+            })
+            .filter(isNonNullish);
 
-        this.#nodeIdToSubpackageId.set(nodeId.get(), subpackages);
-        subpackages.forEach((subpackageId) => {
+        this.#nodeIdToSubpackageId.set(nodeId.get(), subpackageIds);
+        subpackageIds.forEach((subpackageId) => {
             if (this.#visitedSubpackages.has(subpackageId)) {
                 this.taskContext.logger.error(
                     `Duplicate subpackage found in the API Reference layout: ${subpackageId}`
@@ -296,7 +303,8 @@ export class ApiReferenceNodeConverter {
             availability: undefined,
             apiDefinitionId: this.apiDefinitionId,
             pointsTo: undefined,
-            noindex: undefined
+            noindex: undefined,
+            playground: this.#convertPlaygroundSettings(section.playground)
         };
     }
 
@@ -309,7 +317,7 @@ export class ApiReferenceNodeConverter {
         unknownIdentifier = unknownIdentifier.trim();
         // unknownIdentifier could either be a package, endpoint, websocket, or webhook.
         // We need to determine which one it is.
-        const subpackage = this.#holder.getSubpackage(unknownIdentifier);
+        const subpackage = this.#holder.getSubpackageByIdOrLocator(unknownIdentifier);
         if (subpackage != null) {
             const subpackageId = ApiDefinitionHolder.getSubpackageId(subpackage);
             const subpackageNodeId = idgen.append(subpackageId);
@@ -338,7 +346,8 @@ export class ApiReferenceNodeConverter {
                 availability: undefined,
                 apiDefinitionId: this.apiDefinitionId,
                 pointsTo: undefined,
-                noindex: undefined
+                noindex: undefined,
+                playground: undefined
             };
         }
 
@@ -350,7 +359,8 @@ export class ApiReferenceNodeConverter {
                 title: undefined,
                 icon: undefined,
                 slug: undefined,
-                hidden: undefined
+                hidden: undefined,
+                playground: undefined
             },
             apiDefinitionPackageId,
             parentSlug,
@@ -391,7 +401,8 @@ export class ApiReferenceNodeConverter {
                 title: endpointItem.title ?? endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                 slug: endpointSlug.get(),
                 icon: endpointItem.icon,
-                hidden: endpointItem.hidden
+                hidden: endpointItem.hidden,
+                playground: this.#convertPlaygroundSettings(endpointItem.playground)
             };
         }
 
@@ -421,7 +432,8 @@ export class ApiReferenceNodeConverter {
                 icon: endpointItem.icon,
                 hidden: endpointItem.hidden,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.utils.convertAvailability(webSocket.availability)
+                availability: FernNavigation.utils.convertAvailability(webSocket.availability),
+                playground: this.#convertPlaygroundSettings(endpointItem.playground)
             };
         }
 
@@ -524,7 +536,8 @@ export class ApiReferenceNodeConverter {
                 title: endpoint.name ?? stringifyEndpointPathParts(endpoint.path.parts),
                 slug: endpointSlug.get(),
                 icon: undefined,
-                hidden: undefined
+                hidden: undefined,
+                playground: undefined
             });
         });
 
@@ -545,7 +558,8 @@ export class ApiReferenceNodeConverter {
                 icon: undefined,
                 hidden: undefined,
                 apiDefinitionId: this.apiDefinitionId,
-                availability: FernNavigation.utils.convertAvailability(webSocket.availability)
+                availability: FernNavigation.utils.convertAvailability(webSocket.availability),
+                playground: undefined
             });
         });
 
@@ -576,7 +590,7 @@ export class ApiReferenceNodeConverter {
                 return;
             }
 
-            const subpackage = this.#holder.getSubpackage(subpackageId);
+            const subpackage = this.#holder.getSubpackageByIdOrLocator(subpackageId);
             if (subpackage == null) {
                 this.taskContext.logger.error(`Subpackage ${subpackageId} not found in ${this.apiDefinitionId}`);
                 return;
@@ -599,7 +613,8 @@ export class ApiReferenceNodeConverter {
                     availability: undefined,
                     apiDefinitionId: this.apiDefinitionId,
                     pointsTo: FernNavigation.utils.followRedirects(subpackageChildren),
-                    noindex: undefined
+                    noindex: undefined,
+                    playground: undefined
                 });
             }
         });
@@ -622,7 +637,9 @@ export class ApiReferenceNodeConverter {
         parentSlug: FernNavigation.SlugGenerator
     ): FernNavigation.ApiPackageChild[] {
         const pkg =
-            packageId != null ? this.#holder.resolveSubpackage(this.#holder.getSubpackage(packageId)) : undefined;
+            packageId != null
+                ? this.#holder.resolveSubpackage(this.#holder.getSubpackageByIdOrLocator(packageId))
+                : undefined;
 
         if (pkg == null) {
             this.taskContext.logger.error(`Subpackage ${packageId} not found in ${this.apiDefinitionId}`);
@@ -631,6 +648,27 @@ export class ApiReferenceNodeConverter {
 
         // if an endpoint, websocket, webhook, or subpackage is not visited, add it to the additional children list
         return this.#convertApiDefinitionPackage(pkg, parentSlug);
+    }
+
+    #convertPlaygroundSettings(
+        playgroundSettings?: docsYml.RawSchemas.PlaygroundSettings
+    ): FernNavigation.PlaygroundSettings | undefined {
+        if (playgroundSettings) {
+            return {
+                environments:
+                    playgroundSettings.environments != null && playgroundSettings.environments.length > 0
+                        ? playgroundSettings.environments.map((environmentId) =>
+                              FernNavigation.EnvironmentId(environmentId)
+                          )
+                        : undefined,
+                button:
+                    playgroundSettings.button != null && playgroundSettings.button.href
+                        ? { href: FernNavigation.Url(playgroundSettings.button.href) }
+                        : undefined
+            };
+        }
+
+        return;
     }
 
     private mergeEndpointPairs(children: FernNavigation.ApiPackageChild[]): FernNavigation.ApiPackageChild[] {

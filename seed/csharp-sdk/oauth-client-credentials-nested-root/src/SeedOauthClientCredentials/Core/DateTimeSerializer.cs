@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace SeedOauthClientCredentials.Core;
 
-public class DateTimeSerializer : JsonConverter<DateTime>
+internal class DateTimeSerializer : JsonConverter<DateTime>
 {
     public override DateTime Read(
         ref Utf8JsonReader reader,

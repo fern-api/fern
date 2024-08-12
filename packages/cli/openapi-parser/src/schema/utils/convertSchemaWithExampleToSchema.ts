@@ -22,7 +22,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
                 additionalProperties: schema.additionalProperties,
-                availability: schema.availability
+                availability: schema.availability,
+                source: schema.source
             });
         case "array":
             return Schema.array({
@@ -41,7 +42,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 nameOverride: schema.nameOverride,
                 values: schema.values,
                 default: schema.default,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                source: schema.source
             });
         case "literal":
             return Schema.literal({
@@ -94,7 +96,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 value: convertSchemaWithExampleToSchema(schema.value),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                encoding: schema.encoding
             });
         case "reference":
             return Schema.reference({
@@ -103,7 +106,8 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 schema: schema.schema,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                source: schema.source
             });
         case "oneOf":
             return Schema.oneOf(convertToOneOf(schema.value));
@@ -178,7 +182,9 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                         return [discriminantValue, convertSchemaWithExampleToSchema(schemaWithExample)];
                     })
                 ),
-                groupName: oneOfSchema.groupName
+                groupName: oneOfSchema.groupName,
+                encoding: oneOfSchema.encoding,
+                source: oneOfSchema.source
             });
         case "undisciminated":
             return OneOfSchema.undisciminated({
@@ -187,7 +193,9 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema)),
-                groupName: oneOfSchema.groupName
+                groupName: oneOfSchema.groupName,
+                encoding: oneOfSchema.encoding,
+                source: oneOfSchema.source
             });
         default:
             assertNever(oneOfSchema);

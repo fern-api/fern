@@ -125,6 +125,11 @@
             "referencedTypes": [
                 "type_:Parent"
             ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -336,6 +341,11 @@
                 "extendedProperties": []
             },
             "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -577,6 +587,11 @@
             "referencedTypes": [
                 "type_:Parent"
             ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -759,6 +774,13 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_.extendedInlineRequestBody",
@@ -1124,7 +1146,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "2aae178dd3a5b6259e23f15455b2a5778d924838",
+                                "id": "2d1301d7e98e665299fcbb884ae3526729ab6861",
                                 "docs": null
                             }
                         }
@@ -1181,6 +1203,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -1210,7 +1233,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

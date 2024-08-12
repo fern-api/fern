@@ -1,8 +1,3 @@
-using SeedBasicAuth;
-using SeedBasicAuth.Core;
-
-#nullable enable
-
 namespace SeedBasicAuth;
 
 /// <summary>

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser x-fern-streaming parse open api 1`] = `
+exports[`open api parser > x-fern-streaming > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -206,6 +206,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "CreateChatCompletionStreamRequestFunctionCall",
                       "groupName": null,
                       "nameOverride": null,
@@ -229,6 +230,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                         {
                           "availability": null,
                           "description": null,
+                          "encoding": null,
                           "generatedName": "CreateChatCompletionStreamRequestFunctionCallOne",
                           "groupName": null,
                           "key": {
@@ -266,6 +268,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                           },
                         },
                       ],
+                      "source": {
+                        "file": "x-fern-streaming/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -307,6 +313,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "Function",
+                      "source": {
+                        "file": "x-fern-streaming/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -373,6 +383,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "CreateChatCompletionStreamRequestLogitBias",
                     "groupName": null,
                     "key": {
@@ -483,6 +494,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "ChatMessage",
+                  "source": {
+                    "file": "x-fern-streaming/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -580,6 +595,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "ChatCompletionRequestExt",
+                    "source": {
+                      "file": "x-fern-streaming/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 },
@@ -695,6 +714,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "ChatCompletionResponseFormat",
+                    "source": {
+                      "file": "x-fern-streaming/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 },
@@ -726,6 +749,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "CreateChatCompletionStreamRequestStop",
                       "groupName": null,
                       "nameOverride": null,
@@ -771,6 +795,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                           },
                         },
                       ],
+                      "source": {
+                        "file": "x-fern-streaming/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -920,7 +948,15 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "x-fern-streaming/openapi.yml",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "x-fern-streaming/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -935,12 +971,24 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "ChatCompletionChunk",
+          "source": {
+            "file": "x-fern-streaming/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "x-fern-streaming/openapi.yml",
+          "type": "openapi",
         },
         "type": "streamingSse",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create Chat Completion",
       "tags": [
         "text",
@@ -1079,6 +1127,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "CreateChatCompletionRequestFunctionCall",
                       "groupName": null,
                       "nameOverride": null,
@@ -1102,6 +1151,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                         {
                           "availability": null,
                           "description": null,
+                          "encoding": null,
                           "generatedName": "CreateChatCompletionRequestFunctionCallOne",
                           "groupName": null,
                           "key": {
@@ -1139,6 +1189,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                           },
                         },
                       ],
+                      "source": {
+                        "file": "x-fern-streaming/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -1180,6 +1234,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "Function",
+                      "source": {
+                        "file": "x-fern-streaming/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -1246,6 +1304,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                   "value": {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "CreateChatCompletionRequestLogitBias",
                     "groupName": null,
                     "key": {
@@ -1356,6 +1415,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "ChatMessage",
+                  "source": {
+                    "file": "x-fern-streaming/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -1453,6 +1516,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "ChatCompletionRequestExt",
+                    "source": {
+                      "file": "x-fern-streaming/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 },
@@ -1568,6 +1635,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "ChatCompletionResponseFormat",
+                    "source": {
+                      "file": "x-fern-streaming/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                 },
@@ -1599,6 +1670,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                     "value": {
                       "availability": null,
                       "description": null,
+                      "encoding": null,
                       "generatedName": "CreateChatCompletionRequestStop",
                       "groupName": null,
                       "nameOverride": null,
@@ -1644,6 +1716,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                           },
                         },
                       ],
+                      "source": {
+                        "file": "x-fern-streaming/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "undisciminated",
                     },
                   },
@@ -1793,7 +1869,15 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "x-fern-streaming/openapi.yml",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "x-fern-streaming/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1808,12 +1892,24 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
           "groupName": null,
           "nameOverride": null,
           "schema": "ChatCompletionResponse",
+          "source": {
+            "file": "x-fern-streaming/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "x-fern-streaming/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create Chat Completion",
       "tags": [
         "text",
@@ -1877,6 +1973,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "FinishReason",
+                "source": {
+                  "file": "x-fern-streaming/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -1921,10 +2021,18 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ChatMessage",
+            "source": {
+              "file": "x-fern-streaming/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ChatCompletionChunk": {
@@ -1958,6 +2066,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "ChatCompletionChunkChoice",
+              "source": {
+                "file": "x-fern-streaming/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -2057,6 +2169,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ChatCompletionChunkChoice": {
@@ -2083,6 +2199,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "ChatCompletionDelta",
+            "source": {
+              "file": "x-fern-streaming/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -2114,6 +2234,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "FinishReason",
+                "source": {
+                  "file": "x-fern-streaming/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -2145,6 +2269,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ChatCompletionDelta": {
@@ -2222,6 +2350,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ChatCompletionRequestExt": {
@@ -2262,12 +2394,20 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ChatCompletionRequestExtVLLM",
+                "source": {
+                  "file": "x-fern-streaming/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ChatCompletionRequestExtVLLM": {
@@ -2520,6 +2660,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ChatCompletionResponse": {
@@ -2553,6 +2697,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
               "groupName": null,
               "nameOverride": null,
               "schema": "ChatCompletionChoice",
+              "source": {
+                "file": "x-fern-streaming/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -2665,10 +2813,18 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
             "groupName": null,
             "nameOverride": null,
             "schema": "UsageStats",
+            "source": {
+              "file": "x-fern-streaming/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ChatCompletionResponseFormat": {
@@ -2705,6 +2861,7 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ChatCompletionResponseFormatSchema",
                 "groupName": null,
                 "key": {
@@ -2758,6 +2915,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ChatMessage": {
@@ -2827,6 +2988,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "FinishReason": {
@@ -2836,6 +3001,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
       "generatedName": "FinishReason",
       "groupName": null,
       "nameOverride": "FinishReason",
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -2964,6 +3133,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UsageStats": {
@@ -3052,6 +3225,10 @@ exports[`open api parser x-fern-streaming parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-streaming/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
 
@@ -7,11 +8,11 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.NoReqBody;
 
-public class NoReqBodyClient
+public partial class NoReqBodyClient
 {
     private RawClient _client;
 
-    public NoReqBodyClient(RawClient client)
+    internal NoReqBodyClient(RawClient client)
     {
         _client = client;
     }
@@ -45,7 +46,7 @@ public class NoReqBodyClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -76,7 +77,7 @@ public class NoReqBodyClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

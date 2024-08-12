@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser dopt parse open api 1`] = `
+exports[`open api parser > dopt > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -42,6 +42,10 @@ exports[`open api parser dopt parse open api 1`] = `
                   "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
+                  "source": {
+                    "file": "dopt/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "enum",
                   "values": [
                     {
@@ -98,7 +102,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "401": {
@@ -161,7 +173,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "404": {
@@ -224,7 +244,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "500": {
@@ -287,7 +315,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -486,6 +522,10 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -512,6 +552,10 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -533,6 +577,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -722,6 +770,10 @@ exports[`open api parser dopt parse open api 1`] = `
                     },
                   },
                 ],
+                "source": {
+                  "file": "dopt/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             },
@@ -767,6 +819,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "FindBlocksResponseTransitioned",
                 "groupName": null,
                 "key": {
@@ -814,6 +867,10 @@ exports[`open api parser dopt parse open api 1`] = `
                 "generatedName": "FindBlocksResponseType",
                 "groupName": null,
                 "nameOverride": null,
+                "source": {
+                  "file": "dopt/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "enum",
                 "values": [
                   {
@@ -918,6 +975,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "commonProperties": [],
                     "description": null,
                     "discriminantProperty": "type",
+                    "encoding": null,
                     "generatedName": "FindBlocksResponseFieldsItem",
                     "groupName": null,
                     "nameOverride": null,
@@ -985,6 +1043,10 @@ exports[`open api parser dopt parse open api 1`] = `
                             },
                           },
                         ],
+                        "source": {
+                          "file": "dopt/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "object",
                       },
                       "number": {
@@ -1055,6 +1117,10 @@ exports[`open api parser dopt parse open api 1`] = `
                             },
                           },
                         ],
+                        "source": {
+                          "file": "dopt/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "object",
                       },
                       "string": {
@@ -1124,8 +1190,16 @@ exports[`open api parser dopt parse open api 1`] = `
                             },
                           },
                         ],
+                        "source": {
+                          "file": "dopt/openapi.json",
+                          "type": "openapi",
+                        },
                         "type": "object",
                       },
+                    },
+                    "source": {
+                      "file": "dopt/openapi.json",
+                      "type": "openapi",
                     },
                     "type": "discriminated",
                   },
@@ -1133,12 +1207,24 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "dopt/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "v2",
@@ -1179,6 +1265,10 @@ exports[`open api parser dopt parse open api 1`] = `
                   "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
+                  "source": {
+                    "file": "dopt/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "enum",
                   "values": [
                     {
@@ -1235,7 +1325,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "401": {
@@ -1298,7 +1396,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "404": {
@@ -1361,7 +1467,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "500": {
@@ -1424,7 +1538,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -1457,6 +1579,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -1491,6 +1617,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -1514,6 +1644,10 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -1535,6 +1669,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -1566,6 +1704,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -1573,6 +1715,10 @@ exports[`open api parser dopt parse open api 1`] = `
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "v2",
@@ -1613,6 +1759,10 @@ exports[`open api parser dopt parse open api 1`] = `
                   "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
+                  "source": {
+                    "file": "dopt/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "enum",
                   "values": [
                     {
@@ -1669,7 +1819,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "401": {
@@ -1732,7 +1890,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "404": {
@@ -1795,7 +1961,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "500": {
@@ -1858,7 +2032,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2121,6 +2303,10 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -2146,6 +2332,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "double",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -2173,6 +2363,10 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -2194,6 +2388,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -2224,6 +2422,10 @@ exports[`open api parser dopt parse open api 1`] = `
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
       ],
@@ -2433,6 +2635,10 @@ exports[`open api parser dopt parse open api 1`] = `
                     },
                   },
                 ],
+                "source": {
+                  "file": "dopt/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             },
@@ -2638,6 +2844,10 @@ exports[`open api parser dopt parse open api 1`] = `
                               },
                             },
                           ],
+                          "source": {
+                            "file": "dopt/openapi.json",
+                            "type": "openapi",
+                          },
                           "type": "object",
                         },
                       },
@@ -2683,6 +2893,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "schema": {
                           "availability": null,
                           "description": null,
+                          "encoding": null,
                           "generatedName": "GetFlowResponseBlocksItemTransitioned",
                           "groupName": null,
                           "key": {
@@ -2730,6 +2941,10 @@ exports[`open api parser dopt parse open api 1`] = `
                           "generatedName": "GetFlowResponseBlocksItemType",
                           "groupName": null,
                           "nameOverride": null,
+                          "source": {
+                            "file": "dopt/openapi.json",
+                            "type": "openapi",
+                          },
                           "type": "enum",
                           "values": [
                             {
@@ -2834,6 +3049,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "commonProperties": [],
                               "description": null,
                               "discriminantProperty": "type",
+                              "encoding": null,
                               "generatedName": "GetFlowResponseBlocksItemFieldsItem",
                               "groupName": null,
                               "nameOverride": null,
@@ -2901,6 +3117,10 @@ exports[`open api parser dopt parse open api 1`] = `
                                       },
                                     },
                                   ],
+                                  "source": {
+                                    "file": "dopt/openapi.json",
+                                    "type": "openapi",
+                                  },
                                   "type": "object",
                                 },
                                 "number": {
@@ -2971,6 +3191,10 @@ exports[`open api parser dopt parse open api 1`] = `
                                       },
                                     },
                                   ],
+                                  "source": {
+                                    "file": "dopt/openapi.json",
+                                    "type": "openapi",
+                                  },
                                   "type": "object",
                                 },
                                 "string": {
@@ -3040,8 +3264,16 @@ exports[`open api parser dopt parse open api 1`] = `
                                       },
                                     },
                                   ],
+                                  "source": {
+                                    "file": "dopt/openapi.json",
+                                    "type": "openapi",
+                                  },
                                   "type": "object",
                                 },
+                              },
+                              "source": {
+                                "file": "dopt/openapi.json",
+                                "type": "openapi",
                               },
                               "type": "discriminated",
                             },
@@ -3049,18 +3281,34 @@ exports[`open api parser dopt parse open api 1`] = `
                         },
                       },
                     ],
+                    "source": {
+                      "file": "dopt/openapi.json",
+                      "type": "openapi",
+                    },
                     "type": "object",
                   },
                 },
               },
             },
           ],
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "dopt/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "v2",
@@ -3101,6 +3349,10 @@ exports[`open api parser dopt parse open api 1`] = `
                   "generatedName": "BadRequestErrorBodyCode",
                   "groupName": null,
                   "nameOverride": null,
+                  "source": {
+                    "file": "dopt/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "enum",
                   "values": [
                     {
@@ -3157,7 +3409,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "401": {
@@ -3220,7 +3480,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "404": {
@@ -3283,7 +3551,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         "500": {
@@ -3346,7 +3622,15 @@ exports[`open api parser dopt parse open api 1`] = `
                 },
               },
             ],
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "object",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -3431,6 +3715,10 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
         {
@@ -3444,6 +3732,10 @@ exports[`open api parser dopt parse open api 1`] = `
             "generatedName": "FlowIntentRequestIntent",
             "groupName": null,
             "nameOverride": null,
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "enum",
             "values": [
               {
@@ -3500,6 +3792,10 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             ],
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -3526,6 +3822,10 @@ exports[`open api parser dopt parse open api 1`] = `
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -3547,6 +3847,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -3578,6 +3882,10 @@ exports[`open api parser dopt parse open api 1`] = `
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "dopt/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -3585,6 +3893,10 @@ exports[`open api parser dopt parse open api 1`] = `
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "v2",
@@ -3621,6 +3933,10 @@ exports[`open api parser dopt parse open api 1`] = `
             "generatedName": "BadRequestErrorResponseBodyCode",
             "groupName": null,
             "nameOverride": null,
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "enum",
             "values": [
               {
@@ -3677,6 +3993,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "BlockTransitionQueryString": {
@@ -3803,6 +4123,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "BlockTransitionRequestParams": {
@@ -3840,6 +4164,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "FlowIntentQueryString": {
@@ -3934,6 +4262,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "FlowIntentRequestParams": {
@@ -3984,6 +4316,10 @@ exports[`open api parser dopt parse open api 1`] = `
             "generatedName": "FlowIntentRequestParamsIntent",
             "groupName": null,
             "nameOverride": null,
+            "source": {
+              "file": "dopt/openapi.json",
+              "type": "openapi",
+            },
             "type": "enum",
             "values": [
               {
@@ -4042,6 +4378,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GetBlockQueryString": {
@@ -4104,6 +4444,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GetBlockRequestParams": {
@@ -4141,6 +4485,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GetFlowQueryString": {
@@ -4263,6 +4611,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GetFlowRequestParams": {
@@ -4300,6 +4652,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "HealthCheckResponseBody": {
@@ -4362,6 +4718,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "InternalServerErrorResponseBody": {
@@ -4419,6 +4779,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "NotFoundErrorResponseBody": {
@@ -4476,6 +4840,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TimeoutErrorResponseBody": {
@@ -4533,6 +4901,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UnauthorizedErrorResponseBody": {
@@ -4590,6 +4962,10 @@ exports[`open api parser dopt parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "dopt/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

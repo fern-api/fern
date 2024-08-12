@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedTrace.Core;
-using SeedTrace.Test.Utils;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -63,6 +63,6 @@ public class GetLatestProblemTest : BaseWireTest
             );
 
         var response = Client.V2.V3.Problem.GetLatestProblemAsync("string").Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

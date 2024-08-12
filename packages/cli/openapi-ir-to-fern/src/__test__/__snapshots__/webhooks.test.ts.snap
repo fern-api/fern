@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`webhooks webhooks docs 1`] = `
+exports[`webhooks > webhooks > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -11,6 +11,9 @@ exports[`webhooks webhooks docs 1`] = `
           "id": "long",
           "name": "string",
           "tag": "optional<string>",
+        },
+        "source": {
+          "openapi": "webhooks/openapi.yml",
         },
       },
     },
@@ -44,7 +47,7 @@ exports[`webhooks webhooks docs 1`] = `
 }
 `;
 
-exports[`webhooks webhooks simple 1`] = `
+exports[`webhooks > webhooks > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -55,6 +58,9 @@ exports[`webhooks webhooks simple 1`] = `
           "id": "long",
           "name": "string",
           "tag": "optional<string>",
+        },
+        "source": {
+          "openapi": "webhooks/openapi.yml",
         },
       },
     },

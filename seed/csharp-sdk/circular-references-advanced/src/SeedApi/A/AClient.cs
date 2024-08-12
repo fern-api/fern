@@ -4,11 +4,11 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public class AClient
+public partial class AClient
 {
     private RawClient _client;
 
-    public AClient(RawClient client)
+    internal AClient(RawClient client)
     {
         _client = client;
     }

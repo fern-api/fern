@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPagination;
-using SeedPagination.Core;
-using SeedPagination.Test.Utils;
 using SeedPagination.Test.Wire;
 
 #nullable enable
@@ -34,6 +34,6 @@ public class ListWithGlobalConfigTest : BaseWireTest
         var response = Client
             .Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

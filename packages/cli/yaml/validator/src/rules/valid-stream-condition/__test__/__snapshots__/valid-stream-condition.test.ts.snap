@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`valid-stream-condition simple 1`] = `
+exports[`valid-stream-condition > simple 1`] = `
 [
   {
     "message": "stream-condition can only be used if both response and response-stream are specified.",

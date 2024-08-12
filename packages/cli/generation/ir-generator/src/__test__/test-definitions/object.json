@@ -960,6 +960,11 @@
             "referencedTypes": [
                 "type_:Name"
             ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -3174,6 +3179,11 @@
                 "extendedProperties": []
             },
             "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -3381,6 +3391,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {},
     "rootPackage": {
         "fernFilepath": {
@@ -3409,7 +3420,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

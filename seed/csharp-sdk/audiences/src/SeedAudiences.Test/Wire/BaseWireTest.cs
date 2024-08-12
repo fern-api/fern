@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using SeedAudiences;
-using SeedAudiences.Core;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;

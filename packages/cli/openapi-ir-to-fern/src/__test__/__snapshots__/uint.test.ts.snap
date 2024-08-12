@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`uint uint docs 1`] = `
+exports[`uint > uint > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -42,6 +42,9 @@ exports[`uint uint docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "uint/openapi.yml",
+      },
     },
     "types": {
       "Response": {
@@ -50,6 +53,9 @@ exports[`uint uint docs 1`] = `
         "properties": {
           "id": "optional<float>",
           "value": "optional<uint64>",
+        },
+        "source": {
+          "openapi": "uint/openapi.yml",
         },
       },
     },
@@ -64,7 +70,7 @@ exports[`uint uint docs 1`] = `
 }
 `;
 
-exports[`uint uint simple 1`] = `
+exports[`uint > uint > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -106,6 +112,9 @@ exports[`uint uint simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "uint/openapi.yml",
+      },
     },
     "types": {
       "Response": {
@@ -114,6 +123,9 @@ exports[`uint uint simple 1`] = `
         "properties": {
           "id": "optional<float>",
           "value": "optional<uint64>",
+        },
+        "source": {
+          "openapi": "uint/openapi.yml",
         },
       },
     },

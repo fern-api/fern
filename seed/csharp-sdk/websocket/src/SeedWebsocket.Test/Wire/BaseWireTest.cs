@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using SeedWebsocket;
-using SeedWebsocket.Core;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;

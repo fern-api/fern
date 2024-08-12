@@ -1,11 +1,12 @@
 import { DEFINITION_DIRECTORY, dependenciesYml, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import hash from "object-hash";
 import { handleFailedWorkspaceParserResultRaw } from "../handleFailedWorkspaceParserResult";
 import { listFernFiles } from "../listFernFiles";
 import { parseYamlFiles } from "../parseYamlFiles";
 import { processPackageMarkers } from "../processPackageMarkers";
-import { APIChangelog, FernDefinition } from "../types/Workspace";
+import { APIChangelog, FernDefinition, IdentifiableSource } from "../types/Workspace";
 import { validateStructureOfYamlFiles } from "../validateStructureOfYamlFiles";
 import { AbstractAPIWorkspace } from "./AbstractAPIWorkspace";
 import { OSSWorkspace } from "./OSSWorkspace";
@@ -14,6 +15,7 @@ export declare namespace FernWorkspace {
     export interface Args extends LazyFernWorkspace.BaseArgs {
         dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
         definition: FernDefinition;
+        sources: IdentifiableSource[] | undefined;
     }
 }
 
@@ -25,6 +27,7 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
     public dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     public definition: FernDefinition;
     public changelog: APIChangelog | undefined;
+    public sources: IdentifiableSource[];
 
     constructor({
         absoluteFilepath,
@@ -32,7 +35,8 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
         generatorsConfiguration,
         dependenciesConfiguration,
         definition,
-        changelog
+        changelog,
+        sources
     }: FernWorkspace.Args) {
         super();
         this.absoluteFilepath = absoluteFilepath;
@@ -41,6 +45,7 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
         this.generatorsConfiguration = generatorsConfiguration;
         this.dependenciesConfiguration = dependenciesConfiguration;
         this.definition = definition;
+        this.sources = sources ?? [];
     }
 
     public async getDefinition(): Promise<FernDefinition> {
@@ -49,6 +54,14 @@ export class FernWorkspace extends AbstractAPIWorkspace<void> {
 
     public async toFernWorkspace(): Promise<FernWorkspace> {
         return this;
+    }
+
+    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
+        return [this.absoluteFilepath];
+    }
+
+    public getSources(): IdentifiableSource[] {
+        return this.sources;
     }
 }
 
@@ -75,7 +88,7 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
 
     private context: TaskContext;
     private cliVersion: string;
-    private downloaded = false;
+    private fernWorkspaces: Record<string, FernWorkspace> = {};
 
     constructor({
         absoluteFilepath,
@@ -105,65 +118,69 @@ export class LazyFernWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Setting
         { context }: { context?: TaskContext },
         settings?: OSSWorkspace.Settings
     ): Promise<FernWorkspace> {
-        if (this.downloaded) {
-            context?.logger.disable();
+        const key = hash(settings ?? {});
+        let workspace = this.fernWorkspaces[key];
+
+        if (workspace == null) {
+            const defaultedContext = context || this.context;
+            const absolutePathToDefinition = join(this.absoluteFilepath, RelativeFilePath.of(DEFINITION_DIRECTORY));
+            const dependenciesConfiguration = await dependenciesYml.loadDependenciesConfiguration({
+                absolutePathToWorkspace: this.absoluteFilepath,
+                context: defaultedContext
+            });
+
+            const yamlFiles = await listFernFiles(absolutePathToDefinition, "{yml,yaml}");
+
+            const parseResult = await parseYamlFiles(yamlFiles);
+            if (!parseResult.didSucceed) {
+                handleFailedWorkspaceParserResultRaw(parseResult.failures, defaultedContext.logger);
+                return defaultedContext.failAndThrow();
+            }
+
+            const structuralValidationResult = validateStructureOfYamlFiles({
+                files: parseResult.files,
+                absolutePathToDefinition
+            });
+            if (!structuralValidationResult.didSucceed) {
+                handleFailedWorkspaceParserResultRaw(structuralValidationResult.failures, defaultedContext.logger);
+                return defaultedContext.failAndThrow();
+            }
+
+            const processPackageMarkersResult = await processPackageMarkers({
+                dependenciesConfiguration,
+                structuralValidationResult,
+                context: defaultedContext,
+                cliVersion: this.cliVersion,
+                settings
+            });
+            if (!processPackageMarkersResult.didSucceed) {
+                handleFailedWorkspaceParserResultRaw(processPackageMarkersResult.failures, defaultedContext.logger);
+                return defaultedContext.failAndThrow();
+            }
+
+            workspace = new FernWorkspace({
+                absoluteFilepath: this.absoluteFilepath,
+                generatorsConfiguration: this.generatorsConfiguration,
+                dependenciesConfiguration,
+                workspaceName: this.workspaceName,
+                definition: {
+                    absoluteFilepath: absolutePathToDefinition,
+                    rootApiFile: structuralValidationResult.rootApiFile,
+                    namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
+                    packageMarkers: processPackageMarkersResult.packageMarkers,
+                    importedDefinitions: processPackageMarkersResult.importedDefinitions
+                },
+                changelog: this.changelog,
+                sources: undefined
+            });
+
+            this.fernWorkspaces[key] = workspace;
         }
 
-        const defaultedContext = context || this.context;
-        const absolutePathToDefinition = join(this.absoluteFilepath, RelativeFilePath.of(DEFINITION_DIRECTORY));
-        const dependenciesConfiguration = await dependenciesYml.loadDependenciesConfiguration({
-            absolutePathToWorkspace: this.absoluteFilepath,
-            context: defaultedContext
-        });
+        return workspace;
+    }
 
-        const yamlFiles = await listFernFiles(absolutePathToDefinition, "{yml,yaml}");
-
-        const parseResult = await parseYamlFiles(yamlFiles);
-        if (!parseResult.didSucceed) {
-            handleFailedWorkspaceParserResultRaw(parseResult.failures, defaultedContext.logger);
-            return defaultedContext.failAndThrow();
-        }
-
-        const structuralValidationResult = validateStructureOfYamlFiles({
-            files: parseResult.files,
-            absolutePathToDefinition
-        });
-        if (!structuralValidationResult.didSucceed) {
-            handleFailedWorkspaceParserResultRaw(structuralValidationResult.failures, defaultedContext.logger);
-            return defaultedContext.failAndThrow();
-        }
-
-        const processPackageMarkersResult = await processPackageMarkers({
-            dependenciesConfiguration,
-            structuralValidationResult,
-            context: defaultedContext,
-            cliVersion: this.cliVersion,
-            settings
-        });
-        if (!processPackageMarkersResult.didSucceed) {
-            handleFailedWorkspaceParserResultRaw(processPackageMarkersResult.failures, defaultedContext.logger);
-            return defaultedContext.failAndThrow();
-        }
-
-        if (!this.downloaded) {
-            this.downloaded = true;
-        } else {
-            context?.logger.enable();
-        }
-
-        return new FernWorkspace({
-            absoluteFilepath: this.absoluteFilepath,
-            generatorsConfiguration: this.generatorsConfiguration,
-            dependenciesConfiguration,
-            workspaceName: this.workspaceName,
-            definition: {
-                absoluteFilepath: absolutePathToDefinition,
-                rootApiFile: structuralValidationResult.rootApiFile,
-                namedDefinitionFiles: structuralValidationResult.namedDefinitionFiles,
-                packageMarkers: processPackageMarkersResult.packageMarkers,
-                importedDefinitions: processPackageMarkersResult.importedDefinitions
-            },
-            changelog: this.changelog
-        });
+    public getAbsoluteFilepaths(): AbsoluteFilePath[] {
+        return [this.absoluteFilepath];
     }
 }

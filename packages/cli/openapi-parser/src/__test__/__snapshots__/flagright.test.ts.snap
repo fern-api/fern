@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser flagright parse open api 1`] = `
+exports[`open api parser > flagright > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -43,6 +43,10 @@ Here are some of the most used payload fields explained (you can find the full p
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "401": {
           "description": "Unauthorized",
@@ -54,6 +58,10 @@ Here are some of the most used payload fields explained (you can find the full p
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "Too Many Requests",
@@ -64,6 +72,10 @@ Here are some of the most used payload fields explained (you can find the full p
             "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -446,6 +458,10 @@ Here are some of the most used payload fields explained (you can find the full p
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -476,6 +492,10 @@ Here are some of the most used payload fields explained (you can find the full p
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": {
@@ -489,7 +509,15 @@ Here are some of the most used payload fields explained (you can find the full p
           "groupName": null,
           "nameOverride": null,
           "schema": "Transaction",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -507,6 +535,10 @@ Here are some of the most used payload fields explained (you can find the full p
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionMonitoringResult",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
             },
           ],
           "allOfPropertyConflicts": [],
@@ -549,12 +581,24 @@ Here are some of the most used payload fields explained (you can find the full p
               },
             },
           ],
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Verify a Transaction",
       "tags": [],
     },
@@ -578,6 +622,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "Too Many Requests",
@@ -588,6 +636,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
             "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -980,6 +1032,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -996,12 +1052,24 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "groupName": null,
           "nameOverride": null,
           "schema": "TransactionWithRulesResult",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Retrieve a Transaction",
       "tags": [],
     },
@@ -1041,6 +1109,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "401": {
           "description": "Unauthorized",
@@ -1052,6 +1124,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "Too Many Requests",
@@ -1062,6 +1138,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -1523,7 +1603,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "TransactionEvent",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1538,12 +1626,24 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "TransactionEventMonitoringResult",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create a Transaction Event",
       "tags": [],
     },
@@ -1575,6 +1675,10 @@ Each consumer User entity needs three mandatory fields:
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "401": {
           "description": "Unauthorized",
@@ -1586,6 +1690,10 @@ Each consumer User entity needs three mandatory fields:
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "Too Many Requests",
@@ -1596,6 +1704,10 @@ Each consumer User entity needs three mandatory fields:
             "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -2040,7 +2152,15 @@ Each consumer User entity needs three mandatory fields:
           "groupName": null,
           "nameOverride": null,
           "schema": "User",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2058,6 +2178,10 @@ Each consumer User entity needs three mandatory fields:
               "groupName": null,
               "nameOverride": null,
               "schema": "ConsumerUsersResponse",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
             },
             {
               "availability": null,
@@ -2066,6 +2190,10 @@ Each consumer User entity needs three mandatory fields:
               "groupName": null,
               "nameOverride": null,
               "schema": "UserMonitoringResult",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
             },
           ],
           "allOfPropertyConflicts": [
@@ -2117,12 +2245,24 @@ Each consumer User entity needs three mandatory fields:
               },
             },
           ],
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create a Consumer User",
       "tags": [],
     },
@@ -2146,6 +2286,10 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "Too Many Requests",
@@ -2156,6 +2300,10 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
             "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -2714,6 +2862,10 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -2730,12 +2882,24 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "groupName": null,
           "nameOverride": null,
           "schema": "User",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Retrieve a Consumer User",
       "tags": [],
     },
@@ -2768,6 +2932,10 @@ Each consumer Business entity needs three mandatory fields:
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "401": {
           "description": "Unauthorized",
@@ -2779,6 +2947,10 @@ Each consumer Business entity needs three mandatory fields:
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "Too Many Requests",
@@ -2789,6 +2961,10 @@ Each consumer Business entity needs three mandatory fields:
             "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -2979,7 +3155,15 @@ Each consumer Business entity needs three mandatory fields:
           "groupName": null,
           "nameOverride": null,
           "schema": "Business",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2997,6 +3181,10 @@ Each consumer Business entity needs three mandatory fields:
               "groupName": null,
               "nameOverride": null,
               "schema": "BusinessUsersResponse",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
             },
             {
               "availability": null,
@@ -3005,6 +3193,10 @@ Each consumer Business entity needs three mandatory fields:
               "groupName": null,
               "nameOverride": null,
               "schema": "UserMonitoringResult",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
             },
           ],
           "allOfPropertyConflicts": [
@@ -3056,12 +3248,24 @@ Each consumer Business entity needs three mandatory fields:
               },
             },
           ],
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create a Business User",
       "tags": [],
     },
@@ -3085,6 +3289,10 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "Too Many Requests",
@@ -3095,6 +3303,10 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
             "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -4344,6 +4556,10 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -4360,12 +4576,24 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "groupName": null,
           "nameOverride": null,
           "schema": "Business",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Retrieve a Business User",
       "tags": [],
     },
@@ -4404,6 +4632,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "401": {
           "description": "Unauthorized",
@@ -4415,6 +4647,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "Too Many Requests",
@@ -4425,6 +4661,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -5099,7 +5339,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "ConsumerUserEvent",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5114,12 +5362,24 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "UserWithRulesResult",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create a Consumer User Event",
       "tags": [],
     },
@@ -5158,6 +5418,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "401": {
           "description": "Unauthorized",
@@ -5169,6 +5433,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "Too Many Requests",
@@ -5179,6 +5447,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "generatedName": "TooManyRequestsErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -6544,7 +6816,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "BusinessUserEvent",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -6559,12 +6839,24 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "BusinessWithRulesResult",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "flagright/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create a Business User Event",
       "tags": [],
     },
@@ -6815,6 +7107,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Address",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -6852,6 +7148,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ACHPaymentMethod": {
@@ -6873,6 +7173,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "AcquisitionChannel",
       "groupName": null,
       "nameOverride": "AcquisitionChannel",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -7118,12 +7422,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Tag",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "AlertClosedDetails": {
@@ -7513,6 +7825,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Amount": {
@@ -7564,10 +7880,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "CurrencyCode",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Business": {
@@ -7580,6 +7904,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "BusinessBase",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -7588,6 +7916,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "BusinessOptional",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -7597,6 +7929,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "BusinessBase": {
@@ -7659,6 +7995,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "BusinessEntityLink": {
@@ -7744,6 +8084,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "BusinessOptional": {
@@ -7777,6 +8121,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "UserStateDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7802,6 +8150,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "KYCStatusDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7827,6 +8179,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "LegalEntity",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7859,6 +8215,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Person",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -7892,6 +8252,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Person",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -7918,6 +8282,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionLimits",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7943,6 +8311,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "RiskLevel",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7975,6 +8347,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "PaymentMethod",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -8001,6 +8377,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "BusinessEntityLink",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8026,6 +8406,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "AcquisitionChannel",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8058,6 +8442,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "commonProperties": [],
                   "description": null,
                   "discriminantProperty": "method",
+                  "encoding": null,
                   "generatedName": "BusinessOptionalSavedPaymentDetailsItem",
                   "groupName": null,
                   "nameOverride": null,
@@ -8069,6 +8454,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "ACHDetails",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                     "CARD": {
@@ -8078,6 +8467,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "CardDetails",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                     "CHECK": {
@@ -8087,6 +8480,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "CheckDetails",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                     "GENERIC_BANK_ACCOUNT": {
@@ -8096,6 +8493,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "GenericBankAccountDetails",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                     "IBAN": {
@@ -8105,6 +8506,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "IBANDetails",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                     "MPESA": {
@@ -8114,6 +8519,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "MpesaDetails",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                     "SWIFT": {
@@ -8123,6 +8532,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "SWIFTDetails",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                     "UPI": {
@@ -8132,6 +8545,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "UPIDetails",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                     "WALLET": {
@@ -8141,8 +8558,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "WalletDetails",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
+                  },
+                  "source": {
+                    "file": "flagright/openapi.yml",
+                    "type": "openapi",
                   },
                   "type": "discriminated",
                 },
@@ -8171,6 +8596,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "MCCDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8203,12 +8632,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Tag",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "BusinessUserEvent": {
@@ -8387,11 +8824,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "BusinessOptional",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "BusinessUsersResponse": {
@@ -8429,6 +8874,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "BusinessWithRulesResult": {
@@ -8441,6 +8890,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "Business",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -8478,6 +8931,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ExecutedRulesResult",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -8511,12 +8968,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "HitRulesDetails",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CardDetails": {
@@ -8582,6 +9047,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "CountryCode",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8667,6 +9136,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ConsumerName",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8692,6 +9165,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "CardExpiry",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8749,6 +9226,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "generatedName": "CardDetailsCardBrand",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -8867,6 +9348,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "generatedName": "CardDetailsCardFunding",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -8993,6 +9478,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "generatedName": "CardDetailsCardType",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -9046,11 +9535,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "CardMerchantDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CardExpiry": {
@@ -9130,6 +9627,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CardMerchantDetails": {
@@ -9367,6 +9868,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CardPaymentMethod": {
@@ -9641,6 +10146,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CaseManagementEvent": {
@@ -9667,6 +10176,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "generatedName": "CaseManagementEventCaseStatus",
             "groupName": null,
             "nameOverride": null,
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "enum",
             "values": [
               {
@@ -9737,6 +10250,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "generatedName": "CaseManagementEventCaseStatusReason",
             "groupName": null,
             "nameOverride": null,
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "enum",
             "values": [
               {
@@ -9923,6 +10440,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CheckDetails": {
@@ -10052,6 +10573,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "generatedName": "CheckDetailsDeliveryStatus",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -10190,11 +10715,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Address",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CheckPaymentMethod": {
@@ -10240,6 +10773,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -10265,6 +10802,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -10297,12 +10838,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Tag",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CompanyGeneralDetails": {
@@ -10440,6 +10989,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "generatedName": "CompanyGeneralDetailsUserSegment",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -10545,6 +11098,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "UserRegistrationStatus",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -10577,12 +11134,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Tag",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CompanyRegistrationDetails": {
@@ -10633,6 +11198,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "CountryCode",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10760,12 +11329,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Tag",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ConsumerName": {
@@ -10867,6 +11444,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ConsumerUserEvent": {
@@ -11045,11 +11626,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "UserOptional",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ConsumerUsersResponse": {
@@ -11087,6 +11676,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ContactDetails": {
@@ -11287,12 +11880,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Address",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CountryCode": {
@@ -11302,6 +11903,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "CountryCode",
       "groupName": null,
       "nameOverride": "CountryCode",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -14563,6 +15168,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "CurrencyCode",
       "groupName": null,
       "nameOverride": "CurrencyCode",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -18163,6 +18772,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DeviceData": {
@@ -18527,6 +19140,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ExecutedRulesResult": {
@@ -18649,6 +19266,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "RuleAction",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -18693,6 +19314,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "RuleHitMeta",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -18725,6 +19350,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "RuleLabels",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -18751,11 +19380,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "RuleNature",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "FailedRulesResult": {
@@ -18854,10 +19491,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "RuleFailureException",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "FalsePositiveDetails": {
@@ -18916,6 +19561,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GeneralBankAccountPaymentMethod": {
@@ -19121,6 +19770,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Address",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -19190,6 +19843,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "HitRulesDetails": {
@@ -19312,6 +19969,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "RuleAction",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -19336,6 +19997,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "RuleHitMeta",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -19368,6 +20033,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "RuleLabels",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -19394,11 +20063,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "RuleNature",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "IBANDetails": {
@@ -19496,6 +20173,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Address",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -19521,6 +20202,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "CountryCode",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -19610,6 +20295,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Tag",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -19679,6 +20368,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "IBANPaymentMethod": {
@@ -19701,6 +20394,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "KycStatus",
       "groupName": null,
       "nameOverride": "KYCStatus",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -19833,11 +20530,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "KYCStatus",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LegalDocument": {
@@ -19978,6 +20683,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "CountryCode",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -20009,6 +20718,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Tag",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -20035,11 +20748,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ConsumerName",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LegalEntity": {
@@ -20066,6 +20787,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "CompanyGeneralDetails",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -20090,6 +20815,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "CompanyFinancialDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -20115,6 +20844,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "CompanyRegistrationDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -20180,11 +20913,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ContactDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ListData": {
@@ -20218,6 +20959,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ListMetadata",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -20250,12 +20995,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ListItem",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ListExisted": {
@@ -20306,6 +21059,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "ListHeader",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -20330,11 +21087,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ListItem",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ListHeader": {
@@ -20385,6 +21150,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "ListType",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -20402,6 +21171,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "ListSubtype",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -20426,6 +21199,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ListMetadata",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -20481,6 +21258,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ListItem": {
@@ -20538,16 +21319,25 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ListKeyMetadata",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ListKeyMetadata": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "ListKeyMetadata",
       "groupName": null,
       "key": {
@@ -20708,6 +21498,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ListSubtype": {
@@ -20717,6 +21511,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "ListSubtype",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -20871,6 +21669,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "ListType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -20982,6 +21784,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "MpesaDetails": {
@@ -21032,6 +21838,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "generatedName": "MpesaDetailsTransactionType",
             "groupName": null,
             "nameOverride": null,
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "enum",
             "values": [
               {
@@ -21127,6 +21937,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "MpesaPaymentMethod": {
@@ -21204,6 +22018,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PaymentMethod": {
@@ -21213,6 +22031,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "PaymentMethod",
       "groupName": null,
       "nameOverride": "PaymentMethod",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -21358,6 +22180,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "UserDetails",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -21389,6 +22215,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "LegalDocument",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -21415,6 +22245,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ContactDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -21447,6 +22281,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "PEPStatus",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -21480,12 +22318,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Tag",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RiskLevel": {
@@ -21495,6 +22341,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "RiskLevel",
       "groupName": null,
       "nameOverride": "RiskLevel",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -21658,6 +22508,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RuleAction": {
@@ -21667,6 +22521,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "RuleAction",
       "groupName": null,
       "nameOverride": "RuleAction",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -21782,6 +22640,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RuleHitDirection": {
@@ -21791,6 +22653,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "RuleHitDirection",
       "groupName": null,
       "nameOverride": "RuleHitDirection",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -21859,6 +22725,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "RuleHitDirection",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -21885,6 +22755,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "FalsePositiveDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -21917,12 +22791,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "SanctionsDetails",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RuleLabels": {
@@ -21932,6 +22814,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "RuleLabels",
       "groupName": null,
       "nameOverride": "RuleLabels",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -22099,6 +22985,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "RuleNature",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -22186,6 +23076,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ExecutedRulesResult",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -22211,11 +23105,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "HitRulesDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SWIFTDetails": {
@@ -22409,6 +23311,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Address",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -22446,6 +23352,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SWIFTPaymentMethod": {
@@ -22539,11 +23449,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "SanctionsDetailsEntityType",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SanctionsDetailsEntityType": {
@@ -22553,6 +23471,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "SanctionsDetailsEntityType",
       "groupName": null,
       "nameOverride": "SanctionsDetailsEntityType",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -22720,6 +23642,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Transaction": {
@@ -22732,6 +23658,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "TransactionBase",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -22740,6 +23670,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "TransactionUpdatable",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -22749,6 +23683,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "groupName": null,
       "nameOverride": null,
       "properties": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionAmountDetails": {
@@ -22800,6 +23738,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "CurrencyCode",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -22824,11 +23766,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "CountryCode",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionAmountLimit": {
@@ -22862,6 +23812,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -22887,6 +23841,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -22912,6 +23870,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -22937,11 +23899,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionBase": {
@@ -22975,6 +23945,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionType",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -23093,6 +24067,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionCountLimit": {
@@ -23238,6 +24216,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionEvent": {
@@ -23264,6 +24246,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "TransactionState",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -23433,6 +24419,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionUpdatable",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -23458,11 +24448,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "DeviceData",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionEventMonitoringResult": {
@@ -23475,6 +24473,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "RulesResults",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -23522,10 +24524,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "Transaction",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionLimit": {
@@ -23559,6 +24569,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionCountLimit",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -23584,6 +24598,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionAmountLimit",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -23609,11 +24627,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionAmountLimit",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionLimits": {
@@ -23647,6 +24673,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -23672,6 +24702,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -23697,6 +24731,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -23722,6 +24760,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -23747,6 +24789,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -23772,6 +24818,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Amount",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -23821,6 +24871,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "TransactionLimit",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -23846,6 +24900,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "TransactionLimit",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -23871,6 +24929,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "TransactionLimit",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -23896,6 +24958,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "TransactionLimit",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -23921,6 +24987,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "TransactionLimit",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -23946,6 +25016,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "TransactionLimit",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -23971,6 +25045,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "TransactionLimit",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -23996,6 +25074,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "TransactionLimit",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -24021,16 +25103,28 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "TransactionLimit",
+                      "source": {
+                        "file": "flagright/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
                 },
               ],
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "object",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionMonitoringResult": {
@@ -24043,6 +25137,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "RulesResults",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -24077,6 +25175,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionState": {
@@ -24086,6 +25188,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "TransactionState",
       "groupName": null,
       "nameOverride": "TransactionState",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -24201,6 +25307,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "TransactionType",
       "groupName": null,
       "nameOverride": "TransactionType",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -24314,6 +25424,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionState",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -24339,6 +25453,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionAmountDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -24364,6 +25482,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionAmountDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -24389,6 +25511,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "commonProperties": [],
                 "description": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
                 "discriminantProperty": "method",
+                "encoding": null,
                 "generatedName": "TransactionUpdatableOriginPaymentDetails",
                 "groupName": null,
                 "nameOverride": null,
@@ -24400,6 +25523,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "ACHDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "CARD": {
@@ -24409,6 +25536,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "CardDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "CHECK": {
@@ -24418,6 +25549,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "CheckDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "GENERIC_BANK_ACCOUNT": {
@@ -24427,6 +25562,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "GenericBankAccountDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "IBAN": {
@@ -24436,6 +25575,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "IBANDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "MPESA": {
@@ -24445,6 +25588,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "MpesaDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "SWIFT": {
@@ -24454,6 +25601,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "SWIFTDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "UPI": {
@@ -24463,6 +25614,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "UPIDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "WALLET": {
@@ -24472,8 +25627,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "WalletDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
+                },
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
                 },
                 "type": "discriminated",
               },
@@ -24501,6 +25664,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "commonProperties": [],
                 "description": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
                 "discriminantProperty": "method",
+                "encoding": null,
                 "generatedName": "TransactionUpdatableDestinationPaymentDetails",
                 "groupName": null,
                 "nameOverride": null,
@@ -24512,6 +25676,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "ACHDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "CARD": {
@@ -24521,6 +25689,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "CardDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "CHECK": {
@@ -24530,6 +25702,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "CheckDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "GENERIC_BANK_ACCOUNT": {
@@ -24539,6 +25715,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "GenericBankAccountDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "IBAN": {
@@ -24548,6 +25728,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "IBANDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "MPESA": {
@@ -24557,6 +25741,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "MpesaDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "SWIFT": {
@@ -24566,6 +25754,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "SWIFTDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "UPI": {
@@ -24575,6 +25767,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "UPIDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
                   "WALLET": {
@@ -24584,8 +25780,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "groupName": null,
                     "nameOverride": null,
                     "schema": "WalletDetails",
+                    "source": {
+                      "file": "flagright/openapi.yml",
+                      "type": "openapi",
+                    },
                     "type": "reference",
                   },
+                },
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
                 },
                 "type": "discriminated",
               },
@@ -24745,6 +25949,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "DeviceData",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -24777,12 +25985,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Tag",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TransactionWithRulesResult": {
@@ -24795,6 +26011,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "Transaction",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -24825,6 +26045,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ExecutedRulesResult",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -24850,11 +26074,19 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "HitRulesDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UPIDetails": {
@@ -24988,6 +26220,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UPIPaymentMethod": {
@@ -25012,6 +26248,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "UserBase",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -25020,6 +26260,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "UserOptional",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -25029,6 +26273,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "groupName": null,
       "nameOverride": "User",
       "properties": [],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UserBase": {
@@ -25086,6 +26334,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "UserDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -25116,6 +26368,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UserDetails": {
@@ -25142,6 +26398,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "ConsumerName",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -25198,6 +26458,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "CountryCode",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -25223,6 +26487,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "CountryCode",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -25248,6 +26516,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "generatedName": "UserDetailsGender",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -25294,6 +26566,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UserMonitoringResult": {
@@ -25306,6 +26582,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "RulesResults",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -25340,6 +26620,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UserOptional": {
@@ -25373,6 +26657,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "UserStateDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -25398,6 +26686,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "KYCStatusDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -25430,6 +26722,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "LegalDocument",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -25456,6 +26752,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "ContactDetails",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -25481,6 +26781,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "TransactionLimits",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -25506,6 +26810,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "RiskLevel",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -25531,6 +26839,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "AcquisitionChannel",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -25596,6 +26908,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "generatedName": "UserOptionalUserSegment",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -25656,6 +26972,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "PEPStatus",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -25689,12 +27009,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Tag",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UserRegistrationStatus": {
@@ -25704,6 +27032,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "UserRegistrationStatus",
       "groupName": null,
       "nameOverride": "UserRegistrationStatus",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -25741,6 +27073,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "UserState",
       "groupName": null,
       "nameOverride": "UserState",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -25963,10 +27299,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "UserState",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UserWithRulesResult": {
@@ -25979,6 +27323,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "groupName": null,
           "nameOverride": null,
           "schema": "User",
+          "source": {
+            "file": "flagright/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -26016,6 +27364,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ExecutedRulesResult",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -26049,12 +27401,20 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "HitRulesDetails",
+                "source": {
+                  "file": "flagright/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WalletDetails": {
@@ -26208,6 +27568,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "groupName": null,
               "nameOverride": null,
               "schema": "Tag",
+              "source": {
+                "file": "flagright/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -26245,6 +27609,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WalletPaymentMethod": {
@@ -26307,6 +27675,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "WebhookEventType",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -26324,6 +27696,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "groupName": null,
             "nameOverride": null,
             "schema": "UserStateDetails",
+            "source": {
+              "file": "flagright/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -26353,6 +27729,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       ],
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WebhookEventType": {
@@ -26362,6 +27742,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "generatedName": "WebhookEventType",
       "groupName": null,
       "nameOverride": "WebhookEventType",
+      "source": {
+        "file": "flagright/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {

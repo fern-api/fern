@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
+exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -57,6 +57,7 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
           "value": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "GetExampleResponse",
             "groupName": null,
             "nameOverride": null,
@@ -104,6 +105,10 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                     },
                   },
                 ],
+                "source": {
+                  "file": "inline-schema-reference/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
               {
@@ -113,6 +118,10 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Schema1",
+                "source": {
+                  "file": "inline-schema-reference/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               {
@@ -122,6 +131,10 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Schema2",
+                "source": {
+                  "file": "inline-schema-reference/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               {
@@ -167,16 +180,32 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
                     },
                   },
                 ],
+                "source": {
+                  "file": "inline-schema-reference/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             ],
+            "source": {
+              "file": "inline-schema-reference/openapi.yml",
+              "type": "openapi",
+            },
             "type": "undisciminated",
           },
+        },
+        "source": {
+          "file": "inline-schema-reference/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "inline-schema-reference/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Get Example",
       "tags": [],
     },
@@ -266,6 +295,10 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "inline-schema-reference/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Schema2": {
@@ -344,6 +377,10 @@ exports[`inline-schema-reference inline-schema-reference parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "inline-schema-reference/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

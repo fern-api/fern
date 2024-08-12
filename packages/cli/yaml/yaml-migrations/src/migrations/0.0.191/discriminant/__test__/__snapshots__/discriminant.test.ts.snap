@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`discriminant simple 1`] = `
+exports[`discriminant > simple 1`] = `
 "types:
   a: string
   b: boolean

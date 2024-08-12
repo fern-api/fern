@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedExhaustive.Core;
-using SeedExhaustive.Test.Utils;
 using SeedExhaustive.Test.Wire;
 using SeedExhaustive.Types.Object;
 
@@ -62,6 +62,6 @@ public class TestPostTest : BaseWireTest
         var response = Client
             .Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

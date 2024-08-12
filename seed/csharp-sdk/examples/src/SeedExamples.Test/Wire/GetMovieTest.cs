@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedExamples.Core;
-using SeedExamples.Test.Utils;
 using SeedExamples.Test.Wire;
 
 #nullable enable
@@ -52,7 +52,7 @@ public class GetMovieTest : BaseWireTest
             );
 
         var response = Client.Service.GetMovieAsync("movie-c06a4ad7").Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 
     [Test]
@@ -97,6 +97,6 @@ public class GetMovieTest : BaseWireTest
             );
 
         var response = Client.Service.GetMovieAsync("movie-c06a4ad7").Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

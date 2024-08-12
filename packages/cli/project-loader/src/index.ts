@@ -1,2 +1,2 @@
-export { loadApis, loadProject } from "./loadProject";
+export { loadApis, loadProject, loadProjectFromDirectory } from "./loadProject";
 export { type Project } from "./Project";

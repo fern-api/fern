@@ -1,7 +1,6 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
-using SeedExamples;
 using SeedExamples.Commons;
 using SeedExamples.Core;
 using SeedExamples.File;
@@ -67,7 +66,7 @@ public partial class SeedExamplesClient
         throw new SeedExamplesApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

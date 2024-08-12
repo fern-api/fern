@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedBasicAuth.Core;
-using SeedBasicAuth.Test.Utils;
 using SeedBasicAuth.Test.Wire;
 
 #nullable enable
@@ -27,6 +27,6 @@ public class GetWithBasicAuthTest : BaseWireTest
             );
 
         var response = Client.BasicAuth.GetWithBasicAuthAsync().Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

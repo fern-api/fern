@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser assembly parse open api 1`] = `
+exports[`open api parser > assembly > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -88,6 +88,10 @@ exports[`open api parser assembly parse open api 1`] = `
                 "type": "primitive",
               },
             },
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
           },
         ],
         "pathParameters": [
@@ -110,6 +114,10 @@ exports[`open api parser assembly parse open api 1`] = `
                 "type": "string",
               },
               "type": "primitive",
+            },
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
             },
             "variableReference": null,
           },
@@ -144,6 +152,10 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+            },
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
             },
           },
           {
@@ -181,6 +193,10 @@ The parameter should map to a JSON encoded list of strings.
                 "type": "primitive",
               },
             },
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
           },
           {
             "availability": null,
@@ -211,6 +227,10 @@ The parameter should map to a JSON encoded list of strings.
                 "type": "primitive",
               },
             },
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
           },
         ],
       },
@@ -220,6 +240,7 @@ The parameter should map to a JSON encoded list of strings.
         "value": {
           "availability": null,
           "description": "Send messages to the WebSocket",
+          "encoding": null,
           "generatedName": "sendMessage",
           "groupName": null,
           "nameOverride": "sendMessage",
@@ -231,6 +252,10 @@ The parameter should map to a JSON encoded list of strings.
               "groupName": null,
               "nameOverride": null,
               "schema": "AudioData",
+              "source": {
+                "file": "assembly/asyncapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
             {
@@ -240,17 +265,30 @@ The parameter should map to a JSON encoded list of strings.
               "groupName": null,
               "nameOverride": null,
               "schema": "TerminateSession",
+              "source": {
+                "file": "assembly/asyncapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           ],
+          "source": {
+            "file": "assembly/asyncapi.yml",
+            "type": "openapi",
+          },
           "type": "undisciminated",
         },
+      },
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
       },
       "subscribe": {
         "type": "oneOf",
         "value": {
           "availability": null,
           "description": "Receive messages from the WebSocket",
+          "encoding": null,
           "generatedName": "receiveMessage",
           "groupName": null,
           "nameOverride": "receiveMessage",
@@ -262,6 +300,10 @@ The parameter should map to a JSON encoded list of strings.
               "groupName": null,
               "nameOverride": null,
               "schema": "SessionBegins",
+              "source": {
+                "file": "assembly/asyncapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
             {
@@ -271,6 +313,10 @@ The parameter should map to a JSON encoded list of strings.
               "groupName": null,
               "nameOverride": null,
               "schema": "PartialTranscript",
+              "source": {
+                "file": "assembly/asyncapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
             {
@@ -280,6 +326,10 @@ The parameter should map to a JSON encoded list of strings.
               "groupName": null,
               "nameOverride": null,
               "schema": "FinalTranscript",
+              "source": {
+                "file": "assembly/asyncapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
             {
@@ -289,6 +339,10 @@ The parameter should map to a JSON encoded list of strings.
               "groupName": null,
               "nameOverride": null,
               "schema": "SessionTerminated",
+              "source": {
+                "file": "assembly/asyncapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
             {
@@ -298,9 +352,17 @@ The parameter should map to a JSON encoded list of strings.
               "groupName": null,
               "nameOverride": null,
               "schema": "RealtimeError",
+              "source": {
+                "file": "assembly/asyncapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           ],
+          "source": {
+            "file": "assembly/asyncapi.yml",
+            "type": "openapi",
+          },
           "type": "undisciminated",
         },
       },
@@ -327,7 +389,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -342,7 +412,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -357,7 +435,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -372,7 +458,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -387,7 +481,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -400,6 +502,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -410,6 +516,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -426,6 +536,10 @@ The parameter should map to a JSON encoded list of strings.
       "queryParameters": [],
       "request": {
         "description": null,
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
+        },
         "type": "octetStream",
       },
       "requestNameOverride": null,
@@ -439,7 +553,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "UploadedFile",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -450,6 +572,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "upload",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Upload an audio or video file which can be transcribed.",
       "tags": [
         "transcript",
@@ -473,7 +599,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -488,7 +622,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -503,7 +645,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -518,7 +668,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -533,7 +691,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -546,6 +712,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -556,6 +726,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -708,6 +882,10 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -735,6 +913,10 @@ The parameter should map to a JSON encoded list of strings.
                 "generatedName": "TranscriptListRequestStatus",
                 "groupName": null,
                 "nameOverride": null,
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "enum",
                 "values": [
                   {
@@ -793,6 +975,10 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -830,6 +1016,10 @@ The parameter should map to a JSON encoded list of strings.
                 "type": "primitive",
               },
             },
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -869,6 +1059,10 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -907,6 +1101,10 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -941,6 +1139,10 @@ The parameter should map to a JSON encoded list of strings.
               },
             },
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -955,7 +1157,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "TranscriptList",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -966,6 +1176,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "list",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "List transcripts",
       "tags": [
         "transcript",
@@ -989,7 +1203,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -1004,7 +1226,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -1019,7 +1249,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -1034,7 +1272,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -1049,7 +1295,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -1062,6 +1316,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -1072,6 +1330,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -1984,7 +2246,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "CreateTranscriptParameters",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1999,7 +2269,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "Transcript",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2010,6 +2288,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "create",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create a transcript from an audio file",
       "tags": [
         "transcript",
@@ -2033,7 +2315,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -2048,7 +2338,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -2063,7 +2361,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -2078,7 +2384,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -2093,7 +2407,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -2106,6 +2428,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -2116,6 +2442,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -3036,6 +3366,10 @@ The parameter should map to a JSON encoded list of strings.
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -3052,7 +3386,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "Transcript",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3063,6 +3405,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "get",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Get the transcript",
       "tags": [
         "transcript",
@@ -3086,7 +3432,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -3101,7 +3455,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -3116,7 +3478,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -3131,7 +3501,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -3146,7 +3524,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -3159,6 +3545,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -3169,6 +3559,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -4089,6 +4483,10 @@ The parameter should map to a JSON encoded list of strings.
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -4105,7 +4503,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "Transcript",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -4116,6 +4522,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "delete",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Delete the transcript",
       "tags": [
         "transcript",
@@ -4139,7 +4549,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -4154,7 +4572,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -4169,7 +4595,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -4184,7 +4618,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -4199,7 +4641,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -4212,6 +4662,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -4222,6 +4676,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -4255,6 +4713,10 @@ The parameter should map to a JSON encoded list of strings.
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
         {
@@ -4268,7 +4730,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "SubtitleFormat",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -4304,12 +4774,20 @@ The parameter should map to a JSON encoded list of strings.
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
       "requestNameOverride": null,
       "response": {
         "description": "The exported captions as text",
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
+        },
         "type": "text",
       },
       "sdkName": {
@@ -4319,6 +4797,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "getSubtitles",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Export transcript as SRT or VTT captions.",
       "tags": [
         "transcript",
@@ -4342,7 +4824,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -4357,7 +4847,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -4372,7 +4870,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -4387,7 +4893,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -4402,7 +4916,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -4415,6 +4937,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -4425,6 +4951,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -4582,6 +5112,10 @@ The parameter should map to a JSON encoded list of strings.
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -4598,7 +5132,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "SentencesResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -4609,6 +5151,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "getSentences",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Get the transcript split by sentences",
       "tags": [
         "transcript",
@@ -4632,7 +5178,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -4647,7 +5201,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -4662,7 +5224,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -4677,7 +5247,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -4692,7 +5270,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -4705,6 +5291,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -4715,6 +5305,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -4872,6 +5466,10 @@ The parameter should map to a JSON encoded list of strings.
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -4888,7 +5486,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "ParagraphsResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -4899,6 +5505,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "getParagraphs",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Get the transcript split by paragraphs",
       "tags": [
         "transcript",
@@ -4922,7 +5532,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -4937,7 +5555,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -4952,7 +5578,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -4967,7 +5601,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -4982,7 +5624,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -4995,6 +5645,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -5005,6 +5659,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -5037,6 +5695,10 @@ The parameter should map to a JSON encoded list of strings.
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -5071,6 +5733,10 @@ The parameter should map to a JSON encoded list of strings.
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -5085,7 +5751,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "WordSearchResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5096,6 +5770,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "wordSearch",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Search the given transcript for words, numbers, or phrases",
       "tags": [
         "transcript",
@@ -5119,7 +5797,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -5134,7 +5820,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -5149,7 +5843,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -5164,7 +5866,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -5179,7 +5889,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -5192,6 +5910,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -5202,6 +5924,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -5276,6 +6002,10 @@ The parameter should map to a JSON encoded list of strings.
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -5292,7 +6022,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "RedactedAudioResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5303,6 +6041,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "getRedactedAudio",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Retrieves the redacted audio object containing the status and URL to the redacted audio.",
       "tags": [
         "transcript",
@@ -5326,7 +6068,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -5341,7 +6091,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -5356,7 +6114,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -5371,7 +6137,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -5386,7 +6160,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -5399,6 +6181,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -5409,6 +6195,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -5468,7 +6258,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "CreateRealtimeTemporaryTokenParameters",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5483,7 +6281,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "RealtimeTemporaryTokenResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5494,6 +6300,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "createTemporaryToken",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create a temporary authentication token for real-time transcription",
       "tags": [
         "realtime",
@@ -5517,7 +6327,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -5532,7 +6350,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -5547,7 +6373,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -5562,7 +6396,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -5577,7 +6419,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -5590,6 +6440,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -5600,6 +6454,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -5671,7 +6529,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurSummaryParameters",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5686,7 +6552,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurSummaryResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5697,6 +6571,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "summary",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Generate a custom summary from one or more transcripts.",
       "tags": [
         "LeMUR",
@@ -5720,7 +6598,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -5735,7 +6621,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -5750,7 +6644,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -5765,7 +6667,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -5780,7 +6690,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -5793,6 +6711,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -5803,6 +6725,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -5908,7 +6834,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurQuestionAnswerParameters",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5923,7 +6857,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurQuestionAnswerResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -5934,6 +6876,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "questionAnswer",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Create answers to one or more questions about one or more transcripts.",
       "tags": [
         "LeMUR",
@@ -5957,7 +6903,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -5972,7 +6926,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -5987,7 +6949,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -6002,7 +6972,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -6017,7 +6995,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -6030,6 +7016,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -6040,6 +7030,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -6111,7 +7105,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurActionItemsParameters",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -6126,7 +7128,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurActionItemsResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -6137,6 +7147,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "actionItems",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Extract action items from one or more meeting transcripts.",
       "tags": [
         "LeMUR",
@@ -6160,7 +7174,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -6175,7 +7197,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -6190,7 +7220,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -6205,7 +7243,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -6220,7 +7266,15 @@ The parameter should map to a JSON encoded list of strings.
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -6233,6 +7287,10 @@ The parameter should map to a JSON encoded list of strings.
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -6243,6 +7301,10 @@ The parameter should map to a JSON encoded list of strings.
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -6321,7 +7383,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurTaskParameters",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -6336,7 +7406,15 @@ The parameter should map to a JSON encoded list of strings.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurTaskResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -6347,6 +7425,10 @@ The parameter should map to a JSON encoded list of strings.
         "methodName": "task",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Ask LeMUR to use one or more transcripts with a Custom Task to handle your specialized task.",
       "tags": [
         "LeMUR",
@@ -6372,7 +7454,15 @@ The LLM response data, as well as any context provided in the original request w
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "401": {
@@ -6387,7 +7477,15 @@ The LLM response data, as well as any context provided in the original request w
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -6402,7 +7500,15 @@ The LLM response data, as well as any context provided in the original request w
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "429": {
@@ -6417,7 +7523,15 @@ The LLM response data, as well as any context provided in the original request w
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -6432,7 +7546,15 @@ The LLM response data, as well as any context provided in the original request w
             "groupName": null,
             "nameOverride": null,
             "schema": "Error",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
         "503": {
@@ -6445,6 +7567,10 @@ The LLM response data, as well as any context provided in the original request w
             "nameOverride": null,
             "type": "unknown",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
         "504": {
           "description": "Gateway Timeout",
@@ -6455,6 +7581,10 @@ The LLM response data, as well as any context provided in the original request w
             "generatedName": "GatewayTimeoutErrorBody",
             "nameOverride": null,
             "type": "unknown",
+          },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -6536,6 +7666,10 @@ The LLM response data, as well as any context provided in the original request w
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -6552,7 +7686,15 @@ The LLM response data, as well as any context provided in the original request w
           "groupName": null,
           "nameOverride": null,
           "schema": "PurgeLemurRequestDataResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -6563,6 +7705,10 @@ The LLM response data, as well as any context provided in the original request w
         "methodName": "purgeRequestData",
       },
       "server": [],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Delete the data for a previously submitted LeMUR request.",
       "tags": [
         "LeMUR",
@@ -6668,6 +7814,10 @@ The LLM response data, as well as any context provided in the original request w
           },
         },
       ],
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "AudioIntelligenceModelStatus": {
@@ -6677,6 +7827,10 @@ The LLM response data, as well as any context provided in the original request w
       "generatedName": "AudioIntelligenceModelStatus",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -6806,11 +7960,19 @@ The LLM response data, as well as any context provided in the original request w
               "groupName": null,
               "nameOverride": null,
               "schema": "Timestamp",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "AutoHighlightsResult": {
@@ -6855,11 +8017,19 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "AutoHighlightResult",
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         ],
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
+        },
         "type": "object",
       },
     },
@@ -6996,6 +8166,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ContentSafetyLabel": {
@@ -7083,6 +8257,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ContentSafetyLabelResult": {
@@ -7140,6 +8318,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               "groupName": null,
               "nameOverride": null,
               "schema": "ContentSafetyLabel",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7208,6 +8390,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "groupName": null,
             "nameOverride": null,
             "schema": "Timestamp",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -7221,6 +8407,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "schema": {
             "availability": null,
             "description": "A summary of the Content Moderation confidence results for the entire audio file",
+            "encoding": null,
             "generatedName": "ContentSafetyLabelResultSummary",
             "groupName": null,
             "key": {
@@ -7269,6 +8456,7 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           "schema": {
             "availability": null,
             "description": "A summary of the Content Moderation severity results for the entire audio file",
+            "encoding": null,
             "generatedName": "ContentSafetyLabelResultSeverityScoreSummary",
             "groupName": null,
             "key": {
@@ -7295,11 +8483,19 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               "groupName": null,
               "nameOverride": null,
               "schema": "SeverityScoreSummary",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CreateRealtimeTemporaryTokenParameters": {
@@ -7338,6 +8534,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CreateTranscriptOptionalParameters": {
@@ -7373,6 +8573,10 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptLanguageCode",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7728,6 +8932,10 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptBoostParam",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7876,6 +9084,10 @@ The default value is 'en_us'.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "PiiPolicy",
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -7902,6 +9114,10 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "SubstitutionPolicy",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8087,6 +9303,10 @@ The default value is 'en_us'.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "TranscriptCustomSpelling",
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -8292,6 +9512,10 @@ Valid values are in the range [0, 1] inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": "SummaryModel",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8317,6 +9541,10 @@ Valid values are in the range [0, 1] inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": "SummaryType",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8390,6 +9618,10 @@ Valid values are in the range [0, 1] inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "CreateTranscriptParameters": {
@@ -8402,6 +9634,10 @@ Valid values are in the range [0, 1] inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "CreateTranscriptOptionalParameters",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -8436,6 +9672,10 @@ Valid values are in the range [0, 1] inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Entity": {
@@ -8462,6 +9702,10 @@ Valid values are in the range [0, 1] inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "EntityType",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -8540,6 +9784,10 @@ Valid values are in the range [0, 1] inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "EntityType": {
@@ -8549,6 +9797,10 @@ Valid values are in the range [0, 1] inclusive.
       "generatedName": "EntityType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -8996,6 +10248,10 @@ Valid values are in the range [0, 1] inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "FinalTranscript": {
@@ -9008,6 +10264,10 @@ Valid values are in the range [0, 1] inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "RealtimeBaseTranscript",
+          "source": {
+            "file": "assembly/asyncapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9078,6 +10338,10 @@ Valid values are in the range [0, 1] inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurActionItemsParameters": {
@@ -9087,6 +10351,10 @@ Valid values are in the range [0, 1] inclusive.
       "groupName": null,
       "nameOverride": null,
       "schema": "LemurBaseParameters",
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "reference",
     },
     "LemurActionItemsResponse": {
@@ -9099,6 +10367,10 @@ Valid values are in the range [0, 1] inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurBaseResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9133,6 +10405,10 @@ Valid values are in the range [0, 1] inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurBaseParameters": {
@@ -9196,6 +10472,7 @@ Valid values are in the range [0, 1] inclusive.
               "value": {
                 "availability": null,
                 "description": "Context to provide the model. This can be a string or a free-form JSON value.",
+                "encoding": null,
                 "generatedName": "LemurBaseParametersContext",
                 "groupName": null,
                 "nameOverride": null,
@@ -9219,6 +10496,7 @@ Valid values are in the range [0, 1] inclusive.
                   {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "LemurBaseParametersContextOne",
                     "groupName": null,
                     "key": {
@@ -9245,6 +10523,10 @@ Valid values are in the range [0, 1] inclusive.
                     },
                   },
                 ],
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -9271,6 +10553,10 @@ Valid values are in the range [0, 1] inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": "LemurModel",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -9339,6 +10625,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurBaseResponse": {
@@ -9376,6 +10666,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurModel": {
@@ -9386,6 +10680,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "generatedName": "LemurModel",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -9469,6 +10767,7 @@ Can be any value between 0.0 and 1.0 inclusive.
               "value": {
                 "availability": null,
                 "description": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
+                "encoding": null,
                 "generatedName": "LemurQuestionContext",
                 "groupName": null,
                 "nameOverride": null,
@@ -9492,6 +10791,7 @@ Can be any value between 0.0 and 1.0 inclusive.
                   {
                     "availability": null,
                     "description": null,
+                    "encoding": null,
                     "generatedName": "LemurQuestionContextOne",
                     "groupName": null,
                     "key": {
@@ -9518,6 +10818,10 @@ Can be any value between 0.0 and 1.0 inclusive.
                     },
                   },
                 ],
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "undisciminated",
               },
             },
@@ -9598,6 +10902,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurQuestionAnswer": {
@@ -9659,6 +10967,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurQuestionAnswerParameters": {
@@ -9671,6 +10983,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurBaseParameters",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9701,11 +11017,19 @@ Can be any value between 0.0 and 1.0 inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": "LemurQuestion",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurQuestionAnswerResponse": {
@@ -9718,6 +11042,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurBaseResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9748,11 +11076,19 @@ Can be any value between 0.0 and 1.0 inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": "LemurQuestionAnswer",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurSummaryParameters": {
@@ -9765,6 +11101,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurBaseParameters",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9808,6 +11148,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurSummaryResponse": {
@@ -9820,6 +11164,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurBaseResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9854,6 +11202,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurTaskParameters": {
@@ -9866,6 +11218,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurBaseParameters",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9900,6 +11256,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "LemurTaskResponse": {
@@ -9912,6 +11272,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "LemurBaseResponse",
+          "source": {
+            "file": "assembly/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -9946,6 +11310,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "MessageType": {
@@ -9955,6 +11323,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "generatedName": "MessageType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -10160,6 +11532,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ParagraphsResponse": {
@@ -10267,11 +11643,19 @@ Can be any value between 0.0 and 1.0 inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptParagraph",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PartialTranscript": {
@@ -10284,6 +11668,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "RealtimeBaseTranscript",
+          "source": {
+            "file": "assembly/asyncapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -10314,6 +11702,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PiiPolicy": {
@@ -10323,6 +11715,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "generatedName": "PiiPolicy",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -10757,6 +12153,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RealtimeBaseMessage": {
@@ -10783,10 +12183,18 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "MessageType",
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RealtimeBaseTranscript": {
@@ -10919,6 +12327,10 @@ Can be any value between 0.0 and 1.0 inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": "Word",
+              "source": {
+                "file": "assembly/asyncapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -10943,6 +12355,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RealtimeError": {
@@ -10980,6 +12396,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RealtimeMessage": {
@@ -10987,6 +12407,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "value": {
         "availability": null,
         "description": null,
+        "encoding": null,
         "generatedName": "RealtimeMessage",
         "groupName": null,
         "nameOverride": null,
@@ -10998,6 +12419,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "SessionBegins",
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           {
@@ -11007,6 +12432,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "PartialTranscript",
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           {
@@ -11016,6 +12445,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "FinalTranscript",
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           {
@@ -11025,6 +12458,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "SessionTerminated",
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           {
@@ -11034,9 +12471,17 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "RealtimeError",
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         ],
+        "source": {
+          "file": "assembly/asyncapi.yml",
+          "type": "openapi",
+        },
         "type": "undisciminated",
       },
     },
@@ -11075,6 +12520,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RealtimeTranscript": {
@@ -11082,6 +12531,7 @@ Can be any value between 0.0 and 1.0 inclusive.
       "value": {
         "availability": null,
         "description": null,
+        "encoding": null,
         "generatedName": "RealtimeTranscript",
         "groupName": null,
         "nameOverride": null,
@@ -11093,6 +12543,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "PartialTranscript",
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           {
@@ -11102,9 +12556,17 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "FinalTranscript",
+            "source": {
+              "file": "assembly/asyncapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         ],
+        "source": {
+          "file": "assembly/asyncapi.yml",
+          "type": "openapi",
+        },
         "type": "undisciminated",
       },
     },
@@ -11115,6 +12577,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "generatedName": "RealtimeTranscriptType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -11169,6 +12635,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "RedactedAudioStatus",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11197,6 +12667,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RedactedAudioStatus": {
@@ -11316,11 +12790,19 @@ Can be any value between 0.0 and 1.0 inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptSentence",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Sentiment": {
@@ -11330,6 +12812,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "generatedName": "Sentiment",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -11471,6 +12957,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "Sentiment",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -11540,6 +13030,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SessionBegins": {
@@ -11552,6 +13046,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "RealtimeBaseMessage",
+          "source": {
+            "file": "assembly/asyncapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -11629,6 +13127,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SessionTerminated": {
@@ -11641,6 +13143,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "RealtimeBaseMessage",
+          "source": {
+            "file": "assembly/asyncapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -11675,6 +13181,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SeverityScoreSummary": {
@@ -11763,6 +13273,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SubstitutionPolicy": {
@@ -11779,6 +13293,10 @@ Can be any value between 0.0 and 1.0 inclusive.
         "generatedName": "SubstitutionPolicy",
         "groupName": null,
         "nameOverride": null,
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
+        },
         "type": "enum",
         "values": [
           {
@@ -11817,6 +13335,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "generatedName": "SubtitleFormat",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -11866,6 +13388,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "generatedName": "SummaryModel",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -11928,6 +13454,10 @@ Can be any value between 0.0 and 1.0 inclusive.
       "generatedName": "SummaryType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -12007,6 +13537,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           "groupName": null,
           "nameOverride": null,
           "schema": "RealtimeBaseMessage",
+          "source": {
+            "file": "assembly/asyncapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -12037,6 +13571,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Timestamp": {
@@ -12100,6 +13638,10 @@ Can be any value between 0.0 and 1.0 inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TopicDetectionResult": {
@@ -12217,6 +13759,10 @@ Can be any value between 0.0 and 1.0 inclusive.
                     },
                   },
                 ],
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             },
@@ -12243,11 +13789,19 @@ Can be any value between 0.0 and 1.0 inclusive.
               "groupName": null,
               "nameOverride": null,
               "schema": "Timestamp",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Transcript": {
@@ -12346,6 +13900,10 @@ Can be any value between 0.0 and 1.0 inclusive.
             "groupName": null,
             "nameOverride": null,
             "schema": "TranscriptStatus",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -12373,6 +13931,10 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptLanguageCode",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -12480,6 +14042,10 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "TranscriptWord",
+                  "source": {
+                    "file": "assembly/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -12525,6 +14091,10 @@ See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diariza
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "TranscriptUtterance",
+                  "source": {
+                    "file": "assembly/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -12935,6 +14505,10 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               "groupName": null,
               "nameOverride": null,
               "schema": "AutoHighlightsResult",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -13280,6 +14854,10 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "PiiPolicy",
+                  "source": {
+                    "file": "assembly/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -13307,6 +14885,10 @@ See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for mo
               "groupName": null,
               "nameOverride": null,
               "schema": "SubstitutionPolicy",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -13473,6 +15055,10 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "AudioIntelligenceModelStatus",
+                      "source": {
+                        "file": "assembly/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -13497,11 +15083,19 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
                         "groupName": null,
                         "nameOverride": null,
                         "schema": "ContentSafetyLabelResult",
+                        "source": {
+                          "file": "assembly/openapi.yml",
+                          "type": "openapi",
+                        },
                         "type": "reference",
                       },
                     },
                   },
                 ],
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             },
@@ -13592,6 +15186,10 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                       "groupName": null,
                       "nameOverride": null,
                       "schema": "AudioIntelligenceModelStatus",
+                      "source": {
+                        "file": "assembly/openapi.yml",
+                        "type": "openapi",
+                      },
                       "type": "reference",
                     },
                   },
@@ -13616,6 +15214,10 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                         "groupName": null,
                         "nameOverride": null,
                         "schema": "TopicDetectionResult",
+                        "source": {
+                          "file": "assembly/openapi.yml",
+                          "type": "openapi",
+                        },
                         "type": "reference",
                       },
                     },
@@ -13630,6 +15232,7 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                     "schema": {
                       "availability": null,
                       "description": "The overall relevance of topic to the entire audio file",
+                      "encoding": null,
                       "generatedName": "TranscriptIabCategoriesResultSummary",
                       "groupName": null,
                       "key": {
@@ -13669,6 +15272,10 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                     },
                   },
                 ],
+                "source": {
+                  "file": "assembly/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             },
@@ -13745,6 +15352,10 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "TranscriptCustomSpelling",
+                  "source": {
+                    "file": "assembly/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -13822,6 +15433,10 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "Chapter",
+                  "source": {
+                    "file": "assembly/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -14159,6 +15774,10 @@ See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analys
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "SentimentAnalysisResult",
+                  "source": {
+                    "file": "assembly/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -14240,6 +15859,10 @@ See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) 
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "Entity",
+                  "source": {
+                    "file": "assembly/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -14354,6 +15977,10 @@ Valid values are in the range [0, 1] inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TranscriptBoostParam": {
@@ -14363,6 +15990,10 @@ Valid values are in the range [0, 1] inclusive.
       "generatedName": "TranscriptBoostParam",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -14473,6 +16104,10 @@ Valid values are in the range [0, 1] inclusive.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TranscriptLanguageCode": {
@@ -14505,6 +16140,10 @@ The default value is 'en_us'.
         "generatedName": "TranscriptLanguageCode",
         "groupName": null,
         "nameOverride": null,
+        "source": {
+          "file": "assembly/openapi.yml",
+          "type": "openapi",
+        },
         "type": "enum",
         "values": [
           {
@@ -14794,6 +16433,10 @@ The default value is 'en_us'.
             "groupName": null,
             "nameOverride": null,
             "schema": "PageDetails",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -14818,11 +16461,19 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptListItem",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TranscriptListItem": {
@@ -14897,6 +16548,10 @@ The default value is 'en_us'.
             "groupName": null,
             "nameOverride": null,
             "schema": "TranscriptStatus",
+            "source": {
+              "file": "assembly/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -14971,6 +16626,10 @@ The default value is 'en_us'.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TranscriptListParameters": {
@@ -15032,6 +16691,10 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptStatus",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -15161,6 +16824,10 @@ The default value is 'en_us'.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TranscriptParagraph": {
@@ -15293,11 +16960,19 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptWord",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TranscriptSentence": {
@@ -15430,11 +17105,19 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptWord",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TranscriptStatus": {
@@ -15444,6 +17127,10 @@ The default value is 'en_us'.
       "generatedName": "TranscriptStatus",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -15654,11 +17341,19 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "TranscriptWord",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TranscriptWord": {
@@ -15811,6 +17506,10 @@ The default value is 'en_us'.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UploadedFile": {
@@ -15848,6 +17547,10 @@ The default value is 'en_us'.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "Word": {
@@ -15960,6 +17663,10 @@ The default value is 'en_us'.
           },
         },
       ],
+      "source": {
+        "file": "assembly/asyncapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WordSearchMatch": {
@@ -16042,6 +17749,10 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "WordSearchTimestamp",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -16080,6 +17791,10 @@ The default value is 'en_us'.
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WordSearchResponse": {
@@ -16162,11 +17877,19 @@ The default value is 'en_us'.
               "groupName": null,
               "nameOverride": null,
               "schema": "WordSearchMatch",
+              "source": {
+                "file": "assembly/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "assembly/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WordSearchTimestamp": {

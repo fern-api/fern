@@ -4,11 +4,11 @@ using SeedExhaustive.Core;
 
 namespace SeedExhaustive.Types.Enum;
 
-public class EnumClient
+public partial class EnumClient
 {
     private RawClient _client;
 
-    public EnumClient(RawClient client)
+    internal EnumClient(RawClient client)
     {
         _client = client;
     }

@@ -1,17 +1,16 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedLiteral;
 using SeedLiteral.Core;
 
 #nullable enable
 
 namespace SeedLiteral;
 
-public class InlinedClient
+public partial class InlinedClient
 {
     private RawClient _client;
 
-    public InlinedClient(RawClient client)
+    internal InlinedClient(RawClient client)
     {
         _client = client;
     }
@@ -47,7 +46,7 @@ public class InlinedClient
         throw new SeedLiteralApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

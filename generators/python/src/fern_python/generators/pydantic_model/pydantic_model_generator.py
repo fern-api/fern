@@ -8,7 +8,6 @@ from fern_python.codegen import Project
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import PydanticGeneratorContext, PydanticGeneratorContextImpl
 from .custom_config import PydanticModelCustomConfig
@@ -37,8 +36,13 @@ class PydanticModelGenerator(AbstractGenerator):
         generator_config: GeneratorConfig,
         ir: ir_types.IntermediateRepresentation,
     ) -> Tuple[str, ...]:
+        custom_config = PydanticModelCustomConfig.parse_obj(generator_config.custom_config or {})
+        if custom_config.package_name is not None:
+            return (custom_config.package_name,)
+
+        cleaned_org_name = self._clean_organization_name(generator_config.organization)
         return (
-            generator_config.organization,
+            cleaned_org_name,
             ir.api_name.snake_case.safe_name,
         )
 
@@ -65,8 +69,10 @@ class PydanticModelGenerator(AbstractGenerator):
             allow_leveraging_defaults=custom_config.use_provided_defaults,
             use_typeddict_requests=custom_config.use_typeddict_requests,
             use_str_enums=custom_config.use_str_enums,
+            skip_formatting=custom_config.skip_formatting,
+            union_naming_version=custom_config.union_naming,
         )
-        snippet_registry = SnippetRegistry()
+        snippet_registry = SnippetRegistry(source_file_factory=context.source_file_factory)
         snippet_writer = self._build_snippet_writer(
             context=context, improved_imports=False, use_str_enums=custom_config.use_str_enums
         )
@@ -122,7 +128,7 @@ class PydanticModelGenerator(AbstractGenerator):
         # Write the typeddict request
         if self._should_generate_typedict(context=context, type_=type.shape):
             typeddict_filepath = context.get_filepath_for_type_id(type_id=type.name.type_id, as_request=True)
-            typeddict_source_file = SourceFileFactory.create(
+            typeddict_source_file = context.source_file_factory.create(
                 project=project, filepath=typeddict_filepath, generator_exec_wrapper=generator_exec_wrapper
             )
 
@@ -140,7 +146,7 @@ class PydanticModelGenerator(AbstractGenerator):
 
         # Write the pydantic model
         filepath = context.get_filepath_for_type_id(type_id=type.name.type_id, as_request=False)
-        source_file = SourceFileFactory.create(
+        source_file = context.source_file_factory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
 

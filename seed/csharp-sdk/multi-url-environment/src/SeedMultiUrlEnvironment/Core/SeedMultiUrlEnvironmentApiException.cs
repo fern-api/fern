@@ -1,7 +1,3 @@
-using SeedMultiUrlEnvironment.Core;
-
-#nullable enable
-
 namespace SeedMultiUrlEnvironment.Core;
 
 /// <summary>
@@ -18,10 +14,14 @@ public class SeedMultiUrlEnvironmentApiException(string message, int statusCode,
     /// <summary>
     /// The body of the response that triggered the exception.
     /// </summary>
+<<<<<<< HEAD
     public object Body => body;
 
     public override string ToString()
     {
         return $"SeedMultiUrlEnvironmentApiException {{ message: {Message}, statusCode: {StatusCode}, body: {Body} }}";
     }
+=======
+    public object Body { get; } = body;
+>>>>>>> main
 }

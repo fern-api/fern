@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAuthEnvironmentVariables;
-using SeedAuthEnvironmentVariables.Core;
-using SeedAuthEnvironmentVariables.Test.Utils;
 using SeedAuthEnvironmentVariables.Test.Wire;
 
 #nullable enable
@@ -36,6 +36,6 @@ public class GetWithHeaderTest : BaseWireTest
         var response = Client
             .Service.GetWithHeaderAsync(new HeaderAuthRequest { XEndpointHeader = "string" })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

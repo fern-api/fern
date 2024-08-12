@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migrateFromV5ToV4 correctly migrates 1`] = `
+exports[`migrateFromV5ToV4 > correctly migrates 1`] = `
 {
   "apiDisplayName": undefined,
   "apiDocs": undefined,
@@ -119,6 +119,7 @@ exports[`migrateFromV5ToV4 correctly migrates 1`] = `
       "language": "X-Fern-Language",
       "sdkName": "X-Fern-SDK-Name",
       "sdkVersion": "X-Fern-SDK-Version",
+      "userAgent": undefined,
     },
   },
   "services": {

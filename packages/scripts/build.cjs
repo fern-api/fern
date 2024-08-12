@@ -10,7 +10,7 @@ main();
 async function main() {
     const options = {
         platform: "node",
-        target: "node14",
+        target: "node18",
         entryPoints: ["./src/cli.ts"],
         outfile: "./dist/bundle.cjs",
         bundle: true,

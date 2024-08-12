@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using SeedBearerTokenEnvironmentVariable;
-using SeedBearerTokenEnvironmentVariable.Core;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;

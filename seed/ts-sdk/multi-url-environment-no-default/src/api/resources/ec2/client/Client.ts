@@ -52,6 +52,7 @@ export class Ec2 {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/multi-url-environment-no-default",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/multi-url-environment-no-default/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },

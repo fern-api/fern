@@ -31,7 +31,8 @@ export function convertStreamingOperation({
             const streamingOperation = convertHttpOperation({
                 operationContext,
                 context,
-                streamFormat: streamingExtension.format
+                streamFormat: streamingExtension.format,
+                source: context.source
             });
             return {
                 streaming: streamingOperation,
@@ -74,7 +75,8 @@ export function convertStreamingOperation({
                 },
                 context,
                 streamFormat: streamingExtension.format,
-                suffix: STREAM_SUFFIX
+                suffix: STREAM_SUFFIX,
+                source: context.source
             });
             streamingOperation.examples = streamingOperation.examples.filter(
                 (example) => isStreamingExample(example, context) !== false
@@ -100,7 +102,8 @@ export function convertStreamingOperation({
                         responses: nonStreamingResponses
                     }
                 },
-                context
+                context,
+                source: context.source
             });
             nonStreamingOperation.examples = nonStreamingOperation.examples.filter(
                 (example) => isStreamingExample(example, context) !== true

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser vellum parse open api 1`] = `
+exports[`open api parser > vellum > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -161,6 +161,10 @@ Used to retrieve a deployment given its ID or name.
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -177,12 +181,24 @@ Used to retrieve a deployment given its ID or name.
           "groupName": null,
           "nameOverride": null,
           "schema": "DeploymentRead",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "deployments",
@@ -861,7 +877,15 @@ Creates a new document index.",
           "groupName": null,
           "nameOverride": null,
           "schema": "DocumentIndexCreateRequest",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -876,12 +900,24 @@ Creates a new document index.",
           "groupName": null,
           "nameOverride": null,
           "schema": "DocumentIndexRead",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "document-indexes",
@@ -1066,6 +1102,10 @@ Used to list documents. Optionally filter on supported fields.
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -1096,6 +1136,10 @@ Used to list documents. Optionally filter on supported fields.
               },
               "type": "primitive",
             },
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         {
@@ -1128,6 +1172,10 @@ Used to list documents. Optionally filter on supported fields.
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
         },
         {
           "availability": null,
@@ -1158,6 +1206,10 @@ Used to list documents. Optionally filter on supported fields.
               "type": "primitive",
             },
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -1172,12 +1224,24 @@ Used to list documents. Optionally filter on supported fields.
           "groupName": null,
           "nameOverride": null,
           "schema": "PaginatedSlimDocumentList",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "documents",
@@ -1213,7 +1277,15 @@ Executes a deployed Workflow and streams back its results.",
           "groupName": null,
           "nameOverride": null,
           "schema": "ExecuteWorkflowStreamRequest",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1228,7 +1300,15 @@ Executes a deployed Workflow and streams back its results.",
           "groupName": null,
           "nameOverride": null,
           "schema": "WorkflowStreamEvent",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "streamingJson",
       },
@@ -1240,6 +1320,10 @@ Executes a deployed Workflow and streams back its results.",
           "url": "https://predict.vellum.ai",
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "execute-workflow-stream",
@@ -1267,7 +1351,15 @@ Generate a completion using a previously defined deployment.
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -1282,7 +1374,15 @@ Generate a completion using a previously defined deployment.
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -1297,7 +1397,15 @@ Generate a completion using a previously defined deployment.
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -1312,7 +1420,15 @@ Generate a completion using a previously defined deployment.
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -1447,7 +1563,15 @@ Generate a completion using a previously defined deployment.
           "groupName": null,
           "nameOverride": null,
           "schema": "GenerateBodyRequest",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1462,7 +1586,15 @@ Generate a completion using a previously defined deployment.
           "groupName": null,
           "nameOverride": null,
           "schema": "GenerateResponse",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1474,6 +1606,10 @@ Generate a completion using a previously defined deployment.
           "url": "https://predict.vellum.ai",
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "generate",
@@ -1501,7 +1637,15 @@ Generate a stream of completions using a previously defined deployment.
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "403": {
@@ -1516,7 +1660,15 @@ Generate a stream of completions using a previously defined deployment.
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -1531,7 +1683,15 @@ Generate a stream of completions using a previously defined deployment.
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -1546,7 +1706,15 @@ Generate a stream of completions using a previously defined deployment.
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -1572,7 +1740,15 @@ Generate a stream of completions using a previously defined deployment.
           "groupName": null,
           "nameOverride": null,
           "schema": "GenerateStreamBodyRequest",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -1587,7 +1763,15 @@ Generate a stream of completions using a previously defined deployment.
           "groupName": null,
           "nameOverride": null,
           "schema": "GenerateStreamResponse",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "streamingJson",
       },
@@ -1599,6 +1783,10 @@ Generate a stream of completions using a previously defined deployment.
           "url": "https://predict.vellum.ai",
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "generate-stream",
@@ -1888,6 +2076,10 @@ Used to retrieve a model version given its ID.
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -1904,12 +2096,24 @@ Used to retrieve a model version given its ID.
           "groupName": null,
           "nameOverride": null,
           "schema": "ModelVersionRead",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "model-versions",
@@ -2024,6 +2228,10 @@ Compiles the prompt backing the model version using the provided input values.",
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -2039,7 +2247,15 @@ Compiles the prompt backing the model version using the provided input values.",
           "groupName": null,
           "nameOverride": null,
           "schema": "ModelVersionCompilePromptRequestRequest",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2054,12 +2270,24 @@ Compiles the prompt backing the model version using the provided input values.",
           "groupName": null,
           "nameOverride": null,
           "schema": "ModelVersionCompilePromptResponse",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "model-versions",
@@ -2088,7 +2316,15 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             "groupName": null,
             "nameOverride": null,
             "schema": "RegisterPromptErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -2353,7 +2589,15 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
           "groupName": null,
           "nameOverride": null,
           "schema": "RegisterPromptRequestRequest",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2368,12 +2612,24 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
           "groupName": null,
           "nameOverride": null,
           "schema": "RegisterPromptResponse",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "registered-prompts",
@@ -2767,6 +3023,10 @@ or overwritten with default values.",
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -2782,7 +3042,15 @@ or overwritten with default values.",
           "groupName": null,
           "nameOverride": null,
           "schema": "UpsertSandboxScenarioRequestRequest",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -2797,12 +3065,24 @@ or overwritten with default values.",
           "groupName": null,
           "nameOverride": null,
           "schema": "SandboxScenario",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "sandboxes",
@@ -2879,6 +3159,10 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
         {
@@ -2901,6 +3185,10 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -2910,6 +3198,10 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "sandboxes",
@@ -2937,7 +3229,15 @@ Perform a search against a document index.
             "groupName": null,
             "nameOverride": null,
             "schema": "SearchErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -2952,7 +3252,15 @@ Perform a search against a document index.
             "groupName": null,
             "nameOverride": null,
             "schema": "SearchErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -2967,7 +3275,15 @@ Perform a search against a document index.
             "groupName": null,
             "nameOverride": null,
             "schema": "SearchErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -3075,7 +3391,15 @@ Perform a search against a document index.
           "groupName": null,
           "nameOverride": null,
           "schema": "SearchRequestBodyRequest",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3090,7 +3414,15 @@ Perform a search against a document index.
           "groupName": null,
           "nameOverride": null,
           "schema": "SearchResponse",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3102,6 +3434,10 @@ Perform a search against a document index.
           "url": "https://predict.vellum.ai",
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "search",
@@ -3129,7 +3465,15 @@ Used to submit feedback regarding the quality of previously generated completion
             "groupName": null,
             "nameOverride": null,
             "schema": "SubmitCompletionActualsErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -3144,7 +3488,15 @@ Used to submit feedback regarding the quality of previously generated completion
             "groupName": null,
             "nameOverride": null,
             "schema": "SubmitCompletionActualsErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -3159,7 +3511,15 @@ Used to submit feedback regarding the quality of previously generated completion
             "groupName": null,
             "nameOverride": null,
             "schema": "SubmitCompletionActualsErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -3210,7 +3570,15 @@ Used to submit feedback regarding the quality of previously generated completion
           "groupName": null,
           "nameOverride": null,
           "schema": "SubmitCompletionActualsRequest",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3224,6 +3592,10 @@ Used to submit feedback regarding the quality of previously generated completion
           "url": "https://predict.vellum.ai",
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "submit-completion-actuals",
@@ -3376,6 +3748,10 @@ or overwritten with default values.",
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -3391,7 +3767,15 @@ or overwritten with default values.",
           "groupName": null,
           "nameOverride": null,
           "schema": "TestSuiteTestCaseRequest",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3406,12 +3790,24 @@ or overwritten with default values.",
           "groupName": null,
           "nameOverride": null,
           "schema": "TestSuiteTestCase",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "test-suites",
@@ -3488,6 +3884,10 @@ Deletes an existing test case for a test suite, keying off of the test case id."
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
         {
@@ -3510,6 +3910,10 @@ Deletes an existing test case for a test suite, keying off of the test case id."
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "variableReference": null,
         },
       ],
@@ -3519,6 +3923,10 @@ Deletes an existing test case for a test suite, keying off of the test case id."
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "test-suites",
@@ -3546,7 +3954,15 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "UploadDocumentErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "404": {
@@ -3561,7 +3977,15 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "UploadDocumentErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
         "500": {
@@ -3576,7 +4000,15 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "UploadDocumentErrorResponse",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
           },
         },
       },
@@ -3795,6 +4227,10 @@ Upload a document to be indexed and used for search.
             },
           },
         ],
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
+        },
         "type": "multipart",
       },
       "requestNameOverride": null,
@@ -3808,7 +4244,15 @@ Upload a document to be indexed and used for search.
           "groupName": null,
           "nameOverride": null,
           "schema": "UploadDocumentResponse",
+          "source": {
+            "file": "vellum/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -3820,6 +4264,10 @@ Upload a document to be indexed and used for search.
           "url": "https://documents.vellum.ai",
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "documents",
@@ -3939,6 +4387,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "BlockTypeEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -4043,10 +4495,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ChatMessageRole",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ChatMessageRequest": {
@@ -4097,10 +4557,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ChatMessageRole",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ChatMessageRole": {
@@ -4113,6 +4581,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "ChatMessageRole",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -4193,10 +4665,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ConditionalNodeResultData",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ConditionalNodeResultData": {
@@ -4250,6 +4730,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ContentType": {
@@ -4260,6 +4744,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "ContentType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -4314,10 +4802,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "DeploymentNodeResultData",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DeploymentNodeResultData": {
@@ -4435,6 +4931,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DeploymentRead": {
@@ -4563,6 +5063,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "DeploymentReadStatusEnum",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4592,6 +5096,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "EnvironmentEnum",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -4613,6 +5121,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ModelTypeEnum",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -4668,6 +5180,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DeploymentReadStatusEnum": {
@@ -4679,6 +5195,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "DeploymentReadStatusEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -4821,6 +5341,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DocumentDocumentToDocumentIndex": {
@@ -4908,11 +5432,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "IndexingStateEnum",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DocumentIndexCreateRequest": {
@@ -4997,6 +5529,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "DocumentIndexStatus",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -5026,6 +5562,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "EnvironmentEnum",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -5040,6 +5580,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Configuration representing how documents should be indexed",
+            "encoding": null,
             "generatedName": "DocumentIndexCreateRequestIndexingConfig",
             "groupName": null,
             "key": {
@@ -5099,6 +5640,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DocumentIndexRead": {
@@ -5226,6 +5771,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "DocumentIndexStatus",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -5255,6 +5804,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "EnvironmentEnum",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -5269,6 +5822,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Configuration representing how documents should be indexed",
+            "encoding": null,
             "generatedName": "DocumentIndexReadIndexingConfig",
             "groupName": null,
             "key": {
@@ -5296,6 +5850,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "DocumentIndexStatus": {
@@ -5306,6 +5864,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "DocumentIndexStatus",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -5459,6 +6021,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "FinishReasonEnum",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -5491,6 +6057,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "NormalizedLogProbs",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -5541,11 +6111,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "ContentType",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "EnvironmentEnum": {
@@ -5557,6 +6135,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "EnvironmentEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -5643,6 +6225,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "EvaluationParamsRequest": {
@@ -5688,6 +6274,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ExecuteWorkflowStreamRequest": {
@@ -5841,6 +6431,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "WorkflowRequestInputRequest",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -5886,6 +6480,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "FinishReasonEnum": {
@@ -5897,6 +6495,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "FinishReasonEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -6051,6 +6653,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "GenerateRequest",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -6083,12 +6689,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "GenerateOptionsRequest",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateErrorResponse": {
@@ -6126,6 +6740,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateOptionsRequest": {
@@ -6162,11 +6780,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "LogprobsEnum",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateRequest": {
@@ -6189,6 +6815,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Key/value pairs for each template variable defined in the deployment's prompt.",
+            "encoding": null,
             "generatedName": "GenerateRequestInputValues",
             "groupName": null,
             "key": {
@@ -6243,6 +6870,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ChatMessageRequest",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -6297,6 +6928,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateResponse": {
@@ -6330,11 +6965,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "GenerateResult",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateResult": {
@@ -6368,6 +7011,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "GenerateResultData",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -6393,11 +7040,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "GenerateResultError",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateResultData": {
@@ -6431,11 +7086,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "EnrichedNormalizedCompletion",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateResultError": {
@@ -6473,6 +7136,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateStreamBodyRequest": {
@@ -6586,6 +7253,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "GenerateRequest",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -6618,12 +7289,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "GenerateOptionsRequest",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateStreamResponse": {
@@ -6650,10 +7329,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "GenerateStreamResult",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateStreamResult": {
@@ -6712,6 +7399,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "GenerateStreamResultData",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -6737,11 +7428,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "GenerateResultError",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "GenerateStreamResultData": {
@@ -6793,10 +7492,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "EnrichedNormalizedCompletion",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "IndexingStateEnum": {
@@ -6810,6 +7517,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "IndexingStateEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -6887,6 +7598,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "LogprobsEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -6925,6 +7640,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "ModelTypeEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -7017,12 +7736,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ModelVersionSandboxSnapshot",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ModelVersionCompilePromptRequestRequest": {
@@ -7045,6 +7772,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Key/value pairs for each variable found within the model version's prompt template.",
+            "encoding": null,
             "generatedName": "ModelVersionCompilePromptRequestRequestInputValues",
             "groupName": null,
             "key": {
@@ -7072,6 +7800,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ModelVersionCompilePromptResponse": {
@@ -7098,10 +7830,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ModelVersionCompiledPrompt",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ModelVersionCompiledPrompt": {
@@ -7164,6 +7904,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ModelVersionExecConfig": {
@@ -7190,6 +7934,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ModelVersionExecConfigParameters",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -7214,6 +7962,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "PromptTemplateInputVariable",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7271,6 +8023,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "PromptTemplateBlockData",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -7309,6 +8065,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ModelVersionExecConfigParameters": {
@@ -7470,6 +8230,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "ModelVersionExecConfigParametersLogitBias",
                 "groupName": null,
                 "key": {
@@ -7600,6 +8361,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ModelVersionRead": {
@@ -7696,6 +8461,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ModelTypeEnum",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -7722,6 +8491,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ProviderEnum",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -7763,6 +8536,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ModelVersionBuildConfig",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -7780,6 +8557,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ModelVersionExecConfig",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -7804,11 +8585,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "ModelVersionReadStatusEnum",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ModelVersionReadStatusEnum": {
@@ -7821,6 +8610,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "ModelVersionReadStatusEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -8009,6 +8802,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "NormalizedLogProbs": {
@@ -8042,6 +8839,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "NormalizedTokenLogProbs",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -8080,6 +8881,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "NormalizedTokenLogProbs": {
@@ -8166,6 +8971,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "NormalizedTokenLogProbsTopLogprobs",
               "groupName": null,
               "key": {
@@ -8239,6 +9045,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PaginatedSlimDocumentList": {
@@ -8392,12 +9202,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "SlimDocument",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ProcessingFailureReasonEnum": {
@@ -8422,6 +9240,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "ProcessingStateEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -8502,10 +9324,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "PromptNodeResultData",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PromptNodeResultData": {
@@ -8623,6 +9453,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PromptTemplateBlock": {
@@ -8673,6 +9507,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "BlockTypeEnum",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -8690,10 +9528,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "PromptTemplateBlockProperties",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PromptTemplateBlockData": {
@@ -8752,11 +9598,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "PromptTemplateBlock",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PromptTemplateBlockDataRequest": {
@@ -8815,11 +9669,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "PromptTemplateBlockRequest",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PromptTemplateBlockProperties": {
@@ -8860,6 +9722,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ChatMessageRole",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -8961,6 +9827,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ContentType",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -9070,6 +9940,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PromptTemplateBlockPropertiesFunctionParameters",
                 "groupName": null,
                 "key": {
@@ -9133,6 +10004,10 @@ Upload a document to be indexed and used for search.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "PromptTemplateBlock",
+                  "source": {
+                    "file": "vellum/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -9140,6 +10015,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PromptTemplateBlockPropertiesRequest": {
@@ -9180,6 +10059,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ChatMessageRole",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -9281,6 +10164,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ContentType",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -9390,6 +10277,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "PromptTemplateBlockPropertiesRequestFunctionParameters",
                 "groupName": null,
                 "key": {
@@ -9453,6 +10341,10 @@ Upload a document to be indexed and used for search.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "PromptTemplateBlockRequest",
+                  "source": {
+                    "file": "vellum/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -9460,6 +10352,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PromptTemplateBlockRequest": {
@@ -9510,6 +10406,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "BlockTypeEnum",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -9527,10 +10427,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "PromptTemplateBlockPropertiesRequest",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PromptTemplateInputVariable": {
@@ -9568,6 +10476,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "PromptTemplateInputVariableRequest": {
@@ -9605,6 +10517,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ProviderEnum": {
@@ -9621,6 +10537,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "ProviderEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -9764,6 +10684,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RegisterPromptModelParametersRequest": {
@@ -9998,6 +10922,7 @@ Upload a document to be indexed and used for search.
               "value": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "RegisterPromptModelParametersRequestLogitBias",
                 "groupName": null,
                 "key": {
@@ -10047,6 +10972,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RegisterPromptPrompt": {
@@ -10108,6 +11037,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RegisterPromptPromptInfoRequest": {
@@ -10167,6 +11100,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "PromptTemplateBlockDataRequest",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10191,11 +11128,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "PromptTemplateInputVariableRequest",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RegisterPromptRequestRequest": {
@@ -10270,6 +11215,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "RegisterPromptPromptInfoRequest",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10296,6 +11245,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ProviderEnum",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10337,6 +11290,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "RegisterPromptModelParametersRequest",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10357,6 +11314,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "availability": null,
               "description": "Optionally include additional metadata to store along with the prompt.",
+              "encoding": null,
               "generatedName": "RegisterPromptRequestRequestMeta",
               "groupName": null,
               "key": {
@@ -10385,6 +11343,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RegisterPromptResponse": {
@@ -10411,6 +11373,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "RegisterPromptPrompt",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10428,6 +11394,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "RegisteredPromptSandboxSnapshot",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10445,6 +11415,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "RegisteredPromptSandbox",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10462,6 +11436,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "RegisteredPromptModelVersion",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10479,10 +11457,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "RegisteredPromptDeployment",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RegisteredPromptDeployment": {
@@ -10568,6 +11554,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RegisteredPromptModelVersion": {
@@ -10629,6 +11619,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RegisteredPromptSandbox": {
@@ -10690,6 +11684,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "RegisteredPromptSandboxSnapshot": {
@@ -10727,6 +11725,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SandboxMetricInputParams": {
@@ -10767,12 +11769,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "EvaluationParams",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SandboxMetricInputParamsRequest": {
@@ -10813,12 +11823,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "EvaluationParamsRequest",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SandboxNodeResult": {
@@ -10845,10 +11863,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "SandboxNodeResultData",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SandboxNodeResultData": {
@@ -10966,6 +11992,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SandboxScenario": {
@@ -11031,6 +12061,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "ScenarioInput",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -11073,10 +12107,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "SandboxMetricInputParams",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ScenarioInput": {
@@ -11141,6 +12183,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ScenarioInputTypeEnum",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -11206,12 +12252,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ChatMessage",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ScenarioInputRequest": {
@@ -11276,6 +12330,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ScenarioInputTypeEnum",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -11341,12 +12399,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ChatMessageRequest",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "ScenarioInputTypeEnum": {
@@ -11357,6 +12423,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "ScenarioInputTypeEnum",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -11422,6 +12492,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SearchFiltersRequest": {
@@ -11483,6 +12557,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SearchNodeResult": {
@@ -11509,10 +12587,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "SearchNodeResultData",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SearchNodeResultData": {
@@ -11566,6 +12652,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "SearchNodeResultDataResultsItem",
               "groupName": null,
               "key": {
@@ -11674,6 +12761,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SearchRequestBodyRequest": {
@@ -11818,12 +12909,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "SearchRequestOptionsRequest",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SearchRequestOptionsRequest": {
@@ -11905,6 +13004,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "SearchWeightsRequest",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -11938,6 +13041,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "SearchResultMergingRequest",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -11971,12 +13078,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "SearchFiltersRequest",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SearchResponse": {
@@ -12010,11 +13125,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "SearchResult",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SearchResult": {
@@ -12041,6 +13164,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "Document",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -12126,6 +13253,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SearchResultMergingRequest": {
@@ -12159,6 +13290,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SearchWeightsRequest": {
@@ -12222,6 +13357,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SlimDocument": {
@@ -12367,6 +13506,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "ProcessingStateEnum",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -12401,6 +13544,10 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "ProcessingFailureReasonEnum",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -12429,6 +13576,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "SlimDocumentStatusEnum",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -12494,11 +13645,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "DocumentDocumentToDocumentIndex",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SlimDocumentStatusEnum": {
@@ -12720,6 +13879,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SubmitCompletionActualsErrorResponse": {
@@ -12757,6 +13920,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "SubmitCompletionActualsRequest": {
@@ -12870,11 +14037,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "SubmitCompletionActualRequest",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TerminalNodeChatHistoryResult": {
@@ -12932,11 +14107,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "ChatMessage",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TerminalNodeJsonResult": {
@@ -12983,6 +14166,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "TerminalNodeJsonResultValue",
             "groupName": null,
             "key": {
@@ -13010,6 +14194,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TerminalNodeResult": {
@@ -13036,10 +14224,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "TerminalNodeResultData",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TerminalNodeResultData": {
@@ -13066,10 +14262,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "TerminalNodeResultOutput",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TerminalNodeResultOutput": {
@@ -13079,6 +14283,7 @@ Upload a document to be indexed and used for search.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "TerminalNodeResultOutput",
         "groupName": null,
         "nameOverride": null,
@@ -13090,6 +14295,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "TerminalNodeChatHistoryResult",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "JSON": {
@@ -13099,6 +14308,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "TerminalNodeJsonResult",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "STRING": {
@@ -13108,8 +14321,16 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "TerminalNodeStringResult",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -13173,6 +14394,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TestSuiteTestCase": {
@@ -13267,6 +14492,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
+            "encoding": null,
             "generatedName": "TestSuiteTestCaseInputValues",
             "groupName": null,
             "key": {
@@ -13307,10 +14533,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "EvaluationParams",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "TestSuiteTestCaseRequest": {
@@ -13405,6 +14639,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": "Key/value pairs for each input variable that the Test Suite expects.",
+            "encoding": null,
             "generatedName": "TestSuiteTestCaseRequestInputValues",
             "groupName": null,
             "key": {
@@ -13445,10 +14680,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "EvaluationParamsRequest",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UploadDocumentBodyRequest": {
@@ -13646,6 +14889,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UploadDocumentErrorResponse": {
@@ -13683,6 +14930,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UploadDocumentResponse": {
@@ -13720,6 +14971,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "UpsertSandboxScenarioRequestRequest": {
@@ -13785,6 +15040,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "ScenarioInputRequest",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -13842,11 +15101,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "SandboxMetricInputParamsRequest",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowEventError": {
@@ -13897,10 +15164,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowExecutionEventErrorCode",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowExecutionEventErrorCode": {
@@ -13911,6 +15186,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "WorkflowExecutionEventErrorCode",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -14029,10 +15308,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowNodeResultEvent",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowExecutionWorkflowResultEvent": {
@@ -14123,10 +15410,18 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowResultEvent",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowNodeResultData": {
@@ -14136,6 +15431,7 @@ Upload a document to be indexed and used for search.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "WorkflowNodeResultData",
         "groupName": null,
         "nameOverride": null,
@@ -14147,6 +15443,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "ConditionalNodeResult",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "DEPLOYMENT": {
@@ -14156,6 +15456,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "DeploymentNodeResult",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "PROMPT": {
@@ -14165,6 +15469,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "PromptNodeResult",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "SANDBOX": {
@@ -14174,6 +15482,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "SandboxNodeResult",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "SEARCH": {
@@ -14183,6 +15495,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "SearchNodeResult",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "TERMINAL": {
@@ -14192,8 +15508,16 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "TerminalNodeResult",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -14294,6 +15618,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowNodeResultEventState",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -14353,6 +15681,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "WorkflowNodeResultData",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -14385,12 +15717,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "WorkflowEventError",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowNodeResultEventState": {
@@ -14403,6 +15743,10 @@ Upload a document to be indexed and used for search.
       "generatedName": "WorkflowNodeResultEventState",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -14514,11 +15858,19 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "ChatMessageRequest",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowRequestInputRequest": {
@@ -14528,6 +15880,7 @@ Upload a document to be indexed and used for search.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "WorkflowRequestInputRequest",
         "groupName": null,
         "nameOverride": null,
@@ -14539,6 +15892,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowRequestChatHistoryInputRequest",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "JSON": {
@@ -14548,6 +15905,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowRequestJSONInputRequest",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "STRING": {
@@ -14557,8 +15918,16 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowRequestStringInputRequest",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -14607,6 +15976,7 @@ Upload a document to be indexed and used for search.
           "schema": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "WorkflowRequestJsonInputRequestValue",
             "groupName": null,
             "key": {
@@ -14634,6 +16004,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowRequestStringInputRequest": {
@@ -14695,6 +16069,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowResultEvent": {
@@ -14745,6 +16123,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowNodeResultEventState",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -14788,6 +16170,10 @@ Upload a document to be indexed and used for search.
               "groupName": null,
               "nameOverride": null,
               "schema": "WorkflowResultEventOutputData",
+              "source": {
+                "file": "vellum/openapi.yml",
+                "type": "openapi",
+              },
               "type": "reference",
             },
           },
@@ -14820,12 +16206,20 @@ Upload a document to be indexed and used for search.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "WorkflowEventError",
+                "source": {
+                  "file": "vellum/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowResultEventOutputData": {
@@ -14835,6 +16229,7 @@ Upload a document to be indexed and used for search.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "WorkflowResultEventOutputData",
         "groupName": null,
         "nameOverride": null,
@@ -14846,6 +16241,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowResultEventOutputDataChatHistory",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "JSON": {
@@ -14855,6 +16254,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowResultEventOutputDataJSON",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "STRING": {
@@ -14864,8 +16267,16 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowResultEventOutputDataString",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "discriminated",
       },
@@ -14918,6 +16329,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowNodeResultEventState",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -15012,6 +16427,10 @@ Upload a document to be indexed and used for search.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "ChatMessage",
+                  "source": {
+                    "file": "vellum/openapi.yml",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -15019,6 +16438,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowResultEventOutputDataJSON": {
@@ -15069,6 +16492,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowNodeResultEventState",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -15145,6 +16572,7 @@ Upload a document to be indexed and used for search.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "WorkflowResultEventOutputDataJsonValue",
               "groupName": null,
               "key": {
@@ -15173,6 +16601,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowResultEventOutputDataString": {
@@ -15223,6 +16655,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowNodeResultEventState",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -15315,6 +16751,10 @@ Upload a document to be indexed and used for search.
           },
         },
       ],
+      "source": {
+        "file": "vellum/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "WorkflowStreamEvent": {
@@ -15324,6 +16764,7 @@ Upload a document to be indexed and used for search.
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "WorkflowStreamEvent",
         "groupName": null,
         "nameOverride": null,
@@ -15335,6 +16776,10 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowExecutionNodeResultEvent",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
           "WORKFLOW": {
@@ -15344,8 +16789,16 @@ Upload a document to be indexed and used for search.
             "groupName": null,
             "nameOverride": null,
             "schema": "WorkflowExecutionWorkflowResultEvent",
+            "source": {
+              "file": "vellum/openapi.yml",
+              "type": "openapi",
+            },
             "type": "reference",
           },
+        },
+        "source": {
+          "file": "vellum/openapi.yml",
+          "type": "openapi",
         },
         "type": "discriminated",
       },

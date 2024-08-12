@@ -1,15 +1,14 @@
-using SeedObjectsWithImports.Commons;
 using SeedObjectsWithImports.Core;
 
 #nullable enable
 
 namespace SeedObjectsWithImports.Commons;
 
-public class CommonsClient
+public partial class CommonsClient
 {
     private RawClient _client;
 
-    public CommonsClient(RawClient client)
+    internal CommonsClient(RawClient client)
     {
         _client = client;
         Metadata = new MetadataClient(_client);

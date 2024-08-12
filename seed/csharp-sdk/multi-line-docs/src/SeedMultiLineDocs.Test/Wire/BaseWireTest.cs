@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using SeedMultiLineDocs;
-using SeedMultiLineDocs.Core;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;

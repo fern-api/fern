@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migrateFromV50ToV49 simple 1`] = `
+exports[`migrateFromV50ToV49 > simple 1`] = `
 {
   "apiDisplayName": null,
   "apiDocs": null,
@@ -143,7 +143,7 @@ exports[`migrateFromV50ToV49 simple 1`] = `
                 "docs": null,
                 "endpointHeaders": [],
                 "endpointPathParameters": [],
-                "id": "6b664a32e0bf353f2104503f66486bef3b3de38b",
+                "id": "141b855ca1f1c310481602c847b045257e0f99da",
                 "name": null,
                 "queryParameters": [
                   {

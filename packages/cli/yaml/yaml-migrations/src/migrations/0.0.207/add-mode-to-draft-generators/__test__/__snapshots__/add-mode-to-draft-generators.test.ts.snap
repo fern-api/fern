@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`add-mode-to-draft-generators simple 1`] = `
+exports[`add-mode-to-draft-generators > simple 1`] = `
 "draft:
   - name: fernapi/fern-typescript
     version: 0.0.144

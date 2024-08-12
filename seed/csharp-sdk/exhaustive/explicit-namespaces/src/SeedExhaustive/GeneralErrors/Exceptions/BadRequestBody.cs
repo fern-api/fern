@@ -1,5 +1,4 @@
-using SeedExhaustive.Core;
-using SeedExhaustive.GeneralErrors;
+using SeedExhaustive;
 
 #nullable enable
 

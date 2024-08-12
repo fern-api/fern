@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { SourceFetcher } from "@fern-api/generator-commons";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
@@ -10,10 +11,12 @@ import { CSharpFile } from "./CSharpFile";
 import { File } from "./File";
 
 const SRC_DIRECTORY_NAME = "src";
+const PROTOBUF_DIRECTORY_NAME = "proto";
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 
 export const CORE_DIRECTORY_NAME = "Core";
 export const TEST_UTILS_DIRECTORY_NAME = "Utils";
+export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
 /**
  * In memory representation of a C# project.
  */
@@ -23,6 +26,7 @@ export class CsharpProject {
     private coreFiles: File[] = [];
     private testUtilFiles: File[] = [];
     private absolutePathToOutputDirectory: AbsoluteFilePath;
+    private sourceFetcher: SourceFetcher;
     public readonly filepaths: CsharpProjectFilepaths;
 
     public constructor(
@@ -31,6 +35,10 @@ export class CsharpProject {
     ) {
         this.absolutePathToOutputDirectory = AbsoluteFilePath.of(this.context.config.output.path);
         this.filepaths = new CsharpProjectFilepaths(name);
+        this.sourceFetcher = new SourceFetcher({
+            context: this.context,
+            sourceConfig: this.context.ir.sourceConfig
+        });
     }
 
     public addCoreFiles(file: File): void {
@@ -117,6 +125,12 @@ export class CsharpProject {
         this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);
         await mkdir(absolutePathToProjectDirectory, { recursive: true });
 
+        const absolutePathToProtoDirectory = join(
+            this.absolutePathToOutputDirectory,
+            RelativeFilePath.of(PROTOBUF_DIRECTORY_NAME)
+        );
+        const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
+
         const csproj = new CsProj({
             version: this.context.config.output?.mode._visit({
                 downloadFiles: () => undefined,
@@ -139,7 +153,8 @@ export class CsharpProject {
                 publish: () => undefined,
                 _other: () => undefined
             }),
-            context: this.context
+            context: this.context,
+            protobufSourceFilePaths
         });
         const templateCsProjContents = csproj.toString();
         await writeFile(
@@ -270,6 +285,14 @@ class CsharpProjectFilepaths {
         return join(this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
     }
 
+    public getPublicCoreFilesDirectory(): RelativeFilePath {
+        return join(
+            this.getProjectDirectory(),
+            RelativeFilePath.of(CORE_DIRECTORY_NAME),
+            RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME)
+        );
+    }
+
     public getTestFilesDirectory(): RelativeFilePath {
         return join(this.getSourceFileDirectory(), RelativeFilePath.of(this.getTestProjectName()));
     }
@@ -285,6 +308,7 @@ declare namespace CsProj {
         license?: string;
         githubUrl?: string;
         context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        protobufSourceFilePaths: RelativeFilePath[];
     }
 }
 
@@ -295,12 +319,14 @@ class CsProj {
     private license: string | undefined;
     private githubUrl: string | undefined;
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private protobufSourceFilePaths: RelativeFilePath[];
 
-    public constructor({ version, license, githubUrl, context }: CsProj.Args) {
+    public constructor({ version, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
         this.version = version;
         this.license = license;
         this.githubUrl = githubUrl;
         this.context = context;
+        this.protobufSourceFilePaths = protobufSourceFilePaths;
     }
 
     public toString(): string {
@@ -340,7 +366,7 @@ class CsProj {
     <ItemGroup>
         ${dependencies.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
     </ItemGroup>
-
+${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${FOUR_SPACES}`)}
     <ItemGroup>
         <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
@@ -358,6 +384,40 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
             result.push(`<PackageReference Include="${name}" Version="${version}" />`);
         }
+        return result;
+    }
+
+    private getProtobufDependencies(protobufSourceFilePaths: RelativeFilePath[]): string[] {
+        if (protobufSourceFilePaths.length === 0) {
+            return [];
+        }
+
+        const pathToProtobufDirectory = `..\\..\\${PROTOBUF_DIRECTORY_NAME}`;
+
+        const result: string[] = [];
+
+        result.push("");
+        result.push("<ItemGroup>");
+        result.push('    <PackageReference Include="Google.Protobuf" Version="3.27.2" />');
+        result.push('    <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />');
+        result.push('    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />');
+        result.push('    <PackageReference Include="Grpc.Tools" Version="2.64.0">');
+        result.push(
+            "        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>"
+        );
+        result.push("        <PrivateAssets>all</PrivateAssets>");
+        result.push("    </PackageReference>");
+        result.push("</ItemGroup>\n");
+
+        result.push("<ItemGroup>");
+        for (const protobufSourceFilePath of protobufSourceFilePaths) {
+            const protobufSourceWindowsPath = this.relativePathToWindowsPath(protobufSourceFilePath);
+            result.push(
+                `    <Protobuf Include="${pathToProtobufDirectory}\\${protobufSourceWindowsPath}" GrpcServices="Client" ProtoRoot="${pathToProtobufDirectory}"></Protobuf>`
+            );
+        }
+        result.push("</ItemGroup>\n");
+
         return result;
     }
 
@@ -391,5 +451,9 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         }
 
         return result;
+    }
+
+    private relativePathToWindowsPath(relativePath: RelativeFilePath): RelativeFilePath {
+        return RelativeFilePath.of(relativePath.replace("/", "\\"));
     }
 }

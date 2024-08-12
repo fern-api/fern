@@ -113,7 +113,11 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
 
         return new CSharpFile({
             clazz: class_,
-            directory: WIRE_TEST_FOLDER
+            directory: WIRE_TEST_FOLDER,
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 

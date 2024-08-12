@@ -50,7 +50,9 @@ export async function visitHttpService({
                 await visitEndpoint({ endpointId, endpoint, service, visitor, nodePathForEndpoint });
             }
         },
-        idempotent: noop
+        idempotent: noop,
+        transport: noop,
+        source: noop
     });
 }
 
@@ -129,6 +131,7 @@ async function visitEndpoint({
                                 },
                                 "allow-multiple": noop,
                                 audiences: noop,
+                                encoding: noop,
                                 default: noop,
                                 validation: noop
                             });
@@ -194,6 +197,7 @@ async function visitEndpoint({
                                                 });
                                             },
                                             audiences: noop,
+                                            encoding: noop,
                                             default: noop,
                                             validation: noop
                                         });
@@ -501,9 +505,10 @@ export async function visitPathParameters({
                             validation: pathParameter.validation
                         });
                     },
+                    availability: noop,
+                    encoding: noop,
                     default: noop,
-                    validation: noop,
-                    availability: noop
+                    validation: noop
                 });
             }
         }
@@ -544,6 +549,7 @@ async function visitHeaders({
                 },
                 docs: createDocsVisitor(visitor, nodePathForHeader),
                 audiences: noop,
+                encoding: noop,
                 env: noop,
                 default: noop,
                 validation: noop

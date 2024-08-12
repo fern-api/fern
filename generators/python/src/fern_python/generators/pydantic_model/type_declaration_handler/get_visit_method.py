@@ -26,6 +26,7 @@ def get_visit_method(
     items: Sequence[VisitableItem],
     reference_to_current_value: str,
     should_use_is_for_equality_check: bool = False,
+    default_visitor: Optional[VisitableItem] = None,
     pre_tree_expressions: Optional[Sequence[AST.Expression]] = None,
 ) -> AST.FunctionDeclaration:
     def write_visitor_body(
@@ -48,6 +49,15 @@ def get_visit_method(
                     writer.write_node(item.visitor_argument.expression)
                 writer.write(")\n")
 
+        if default_visitor is not None:
+            writer.write_line(f"return {default_visitor.parameter_name}(")
+            if default_visitor.visitor_argument is not None:
+                writer.write_node(default_visitor.visitor_argument.expression)
+            writer.write(")")
+
+    sig_items = list(items)
+    if default_visitor is not None:
+        sig_items.append(default_visitor)
     return AST.FunctionDeclaration(
         name="visit",
         signature=AST.FunctionSignature(
@@ -59,7 +69,7 @@ def get_visit_method(
                         return_type=AST.TypeHint(type=VISITOR_RETURN_TYPE),
                     ),
                 )
-                for item in items
+                for item in sig_items
             ],
             return_type=AST.TypeHint.generic(VISITOR_RETURN_TYPE),
         ),

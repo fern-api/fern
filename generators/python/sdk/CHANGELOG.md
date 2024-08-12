@@ -5,15 +5,95 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.10.0] - 2024-08-09
+
+- Feat: Adds a new flag to generate forward compatible Python enums, as opposed to leveraging raw string enums as literals. This works through addding an "\_UNKNOWN" member to your enum set, the value of which is the raw value of the unrecognized enum.
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        pydantic_config:
+          enum_type: "forward_compatible_python_enums" # Other valid option is: "literals" and "python_enums"
+  ```
+
+## [3.9.0] - 2024-08-09
+
+- Feat: A new configuration is introduced to make discriminated union member naming more Pythonic. With V1 union naming, member names change from `<UnionName>_<DiscriminantValue>` to `<DiscriminantValue><UnionName>`. Concretely, union members previously named `Chat_User` will now be named `UserChat` under the new configuration.
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        pydantic_config:
+          union_naming: "v1" # Other valid option is: "v0"
+  ```
+
+## [3.8.0] - 2024-08-09
+
+- Improvement: generated SDKs now use ruff for linting and formatting, instead of Black.
+
+## [3.7.0] - 2024-08-08
+
+- Improvement: Python circular referencing types are more robust.
+
+## [3.6.0] - 2024-08-08
+
+- Feat: The generator now respects returning nested properties, these can be specified via:
+
+  In OpenAPI below, we'd like to only return the property `jobId` from the `Job` object we get back from our server to our SDK users:
+
+  ```yaml
+  my/endpoint:
+    get:
+      x-fern-sdk-return-value: jobId
+      response: Job
+  ```
+
+  For a similar situation using the Fern definition:
+
+  ```yaml
+  endpoints:
+    getJob:
+      method: GET
+      path: my/endpoint
+      response:
+        type: Job
+        property: jobId
+  ```
+
+- Fix: The underlying content no longer sends empty JSON bodies, instead it'll pass a `None` value to httpx
+
+## [3.5.1] - 2024-08-05
+
+- Fix: The root type for unions with visitors now has it's parent typed correctly. This allows auto-complete to work once again on the union when it's nested within other pydantic models.
+
+## [3.5.0] - 2024-08-05
+
+- Improvement: The generated SDK now respects the pydantic version flag, generating V1 only code and V2 only code if specified. If not, the SDK is generated as it is today, with compatibility for BOTH Pydantic versions. This cleans up the generated code, and brings back features liked wrapped aliases for V1-only SDKs.
+
+  Pydantic compatibility can be specified through the config below:
+
+  ```yaml
+  generators:
+    - name: fernapi/fern-python-sdk
+      config:
+        pydantic_config:
+          version: "v1" # Other valid options include: "v2" and "both"
+  ```
+
+## [3.4.2] - 2024-08-05
+
+- Fix: The Python generator now instantiates `Any` types as `Optional[Any]` to be able to meet some breaks in Pydantic V2.
+
 ## [3.4.1] - 2024-08-04
 
 - Fix: Literal templates are generated if they are union members
 
 ## [3.4.0] - 2024-08-02
 
-- Internal: The SDK generator has now been upgraded to use Pydantic V2 internally. Note that 
+- Internal: The SDK generator has now been upgraded to use Pydantic V2 internally. Note that
   there is no change to the generated code, however by leveraging Pydantic V2 you should notice
-  an improvement in `fern generate` times. 
+  an improvement in `fern generate` times.
 
 ## [3.3.4] - 2024-08-02
 

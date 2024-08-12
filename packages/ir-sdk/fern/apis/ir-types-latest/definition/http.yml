@@ -2,9 +2,10 @@
 
 imports:
   commons: commons.yml
-  types: types.yml
-  errors: errors.yml
   environment: environment.yml
+  errors: errors.yml
+  proto: proto.yml
+  types: types.yml
   variables: variables.yml
 types:
   HttpService:
@@ -16,9 +17,20 @@ types:
       endpoints: list<HttpEndpoint>
       headers: list<HttpHeader>
       pathParameters: list<PathParameter>
+      encoding: optional<types.Encoding>
+      transport: optional<Transport>
   DeclaredServiceName:
     properties:
       fernFilepath: commons.FernFilepath
+
+  Transport:
+    union:
+      http: {}
+      grpc: GrpcTransport
+
+  GrpcTransport:
+    properties:
+      service: proto.ProtobufService
 
   HttpEndpoint:
     extends: commons.Declaration
@@ -269,6 +281,9 @@ types:
     properties:
       page: RequestProperty
       results: ResponseProperty
+      hasNextPage: 
+        docs: A response property that indicates whether there is a next page or not.
+        type: optional<ResponseProperty>
       step:
         docs: |
           The step size used to increment the page offset between every new page.
@@ -387,6 +402,13 @@ types:
     properties:
       name: commons.NameAndWireValue
       value: types.ExampleTypeReference
+      shape: optional<ExampleQueryParameterShape>
+
+  ExampleQueryParameterShape:
+    union:
+      single: {}
+      exploded: {}
+      commaSeparated: {}
 
   ExampleHeader:
     properties:

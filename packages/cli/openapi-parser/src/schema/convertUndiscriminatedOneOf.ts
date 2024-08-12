@@ -1,9 +1,11 @@
 import {
     Availability,
+    Encoding,
     LiteralSchemaValue,
     OneOfSchemaWithExample,
     SchemaWithExample,
-    SdkGroupName
+    SdkGroupName,
+    Source
 } from "@fern-api/openapi-ir-sdk";
 import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
@@ -15,6 +17,17 @@ import { isReferenceObject } from "./utils/isReferenceObject";
 import { isSchemaEqual } from "./utils/isSchemaEqual";
 import { convertNumberToSnakeCase } from "./utils/replaceStartingNumber";
 
+export interface UndiscriminatedOneOfPrefixNotFound {
+    type: "notFound";
+}
+
+export interface UndiscriminatedOneOfPrefixName {
+    type: "name";
+    name: string;
+}
+
+export type UndiscriminatedOneOfPrefix = UndiscriminatedOneOfPrefixName | UndiscriminatedOneOfPrefixNotFound;
+
 export function convertUndiscriminatedOneOf({
     nameOverride,
     generatedName,
@@ -24,7 +37,10 @@ export function convertUndiscriminatedOneOf({
     wrapAsNullable,
     context,
     subtypes,
-    groupName
+    groupName,
+    encoding,
+    source,
+    subtypePrefixOverrides
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -35,8 +51,11 @@ export function convertUndiscriminatedOneOf({
     context: SchemaParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
     groupName: SdkGroupName | undefined;
+    encoding: Encoding | undefined;
+    source: Source;
+    subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
 }): SchemaWithExample {
-    const subtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
+    const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
 
     const convertedSubtypes = subtypes.flatMap((schema, index) => {
         if (!isReferenceObject(schema) && schema.enum != null) {
@@ -51,7 +70,14 @@ export function convertUndiscriminatedOneOf({
                 });
             });
         }
-        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`])];
+        let subtypePrefix = derivedSubtypePrefixes[index];
+        if (subtypePrefixOverrides != null) {
+            const override = subtypePrefixOverrides[index];
+            if (override != null && "name" in override) {
+                subtypePrefix = override.name;
+            }
+        }
+        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source)];
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];
@@ -97,7 +123,8 @@ export function convertUndiscriminatedOneOf({
             enumValues,
             _default: undefined,
             groupName,
-            context
+            context,
+            source
         });
     }
 
@@ -112,7 +139,9 @@ export function convertUndiscriminatedOneOf({
         description,
         availability,
         subtypes: uniqueSubtypes,
-        groupName
+        groupName,
+        encoding,
+        source
     });
 }
 
@@ -124,7 +153,9 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     wrapAsNullable,
     context,
     groupName,
-    discriminator
+    discriminator,
+    encoding,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -134,12 +165,21 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
     discriminator: OpenAPIV3.DiscriminatorObject;
+    encoding: Encoding | undefined;
+    source: Source;
 }): SchemaWithExample {
     const convertedSubtypes = Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema], index) => {
         const subtypeReferenceSchema = {
             $ref: schema
         };
-        const subtypeReference = convertReferenceObject(subtypeReferenceSchema, false, context, [schema]);
+        const subtypeReference = convertReferenceObject(
+            subtypeReferenceSchema,
+            false,
+            context,
+            [schema],
+            encoding,
+            source
+        );
         context.markSchemaWithDiscriminantValue(subtypeReferenceSchema, discriminator.propertyName, discriminantValue);
 
         // If the reference is an object (which I think it has to be?), add the discriminant value as a property
@@ -205,7 +245,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             enumValues,
             _default: undefined,
             groupName,
-            context
+            context,
+            source
         });
     }
 
@@ -220,7 +261,9 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         description,
         availability,
         subtypes: uniqueSubtypes,
-        groupName
+        groupName,
+        encoding,
+        source
     });
 }
 
@@ -279,6 +322,7 @@ function getUniqueSubTypeNames({
         }
         ++i;
     }
+
     return prefixes;
 }
 
@@ -289,7 +333,9 @@ export function wrapUndiscriminantedOneOf({
     description,
     availability,
     subtypes,
-    groupName
+    groupName,
+    encoding,
+    source
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
@@ -298,6 +344,8 @@ export function wrapUndiscriminantedOneOf({
     availability: Availability | undefined;
     subtypes: SchemaWithExample[];
     groupName: SdkGroupName | undefined;
+    encoding: Encoding | undefined;
+    source: Source;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -310,7 +358,9 @@ export function wrapUndiscriminantedOneOf({
                     nameOverride,
                     generatedName,
                     schemas: subtypes,
-                    groupName
+                    groupName,
+                    encoding,
+                    source
                 })
             ),
             description,
@@ -325,7 +375,9 @@ export function wrapUndiscriminantedOneOf({
             nameOverride,
             generatedName,
             schemas: subtypes,
-            groupName
+            groupName,
+            encoding,
+            source
         })
     );
 }

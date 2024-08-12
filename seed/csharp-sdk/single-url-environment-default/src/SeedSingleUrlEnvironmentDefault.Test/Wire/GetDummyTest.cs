@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedSingleUrlEnvironmentDefault.Core;
-using SeedSingleUrlEnvironmentDefault.Test.Utils;
 using SeedSingleUrlEnvironmentDefault.Test.Wire;
 
 #nullable enable
@@ -27,6 +27,6 @@ public class GetDummyTest : BaseWireTest
             );
 
         var response = Client.Dummy.GetDummyAsync().Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser superagent docs 1`] = `
+exports[`open api parser > superagent > docs 1`] = `
 {
   "definitionFiles": {
     "agent.yml": {
@@ -225,6 +225,9 @@ exports[`open api parser superagent docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "apiToken.yml": {
@@ -354,6 +357,9 @@ exports[`open api parser superagent docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "auth.yml": {
@@ -444,6 +450,9 @@ exports[`open api parser superagent docs 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -586,6 +595,9 @@ exports[`open api parser superagent docs 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -756,6 +768,9 @@ exports[`open api parser superagent docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "tools.yml": {
@@ -888,6 +903,9 @@ exports[`open api parser superagent docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "traces.yml": {
@@ -916,6 +934,9 @@ exports[`open api parser superagent docs 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -978,6 +999,9 @@ exports[`open api parser superagent docs 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -1096,6 +1120,9 @@ exports[`open api parser superagent docs 1`] = `
         "properties": {
           "detail": "optional<list<ValidationError>>",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -1104,10 +1131,17 @@ exports[`open api parser superagent docs 1`] = `
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -1138,7 +1172,7 @@ exports[`open api parser superagent docs 1`] = `
 }
 `;
 
-exports[`open api parser superagent simple 1`] = `
+exports[`open api parser > superagent > simple 1`] = `
 {
   "definitionFiles": {
     "agent.yml": {
@@ -1363,6 +1397,9 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "apiToken.yml": {
@@ -1492,6 +1529,9 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "auth.yml": {
@@ -1582,6 +1622,9 @@ exports[`open api parser superagent simple 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -1724,6 +1767,9 @@ exports[`open api parser superagent simple 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -1894,6 +1940,9 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "tools.yml": {
@@ -2026,6 +2075,9 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "traces.yml": {
@@ -2054,6 +2106,9 @@ exports[`open api parser superagent simple 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -2117,6 +2172,9 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
   },
@@ -2134,6 +2192,9 @@ exports[`open api parser superagent simple 1`] = `
         "properties": {
           "detail": "optional<list<ValidationError>>",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -2142,10 +2203,17 @@ exports[`open api parser superagent simple 1`] = `
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
         "union": [
           "string",
           "integer",

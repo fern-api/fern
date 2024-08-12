@@ -2,17 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 from types import TracebackType
-from typing import (
-    Callable,
-    Iterable,
-    List,
-    Literal,
-    Optional,
-    Sequence,
-    Tuple,
-    Type,
-    Union,
-)
+from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Union
 
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
@@ -68,6 +58,7 @@ class PydanticModel:
         )
         self._has_aliases = False
         self._version = version
+        self._v1_root_type: Optional[AST.TypeHint] = None
         self._fields: List[PydanticField] = []
         self._extra_fields = extra_fields
         self._frozen = frozen
@@ -239,6 +230,32 @@ class PydanticModel:
             ),
         )
 
+    def set_root_type_unsafe_v1_only(
+        self, root_type: AST.TypeHint, annotation: Optional[AST.Expression] = None
+    ) -> None:
+        if self._version != PydanticVersionCompatibility.V1:
+            raise RuntimeError("Overriding root types is only available in Pydantic v1")
+
+        if self._v1_root_type is not None:
+            raise RuntimeError("__root__ was already added")
+        self._v1_root_type = root_type
+
+        root_type_with_annotation = (
+            AST.TypeHint.annotated(
+                type=root_type,
+                annotation=AST.Expression(annotation),
+            )
+            if annotation is not None
+            else root_type
+        )
+
+        self._class_declaration.add_statement(
+            AST.VariableDeclaration(name="__root__", type_hint=root_type_with_annotation)
+        )
+
+    def get_root_type_unsafe_v1_only(self) -> Optional[AST.TypeHint]:
+        return self._v1_root_type
+
     def add_inner_class(self, inner_class: AST.ClassDeclaration) -> None:
         self._class_declaration.add_class(declaration=inner_class)
 
@@ -317,17 +334,12 @@ class PydanticModel:
         if self._include_model_config:
             self._class_declaration.add_expression(AST.Expression(AST.CodeWriter(write_extras)))
 
-    def update_forward_refs(self, localns: Iterable[AST.ClassReference] = []) -> None:
+    def update_forward_refs(self) -> None:
         self._source_file.add_footer_expression(
             AST.Expression(
                 AST.FunctionInvocation(
                     function_definition=self._update_forward_ref_function_reference,
                     args=[AST.Expression(self._local_class_reference)],
-                    kwargs=sorted(
-                        [(get_named_import_or_throw(reference), AST.Expression(reference)) for reference in localns],
-                        # sort by name for consistency
-                        key=lambda kwarg: kwarg[0],
-                    ),
                 )
             )
         )

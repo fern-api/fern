@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedCustomAuth.Core;
-using SeedCustomAuth.Test.Utils;
 using SeedCustomAuth.Test.Wire;
 
 #nullable enable
@@ -27,6 +27,6 @@ public class GetWithCustomAuthTest : BaseWireTest
             );
 
         var response = Client.CustomAuth.GetWithCustomAuthAsync().Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

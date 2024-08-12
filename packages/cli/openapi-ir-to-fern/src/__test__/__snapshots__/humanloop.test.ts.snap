@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api ir to fern humanloop docs 1`] = `
+exports[`open api ir to fern > humanloop > docs 1`] = `
 {
   "definitionFiles": {
     "datasets.yml": {
@@ -763,6 +763,9 @@ By default the deployed version of the Dataset is returned. Use the query parame
             },
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
     },
     "evaluations.yml": {
@@ -1401,6 +1404,9 @@ as completed.",
             },
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
     },
     "evaluators.yml": {
@@ -1788,12 +1794,19 @@ By default the deployed version of the Evaluator is returned. Use the query para
             },
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "types": {
         "Evaluator": {
           "base-properties": {},
           "discriminant": "evaluator_type",
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": {
             "human": "root.HumanEvaluatorRequest",
             "llm": "root.LLMEvaluatorRequest",
@@ -1804,6 +1817,10 @@ By default the deployed version of the Evaluator is returned. Use the query para
           "base-properties": {},
           "discriminant": "evaluator_type",
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": {
             "human": "root.HumanEvaluatorRequest",
             "llm": "root.LLMEvaluatorRequest",
@@ -2146,6 +2163,9 @@ You can manually create Logs through the API.
               "type": "root.PaginatedDataPromptLogResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
     },
@@ -3606,6 +3626,9 @@ within the Prompt for monitoring purposes.",
             },
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "types": {
         "PromptCallRequestToolChoice": {
@@ -3615,6 +3638,10 @@ within the Prompt for monitoring purposes.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "literal<"none">",
             "literal<"auto">",
@@ -3629,6 +3656,10 @@ within the Prompt for monitoring purposes.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "literal<"none">",
             "literal<"auto">",
@@ -3639,6 +3670,10 @@ within the Prompt for monitoring purposes.",
         "PromptRequestStop": {
           "discriminated": false,
           "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "string",
             "list<string>",
@@ -3647,6 +3682,10 @@ within the Prompt for monitoring purposes.",
         "PromptsCallResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "root.PromptCallResponse",
             "root.PromptCallStreamResponse",
@@ -3655,6 +3694,10 @@ within the Prompt for monitoring purposes.",
         "Template": {
           "discriminated": false,
           "docs": "For chat endpoint, provide a Chat template. For completion endpoint, provide a Prompt template. Input variables within the template should be specified with double curly bracket syntax: {{INPUT_NAME}}.",
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "string",
             "list<root.ChatMessage>",
@@ -3881,6 +3924,9 @@ Log is in, nested within the evaluated Log.
               "type": "root.PaginatedDataSessionResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
     },
@@ -4829,6 +4875,9 @@ within the Tool for monitoring purposes.",
             },
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
     },
   },
@@ -5146,6 +5195,9 @@ within the Tool for monitoring purposes.",
             "type": "optional<list<ToolConfigRequest>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "BooleanEvaluatorVersionStats": {
         "docs": "Base attributes for stats for an Evaluator Version-Evaluated Version pair
@@ -5180,6 +5232,9 @@ in the Evaluation Report.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "CategoricalFeedbackLabel": {
         "docs": undefined,
@@ -5193,6 +5248,9 @@ in the Evaluation Report.",
             "type": "FeedbackLabelStatus",
           },
           "value": "string",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ChatMessage": {
@@ -5219,11 +5277,18 @@ in the Evaluation Report.",
             "type": "optional<list<ToolCall>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ChatMessageContentItem": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": {
           "image_url": "ImageChatContent",
           "text": "TextChatContent",
@@ -5258,11 +5323,18 @@ in the Evaluation Report.",
             "type": "optional<list<ToolCall>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ChatMessageWithToolCallContentItem": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": {
           "image_url": "ImageChatContent",
           "text": "TextChatContent",
@@ -5276,6 +5348,9 @@ in the Evaluation Report.",
           "system",
           "tool",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "CodeEvaluatorRequest": {
         "docs": undefined,
@@ -5293,6 +5368,9 @@ in the Evaluation Report.",
             "type": "EvaluatorReturnTypeEnum",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "CommitRequest": {
         "docs": undefined,
@@ -5302,11 +5380,18 @@ in the Evaluation Report.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ConfigResponse": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": {
           "agent": "AgentConfigResponse",
           "evaluator": "EvaluatorConfigResponse",
@@ -5318,6 +5403,10 @@ in the Evaluation Report.",
       "Content": {
         "discriminated": false,
         "docs": "The content of the message.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<ChatMessageWithToolCallContentItem>",
@@ -5339,10 +5428,17 @@ in the Evaluation Report.",
             "type": "optional<map<string, CreateDatapointRequestTargetValue>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "CreateDatapointRequestTargetValue": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -5372,6 +5468,9 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "type": "list<EvaluatorRequest>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "CreatePromptLogResponse": {
         "docs": undefined,
@@ -5392,6 +5491,9 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "docs": "ID of the specific version of the Prompt.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "CreateToolLogResponse": {
@@ -5414,6 +5516,9 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "DashboardConfiguration": {
         "docs": undefined,
@@ -5421,6 +5526,9 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
           "model_config_ids": "list<string>",
           "time_range_days": "integer",
           "time_unit": "TimeUnit",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "DatapointResponse": {
@@ -5443,10 +5551,17 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "type": "optional<map<string, DatapointResponseTargetValue>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "DatapointResponseTargetValue": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -5463,6 +5578,9 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "docs": "Unique identifier for the Dataset Version to use in this evaluation. Starts with \`dsv_\`.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "DatasetResponse": {
@@ -5511,6 +5629,9 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EnvironmentResponse": {
         "docs": undefined,
@@ -5520,6 +5641,9 @@ in the inheriting classes with documentation and appropriate Field definitions."
           "name": "string",
           "tag": "EnvironmentTag",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EnvironmentTag": {
         "docs": "An enumeration.",
@@ -5527,10 +5651,17 @@ in the inheriting classes with documentation and appropriate Field definitions."
           "default",
           "other",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatedVersionResponse": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -5553,6 +5684,9 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluateeResponse": {
         "docs": undefined,
@@ -5567,6 +5701,9 @@ in the inheriting classes with documentation and appropriate Field definitions."
           },
           "version": "EvaluatedVersionResponse",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluationDebugResultResponse": {
         "docs": "This is similar to an \`EvaluationResult\` but is ephemeral as it is only for synchronous
@@ -5580,6 +5717,9 @@ function.",
           "log_id": "string",
           "value": "optional<Value>",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluationEvaluatorResponse": {
         "docs": undefined,
@@ -5589,6 +5729,9 @@ function.",
             "type": "boolean",
           },
           "version": "EvaluatorResponse",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "EvaluationResponse": {
@@ -5624,6 +5767,9 @@ function.",
           },
           "updated_at": "datetime",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluationResultResponse": {
         "docs": undefined,
@@ -5642,6 +5788,9 @@ function.",
           "version": "optional<unknown>",
           "version_id": "optional<string>",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluationStats": {
         "docs": undefined,
@@ -5655,6 +5804,9 @@ function.",
             "type": "list<VersionStats>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluationStatus": {
         "docs": "Status of an evaluation.",
@@ -5665,6 +5817,9 @@ function.",
           "cancelled",
           "failed",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatorActivationDeactivationRequest": {
         "docs": undefined,
@@ -5678,10 +5833,17 @@ function.",
             "type": "optional<list<EvaluatorActivationDeactivationRequestEvaluatorsToDeactivateItem>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatorActivationDeactivationRequestEvaluatorsToActivateItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "MonitoringEvaluatorVersionRequest",
           "MonitoringEvaluatorEnvironmentRequest",
@@ -5690,6 +5852,10 @@ function.",
       "EvaluatorActivationDeactivationRequestEvaluatorsToDeactivateItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "MonitoringEvaluatorVersionRequest",
           "MonitoringEvaluatorEnvironmentRequest",
@@ -5701,6 +5867,9 @@ function.",
           "target_free",
           "target_required",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatorConfigResponse": {
         "docs": undefined,
@@ -5750,6 +5919,9 @@ function.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatorRequest": {
         "docs": undefined,
@@ -5763,6 +5935,9 @@ function.",
             "docs": "Unique identifier for the Evaluator Version to use in this evaluation. Starts with \`evv_\`.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "EvaluatorResponse": {
@@ -5814,6 +5989,9 @@ function.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatorReturnTypeEnum": {
         "docs": "Enum representing the possible return types of an evaluator.",
@@ -5821,6 +5999,9 @@ function.",
           "boolean",
           "number",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackClass": {
         "docs": "An enumeration.",
@@ -5830,6 +6011,9 @@ function.",
           "text",
           "number",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackLabelStatus": {
         "docs": "Controls whether the label is displayed in the UI.",
@@ -5838,6 +6022,9 @@ function.",
           "active",
           "inactive",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackResponse": {
         "docs": undefined,
@@ -5867,10 +6054,17 @@ function.",
             "type": "FeedbackResponseValue",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackResponseType": {
         "discriminated": false,
         "docs": "The type of feedback. The default feedback types available are 'rating', 'action', 'issue', 'correction', and 'comment'.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "FeedbackType",
           "string",
@@ -5879,6 +6073,10 @@ function.",
       "FeedbackResponseValue": {
         "discriminated": false,
         "docs": "The feedback value to set. This would be the appropriate text for 'correction' or 'comment', or a label to apply for 'rating', 'action', or 'issue'.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "double",
           "string",
@@ -5893,6 +6091,9 @@ function.",
           "correction",
           "comment",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackTypeModel": {
         "docs": undefined,
@@ -5906,10 +6107,17 @@ function.",
             "type": "optional<list<CategoricalFeedbackLabel>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackTypeModelType": {
         "discriminated": false,
         "docs": "The type of feedback. The default feedback types available are 'rating', 'action', 'issue', 'correction', and 'comment'.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "FeedbackType",
           "string",
@@ -5919,6 +6127,10 @@ function.",
       "File": {
         "discriminated": false,
         "docs": "The File that the deployed Version belongs to.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -5932,11 +6144,17 @@ function.",
           "arguments": "optional<string>",
           "name": "string",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FunctionToolChoice": {
         "docs": "A function tool to be called by the model where user owns runtime.",
         "properties": {
           "name": "string",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "GenericConfigResponse": {
@@ -5967,11 +6185,17 @@ function.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "HTTPValidationError": {
         "docs": undefined,
         "properties": {
           "detail": "optional<list<ValidationError>>",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "HumanEvaluatorRequest": {
@@ -5986,6 +6210,9 @@ function.",
             "type": "EvaluatorReturnTypeEnum",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ImageChatContent": {
         "docs": undefined,
@@ -5994,6 +6221,9 @@ function.",
             "docs": "The message's image content.",
             "type": "ImageUrl",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ImageUrl": {
@@ -6008,6 +6238,9 @@ function.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ImageUrlDetail": {
         "docs": "Specify the detail level of the image provided to the model. For more details see: https://platform.openai.com/docs/guides/vision/low-or-high-fidelity-image-understanding",
@@ -6016,6 +6249,9 @@ function.",
           "low",
           "auto",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "InputResponse": {
         "docs": undefined,
@@ -6025,10 +6261,17 @@ function.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "Judgment": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "boolean",
           "double",
@@ -6050,6 +6293,9 @@ function.",
             "type": "EvaluatorReturnTypeEnum",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "LabelSentiment": {
         "docs": "How a label should be treated in calculating Version performance.
@@ -6061,6 +6307,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           "neutral",
           "unset",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "LinkedToolRequest": {
         "docs": undefined,
@@ -6085,6 +6334,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "docs": "The source of the linked tool. For a linked tool it should be \`organization\`",
             "type": "literal<"organization">",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "LinkedToolResponse": {
@@ -6111,6 +6363,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ListDatasets": {
         "docs": undefined,
@@ -6119,6 +6374,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "docs": "The list of Datasets.",
             "type": "list<DatasetResponse>",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ListEvaluators": {
@@ -6129,6 +6387,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "list<EvaluatorResponse>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ListPrompts": {
         "docs": undefined,
@@ -6138,6 +6399,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "list<PromptResponse>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ListTools": {
         "docs": undefined,
@@ -6146,6 +6410,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "docs": "The list of Tools.",
             "type": "list<ToolResponse>",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "LogResponse": {
@@ -6301,10 +6568,17 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "LogResponseToolChoice": {
         "discriminated": false,
         "docs": "Controls how the model uses tools. The following options are supported: 'none' forces the model to not call a tool; the default when no tools are provided as part of the model config. 'auto' the model can decide to call one of the provided tools; the default when tools are provided as part of the model config. Providing {'type': 'function', 'function': {name': <TOOL_NAME>}} forces the model to use the named function.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -6318,6 +6592,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           "metric_id": "string",
           "metric_name": "string",
           "metric_value": "double",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ModelConfigRequest": {
@@ -6398,10 +6675,17 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "type": "optional<literal<"model">>",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ModelConfigRequestStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -6410,6 +6694,10 @@ Used by a File's PAPV (Positive Action Per View) metric.",
       "ModelConfigRequestToolsItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "LinkedToolRequest",
           "ModelConfigToolRequest",
@@ -6503,10 +6791,17 @@ Contains fields that are common to all (i.e. both chat and complete) endpoints."
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ModelConfigResponseStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -6547,6 +6842,9 @@ Does not have things like the signature or setup schema.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ModelEndpoints": {
         "docs": "Supported model provider endpoints.",
@@ -6555,6 +6853,9 @@ Does not have things like the signature or setup schema.",
           "chat",
           "edit",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ModelProviders": {
         "docs": "Supported model providers.",
@@ -6570,6 +6871,9 @@ Does not have things like the signature or setup schema.",
           "google",
           "groq",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "MonitoringEvaluatorEnvironmentRequest": {
         "docs": undefined,
@@ -6582,6 +6886,9 @@ Does not have things like the signature or setup schema.",
             "docs": "Unique identifier for the Evaluator to be used for monitoring.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "MonitoringEvaluatorResponse": {
@@ -6602,6 +6909,9 @@ Does not have things like the signature or setup schema.",
             "type": "VersionReferenceResponse",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "MonitoringEvaluatorState": {
         "docs": "State of an evaluator connected to a file",
@@ -6609,6 +6919,9 @@ Does not have things like the signature or setup schema.",
           "active",
           "inactive",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "MonitoringEvaluatorVersionRequest": {
         "docs": undefined,
@@ -6617,6 +6930,9 @@ Does not have things like the signature or setup schema.",
             "docs": "Unique identifier for the Evaluator Version to be used for monitoring.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "NumericEvaluatorVersionStats": {
@@ -6647,6 +6963,9 @@ in the Evaluation Report.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ObservabilityStatus": {
         "docs": "Status of a Log for observability.
@@ -6658,6 +6977,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "completed",
           "failed",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "OverallStats": {
         "docs": undefined,
@@ -6675,6 +6997,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PaginatedDataDatapointResponse": {
         "docs": undefined,
@@ -6683,6 +7008,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "records": "list<DatapointResponse>",
           "size": "integer",
           "total": "integer",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "PaginatedDataDatasetResponse": {
@@ -6693,6 +7021,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "size": "integer",
           "total": "integer",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PaginatedDataEvaluationResponse": {
         "docs": undefined,
@@ -6701,6 +7032,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "records": "list<EvaluationResponse>",
           "size": "integer",
           "total": "integer",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "PaginatedDataPromptLogResponse": {
@@ -6711,6 +7045,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "size": "integer",
           "total": "integer",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PaginatedDataSessionResponse": {
         "docs": undefined,
@@ -6720,6 +7057,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "size": "integer",
           "total": "integer",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PlatformAccessEnum": {
         "docs": "An enumeration.",
@@ -6728,6 +7068,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "supportadmin",
           "user",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ProjectSortBy": {
         "docs": "An enumeration.",
@@ -6736,6 +7079,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "updated_at",
           "name",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptCallLogResponse": {
         "docs": "Sample specific response details for a Prompt call",
@@ -6788,6 +7134,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "docs": "Raw output from the provider.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "PromptCallResponse": {
@@ -6859,6 +7208,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptCallResponseToolChoice": {
         "discriminated": false,
@@ -6867,6 +7219,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -6938,6 +7294,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptKernelRequest": {
         "docs": undefined,
@@ -7008,10 +7367,17 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptKernelRequestStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -7134,6 +7500,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptLogResponseToolChoice": {
         "discriminated": false,
@@ -7142,6 +7511,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -7265,10 +7638,17 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptResponseStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -7285,11 +7665,17 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "openai_azure": "optional<string>",
           "openai_azure_endpoint": "optional<string>",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ResponseFormat": {
         "docs": "Response format of the model.",
         "properties": {
           "type": "literal<"json_object">",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "SessionResponse": {
@@ -7306,6 +7692,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "updated_at": "datetime",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "SortOrder": {
         "docs": "An enumeration.",
@@ -7313,11 +7702,18 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "asc",
           "desc",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "Spec": {
         "base-properties": {},
         "discriminant": "evaluator_type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": {
           "human": "HumanEvaluatorRequest",
           "llm": "LLMEvaluatorRequest",
@@ -7327,6 +7723,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
       "Template": {
         "discriminated": false,
         "docs": "For chat endpoint, provide a Chat template. For completion endpoint, provide a Prompt template. Input variables within the template should be specified with double curly bracket syntax: {{INPUT_NAME}}.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<ChatMessage>",
@@ -7340,6 +7740,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "TimeUnit": {
         "docs": "An enumeration.",
@@ -7348,6 +7751,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "week",
           "month",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolCall": {
         "docs": "A tool call to be made.",
@@ -7356,12 +7762,18 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "id": "string",
           "type": "ToolType",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolChoice": {
         "docs": "Tool choice to force the model to use a tool.",
         "properties": {
           "function": "FunctionToolChoice",
           "type": "ToolType",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ToolConfigRequest": {
@@ -7399,6 +7811,9 @@ Does not have things like the signature or setup schema.",
             "type": "optional<string>",
           },
           "type": "literal<"tool">",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ToolConfigResponse": {
@@ -7457,6 +7872,9 @@ Does not have things like the signature or setup schema.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolFunction": {
         "docs": undefined,
@@ -7474,6 +7892,9 @@ Does not have things like the signature or setup schema.",
             "type": "optional<map<string, unknown>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolKernelRequest": {
         "docs": undefined,
@@ -7490,6 +7911,9 @@ Does not have things like the signature or setup schema.",
             "docs": "Code source of the Tool.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ToolResponse": {
@@ -7563,6 +7987,9 @@ Does not have things like the signature or setup schema.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolResultResponse": {
         "docs": "A result from a tool used to populate the prompt template",
@@ -7571,6 +7998,9 @@ Does not have things like the signature or setup schema.",
           "name": "string",
           "result": "string",
           "signature": "string",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ToolSource": {
@@ -7581,6 +8011,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           "organization",
           "inline",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolTemplateResponse": {
         "docs": "Template for a Humanloop runnable tool.",
@@ -7606,6 +8039,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolType": {
         "docs": "Type of tool.",
@@ -7617,6 +8053,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           "json_schema",
           "get_api_call",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "UpdateDatesetAction": {
         "docs": "An enumeration.",
@@ -7625,6 +8064,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           "add",
           "remove",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "UserResponse": {
         "docs": undefined,
@@ -7642,6 +8084,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -7650,10 +8095,17 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -7662,6 +8114,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "Value": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "boolean",
           "double",
@@ -7670,6 +8126,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "Version": {
         "discriminated": false,
         "docs": "The specific Version being referenced.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -7689,6 +8149,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "type": "File",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "VersionIdResponse": {
         "docs": "A reference to a specific Version by its ID",
@@ -7698,11 +8161,18 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "type": "Version",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "VersionReferenceResponse": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": {
           "environment": "VersionDeploymentResponse",
           "version": "VersionIdResponse",
@@ -7724,10 +8194,17 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "VersionStatsEvaluatorVersionStatsItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "NumericEvaluatorVersionStats",
           "BooleanEvaluatorVersionStats",
@@ -7740,6 +8217,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           "committed",
           "deleted",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
     },
   },
@@ -7765,7 +8245,7 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
 }
 `;
 
-exports[`open api ir to fern humanloop simple 1`] = `
+exports[`open api ir to fern > humanloop > simple 1`] = `
 {
   "definitionFiles": {
     "datasets.yml": {
@@ -8528,6 +9008,9 @@ By default the deployed version of the Dataset is returned. Use the query parame
             },
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
     },
     "evaluations.yml": {
@@ -9166,6 +9649,9 @@ as completed.",
             },
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
     },
     "evaluators.yml": {
@@ -9553,12 +10039,19 @@ By default the deployed version of the Evaluator is returned. Use the query para
             },
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "types": {
         "Evaluator": {
           "base-properties": {},
           "discriminant": "evaluator_type",
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": {
             "human": "root.HumanEvaluatorRequest",
             "llm": "root.LLMEvaluatorRequest",
@@ -9569,6 +10062,10 @@ By default the deployed version of the Evaluator is returned. Use the query para
           "base-properties": {},
           "discriminant": "evaluator_type",
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": {
             "human": "root.HumanEvaluatorRequest",
             "llm": "root.LLMEvaluatorRequest",
@@ -9911,6 +10408,9 @@ You can manually create Logs through the API.
               "type": "root.PaginatedDataPromptLogResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
     },
@@ -11371,6 +11871,9 @@ within the Prompt for monitoring purposes.",
             },
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "types": {
         "PromptCallRequestToolChoice": {
@@ -11380,6 +11883,10 @@ within the Prompt for monitoring purposes.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "literal<"none">",
             "literal<"auto">",
@@ -11394,6 +11901,10 @@ within the Prompt for monitoring purposes.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "literal<"none">",
             "literal<"auto">",
@@ -11404,6 +11915,10 @@ within the Prompt for monitoring purposes.",
         "PromptRequestStop": {
           "discriminated": false,
           "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "string",
             "list<string>",
@@ -11412,6 +11927,10 @@ within the Prompt for monitoring purposes.",
         "PromptsCallResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "root.PromptCallResponse",
             "root.PromptCallStreamResponse",
@@ -11420,6 +11939,10 @@ within the Prompt for monitoring purposes.",
         "Template": {
           "discriminated": false,
           "docs": "For chat endpoint, provide a Chat template. For completion endpoint, provide a Prompt template. Input variables within the template should be specified with double curly bracket syntax: {{INPUT_NAME}}.",
+          "encoding": undefined,
+          "source": {
+            "openapi": "humanloop/openapi.yml",
+          },
           "union": [
             "string",
             "list<root.ChatMessage>",
@@ -11646,6 +12169,9 @@ Log is in, nested within the evaluated Log.
               "type": "root.PaginatedDataSessionResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
     },
@@ -12594,6 +13120,9 @@ within the Tool for monitoring purposes.",
             },
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
     },
   },
@@ -12646,6 +13175,9 @@ within the Tool for monitoring purposes.",
             "type": "optional<list<ToolConfigRequest>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "BooleanEvaluatorVersionStats": {
         "docs": "Base attributes for stats for an Evaluator Version-Evaluated Version pair
@@ -12680,6 +13212,9 @@ in the Evaluation Report.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "CategoricalFeedbackLabel": {
         "docs": undefined,
@@ -12693,6 +13228,9 @@ in the Evaluation Report.",
             "type": "FeedbackLabelStatus",
           },
           "value": "string",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ChatMessage": {
@@ -12719,11 +13257,18 @@ in the Evaluation Report.",
             "type": "optional<list<ToolCall>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ChatMessageContentItem": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": {
           "image_url": "ImageChatContent",
           "text": "TextChatContent",
@@ -12758,11 +13303,18 @@ in the Evaluation Report.",
             "type": "optional<list<ToolCall>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ChatMessageWithToolCallContentItem": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": {
           "image_url": "ImageChatContent",
           "text": "TextChatContent",
@@ -12776,6 +13328,9 @@ in the Evaluation Report.",
           "system",
           "tool",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "CodeEvaluatorRequest": {
         "docs": undefined,
@@ -12793,6 +13348,9 @@ in the Evaluation Report.",
             "type": "EvaluatorReturnTypeEnum",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "CommitRequest": {
         "docs": undefined,
@@ -12802,11 +13360,18 @@ in the Evaluation Report.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ConfigResponse": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": {
           "agent": "AgentConfigResponse",
           "evaluator": "EvaluatorConfigResponse",
@@ -12818,6 +13383,10 @@ in the Evaluation Report.",
       "Content": {
         "discriminated": false,
         "docs": "The content of the message.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<ChatMessageWithToolCallContentItem>",
@@ -12839,10 +13408,17 @@ in the Evaluation Report.",
             "type": "optional<map<string, CreateDatapointRequestTargetValue>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "CreateDatapointRequestTargetValue": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -12872,6 +13448,9 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "type": "list<EvaluatorRequest>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "CreatePromptLogResponse": {
         "docs": undefined,
@@ -12892,6 +13471,9 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "docs": "ID of the specific version of the Prompt.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "CreateToolLogResponse": {
@@ -12914,6 +13496,9 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "DashboardConfiguration": {
         "docs": undefined,
@@ -12921,6 +13506,9 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
           "model_config_ids": "list<string>",
           "time_range_days": "integer",
           "time_unit": "TimeUnit",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "DatapointResponse": {
@@ -12943,10 +13531,17 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "type": "optional<map<string, DatapointResponseTargetValue>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "DatapointResponseTargetValue": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -12963,6 +13558,9 @@ Aggregated statistics are then calculated and presented in the Evaluation.",
             "docs": "Unique identifier for the Dataset Version to use in this evaluation. Starts with \`dsv_\`.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "DatasetResponse": {
@@ -13011,6 +13609,9 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EnvironmentResponse": {
         "docs": undefined,
@@ -13020,6 +13621,9 @@ in the inheriting classes with documentation and appropriate Field definitions."
           "name": "string",
           "tag": "EnvironmentTag",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EnvironmentTag": {
         "docs": "An enumeration.",
@@ -13027,10 +13631,17 @@ in the inheriting classes with documentation and appropriate Field definitions."
           "default",
           "other",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatedVersionResponse": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -13053,6 +13664,9 @@ in the inheriting classes with documentation and appropriate Field definitions."
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluateeResponse": {
         "docs": undefined,
@@ -13067,6 +13681,9 @@ in the inheriting classes with documentation and appropriate Field definitions."
           },
           "version": "EvaluatedVersionResponse",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluationDebugResultResponse": {
         "docs": "This is similar to an \`EvaluationResult\` but is ephemeral as it is only for synchronous
@@ -13080,6 +13697,9 @@ function.",
           "log_id": "string",
           "value": "optional<Value>",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluationEvaluatorResponse": {
         "docs": undefined,
@@ -13089,6 +13709,9 @@ function.",
             "type": "boolean",
           },
           "version": "EvaluatorResponse",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "EvaluationResponse": {
@@ -13124,6 +13747,9 @@ function.",
           },
           "updated_at": "datetime",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluationResultResponse": {
         "docs": undefined,
@@ -13142,6 +13768,9 @@ function.",
           "version": "optional<unknown>",
           "version_id": "optional<string>",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluationStats": {
         "docs": undefined,
@@ -13155,6 +13784,9 @@ function.",
             "type": "list<VersionStats>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluationStatus": {
         "docs": "Status of an evaluation.",
@@ -13165,6 +13797,9 @@ function.",
           "cancelled",
           "failed",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatorActivationDeactivationRequest": {
         "docs": undefined,
@@ -13178,10 +13813,17 @@ function.",
             "type": "optional<list<EvaluatorActivationDeactivationRequestEvaluatorsToDeactivateItem>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatorActivationDeactivationRequestEvaluatorsToActivateItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "MonitoringEvaluatorVersionRequest",
           "MonitoringEvaluatorEnvironmentRequest",
@@ -13190,6 +13832,10 @@ function.",
       "EvaluatorActivationDeactivationRequestEvaluatorsToDeactivateItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "MonitoringEvaluatorVersionRequest",
           "MonitoringEvaluatorEnvironmentRequest",
@@ -13201,6 +13847,9 @@ function.",
           "target_free",
           "target_required",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatorConfigResponse": {
         "docs": undefined,
@@ -13250,6 +13899,9 @@ function.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatorRequest": {
         "docs": undefined,
@@ -13263,6 +13915,9 @@ function.",
             "docs": "Unique identifier for the Evaluator Version to use in this evaluation. Starts with \`evv_\`.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "EvaluatorResponse": {
@@ -13314,6 +13969,9 @@ function.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "EvaluatorReturnTypeEnum": {
         "docs": "Enum representing the possible return types of an evaluator.",
@@ -13321,6 +13979,9 @@ function.",
           "boolean",
           "number",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackClass": {
         "docs": "An enumeration.",
@@ -13330,6 +13991,9 @@ function.",
           "text",
           "number",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackLabelStatus": {
         "docs": "Controls whether the label is displayed in the UI.",
@@ -13338,6 +14002,9 @@ function.",
           "active",
           "inactive",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackResponse": {
         "docs": undefined,
@@ -13367,10 +14034,17 @@ function.",
             "type": "FeedbackResponseValue",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackResponseType": {
         "discriminated": false,
         "docs": "The type of feedback. The default feedback types available are 'rating', 'action', 'issue', 'correction', and 'comment'.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "FeedbackType",
           "string",
@@ -13379,6 +14053,10 @@ function.",
       "FeedbackResponseValue": {
         "discriminated": false,
         "docs": "The feedback value to set. This would be the appropriate text for 'correction' or 'comment', or a label to apply for 'rating', 'action', or 'issue'.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "double",
           "string",
@@ -13393,6 +14071,9 @@ function.",
           "correction",
           "comment",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackTypeModel": {
         "docs": undefined,
@@ -13406,10 +14087,17 @@ function.",
             "type": "optional<list<CategoricalFeedbackLabel>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FeedbackTypeModelType": {
         "discriminated": false,
         "docs": "The type of feedback. The default feedback types available are 'rating', 'action', 'issue', 'correction', and 'comment'.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "FeedbackType",
           "string",
@@ -13419,6 +14107,10 @@ function.",
       "File": {
         "discriminated": false,
         "docs": "The File that the deployed Version belongs to.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -13432,11 +14124,17 @@ function.",
           "arguments": "optional<string>",
           "name": "string",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "FunctionToolChoice": {
         "docs": "A function tool to be called by the model where user owns runtime.",
         "properties": {
           "name": "string",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "GenericConfigResponse": {
@@ -13467,11 +14165,17 @@ function.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "HTTPValidationError": {
         "docs": undefined,
         "properties": {
           "detail": "optional<list<ValidationError>>",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "HumanEvaluatorRequest": {
@@ -13486,6 +14190,9 @@ function.",
             "type": "EvaluatorReturnTypeEnum",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ImageChatContent": {
         "docs": undefined,
@@ -13494,6 +14201,9 @@ function.",
             "docs": "The message's image content.",
             "type": "ImageUrl",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ImageUrl": {
@@ -13508,6 +14218,9 @@ function.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ImageUrlDetail": {
         "docs": "Specify the detail level of the image provided to the model. For more details see: https://platform.openai.com/docs/guides/vision/low-or-high-fidelity-image-understanding",
@@ -13516,6 +14229,9 @@ function.",
           "low",
           "auto",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "InputResponse": {
         "docs": undefined,
@@ -13525,10 +14241,17 @@ function.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "Judgment": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "boolean",
           "double",
@@ -13550,6 +14273,9 @@ function.",
             "type": "EvaluatorReturnTypeEnum",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "LabelSentiment": {
         "docs": "How a label should be treated in calculating Version performance.
@@ -13561,6 +14287,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           "neutral",
           "unset",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "LinkedToolRequest": {
         "docs": undefined,
@@ -13585,6 +14314,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "docs": "The source of the linked tool. For a linked tool it should be \`organization\`",
             "type": "literal<"organization">",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "LinkedToolResponse": {
@@ -13611,6 +14343,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ListDatasets": {
         "docs": undefined,
@@ -13619,6 +14354,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "docs": "The list of Datasets.",
             "type": "list<DatasetResponse>",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ListEvaluators": {
@@ -13629,6 +14367,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "list<EvaluatorResponse>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ListPrompts": {
         "docs": undefined,
@@ -13638,6 +14379,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "list<PromptResponse>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ListTools": {
         "docs": undefined,
@@ -13646,6 +14390,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "docs": "The list of Tools.",
             "type": "list<ToolResponse>",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "LogResponse": {
@@ -13801,10 +14548,17 @@ Used by a File's PAPV (Positive Action Per View) metric.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "LogResponseToolChoice": {
         "discriminated": false,
         "docs": "Controls how the model uses tools. The following options are supported: 'none' forces the model to not call a tool; the default when no tools are provided as part of the model config. 'auto' the model can decide to call one of the provided tools; the default when tools are provided as part of the model config. Providing {'type': 'function', 'function': {name': <TOOL_NAME>}} forces the model to use the named function.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -13818,6 +14572,9 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           "metric_id": "string",
           "metric_name": "string",
           "metric_value": "double",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ModelConfigRequest": {
@@ -13898,10 +14655,17 @@ Used by a File's PAPV (Positive Action Per View) metric.",
           },
           "type": "optional<literal<"model">>",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ModelConfigRequestStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -13910,6 +14674,10 @@ Used by a File's PAPV (Positive Action Per View) metric.",
       "ModelConfigRequestToolsItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "LinkedToolRequest",
           "ModelConfigToolRequest",
@@ -14003,10 +14771,17 @@ Contains fields that are common to all (i.e. both chat and complete) endpoints."
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ModelConfigResponseStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -14047,6 +14822,9 @@ Does not have things like the signature or setup schema.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ModelEndpoints": {
         "docs": "Supported model provider endpoints.",
@@ -14055,6 +14833,9 @@ Does not have things like the signature or setup schema.",
           "chat",
           "edit",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ModelProviders": {
         "docs": "Supported model providers.",
@@ -14070,6 +14851,9 @@ Does not have things like the signature or setup schema.",
           "google",
           "groq",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "MonitoringEvaluatorEnvironmentRequest": {
         "docs": undefined,
@@ -14082,6 +14866,9 @@ Does not have things like the signature or setup schema.",
             "docs": "Unique identifier for the Evaluator to be used for monitoring.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "MonitoringEvaluatorResponse": {
@@ -14102,6 +14889,9 @@ Does not have things like the signature or setup schema.",
             "type": "VersionReferenceResponse",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "MonitoringEvaluatorState": {
         "docs": "State of an evaluator connected to a file",
@@ -14109,6 +14899,9 @@ Does not have things like the signature or setup schema.",
           "active",
           "inactive",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "MonitoringEvaluatorVersionRequest": {
         "docs": undefined,
@@ -14117,6 +14910,9 @@ Does not have things like the signature or setup schema.",
             "docs": "Unique identifier for the Evaluator Version to be used for monitoring.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "NumericEvaluatorVersionStats": {
@@ -14147,6 +14943,9 @@ in the Evaluation Report.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ObservabilityStatus": {
         "docs": "Status of a Log for observability.
@@ -14158,6 +14957,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "completed",
           "failed",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "OverallStats": {
         "docs": undefined,
@@ -14175,6 +14977,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PaginatedDataDatapointResponse": {
         "docs": undefined,
@@ -14183,6 +14988,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "records": "list<DatapointResponse>",
           "size": "integer",
           "total": "integer",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "PaginatedDataDatasetResponse": {
@@ -14193,6 +15001,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "size": "integer",
           "total": "integer",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PaginatedDataEvaluationResponse": {
         "docs": undefined,
@@ -14201,6 +15012,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "records": "list<EvaluationResponse>",
           "size": "integer",
           "total": "integer",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "PaginatedDataPromptLogResponse": {
@@ -14211,6 +15025,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "size": "integer",
           "total": "integer",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PaginatedDataSessionResponse": {
         "docs": undefined,
@@ -14220,6 +15037,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "size": "integer",
           "total": "integer",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PlatformAccessEnum": {
         "docs": "An enumeration.",
@@ -14228,6 +15048,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "supportadmin",
           "user",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ProjectSortBy": {
         "docs": "An enumeration.",
@@ -14236,6 +15059,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "updated_at",
           "name",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptCallLogResponse": {
         "docs": "Sample specific response details for a Prompt call",
@@ -14288,6 +15114,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "docs": "Raw output from the provider.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "PromptCallResponse": {
@@ -14359,6 +15188,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptCallResponseToolChoice": {
         "discriminated": false,
@@ -14367,6 +15199,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -14438,6 +15274,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptKernelRequest": {
         "docs": undefined,
@@ -14508,10 +15347,17 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<double>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptKernelRequestStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -14634,6 +15480,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptLogResponseToolChoice": {
         "discriminated": false,
@@ -14642,6 +15491,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
 - \`'auto'\` means the model can decide to call one or more of the provided tools; this is the default when tools are provided as part of the Prompt. 
 - \`'required'\` means the model can decide to call one or more of the provided tools. 
 - \`{'type': 'function', 'function': {name': <TOOL_NAME>}}\` forces the model to use the named function.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "literal<"none">",
           "literal<"auto">",
@@ -14765,10 +15618,17 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "PromptResponseStop": {
         "discriminated": false,
         "docs": "The string (or list of strings) after which the model will stop generating. The returned text will not contain the stop sequence.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<string>",
@@ -14785,11 +15645,17 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "openai_azure": "optional<string>",
           "openai_azure_endpoint": "optional<string>",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ResponseFormat": {
         "docs": "Response format of the model.",
         "properties": {
           "type": "literal<"json_object">",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "SessionResponse": {
@@ -14806,6 +15672,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           },
           "updated_at": "datetime",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "SortOrder": {
         "docs": "An enumeration.",
@@ -14813,11 +15682,18 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "asc",
           "desc",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "Spec": {
         "base-properties": {},
         "discriminant": "evaluator_type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": {
           "human": "HumanEvaluatorRequest",
           "llm": "LLMEvaluatorRequest",
@@ -14827,6 +15703,10 @@ Observability is implemented by running monitoring Evaluators on Logs.",
       "Template": {
         "discriminated": false,
         "docs": "For chat endpoint, provide a Chat template. For completion endpoint, provide a Prompt template. Input variables within the template should be specified with double curly bracket syntax: {{INPUT_NAME}}.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "list<ChatMessage>",
@@ -14840,6 +15720,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "TimeUnit": {
         "docs": "An enumeration.",
@@ -14848,6 +15731,9 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "week",
           "month",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolCall": {
         "docs": "A tool call to be made.",
@@ -14856,12 +15742,18 @@ Observability is implemented by running monitoring Evaluators on Logs.",
           "id": "string",
           "type": "ToolType",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolChoice": {
         "docs": "Tool choice to force the model to use a tool.",
         "properties": {
           "function": "FunctionToolChoice",
           "type": "ToolType",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ToolConfigRequest": {
@@ -14899,6 +15791,9 @@ Does not have things like the signature or setup schema.",
             "type": "optional<string>",
           },
           "type": "literal<"tool">",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ToolConfigResponse": {
@@ -14957,6 +15852,9 @@ Does not have things like the signature or setup schema.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolFunction": {
         "docs": undefined,
@@ -14974,6 +15872,9 @@ Does not have things like the signature or setup schema.",
             "type": "optional<map<string, unknown>>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolKernelRequest": {
         "docs": undefined,
@@ -14990,6 +15891,9 @@ Does not have things like the signature or setup schema.",
             "docs": "Code source of the Tool.",
             "type": "optional<string>",
           },
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ToolResponse": {
@@ -15063,6 +15967,9 @@ Does not have things like the signature or setup schema.",
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolResultResponse": {
         "docs": "A result from a tool used to populate the prompt template",
@@ -15071,6 +15978,9 @@ Does not have things like the signature or setup schema.",
           "name": "string",
           "result": "string",
           "signature": "string",
+        },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
         },
       },
       "ToolSource": {
@@ -15081,6 +15991,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           "organization",
           "inline",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolTemplateResponse": {
         "docs": "Template for a Humanloop runnable tool.",
@@ -15106,6 +16019,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "type": "optional<string>",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ToolType": {
         "docs": "Type of tool.",
@@ -15117,6 +16033,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           "json_schema",
           "get_api_call",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "UpdateDatesetAction": {
         "docs": "An enumeration.",
@@ -15125,6 +16044,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           "add",
           "remove",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "UserResponse": {
         "docs": undefined,
@@ -15142,6 +16064,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -15150,10 +16075,17 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -15162,6 +16094,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "Value": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "boolean",
           "double",
@@ -15170,6 +16106,10 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
       "Version": {
         "discriminated": false,
         "docs": "The specific Version being referenced.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "PromptResponse",
           "ToolResponse",
@@ -15189,6 +16129,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "type": "File",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "VersionIdResponse": {
         "docs": "A reference to a specific Version by its ID",
@@ -15198,11 +16141,18 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "type": "Version",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "VersionReferenceResponse": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": {
           "environment": "VersionDeploymentResponse",
           "version": "VersionIdResponse",
@@ -15224,10 +16174,17 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
       "VersionStatsEvaluatorVersionStatsItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
         "union": [
           "NumericEvaluatorVersionStats",
           "BooleanEvaluatorVersionStats",
@@ -15240,6 +16197,9 @@ V4 uses organization and inline. Those are deprecated and will be removed in fav
           "committed",
           "deleted",
         ],
+        "source": {
+          "openapi": "humanloop/openapi.yml",
+        },
       },
     },
   },

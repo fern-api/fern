@@ -288,6 +288,11 @@
             "referencedTypes": [
                 "type_commons/metadata:Metadata"
             ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -2150,6 +2155,11 @@
                 "type_:Node",
                 "type_commons/metadata:Metadata"
             ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -4371,6 +4381,11 @@
                 "extendedProperties": []
             },
             "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -5052,6 +5067,11 @@
             "referencedTypes": [
                 "type_file:FileInfo"
             ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -6021,6 +6041,11 @@
                 ]
             },
             "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -6529,6 +6554,11 @@
                 "type_file:FileInfo",
                 "type_file/directory:Directory"
             ],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
             "userProvidedExamples": [
                 {
                     "name": {
@@ -8964,6 +8994,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {
         "subpackage_commons": {
             "name": {
@@ -9379,7 +9410,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

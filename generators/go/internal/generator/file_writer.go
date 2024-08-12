@@ -28,16 +28,17 @@ const whitelabelFileHeader = `// This file was auto-generated from our API Defin
 
 // fileWriter wries and formats Go files.
 type fileWriter struct {
-	filename       string
-	packageName    string
-	baseImportPath string
-	whitelabel     bool
-	unionVersion   UnionVersion
-	scope          *gospec.Scope
-	types          map[ir.TypeId]*ir.TypeDeclaration
-	errors         map[ir.ErrorId]*ir.ErrorDeclaration
-	coordinator    *coordinator.Client
-	snippetWriter  *SnippetWriter
+	filename                     string
+	packageName                  string
+	baseImportPath               string
+	whitelabel                   bool
+	alwaysSendRequiredProperties bool
+	unionVersion                 UnionVersion
+	scope                        *gospec.Scope
+	types                        map[ir.TypeId]*ir.TypeDeclaration
+	errors                       map[ir.ErrorId]*ir.ErrorDeclaration
+	coordinator                  *coordinator.Client
+	snippetWriter                *SnippetWriter
 
 	buffer *bytes.Buffer
 }
@@ -47,6 +48,7 @@ func newFileWriter(
 	packageName string,
 	baseImportPath string,
 	whitelabel bool,
+	alwaysSendRequiredProperties bool,
 	unionVersion UnionVersion,
 	types map[ir.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
@@ -81,17 +83,18 @@ func newFileWriter(
 	scope.AddImport(path.Join(baseImportPath, "option"))
 
 	return &fileWriter{
-		filename:       filename,
-		packageName:    packageName,
-		baseImportPath: baseImportPath,
-		whitelabel:     whitelabel,
-		unionVersion:   unionVersion,
-		scope:          scope,
-		types:          types,
-		errors:         errors,
-		coordinator:    coordinator,
-		snippetWriter:  NewSnippetWriter(baseImportPath, unionVersion, types),
-		buffer:         new(bytes.Buffer),
+		filename:                     filename,
+		packageName:                  packageName,
+		baseImportPath:               baseImportPath,
+		whitelabel:                   whitelabel,
+		alwaysSendRequiredProperties: alwaysSendRequiredProperties,
+		unionVersion:                 unionVersion,
+		scope:                        scope,
+		types:                        types,
+		errors:                       errors,
+		coordinator:                  coordinator,
+		snippetWriter:                NewSnippetWriter(baseImportPath, unionVersion, types),
+		buffer:                       new(bytes.Buffer),
 	}
 }
 
@@ -158,6 +161,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.packageName,
 		f.baseImportPath,
 		f.whitelabel,
+		f.alwaysSendRequiredProperties,
 		f.unionVersion,
 		f.types,
 		f.errors,

@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using SeedPagination;
-using SeedPagination.Core;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;

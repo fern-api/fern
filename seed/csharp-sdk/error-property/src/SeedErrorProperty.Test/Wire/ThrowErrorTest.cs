@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedErrorProperty.Core;
-using SeedErrorProperty.Test.Utils;
 using SeedErrorProperty.Test.Wire;
 
 #nullable enable
@@ -32,6 +32,6 @@ public class ThrowErrorTest : BaseWireTest
             );
 
         var response = Client.PropertyBasedError.ThrowErrorAsync().Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

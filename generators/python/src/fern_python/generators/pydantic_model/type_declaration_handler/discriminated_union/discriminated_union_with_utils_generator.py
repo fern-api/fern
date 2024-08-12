@@ -8,6 +8,9 @@ from fern_python.codegen.ast.nodes.declarations.class_.class_declaration import 
     ClassDeclaration,
 )
 from fern_python.external_dependencies import Pydantic
+from fern_python.generators.pydantic_model.type_declaration_handler.type_utilities import (
+    declared_type_name_to_named_type,
+)
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
 
 from ....context import PydanticGeneratorContext
@@ -155,11 +158,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             source_file=self._source_file,
             docstring=self._docs,
             snippet=self._snippet,
-            base_models=[self._context.core_utilities.get_universal_root_model()],
+            pydantic_base_model_override=self._context.core_utilities.get_universal_root_model(),
             # No reason to have model config overrides on the base model, but
             # also Pydantic V2's RootModel doesn't allow for a lot of the configuration.
             include_model_config=False,
-            force_update_forward_refs=True,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",
@@ -230,7 +232,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                             name=BUILDER_ARGUMENT_NAME,
                                             type_hint=self._context.get_type_hint_for_type_reference(
                                                 ir_types.TypeReference.factory.named(
-                                                    self._to_named_type(declared_type_name=declared_type_name)
+                                                    declared_type_name_to_named_type(
+                                                        declared_type_name=declared_type_name
+                                                    )
                                                 )
                                             ),
                                         )
@@ -244,7 +248,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                     no_properties=lambda: None,
                                 ),
                                 return_type=self._context.get_type_hint_for_type_reference(
-                                    ir_types.TypeReference.factory.named(self._to_named_type(self._name))
+                                    ir_types.TypeReference.factory.named(declared_type_name_to_named_type(self._name))
                                 ),
                             ),
                             body=AST.CodeWriter(
@@ -274,7 +278,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     forward_refed_types = [
                         referenced_type_id
                         for referenced_type_id in referenced_type_ids
-                        if self._context.does_type_reference_other_type(referenced_type_id, self._name.type_id)
+                        if self._context.does_type_reference_other_type(
+                            type_id=referenced_type_id, other_type_id=self._name.type_id
+                        )
                     ]
 
                     if len(forward_refed_types) > 0:
@@ -283,12 +289,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         # file. https://github.com/pydantic/pydantic/issues/4902.
                         # as a workaround, we explicitly pass references to update_forward_refs
                         # so they are in scope
-                        internal_pydantic_model_for_single_union_type.update_forward_refs(
-                            {
-                                self._context.get_class_reference_for_type_id(type_id, as_request=False)
-                                for type_id in forward_refed_types
-                            }
-                        )
+                        internal_pydantic_model_for_single_union_type.update_forward_refs()
 
                         # to avoid issues with circular dependencies, make sure all imports
                         # that reference this type appear after the main (exported) model for the union.
@@ -320,7 +321,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                                     ),
                                     type=external_pydantic_model.get_type_hint_for_type_reference(
                                         ir_types.TypeReference.factory.named(
-                                            self._to_named_type(declared_type_name=declared_type_name)
+                                            declared_type_name_to_named_type(declared_type_name=declared_type_name)
                                         )
                                     ),
                                 ),
@@ -341,13 +342,6 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     reference_to_current_value=f"unioned_value.{self._get_discriminant_attr_name()}",
                 )
             )
-
-    def _to_named_type(self, declared_type_name: ir_types.DeclaredTypeName) -> ir_types.NamedType:
-        return ir_types.NamedType(
-            type_id=declared_type_name.type_id,
-            fern_filepath=declared_type_name.fern_filepath,
-            name=declared_type_name.name,
-        )
 
     def _create_body_writer(
         self,

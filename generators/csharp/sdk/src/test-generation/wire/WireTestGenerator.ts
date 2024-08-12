@@ -118,15 +118,11 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
                 if (hasJsonExampleResponse) {
                     writer.newLine();
 
-                    writer.writeNode(
-                        csharp.classReference({
-                            name: "JsonDiffChecker",
-                            namespace: this.context.getTestUtilsNamespace()
-                        })
-                    );
-                    writer.write(".AssertJsonEquals(mockResponse, ");
-                    writer.writeNode(this.context.getJsonUtilsClassReference());
-                    writer.writeTextStatement(".Serialize(response))");
+                    writer.addReference(this.context.getFluentAssetionsJsonClassReference());
+                    writer.writeNode(this.context.getJTokenClassReference());
+                    writer.write(".Parse(serializedJson).Should().BeEquivalentTo(");
+                    writer.writeNode(this.context.getJTokenClassReference());
+                        writer.writeTextStatement(".Parse(response))");
                 }
             });
             const testNumber = this.exampleEndpointCalls.length > 1 ? `_${index + 1}` : "";
@@ -137,7 +133,11 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
         });
         return new CSharpFile({
             clazz: testClass.getClass(),
-            directory: WIRE_TEST_FOLDER
+            directory: WIRE_TEST_FOLDER,
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 

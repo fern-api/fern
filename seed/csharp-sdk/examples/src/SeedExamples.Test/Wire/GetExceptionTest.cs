@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedExamples.Core;
-using SeedExamples.Test.Utils;
 using SeedExamples.Test.Wire;
 
 #nullable enable
@@ -37,7 +37,7 @@ public class GetExceptionTest : BaseWireTest
             );
 
         var response = Client.File.Notification.Service.GetExceptionAsync("string").Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 
     [Test]
@@ -69,6 +69,6 @@ public class GetExceptionTest : BaseWireTest
         var response = Client
             .File.Notification.Service.GetExceptionAsync("notification-hsy129x")
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

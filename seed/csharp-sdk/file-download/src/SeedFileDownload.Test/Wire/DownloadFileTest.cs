@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedFileDownload.Core;
-using SeedFileDownload.Test.Utils;
 using SeedFileDownload.Test.Wire;
 
 #nullable enable
@@ -27,6 +27,6 @@ public class DownloadFileTest : BaseWireTest
             );
 
         var response = Client.Service.DownloadFileAsync().GetAwaiter().GetResult();
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

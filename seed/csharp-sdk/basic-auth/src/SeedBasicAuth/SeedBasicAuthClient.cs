@@ -1,5 +1,4 @@
 using System;
-using SeedBasicAuth;
 using SeedBasicAuth.Core;
 
 #nullable enable

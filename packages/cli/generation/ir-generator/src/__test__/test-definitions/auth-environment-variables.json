@@ -165,6 +165,13 @@
             },
             "headers": [],
             "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_service.getWithApiKey",
@@ -259,7 +266,7 @@
                                         }
                                     }
                                 },
-                                "id": "e30fd4387a403719017c1c14f2a5554a87c42450",
+                                "id": "2bc4a461b9978e50a9000875a914301056df33ff",
                                 "docs": null
                             }
                         }
@@ -499,7 +506,7 @@
                                         }
                                     }
                                 },
-                                "id": "7692cd1de4bf852778b6f8c1465cb6a7f7077325",
+                                "id": "192faa44343a9a8961ca5014fb7efbeaa51556a3",
                                 "docs": null
                             }
                         }
@@ -549,6 +556,7 @@
     "webhookGroups": {},
     "websocketChannels": {},
     "readmeConfig": null,
+    "sourceConfig": null,
     "subpackages": {
         "subpackage_service": {
             "name": {
@@ -650,7 +658,8 @@
         "platformHeaders": {
             "language": "X-Fern-Language",
             "sdkName": "X-Fern-SDK-Name",
-            "sdkVersion": "X-Fern-SDK-Version"
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
         }
     }
 }

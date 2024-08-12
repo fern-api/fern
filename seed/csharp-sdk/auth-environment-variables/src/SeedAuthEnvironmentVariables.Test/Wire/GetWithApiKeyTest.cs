@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedAuthEnvironmentVariables.Core;
-using SeedAuthEnvironmentVariables.Test.Utils;
 using SeedAuthEnvironmentVariables.Test.Wire;
 
 #nullable enable
@@ -27,6 +27,6 @@ public class GetWithApiKeyTest : BaseWireTest
             );
 
         var response = Client.Service.GetWithApiKeyAsync().Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

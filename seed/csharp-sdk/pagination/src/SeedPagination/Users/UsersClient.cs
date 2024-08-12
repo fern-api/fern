@@ -1,17 +1,16 @@
 using System.Net.Http;
 using System.Text.Json;
-using SeedPagination;
 using SeedPagination.Core;
 
 #nullable enable
 
 namespace SeedPagination;
 
-public class UsersClient
+public partial class UsersClient
 {
     private RawClient _client;
 
-    public UsersClient(RawClient client)
+    internal UsersClient(RawClient client)
     {
         _client = client;
     }
@@ -64,7 +63,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -99,7 +98,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -151,7 +150,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -186,7 +185,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -234,7 +233,55 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
+        );
+    }
+
+    public async Task<ListUsersPaginationResponse> ListWithOffsetPaginationHasNextPageAsync(
+        ListWithOffsetPaginationHasNextPageRequest request,
+        RequestOptions? options = null
+    )
+    {
+        var _query = new Dictionary<string, object>() { };
+        if (request.Page != null)
+        {
+            _query["page"] = request.Page.ToString();
+        }
+        if (request.Limit != null)
+        {
+            _query["limit"] = request.Limit.ToString();
+        }
+        if (request.Order != null)
+        {
+            _query["order"] = JsonSerializer.Serialize(request.Order.Value);
+        }
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/users",
+                Query = _query,
+                Options = options
+            }
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<ListUsersPaginationResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPaginationException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedPaginationApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
     }
 
@@ -274,7 +321,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -314,7 +361,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -354,7 +401,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

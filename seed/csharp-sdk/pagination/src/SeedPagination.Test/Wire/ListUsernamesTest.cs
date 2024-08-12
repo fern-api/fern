@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPagination;
-using SeedPagination.Core;
-using SeedPagination.Test.Utils;
 using SeedPagination.Test.Wire;
 
 #nullable enable
@@ -38,6 +38,6 @@ public class ListUsernamesTest : BaseWireTest
         var response = Client
             .Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter = "string" })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

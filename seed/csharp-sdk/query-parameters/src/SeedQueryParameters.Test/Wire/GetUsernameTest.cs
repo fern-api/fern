@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedQueryParameters;
-using SeedQueryParameters.Core;
-using SeedQueryParameters.Test.Utils;
 using SeedQueryParameters.Test.Wire;
 
 #nullable enable
@@ -50,8 +50,8 @@ public class GetUsernameTest : BaseWireTest
                 {
                     Limit = 1,
                     Id = "this.internalType.value.toString()",
-                    Date = new DateOnly(2023, 1, 14),
-                    Deadline = new DateTime(2024, 01, 15, 04, 30, 00, 000),
+                    Date = new DateOnly(2023, 1, 15),
+                    Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
                     Bytes = "SGVsbG8gd29ybGQh",
                     User = new User
                     {
@@ -66,7 +66,7 @@ public class GetUsernameTest : BaseWireTest
                             Tags = new List<string>() { "string" }
                         }
                     },
-                    OptionalDeadline = new DateTime(2024, 01, 15, 04, 30, 00, 000),
+                    OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
                     KeyValue = new Dictionary<string, string>() { { "string", "string" }, },
                     OptionalString = "string",
                     NestedUser = new NestedUser
@@ -92,6 +92,6 @@ public class GetUsernameTest : BaseWireTest
                 }
             )
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

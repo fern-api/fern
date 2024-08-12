@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedIdempotencyHeaders;
-using SeedIdempotencyHeaders.Core;
-using SeedIdempotencyHeaders.Test.Utils;
 using SeedIdempotencyHeaders.Test.Wire;
 
 #nullable enable
@@ -43,6 +43,6 @@ public class CreateTest : BaseWireTest
         var response = Client
             .Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

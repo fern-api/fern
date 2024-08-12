@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMultiLineDocs;
-using SeedMultiLineDocs.Core;
-using SeedMultiLineDocs.Test.Utils;
 using SeedMultiLineDocs.Test.Wire;
 
 #nullable enable
@@ -47,6 +47,6 @@ public class CreateUserTest : BaseWireTest
         var response = Client
             .User.CreateUserAsync(new CreateUserRequest { Name = "string", Age = 1 })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

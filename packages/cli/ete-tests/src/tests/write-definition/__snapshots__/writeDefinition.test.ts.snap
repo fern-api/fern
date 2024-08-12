@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`validate petstore 1`] = `
+exports[`validate > petstore 1`] = `
 [
   {
     "contents": "types:
@@ -9,11 +9,15 @@ exports[`validate petstore 1`] = `
       id: long
       name: string
       tag: optional<string>
+    source:
+      openapi: openapi/openapi.yml
   Pets: list<Pet>
   Error:
     properties:
       code: integer
       message: string
+    source:
+      openapi: openapi/openapi.yml
 ",
     "name": "__package__.yml",
     "type": "file",
@@ -84,6 +88,8 @@ service:
               id: 1000000
               name: name
               tag: tag
+  source:
+    openapi: openapi/openapi.yml
 ",
     "name": "pets.yml",
     "type": "file",

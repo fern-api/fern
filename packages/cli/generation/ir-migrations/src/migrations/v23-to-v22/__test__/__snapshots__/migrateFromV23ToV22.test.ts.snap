@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migrateFromV23ToV22 migrates extensive 1`] = `
+exports[`migrateFromV23ToV22 > migrates extensive 1`] = `
 {
   "apiDisplayName": undefined,
   "apiDocs": undefined,
@@ -1717,6 +1717,7 @@ exports[`migrateFromV23ToV22 migrates extensive 1`] = `
       "language": "X-Fern-Language",
       "sdkName": "X-Fern-SDK-Name",
       "sdkVersion": "X-Fern-SDK-Version",
+      "userAgent": undefined,
     },
   },
   "serviceTypeReferenceInfo": {

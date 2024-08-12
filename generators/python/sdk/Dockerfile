@@ -36,6 +36,8 @@ ENTRYPOINT ["python", "-m", "src.fern_python.generators.sdk.cli"]
 ##       To visualize the flamegraph you can run: 
 ##         - poetry add snakeviz
 ##         - poetry run snakeviz output.prof
-## 
-## RUN mkdir -p /fern/output
-## ENTRYPOINT ["python", "-m", "cProfile", "-o", "/fern/output/output.prof", "/src/fern_python/generators/sdk/cli.py"]
+# RUN mkdir -p /fern/output
+## For a time-limited run, uncomment the below line and comment the next line.
+# ENTRYPOINT ["timeout", "-s", "INT", "5m", "python", "-m", "cProfile", "-o", "/fern/output/output.prof", "/src/fern_python/generators/sdk/cli.py"]
+## For a regularly profiled run, uncomment the below line and comment the previous line.
+# ENTRYPOINT ["python", "-m", "cProfile", "-o", "/fern/output/output.prof", "/src/fern_python/generators/sdk/cli.py"]

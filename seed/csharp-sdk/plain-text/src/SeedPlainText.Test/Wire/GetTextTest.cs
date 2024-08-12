@@ -1,6 +1,6 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedPlainText.Core;
-using SeedPlainText.Test.Utils;
 using SeedPlainText.Test.Wire;
 
 #nullable enable
@@ -27,6 +27,6 @@ public class GetTextTest : BaseWireTest
             );
 
         var response = Client.Service.GetTextAsync().Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

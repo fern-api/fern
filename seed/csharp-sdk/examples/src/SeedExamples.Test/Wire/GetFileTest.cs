@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedExamples.Core;
 using SeedExamples.File;
-using SeedExamples.Test.Utils;
 using SeedExamples.Test.Wire;
 
 #nullable enable
@@ -37,6 +37,6 @@ public class GetFileTest : BaseWireTest
             );
 
         var response = Client.File.Service.GetFileAsync("string", new GetFileRequest()).Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

@@ -1,4 +1,4 @@
-using SeedApi.Core;
+using SeedApi;
 
 #nullable enable
 

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`rules rules docs 1`] = `
+exports[`rules > rules > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -33,11 +33,18 @@ exports[`rules rules docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "rules/openapi.yml",
+      },
     },
     "types": {
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
         "union": [
           "Schema",
           "GetExampleResponseMessage",
@@ -47,6 +54,9 @@ exports[`rules rules docs 1`] = `
         "docs": undefined,
         "properties": {
           "message": "optional<string>",
+        },
+        "source": {
+          "openapi": "rules/openapi.yml",
         },
       },
       "Schema": {
@@ -99,6 +109,9 @@ exports[`rules rules docs 1`] = `
               "multipleOf": 1.1,
             },
           },
+        },
+        "source": {
+          "openapi": "rules/openapi.yml",
         },
       },
       "String": {
@@ -122,7 +135,7 @@ exports[`rules rules docs 1`] = `
 }
 `;
 
-exports[`rules rules simple 1`] = `
+exports[`rules > rules > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -155,11 +168,18 @@ exports[`rules rules simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "rules/openapi.yml",
+      },
     },
     "types": {
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
         "union": [
           "Schema",
           "GetExampleResponseMessage",
@@ -169,6 +189,9 @@ exports[`rules rules simple 1`] = `
         "docs": undefined,
         "properties": {
           "message": "optional<string>",
+        },
+        "source": {
+          "openapi": "rules/openapi.yml",
         },
       },
       "Schema": {
@@ -221,6 +244,9 @@ exports[`rules rules simple 1`] = `
               "multipleOf": 1.1,
             },
           },
+        },
+        "source": {
+          "openapi": "rules/openapi.yml",
         },
       },
       "String": {

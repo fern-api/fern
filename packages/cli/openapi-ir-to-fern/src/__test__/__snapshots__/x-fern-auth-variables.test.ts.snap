@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
+exports[`x-fern-auth-variables > x-fern-auth-variables > docs 1`] = `
 {
   "definitionFiles": {
     "user.yml": {
@@ -51,6 +51,9 @@ exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-auth-variables/openapi.yml",
+        },
       },
       "types": {
         "UserGetAllResponseItem": {
@@ -66,6 +69,9 @@ exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "x-fern-auth-variables/openapi.yml",
+          },
         },
         "UserGetResponse": {
           "docs": undefined,
@@ -79,6 +85,9 @@ exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
                 "pattern": undefined,
               },
             },
+          },
+          "source": {
+            "openapi": "x-fern-auth-variables/openapi.yml",
           },
         },
       },
@@ -109,7 +118,7 @@ exports[`x-fern-auth-variables x-fern-auth-variables docs 1`] = `
 }
 `;
 
-exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
+exports[`x-fern-auth-variables > x-fern-auth-variables > simple 1`] = `
 {
   "definitionFiles": {
     "user.yml": {
@@ -160,6 +169,9 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-auth-variables/openapi.yml",
+        },
       },
       "types": {
         "UserGetAllResponseItem": {
@@ -175,6 +187,9 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
               },
             },
           },
+          "source": {
+            "openapi": "x-fern-auth-variables/openapi.yml",
+          },
         },
         "UserGetResponse": {
           "docs": undefined,
@@ -188,6 +203,9 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
                 "pattern": undefined,
               },
             },
+          },
+          "source": {
+            "openapi": "x-fern-auth-variables/openapi.yml",
           },
         },
       },

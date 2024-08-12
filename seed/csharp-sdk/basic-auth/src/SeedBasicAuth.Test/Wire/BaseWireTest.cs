@@ -1,6 +1,5 @@
 using NUnit.Framework;
 using SeedBasicAuth;
-using SeedBasicAuth.Core;
 using WireMock.Logging;
 using WireMock.Server;
 using WireMock.Settings;

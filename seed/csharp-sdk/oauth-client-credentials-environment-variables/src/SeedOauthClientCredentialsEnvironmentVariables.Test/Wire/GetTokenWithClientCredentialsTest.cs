@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedOauthClientCredentialsEnvironmentVariables;
-using SeedOauthClientCredentialsEnvironmentVariables.Core;
-using SeedOauthClientCredentialsEnvironmentVariables.Test.Utils;
 using SeedOauthClientCredentialsEnvironmentVariables.Test.Wire;
 
 #nullable enable
@@ -59,6 +59,6 @@ public class GetTokenWithClientCredentialsTest : BaseWireTest
                 }
             )
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedStreaming;
-using SeedStreaming.Core;
-using SeedStreaming.Test.Utils;
 using SeedStreaming.Test.Wire;
 
 #nullable enable
@@ -46,7 +46,7 @@ public class GenerateTest : BaseWireTest
         var response = Client
             .Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents = 5 })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 
     [Test]
@@ -84,6 +84,6 @@ public class GenerateTest : BaseWireTest
         var response = Client
             .Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents = 5 })
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

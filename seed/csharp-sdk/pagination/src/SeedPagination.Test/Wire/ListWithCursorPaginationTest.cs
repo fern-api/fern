@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPagination;
-using SeedPagination.Core;
-using SeedPagination.Test.Utils;
 using SeedPagination.Test.Wire;
 
 #nullable enable
@@ -16,6 +16,7 @@ public class ListWithCursorPaginationTest : BaseWireTest
     {
         const string mockResponse = """
             {
+              "hasNextPage": true,
               "page": {},
               "total_count": 1,
               "data": [
@@ -51,6 +52,6 @@ public class ListWithCursorPaginationTest : BaseWireTest
                 }
             )
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

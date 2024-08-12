@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser uploadcare parse open api 1`] = `
+exports[`open api parser > uploadcare > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -263,6 +263,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -274,6 +275,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestFiledsNumberLimitExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -283,6 +288,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "postRequestParserFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -292,6 +301,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -301,6 +314,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyDuplicatedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -310,6 +327,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyEmptyError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -319,6 +340,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -328,6 +353,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyLengthTooBigError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -337,6 +366,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueEmptyError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -346,6 +379,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -355,6 +392,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueLengthTooBigError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -364,6 +405,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeysNumberTooBigError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -373,6 +418,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -382,6 +431,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -391,6 +444,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -400,6 +457,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "filesRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -409,6 +470,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileSizeLimitExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -418,6 +483,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileTypeForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -427,11 +496,23 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileInfectedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "403": {
@@ -555,6 +636,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -566,6 +648,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -575,6 +661,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -584,6 +674,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "autoStoreDisabledError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -593,6 +687,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "projectPublicKeyRemovedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -602,6 +700,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountBlockedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -611,6 +713,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountUnpaidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -620,6 +726,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -629,6 +739,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountLimitsExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -638,6 +752,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -647,11 +765,23 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "413": {
@@ -687,6 +817,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
         },
         "429": {
           "description": "Request was throttled.",
@@ -720,6 +854,10 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -889,6 +1027,10 @@ Log.d("TAG", file.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "projectPublicKeyType",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -912,6 +1054,10 @@ Log.d("TAG", file.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "storeType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -945,6 +1091,10 @@ Log.d("TAG", file.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "metadataValue",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -969,6 +1119,10 @@ Log.d("TAG", file.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -993,12 +1147,20 @@ Log.d("TAG", file.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "expireType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
             },
           },
         ],
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
+        },
         "type": "multipart",
       },
       "requestNameOverride": null,
@@ -1050,12 +1212,24 @@ the value is the unique ID of the file on our systems.
               },
             },
           ],
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Direct uploads",
       "tags": [
         "Upload",
@@ -1319,6 +1493,7 @@ To upload large files, 3 requests are sent in sequence:
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -1330,6 +1505,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestFiledsNumberLimitExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1339,6 +1518,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "postRequestParserFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1348,6 +1531,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1357,6 +1544,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyDuplicatedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1366,6 +1557,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyEmptyError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1375,6 +1570,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1384,6 +1583,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyLengthTooBigError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1393,6 +1596,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueEmptyError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1402,6 +1609,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1411,6 +1622,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueLengthTooBigError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1420,6 +1635,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeysNumberTooBigError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1429,6 +1648,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1438,6 +1661,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1447,6 +1674,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1456,6 +1687,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestParamRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1465,6 +1700,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartSizeInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1474,6 +1713,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartFileSizeLimitExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1483,6 +1726,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartFileSizeTooSmallError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1492,6 +1739,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartPartSizeInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1501,6 +1752,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartPartSizeTooSmallError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1510,11 +1765,23 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartPartSizeTooBigError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "403": {
@@ -1638,6 +1905,7 @@ To upload large files, 3 requests are sent in sequence:
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -1649,6 +1917,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1658,6 +1930,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1667,6 +1943,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "autoStoreDisabledError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1676,6 +1956,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "projectPublicKeyRemovedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1685,6 +1969,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountBlockedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1694,6 +1982,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountUnpaidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1703,6 +1995,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1712,6 +2008,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountLimitsExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1721,6 +2021,10 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -1730,11 +2034,23 @@ To upload large files, 3 requests are sent in sequence:
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "429": {
@@ -1769,6 +2085,10 @@ To upload large files, 3 requests are sent in sequence:
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -2008,6 +2328,10 @@ Log.d("TAG", file.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "projectPublicKeyType",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -2031,6 +2355,10 @@ Log.d("TAG", file.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "storeType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -2166,6 +2494,10 @@ to us as a value of the \`part_size\` parameter (in bytes).
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "metadataValue",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -2190,6 +2522,10 @@ to us as a value of the \`part_size\` parameter (in bytes).
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -2214,12 +2550,20 @@ to us as a value of the \`part_size\` parameter (in bytes).
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "expireType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
             },
           },
         ],
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
+        },
         "type": "multipart",
       },
       "requestNameOverride": null,
@@ -2293,12 +2637,24 @@ to us as a value of the \`part_size\` parameter (in bytes).
               },
             },
           ],
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Start multipart upload",
       "tags": [
         "Upload",
@@ -2438,12 +2794,20 @@ Log.d("TAG", file.toString())
       "queryParameters": [],
       "request": {
         "description": null,
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
+        },
         "type": "octetStream",
       },
       "requestNameOverride": null,
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Upload individual file parts",
       "tags": [
         "Upload",
@@ -2589,6 +2953,7 @@ upload session to assemble all the file parts into a single resulting file.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -2600,6 +2965,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestFiledsNumberLimitExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2609,6 +2978,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "postRequestParserFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2618,6 +2991,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2627,6 +3004,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartFileIdRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2636,6 +3017,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uuidInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2645,6 +3030,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartFileAlreadyUploadedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2654,6 +3043,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartUploadSizeTooLargeError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2663,6 +3056,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartUploadSizeTooSmallError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2672,6 +3069,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "multipartFileCompletionFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2681,6 +3082,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileTypeForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2690,11 +3095,23 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileInfectedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "403": {
@@ -2730,6 +3147,7 @@ upload session to assemble all the file parts into a single resulting file.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -2741,6 +3159,10 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -2750,11 +3172,23 @@ upload session to assemble all the file parts into a single resulting file.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadcarePublicKeyInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "404": {
@@ -2781,7 +3215,15 @@ upload session to assemble all the file parts into a single resulting file.
             "groupName": null,
             "nameOverride": null,
             "schema": "fileNotFoundError",
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -3491,6 +3933,10 @@ Log.d("TAG", file.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "projectPublicKeyType",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -3519,6 +3965,10 @@ Log.d("TAG", file.toString())
             },
           },
         ],
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
+        },
         "type": "multipart",
       },
       "requestNameOverride": null,
@@ -3532,12 +3982,24 @@ Log.d("TAG", file.toString())
           "groupName": null,
           "nameOverride": null,
           "schema": "fileUploadInfo",
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Complete multipart upload",
       "tags": [
         "Upload",
@@ -3830,6 +4292,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -3841,6 +4304,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestFiledsNumberLimitExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3850,6 +4317,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "postRequestParserFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3859,6 +4330,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3868,6 +4343,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyDuplicatedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3877,6 +4356,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyEmptyError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3886,6 +4369,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3895,6 +4382,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeyLengthTooBigError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3904,6 +4395,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueEmptyError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3913,6 +4408,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3922,6 +4421,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataValueLengthTooBigError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3931,6 +4434,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileMetadataKeysNumberTooBigError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3940,6 +4447,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3949,6 +4460,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3958,6 +4473,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3967,6 +4486,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "sourceURLRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3976,6 +4499,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlParsingFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3985,6 +4512,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlSchemeRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -3994,6 +4525,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlSchemeInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4003,6 +4538,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlHostRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4012,6 +4551,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlBlacklistedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4021,6 +4564,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "hostnameNotFoundError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4030,6 +4577,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlHostMalformedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4039,11 +4590,23 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "urlHostPrivateIPForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "403": {
@@ -4167,6 +4730,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -4178,6 +4742,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4187,6 +4755,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4196,6 +4768,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "autoStoreDisabledError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4205,6 +4781,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "projectPublicKeyRemovedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4214,6 +4794,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountBlockedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4223,6 +4807,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountUnpaidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4232,6 +4820,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4241,6 +4833,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountLimitsExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4250,6 +4846,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -4259,11 +4859,23 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "429": {
@@ -4298,6 +4910,10 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -5168,6 +5784,10 @@ Log.d("TAG", file.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "projectPublicKeyType",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -5217,6 +5837,10 @@ Log.d("TAG", file.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "storeType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -5293,6 +5917,10 @@ this request will return information about the already uploaded file.
                   "generatedName": "FromUrlUploadRequestCheckUrlDuplicates",
                   "groupName": null,
                   "nameOverride": null,
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "enum",
                   "values": [
                     {
@@ -5348,6 +5976,10 @@ to the value of the \`check_URL_duplicates\` parameter.
                   "generatedName": "FromUrlUploadRequestSaveUrlDuplicates",
                   "groupName": null,
                   "nameOverride": null,
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "enum",
                   "values": [
                     {
@@ -5400,6 +6032,10 @@ to the value of the \`check_URL_duplicates\` parameter.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "metadataValue",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -5424,6 +6060,10 @@ to the value of the \`check_URL_duplicates\` parameter.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -5448,12 +6088,20 @@ to the value of the \`check_URL_duplicates\` parameter.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "expireType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
             },
           },
         ],
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
+        },
         "type": "multipart",
       },
       "requestNameOverride": null,
@@ -5465,6 +6113,7 @@ to the value of the \`check_URL_duplicates\` parameter.
           "value": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "FromUrlUploadResponse",
             "groupName": null,
             "nameOverride": null,
@@ -5476,6 +6125,10 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "fromURLUploadResponseSchema",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               {
@@ -5485,16 +6138,32 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "fileUploadInfoFromURL",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             ],
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "undisciminated",
           },
+        },
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Upload files from URLs",
       "tags": [
         "Upload",
@@ -5537,7 +6206,15 @@ to the value of the \`check_URL_duplicates\` parameter.
             "groupName": null,
             "nameOverride": null,
             "schema": "tokenRequiredError",
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -6735,6 +7412,10 @@ Log.d("TAG", status.toString())
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -6748,6 +7429,7 @@ Log.d("TAG", status.toString())
           "value": {
             "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "FromUrlUploadStatusResponse",
             "groupName": null,
             "nameOverride": null,
@@ -6759,6 +7441,10 @@ Log.d("TAG", status.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "fileUploadInfoWaitingStatus",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               {
@@ -6768,6 +7454,10 @@ Log.d("TAG", status.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "fileUploadInfoProgressStatus",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               {
@@ -6777,6 +7467,10 @@ Log.d("TAG", status.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "fileUploadInfoSuccessStatus",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               {
@@ -6786,6 +7480,10 @@ Log.d("TAG", status.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "fileUploadInfoErrorStatus",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               {
@@ -6795,16 +7493,32 @@ Log.d("TAG", status.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "fileUploadInfoUnknownStatus",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             ],
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "undisciminated",
           },
+        },
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Check the status of a task to fetch/upload a file from a URL",
       "tags": [
         "Upload",
@@ -6861,6 +7575,7 @@ Log.d("TAG", status.toString())
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -6872,6 +7587,10 @@ Log.d("TAG", status.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -6881,6 +7600,10 @@ Log.d("TAG", status.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileIdRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -6890,11 +7613,23 @@ Log.d("TAG", status.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "fileIdInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "403": {
@@ -6930,6 +7665,7 @@ Log.d("TAG", status.toString())
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -6941,6 +7677,10 @@ Log.d("TAG", status.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -6950,11 +7690,23 @@ Log.d("TAG", status.toString())
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "404": {
@@ -6981,7 +7733,15 @@ Log.d("TAG", status.toString())
             "groupName": null,
             "nameOverride": null,
             "schema": "fileNotFoundError",
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -7669,7 +8429,15 @@ Log.d("TAG", file.toString())
             "groupName": null,
             "nameOverride": null,
             "schema": "projectPublicKeyType",
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -7693,6 +8461,10 @@ Log.d("TAG", file.toString())
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -7707,12 +8479,24 @@ Log.d("TAG", file.toString())
           "groupName": null,
           "nameOverride": null,
           "schema": "fileUploadInfo",
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Get information about an uploaded file",
       "tags": [
         "Upload",
@@ -7843,6 +8627,7 @@ is to create a new one.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -7854,6 +8639,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "requestFiledsNumberLimitExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -7863,6 +8652,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "postRequestParserFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -7872,6 +8665,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -7881,6 +8678,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -7890,6 +8691,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -7899,6 +8704,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -7908,6 +8717,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "groupFilesInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -7917,6 +8730,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "groupFileURLParsingFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -7926,11 +8743,23 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "groupFilesNotFoundError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "403": {
@@ -8043,6 +8872,7 @@ is to create a new one.
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -8054,6 +8884,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -8063,6 +8897,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -8072,6 +8910,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "projectPublicKeyRemovedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -8081,6 +8923,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountBlockedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -8090,6 +8936,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountUnpaidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -8099,6 +8949,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "uploadFailedError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -8108,6 +8962,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "accountLimitsExceededError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -8117,6 +8975,10 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureExpirationError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -8126,11 +8988,23 @@ is to create a new one.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -8908,6 +9782,10 @@ Log.d("TAG", group.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "projectPublicKeyType",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -8965,6 +9843,10 @@ processing operations.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "signatureType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
@@ -8989,12 +9871,20 @@ processing operations.
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "expireType",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               },
             },
           },
         ],
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
+        },
         "type": "multipart",
       },
       "requestNameOverride": null,
@@ -9008,12 +9898,24 @@ processing operations.
           "groupName": null,
           "nameOverride": null,
           "schema": "groupInfo",
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Create a file group",
       "tags": [
         "Groups",
@@ -9060,6 +9962,7 @@ number of the files in the group, etc).
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "BadRequestErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -9071,6 +9974,10 @@ number of the files in the group, etc).
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "nullCharactersForbiddenError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -9080,11 +9987,23 @@ number of the files in the group, etc).
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "groupIdRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "403": {
@@ -9120,6 +10039,7 @@ number of the files in the group, etc).
             "value": {
               "availability": null,
               "description": null,
+              "encoding": null,
               "generatedName": "ForbiddenErrorBody",
               "groupName": null,
               "nameOverride": null,
@@ -9131,6 +10051,10 @@ number of the files in the group, etc).
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyRequiredError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
                 {
@@ -9140,11 +10064,23 @@ number of the files in the group, etc).
                   "groupName": null,
                   "nameOverride": null,
                   "schema": "publicKeyInvalidError",
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "reference",
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "undisciminated",
             },
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         "404": {
@@ -9171,7 +10107,15 @@ number of the files in the group, etc).
             "groupName": null,
             "nameOverride": null,
             "schema": "groupNotFoundError",
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
       },
@@ -9933,7 +10877,15 @@ Log.d("TAG", group.toString())
             "groupName": null,
             "nameOverride": null,
             "schema": "projectPublicKeyType",
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
+          },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
           },
         },
         {
@@ -9958,6 +10910,10 @@ Log.d("TAG", group.toString())
             },
             "type": "primitive",
           },
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "request": null,
@@ -9972,12 +10928,24 @@ Log.d("TAG", group.toString())
           "groupName": null,
           "nameOverride": null,
           "schema": "groupInfo",
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "summary": "Get information about a file group",
       "tags": [
         "Groups",
@@ -10250,6 +11218,10 @@ Log.d("TAG", group.toString())
                     },
                   },
                 ],
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             },
@@ -10275,6 +11247,10 @@ Log.d("TAG", group.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "schemas-imageInfo",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
@@ -10300,11 +11276,19 @@ Log.d("TAG", group.toString())
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "videoInfo",
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
             },
           },
         ],
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
+        },
         "type": "object",
       },
     },
@@ -10771,6 +11755,10 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "groupName": null,
             "nameOverride": null,
             "schema": "imageInfo",
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10788,6 +11776,10 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "groupName": null,
             "nameOverride": null,
             "schema": "legacyVideoInfo",
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10805,6 +11797,10 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "groupName": null,
             "nameOverride": null,
             "schema": "contentInfo",
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10822,6 +11818,10 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "groupName": null,
             "nameOverride": null,
             "schema": "metadata",
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "reference",
           },
         },
@@ -10926,6 +11926,10 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "fileUploadInfoErrorStatus": {
@@ -11037,6 +12041,10 @@ page for a full list of all possible error codes.
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "fileUploadInfoFromURL": {
@@ -11049,6 +12057,10 @@ page for a full list of all possible error codes.
           "groupName": null,
           "nameOverride": null,
           "schema": "fileUploadInfo",
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -11087,6 +12099,10 @@ page for a full list of all possible error codes.
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "fileUploadInfoProgressStatus": {
@@ -11214,6 +12230,10 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "fileUploadInfoSuccessStatus": {
@@ -11226,6 +12246,10 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           "groupName": null,
           "nameOverride": null,
           "schema": "fileUploadInfo",
+          "source": {
+            "file": "uploadcare/openapi.json",
+            "type": "openapi",
+          },
         },
       ],
       "allOfPropertyConflicts": [],
@@ -11264,6 +12288,10 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "fileUploadInfoUnknownStatus": {
@@ -11310,6 +12338,10 @@ that are tool old (or that have not been created at all).
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "fileUploadInfoWaitingStatus": {
@@ -11352,6 +12384,10 @@ that are tool old (or that have not been created at all).
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "filesRequiredError": {
@@ -11441,6 +12477,10 @@ that are tool old (or that have not been created at all).
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "groupFileURLParsingFailedError": {
@@ -11748,6 +12788,10 @@ that are tool old (or that have not been created at all).
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "groupNotFoundError": {
@@ -11813,6 +12857,10 @@ that are tool old (or that have not been created at all).
               "generatedName": "ImageInfoColorMode",
               "groupName": null,
               "nameOverride": null,
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "enum",
               "values": [
                 {
@@ -12189,6 +13237,10 @@ that are tool old (or that have not been created at all).
                     },
                   },
                 ],
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             },
@@ -12262,6 +13314,10 @@ that are tool old (or that have not been created at all).
             },
           },
         ],
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
+        },
         "type": "object",
       },
     },
@@ -12574,6 +13630,10 @@ that are tool old (or that have not been created at all).
                       },
                     },
                   ],
+                  "source": {
+                    "file": "uploadcare/openapi.json",
+                    "type": "openapi",
+                  },
                   "type": "object",
                 },
               },
@@ -12768,11 +13828,19 @@ that are tool old (or that have not been created at all).
                     },
                   },
                 ],
+                "source": {
+                  "file": "uploadcare/openapi.json",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             },
           },
         ],
+        "source": {
+          "file": "uploadcare/openapi.json",
+          "type": "openapi",
+        },
         "type": "object",
       },
     },
@@ -12786,6 +13854,7 @@ that are tool old (or that have not been created at all).
       "value": {
         "availability": null,
         "description": "Arbitrary metadata associated with a file.",
+        "encoding": null,
         "generatedName": "Metadata",
         "groupName": null,
         "key": {
@@ -13158,6 +14227,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "generatedName": "SchemasImageInfoColorMode",
             "groupName": null,
             "nameOverride": null,
+            "source": {
+              "file": "uploadcare/openapi.json",
+              "type": "openapi",
+            },
             "type": "enum",
             "values": [
               {
@@ -13534,6 +14607,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                   },
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "object",
             },
           },
@@ -13607,6 +14684,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "signatureExpirationError": {
@@ -13761,6 +14842,10 @@ change the value to \`auto\`.
       "generatedName": "StoreType",
       "groupName": null,
       "nameOverride": null,
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "enum",
       "values": [
         {
@@ -14252,6 +15337,10 @@ change the value to \`auto\`.
                   },
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "object",
             },
           },
@@ -14421,11 +15510,19 @@ change the value to \`auto\`.
                   },
                 },
               ],
+              "source": {
+                "file": "uploadcare/openapi.json",
+                "type": "openapi",
+              },
               "type": "object",
             },
           },
         },
       ],
+      "source": {
+        "file": "uploadcare/openapi.json",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

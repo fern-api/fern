@@ -1,7 +1,7 @@
+using FluentAssertions.Json;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAudiences;
-using SeedAudiences.Core;
-using SeedAudiences.Test.Utils;
 using SeedAudiences.Test.Wire;
 
 #nullable enable
@@ -53,6 +53,6 @@ public class FindTest : BaseWireTest
                 }
             )
             .Result;
-        JsonDiffChecker.AssertJsonEquals(mockResponse, JsonUtils.Serialize(response));
+        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
     }
 }

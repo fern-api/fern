@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-type x-fern-type parse open api 1`] = `
+exports[`x-fern-type > x-fern-type > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -16,6 +16,7 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
     "BaseUser": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "BaseUser",
       "groupName": null,
       "key": {
