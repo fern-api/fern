@@ -48,6 +48,7 @@ export function convertSchema(
     context: SchemaParserContext,
     breadcrumbs: string[],
     source: Source,
+    namespace: string | undefined,
     referencedAsRequest = false,
     propertiesToExclude: Set<string> = new Set(),
     fallback?: string | number | boolean | unknown[]
@@ -61,7 +62,7 @@ export function convertSchema(
             } else {
                 context.markSchemaAsReferencedByRequest(schemaId);
             }
-            return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs, encoding, source);
+            return convertReferenceObject(schema, wrapAsNullable, context, breadcrumbs, encoding, source, namespace);
         }
         // if the schema id is null, we should convert the entire schema and inline it
         // in the OpenAPI IR
@@ -72,6 +73,7 @@ export function convertSchema(
             getBreadcrumbsFromReference(schema.$ref),
             encoding,
             source,
+            namespace,
             propertiesToExclude,
             referencedAsRequest,
             fallback
@@ -84,6 +86,7 @@ export function convertSchema(
         breadcrumbs,
         encoding,
         source,
+        namespace,
         propertiesToExclude,
         referencedAsRequest,
         fallback
@@ -96,7 +99,8 @@ export function convertReferenceObject(
     context: SchemaParserContext,
     breadcrumbs: string[],
     encoding: Encoding | undefined,
-    source: Source
+    source: Source,
+    namespace: string | undefined
 ): SchemaWithExample {
     const referenceSchema = schema.$ref.includes("properties")
         ? convertSchemaObject(
@@ -106,7 +110,8 @@ export function convertReferenceObject(
               breadcrumbs,
               encoding,
               source,
-              new Set()
+              namespace,
+              new Set(),
           )
         : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs, source));
     if (wrapAsNullable) {
@@ -144,6 +149,7 @@ export function convertSchemaObject(
     breadcrumbs: string[],
     encoding: Encoding | undefined,
     source: Source,
+    namespace: string | undefined,
     propertiesToExclude: Set<string> = new Set(),
     referencedAsRequest = false,
     fallback?: string | number | boolean | unknown[]
@@ -154,7 +160,11 @@ export function convertSchemaObject(
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
-    const groupName = typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName;
+    const groupName = (typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName) ?? [];
+    if (namespace != null) {
+        groupName.push(namespace);
+    }
+
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
     const availability = convertAvailability(schema);
@@ -187,6 +197,7 @@ export function convertSchemaObject(
             breadcrumbs,
             encoding,
             source,
+            namespace,
             propertiesToExclude,
             referencedAsRequest,
             fallback
@@ -264,6 +275,7 @@ export function convertSchemaObject(
                     breadcrumbs,
                     encoding,
                     source,
+                    namespace,
                     propertiesToExclude,
                     referencedAsRequest,
                     fallback
@@ -286,6 +298,7 @@ export function convertSchemaObject(
                     breadcrumbs,
                     encoding,
                     source,
+                    namespace,
                     propertiesToExclude,
                     referencedAsRequest,
                     fallback
@@ -573,6 +586,7 @@ export function convertSchemaObject(
                 context,
                 breadcrumbs,
                 source,
+                namespace,
                 referencedAsRequest
             );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
@@ -581,9 +595,9 @@ export function convertSchemaObject(
                 const firstSchema = schema.oneOf[0];
                 const secondSchema = schema.oneOf[1];
                 if (!isReferenceObject(firstSchema) && (firstSchema.type as string) === "null") {
-                    return convertSchema(secondSchema, true, context, breadcrumbs, source);
+                    return convertSchema(secondSchema, true, context, breadcrumbs, source, namespace);
                 } else if (!isReferenceObject(secondSchema) && (secondSchema.type as string) === "null") {
-                    return convertSchema(firstSchema, true, context, breadcrumbs, source);
+                    return convertSchema(firstSchema, true, context, breadcrumbs, source, namespace);
                 }
             }
 
@@ -656,6 +670,7 @@ export function convertSchemaObject(
                 context,
                 breadcrumbs,
                 source,
+                namespace,
                 referencedAsRequest
             );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
@@ -665,10 +680,10 @@ export function convertSchemaObject(
             const [firstSchema, secondSchema] = schema.anyOf;
             if (firstSchema != null && secondSchema != null) {
                 if (!isReferenceObject(firstSchema) && (firstSchema.type as unknown) === "null") {
-                    const convertedSchema = convertSchema(secondSchema, true, context, breadcrumbs, source);
+                    const convertedSchema = convertSchema(secondSchema, true, context, breadcrumbs, source, namespace);
                     return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
                 } else if (!isReferenceObject(secondSchema) && (secondSchema.type as unknown) === "null") {
-                    const convertedSchema = convertSchema(firstSchema, true, context, breadcrumbs, source);
+                    const convertedSchema = convertSchema(firstSchema, true, context, breadcrumbs, source, namespace);
                     return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
                 }
             }
@@ -739,6 +754,7 @@ export function convertSchemaObject(
                 context,
                 breadcrumbs,
                 source,
+                namespace,
                 referencedAsRequest
             );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);
@@ -766,6 +782,7 @@ export function convertSchemaObject(
                 context,
                 breadcrumbs,
                 source,
+                namespace,
                 referencedAsRequest
             );
             return maybeInjectDescriptionOrGroupName(convertedSchema, description, groupName);

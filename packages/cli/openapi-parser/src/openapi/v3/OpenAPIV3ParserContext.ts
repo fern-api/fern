@@ -27,20 +27,23 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         taskContext,
         authHeaders,
         options,
-        source
+        source,
+        namespace
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
         options: ParseOpenAPIOptions;
         source: Source;
+        namespace?: string;
     }) {
         super({
             document,
             taskContext,
             authHeaders,
             options,
-            source
+            source,
+            namespace
         });
     }
 

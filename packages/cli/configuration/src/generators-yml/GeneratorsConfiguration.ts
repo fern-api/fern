@@ -17,11 +17,16 @@ export interface GeneratorsConfiguration {
     absolutePathToConfiguration: AbsoluteFilePath;
 }
 
-export type APIDefinition = SingleNamespaceAPIDefinition;
+export type APIDefinition = SingleNamespaceAPIDefinition | MultiNamespaceAPIDefinition;
 
 export interface SingleNamespaceAPIDefinition {
     type: "singleNamespace";
     definitions: APIDefinitionLocation[];
+}
+
+export interface MultiNamespaceAPIDefinition {
+    type: "multiNamespace";
+    definitions: Record<string, APIDefinitionLocation[]>;
 }
 
 export interface APIDefinitionSettings {

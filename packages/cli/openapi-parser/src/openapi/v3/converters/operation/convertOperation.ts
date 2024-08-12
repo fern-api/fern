@@ -45,7 +45,7 @@ export function convertOperation({
     context,
     pathItemContext,
     operation,
-    convertToWebhook
+    convertToWebhook,
 }: {
     context: AbstractOpenAPIV3ParserContext;
     pathItemContext: PathItemContext;
@@ -66,12 +66,12 @@ export function convertOperation({
     const operationContext: OperationContext = {
         ...pathItemContext,
         sdkMethodName,
-        baseBreadcrumbs: getBaseBreadcrumbs({
+        baseBreadcrumbs: context.breadcrumbs.concat(getBaseBreadcrumbs({
             operation,
             sdkMethodName,
             httpMethod: pathItemContext.method,
             path: pathItemContext.path
-        }),
+        })),
         operation,
         operationParameters: operation.parameters ?? [],
         pagination

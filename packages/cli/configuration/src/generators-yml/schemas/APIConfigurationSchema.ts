@@ -98,11 +98,31 @@ export const APIDefinitionList = z.array(
     z.union([APIDefinitionPathSchema, APIDefintionWithOverridesSchema, ProtobufAPIDefinitionSchema])
 );
 
-export const APIConfigurationSchema = z.union([
+export const APIConfigurationSchemaInternal = z.union([
     APIDefinitionPathSchema,
     APIDefintionWithOverridesSchema,
     APIDefinitionList,
     ProtobufAPIDefinitionSchema
 ]);
+
+export type APIConfigurationSchemaInternal = z.infer<typeof APIConfigurationSchemaInternal>;
+
+/**
+ * Allow for namespacing of the API and it's contents, the name on the record will be applied throughout the API.
+ * Note we nest the namespaced config under a `namespaced` key to disambiguate from the top-level keys from the APIConfigurationSchemaInternal (proto, settings, etc.)
+ * 
+ * @example
+ * api:
+ *  namespaced:
+ *    docs:
+ *      - path: openapi.yml
+ *        overrides: overrides.yml
+ *      - openapi.yml
+ *      - proto:
+ *          root: proto
+ *          target: proto/user/v1/user.proto
+ *    sdks: ./sdks/openapi.yml
+ */
+export const APIConfigurationSchema = z.union([APIConfigurationSchemaInternal, z.strictObject({namespaced: z.record(APIConfigurationSchemaInternal)})]);
 
 export type APIConfigurationSchema = z.infer<typeof APIConfigurationSchema>;

@@ -18,7 +18,7 @@ export {
     loadGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
 } from "./loadGeneratorsConfiguration";
-export { type APIConfigurationSchema, type ProtobufAPIDefinitionSchema } from "./schemas/APIConfigurationSchema";
+export { type APIConfigurationSchema, type APIConfigurationSchemaInternal, type ProtobufAPIDefinitionSchema } from "./schemas/APIConfigurationSchema";
 export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 export { type GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 export {
@@ -32,3 +32,4 @@ export { type ReadmeEndpointObjectSchema } from "./schemas/ReadmeEndpointObjectS
 export { type ReadmeEndpointSchema } from "./schemas/ReadmeEndpointSchema";
 export { type ReadmeSchema } from "./schemas/ReadmeSchema";
 export { updateGeneratorGroup } from "./updateGeneratorGroup";
+

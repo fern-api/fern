@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
@@ -13,6 +13,7 @@ import {
     GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
 import { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
+import { APIConfigurationSchemaInternal } from "./schemas/APIConfigurationSchema";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
@@ -72,11 +73,9 @@ export async function convertGeneratorsConfiguration({
     };
 }
 
-async function parseAPIConfiguration(
-    rawGeneratorsConfiguration: GeneratorsConfigurationSchema
-): Promise<APIDefinition> {
-    const apiConfiguration = rawGeneratorsConfiguration.api;
+async function parseAPIConfigurationToApiLocations(apiConfiguration: APIConfigurationSchemaInternal, rawConfiguration: GeneratorsConfigurationSchema): Promise<APIDefinitionLocation[]> {
     const apiDefinitions: APIDefinitionLocation[] = [];
+
     if (apiConfiguration != null) {
         if (typeof apiConfiguration === "string") {
             apiDefinitions.push({
@@ -178,11 +177,11 @@ async function parseAPIConfiguration(
             });
         }
     } else {
-        const openapi = rawGeneratorsConfiguration[OPENAPI_LOCATION_KEY];
-        const apiOrigin = rawGeneratorsConfiguration[API_ORIGIN_LOCATION_KEY];
-        const openapiOverrides = rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
-        const asyncapi = rawGeneratorsConfiguration[ASYNC_API_LOCATION_KEY];
-        const settings = rawGeneratorsConfiguration[API_SETTINGS_KEY];
+        const openapi = rawConfiguration[OPENAPI_LOCATION_KEY];
+        const apiOrigin = rawConfiguration[API_ORIGIN_LOCATION_KEY];
+        const openapiOverrides = rawConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
+        const asyncapi = rawConfiguration[ASYNC_API_LOCATION_KEY];
+        const settings = rawConfiguration[API_SETTINGS_KEY];
 
         if (openapi != null && typeof openapi === "string") {
             apiDefinitions.push({
@@ -234,9 +233,27 @@ async function parseAPIConfiguration(
         }
     }
 
+    return apiDefinitions
+}
+
+async function parseAPIConfiguration(
+    rawGeneratorsConfiguration: GeneratorsConfigurationSchema
+): Promise<APIDefinition> {
+    const apiConfiguration = rawGeneratorsConfiguration.api
+    if (isPlainObject(apiConfiguration) && "namespaced" in apiConfiguration) {
+        const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
+        for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaced)) {
+            namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(configuration, rawGeneratorsConfiguration);
+        }
+        return {
+            type: "multiNamespace",
+            definitions: namespacedDefinitions
+        };
+    }
+
     return {
         type: "singleNamespace",
-        definitions: apiDefinitions
+        definitions: apiConfiguration != null ? await parseAPIConfigurationToApiLocations(apiConfiguration, rawGeneratorsConfiguration) : []
     };
 }
 
