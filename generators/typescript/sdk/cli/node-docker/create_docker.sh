@@ -12,7 +12,7 @@ export GENERATOR_VERSION="$TAG"
 
 pnpm install
 pnpm compile
-yarn build:node
+pnpm build:node
 rm -rf "$DOCKER_DIR/dist"
 mv "$DOCKER_DIR/../dist" "$DOCKER_DIR/dist"
 
