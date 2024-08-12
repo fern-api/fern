@@ -65,6 +65,8 @@ jobs:
           cat package.json.tmp| sed "${version_replace}" > package.json
           rm -rf package.json.tmp
 
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
       - name: Update pnpm lock with new versions
         run: pnpm install
 
@@ -107,6 +109,8 @@ jobs:
           cat package.json.tmp| sed "${version_replace}" > package.json
           rm -rf package.json.tmp
 
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
       - name: Update pnpm lock with new versions
         run: pnpm install
 
@@ -146,11 +150,14 @@ jobs:
       - name: Add version to package.json's
         run: |
           git_version=${{ github.ref_name }}
+
           cd packages/cli/cli
           mv package.json package.json.tmp
           version_replace="s/0.0.0/${git_version}/"
           cat package.json.tmp| sed "${version_replace}" > package.json
           rm -rf package.json.tmp
+
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
 
       - name: Update pnpm lock with new versions
         run: pnpm install
