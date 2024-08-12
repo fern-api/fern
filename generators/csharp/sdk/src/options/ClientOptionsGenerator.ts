@@ -18,8 +18,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
 
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
-            name: CLIENT_OPTIONS_CLASS_NAME,
-            namespace: this.context.getCoreNamespace(),
+            ...this.context.getClientOptionsClassReference(),
             partial: true,
             access: "public"
         });
@@ -34,7 +33,8 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getCoreDirectory(),
-            allNamespaceSegmentsAndTypes: this.context.getAllNamespaceSegmentsAndTypes(),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace()
         });
     }

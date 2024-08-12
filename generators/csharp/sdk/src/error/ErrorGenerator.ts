@@ -47,7 +47,8 @@ export class ErrorGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSch
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getDirectoryForError(this.errorDeclaration.name),
-            allNamespaceSegmentsAndTypes: this.context.getAllNamespaceSegmentsAndTypes(),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace()
         });
     }

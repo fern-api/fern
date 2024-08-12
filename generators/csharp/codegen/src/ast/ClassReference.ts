@@ -96,13 +96,21 @@ export class ClassReference extends AstNode {
      * - Net -- Company.Net
      */
     private qualifiedTypeNameRequired(writer: Writer): boolean {
-        return (
-            writer.getAllNamespaceSegmentsAndTypes().has(this.name) ||
-            Array.from(writer.getAllNamespaceSegmentsAndTypes()).find(
-                (thing) =>
-                    thing instanceof ClassReference && thing.name === this.name && thing.namespace !== this.namespace
-            ) != null
-        );
+        return this.potentialConflictWithNamespaceSegment(writer) || this.potentialConflictWithGeneratedType(writer);
+    }
+
+    private potentialConflictWithNamespaceSegment(writer: Writer) {
+        return writer.getAllNamespaceSegmentsAndTypes().has(this.name);
+    }
+
+    private potentialConflictWithGeneratedType(writer: Writer) {
+        const matchingNamespaces = writer.getAllTypeClassReferences().get(this.name);
+        if (matchingNamespaces == null) {
+            return false;
+        }
+        const matchingNamespacesCopy = new Set(matchingNamespaces);
+        matchingNamespacesCopy.delete(this.namespace);
+        return matchingNamespacesCopy.size > 0;
     }
 }
 

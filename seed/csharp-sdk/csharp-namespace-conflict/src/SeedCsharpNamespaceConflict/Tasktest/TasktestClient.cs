@@ -5,7 +5,7 @@ using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict;
 
-public class TasktestClient
+public partial class TasktestClient
 {
     private RawClient _client;
 

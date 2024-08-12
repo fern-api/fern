@@ -4,7 +4,7 @@ using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict.B;
 
-public class BClient
+public partial class BClient
 {
     private RawClient _client;
 

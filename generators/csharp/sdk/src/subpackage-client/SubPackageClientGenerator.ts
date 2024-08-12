@@ -38,7 +38,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
             ...this.classReference,
-            partial: false,
+            partial: true,
             access: "public"
         });
 
@@ -77,7 +77,8 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         return new CSharpFile({
             clazz: class_,
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
-            allNamespaceSegmentsAndTypes: this.context.getAllNamespaceSegmentsAndTypes(),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace()
         });
     }

@@ -1,8 +1,10 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
-import { Class, ClassReference, Enum } from "../ast";
+import { Class, Enum } from "../ast";
 import { File } from "./File";
+
+export type Namespace = string;
 
 export declare namespace CSharpFile {
     interface Args {
@@ -11,18 +13,20 @@ export declare namespace CSharpFile {
         /* Directory of the filepath */
         directory: RelativeFilePath;
         /* All base namespaces. Can be pulled directly from context. */
-        allNamespaceSegmentsAndTypes: Set<string | ClassReference>;
+        allNamespaceSegments: Set<string>;
+        /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
+        allTypeClassReferences: Map<string, Set<Namespace>>;
         /* The root namespace of the project. Can be pulled directly from context. */
         namespace: string;
     }
 }
 
 export class CSharpFile extends File {
-    constructor({ clazz, directory, allNamespaceSegmentsAndTypes, namespace }: CSharpFile.Args) {
+    constructor({ clazz, directory, allNamespaceSegments, allTypeClassReferences, namespace }: CSharpFile.Args) {
         super(
             `${clazz.name}.cs`,
             directory,
-            clazz.toString(clazz.getNamespace(), allNamespaceSegmentsAndTypes, namespace)
+            clazz.toString(clazz.getNamespace(), allNamespaceSegments, allTypeClassReferences, namespace)
         );
     }
 

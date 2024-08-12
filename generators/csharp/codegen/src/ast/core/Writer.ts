@@ -11,7 +11,9 @@ export declare namespace Writer {
         /* The namespace that is being written to */
         namespace: string;
         /* All base namespaces in the project */
-        allNamespaceSegmentsAndTypes: Set<string | ClassReference>;
+        allNamespaceSegments: Set<string>;
+        /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
+        allTypeClassReferences: Map<string, Set<Namespace>>;
         /* The root namespace of the project */
         rootNamespace: string;
     }
@@ -31,13 +33,16 @@ export class Writer {
     /* The namespace that is being written to */
     private namespace: string;
     /* All base namespaces in the project */
-    private allNamespaceSegmentsAndTypes: Set<string | ClassReference>;
+    private allNamespaceSegments: Set<string>;
+    /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
+    private allTypeClassReferences: Map<string, Set<Namespace>>;
     /* The root namespace of the project */
     private rootNamespace: string;
 
-    constructor({ namespace, allNamespaceSegmentsAndTypes, rootNamespace }: Writer.Args) {
+    constructor({ namespace, allNamespaceSegments, allTypeClassReferences, rootNamespace }: Writer.Args) {
         this.namespace = namespace;
-        this.allNamespaceSegmentsAndTypes = allNamespaceSegmentsAndTypes;
+        this.allNamespaceSegments = allNamespaceSegments;
+        this.allTypeClassReferences = allTypeClassReferences;
         this.rootNamespace = rootNamespace;
     }
 
@@ -142,8 +147,12 @@ export class Writer {
         }
     }
 
+    public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
+        return this.allTypeClassReferences;
+    }
+
     public getAllNamespaceSegmentsAndTypes(): Set<string | ClassReference> {
-        return this.allNamespaceSegmentsAndTypes;
+        return this.allNamespaceSegments;
     }
 
     public getRootNamespace(): string {

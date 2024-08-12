@@ -1,4 +1,3 @@
-import { ClassReference } from "../ClassReference";
 import { Writer } from "./Writer";
 
 type Namespace = string;
@@ -14,12 +13,14 @@ export abstract class AstNode {
      */
     public toString(
         namespace: string,
-        allNamespaceSegmentsAndTypes: Set<string | ClassReference>,
+        allNamespaceSegments: Set<string>,
+        allTypeClassReferences: Map<string, Set<Namespace>>,
         rootNamespace: string
     ): string {
         const writer = new Writer({
             namespace,
-            allNamespaceSegmentsAndTypes,
+            allNamespaceSegments,
+            allTypeClassReferences,
             rootNamespace
         });
         this.write(writer);

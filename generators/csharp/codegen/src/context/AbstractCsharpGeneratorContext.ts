@@ -19,9 +19,9 @@ import {
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
-import { ClassReference } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
+import { Namespace } from "../project/CSharpFile";
 import { CORE_DIRECTORY_NAME } from "../project/CsharpProject";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
@@ -32,7 +32,8 @@ export abstract class AbstractCsharpGeneratorContext<
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
-    private allNamespaceSegmentsAndTypes?: Set<string | ClassReference>;
+    private allNamespaceSegments?: Set<string>;
+    private allTypeClassReferences?: Map<string, Set<Namespace>>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -77,24 +78,34 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
-    public getAllNamespaceSegmentsAndTypes(): Set<string | ClassReference> {
-        if (this.allNamespaceSegmentsAndTypes == null) {
-            this.allNamespaceSegmentsAndTypes = new Set(
+    public getAllNamespaceSegments(): Set<string> {
+        if (this.allNamespaceSegments == null) {
+            this.allNamespaceSegments = new Set(
                 Object.values(this.ir.subpackages).flatMap((subpackage) =>
                     this.getFullNamespaceSegments(subpackage.fernFilepath)
                 )
             );
         }
-        return this.allNamespaceSegmentsAndTypes;
+        return this.allNamespaceSegments;
     }
 
-    public getAllClassReferencesForTypes(): Map<string, string> {
-        return new Map(
-            Object.values(this.ir.types).map((typeDeclaration) => {
+    public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
+        if (this.allTypeClassReferences == null) {
+            const resultMap = new Map<string, Set<string>>();
+            Object.values(this.ir.types).forEach((typeDeclaration) => {
                 const classReference = this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
-                return [classReference.name, classReference.namespace];
-            })
-        );
+                const key = classReference.name;
+                const value = classReference.namespace;
+
+                if (!resultMap.has(key)) {
+                    resultMap.set(key, new Set<string>());
+                }
+
+                resultMap.get(key)?.add(value);
+            });
+            this.allTypeClassReferences = resultMap;
+        }
+        return this.allTypeClassReferences;
     }
 
     public getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {

@@ -5,7 +5,7 @@ using SeedCsharpNamespaceConflict.Core;
 
 namespace SeedCsharpNamespaceConflict.A;
 
-public class AClient
+public partial class AClient
 {
     private RawClient _client;
 
