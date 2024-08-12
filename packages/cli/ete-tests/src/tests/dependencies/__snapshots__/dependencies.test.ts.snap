@@ -871,9 +871,6 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-<<<<<<< HEAD
-exports[`dependencies file dependencies 1`] = `3044676`;
-=======
 exports[`dependencies > file dependencies 1`] = `3037640`;
 
 exports[`dependencies correctly incorporates dependencies 1`] = `
@@ -1748,4 +1745,3 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 `;
 
 exports[`dependencies file dependencies 1`] = `3037640`;
->>>>>>> main
