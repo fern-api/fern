@@ -3,6 +3,7 @@ import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuratio
 import { createFdrService } from "@fern-api/core";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { SourceConfig } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -11,6 +12,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
+import { SourceUploader } from "./SourceUploader";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -57,15 +59,29 @@ export async function runRemoteGenerationForGenerator({
         version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation }))
     });
 
+    const sourceUploader = new SourceUploader(interactiveTaskContext, workspace);
+    const sources = sourceUploader.getFdrApiDefinitionSources();
+
     const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig: {} });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: organization,
         apiId: ir.apiName.originalName,
-        definition: apiDefinition
+        definition: apiDefinition,
+        sources
     });
+
     let fdrApiDefinitionId;
+    let sourceUploads;
     if (response.ok) {
         fdrApiDefinitionId = response.body.apiDefinitionId;
+        sourceUploads = response.body.sources;
+    }
+
+    if (sourceUploads != null) {
+        const sourceConfig = await uploadSources({ context: interactiveTaskContext, sourceUploader, sourceUploads });
+
+        interactiveTaskContext.logger.debug(`Setting IR source configuration ...`);
+        ir.sourceConfig = sourceConfig;
     }
 
     const job = await createAndStartJob({
@@ -160,4 +176,25 @@ async function computeSemanticVersion({
         return undefined;
     }
     return response.body.version;
+}
+
+async function uploadSources({
+    context,
+    sourceUploader,
+    sourceUploads
+}: {
+    context: InteractiveTaskContext;
+    sourceUploader: SourceUploader;
+    sourceUploads: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload>;
+}): Promise<SourceConfig> {
+    if (sourceUploads == null && sourceUploader.getSourceTypes().has("protobuf")) {
+        // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
+        // files are required for successful code generation.
+        context.failAndThrow("Did not successfully upload Protobuf source files.");
+    }
+
+    context.logger.debug(`Uploading source files ...`);
+    await sourceUploader.uploadSources(sourceUploads);
+
+    return sourceUploader.convertFdrSourceUploadsToSourceConfig(sourceUploads);
 }
