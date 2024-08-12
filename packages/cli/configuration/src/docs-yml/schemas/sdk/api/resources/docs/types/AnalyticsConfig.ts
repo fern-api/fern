@@ -8,4 +8,17 @@ export interface AnalyticsConfig {
     segment?: FernDocsConfig.SegmentConfig;
     fullstory?: FernDocsConfig.FullStoryAnalyticsConfig;
     intercom?: FernDocsConfig.IntercomConfig;
+    posthog?: FernDocsConfig.PostHogConfig;
+    gtm?: FernDocsConfig.GtmConfig;
+    ga4?: FernDocsConfig.GoogleAnalytics4Config;
+    amplitude?: FernDocsConfig.AmplitudeConfig;
+    mixpanel?: FernDocsConfig.MixpanelConfig;
+    hotjar?: FernDocsConfig.HotJarConfig;
+    koala?: FernDocsConfig.KoalaConfig;
+    logrocket?: FernDocsConfig.LogRocketConfig;
+    pirsch?: FernDocsConfig.PirschConfig;
+    plausible?: FernDocsConfig.PlausibleConfig;
+    fathom?: FernDocsConfig.FathomConfig;
+    clearbit?: FernDocsConfig.ClearBitConfig;
+    heap?: FernDocsConfig.HeapConfig;
 }

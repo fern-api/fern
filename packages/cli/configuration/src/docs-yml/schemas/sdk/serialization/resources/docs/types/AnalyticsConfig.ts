@@ -15,6 +15,19 @@ export const AnalyticsConfig: core.serialization.ObjectSchema<
         .lazyObject(async () => (await import("../../..")).FullStoryAnalyticsConfig)
         .optional(),
     intercom: core.serialization.lazyObject(async () => (await import("../../..")).IntercomConfig).optional(),
+    posthog: core.serialization.lazyObject(async () => (await import("../../..")).PostHogConfig).optional(),
+    gtm: core.serialization.lazyObject(async () => (await import("../../..")).GtmConfig).optional(),
+    ga4: core.serialization.lazyObject(async () => (await import("../../..")).GoogleAnalytics4Config).optional(),
+    amplitude: core.serialization.lazyObject(async () => (await import("../../..")).AmplitudeConfig).optional(),
+    mixpanel: core.serialization.lazyObject(async () => (await import("../../..")).MixpanelConfig).optional(),
+    hotjar: core.serialization.lazyObject(async () => (await import("../../..")).HotJarConfig).optional(),
+    koala: core.serialization.lazyObject(async () => (await import("../../..")).KoalaConfig).optional(),
+    logrocket: core.serialization.lazyObject(async () => (await import("../../..")).LogRocketConfig).optional(),
+    pirsch: core.serialization.lazyObject(async () => (await import("../../..")).PirschConfig).optional(),
+    plausible: core.serialization.lazyObject(async () => (await import("../../..")).PlausibleConfig).optional(),
+    fathom: core.serialization.lazyObject(async () => (await import("../../..")).FathomConfig).optional(),
+    clearbit: core.serialization.lazyObject(async () => (await import("../../..")).ClearBitConfig).optional(),
+    heap: core.serialization.lazyObject(async () => (await import("../../..")).HeapConfig).optional(),
 });
 
 export declare namespace AnalyticsConfig {
@@ -22,5 +35,18 @@ export declare namespace AnalyticsConfig {
         segment?: serializers.SegmentConfig.Raw | null;
         fullstory?: serializers.FullStoryAnalyticsConfig.Raw | null;
         intercom?: serializers.IntercomConfig.Raw | null;
+        posthog?: serializers.PostHogConfig.Raw | null;
+        gtm?: serializers.GtmConfig.Raw | null;
+        ga4?: serializers.GoogleAnalytics4Config.Raw | null;
+        amplitude?: serializers.AmplitudeConfig.Raw | null;
+        mixpanel?: serializers.MixpanelConfig.Raw | null;
+        hotjar?: serializers.HotJarConfig.Raw | null;
+        koala?: serializers.KoalaConfig.Raw | null;
+        logrocket?: serializers.LogRocketConfig.Raw | null;
+        pirsch?: serializers.PirschConfig.Raw | null;
+        plausible?: serializers.PlausibleConfig.Raw | null;
+        fathom?: serializers.FathomConfig.Raw | null;
+        clearbit?: serializers.ClearBitConfig.Raw | null;
+        heap?: serializers.HeapConfig.Raw | null;
     }
 }

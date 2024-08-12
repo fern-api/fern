@@ -26,6 +26,19 @@ types:
       segment: optional<SegmentConfig>
       fullstory: optional<FullStoryAnalyticsConfig>
       intercom: optional<IntercomConfig>
+      posthog: optional<PostHogConfig>
+      gtm: optional<GTMConfig>
+      ga4: optional<GoogleAnalytics4Config>
+      amplitude: optional<AmplitudeConfig>
+      mixpanel: optional<MixpanelConfig>
+      hotjar: optional<HotJarConfig>
+      koala: optional<KoalaConfig>
+      logrocket: optional<LogRocketConfig>
+      pirsch: optional<PirschConfig>
+      plausible: optional<PlausibleConfig>
+      fathom: optional<FathomConfig>
+      clearbit: optional<ClearBitConfig>
+      heap: optional<HeapConfig>
 
   SegmentConfig:
     properties:
@@ -38,6 +51,60 @@ types:
   IntercomConfig:
     properties:
       access-token: string
+
+  PostHogConfig:
+    properties:
+      apiKey: string
+      endpoint: optional<string>
+
+  GTMConfig:
+    properties:
+      containerId: string
+
+  GoogleAnalytics4Config:
+    properties:
+      measurementId: string
+
+  AmplitudeConfig:
+    properties:
+      apiKey: string
+
+  MixpanelConfig:
+    properties:
+      apiKey: string
+
+  HotJarConfig:
+    properties:
+      hjid: string
+      hjsv: string
+
+  KoalaConfig:
+    properties:
+      apiKey: string
+
+  LogRocketConfig:
+    properties:
+      apiKey: string
+
+  PirschConfig:
+    properties:
+      id: string
+
+  PlausibleConfig:
+    properties:
+      domain: string
+
+  FathomConfig:
+    properties:
+      siteId: string
+
+  ClearBitConfig:
+    properties:
+      apiKey: string
+
+  HeapConfig:
+    properties:
+      appId: string
       
   DocsConfiguration:
     properties:
