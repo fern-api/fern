@@ -14,7 +14,7 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
                         {
                             severity: "error",
                             message:
-                                "Cannot specify playground environments if there are no environments supplied in the API specification."
+                                `${playgroundEnvironmentIds.join(", ")} are not valid environments`
                         }
                     ];
                 }
@@ -26,7 +26,7 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
                 .filter((id) => !availableEnvironmentIds.has(id))
                 .map((id) => ({
                     severity: "error",
-                    message: `Invalid environment id supplied in playground settings: ${id}`
+                    message: `${invalidEnvironmentIds.join(", ")} are not valid environments. Choose from ${availableEnvironmentIds.join(", ")}`
                 }));
 
             return violations;
