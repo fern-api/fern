@@ -180,6 +180,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
@@ -195,6 +198,9 @@ importers:
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   generators/csharp/codegen:
     dependencies:
