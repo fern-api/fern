@@ -24,10 +24,20 @@ types:
   AnalyticsConfig:
     properties:
       segment: optional<SegmentConfig>
+      fullstory: optional<FullStoryAnalyticsConfig>
+      intercom: optional<IntercomConfig>
 
   SegmentConfig:
     properties:
       write-key: string
+
+  FullStoryAnalyticsConfig:
+    properties:
+      api-key: string
+
+  IntercomConfig:
+    properties:
+      access-token: string
       
   DocsConfiguration:
     properties:
