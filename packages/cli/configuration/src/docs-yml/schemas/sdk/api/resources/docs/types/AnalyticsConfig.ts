@@ -6,4 +6,6 @@ import * as FernDocsConfig from "../../..";
 
 export interface AnalyticsConfig {
     segment?: FernDocsConfig.SegmentConfig;
+    fullstory?: FernDocsConfig.FullStoryAnalyticsConfig;
+    intercom?: FernDocsConfig.IntercomConfig;
 }
