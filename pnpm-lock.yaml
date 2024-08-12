@@ -3177,19 +3177,6 @@ importers:
         specifier: 4.6.4
         version: 4.6.4
 
-  packages/cli/cli/dist/dev: {}
-
-  packages/cli/cli/dist/local:
-    devDependencies:
-      globals:
-        specifier: link:@types/vitest/globals
-        version: link:@types/vitest/globals
-      vitest:
-        specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
-
-  packages/cli/cli/dist/prod: {}
-
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -3327,8 +3314,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-resolver
       '@fern-api/fdr-sdk':
-        specifier: 0.98.20-33071ab6e
-        version: 0.98.20-33071ab6e(typescript@4.6.4)
+        specifier: 0.98.20-86eba53a1
+        version: 0.98.20-86eba53a1(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -3427,8 +3414,8 @@ importers:
         specifier: workspace:*
         version: link:../docs-markdown-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.98.20-33071ab6e
-        version: 0.98.20-33071ab6e(typescript@4.6.4)
+        specifier: 0.98.20-86eba53a1
+        version: 0.98.20-86eba53a1(typescript@4.6.4)
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -4017,6 +4004,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../logger
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../../../commons/logging-execa
       '@fern-api/register':
         specifier: workspace:*
         version: link:../../../register
@@ -4633,8 +4623,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons/core-utils
       '@fern-api/fdr-sdk':
-        specifier: 0.98.20-33071ab6e
-        version: 0.98.20-33071ab6e(typescript@4.6.4)
+        specifier: 0.98.20-86eba53a1
+        version: 0.98.20-86eba53a1(typescript@4.6.4)
       '@fern-api/ir-generator':
         specifier: workspace:*
         version: link:../generation/ir-generator
@@ -6689,8 +6679,8 @@ packages:
   '@exodus/schemasafe@1.0.0':
     resolution: {integrity: sha512-2cyupPIZI69HQxEAPllLXBjQp4njDKkOjYRCYxvMZe3/LY9pp9fBM3Tb1wiFAdP6Emo4v3OEbCLGj6u73Q5KLw==}
 
-  '@fern-api/fdr-sdk@0.98.20-33071ab6e':
-    resolution: {integrity: sha512-dvyh7sDjWw1Zs8LRlLVxm2SKChH5ZY0wbybe4c2+I64i7Voy3/YQ9J03nx9IrMtsrbifiTDDtj6IxSJycsUeVA==}
+  '@fern-api/fdr-sdk@0.98.20-86eba53a1':
+    resolution: {integrity: sha512-gQsTxrmG69hE/W68e3RpS0Jiq+hD1OPwwEgPi7EjFHcUy0Ru9WlSDOGJ0Uv1WsS84AHAz84OrUs+KEQwUwDeyA==}
 
   '@fern-api/venus-api-sdk@0.0.38':
     resolution: {integrity: sha512-1JjuctZwyPu4jN51bBqjIy+uCBPGa/ROcDfqN0UnGeVEW7NyztkGh/qOFwnN6K07VMMql1AIF4Zov+MVqTPwmw==}
@@ -13712,7 +13702,7 @@ snapshots:
 
   '@exodus/schemasafe@1.0.0': {}
 
-  '@fern-api/fdr-sdk@0.98.20-33071ab6e(typescript@4.6.4)':
+  '@fern-api/fdr-sdk@0.98.20-86eba53a1(typescript@4.6.4)':
     dependencies:
       dayjs: 1.11.11
       fast-deep-equal: 3.1.3
