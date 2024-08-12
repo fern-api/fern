@@ -16,10 +16,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "pnpm"
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Check versions
         run: |
