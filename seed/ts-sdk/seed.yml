@@ -1,14 +1,14 @@
 irVersion: v53
 docker: fernapi/fern-typescript-node-sdk:local
-dockerCommand: yarn workspace @fern-typescript/sdk-generator-cli dockerTagLocal:node
+dockerCommand: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
 language: typescript
 generatorType: SDK
 defaultOutputMode: github
 local:
   workingDirectory: generators/typescript
   buildCommand:
-    - yarn workspace @fern-typescript/sdk-generator-cli compile
-    - yarn workspace @fern-typescript/sdk-generator-cli build:node
+    - pnpm --filter @fern-typescript/sdk-generator-cli compile
+    - pnpm --filter @fern-typescript/sdk-generator-cli build:node
   runCommand: node sdk/cli/dist/nodeCli.cjs
   env:
     NODE_ENV: test

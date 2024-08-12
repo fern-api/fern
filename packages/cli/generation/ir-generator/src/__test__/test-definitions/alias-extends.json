@@ -125,7 +125,10 @@
             "referencedTypes": [
                 "type_:Parent"
             ],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -338,7 +341,10 @@
                 "extendedProperties": []
             },
             "referencedTypes": [],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -581,7 +587,10 @@
             "referencedTypes": [
                 "type_:Parent"
             ],
-            "encoding": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
             "source": null,
             "userProvidedExamples": [
                 {
@@ -765,8 +774,13 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": null,
-            "transport": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_.extendedInlineRequestBody",
@@ -1132,7 +1146,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "2aae178dd3a5b6259e23f15455b2a5778d924838",
+                                "id": "2d1301d7e98e665299fcbb884ae3526729ab6861",
                                 "docs": null
                             }
                         }

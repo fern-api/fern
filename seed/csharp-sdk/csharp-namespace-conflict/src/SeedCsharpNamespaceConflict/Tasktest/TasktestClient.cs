@@ -9,7 +9,7 @@ public partial class TasktestClient
 {
     private RawClient _client;
 
-    public TasktestClient(RawClient client)
+    internal TasktestClient(RawClient client)
     {
         _client = client;
     }
@@ -33,7 +33,7 @@ public partial class TasktestClient
         throw new SeedCsharpNamespaceConflictApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

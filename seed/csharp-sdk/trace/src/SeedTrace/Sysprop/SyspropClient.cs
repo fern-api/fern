@@ -7,11 +7,11 @@ using SeedTrace.Core;
 
 namespace SeedTrace;
 
-public class SyspropClient
+public partial class SyspropClient
 {
     private RawClient _client;
 
-    public SyspropClient(RawClient client)
+    internal SyspropClient(RawClient client)
     {
         _client = client;
     }
@@ -39,7 +39,7 @@ public class SyspropClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -72,7 +72,7 @@ public class SyspropClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

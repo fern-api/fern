@@ -23,13 +23,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
 
       - name: Generate preview URL
         id: generate-docs
@@ -39,8 +34,8 @@ jobs:
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
-          yarn workspace @fern-api/cli dist:cli:prod
-          cli_path="$(yarn workspace @fern-api/cli bin fern:prod)"
+          pnpm --filter @fern-api/cli dist:cli:prod
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs" 
           OUTPUT=$(node $cli_path generate --docs --preview --instance fern.docs.buildwithfern.com/learn 2>&1) || true
           echo "$OUTPUT"
           URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')

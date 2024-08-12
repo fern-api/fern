@@ -17,7 +17,7 @@ describe("class reference", () => {
                 )
             ]
         });
-        expect(clazz.toString("", new Set<string>(), new Map<string, Set<string>>(), "")).toContain(
+        expect(clazz.toString("", new Set<string>(), new Map<string, Set<string>>(), "", {})).toContain(
             "OneOf<string, bool, List<string>>"
         );
     });

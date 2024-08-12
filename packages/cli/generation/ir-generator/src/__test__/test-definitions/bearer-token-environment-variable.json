@@ -111,8 +111,13 @@
             },
             "headers": [],
             "pathParameters": [],
-            "encoding": null,
-            "transport": null,
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
             "endpoints": [
                 {
                     "id": "endpoint_service.getWithBearerToken",
@@ -207,7 +212,7 @@
                                         }
                                     }
                                 },
-                                "id": "e30fd4387a403719017c1c14f2a5554a87c42450",
+                                "id": "2bc4a461b9978e50a9000875a914301056df33ff",
                                 "docs": null
                             }
                         }

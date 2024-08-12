@@ -79,13 +79,14 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
             directory: RelativeFilePath.of(this.context.getDirectoryForSubpackage(this.subpackage)),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace()
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 
     private getConstructorMethod(): csharp.Class.Constructor {
         return {
-            access: "public",
+            access: "internal",
             parameters: [
                 csharp.parameter({
                     name: "client",

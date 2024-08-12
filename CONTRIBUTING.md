@@ -65,7 +65,7 @@ This tells VSCode to rely on the version of TypeScript that lives in `.yarn/sdks
 
 ### Compiling
 
-To compile the packages in this monorepo, run `yarn compile`.
+To compile the packages in this monorepo, run `pnpm compile`.
 
 ### Tests
 
@@ -81,9 +81,9 @@ Many of our tests rely on [Jest snapshot testing](https://jestjs.io/docs/snapsho
 
 To build the CLI, run either:
 
-- `yarn dist:cli:dev`. This compiles and bundles a CLI that communicates with our dev cloud environment. The CLI is outputted to `packages/cli/cli/dist/dev/cli.cjs`.
+- `pnpm dist:cli:dev`. This compiles and bundles a CLI that communicates with our dev cloud environment. The CLI is outputted to `packages/cli/cli/dist/dev/cli.cjs`.
 
-- `yarn dist:cli:prod`. This compiles and bundles a CLI that communicates with our production cloud environment. The CLI is outputted to `packages/cli/cli/dist/prod/cli.cjs`.
+- `pnpm dist:cli:prod`. This compiles and bundles a CLI that communicates with our production cloud environment. The CLI is outputted to `packages/cli/cli/dist/prod/cli.cjs`.
 
 To run the locally-generated CLI, run:
 
@@ -129,7 +129,7 @@ that depends on a lower IR version can continue to be run from our CLI.
 3. Generate a TypeScript SDK for the IR by running `fern generate --api ir-types-vXXX`
 4. Update all `package.json` files to use new `ir-sdk` npm version.
    Run `yarn install`
-5. Run `yarn compile`. You will see compile errors related to your schema changes.
+5. Run `pnpm compile`. You will see compile errors related to your schema changes.
 
 **Step 2: Write a reverse migration**
 
@@ -180,7 +180,7 @@ specific API that you are looking to generate:
 yarn seed run --generator ts-sdk --path /Users/jdoe/fern/apis/imdb
 ```
 
-To run against a custom fixture with an audience, run 
+To run against a custom fixture with an audience, run
 
 ```sh
 yarn seed run --generator ts-sdk --path /Users/jdoe/fern/apis/imdb --audience external

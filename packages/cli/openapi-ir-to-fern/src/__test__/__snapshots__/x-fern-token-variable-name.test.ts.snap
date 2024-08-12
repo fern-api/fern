@@ -1,4 +1,194 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`x-fern-token-variable-name > x-fern-token-variable-name > docs 1`] = `
+{
+  "definitionFiles": {
+    "chatCompletions.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "request": {
+                  "prompt": "prompt",
+                },
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
+            "method": "POST",
+            "pagination": undefined,
+            "path": "/completions/chat",
+            "request": {
+              "body": {
+                "properties": {
+                  "prompt": "string",
+                  "stream": "optional<boolean>",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCompletionRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success!",
+              "type": "string",
+            },
+          },
+        },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Completion": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
+      },
+      "CompletionChunk": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+        "token": {
+          "name": "apiKey",
+        },
+      },
+    },
+    "display-name": "Test extension \`x-fern-token-variable-name\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "headers": {
+      "X-API-Key": {
+        "env": undefined,
+        "name": "apiKey",
+        "type": "string",
+      },
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-token-variable-name > x-fern-token-variable-name > simple 1`] = `
+{
+  "definitionFiles": {
+    "chatCompletions.yml": {
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "create": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "request": {
+                  "prompt": "prompt",
+                },
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
+            "method": "POST",
+            "pagination": undefined,
+            "path": "/completions/chat",
+            "request": {
+              "body": {
+                "properties": {
+                  "prompt": "string",
+                  "stream": "optional<boolean>",
+                },
+              },
+              "headers": undefined,
+              "name": "CreateCompletionRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "Success!",
+              "type": "string",
+            },
+          },
+        },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Completion": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
+      },
+      "CompletionChunk": {
+        "docs": undefined,
+        "properties": {
+          "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+        "token": {
+          "name": "apiKey",
+        },
+      },
+    },
+    "display-name": "Test extension \`x-fern-token-variable-name\`.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "headers": {
+      "X-API-Key": {
+        "env": undefined,
+        "name": "apiKey",
+        "type": "string",
+      },
+    },
+    "name": "api",
+  },
+}
+`;
 
 exports[`x-fern-token-variable-name x-fern-token-variable-name docs 1`] = `
 {
@@ -41,6 +231,9 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
       },
     },
   },
@@ -51,11 +244,17 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name docs 1`] = `
         "properties": {
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
         },
       },
     },
@@ -127,6 +326,9 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
       },
     },
   },
@@ -137,11 +339,17 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name simple 1`] = `
         "properties": {
           "text": "optional<string>",
         },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
+        },
       },
       "CompletionChunk": {
         "docs": undefined,
         "properties": {
           "text": "optional<string>",
+        },
+        "source": {
+          "openapi": "x-fern-token-variable-name/openapi.yml",
         },
       },
     },

@@ -1,16 +1,17 @@
 using System.Net.Http;
 using System.Threading.Tasks;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 
 #nullable enable
 
 namespace SeedExhaustive.ReqWithHeaders;
 
-public class ReqWithHeadersClient
+public partial class ReqWithHeadersClient
 {
     private RawClient _client;
 
-    public ReqWithHeadersClient(RawClient client)
+    internal ReqWithHeadersClient(RawClient client)
     {
         _client = client;
     }
@@ -43,7 +44,7 @@ public class ReqWithHeadersClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

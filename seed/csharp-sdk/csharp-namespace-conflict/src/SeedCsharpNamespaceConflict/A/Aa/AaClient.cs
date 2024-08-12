@@ -8,7 +8,7 @@ public partial class AaClient
 {
     private RawClient _client;
 
-    public AaClient(RawClient client)
+    internal AaClient(RawClient client)
     {
         _client = client;
     }

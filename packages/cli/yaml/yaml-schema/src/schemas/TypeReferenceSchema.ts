@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { DeclarationSchema } from "./DeclarationSchema";
 import { DeclarationWithNameSchema } from "./DeclarationWithNameSchema";
+import { EncodingSchema } from "./EncodingSchema";
 import { ValidationSchema } from "./ValidationSchema";
 import { WithDocsAndAvailabilitySchema } from "./WithDocsAndAvailability";
 import { WithDocsSchema } from "./WithDocsSchema";
@@ -14,6 +15,7 @@ export function extendTypeReferenceSchema<T extends z.ZodRawShape>(extension: T)
             .strictObject({
                 type: z.string(),
                 default: z.unknown().optional(),
+                encoding: z.optional(EncodingSchema),
                 validation: z.optional(ValidationSchema)
             })
             .extend(extension)

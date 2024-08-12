@@ -27,7 +27,8 @@ export class TestFileGenerator extends FileGenerator<
             directory: RelativeFilePath.of(""),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace()
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 }

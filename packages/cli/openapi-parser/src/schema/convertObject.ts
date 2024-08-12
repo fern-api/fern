@@ -1,13 +1,15 @@
 import {
     AllOfPropertyConflict,
     Availability,
+    Encoding,
     NamedFullExample,
     ObjectPropertyConflictInfo,
     ObjectPropertyWithExample,
     ReferencedSchema,
     SchemaId,
     SchemaWithExample,
-    SdkGroupName
+    SdkGroupName,
+    Source
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
@@ -41,7 +43,9 @@ export function convertObject({
     groupName,
     fullExamples,
     additionalProperties,
-    availability
+    availability,
+    encoding,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -57,6 +61,8 @@ export function convertObject({
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     availability: Availability | undefined;
+    encoding: Encoding | undefined;
+    source: Source;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
@@ -77,7 +83,13 @@ export function convertObject({
                     const resolvedOneOfSchema = isReferenceObject(oneOfSchema)
                         ? context.resolveSchemaReference(oneOfSchema)
                         : oneOfSchema;
-                    const convertedOneOfSchema = convertSchema(resolvedOneOfSchema, false, context.DUMMY, breadcrumbs);
+                    const convertedOneOfSchema = convertSchema(
+                        resolvedOneOfSchema,
+                        false,
+                        context.DUMMY,
+                        breadcrumbs,
+                        source
+                    );
                     if (convertedOneOfSchema.type === "object") {
                         inlinedParentProperties.push(
                             ...convertedOneOfSchema.properties.map((property) => {
@@ -109,12 +121,12 @@ export function convertObject({
             }
             parents.push({
                 schemaId,
-                convertedSchema: convertToReferencedSchema(allOfElement, [schemaId]),
-                properties: getAllProperties({ schema: allOfElement, context, breadcrumbs })
+                convertedSchema: convertToReferencedSchema(allOfElement, [schemaId], source),
+                properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source })
             });
             context.markSchemaAsReferencedByNonRequest(schemaId);
         } else {
-            const allOfSchema = convertSchema(allOfElement, false, context, breadcrumbs);
+            const allOfSchema = convertSchema(allOfElement, false, context, breadcrumbs, source);
             if (allOfSchema.type === "object") {
                 inlinedParentProperties.push(...allOfSchema.properties);
             }
@@ -162,13 +174,13 @@ export function convertObject({
             const propertyBreadcrumbs = [...breadcrumbs, propertyName];
             const generatedName = getGeneratedPropertyName(propertyBreadcrumbs);
             const schema = isRequired
-                ? convertSchema(propertySchema, false, context, propertyBreadcrumbs)
+                ? convertSchema(propertySchema, false, context, propertyBreadcrumbs, source)
                 : SchemaWithExample.optional({
                       nameOverride,
                       generatedName,
                       description: undefined,
                       availability,
-                      value: convertSchema(propertySchema, false, context, propertyBreadcrumbs),
+                      value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source),
                       groupName
                   });
 
@@ -225,7 +237,8 @@ export function convertObject({
         groupName,
         fullExamples,
         additionalProperties,
-        availability
+        availability,
+        source
     });
 }
 
@@ -240,7 +253,8 @@ export function wrapObject({
     groupName,
     fullExamples,
     additionalProperties,
-    availability
+    availability,
+    source
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -253,6 +267,7 @@ export function wrapObject({
     fullExamples: undefined | NamedFullExample[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     availability: Availability | undefined;
+    source: Source;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -268,7 +283,8 @@ export function wrapObject({
                 groupName,
                 fullExamples,
                 additionalProperties: isAdditionalPropertiesAny(additionalProperties),
-                availability: undefined
+                availability: undefined,
+                source
             }),
             description,
             availability,
@@ -285,18 +301,21 @@ export function wrapObject({
         groupName,
         fullExamples,
         additionalProperties: isAdditionalPropertiesAny(additionalProperties),
-        availability
+        availability,
+        source
     });
 }
 
 function getAllProperties({
     schema,
     context,
-    breadcrumbs
+    breadcrumbs,
+    source
 }: {
     schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     context: SchemaParserContext;
     breadcrumbs: string[];
+    source: Source;
 }): Record<string, SchemaWithExample> {
     let properties: Record<string, SchemaWithExample> = {};
     const [resolvedSchema, resolvedBreadCrumbs] = isReferenceObject(schema)
@@ -305,14 +324,17 @@ function getAllProperties({
     for (const allOfElement of resolvedSchema.allOf ?? []) {
         properties = {
             ...properties,
-            ...getAllProperties({ schema: allOfElement, context, breadcrumbs: resolvedBreadCrumbs })
+            ...getAllProperties({ schema: allOfElement, context, breadcrumbs: resolvedBreadCrumbs, source })
         };
     }
     for (const [propertyName, propertySchema] of Object.entries(resolvedSchema.properties ?? {})) {
-        const convertedPropertySchema = convertSchema(propertySchema, false, context, [
-            ...resolvedBreadCrumbs,
-            propertyName
-        ]);
+        const convertedPropertySchema = convertSchema(
+            propertySchema,
+            false,
+            context,
+            [...resolvedBreadCrumbs, propertyName],
+            source
+        );
         properties[propertyName] = convertedPropertySchema;
     }
     return properties;

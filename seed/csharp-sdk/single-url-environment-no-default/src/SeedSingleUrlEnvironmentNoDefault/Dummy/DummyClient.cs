@@ -6,11 +6,11 @@ using SeedSingleUrlEnvironmentNoDefault.Core;
 
 namespace SeedSingleUrlEnvironmentNoDefault;
 
-public class DummyClient
+public partial class DummyClient
 {
     private RawClient _client;
 
-    public DummyClient(RawClient client)
+    internal DummyClient(RawClient client)
     {
         _client = client;
     }
@@ -45,7 +45,7 @@ public class DummyClient
         throw new SeedSingleUrlEnvironmentNoDefaultApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

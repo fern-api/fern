@@ -1,9 +1,10 @@
 import { FERN_PACKAGE_MARKER_FILENAME, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, relative, RelativeFilePath } from "@fern-api/fs-utils";
-import { OpenApiIntermediateRepresentation } from "@fern-api/openapi-ir-sdk";
+import { OpenApiIntermediateRepresentation, Source } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas, RootApiFileSchema, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
 import { camelCase, isEqual } from "lodash-es";
 import path, { basename, extname } from "path";
+import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 
 export interface FernDefinitionBuilder {
     addNavigation({ navigation }: { navigation: string[] }): void;
@@ -53,7 +54,7 @@ export interface FernDefinitionBuilder {
 
     addEndpoint(
         file: RelativeFilePath,
-        { name, schema }: { name: string; schema: RawSchemas.HttpEndpointSchema }
+        { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: Source | undefined }
     ): void;
 
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
@@ -322,7 +323,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
 
     public addEndpoint(
         file: RelativeFilePath,
-        { name, schema }: { name: string; schema: RawSchemas.HttpEndpointSchema }
+        { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: Source | undefined }
     ): void {
         const fernFile = this.getOrCreateFile(file);
         if (fernFile.service == null) {
@@ -331,6 +332,9 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 "base-path": "",
                 endpoints: {}
             };
+        }
+        if (source != null) {
+            fernFile.service.source = convertToSourceSchema(source);
         }
         fernFile.service.endpoints[name] = schema;
     }

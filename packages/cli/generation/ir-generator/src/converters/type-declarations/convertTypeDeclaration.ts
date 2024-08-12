@@ -1,13 +1,15 @@
-import { ExampleType, FernFilepath, Type, TypeDeclaration } from "@fern-api/ir-sdk";
+import { Encoding, ExampleType, FernFilepath, Source, Type, TypeDeclaration } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { AudienceId } from "../../filtered-ir/ids";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
+import { SourceResolver } from "../../resolvers/SourceResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getPropertiesByAudience } from "../../utils/getPropertiesByAudience";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
+import { convertSourceToProtobufType, maybeConvertEncodingToProtobufType } from "../convertProtobufType";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
 import { convertDiscriminatedUnionTypeDeclaration } from "./convertDiscriminatedUnionTypeDeclaration";
 import { convertEnumTypeDeclaration } from "./convertEnumTypeDeclaration";
@@ -28,6 +30,7 @@ export async function convertTypeDeclaration({
     file,
     typeResolver,
     exampleResolver,
+    sourceResolver,
     workspace
 }: {
     typeName: string;
@@ -35,6 +38,7 @@ export async function convertTypeDeclaration({
     file: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
+    sourceResolver: SourceResolver;
     workspace: FernWorkspace;
 }): Promise<TypeDeclarationWithDescendantFilepaths> {
     const declaration = await convertDeclaration(typeDeclaration);
@@ -49,6 +53,13 @@ export async function convertTypeDeclaration({
         propertiesByAudience = getPropertiesByAudience(typeDeclaration.properties ?? {});
     }
 
+    const source = await convertTypeDeclarationSource({
+        file,
+        typeDeclaration,
+        typeName,
+        sourceResolver
+    });
+
     return {
         propertiesByAudience,
         typeDeclaration: {
@@ -56,8 +67,8 @@ export async function convertTypeDeclaration({
             name: declaredTypeName,
             shape: await convertType({ typeDeclaration, file, typeResolver }),
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
-            encoding: undefined,
-            source: undefined,
+            encoding: convertTypeDeclarationEncoding({ typeDeclaration, source }),
+            source,
             userProvidedExamples:
                 typeof typeDeclaration !== "string" && typeDeclaration.examples != null
                     ? typeDeclaration.examples.map(
@@ -103,4 +114,81 @@ export async function convertType({
         undiscriminatedUnion: (union) => convertUndiscriminatedUnionTypeDeclaration({ union, file }),
         enum: async (enum_) => Type.enum(await convertEnumTypeDeclaration({ _enum: enum_, file }))
     });
+}
+
+async function convertTypeDeclarationSource({
+    file,
+    typeDeclaration,
+    typeName,
+    sourceResolver
+}: {
+    file: FernFileContext;
+    typeDeclaration: RawSchemas.TypeDeclarationSchema;
+    typeName: string;
+    sourceResolver: SourceResolver;
+}): Promise<Source | undefined> {
+    if (typeof typeDeclaration === "string" || (typeDeclaration.source == null && typeDeclaration.encoding == null)) {
+        return undefined;
+    }
+    if (typeDeclaration.encoding != null) {
+        const maybeProtobufType = maybeConvertEncodingToProtobufType({
+            encoding: typeDeclaration.encoding
+        });
+        if (maybeProtobufType != null) {
+            return Source.proto(maybeProtobufType);
+        }
+    }
+    if (typeDeclaration.source == null) {
+        return undefined;
+    }
+    const resolvedSource = await sourceResolver.resolveSourceOrThrow({
+        source: typeDeclaration.source,
+        file
+    });
+    if (resolvedSource.type !== "protobuf") {
+        return undefined;
+    }
+    return Source.proto(
+        convertSourceToProtobufType({
+            source: resolvedSource,
+            name: typeName
+        })
+    );
+}
+
+function convertTypeDeclarationEncoding({
+    typeDeclaration,
+    source
+}: {
+    typeDeclaration: RawSchemas.TypeDeclarationSchema;
+    source: Source | undefined;
+}): Encoding {
+    if (typeof typeDeclaration !== "string" && typeDeclaration.encoding != null) {
+        return convertEncoding(typeDeclaration.encoding);
+    }
+    return convertSourceToEncoding(source);
+}
+
+function convertEncoding(encodingSchema: RawSchemas.EncodingSchema): Encoding {
+    return encodingSchema.proto != null
+        ? {
+              json: undefined,
+              proto: {}
+          }
+        : {
+              json: {},
+              proto: undefined
+          };
+}
+
+function convertSourceToEncoding(source: Source | undefined): Encoding {
+    return source != null && source.type === "proto"
+        ? {
+              json: undefined,
+              proto: {}
+          }
+        : {
+              json: {},
+              proto: undefined
+          };
 }

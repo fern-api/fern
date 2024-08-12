@@ -1,5 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import { vi } from "vitest";
 import { replaceReferencedMarkdown } from "../replaceReferencedMarkdown";
 
 const absolutePathToFernFolder = AbsoluteFilePath.of("/path/to/fern");
@@ -65,7 +66,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src={'test4.md'} />
         `;
 
-        const markdownLoader = jest.fn().mockResolvedValue("test content");
+        const markdownLoader = vi.fn().mockResolvedValue("test content");
 
         await replaceReferencedMarkdown({
             markdown,

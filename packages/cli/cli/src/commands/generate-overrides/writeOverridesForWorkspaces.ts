@@ -61,6 +61,7 @@ async function writeDefinitionForOpenAPIWorkspace({
     const specs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
     for (const spec of specs) {
         const ir = await parse({
+            absoluteFilePathToWorkspace: workspace.absoluteFilepath,
             specs: [spec],
             taskContext: context
         });

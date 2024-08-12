@@ -3,11 +3,11 @@ import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
 import { MediaType } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
-import { DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
@@ -51,7 +51,9 @@ export async function publishDocs({
     isPrivate: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
-    const authConfig: DocsV2Write.AuthConfig = isPrivate ? { type: "private", authType: "sso" } : { type: "public" };
+    const authConfig: CjsFdrSdk.docs.v2.write.AuthConfig = isPrivate
+        ? { type: "private", authType: "sso" }
+        : { type: "public" };
 
     let docsRegistrationId: string | undefined;
     let urlToOutput = customDomains[0] ?? domain;
@@ -77,7 +79,7 @@ export async function publishDocs({
 
             const measuredImages = await measureImageSizes(imagesToMeasure, MEASURE_IMAGE_BATCH_SIZE, context);
 
-            const images: DocsV2Write.ImageFilePath[] = [];
+            const images: CjsFdrSdk.docs.v2.write.ImageFilePath[] = [];
 
             [...measuredImages.values()].forEach((image) => {
                 const filePath = filesMap.get(image.filePath);
@@ -207,7 +209,7 @@ export async function publishDocs({
 }
 
 async function uploadFiles(
-    filesToUpload: Record<string, DocsV1Write.FileS3UploadUrl>,
+    filesToUpload: Record<string, CjsFdrSdk.docs.v1.write.FileS3UploadUrl>,
     docsWorkspacePath: AbsoluteFilePath,
     context: TaskContext,
     batchSize: number
@@ -244,7 +246,7 @@ async function uploadFiles(
 }
 
 function convertToFilePathPairs(
-    uploadUrls: Record<string, DocsV1Write.FileS3UploadUrl>,
+    uploadUrls: Record<string, CjsFdrSdk.docs.v1.write.FileS3UploadUrl>,
     docsWorkspacePath: AbsoluteFilePath
 ): UploadedFile[] {
     const toRet: UploadedFile[] = [];
@@ -261,7 +263,7 @@ function convertToFilePathPairs(
 }
 
 function startDocsRegisterFailed(
-    error: DocsV2Write.startDocsPreviewRegister.Error | DocsV2Write.startDocsRegister.Error,
+    error: CjsFdrSdk.docs.v2.write.startDocsPreviewRegister.Error | CjsFdrSdk.docs.v2.write.startDocsRegister.Error,
     context: TaskContext
 ): never {
     context.instrumentPostHogEvent({

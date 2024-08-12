@@ -39,30 +39,18 @@ export class BaseApiExceptionGenerator extends FileGenerator<CSharpFile, SdkCust
                 summary: "The body of the response that triggered the exception."
             })
         );
-        class_.addMethod(
-            csharp.method({
-                name: "ToString",
-                access: "public",
-                isAsync: false,
-                parameters: [],
-                override: true,
-                body: csharp.codeblock(
-                    `return $"${class_.name} {{ message: {Message}, statusCode: {StatusCode}, body: {Body} }}";`
-                ),
-                return_: csharp.Type.string()
-            })
-        );
         return new CSharpFile({
             clazz: class_,
-            directory: this.context.getCoreDirectory(),
+            directory: this.context.getPublicCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace()
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getCoreFilesDirectory(),
+            this.context.project.filepaths.getPublicCoreFilesDirectory(),
             RelativeFilePath.of(`${this.context.getBaseApiExceptionClassReference().name}.cs`)
         );
     }

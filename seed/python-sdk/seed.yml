@@ -47,6 +47,14 @@ fixtures:
         pydantic_config:
           use_str_enums: true
       outputFolder: strenum
+    - customConfig:
+        pydantic_config:
+          enum_type: "forward_compatible_python_enums"
+      outputFolder: real-enum-forward-compat
+    - customConfig:
+        pydantic_config:
+          enum_type: "python_enums"
+      outputFolder: real-enum
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
@@ -124,7 +132,11 @@ fixtures:
     - customConfig:
         pydantic_config:
           include_union_utils: true
-      outputFolder: union-utils 
+      outputFolder: union-utils
+    - customConfig:
+        pydantic_config:
+          union_naming: v1
+      outputFolder: union-naming-v1
   validation:
     - customConfig: null
       outputFolder: no-custom-config

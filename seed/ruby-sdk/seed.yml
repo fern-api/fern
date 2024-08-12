@@ -1,6 +1,6 @@
 irVersion: v39
 docker: fernapi/fern-ruby-sdk:latest
-dockerCommand: yarn workspace @fern-api/fern-ruby-sdk dockerTagLatest
+dockerCommand: pnpm --filter @fern-api/fern-ruby-sdk dockerTagLatest
 language: ruby
 generatorType: sdk
 defaultOutputMode: github

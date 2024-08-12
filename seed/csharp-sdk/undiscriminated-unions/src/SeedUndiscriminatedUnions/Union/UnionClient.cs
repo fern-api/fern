@@ -7,11 +7,11 @@ using SeedUndiscriminatedUnions.Core;
 
 namespace SeedUndiscriminatedUnions;
 
-public class UnionClient
+public partial class UnionClient
 {
     private RawClient _client;
 
-    public UnionClient(RawClient client)
+    internal UnionClient(RawClient client)
     {
         _client = client;
     }
@@ -72,7 +72,7 @@ public class UnionClient
         throw new SeedUndiscriminatedUnionsApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -107,7 +107,7 @@ public class UnionClient
         throw new SeedUndiscriminatedUnionsApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

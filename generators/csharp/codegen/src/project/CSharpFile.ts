@@ -2,6 +2,7 @@ import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
 import { Class, Enum } from "../ast";
+import { BaseCsharpCustomConfigSchema } from "../custom-config";
 import { File } from "./File";
 
 export type Namespace = string;
@@ -18,15 +19,17 @@ export declare namespace CSharpFile {
         allTypeClassReferences: Map<string, Set<Namespace>>;
         /* The root namespace of the project. Can be pulled directly from context. */
         namespace: string;
+        /* Custom generator config */
+        customConfig: BaseCsharpCustomConfigSchema;
     }
 }
 
 export class CSharpFile extends File {
-    constructor({ clazz, directory, allNamespaceSegments, allTypeClassReferences, namespace }: CSharpFile.Args) {
+    constructor({ clazz, directory, allNamespaceSegments, allTypeClassReferences, namespace, customConfig }: CSharpFile.Args) {
         super(
             `${clazz.name}.cs`,
             directory,
-            clazz.toString(clazz.getNamespace(), allNamespaceSegments, allTypeClassReferences, namespace)
+            clazz.toString(clazz.getNamespace(), allNamespaceSegments, allTypeClassReferences, namespace, customConfig)
         );
     }
 

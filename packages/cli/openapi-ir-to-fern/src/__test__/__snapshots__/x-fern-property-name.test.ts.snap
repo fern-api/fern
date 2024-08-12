@@ -1,4 +1,74 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`x-fern-property-name > x-fern-property-name > docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "types": {
+      "BaseUser": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "name": "renamed_id",
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+        },
+        "source": {
+          "openapi": "x-fern-property-name/openapi.yml",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-property-name\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`x-fern-property-name > x-fern-property-name > simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "types": {
+      "BaseUser": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "name": "renamed_id",
+            "type": "optional<string>",
+            "validation": {
+              "format": "uuid",
+              "maxLength": undefined,
+              "minLength": undefined,
+              "pattern": undefined,
+            },
+          },
+        },
+        "source": {
+          "openapi": "x-fern-property-name/openapi.yml",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-property-name\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
 
 exports[`x-fern-property-name x-fern-property-name docs 1`] = `
 {
@@ -18,6 +88,9 @@ exports[`x-fern-property-name x-fern-property-name docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-property-name/openapi.yml",
         },
       },
     },
@@ -50,6 +123,9 @@ exports[`x-fern-property-name x-fern-property-name simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-property-name/openapi.yml",
         },
       },
     },

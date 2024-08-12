@@ -6,11 +6,11 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public class InlinedRequestClient
+public partial class InlinedRequestClient
 {
     private RawClient _client;
 
-    public InlinedRequestClient(RawClient client)
+    internal InlinedRequestClient(RawClient client)
     {
         _client = client;
     }
@@ -35,7 +35,7 @@ public class InlinedRequestClient
         throw new SeedEnumApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

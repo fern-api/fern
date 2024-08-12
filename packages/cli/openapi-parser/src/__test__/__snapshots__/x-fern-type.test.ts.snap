@@ -1,4 +1,70 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`x-fern-type > x-fern-type > parse open api 1`] = `
+{
+  "apiVersion": null,
+  "basePath": null,
+  "channel": [],
+  "description": null,
+  "endpoints": [],
+  "globalHeaders": [],
+  "groups": {},
+  "hasEndpointsMarkedInternal": false,
+  "idempotencyHeaders": [],
+  "nonRequestReferencedSchemas": [],
+  "schemas": {
+    "BaseUser": {
+      "availability": null,
+      "description": null,
+      "encoding": null,
+      "generatedName": "BaseUser",
+      "groupName": null,
+      "key": {
+        "availability": null,
+        "description": null,
+        "generatedName": "BaseUser",
+        "groupName": null,
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+      },
+      "nameOverride": null,
+      "type": "map",
+      "value": {
+        "availability": null,
+        "description": null,
+        "generatedName": "BaseUser",
+        "groupName": null,
+        "nameOverride": null,
+        "schema": {
+          "default": null,
+          "format": null,
+          "maxLength": null,
+          "minLength": null,
+          "pattern": null,
+          "type": "string",
+        },
+        "type": "primitive",
+      },
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {
+    "orderedTagIds": null,
+    "tagsById": {},
+  },
+  "title": "Test extension \`x-fern-type\`",
+  "variables": {},
+  "webhooks": [],
+}
+`;
 
 exports[`x-fern-type x-fern-type parse open api 1`] = `
 {
@@ -16,6 +82,7 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
     "BaseUser": {
       "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "BaseUser",
       "groupName": null,
       "key": {

@@ -66,7 +66,7 @@ public partial class SeedExamplesClient
         throw new SeedExamplesApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

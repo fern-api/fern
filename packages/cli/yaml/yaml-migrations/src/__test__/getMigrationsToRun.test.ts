@@ -7,7 +7,7 @@ describe("getMigrationsToRun", () => {
     });
 
     it("includes from-version", () => {
-        const migrationsToRun = getMigrationsToRun({ fromVersion: "0.0.188", toVersion: "0.0.189" });
+        const migrationsToRun = getMigrationsToRun({ fromVersion: "0.0.191", toVersion: "0.0.192" });
         const allMigrations = migrationsToRun.flatMap(({ migrations }) => migrations);
         expect(allMigrations).toHaveLength(1);
     });

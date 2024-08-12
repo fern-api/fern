@@ -39,7 +39,7 @@ public partial class SeedAliasClient
         throw new SeedAliasApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

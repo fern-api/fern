@@ -36,6 +36,11 @@ export async function convertProtobufToOpenAPI({
         type: "openapi",
         absoluteFilepath: openAPIAbsoluteFilePath,
         absoluteFilepathToOverrides: protobufSpec.absoluteFilepathToOverrides,
-        settings: protobufSpec.settings
+        settings: protobufSpec.settings,
+        source: {
+            type: "protobuf",
+            root: protobufSpec.absoluteFilepathToProtobufRoot,
+            file: protobufSpec.absoluteFilepathToProtobufTarget
+        }
     };
 }

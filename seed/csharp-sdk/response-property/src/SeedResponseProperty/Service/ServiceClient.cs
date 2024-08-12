@@ -6,11 +6,11 @@ using SeedResponseProperty.Core;
 
 namespace SeedResponseProperty;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
@@ -43,7 +43,7 @@ public class ServiceClient
         throw new SeedResponsePropertyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -75,7 +75,7 @@ public class ServiceClient
         throw new SeedResponsePropertyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -110,7 +110,7 @@ public class ServiceClient
         throw new SeedResponsePropertyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -145,7 +145,7 @@ public class ServiceClient
         throw new SeedResponsePropertyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -180,7 +180,7 @@ public class ServiceClient
         throw new SeedResponsePropertyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -215,7 +215,7 @@ public class ServiceClient
         throw new SeedResponsePropertyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -250,7 +250,7 @@ public class ServiceClient
         throw new SeedResponsePropertyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

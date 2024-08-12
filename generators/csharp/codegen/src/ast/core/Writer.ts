@@ -1,5 +1,6 @@
 import { ClassReference } from "..";
 import { csharp } from "../..";
+import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { AstNode } from "./AstNode";
 
 type Namespace = string;
@@ -16,6 +17,8 @@ export declare namespace Writer {
         allTypeClassReferences: Map<string, Set<Namespace>>;
         /* The root namespace of the project */
         rootNamespace: string;
+        /* Custom generator config */
+        customConfig: BaseCsharpCustomConfigSchema;
     }
 }
 
@@ -38,12 +41,15 @@ export class Writer {
     private allTypeClassReferences: Map<string, Set<Namespace>>;
     /* The root namespace of the project */
     private rootNamespace: string;
+    /* Whether or not dictionary<string, object?> should be simplified to just objects */
+    private customConfig: BaseCsharpCustomConfigSchema;
 
-    constructor({ namespace, allNamespaceSegments, allTypeClassReferences, rootNamespace }: Writer.Args) {
+    constructor({ namespace, allNamespaceSegments, allTypeClassReferences, rootNamespace, customConfig }: Writer.Args) {
         this.namespace = namespace;
         this.allNamespaceSegments = allNamespaceSegments;
         this.allTypeClassReferences = allTypeClassReferences;
         this.rootNamespace = rootNamespace;
+        this.customConfig = customConfig;
     }
 
     public write(text: string): void {
@@ -161,6 +167,10 @@ export class Writer {
 
     public getNamespace(): string {
         return this.namespace;
+    }
+
+    public getSimplifyObjectDictionaries(): boolean {
+        return this.customConfig["simplify-object-dictionaries"] ?? true;
     }
 
     public toString(): string {

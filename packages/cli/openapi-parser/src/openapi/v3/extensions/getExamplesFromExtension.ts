@@ -19,7 +19,7 @@ export function getExamplesFromExtension(
             operationObject,
             FernOpenAPIExtension.EXAMPLES,
             RawSchemas.ExampleEndpointCallArraySchema,
-            context,
+            context.logger,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 
@@ -28,7 +28,7 @@ export function getExamplesFromExtension(
             operationObject,
             OpenAPIExtension.REDOCLY_CODE_SAMPLES_KEBAB,
             RedoclyCodeSampleArraySchema,
-            context,
+            context.logger,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 
@@ -37,7 +37,7 @@ export function getExamplesFromExtension(
             operationObject,
             OpenAPIExtension.REDOCLY_CODE_SAMPLES_CAMEL,
             RedoclyCodeSampleArraySchema,
-            context,
+            context.logger,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 

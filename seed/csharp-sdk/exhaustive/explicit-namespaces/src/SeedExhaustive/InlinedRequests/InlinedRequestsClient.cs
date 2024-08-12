@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.GeneralErrors;
 using SeedExhaustive.Types.Object;
@@ -8,11 +9,11 @@ using SeedExhaustive.Types.Object;
 
 namespace SeedExhaustive.InlinedRequests;
 
-public class InlinedRequestsClient
+public partial class InlinedRequestsClient
 {
     private RawClient _client;
 
-    public InlinedRequestsClient(RawClient client)
+    internal InlinedRequestsClient(RawClient client)
     {
         _client = client;
     }
@@ -65,7 +66,7 @@ public class InlinedRequestsClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }
