@@ -157,7 +157,7 @@ export async function loadAPIWorkspace({
             if (!Array.isArray(maybeSpecs)) {
                 return maybeSpecs;
             }
-            specs.concat(maybeSpecs);
+            specs.push(...maybeSpecs);
         } else {
             for (const [namespace, definitions] of Object.entries(generatorsConfiguration.api.definitions)) {
                 const maybeSpecs = await loadSingleNamespaceAPIWorkspace({
@@ -168,7 +168,7 @@ export async function loadAPIWorkspace({
                 if (!Array.isArray(maybeSpecs)) {
                     return maybeSpecs;
                 }
-                specs.concat(maybeSpecs);
+                specs.push(...maybeSpecs);
             }
         }
         

@@ -1,0 +1,281 @@
+types:
+  Station:
+    properties:
+      id:
+        type: string
+        docs: Unique identifier for the station.
+        validation:
+          format: uuid
+      name:
+        type: string
+        docs: The name of the station
+      address:
+        type: string
+        docs: The address of the station.
+      country_code:
+        type: string
+        docs: The country code of the station.
+      timezone:
+        type: optional<string>
+        docs: >-
+          The timezone of the station in the [IANA Time Zone Database
+          format](https://www.iana.org/time-zones).
+    source:
+      openapi: openapi/trains/openapi.yml
+  LinksSelf:
+    properties:
+      self:
+        type: optional<string>
+        validation:
+          format: uri
+    source:
+      openapi: openapi/trains/openapi.yml
+  LinksPagination:
+    properties:
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      prev:
+        type: optional<string>
+        validation:
+          format: uri
+    source:
+      openapi: openapi/trains/openapi.yml
+  Problem:
+    properties:
+      type:
+        type: optional<string>
+        docs: A URI reference that identifies the problem type
+      title:
+        type: optional<string>
+        docs: A short, human-readable summary of the problem type
+      detail:
+        type: optional<string>
+        docs: >-
+          A human-readable explanation specific to this occurrence of the
+          problem
+      instance:
+        type: optional<string>
+        docs: A URI reference that identifies the specific occurrence of the problem
+      status:
+        type: optional<integer>
+        docs: The HTTP status code
+    source:
+      openapi: openapi/trains/openapi.yml
+  Trip:
+    properties:
+      id:
+        type: optional<string>
+        docs: Unique identifier for the trip
+        validation:
+          format: uuid
+      origin:
+        type: optional<string>
+        docs: The starting station of the trip
+      destination:
+        type: optional<string>
+        docs: The destination station of the trip
+      departure_time:
+        type: optional<datetime>
+        docs: The date and time when the trip departs
+      arrival_time:
+        type: optional<datetime>
+        docs: The date and time when the trip arrives
+      operator:
+        type: optional<string>
+        docs: The name of the operator of the trip
+      price:
+        type: optional<double>
+        docs: The cost of the trip
+      bicycles_allowed:
+        type: optional<boolean>
+        docs: Indicates whether bicycles are allowed on the trip
+      dogs_allowed:
+        type: optional<boolean>
+        docs: Indicates whether dogs are allowed on the trip
+    source:
+      openapi: openapi/trains/openapi.yml
+  Booking:
+    properties:
+      id:
+        type: optional<string>
+        docs: Unique identifier for the booking
+        validation:
+          format: uuid
+      trip_id:
+        type: optional<string>
+        docs: Identifier of the booked trip
+        validation:
+          format: uuid
+      passenger_name:
+        type: optional<string>
+        docs: Name of the passenger
+      has_bicycle:
+        type: optional<boolean>
+        docs: Indicates whether the passenger has a bicycle.
+      has_dog:
+        type: optional<boolean>
+        docs: Indicates whether the passenger has a dog.
+    source:
+      openapi: openapi/trains/openapi.yml
+  WrapperCollection:
+    docs: >-
+      This is a generic request/response wrapper which contains both data and
+      links which serve as hypermedia controls (HATEOAS).
+    properties:
+      data:
+        type: optional<list<map<string, unknown>>>
+        docs: The wrapper for a collection is an array of objects.
+      links:
+        type: optional<map<string, unknown>>
+        docs: A set of hypermedia links which serve as controls for the client.
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentCurrency:
+    enum:
+      - bam
+      - bgn
+      - chf
+      - eur
+      - gbp
+      - nok
+      - sek
+      - try
+    docs: >-
+      Three-letter [ISO currency
+      code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+    source:
+      openapi: openapi/trains/openapi.yml
+  Card:
+    docs: A card (debit or credit) to take payment from.
+    properties:
+      name:
+        type: string
+        docs: Cardholder's full name as it appears on the card.
+      number:
+        type: string
+        docs: >-
+          The card number, as a string without any separators. On read all but
+          the last four digits will be masked for security.
+      cvc:
+        type: integer
+        docs: >-
+          Card security code, 3 or 4 digits usually found on the back of the
+          card.
+      exp_month:
+        type: long
+        docs: Two-digit number representing the card's expiration month.
+      exp_year:
+        type: long
+        docs: Four-digit number representing the card's expiration year.
+      address_line1: optional<string>
+      address_line2: optional<string>
+      address_city: optional<string>
+      address_country: string
+      address_post_code: optional<string>
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentSourceBankAccountAccountType:
+    enum:
+      - individual
+      - company
+    docs: >-
+      The type of entity that holds the account. This can be either `individual`
+      or `company`.
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentSourceBankAccount:
+    docs: >-
+      A bank account to take payment from. Must be able to make payments in the
+      currency specified in the payment.
+    properties:
+      name: string
+      number:
+        type: string
+        docs: >-
+          The account number for the bank account, in string form. Must be a
+          current account.
+      sort_code:
+        type: optional<string>
+        docs: >-
+          The sort code for the bank account, in string form. Must be a
+          six-digit number.
+      account_type:
+        type: BookingPaymentSourceBankAccountAccountType
+        docs: >-
+          The type of entity that holds the account. This can be either
+          `individual` or `company`.
+      bank_name:
+        type: string
+        docs: The name of the bank associated with the routing number.
+      country:
+        type: string
+        docs: Two-letter country code (ISO 3166-1 alpha-2).
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentSource:
+    discriminant: object
+    base-properties: {}
+    docs: >-
+      The payment source to take the payment from. This can be a card or a bank
+      account. Some of these properties will be hidden on read to protect PII
+      leaking.
+    union:
+      card:
+        type: Card
+        docs: A card (debit or credit) to take payment from.
+      bank_account:
+        type: BookingPaymentSourceBankAccount
+        docs: >-
+          A bank account to take payment from. Must be able to make payments in
+          the currency specified in the payment.
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentStatus:
+    enum:
+      - pending
+      - succeeded
+      - failed
+    docs: The status of the payment, one of `pending`, `succeeded`, or `failed`.
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPayment:
+    properties:
+      id:
+        type: optional<string>
+        docs: >-
+          Unique identifier for the payment. This will be a unique identifier
+          for the payment, and is used to reference the payment in other
+          objects.
+        validation:
+          format: uuid
+      amount:
+        type: optional<double>
+        docs: >-
+          Amount intended to be collected by this payment. A positive decimal
+          figure describing the amount to be collected.
+      currency:
+        type: optional<BookingPaymentCurrency>
+        docs: >-
+          Three-letter [ISO currency
+          code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+      source:
+        type: optional<BookingPaymentSource>
+        docs: >-
+          The payment source to take the payment from. This can be a card or a
+          bank account. Some of these properties will be hidden on read to
+          protect PII leaking.
+      status:
+        type: optional<BookingPaymentStatus>
+        docs: The status of the payment, one of `pending`, `succeeded`, or `failed`.
+    source:
+      openapi: openapi/trains/openapi.yml
+  LinksBooking:
+    properties:
+      booking:
+        type: optional<string>
+        validation:
+          format: uri
+    source:
+      openapi: openapi/trains/openapi.yml
