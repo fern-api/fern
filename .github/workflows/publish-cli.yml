@@ -36,7 +36,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     env:
-      YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
@@ -69,10 +69,7 @@ jobs:
         run: pnpm install
 
       - name: Compile
-        run: pnpm compile
-
-      - name: Publish seed CLI
-        run: pnpm --filter @fern-api/seed-cli publish:cli
+        run: pnpm --filter @fern-api/cli compile
 
       - name: Publish fern-api-dev CLI
         run: pnpm --filter @fern-api/cli publish:cli:dev --access restricted
@@ -81,7 +78,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/') && contains(github.ref, '-rc')
     runs-on: ubuntu-latest
     env:
-      YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
@@ -114,7 +111,7 @@ jobs:
         run: pnpm install
 
       - name: Compile
-        run: pnpm compile
+        run: pnpm --filter @fern-api/cli compile
 
       - name: Publish fern-api-dev CLI
         run: pnpm --filter @fern-api/cli publish:cli:dev --access restricted
@@ -127,7 +124,7 @@ jobs:
     needs: live-test
     runs-on: ubuntu-latest
     env:
-      YARN_NPM_AUTH_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
       AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
       AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
       POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
@@ -156,7 +153,7 @@ jobs:
         run: pnpm install
 
       - name: Compile
-        run: pnpm compile
+        run: pnpm --filter @fern-api/cli compile
 
       - name: Publish fern-api-dev CLI
         run: pnpm --filter @fern-api/cli publish:cli:dev --access restricted
