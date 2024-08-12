@@ -249,7 +249,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             )
         );
 
-        // hasNextPage checks if the items are not empty
+        // hasNextPage checks if the items are not empty        
         const itemsProperty = this.getNameFromWireValue({ name: offset.results.property.name, context });
         const itemsPropertyPathComponents = [
             "response",
@@ -262,7 +262,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier(itemsProperty)
         );
-        const hasNextPage = ts.factory.createBinaryExpression(
+        let hasNextPage: ts.Expression = ts.factory.createBinaryExpression(
             ts.factory.createPropertyAccessExpression(
                 ts.factory.createParenthesizedExpression(
                     ts.factory.createBinaryExpression(
@@ -276,6 +276,23 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
             ts.factory.createToken(ts.SyntaxKind.GreaterThanToken),
             ts.factory.createNumericLiteral("0")
         );
+        if (offset.hasNextPage != null) {
+            const hasNextPagePropertyComponents = [
+                "response",
+                ...(offset.hasNextPage.propertyPath ?? []).map((name) => this.getName({ name, context }))
+            ];
+            const hasNextPageProperty = this.getNameFromWireValue({ name: offset.hasNextPage.property.name, context });
+            const hasNextPagePropertyAccess = ts.factory.createPropertyAccessChain(
+                ts.factory.createIdentifier(hasNextPagePropertyComponents.join("?.")),
+                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                ts.factory.createIdentifier(hasNextPageProperty)
+            );
+            hasNextPage = ts.factory.createBinaryExpression(
+                hasNextPagePropertyAccess, 
+                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                hasNextPage
+            );
+        }
 
         // getItems gets the items
         const getItems = ts.factory.createBinaryExpression(

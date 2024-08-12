@@ -1,5 +1,5 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { Constants, IntermediateRepresentation, TypeReference } from "@fern-fern/ir-sdk/api";
 import {
     CoreUtilitiesManager,
     createExternalDependencies,
@@ -321,5 +321,22 @@ export class SdkContextImpl implements SdkContext {
             timeoutSdkErrorDeclarationReferencer,
             timeoutSdkErrorGenerator
         });
+    }
+
+    public isRequired(type: TypeReference): boolean {
+        if (type.type === "container" && type.container.type === "optional") {
+            return true;
+        }
+        if (type.type === "named") {
+            const declaration = this.type.getTypeDeclaration(type);
+            if (
+                declaration.shape.type === "alias" &&
+                declaration.shape.resolvedType.type === "container" &&
+                declaration.shape.resolvedType.container.type == "optional"
+            ) {
+                return true;
+            }
+        }
+        return false;
     }
 }

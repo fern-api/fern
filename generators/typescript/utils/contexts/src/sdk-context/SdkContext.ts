@@ -1,5 +1,5 @@
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, TypeReference } from "@fern-fern/ir-sdk/api";
 import { JavaScriptRuntime } from "@fern-typescript/commons";
 import { ts } from "ts-morph";
 import { ModelContext } from "../model-context/ModelContext";
@@ -37,4 +37,6 @@ export interface SdkContext extends ModelContext {
     generateOAuthClients: boolean;
     inlineFileProperties: boolean;
     omitUndefined: boolean;
+
+    isRequired(type: TypeReference): boolean
 }
