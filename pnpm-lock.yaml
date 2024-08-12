@@ -3171,7 +3171,25 @@ importers:
         specifier: 4.6.4
         version: 4.6.4
 
-  packages/cli/cli/dist/prod: {}
+  packages/cli/cli/dist/dev: {}
+
+  packages/cli/cli/dist/local:
+    devDependencies:
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/cli/dist/prod:
+    devDependencies:
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
 
   packages/cli/configuration:
     dependencies:
