@@ -16,7 +16,7 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
 
             const nonExistentEnviromentIds = playgroundEnvironmentIds.filter((id) => !availableEnvironmentIds.has(id));
 
-            if (nonExistentEnviromentIds.length == 0) {
+            if (nonExistentEnviromentIds.length === 0) {
                 return [];
             }
 
