@@ -1,13 +1,13 @@
 import { assertNever } from "@fern-api/core-utils";
-import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { TaskContext } from "@fern-api/task-context";
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import tinycolor from "tinycolor2";
 import { FernDocsConfig as RawDocs } from "./schemas";
 
 export function convertColorsConfiguration(
     rawConfig: RawDocs.ColorsConfiguration = { accentPrimary: undefined, background: undefined },
     context: TaskContext
-): DocsV1Write.ColorsConfigV3 {
+): CjsFdrSdk.docs.v1.write.ColorsConfigV3 {
     rawConfig.accentPrimary = rawConfig.accentPrimary ?? rawConfig.accentPrimaryDeprecated;
 
     const colorType = getColorType(rawConfig);
@@ -86,7 +86,7 @@ export function convertThemedColorConfig(
     rawConfig: RawDocs.ColorsConfiguration,
     context: TaskContext,
     theme: "dark" | "light"
-): DocsV1Write.ThemeConfig {
+): CjsFdrSdk.docs.v1.write.ThemeConfig {
     const accentPrimaryColor =
         getColorInstanceFromRawConfigOrThrow(
             rawConfig.accentPrimary ?? rawConfig.accentPrimaryDeprecated,

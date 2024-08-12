@@ -17,6 +17,9 @@ async function main() {
         bundle: true,
         external: ["cpu-features"],
         plugins: [jsoncParserResolverPlugin, pnpPlugin()],
+        loader: {
+            ".node": "file"
+        },
         define: {
             "process.env.CLI_NAME": JSON.stringify("fern-local"),
             "process.env.CLI_VERSION": JSON.stringify(packageJson.version),

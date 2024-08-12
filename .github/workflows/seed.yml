@@ -81,13 +81,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -104,7 +99,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator ruby-model
+          pnpm seed:local test --generator ruby-model
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -117,13 +112,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -140,7 +130,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator ruby-sdk
+          pnpm seed:local test --generator ruby-sdk
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -153,13 +143,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -183,7 +168,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator pydantic
+          pnpm seed:local test --generator pydantic
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -196,13 +181,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -226,7 +206,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator python-sdk --parallel 10
+          pnpm seed:local test --generator python-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -239,13 +219,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -269,7 +244,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator fastapi
+          pnpm seed:local test --generator fastapi
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -282,13 +257,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -305,7 +275,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator openapi
+          pnpm seed:local test --generator openapi
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -318,13 +288,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -341,7 +306,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator postman
+          pnpm seed:local test --generator postman
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -354,13 +319,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -377,7 +337,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator java-sdk --parallel 10
+          pnpm seed:local test --generator java-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -390,13 +350,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -413,7 +368,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator java-model --parallel 10
+          pnpm seed:local test --generator java-model --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -426,13 +381,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -449,7 +399,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator java-spring
+          pnpm seed:local test --generator java-spring
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -462,13 +412,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -485,7 +430,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator ts-sdk --parallel 10
+          pnpm seed:local test --generator ts-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -498,13 +443,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -521,7 +461,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator ts-express --parallel 10
+          pnpm seed:local test --generator ts-express --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -534,13 +474,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -557,7 +492,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator go-fiber --parallel 16
+          pnpm seed:local test --generator go-fiber --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -570,13 +505,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -593,7 +523,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator go-model --parallel 16
+          pnpm seed:local test --generator go-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -606,13 +536,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -629,7 +554,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator go-sdk --parallel 16
+          pnpm seed:local test --generator go-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -642,13 +567,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -665,7 +585,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator csharp-model --parallel 16
+          pnpm seed:local test --generator csharp-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -678,13 +598,8 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Yarn Install
-        run: yarn install
+      - name: Install
+        uses: ./.github/actions/install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -701,7 +616,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          yarn seed:local test --generator csharp-sdk --parallel 16
+          pnpm seed:local test --generator csharp-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"

@@ -1,11 +1,10 @@
 import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { loadAPIChangelog } from "./loadAPIChangelog";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
 import { getValidAbsolutePathToOpenAPIFromFolder } from "./loadOpenAPIFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
-import { APIChangelog, Spec } from "./types/Workspace";
+import { Spec } from "./types/Workspace";
 import { OSSWorkspace } from "./workspaces";
 import { LazyFernWorkspace } from "./workspaces/FernWorkspace";
 
@@ -25,10 +24,10 @@ export async function loadAPIWorkspace({
         context
     });
 
-    let changelog: APIChangelog | undefined = undefined;
-    try {
-        changelog = await loadAPIChangelog({ absolutePathToWorkspace });
-    } catch (err) {}
+    const changelog = undefined;
+    // try {
+    //     changelog = await loadAPIChangelog({ absolutePathToWorkspace });
+    // } catch (err) {}
 
     const absolutePathToOpenAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(OPENAPI_DIRECTORY));
     const openApiDirectoryExists = await doesPathExist(absolutePathToOpenAPIFolder);

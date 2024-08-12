@@ -1,4 +1,102 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`open api parser > file-upload > docs 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "upload-file": {
+          "auth": false,
+          "display-name": "Upload a file",
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/upload",
+          "request": {
+            "body": {
+              "properties": {
+                "file": "file",
+                "maybe_file": "optional<file>",
+              },
+            },
+            "content-type": "multipart/form-data",
+            "headers": undefined,
+            "name": "UploadFileRequest",
+            "query-parameters": undefined,
+          },
+        },
+      },
+      "source": {
+        "openapi": "file-upload/openapi.yml",
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test file upload",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
+
+exports[`open api parser > file-upload > simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "upload-file": {
+          "auth": false,
+          "display-name": "Upload a file",
+          "docs": undefined,
+          "examples": [
+            {
+              "request": {},
+            },
+          ],
+          "method": "POST",
+          "pagination": undefined,
+          "path": "/upload",
+          "request": {
+            "body": {
+              "properties": {
+                "file": "file",
+                "maybe_file": "optional<file>",
+              },
+            },
+            "content-type": "multipart/form-data",
+            "headers": undefined,
+            "name": "UploadFileRequest",
+            "query-parameters": undefined,
+          },
+        },
+      },
+      "source": {
+        "openapi": "file-upload/openapi.yml",
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test file upload",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;
 
 exports[`open api parser file-upload docs 1`] = `
 {
