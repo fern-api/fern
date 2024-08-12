@@ -20,7 +20,7 @@ export const PlaygroundEnvironmentsExistRule: Rule = {
             }
 
             const availableEnvironmentIds = new Set(Object.keys(apiSpecificationEnvironments));
-            const violations = playgroundEnvironmentIds
+            const violations: RuleViolation[] = playgroundEnvironmentIds
                 .filter(id => !availableEnvironmentIds.has(id))
                 .map(id => ({
                     severity: "error",
