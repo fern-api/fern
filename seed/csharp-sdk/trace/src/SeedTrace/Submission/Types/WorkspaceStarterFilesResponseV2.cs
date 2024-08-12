@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2;
 
 #nullable enable
 
@@ -8,6 +7,6 @@ namespace SeedTrace;
 public record WorkspaceStarterFilesResponseV2
 {
     [JsonPropertyName("filesByLanguage")]
-    public Dictionary<Language, Files> FilesByLanguage { get; set; } =
-        new Dictionary<Language, Files>();
+    public Dictionary<Language, V2.Files> FilesByLanguage { get; set; } =
+        new Dictionary<Language, V2.Files>();
 }

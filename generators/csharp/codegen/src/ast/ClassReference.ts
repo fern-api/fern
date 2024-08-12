@@ -56,17 +56,20 @@ export class ClassReference extends AstNode {
      * Result: Engineer.Backend.
      */
     private getTypeQualification(classReferenceNamespace: string, namespaceToBeWrittenTo: string): string {
+        const classReferenceSegments = classReferenceNamespace.split(".");
+        const namespaceToBeWrittenSegments = namespaceToBeWrittenTo.split(".");
+
         let i = 0;
-        // Find the length of the longest matching prefix
+        // Find the length of the longest matching segment prefix
         while (
-            i < classReferenceNamespace.length &&
-            i < namespaceToBeWrittenTo.length &&
-            classReferenceNamespace[i] === namespaceToBeWrittenTo[i]
+            i < classReferenceSegments.length &&
+            i < namespaceToBeWrittenSegments.length &&
+            classReferenceSegments[i] === namespaceToBeWrittenSegments[i]
         ) {
             i++;
         }
-        // Return the part of 'a' after the matching prefix
-        const typeQualification = classReferenceNamespace.slice(i);
+        // Join the remaining segments of 'classReferenceNamespace' after the matching prefix
+        const typeQualification = classReferenceSegments.slice(i).join(".");
         return `${typeQualification}${typeQualification ? "." : ""}`;
     }
 
@@ -93,7 +96,23 @@ export class ClassReference extends AstNode {
      * - Net -- Company.Net
      */
     private qualifiedTypeNameRequired(writer: Writer): boolean {
-        return writer.getAllNamespaceSegments().has(this.name);
+        return this.potentialConflictWithNamespaceSegment(writer) || this.potentialConflictWithGeneratedType(writer);
+    }
+
+    private potentialConflictWithNamespaceSegment(writer: Writer) {
+        return writer.getAllNamespaceSegmentsAndTypes().has(this.name);
+    }
+
+    private potentialConflictWithGeneratedType(writer: Writer) {
+        const matchingNamespaces = writer.getAllTypeClassReferences().get(this.name);
+        if (matchingNamespaces == null) {
+            return false;
+        }
+        // If there's a ClassReference besides the one that we're writing with the same name,
+        // then there may be conflict, so return true
+        const matchingNamespacesCopy = new Set(matchingNamespaces);
+        matchingNamespacesCopy.delete(this.namespace);
+        return matchingNamespacesCopy.size > 0;
     }
 }
 

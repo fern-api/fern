@@ -20,9 +20,12 @@ public partial class SeedCsharpNamespaceConflictClient
         );
         A = new AClient(_client);
         B = new BClient(_client);
+        Tasktest = new TasktestClient(_client);
     }
 
     public AClient A { get; init; }
 
     public BClient B { get; init; }
+
+    public TasktestClient Tasktest { get; init; }
 }

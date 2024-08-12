@@ -1,0 +1,12 @@
+types:
+  Task:
+    properties:
+      id: string
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    hello:
+      path: /hello
+      method: GET

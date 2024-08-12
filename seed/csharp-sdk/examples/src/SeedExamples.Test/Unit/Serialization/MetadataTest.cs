@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
-using SeedExamples.Commons;
 
 #nullable enable
 
@@ -32,7 +31,10 @@ public class MetadataTest
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
 
-        var deserializedObject = JsonSerializer.Deserialize<Metadata>(inputJson, serializerOptions);
+        var deserializedObject = JsonSerializer.Deserialize<Commons.Metadata>(
+            inputJson,
+            serializerOptions
+        );
 
         var serializedJson = JsonSerializer.Serialize(deserializedObject, serializerOptions);
 
