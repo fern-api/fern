@@ -286,7 +286,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -356,7 +356,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -420,7 +420,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -481,7 +481,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -646,7 +646,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -716,7 +716,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -762,7 +762,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -3147,14 +3147,14 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       '@types/yargs':
-        specifier: ^17.0.28
-        version: 17.0.28
+        specifier: ^17.0.33
+        version: 17.0.33
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -5518,8 +5518,8 @@ importers:
         specifier: ^18.7.18
         version: 18.7.18
       '@types/yargs':
-        specifier: ^17.0.28
-        version: 17.0.28
+        specifier: ^17.0.33
+        version: 17.0.33
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -5624,8 +5624,8 @@ importers:
         specifier: ^18.7.18
         version: 18.7.18
       '@types/yargs':
-        specifier: ^17.0.28
-        version: 17.0.28
+        specifier: ^17.0.33
+        version: 17.0.33
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
@@ -5634,7 +5634,7 @@ importers:
         version: 1.4.6
       env-cmd:
         specifier: toddbluhm/env-cmd
-        version: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b
+        version: git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b
       esbuild:
         specifier: ^0.15.7
         version: 0.15.7
@@ -7443,8 +7443,8 @@ packages:
   '@types/yargs-parser@21.0.0':
     resolution: {integrity: sha512-iO9ZQHkZxHn4mSakYV0vFHAVDyEOIJQrV2uZ06HxEPcx+mt8swXoZHIbaaJ2crJYFfErySgktuTZ3BeLz+XmFA==}
 
-  '@types/yargs@17.0.28':
-    resolution: {integrity: sha512-N3e3fkS86hNhtk6BEnc0rj3zcehaxx8QWhCROJkqpl5Zaoi7nAic3jH8q94jVD3zu5LGk+PUB6KAiDmimYOEQw==}
+  '@types/yargs@17.0.33':
+    resolution: {integrity: sha512-WpxBCKWPLr4xSsHgz511rFJAM+wS28w2zEO1QDNY5zM/S8ok70NNfztH0xwhqKyaK0OHCbN98LDAZuy1ctxDkA==}
 
   '@typescript-eslint/eslint-plugin@5.30.5':
     resolution: {integrity: sha512-lftkqRoBvc28VFXEoRgyZuztyVUQ04JvUnATSPtIRFAccbXTWL6DEtXGYMcbg998kXw1NLUJm7rTQ9eUt+q6Ig==}
@@ -8643,8 +8643,8 @@ packages:
     resolution: {integrity: sha512-V0hjH4dGPh9Ao5p0MoRY6BVqtwCjhz6vI5LT8AJ55H+4g9/4vbHx1I54fS0XuclLhDHArPQCiMjDxjaL8fPxhw==}
     engines: {node: '>=0.12'}
 
-  env-cmd@https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b:
-    resolution: {tarball: https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b}
+  env-cmd@git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b:
+    resolution: {commit: 8f35b71651f6a78710308ff38ab30896ea72ee8b, repo: git@github.com:toddbluhm/env-cmd.git, type: git}
     version: 10.1.0
     engines: {node: '>=8.0.0'}
     hasBin: true
@@ -14096,7 +14096,7 @@ snapshots:
       '@types/istanbul-lib-coverage': 2.0.4
       '@types/istanbul-reports': 3.0.1
       '@types/node': 18.7.18
-      '@types/yargs': 17.0.28
+      '@types/yargs': 17.0.33
       chalk: 4.1.2
 
   '@jridgewell/gen-mapping@0.3.5':
@@ -14617,7 +14617,7 @@ snapshots:
 
   '@types/yargs-parser@21.0.0': {}
 
-  '@types/yargs@17.0.28':
+  '@types/yargs@17.0.33':
     dependencies:
       '@types/yargs-parser': 21.0.0
 
@@ -16010,7 +16010,7 @@ snapshots:
 
   entities@4.5.0: {}
 
-  env-cmd@https://codeload.github.com/toddbluhm/env-cmd/tar.gz/8f35b71651f6a78710308ff38ab30896ea72ee8b:
+  env-cmd@git+https://git@github.com:toddbluhm/env-cmd.git#8f35b71651f6a78710308ff38ab30896ea72ee8b:
     dependencies:
       commander: 5.1.0
       cross-spawn: 7.0.3
