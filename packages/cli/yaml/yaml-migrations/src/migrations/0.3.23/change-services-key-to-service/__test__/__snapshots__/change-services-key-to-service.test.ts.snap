@@ -13,17 +13,3 @@ types:
   MyAlias: string
 "
 `;
-
-exports[`change-services-key-to-service simple 1`] = `
-"imports: {}
-
-# services!
-service:
-  base-path: /
-  auth: false
-  endpoints: {}
-
-types:
-  MyAlias: string
-"
-`;

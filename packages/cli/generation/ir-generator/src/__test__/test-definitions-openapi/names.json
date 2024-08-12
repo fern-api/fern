@@ -2083,6 +2083,9 @@
                                                 }
                                             },
                                             "jsonExample": true
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -3204,7 +3207,7 @@
                                         }
                                     }
                                 },
-                                "id": "20784ecfba8cdbb774d6255afc7abf044a10a474",
+                                "id": "6525693b41cee09498915573a55e5ef6bc8d0687",
                                 "docs": null
                             }
                         }

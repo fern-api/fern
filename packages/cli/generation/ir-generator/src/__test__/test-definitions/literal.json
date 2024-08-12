@@ -5350,6 +5350,9 @@
                                                 }
                                             },
                                             "jsonExample": "You are a helpful assistant"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -5387,6 +5390,9 @@
                                                 }
                                             },
                                             "jsonExample": false
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -5423,6 +5429,9 @@
                                                 }
                                             },
                                             "jsonExample": "What is the weather today"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -5715,6 +5724,9 @@
                                                 }
                                             },
                                             "jsonExample": "You are a helpful assistant"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -5751,6 +5763,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -5788,6 +5803,9 @@
                                                 }
                                             },
                                             "jsonExample": false
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -6029,7 +6047,7 @@
                                         }
                                     }
                                 },
-                                "id": "6e82e9406c170062638ae18e9ecc61af60047249",
+                                "id": "cfdabcd8ad8a805d71102459c8670d238b09324a",
                                 "docs": null
                             }
                         }

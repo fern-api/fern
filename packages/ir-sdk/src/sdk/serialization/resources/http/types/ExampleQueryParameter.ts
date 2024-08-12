@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
+import { ExampleQueryParameterShape } from "./ExampleQueryParameterShape";
 
 export const ExampleQueryParameter: core.serialization.ObjectSchema<
     serializers.ExampleQueryParameter.Raw,
@@ -13,11 +14,13 @@ export const ExampleQueryParameter: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     name: NameAndWireValue,
     value: core.serialization.lazyObject(() => serializers.ExampleTypeReference),
+    shape: ExampleQueryParameterShape.optional(),
 });
 
 export declare namespace ExampleQueryParameter {
     interface Raw {
         name: NameAndWireValue.Raw;
         value: serializers.ExampleTypeReference.Raw;
+        shape?: ExampleQueryParameterShape.Raw | null;
     }
 }

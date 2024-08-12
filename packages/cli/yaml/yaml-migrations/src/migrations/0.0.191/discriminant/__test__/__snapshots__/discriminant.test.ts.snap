@@ -16,20 +16,3 @@ exports[`discriminant > simple 1`] = `
       b: boolean
 "
 `;
-
-exports[`discriminant simple 1`] = `
-"types:
-  a: string
-  b: boolean
-  c:
-    properties:
-      a: integer
-  d:
-    discriminant:
-      value: _type
-      name: type
-    union:
-      a: string
-      b: boolean
-"
-`;
