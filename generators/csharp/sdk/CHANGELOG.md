@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.2.0 - 2024-08-12]
 
 - Fix: Build on the fix in `0.10.0` to resolve more potential namespace and type conflicts.
+- Feature: Add support for Protobuf file dependencies to generate gRPC client stubs.
 
 ## [1.1.0 - 2024-08-11]
 
