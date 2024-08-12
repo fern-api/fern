@@ -18,6 +18,7 @@ import {
     RawSchemas,
     visitExampleResponseSchema
 } from "@fern-api/yaml-schema";
+import crypto from "crypto";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -31,6 +32,11 @@ import {
 import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
 import { getQueryParameterName } from "./convertQueryParameter";
+
+function hashJSON(obj: unknown): string {
+    const jsonString = JSON.stringify(obj);
+    return crypto.createHash("sha256").update(jsonString).digest("hex");
+}
 
 export function convertExampleEndpointCall({
     service,
@@ -64,7 +70,7 @@ export function convertExampleEndpointCall({
         workspace
     });
     return {
-        id: example.id,
+        id: example.name ?? hashJSON(example),
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
         url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
