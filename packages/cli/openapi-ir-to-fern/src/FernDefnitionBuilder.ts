@@ -65,9 +65,9 @@ export interface FernDefinitionBuilder {
         { name, schema, source }: { name: string; schema: RawSchemas.HttpEndpointSchema; source: Source | undefined }
     ): void;
 
-    getEndpoint(method: string, url: string): string | undefined;
+    getEndpoint(method: string, url: string): EndpointLocation | undefined;
 
-    getEndpointWithoutMethod(url: string): string | undefined;
+    getEndpointWithoutMethod(url: string): EndpointLocation | undefined;
 
     addWebhook(file: RelativeFilePath, { name, schema }: { name: string; schema: RawSchemas.WebhookSchema }): void;
 
@@ -95,7 +95,7 @@ export interface FernDefinition {
     definitionFiles: Record<RelativeFilePath, RawSchemas.DefinitionFileSchema>;
 }
 
-interface EndpointLocation {
+export interface EndpointLocation {
     file: RelativeFilePath;
     endpointReference: string;
 }
@@ -145,7 +145,7 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         return path;
     }
 
-    public getEndpointWithoutMethod(url: string): string | undefined {
+    public getEndpointWithoutMethod(url: string): EndpointLocation | undefined {
         const path = this.getPathFromUrl(url);
         const endpointByPath = this.endpointsByPath[path];
 
@@ -155,12 +155,12 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
             );
         }
 
-        return this.endpointsByPath[path]?.[1].endpointReference;
+        return this.endpointsByPath[path]?.[1];
     }
 
-    public getEndpoint(method: string, url: string): string | undefined {
+    public getEndpoint(method: string, url: string): EndpointLocation | undefined {
         const path = this.getPathFromUrl(url);
-        return this.endpoints[this.getEndpointMapKey(method, path)]?.endpointReference;
+        return this.endpoints[this.getEndpointMapKey(method, path)];
     }
 
     public addNavigation({ navigation }: { navigation: string[] }): void {
@@ -198,12 +198,26 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.rootApiFile.auth = name;
     }
 
-    public addAuthScheme({ name, schema }: { name: string; schema: RawSchemas.AuthSchemeDeclarationSchema }): void {
+    public addAuthScheme({
+        name,
+        schema,
+        additionalImports
+    }: {
+        name: string;
+        schema: RawSchemas.AuthSchemeDeclarationSchema;
+        additionalImports?: RelativeFilePath[];
+    }): void {
         if (this.rootApiFile["auth-schemes"] == null) {
             this.rootApiFile["auth-schemes"] = {};
         }
         if (this.rootApiFile["auth-schemes"][name] == null) {
             this.rootApiFile["auth-schemes"][name] = schema;
+        }
+
+        if (additionalImports != null) {
+            for (const fileToImport of additionalImports) {
+                this.addImport({ file: RelativeFilePath.of(ROOT_API_FILENAME), fileToImport });
+            }
         }
     }
 

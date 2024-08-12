@@ -1,11 +1,11 @@
 import { addPrefixToString } from "@fern-api/core-utils";
-import { docsYml } from "@fern-api/configuration";
+import { Serializer, VersionFileConfig } from "..";
 
 export type VersionParseResult = VersionFileSuccessParseResult | VersionFileFailureParseResult;
 
 interface VersionFileSuccessParseResult {
     type: "success";
-    contents: docsYml.RawSchemas.VersionFileConfig;
+    contents: VersionFileConfig;
 }
 
 interface VersionFileFailureParseResult {
@@ -14,7 +14,7 @@ interface VersionFileFailureParseResult {
 }
 
 export async function validateVersionConfigFileSchema({ value }: { value: unknown }): Promise<VersionParseResult> {
-    const result = await docsYml.RawSchemas.Serializer.VersionFileConfig.parse(value);
+    const result = await Serializer.VersionFileConfig.parse(value);
     if (result.ok) {
         return {
             type: "success",

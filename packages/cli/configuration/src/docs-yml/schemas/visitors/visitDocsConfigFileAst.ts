@@ -1,16 +1,25 @@
-import { docsYml } from "@fern-api/configuration";
 import { parseImagePaths, replaceReferencedCode, replaceReferencedMarkdown } from "@fern-api/docs-markdown-utils";
 import { AbsoluteFilePath, dirname, doesPathExist, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import path from "path";
-import { NodePath } from "../NodePath";
+import { NodePath } from "../../../NodePath";
+import { parseDocsConfiguration } from "../../parseDocsConfiguration";
+import {
+    DocsConfiguration,
+    JsConfigOptions,
+    NavigationConfig,
+    NavigationItem,
+    PageConfiguration,
+    SectionConfiguration,
+    TabbedNavigationConfig
+} from "../sdk/api";
 import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { validateVersionConfigFileSchema } from "./validateVersionConfig";
 
 export async function visitDocsConfigFileYamlAst(
-    contents: docsYml.RawSchemas.DocsConfiguration,
+    contents: DocsConfiguration,
     visitor: Partial<DocsConfigFileAstVisitor>,
     absoluteFilepathToConfiguration: AbsoluteFilePath,
     absolutePathToFernFolder: AbsoluteFilePath,
@@ -28,7 +37,7 @@ export async function visitDocsConfigFileYamlAst(
 
     try {
         // wrap the parse call in a try/catch because it will throw if a markdown file doesn't exist
-        const { pages } = await docsYml.parseDocsConfiguration({
+        const { pages } = await parseDocsConfiguration({
             rawDocsConfiguration: contents,
             context,
             absoluteFilepathToDocsConfig: absoluteFilepathToConfiguration,
@@ -304,7 +313,7 @@ async function visitNavigation({
     nodePath,
     absoluteFilepathToConfiguration
 }: {
-    navigation: docsYml.RawSchemas.NavigationConfig;
+    navigation: NavigationConfig;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
@@ -346,7 +355,7 @@ async function visitNavigationItem({
     nodePath,
     absoluteFilepathToConfiguration
 }: {
-    navigationItem: docsYml.RawSchemas.NavigationItem;
+    navigationItem: NavigationItem;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
@@ -395,7 +404,7 @@ async function visitScript({
 }: {
     absoluteFilepathToConfiguration: AbsoluteFilePath;
     visitor: Partial<DocsConfigFileAstVisitor>;
-    script: docsYml.RawSchemas.JsConfigOptions;
+    script: JsConfigOptions;
     nodePath: NodePath;
 }) {
     const rawUnresolvedFilepath = typeof script === "string" ? script : "path" in script ? script.path : null;
@@ -411,20 +420,16 @@ async function visitScript({
     }
 }
 
-function navigationItemIsPage(item: docsYml.RawSchemas.NavigationItem): item is docsYml.RawSchemas.PageConfiguration {
+function navigationItemIsPage(item: NavigationItem): item is PageConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.PageConfiguration).page != null;
+    return (item as PageConfiguration).page != null;
 }
 
-function navigationItemIsSection(
-    item: docsYml.RawSchemas.NavigationItem
-): item is docsYml.RawSchemas.SectionConfiguration {
+function navigationItemIsSection(item: NavigationItem): item is SectionConfiguration {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    return (item as docsYml.RawSchemas.SectionConfiguration).section != null;
+    return (item as SectionConfiguration).section != null;
 }
 
-function navigationConfigIsTabbed(
-    config: docsYml.RawSchemas.NavigationConfig
-): config is docsYml.RawSchemas.TabbedNavigationConfig {
-    return (config as docsYml.RawSchemas.TabbedNavigationConfig)[0]?.tab != null;
+function navigationConfigIsTabbed(config: NavigationConfig): config is TabbedNavigationConfig {
+    return (config as TabbedNavigationConfig)[0]?.tab != null;
 }

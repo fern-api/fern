@@ -1,0 +1,27 @@
+auth-schemes:
+ MyOAuth: 
+   scheme: oauth
+   type: "client-credentials"
+   client-id-env: MY_CLIENT_ID
+   client-secret-env: MY_CLIENT_ID
+   token-prefix: Bearer
+   get-token:
+     endpoint: POST https://example.com/token
+     request-properties:
+       client-id: $request.client_id
+       client-secret: $request.client_secret
+       scopes: $request.scopes
+     response-properties:
+       access-token: $response.accessToken
+       refresh-token: $response.refreshToken
+   refresh-token:
+      endpoint: POST /refresh
+      request-properties:
+        refresh-token: $request.refresh_token
+      response-properties:
+        access-token: $response.accessToken
+        refresh-token: $response.refreshToken
+   scopes: ["scope1", "scope2"]
+
+api:
+  path: ./definition/openapi.yml

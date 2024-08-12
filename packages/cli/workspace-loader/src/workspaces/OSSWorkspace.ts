@@ -80,7 +80,8 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             taskContext: context,
             ir: openApiIr,
             enableUniqueErrorsPerEndpoint: settings?.enableUniqueErrorsPerEndpoint ?? false,
-            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true
+            detectGlobalHeaders: settings?.detectGlobalHeaders ?? true,
+            generatorsConfiguration: this.generatorsConfiguration
         });
 
         if (modifySourceFilepath != null) {

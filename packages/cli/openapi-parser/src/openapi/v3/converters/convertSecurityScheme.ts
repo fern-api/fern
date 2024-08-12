@@ -8,11 +8,7 @@ import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContex
 import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
-import {
-    getAccessTokenConfiguration,
-    getFullOAuthConfiguration,
-    getRefreshTokenConfiguration
-} from "../extensions/getOAuthScheme";
+import { getAccessTokenConfiguration, getRefreshTokenConfiguration } from "../extensions/getOAuthScheme";
 import {
     getBasicSecuritySchemeNameAndEnvvar,
     HeaderSecuritySchemeNames,
@@ -47,45 +43,7 @@ function convertSecuritySchemeHelper({
     context: AbstractOpenAPIV3ParserContext;
     source: Source;
 }): SecurityScheme | undefined {
-    const maybeFullOauthConfig = getFullOAuthConfiguration({ document, context });
-
-    if (maybeFullOauthConfig != null) {
-        // If the full spec is specified, we only respect that, and ignore the original OAS config.
-        return SecurityScheme.oauth(
-            OauthSecurityScheme.clientCredentials({
-                clientIdEnvVar: maybeFullOauthConfig.clientId.env,
-                clientSecretEnvVar: maybeFullOauthConfig.clientSecret.env,
-                tokenPrefix: maybeFullOauthConfig.tokenPrefix,
-                scopes: maybeFullOauthConfig.scopes,
-                tokenEndpoint: {
-                    endpointReference: maybeFullOauthConfig.getToken.endpoint,
-                    requestProperties: {
-                        clientId: maybeFullOauthConfig.getToken.request.clientId,
-                        clientSecret: maybeFullOauthConfig.getToken.request.clientSecret,
-                        scopes: maybeFullOauthConfig.getToken.request.scopes
-                    },
-                    responseProperties: {
-                        accessToken: maybeFullOauthConfig.getToken.response.accessToken,
-                        expiresIn: maybeFullOauthConfig.getToken.response.expiresIn,
-                        refreshToken: maybeFullOauthConfig.getToken.response.refreshToken
-                    }
-                },
-                refreshEndpoint: maybeFullOauthConfig.refreshToken
-                    ? {
-                          endpointReference: maybeFullOauthConfig.refreshToken.endpoint,
-                          requestProperties: {
-                              refreshToken: maybeFullOauthConfig.refreshToken.request.refreshToken
-                          },
-                          responseProperties: {
-                              accessToken: maybeFullOauthConfig.refreshToken.response.accessToken,
-                              expiresIn: maybeFullOauthConfig.refreshToken.response.expiresIn,
-                              refreshToken: maybeFullOauthConfig.refreshToken.response.refreshToken
-                          }
-                      }
-                    : undefined
-            })
-        );
-    } else if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
+    if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
         const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
         const headerNames = getExtension<HeaderSecuritySchemeNames>(
             securityScheme,
@@ -123,10 +81,6 @@ function convertSecuritySchemeHelper({
             tokenEnvVar: undefined
         });
     } else if (securityScheme.type === "oauth2") {
-        context.logger.debug(
-            "`x-fern-oauth` extension either not used, or incomplete. Falling back to OAS spec, and looking for `x-fern-access-token-endpoint` and `x-fern-refresh-token-endpoint`."
-        );
-
         if (securityScheme.flows.clientCredentials != null) {
             // Scopes is a record of the scope name to the scope's description
             // https://swagger.io/docs/specification/authentication/oauth2/

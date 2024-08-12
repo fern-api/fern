@@ -31,4 +31,5 @@ export {
 export { type ReadmeEndpointObjectSchema } from "./schemas/ReadmeEndpointObjectSchema";
 export { type ReadmeEndpointSchema } from "./schemas/ReadmeEndpointSchema";
 export { type ReadmeSchema } from "./schemas/ReadmeSchema";
+export * as Visitors from "./schemas/visitors";
 export { updateGeneratorGroup } from "./updateGeneratorGroup";

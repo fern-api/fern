@@ -1,0 +1,35 @@
+name: api
+error-discrimination:
+  strategy: status-code
+display-name: Test extension `x-fern-oauth`.
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+  MyOAuth:
+    scheme: oauth
+    type: client-credentials
+    scopes:
+      - scope1
+      - scope2
+    client-id-env: MY_CLIENT_ID
+    client-secret-env: MY_CLIENT_ID
+    token-prefix: Bearer
+    get-token:
+      endpoint: root.postToken
+      request-properties:
+        client-id: $request.client_id
+        client-secret: $request.client_secret
+        scopes: $request.scope
+      response-properties:
+        access-token: $response.access_token
+        refresh-token: $response.refresh_token
+    refresh-token:
+      endpoint: root.postRefresh
+      request-properties:
+        refresh-token: $request.refresh_token
+      response-properties:
+        access-token: $response.access_token
+        refresh-token: $response.refresh_token
+auth: BearerAuthScheme
+imports:
+  root: __package__.yml

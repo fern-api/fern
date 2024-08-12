@@ -3637,9 +3637,11 @@ __metadata:
   resolution: "@fern-api/configuration@workspace:packages/cli/configuration"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/docs-markdown-utils": "workspace:*"
     "@fern-api/fdr-sdk": 0.98.20-33071ab6e
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
+    "@fern-api/yaml-schema": "workspace:*"
     "@fern-fern/fiddle-sdk": 0.0.584
     "@types/dockerode": ^3.3.9
     "@types/jest": ^29.5.12
@@ -4950,9 +4952,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/yaml-schema@workspace:packages/cli/yaml/yaml-schema"
   dependencies:
-    "@fern-api/configuration": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/docs-markdown-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/task-context": "workspace:*"

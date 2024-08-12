@@ -1,13 +1,13 @@
-import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { NodePath } from "../NodePath";
+import { NodePath } from "../../../NodePath";
+import { DocsConfiguration } from "../sdk/api";
 
 export type DocsConfigFileAstVisitor<R = void | Promise<void>> = {
     [K in keyof DocsConfigFileAstNodeTypes]: DocsConfigFileAstNodeVisitor<K, R>;
 };
 
 export interface DocsConfigFileAstNodeTypes {
-    file: { config: docsYml.RawSchemas.DocsConfiguration };
+    file: { config: DocsConfiguration };
     filepath: {
         absoluteFilepath: AbsoluteFilePath;
         value: string /* User defined value for filepath */;

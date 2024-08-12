@@ -4,7 +4,7 @@ import { OAuthAccessTokenResponsePropertiesSchema } from "./OAuthAccessTokenResp
 
 export const OAuthGetTokenEndpointSchema = z.strictObject({
     endpoint: z.string().describe("The endpoint to get the access token, such as 'auth.get_token')"),
-    "request-properties": OAuthAccessTokenRequestPropertiesSchema.optional(),
+    "request-properties": OAuthAccessTokenRequestPropertiesSchema,
     "response-properties": OAuthAccessTokenResponsePropertiesSchema.optional()
 });
 

@@ -1891,6 +1891,2259 @@ exports[`ir {"name":"file-upload"} 1`] = `
 }"
 `;
 
+exports[`ir {"name":"gen-yml-auth"} 1`] = `
+"{
+    "fdrApiDefinitionId": null,
+    "apiVersion": null,
+    "apiName": {
+        "originalName": "api",
+        "camelCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "snakeCase": {
+            "unsafeName": "api",
+            "safeName": "api"
+        },
+        "screamingSnakeCase": {
+            "unsafeName": "API",
+            "safeName": "API"
+        },
+        "pascalCase": {
+            "unsafeName": "Api",
+            "safeName": "Api"
+        }
+    },
+    "apiDisplayName": "Test extension \`x-fern-oauth\`.",
+    "apiDocs": null,
+    "auth": {
+        "requirement": "ALL",
+        "schemes": [
+            {
+                "_type": "oauth",
+                "configuration": {
+                    "type": "clientCredentials",
+                    "clientIdEnvVar": "MY_CLIENT_ID",
+                    "clientSecretEnvVar": "MY_CLIENT_ID",
+                    "tokenPrefix": "Bearer",
+                    "scopes": [
+                        "scope1",
+                        "scope2"
+                    ],
+                    "tokenEndpoint": {
+                        "endpointReference": {
+                            "endpointId": "endpoint_.postToken",
+                            "serviceId": "service_",
+                            "subpackageId": null
+                        },
+                        "requestProperties": {
+                            "clientId": {
+                                "property": {
+                                    "type": "query",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "client_id",
+                                            "camelCase": {
+                                                "unsafeName": "clientId",
+                                                "safeName": "clientId"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "client_id",
+                                                "safeName": "client_id"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "CLIENT_ID",
+                                                "safeName": "CLIENT_ID"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ClientId",
+                                                "safeName": "ClientId"
+                                            }
+                                        },
+                                        "wireValue": "client_id"
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    },
+                                    "allowMultiple": false,
+                                    "availability": null,
+                                    "docs": null
+                                },
+                                "propertyPath": null
+                            },
+                            "clientSecret": {
+                                "property": {
+                                    "type": "query",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "client_secret",
+                                            "camelCase": {
+                                                "unsafeName": "clientSecret",
+                                                "safeName": "clientSecret"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "client_secret",
+                                                "safeName": "client_secret"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "CLIENT_SECRET",
+                                                "safeName": "CLIENT_SECRET"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ClientSecret",
+                                                "safeName": "ClientSecret"
+                                            }
+                                        },
+                                        "wireValue": "client_secret"
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    },
+                                    "allowMultiple": false,
+                                    "availability": null,
+                                    "docs": null
+                                },
+                                "propertyPath": null
+                            },
+                            "scopes": {
+                                "property": {
+                                    "type": "query",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "scopes",
+                                            "camelCase": {
+                                                "unsafeName": "scopes",
+                                                "safeName": "scopes"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "scopes",
+                                                "safeName": "scopes"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SCOPES",
+                                                "safeName": "SCOPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Scopes",
+                                                "safeName": "Scopes"
+                                            }
+                                        },
+                                        "wireValue": "scopes"
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    },
+                                    "allowMultiple": false,
+                                    "availability": null,
+                                    "docs": null
+                                },
+                                "propertyPath": null
+                            }
+                        },
+                        "responseProperties": {
+                            "accessToken": {
+                                "propertyPath": [],
+                                "property": {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "accessToken",
+                                            "camelCase": {
+                                                "unsafeName": "accessToken",
+                                                "safeName": "accessToken"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "access_token",
+                                                "safeName": "access_token"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ACCESS_TOKEN",
+                                                "safeName": "ACCESS_TOKEN"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "AccessToken",
+                                                "safeName": "AccessToken"
+                                            }
+                                        },
+                                        "wireValue": "accessToken"
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    },
+                                    "availability": null,
+                                    "docs": null
+                                }
+                            },
+                            "expiresIn": null,
+                            "refreshToken": {
+                                "propertyPath": [],
+                                "property": {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "refreshToken",
+                                            "camelCase": {
+                                                "unsafeName": "refreshToken",
+                                                "safeName": "refreshToken"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "refresh_token",
+                                                "safeName": "refresh_token"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "REFRESH_TOKEN",
+                                                "safeName": "REFRESH_TOKEN"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "RefreshToken",
+                                                "safeName": "RefreshToken"
+                                            }
+                                        },
+                                        "wireValue": "refreshToken"
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    },
+                                    "availability": null,
+                                    "docs": null
+                                }
+                            }
+                        }
+                    },
+                    "refreshEndpoint": {
+                        "endpointReference": {
+                            "endpointId": "endpoint_.postRefresh",
+                            "serviceId": "service_",
+                            "subpackageId": null
+                        },
+                        "requestProperties": {
+                            "refreshToken": {
+                                "property": {
+                                    "type": "query",
+                                    "name": {
+                                        "name": {
+                                            "originalName": "refresh_token",
+                                            "camelCase": {
+                                                "unsafeName": "refreshToken",
+                                                "safeName": "refreshToken"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "refresh_token",
+                                                "safeName": "refresh_token"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "REFRESH_TOKEN",
+                                                "safeName": "REFRESH_TOKEN"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "RefreshToken",
+                                                "safeName": "RefreshToken"
+                                            }
+                                        },
+                                        "wireValue": "refresh_token"
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    },
+                                    "allowMultiple": false,
+                                    "availability": null,
+                                    "docs": null
+                                },
+                                "propertyPath": null
+                            }
+                        },
+                        "responseProperties": {
+                            "accessToken": {
+                                "propertyPath": [],
+                                "property": {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "accessToken",
+                                            "camelCase": {
+                                                "unsafeName": "accessToken",
+                                                "safeName": "accessToken"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "access_token",
+                                                "safeName": "access_token"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ACCESS_TOKEN",
+                                                "safeName": "ACCESS_TOKEN"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "AccessToken",
+                                                "safeName": "AccessToken"
+                                            }
+                                        },
+                                        "wireValue": "accessToken"
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    },
+                                    "availability": null,
+                                    "docs": null
+                                }
+                            },
+                            "expiresIn": null,
+                            "refreshToken": {
+                                "propertyPath": [],
+                                "property": {
+                                    "name": {
+                                        "name": {
+                                            "originalName": "refreshToken",
+                                            "camelCase": {
+                                                "unsafeName": "refreshToken",
+                                                "safeName": "refreshToken"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "refresh_token",
+                                                "safeName": "refresh_token"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "REFRESH_TOKEN",
+                                                "safeName": "REFRESH_TOKEN"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "RefreshToken",
+                                                "safeName": "RefreshToken"
+                                            }
+                                        },
+                                        "wireValue": "refreshToken"
+                                    },
+                                    "valueType": {
+                                        "_type": "primitive",
+                                        "primitive": {
+                                            "v1": "STRING",
+                                            "v2": {
+                                                "type": "string",
+                                                "default": null,
+                                                "validation": null
+                                            }
+                                        }
+                                    },
+                                    "availability": null,
+                                    "docs": null
+                                }
+                            }
+                        }
+                    }
+                },
+                "docs": null
+            }
+        ],
+        "docs": null
+    },
+    "headers": [],
+    "idempotencyHeaders": [],
+    "types": {
+        "type_:PostRefreshResponse": {
+            "name": {
+                "name": {
+                    "originalName": "PostRefreshResponse",
+                    "camelCase": {
+                        "unsafeName": "postRefreshResponse",
+                        "safeName": "postRefreshResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_refresh_response",
+                        "safeName": "post_refresh_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_REFRESH_RESPONSE",
+                        "safeName": "POST_REFRESH_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostRefreshResponse",
+                        "safeName": "PostRefreshResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:PostRefreshResponse"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "accessToken",
+                                "camelCase": {
+                                    "unsafeName": "accessToken",
+                                    "safeName": "accessToken"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "access_token",
+                                    "safeName": "access_token"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ACCESS_TOKEN",
+                                    "safeName": "ACCESS_TOKEN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "AccessToken",
+                                    "safeName": "AccessToken"
+                                }
+                            },
+                            "wireValue": "accessToken"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "refreshToken",
+                                "camelCase": {
+                                    "unsafeName": "refreshToken",
+                                    "safeName": "refreshToken"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "refresh_token",
+                                    "safeName": "refresh_token"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REFRESH_TOKEN",
+                                    "safeName": "REFRESH_TOKEN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RefreshToken",
+                                    "safeName": "RefreshToken"
+                                }
+                            },
+                            "wireValue": "refreshToken"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_:PostTokenResponse": {
+            "name": {
+                "name": {
+                    "originalName": "PostTokenResponse",
+                    "camelCase": {
+                        "unsafeName": "postTokenResponse",
+                        "safeName": "postTokenResponse"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "post_token_response",
+                        "safeName": "post_token_response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "POST_TOKEN_RESPONSE",
+                        "safeName": "POST_TOKEN_RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "PostTokenResponse",
+                        "safeName": "PostTokenResponse"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                },
+                "typeId": "type_:PostTokenResponse"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "accessToken",
+                                "camelCase": {
+                                    "unsafeName": "accessToken",
+                                    "safeName": "accessToken"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "access_token",
+                                    "safeName": "access_token"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ACCESS_TOKEN",
+                                    "safeName": "ACCESS_TOKEN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "AccessToken",
+                                    "safeName": "AccessToken"
+                                }
+                            },
+                            "wireValue": "accessToken"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "refreshToken",
+                                "camelCase": {
+                                    "unsafeName": "refreshToken",
+                                    "safeName": "refreshToken"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "refresh_token",
+                                    "safeName": "refresh_token"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "REFRESH_TOKEN",
+                                    "safeName": "REFRESH_TOKEN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "RefreshToken",
+                                    "safeName": "RefreshToken"
+                                }
+                            },
+                            "wireValue": "refreshToken"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        }
+    },
+    "errors": {},
+    "services": {
+        "service_": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [],
+                    "packagePath": [],
+                    "file": null
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_.postRefresh",
+                    "name": {
+                        "originalName": "postRefresh",
+                        "camelCase": {
+                            "unsafeName": "postRefresh",
+                            "safeName": "postRefresh"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_refresh",
+                            "safeName": "post_refresh"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_REFRESH",
+                            "safeName": "POST_REFRESH"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostRefresh",
+                            "safeName": "PostRefresh"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "method": "POST",
+                    "path": {
+                        "head": "/refresh",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "refresh",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "refresh_token",
+                                    "camelCase": {
+                                        "unsafeName": "refreshToken",
+                                        "safeName": "refreshToken"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "refresh_token",
+                                        "safeName": "refresh_token"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "REFRESH_TOKEN",
+                                        "safeName": "REFRESH_TOKEN"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "RefreshToken",
+                                        "safeName": "RefreshToken"
+                                    }
+                                },
+                                "wireValue": "refresh_token"
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            },
+                            "allowMultiple": false,
+                            "availability": null,
+                            "docs": null
+                        }
+                    ],
+                    "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "PostRefreshRequest",
+                                "camelCase": {
+                                    "unsafeName": "postRefreshRequest",
+                                    "safeName": "postRefreshRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "post_refresh_request",
+                                    "safeName": "post_refresh_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "POST_REFRESH_REQUEST",
+                                    "safeName": "POST_REFRESH_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PostRefreshRequest",
+                                    "safeName": "PostRefreshRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "PostRefreshResponse",
+                                        "camelCase": {
+                                            "unsafeName": "postRefreshResponse",
+                                            "safeName": "postRefreshResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "post_refresh_response",
+                                            "safeName": "post_refresh_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "POST_REFRESH_RESPONSE",
+                                            "safeName": "POST_REFRESH_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PostRefreshResponse",
+                                            "safeName": "PostRefreshResponse"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:PostRefreshResponse",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": "A real life token"
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": null,
+                                "name": null,
+                                "url": "/refresh",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "refresh_token",
+                                                "camelCase": {
+                                                    "unsafeName": "refreshToken",
+                                                    "safeName": "refreshToken"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "refresh_token",
+                                                    "safeName": "refresh_token"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "REFRESH_TOKEN",
+                                                    "safeName": "REFRESH_TOKEN"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "RefreshToken",
+                                                    "safeName": "RefreshToken"
+                                                }
+                                            },
+                                            "wireValue": "refresh_token"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "refresh_token"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "refresh_token"
+                                        }
+                                    }
+                                ],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_:PostRefreshResponse",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "name": {
+                                                        "originalName": "PostRefreshResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "postRefreshResponse",
+                                                            "safeName": "postRefreshResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "post_refresh_response",
+                                                            "safeName": "post_refresh_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "POST_REFRESH_RESPONSE",
+                                                            "safeName": "POST_REFRESH_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "PostRefreshResponse",
+                                                            "safeName": "PostRefreshResponse"
+                                                        }
+                                                    }
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "accessToken",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "accessToken",
+                                                                        "safeName": "accessToken"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "access_token",
+                                                                        "safeName": "access_token"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "ACCESS_TOKEN",
+                                                                        "safeName": "ACCESS_TOKEN"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "AccessToken",
+                                                                        "safeName": "AccessToken"
+                                                                    }
+                                                                },
+                                                                "wireValue": "accessToken"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "accessToken"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "accessToken"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:PostRefreshResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": {
+                                                                    "originalName": "PostRefreshResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postRefreshResponse",
+                                                                        "safeName": "postRefreshResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_refresh_response",
+                                                                        "safeName": "post_refresh_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_REFRESH_RESPONSE",
+                                                                        "safeName": "POST_REFRESH_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostRefreshResponse",
+                                                                        "safeName": "PostRefreshResponse"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "refreshToken",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "refreshToken",
+                                                                        "safeName": "refreshToken"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "refresh_token",
+                                                                        "safeName": "refresh_token"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "REFRESH_TOKEN",
+                                                                        "safeName": "REFRESH_TOKEN"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "RefreshToken",
+                                                                        "safeName": "RefreshToken"
+                                                                    }
+                                                                },
+                                                                "wireValue": "refreshToken"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "refreshToken"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "refreshToken"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:PostRefreshResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": {
+                                                                    "originalName": "PostRefreshResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postRefreshResponse",
+                                                                        "safeName": "postRefreshResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_refresh_response",
+                                                                        "safeName": "post_refresh_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_REFRESH_RESPONSE",
+                                                                        "safeName": "POST_REFRESH_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostRefreshResponse",
+                                                                        "safeName": "PostRefreshResponse"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "accessToken": "accessToken",
+                                                "refreshToken": "refreshToken"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "url": "/refresh",
+                                "rootPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointPathParameters": [],
+                                "serviceHeaders": [],
+                                "endpointHeaders": [],
+                                "queryParameters": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "refresh_token",
+                                                "camelCase": {
+                                                    "unsafeName": "refreshToken",
+                                                    "safeName": "refreshToken"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "refresh_token",
+                                                    "safeName": "refresh_token"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "REFRESH_TOKEN",
+                                                    "safeName": "REFRESH_TOKEN"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "RefreshToken",
+                                                    "safeName": "RefreshToken"
+                                                }
+                                            },
+                                            "wireValue": "refresh_token"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                ],
+                                "request": null,
+                                "name": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_:PostRefreshResponse",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "name": {
+                                                        "originalName": "PostRefreshResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "postRefreshResponse",
+                                                            "safeName": "postRefreshResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "post_refresh_response",
+                                                            "safeName": "post_refresh_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "POST_REFRESH_RESPONSE",
+                                                            "safeName": "POST_REFRESH_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "PostRefreshResponse",
+                                                            "safeName": "PostRefreshResponse"
+                                                        }
+                                                    }
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "accessToken",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "accessToken",
+                                                                        "safeName": "accessToken"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "access_token",
+                                                                        "safeName": "access_token"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "ACCESS_TOKEN",
+                                                                        "safeName": "ACCESS_TOKEN"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "AccessToken",
+                                                                        "safeName": "AccessToken"
+                                                                    }
+                                                                },
+                                                                "wireValue": "accessToken"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "accessToken"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "accessToken"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:PostRefreshResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": {
+                                                                    "originalName": "PostRefreshResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postRefreshResponse",
+                                                                        "safeName": "postRefreshResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_refresh_response",
+                                                                        "safeName": "post_refresh_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_REFRESH_RESPONSE",
+                                                                        "safeName": "POST_REFRESH_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostRefreshResponse",
+                                                                        "safeName": "PostRefreshResponse"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "refreshToken",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "refreshToken",
+                                                                        "safeName": "refreshToken"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "refresh_token",
+                                                                        "safeName": "refresh_token"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "REFRESH_TOKEN",
+                                                                        "safeName": "REFRESH_TOKEN"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "RefreshToken",
+                                                                        "safeName": "RefreshToken"
+                                                                    }
+                                                                },
+                                                                "wireValue": "refreshToken"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "refreshToken"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "refreshToken"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:PostRefreshResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": {
+                                                                    "originalName": "PostRefreshResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postRefreshResponse",
+                                                                        "safeName": "postRefreshResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_refresh_response",
+                                                                        "safeName": "post_refresh_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_REFRESH_RESPONSE",
+                                                                        "safeName": "POST_REFRESH_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostRefreshResponse",
+                                                                        "safeName": "PostRefreshResponse"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "accessToken": "accessToken",
+                                                "refreshToken": "refreshToken"
+                                            }
+                                        }
+                                    }
+                                },
+                                "id": "b8d3a61a50e6e606a6a829c5c168be7cd49f4fc1",
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "id": "endpoint_.postToken",
+                    "name": {
+                        "originalName": "postToken",
+                        "camelCase": {
+                            "unsafeName": "postToken",
+                            "safeName": "postToken"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "post_token",
+                            "safeName": "post_token"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "POST_TOKEN",
+                            "safeName": "POST_TOKEN"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "PostToken",
+                            "safeName": "PostToken"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "method": "POST",
+                    "path": {
+                        "head": "/token",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "token",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "client_id",
+                                    "camelCase": {
+                                        "unsafeName": "clientId",
+                                        "safeName": "clientId"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "client_id",
+                                        "safeName": "client_id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CLIENT_ID",
+                                        "safeName": "CLIENT_ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ClientId",
+                                        "safeName": "ClientId"
+                                    }
+                                },
+                                "wireValue": "client_id"
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            },
+                            "allowMultiple": false,
+                            "availability": null,
+                            "docs": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "client_secret",
+                                    "camelCase": {
+                                        "unsafeName": "clientSecret",
+                                        "safeName": "clientSecret"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "client_secret",
+                                        "safeName": "client_secret"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "CLIENT_SECRET",
+                                        "safeName": "CLIENT_SECRET"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ClientSecret",
+                                        "safeName": "ClientSecret"
+                                    }
+                                },
+                                "wireValue": "client_secret"
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            },
+                            "allowMultiple": false,
+                            "availability": null,
+                            "docs": null
+                        },
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "scopes",
+                                    "camelCase": {
+                                        "unsafeName": "scopes",
+                                        "safeName": "scopes"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "scopes",
+                                        "safeName": "scopes"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "SCOPES",
+                                        "safeName": "SCOPES"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Scopes",
+                                        "safeName": "Scopes"
+                                    }
+                                },
+                                "wireValue": "scopes"
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            },
+                            "allowMultiple": false,
+                            "availability": null,
+                            "docs": null
+                        }
+                    ],
+                    "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "wrapper",
+                            "wrapperName": {
+                                "originalName": "PostTokenRequest",
+                                "camelCase": {
+                                    "unsafeName": "postTokenRequest",
+                                    "safeName": "postTokenRequest"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "post_token_request",
+                                    "safeName": "post_token_request"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "POST_TOKEN_REQUEST",
+                                    "safeName": "POST_TOKEN_REQUEST"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "PostTokenRequest",
+                                    "safeName": "PostTokenRequest"
+                                }
+                            },
+                            "bodyKey": {
+                                "originalName": "body",
+                                "camelCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "body",
+                                    "safeName": "body"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "BODY",
+                                    "safeName": "BODY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Body",
+                                    "safeName": "Body"
+                                }
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "PostTokenResponse",
+                                        "camelCase": {
+                                            "unsafeName": "postTokenResponse",
+                                            "safeName": "postTokenResponse"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "post_token_response",
+                                            "safeName": "post_token_response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "POST_TOKEN_RESPONSE",
+                                            "safeName": "POST_TOKEN_RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "PostTokenResponse",
+                                            "safeName": "PostTokenResponse"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [],
+                                        "packagePath": [],
+                                        "file": null
+                                    },
+                                    "typeId": "type_:PostTokenResponse",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": "A real life token"
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": null,
+                                "name": null,
+                                "url": "/token",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "client_id",
+                                                "camelCase": {
+                                                    "unsafeName": "clientId",
+                                                    "safeName": "clientId"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "client_id",
+                                                    "safeName": "client_id"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "CLIENT_ID",
+                                                    "safeName": "CLIENT_ID"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "ClientId",
+                                                    "safeName": "ClientId"
+                                                }
+                                            },
+                                            "wireValue": "client_id"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "client_id"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "client_id"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "client_secret",
+                                                "camelCase": {
+                                                    "unsafeName": "clientSecret",
+                                                    "safeName": "clientSecret"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "client_secret",
+                                                    "safeName": "client_secret"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "CLIENT_SECRET",
+                                                    "safeName": "CLIENT_SECRET"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "ClientSecret",
+                                                    "safeName": "ClientSecret"
+                                                }
+                                            },
+                                            "wireValue": "client_secret"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "client_secret"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "client_secret"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "scopes",
+                                                "camelCase": {
+                                                    "unsafeName": "scopes",
+                                                    "safeName": "scopes"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "scopes",
+                                                    "safeName": "scopes"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SCOPES",
+                                                    "safeName": "SCOPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Scopes",
+                                                    "safeName": "Scopes"
+                                                }
+                                            },
+                                            "wireValue": "scopes"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "scopes"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "scopes"
+                                        }
+                                    }
+                                ],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_:PostTokenResponse",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "name": {
+                                                        "originalName": "PostTokenResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "postTokenResponse",
+                                                            "safeName": "postTokenResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "post_token_response",
+                                                            "safeName": "post_token_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "POST_TOKEN_RESPONSE",
+                                                            "safeName": "POST_TOKEN_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "PostTokenResponse",
+                                                            "safeName": "PostTokenResponse"
+                                                        }
+                                                    }
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "accessToken",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "accessToken",
+                                                                        "safeName": "accessToken"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "access_token",
+                                                                        "safeName": "access_token"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "ACCESS_TOKEN",
+                                                                        "safeName": "ACCESS_TOKEN"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "AccessToken",
+                                                                        "safeName": "AccessToken"
+                                                                    }
+                                                                },
+                                                                "wireValue": "accessToken"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "accessToken"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "accessToken"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:PostTokenResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": {
+                                                                    "originalName": "PostTokenResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postTokenResponse",
+                                                                        "safeName": "postTokenResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_token_response",
+                                                                        "safeName": "post_token_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_TOKEN_RESPONSE",
+                                                                        "safeName": "POST_TOKEN_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostTokenResponse",
+                                                                        "safeName": "PostTokenResponse"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "refreshToken",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "refreshToken",
+                                                                        "safeName": "refreshToken"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "refresh_token",
+                                                                        "safeName": "refresh_token"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "REFRESH_TOKEN",
+                                                                        "safeName": "REFRESH_TOKEN"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "RefreshToken",
+                                                                        "safeName": "RefreshToken"
+                                                                    }
+                                                                },
+                                                                "wireValue": "refreshToken"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "refreshToken"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "refreshToken"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:PostTokenResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": {
+                                                                    "originalName": "PostTokenResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postTokenResponse",
+                                                                        "safeName": "postTokenResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_token_response",
+                                                                        "safeName": "post_token_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_TOKEN_RESPONSE",
+                                                                        "safeName": "POST_TOKEN_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostTokenResponse",
+                                                                        "safeName": "PostTokenResponse"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "accessToken": "accessToken",
+                                                "refreshToken": "refreshToken"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "url": "/token",
+                                "rootPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointPathParameters": [],
+                                "serviceHeaders": [],
+                                "endpointHeaders": [],
+                                "queryParameters": [
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "client_id",
+                                                "camelCase": {
+                                                    "unsafeName": "clientId",
+                                                    "safeName": "clientId"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "client_id",
+                                                    "safeName": "client_id"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "CLIENT_ID",
+                                                    "safeName": "CLIENT_ID"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "ClientId",
+                                                    "safeName": "ClientId"
+                                                }
+                                            },
+                                            "wireValue": "client_id"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "client_secret",
+                                                "camelCase": {
+                                                    "unsafeName": "clientSecret",
+                                                    "safeName": "clientSecret"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "client_secret",
+                                                    "safeName": "client_secret"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "CLIENT_SECRET",
+                                                    "safeName": "CLIENT_SECRET"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "ClientSecret",
+                                                    "safeName": "ClientSecret"
+                                                }
+                                            },
+                                            "wireValue": "client_secret"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    },
+                                    {
+                                        "name": {
+                                            "name": {
+                                                "originalName": "scopes",
+                                                "camelCase": {
+                                                    "unsafeName": "scopes",
+                                                    "safeName": "scopes"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "scopes",
+                                                    "safeName": "scopes"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SCOPES",
+                                                    "safeName": "SCOPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Scopes",
+                                                    "safeName": "Scopes"
+                                                }
+                                            },
+                                            "wireValue": "scopes"
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "string"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "string"
+                                        }
+                                    }
+                                ],
+                                "request": null,
+                                "name": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_:PostTokenResponse",
+                                                    "fernFilepath": {
+                                                        "allParts": [],
+                                                        "packagePath": [],
+                                                        "file": null
+                                                    },
+                                                    "name": {
+                                                        "originalName": "PostTokenResponse",
+                                                        "camelCase": {
+                                                            "unsafeName": "postTokenResponse",
+                                                            "safeName": "postTokenResponse"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "post_token_response",
+                                                            "safeName": "post_token_response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "POST_TOKEN_RESPONSE",
+                                                            "safeName": "POST_TOKEN_RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "PostTokenResponse",
+                                                            "safeName": "PostTokenResponse"
+                                                        }
+                                                    }
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "accessToken",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "accessToken",
+                                                                        "safeName": "accessToken"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "access_token",
+                                                                        "safeName": "access_token"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "ACCESS_TOKEN",
+                                                                        "safeName": "ACCESS_TOKEN"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "AccessToken",
+                                                                        "safeName": "AccessToken"
+                                                                    }
+                                                                },
+                                                                "wireValue": "accessToken"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "accessToken"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "accessToken"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:PostTokenResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": {
+                                                                    "originalName": "PostTokenResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postTokenResponse",
+                                                                        "safeName": "postTokenResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_token_response",
+                                                                        "safeName": "post_token_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_TOKEN_RESPONSE",
+                                                                        "safeName": "POST_TOKEN_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostTokenResponse",
+                                                                        "safeName": "PostTokenResponse"
+                                                                    }
+                                                                }
+                                                            }
+                                                        },
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "refreshToken",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "refreshToken",
+                                                                        "safeName": "refreshToken"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "refresh_token",
+                                                                        "safeName": "refresh_token"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "REFRESH_TOKEN",
+                                                                        "safeName": "REFRESH_TOKEN"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "RefreshToken",
+                                                                        "safeName": "RefreshToken"
+                                                                    }
+                                                                },
+                                                                "wireValue": "refreshToken"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "refreshToken"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "refreshToken"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "typeId": "type_:PostTokenResponse",
+                                                                "fernFilepath": {
+                                                                    "allParts": [],
+                                                                    "packagePath": [],
+                                                                    "file": null
+                                                                },
+                                                                "name": {
+                                                                    "originalName": "PostTokenResponse",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "postTokenResponse",
+                                                                        "safeName": "postTokenResponse"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "post_token_response",
+                                                                        "safeName": "post_token_response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "POST_TOKEN_RESPONSE",
+                                                                        "safeName": "POST_TOKEN_RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "PostTokenResponse",
+                                                                        "safeName": "PostTokenResponse"
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "accessToken": "accessToken",
+                                                "refreshToken": "refreshToken"
+                                            }
+                                        }
+                                    }
+                                },
+                                "id": "214a8ee282b364c5d9dc5f6461eac833d1bdb7c0",
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ]
+        }
+    },
+    "constants": {
+        "errorInstanceIdKey": {
+            "name": {
+                "originalName": "errorInstanceId",
+                "camelCase": {
+                    "unsafeName": "errorInstanceId",
+                    "safeName": "errorInstanceId"
+                },
+                "snakeCase": {
+                    "unsafeName": "error_instance_id",
+                    "safeName": "error_instance_id"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "ERROR_INSTANCE_ID",
+                    "safeName": "ERROR_INSTANCE_ID"
+                },
+                "pascalCase": {
+                    "unsafeName": "ErrorInstanceId",
+                    "safeName": "ErrorInstanceId"
+                }
+            },
+            "wireValue": "errorInstanceId"
+        }
+    },
+    "environments": null,
+    "errorDiscriminationStrategy": {
+        "type": "statusCode"
+    },
+    "basePath": null,
+    "pathParameters": [],
+    "variables": [],
+    "serviceTypeReferenceInfo": {
+        "typesReferencedOnlyByService": {
+            "service_": [
+                "type_:PostRefreshResponse",
+                "type_:PostTokenResponse"
+            ]
+        },
+        "sharedTypes": []
+    },
+    "webhookGroups": {},
+    "websocketChannels": {},
+    "readmeConfig": null,
+    "sourceConfig": null,
+    "subpackages": {},
+    "rootPackage": {
+        "fernFilepath": {
+            "allParts": [],
+            "packagePath": [],
+            "file": null
+        },
+        "websocket": null,
+        "service": "service_",
+        "types": [
+            "type_:PostRefreshResponse",
+            "type_:PostTokenResponse"
+        ],
+        "errors": [],
+        "subpackages": [],
+        "webhooks": null,
+        "navigationConfig": null,
+        "hasEndpointsInTree": true,
+        "docs": null
+    },
+    "sdkConfig": {
+        "isAuthMandatory": false,
+        "hasStreamingEndpoints": false,
+        "hasPaginatedEndpoints": false,
+        "hasFileDownloadEndpoints": false,
+        "platformHeaders": {
+            "language": "X-Fern-Language",
+            "sdkName": "X-Fern-SDK-Name",
+            "sdkVersion": "X-Fern-SDK-Version",
+            "userAgent": null
+        }
+    }
+}"
+`;
+
 exports[`ir {"name":"migration","version":"v1"} 1`] = `
 "{
     "apiName": "my-api",

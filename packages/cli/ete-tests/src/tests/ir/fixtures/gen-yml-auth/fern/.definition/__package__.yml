@@ -1,0 +1,59 @@
+types:
+  PostRefreshResponse:
+    properties:
+      accessToken: string
+      refreshToken: string
+    source:
+      openapi: definition/openapi.yml
+  PostTokenResponse:
+    properties:
+      accessToken: string
+      refreshToken: string
+    source:
+      openapi: definition/openapi.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    postRefresh:
+      path: /refresh
+      method: POST
+      auth: false
+      request:
+        name: PostRefreshRequest
+        query-parameters:
+          refresh_token: string
+      response:
+        docs: A real life token
+        type: PostRefreshResponse
+      examples:
+        - query-parameters:
+            refresh_token: refresh_token
+          response:
+            body:
+              accessToken: accessToken
+              refreshToken: refreshToken
+    postToken:
+      path: /token
+      method: POST
+      auth: false
+      request:
+        name: PostTokenRequest
+        query-parameters:
+          client_id: string
+          client_secret: string
+          scopes: string
+      response:
+        docs: A real life token
+        type: PostTokenResponse
+      examples:
+        - query-parameters:
+            client_id: client_id
+            client_secret: client_secret
+            scopes: scopes
+          response:
+            body:
+              accessToken: accessToken
+              refreshToken: refreshToken
+  source:
+    openapi: definition/openapi.yml

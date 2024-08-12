@@ -5,6 +5,8 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
-    { "path": "../task-context" }
+    { "path": "../docs-markdown-utils" },
+    { "path": "../task-context" },
+    { "path": "../yaml/yaml-schema" }
   ]
 }

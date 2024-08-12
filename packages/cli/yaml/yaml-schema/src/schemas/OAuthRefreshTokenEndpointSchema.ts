@@ -4,7 +4,7 @@ import { OAuthRefreshTokenRequestPropertiesSchema } from "./OAuthRefreshTokenReq
 
 export const OAuthRefreshTokenEndpointSchema = z.strictObject({
     endpoint: z.string().describe("The endpoint to refresh the access token, such as 'auth.refresh_token')"),
-    "request-properties": OAuthRefreshTokenRequestPropertiesSchema.optional(),
+    "request-properties": OAuthRefreshTokenRequestPropertiesSchema,
     "response-properties": OAuthAccessTokenResponsePropertiesSchema.optional()
 });
 export type OAuthRefreshTokenEndpointSchema = z.infer<typeof OAuthRefreshTokenEndpointSchema>;

@@ -1,4 +1,4 @@
-import { validateVersionConfigFileSchema } from "@fern-api/yaml-schema";
+import { docsYml } from "@fern-api/configuration";
 import { Rule } from "../../Rule";
 
 export const ValidateVersionFileRule: Rule = {
@@ -6,7 +6,9 @@ export const ValidateVersionFileRule: Rule = {
     create: () => {
         return {
             versionFile: async ({ path, content }) => {
-                const parseResult = await validateVersionConfigFileSchema({ value: content });
+                const parseResult = await docsYml.RawSchemas.Visitors.validateVersionConfigFileSchema({
+                    value: content
+                });
                 if (parseResult.type === "success") {
                     return [];
                 }

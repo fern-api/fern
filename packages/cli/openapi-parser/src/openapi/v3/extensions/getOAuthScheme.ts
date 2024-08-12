@@ -1,11 +1,7 @@
 import { OpenAPIV3 } from "openapi-types";
 import { getExtensionAndValidate } from "../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
-import {
-    AccessTokenEndpointSchema,
-    FullOAuthConfigSchema,
-    RefreshTokenEndpointSchema
-} from "../schemas/OAuthConfigSchema";
+import { AccessTokenEndpointSchema, RefreshTokenEndpointSchema } from "../schemas/OAuthConfigSchema";
 import { FernOpenAPIExtension } from "./fernExtensions";
 
 export function getRefreshTokenConfiguration({
@@ -40,19 +36,4 @@ export function getAccessTokenConfiguration({
               context
           )
         : undefined;
-}
-
-export function getFullOAuthConfiguration({
-    document,
-    context
-}: {
-    document: OpenAPIV3.Document;
-    context: AbstractOpenAPIV3ParserContext;
-}): FullOAuthConfigSchema | undefined {
-    return getExtensionAndValidate<FullOAuthConfigSchema>(
-        document,
-        FernOpenAPIExtension.FERN_OAUTH,
-        FullOAuthConfigSchema,
-        context
-    );
 }

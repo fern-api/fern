@@ -1,10 +1,6 @@
+import { docsYml } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    DocsConfigFileAstNodeTypes,
-    DocsConfigFileAstNodeVisitor,
-    DocsConfigFileAstVisitor,
-    NodePath
-} from "@fern-api/yaml-schema";
+import { NodePath } from "@fern-api/yaml-schema";
 import { RuleVisitor } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
@@ -14,14 +10,14 @@ export function createDocsConfigFileAstVisitorForRules({
     addViolations
 }: {
     relativeFilepath: RelativeFilePath;
-    allRuleVisitors: RuleVisitor<DocsConfigFileAstNodeTypes>[];
+    allRuleVisitors: RuleVisitor<docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeTypes>[];
     addViolations: (newViolations: ValidationViolation[]) => void;
-}): DocsConfigFileAstVisitor {
-    function createAstNodeVisitor<K extends keyof DocsConfigFileAstNodeTypes>(
+}): docsYml.RawSchemas.Visitors.DocsConfigFileAstVisitor {
+    function createAstNodeVisitor<K extends keyof docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeTypes>(
         nodeType: K
-    ): Record<K, DocsConfigFileAstNodeVisitor<K>> {
-        const visit: DocsConfigFileAstNodeVisitor<K> = async (
-            node: DocsConfigFileAstNodeTypes[K],
+    ): Record<K, docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeVisitor<K>> {
+        const visit: docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeVisitor<K> = async (
+            node: docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeTypes[K],
             nodePath: NodePath
         ) => {
             for (const ruleVisitors of allRuleVisitors) {
@@ -40,7 +36,7 @@ export function createDocsConfigFileAstVisitorForRules({
             }
         };
 
-        return { [nodeType]: visit } as Record<K, DocsConfigFileAstNodeVisitor<K>>;
+        return { [nodeType]: visit } as Record<K, docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeVisitor<K>>;
     }
 
     return {

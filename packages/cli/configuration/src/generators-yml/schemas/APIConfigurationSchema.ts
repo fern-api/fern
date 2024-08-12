@@ -47,6 +47,10 @@ export const APIDefintionWithOverridesSchema = z.object({
         .describe("The URL of the API definition origin, from which the file should be polled."),
     overrides: z.optional(z.string()).describe("Path to the OpenAPI or AsyncAPI overrides"),
     audiences: z.optional(z.array(z.string())).describe("Audiences that you would like to filter to"),
+    // TODO: Support multiple auth schemes and then allow the user to specify which one(s) to use for this API
+    // "auth-scheme": z
+    //     .optional(z.string())
+    //     .describe("The auth scheme defined within the `auth-schemes` block used for this API."),
     settings: z.optional(APIDefinitionSettingsSchema)
 });
 

@@ -1,3 +1,4 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { Logger } from "@fern-api/logger";
 import { OpenApiIntermediateRepresentation, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
@@ -6,6 +7,7 @@ import { FernDefinitionBuilder, FernDefinitionBuilderImpl } from "./FernDefnitio
 export interface OpenApiIrConverterContextOpts {
     taskContext: TaskContext;
     ir: OpenApiIntermediateRepresentation;
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
 
     /**
      * If true, each error will be made unique per endpoint. This is the preferred behavior for Docs.
@@ -26,19 +28,23 @@ export class OpenApiIrConverterContext {
     public ir: OpenApiIntermediateRepresentation;
     public builder: FernDefinitionBuilder;
     public detectGlobalHeaders: boolean;
+    public generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined;
+
     private defaultServerName: string | undefined = undefined;
 
     constructor({
         taskContext,
         ir,
         enableUniqueErrorsPerEndpoint,
-        detectGlobalHeaders
+        detectGlobalHeaders,
+        generatorsConfiguration
     }: OpenApiIrConverterContextOpts) {
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.ir = ir;
         this.builder = new FernDefinitionBuilderImpl(ir, false, enableUniqueErrorsPerEndpoint);
         this.detectGlobalHeaders = detectGlobalHeaders;
+        this.generatorsConfiguration = generatorsConfiguration;
     }
 
     public getSchema(id: SchemaId): Schema | undefined {

@@ -1,0 +1,64 @@
+openapi: 3.1.0
+info:
+  title: Test extension `x-fern-oauth`.
+  version: 1.0.0
+
+paths:
+  "/refresh":
+    post:
+      x-fern-sdk-group-name: auth
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: refresh_token
+          required: true
+      responses:
+        '200':
+          description: A real life token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+                required:
+                  - accessToken
+                  - refreshToken
+  "/token":
+    post:
+      x-fern-sdk-group-name: auth
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: client_id
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: client_secret
+          required: true
+        - schema:
+            type: string
+          in: query
+          name: scopes
+          required: true
+      responses:
+        '200':
+          description: A real life token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accessToken:
+                    type: string
+                  refreshToken:
+                    type: string
+                required:
+                  - accessToken
+                  - refreshToken

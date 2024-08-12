@@ -1,10 +1,10 @@
+import { docsYml } from "@fern-api/configuration";
 import { Logger } from "@fern-api/logger";
 import { DocsWorkspace } from "@fern-api/workspace-loader";
-import { DocsConfigFileAstNodeTypes } from "@fern-api/yaml-schema";
 
 export interface Rule {
     name: string;
-    create: (context: RuleContext) => MaybePromise<RuleVisitor<DocsConfigFileAstNodeTypes>>;
+    create: (context: RuleContext) => MaybePromise<RuleVisitor<docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeTypes>>;
 }
 
 export type RuleVisitor<AstNodeTypes> = {

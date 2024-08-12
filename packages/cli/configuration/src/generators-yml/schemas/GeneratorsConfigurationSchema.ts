@@ -1,3 +1,4 @@
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { z } from "zod";
 import { APIConfigurationSchema, APIDefinitionSettingsSchema } from "./APIConfigurationSchema";
 import { GeneratorGroupSchema } from "./GeneratorGroupSchema";
@@ -16,6 +17,8 @@ export const API_SETTINGS_KEY = "api-settings";
 
 export const GeneratorsConfigurationSchema = z.strictObject({
     api: z.optional(APIConfigurationSchema),
+
+    "auth-schemes": z.optional(z.record(RawSchemas.AuthSchemeDeclarationSchema)),
 
     whitelabel: z.optional(WhitelabelConfigurationSchema),
 

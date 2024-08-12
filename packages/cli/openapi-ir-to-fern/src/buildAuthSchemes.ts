@@ -2,6 +2,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { HttpMethodSchema } from "@fern-api/yaml-schema/src/schemas";
 import { buildEnumTypeDeclaration } from "./buildTypeDeclaration";
+import { EndpointLocation } from "./FernDefnitionBuilder";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { getHeaderName } from "./utils/getHeaderName";
 
@@ -11,6 +12,8 @@ const BEARER_AUTH_SCHEME = "BearerAuthScheme";
 
 export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
     let setAuth = false;
+
+    const authOverrides = context.generatorsConfiguration?.rawConfiguration["auth-schemes"];
 
     for (const [id, securityScheme] of Object.entries(context.ir.securitySchemes)) {
         if (securityScheme.type === "basic") {
@@ -153,7 +156,7 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                     ? context.builder.getEndpoint(atMethod, atUrl)
                     : context.builder.getEndpointWithoutMethod(atUrl);
 
-                let maybeRefreshTokenEndpointFernReference: string | undefined;
+                let maybeRefreshTokenEndpointFernReference: EndpointLocation | undefined;
                 if (maybeRefreshTokenEndpoint != null) {
                     const [rtMethod, rtUrl] = getMethodAndUrl(maybeRefreshTokenEndpoint.endpointReference);
                     maybeRefreshTokenEndpointFernReference = rtMethod
@@ -166,6 +169,11 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                         `Failed to resolve the provided access token endpoint: method - ${atMethod} url - ${atUrl}.`
                     );
                 }
+                const endpointImports = [];
+                endpointImports.push(maybeAccessTokenEndpointFernReference.file);
+                if (maybeRefreshTokenEndpointFernReference != null) {
+                    endpointImports.push(maybeRefreshTokenEndpointFernReference.file);
+                }
 
                 context.builder.addAuthScheme({
                     name: OAUTH_SCHEME,
@@ -177,7 +185,7 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                         "client-secret-env": securityScheme.value.clientSecretEnvVar,
                         "token-prefix": securityScheme.value.tokenPrefix,
                         "get-token": {
-                            endpoint: maybeAccessTokenEndpointFernReference,
+                            endpoint: maybeAccessTokenEndpointFernReference.endpointReference,
                             "request-properties": {
                                 "client-id": accessTokenEndpoint.requestProperties.clientId,
                                 "client-secret": accessTokenEndpoint.requestProperties.clientSecret,
@@ -192,7 +200,7 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                         "refresh-token":
                             maybeRefreshTokenEndpoint != null && maybeRefreshTokenEndpointFernReference != null
                                 ? {
-                                      endpoint: maybeRefreshTokenEndpointFernReference,
+                                      endpoint: maybeRefreshTokenEndpointFernReference.endpointReference,
                                       "request-properties": {
                                           "refresh-token": maybeRefreshTokenEndpoint.requestProperties.refreshToken
                                       },
@@ -203,8 +211,125 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
                                       }
                                   }
                                 : undefined
-                    }
+                    },
+                    additionalImports: endpointImports
                 });
+
+                if (!setAuth) {
+                    context.builder.setAuth(OAUTH_SCHEME);
+                    setAuth = true;
+                }
+            }
+        }
+    }
+
+    // Run through the authOverrides and add in the schemes so that these schemes take
+    // precedence over the ones that were in the OAS spec.
+    for (const [name, scheme] of Object.entries(authOverrides ?? {})) {
+        if ("header" in scheme) {
+            context.builder.addAuthScheme({
+                name,
+                schema: {
+                    header: scheme.header,
+                    name: scheme.header,
+                    type: scheme.type,
+                    env: scheme.env,
+                    prefix: scheme.prefix
+                }
+            });
+            if (!setAuth) {
+                context.builder.setAuth(name);
+                setAuth = true;
+            }
+        } else if (scheme.scheme === "basic") {
+            context.builder.addAuthScheme({
+                name,
+                schema: {
+                    scheme: "basic",
+                    username: {
+                        name: scheme.username?.name,
+                        env: scheme.username?.env
+                    },
+                    password: {
+                        name: scheme.password?.name,
+                        env: scheme.password?.env
+                    }
+                }
+            });
+            if (!setAuth) {
+                context.builder.setAuth(name);
+                setAuth = true;
+            }
+        } else if (scheme.scheme === "bearer") {
+            context.builder.addAuthScheme({
+                name,
+                schema: {
+                    scheme: "bearer",
+                    token: {
+                        name: scheme.token?.name,
+                        env: scheme.token?.env
+                    }
+                }
+            });
+            if (!setAuth) {
+                context.builder.setAuth(name);
+                setAuth = true;
+            }
+        } else if (scheme.scheme === "oauth") {
+            const [atMethod, atUrl] = getMethodAndUrl(scheme["get-token"]?.endpoint);
+            const maybeAccessTokenEndpointFernReference = atMethod
+                ? context.builder.getEndpoint(atMethod, atUrl)
+                : context.builder.getEndpointWithoutMethod(atUrl);
+
+            let maybeRefreshTokenEndpointFernReference: EndpointLocation | undefined;
+            if (scheme["refresh-token"]?.endpoint != null) {
+                const [rtMethod, rtUrl] = getMethodAndUrl(scheme["refresh-token"]?.endpoint);
+                maybeRefreshTokenEndpointFernReference = rtMethod
+                    ? context.builder.getEndpoint(rtMethod, rtUrl)
+                    : context.builder.getEndpointWithoutMethod(rtUrl);
+            }
+
+            if (maybeAccessTokenEndpointFernReference == null) {
+                throw new Error(
+                    `Failed to resolve the provided access token endpoint: method - ${atMethod} url - ${atUrl}.`
+                );
+            }
+
+            const endpointImports = [];
+            endpointImports.push(maybeAccessTokenEndpointFernReference.file);
+            if (maybeRefreshTokenEndpointFernReference != null) {
+                endpointImports.push(maybeRefreshTokenEndpointFernReference.file);
+            }
+
+            context.builder.addAuthScheme({
+                name,
+                schema: {
+                    scheme: "oauth",
+                    type: "client-credentials",
+                    scopes: scheme.scopes,
+                    "client-id-env": scheme["client-id-env"],
+                    "client-secret-env": scheme["client-secret-env"],
+                    "token-prefix": scheme["token-prefix"],
+                    "get-token": {
+                        endpoint: maybeAccessTokenEndpointFernReference.endpointReference,
+                        "request-properties": scheme["get-token"]["request-properties"],
+                        "response-properties": scheme["get-token"]["response-properties"]
+                    },
+                    "refresh-token":
+                        scheme["refresh-token"] != null && maybeRefreshTokenEndpointFernReference != null
+                            ? {
+                                  endpoint: maybeRefreshTokenEndpointFernReference.endpointReference,
+                                  "request-properties": scheme["refresh-token"]["request-properties"],
+                                  "response-properties": scheme["refresh-token"]["response-properties"]
+                              }
+                            : undefined
+                },
+                additionalImports: endpointImports
+            });
+
+            if (!setAuth) {
+                context.builder.setAuth(name);
+                setAuth = true;
             }
         }
     }
