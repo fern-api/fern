@@ -67,7 +67,7 @@ jobs:
       - name: Update yarn.lock with new versions
         run: yarn
       - name: Compile
-        run: pnpm comile
+        run: pnpm compile
       - name: Publish seed CLI
         run: yarn workspace @fern-api/seed-cli publish:cli
       - name: Publish fern-api-dev CLI
@@ -103,7 +103,7 @@ jobs:
       - name: Update yarn.lock with new versions
         run: yarn
       - name: Compile
-        run: pnpm comile
+        run: pnpm compile
       - name: Publish fern-api-dev CLI
         run: yarn workspace @fern-api/cli publish:cli:dev --access restricted
       - name: Publish seed CLI
@@ -142,7 +142,7 @@ jobs:
       - name: Update yarn.lock with new versions
         run: yarn
       - name: Compile
-        run: pnpm comile
+        run: pnpm compile
       - name: Publish fern-api-dev CLI
         run: yarn workspace @fern-api/cli publish:cli:dev --access restricted
       - name: Publish seed CLI

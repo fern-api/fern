@@ -65,7 +65,7 @@ This tells VSCode to rely on the version of TypeScript that lives in `.yarn/sdks
 
 ### Compiling
 
-To compile the packages in this monorepo, run `pnpm comile`.
+To compile the packages in this monorepo, run `pnpm compile`.
 
 ### Tests
 
@@ -129,7 +129,7 @@ that depends on a lower IR version can continue to be run from our CLI.
 3. Generate a TypeScript SDK for the IR by running `fern generate --api ir-types-vXXX`
 4. Update all `package.json` files to use new `ir-sdk` npm version.
    Run `yarn install`
-5. Run `pnpm comile`. You will see compile errors related to your schema changes.
+5. Run `pnpm compile`. You will see compile errors related to your schema changes.
 
 **Step 2: Write a reverse migration**
 
