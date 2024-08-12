@@ -1,4 +1,3 @@
-import { generatePathTemplate } from "@fern-api/generator-commons";
 import {
     Argument,
     AstNode,
@@ -43,6 +42,7 @@ import {
     Subpackage,
     TypeId
 } from "@fern-fern/ir-sdk/api";
+import { format } from "util";
 import { ArtifactRegistry } from "./utils/ArtifactRegistry";
 import { EndpointGenerator } from "./utils/EndpointGenerator";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
@@ -1213,4 +1213,27 @@ export function getOauthRefreshTokenFunctionMetadata({
         tokenFunction,
         tokenFunctionClientClassReference
     };
+}
+
+
+function generatePathTemplate(
+    templateString: string,
+    pathParameters: PathParameter[],
+    basePath?: HttpPath
+): string {
+    if (basePath === undefined) {
+        return "";
+    }
+    let pathParametersTemplate = basePath.head;
+    for (let i = 0; i < basePath.parts.length; i++) {
+        const pathPart = pathParameters[i];
+        if (pathPart === undefined) {
+            continue;
+        }
+        pathParametersTemplate = pathParametersTemplate.concat(
+            `${format(templateString, pathPart.name.snakeCase.safeName)}${basePath.parts[i]?.tail ?? ""}`
+        );
+    }
+    // Strip leading and trailing slashes
+    return pathParametersTemplate.replaceAll(/^\/+|\/+$/g, "");
 }
