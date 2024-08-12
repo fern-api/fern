@@ -5028,8 +5028,8 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
       zod-to-json-schema:
-        specifier: 3.14.1
-        version: 3.14.1(zod@3.22.4)
+        specifier: 3.23.2
+        version: 3.23.2(zod@3.22.4)
     devDependencies:
       '@types/jest':
         specifier: ^29.5.12
@@ -5503,32 +5503,13 @@ importers:
         version: 4.6.4
 
   packages/scripts:
-    dependencies:
+    devDependencies:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
       '@fern-api/json-schema':
         specifier: workspace:*
         version: link:../cli/yaml/json-schema
-      chalk:
-        specifier: ^5.3.0
-        version: 5.3.0
-      execa:
-        specifier: ^5.1.1
-        version: 5.1.1
-      immer:
-        specifier: ^9.0.15
-        version: 9.0.15
-      js-yaml:
-        specifier: ^4.1.0
-        version: 4.1.0
-      lodash-es:
-        specifier: ^4.17.21
-        version: 4.17.21
-      yargs:
-        specifier: ^17.4.1
-        version: 17.7.2
-    devDependencies:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
@@ -5547,6 +5528,9 @@ importers:
       '@yarnpkg/esbuild-plugin-pnp':
         specifier: ^3.0.0-rc.14
         version: 3.0.0-rc.14(esbuild@0.15.7)
+      chalk:
+        specifier: ^5.3.0
+        version: 5.3.0
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -5556,9 +5540,21 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      execa:
+        specifier: ^5.1.1
+        version: 5.1.1
+      immer:
+        specifier: ^9.0.15
+        version: 9.0.15
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
@@ -5568,9 +5564,18 @@ importers:
       ts-jest:
         specifier: ^29.2.4
         version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@18.7.18)(typescript@4.6.4)
+      tsup:
+        specifier: ^8.0.2
+        version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      yargs:
+        specifier: ^17.4.1
+        version: 17.7.2
 
   packages/seed:
     dependencies:
@@ -12687,10 +12692,10 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
 
-  zod-to-json-schema@3.14.1:
-    resolution: {integrity: sha512-B4SGEt5AX2C+0WpZ97aFXjNkao+lPT/MwvJliweojlj5E5hF+q5sjA4wgL4BBlQG4ISl0b+Q9bL3hD/gJoAdkg==}
+  zod-to-json-schema@3.23.2:
+    resolution: {integrity: sha512-uSt90Gzc/tUfyNqxnjlfBs8W6WSGpNBv0rVsNxP/BVSMHMKGdthPYff4xtCHYloJGM0CFxFsb3NbC0eqPhfImw==}
     peerDependencies:
-      zod: ^3.14.4
+      zod: ^3.23.3
 
   zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
@@ -20388,7 +20393,7 @@ snapshots:
       bundle-require: 4.0.2(esbuild@0.19.12)
       cac: 6.7.14
       chokidar: 3.6.0
-      debug: 4.3.4
+      debug: 4.3.6
       esbuild: 0.19.12
       execa: 5.1.1
       globby: 11.1.0
@@ -21044,7 +21049,7 @@ snapshots:
 
   yocto-queue@1.0.0: {}
 
-  zod-to-json-schema@3.14.1(zod@3.22.4):
+  zod-to-json-schema@3.23.2(zod@3.22.4):
     dependencies:
       zod: 3.22.4
 
