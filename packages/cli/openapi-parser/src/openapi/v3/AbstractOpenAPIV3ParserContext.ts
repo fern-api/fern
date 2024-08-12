@@ -31,7 +31,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly DUMMY: SchemaParserContext;
     public readonly options: ParseOpenAPIOptions;
     public readonly source: Source;
-    public readonly breadcrumbs: string[];
+    public readonly namespace: string | undefined;
 
     constructor({
         document,
@@ -57,7 +57,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.source = source;
         this.DUMMY = this.getDummy();
 
-        this.breadcrumbs = namespace != null ? [namespace] : [];
+        this.namespace = namespace
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {

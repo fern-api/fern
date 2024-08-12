@@ -15,21 +15,26 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
     public taskContext: TaskContext;
     public DUMMY: SchemaParserContext;
     public options: ParseOpenAPIOptions;
+    public namespace: string | undefined;
 
     constructor({
         document,
         taskContext,
-        options
+        options, 
+        namespace
     }: {
         document: AsyncAPIV2.Document;
         taskContext: TaskContext;
         options: ParseOpenAPIOptions;
+        namespace: string | undefined;
     }) {
         this.document = document;
         this.taskContext = taskContext;
         this.logger = taskContext.logger;
         this.DUMMY = this;
         this.options = options;
+
+        this.namespace = namespace;
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
@@ -122,16 +127,19 @@ export class AsyncAPIV2ParserContext extends AbstractAsyncAPIV2ParserContext {
     constructor({
         document,
         taskContext,
-        options
+        options,
+        namespace
     }: {
         document: AsyncAPIV2.Document;
         taskContext: TaskContext;
         options: ParseOpenAPIOptions;
+        namespace: string | undefined;
     }) {
         super({
             document,
             taskContext,
-            options
+            options,
+            namespace
         });
     }
 

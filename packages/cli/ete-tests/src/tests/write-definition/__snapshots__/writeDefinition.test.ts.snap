@@ -96,3 +96,22 @@ service:
   },
 ]
 `;
+
+exports[`validate namespaced API > namespaced 1`] = `
+[
+  {
+    "contents": "{}
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "name: api
+error-discrimination:
+  strategy: status-code
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+]
+`;

@@ -24,7 +24,8 @@ export function convertAdditionalProperties({
     groupName,
     example,
     encoding,
-    source
+    source,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -38,6 +39,7 @@ export function convertAdditionalProperties({
     example: unknown | undefined;
     encoding: Encoding | undefined;
     source: Source;
+    namespace: string | undefined;
 }): SchemaWithExample {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties)) {
         return wrapMap({
@@ -95,7 +97,7 @@ export function convertAdditionalProperties({
             }),
             groupName: undefined
         },
-        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"], source),
+        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"], source, namespace),
         groupName,
         example,
         encoding

@@ -49,13 +49,15 @@ export function convertRequest({
     document,
     context,
     requestBreadcrumbs,
-    source
+    source,
+    namespace
 }: {
     requestBody: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject;
     document: OpenAPIV3.Document;
     context: AbstractOpenAPIV3ParserContext;
     requestBreadcrumbs: string[];
     source: Source;
+    namespace: string | undefined;
 }): RequestWithExample | undefined {
     const resolvedRequestBody = isReferenceObject(requestBody)
         ? context.resolveRequestBodyReference(requestBody)
@@ -88,7 +90,8 @@ export function convertRequest({
             false,
             context,
             requestBreadcrumbs,
-            source
+            source,
+            namespace
         );
         const properties: MultipartRequestProperty[] = [];
         if (convertedMultipartSchema.type === "object") {
@@ -172,7 +175,7 @@ export function convertRequest({
     if (jsonMediaObject == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(jsonMediaObject.schema, false, context, requestBreadcrumbs, source, true);
+    const requestSchema = convertSchema(jsonMediaObject.schema, false, context, requestBreadcrumbs, source, namespace, true);
     return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,

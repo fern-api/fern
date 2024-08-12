@@ -40,7 +40,8 @@ export function convertUndiscriminatedOneOf({
     groupName,
     encoding,
     source,
-    subtypePrefixOverrides
+    subtypePrefixOverrides,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -53,6 +54,7 @@ export function convertUndiscriminatedOneOf({
     groupName: SdkGroupName | undefined;
     encoding: Encoding | undefined;
     source: Source;
+    namespace: string | undefined;
     subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
 }): SchemaWithExample {
     const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
@@ -77,7 +79,7 @@ export function convertUndiscriminatedOneOf({
                 subtypePrefix = override.name;
             }
         }
-        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source)];
+        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source, namespace)];
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];
@@ -155,7 +157,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     groupName,
     discriminator,
     encoding,
-    source
+    source,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -167,6 +170,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     discriminator: OpenAPIV3.DiscriminatorObject;
     encoding: Encoding | undefined;
     source: Source;
+    namespace: string | undefined;
 }): SchemaWithExample {
     const convertedSubtypes = Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema], index) => {
         const subtypeReferenceSchema = {
@@ -178,7 +182,8 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
             context,
             [schema],
             encoding,
-            source
+            source,
+            namespace
         );
         context.markSchemaWithDiscriminantValue(subtypeReferenceSchema, discriminator.propertyName, discriminantValue);
 

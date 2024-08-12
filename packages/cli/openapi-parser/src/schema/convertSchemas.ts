@@ -160,9 +160,9 @@ export function convertSchemaObject(
     const mixedGroupName =
         getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME) ??
         getExtension<string[]>(schema, OpenAPIExtension.TAGS)?.[0];
-    const groupName = (typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName) ?? [];
+    let groupName = (typeof mixedGroupName === "string" ? [mixedGroupName] : mixedGroupName) ?? [];
     if (namespace != null) {
-        groupName.push(namespace);
+        groupName = [namespace, ...groupName];
     }
 
     const generatedName = getGeneratedTypeName(breadcrumbs);
@@ -333,7 +333,8 @@ export function convertSchemaObject(
             subtypes,
             groupName,
             encoding,
-            source
+            source,
+            namespace
         });
     }
 
@@ -486,7 +487,8 @@ export function convertSchemaObject(
             context,
             groupName,
             example: getExampleAsArray({ schema, logger: context.logger, fallback }),
-            source
+            source,
+            namespace
         });
     }
 
@@ -504,7 +506,8 @@ export function convertSchemaObject(
             groupName,
             encoding,
             example: schema.example,
-            source
+            source,
+            namespace
         });
     }
 
@@ -523,7 +526,8 @@ export function convertSchemaObject(
                 context,
                 groupName,
                 encoding,
-                source
+                source,
+                namespace
             });
         } else {
             return convertUndiscriminatedOneOfWithDiscriminant({
@@ -536,7 +540,8 @@ export function convertSchemaObject(
                 groupName,
                 discriminator: schema.discriminator,
                 encoding,
-                source
+                source,
+                namespace
             });
         }
     }
@@ -560,7 +565,8 @@ export function convertSchemaObject(
                     groupName,
                     discriminator: schema.discriminator,
                     encoding,
-                    source
+                    source,
+                    namespace
                 });
             } else {
                 return convertDiscriminatedOneOf({
@@ -576,7 +582,8 @@ export function convertSchemaObject(
                     context,
                     groupName,
                     encoding,
-                    source
+                    source,
+                    namespace
                 });
             }
         } else if (schema.oneOf.length === 1 && schema.oneOf[0] != null) {
@@ -635,7 +642,8 @@ export function convertSchemaObject(
                     context,
                     groupName,
                     encoding,
-                    source
+                    source,
+                    namespace
                 });
             }
 
@@ -656,7 +664,8 @@ export function convertSchemaObject(
                 }),
                 encoding,
                 groupName,
-                source
+                source,
+                namespace
             });
         }
     }
@@ -708,7 +717,8 @@ export function convertSchemaObject(
                 context,
                 groupName,
                 encoding,
-                source
+                source,
+                namespace
             });
         }
 
@@ -729,7 +739,8 @@ export function convertSchemaObject(
             }),
             encoding,
             groupName,
-            source
+            source,
+            namespace
         });
     }
 
@@ -804,7 +815,8 @@ export function convertSchemaObject(
             additionalProperties: schema.additionalProperties,
             availability,
             encoding,
-            source
+            source,
+            namespace
         });
     }
 

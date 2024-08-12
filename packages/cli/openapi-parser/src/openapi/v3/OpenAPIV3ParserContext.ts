@@ -52,7 +52,8 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
             document: this.document,
             taskContext: this.taskContext,
             options: this.options,
-            source: this.source
+            source: this.source,
+            namespace: this.namespace
         });
     }
 

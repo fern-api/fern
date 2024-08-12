@@ -79,6 +79,9 @@ export class OSSWorkspace extends AbstractAPIWorkspace<OSSWorkspace.Settings> {
             optionOverrides: getOptionsOverridesFromSettings(settings)
         });
 
+        // Ideally you are still at the individual spec level here, so you can still modify the fern definition
+        // file paths with the inputted namespace, however given auth and other shared settings I think we have to
+        // resolve to the IR first, and namespace there.
         const definition = convert({
             taskContext: context,
             ir: openApiIr,

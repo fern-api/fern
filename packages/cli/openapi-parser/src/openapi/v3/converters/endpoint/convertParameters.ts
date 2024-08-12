@@ -30,7 +30,7 @@ export function convertParameters({
     parameters,
     context,
     requestBreadcrumbs,
-    source
+    source,
 }: {
     path: string;
     httpMethod: HttpMethod;
@@ -69,6 +69,7 @@ export function convertParameters({
                       context,
                       parameterBreadcrumbs,
                       source,
+                      context.namespace,
                       false,
                       new Set(),
                       getExamplesString({

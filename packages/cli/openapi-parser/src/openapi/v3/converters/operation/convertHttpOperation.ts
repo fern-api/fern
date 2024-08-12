@@ -20,7 +20,7 @@ export function convertHttpOperation({
     responseStatusCode,
     suffix,
     streamFormat,
-    source
+    source,
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
@@ -54,10 +54,12 @@ export function convertHttpOperation({
                       document: context.document,
                       taskContext: context.taskContext,
                       options: context.options,
-                      source: context.source
+                      source: context.source,
+                      namespace: context.namespace
                   }),
                   requestBreadcrumbs,
-                  source
+                  source,
+                  namespace: context.namespace
               })
             : undefined;
 
@@ -74,7 +76,8 @@ export function convertHttpOperation({
             document,
             context,
             requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
-            source
+            source,
+            namespace: context.namespace
         });
     } else if (operation.requestBody != null) {
         convertedRequest = convertRequest({
@@ -82,7 +85,8 @@ export function convertHttpOperation({
             document,
             context,
             requestBreadcrumbs: [...requestBreadcrumbs],
-            source
+            source,
+            namespace: context.namespace
         });
     }
 

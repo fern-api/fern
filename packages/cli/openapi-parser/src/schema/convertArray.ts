@@ -14,7 +14,8 @@ export function convertArray({
     context,
     groupName,
     example,
-    source
+    source,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -27,6 +28,7 @@ export function convertArray({
     groupName: SdkGroupName | undefined;
     example: unknown[] | undefined;
     source: Source;
+    namespace: string | undefined;
 }): SchemaWithExample {
     const itemSchema =
         item == null
@@ -38,7 +40,7 @@ export function convertArray({
                   example: undefined,
                   groupName
               })
-            : convertSchema(item, false, context, [...breadcrumbs, "Item"], source);
+            : convertSchema(item, false, context, [...breadcrumbs, "Item"], source, namespace);
     return wrapArray({
         nameOverride,
         generatedName,

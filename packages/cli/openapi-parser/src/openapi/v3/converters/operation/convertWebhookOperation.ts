@@ -42,7 +42,8 @@ export function convertWebhookOperation({
         document,
         context,
         requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
-        source
+        source,
+        namespace: context.namespace
     });
 
     if (convertedPayload == null || convertedPayload.type !== "json") {

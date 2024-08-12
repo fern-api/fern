@@ -63,7 +63,8 @@ export function parseAsyncAPI({
     const context = new AsyncAPIV2ParserContext({
         document,
         taskContext,
-        options
+        options,
+        namespace
     });
 
     const schemas: Record<SchemaId, SchemaWithExample> = {};
@@ -194,7 +195,8 @@ export function parseAsyncAPI({
                     },
                     publish: publishSchema,
                     subscribe: subscribeSchema,
-                    source
+                    source,
+                    namespace: namespace,
                 });
             } else {
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({
@@ -309,6 +311,7 @@ function convertMessageToSchema({
             context,
             encoding: undefined,
             source,
+            namespace: context.namespace,
             subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
         });
     }
