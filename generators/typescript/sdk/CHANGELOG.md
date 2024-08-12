@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.39.0] - 2024-08-07
 
-- Feature: The SDK now supports looking directly at a `hasNextPage` property for offset pagination. 
+- Feature: The SDK now supports looking directly at a `hasNextPage` property for offset pagination if configured. 
   Previously the SDK would look if the number of items were empty, but this failed in certain edge cases. 
 
 ## [0.38.6] - 2024-08-07
