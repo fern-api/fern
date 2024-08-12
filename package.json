@@ -55,7 +55,7 @@
     "chalk": "^5.0.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
-    "eslint-plugin-deprecation": "^2.0.0",
+    "eslint-plugin-deprecation": "^3.0.0",
     "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-react": "^7.34.1",
