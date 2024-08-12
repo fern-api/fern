@@ -3,7 +3,6 @@ import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuratio
 import { createFdrService } from "@fern-api/core";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { SourceConfig } from "@fern-api/ir-sdk";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
@@ -182,25 +181,6 @@ async function computeSemanticVersion({
         return undefined;
     }
     return response.body.version;
-}
-
-async function uploadSources({
-    context,
-    sourceUploader,
-    sourceUploads
-}: {
-    context: InteractiveTaskContext;
-    sourceUploader: SourceUploader;
-    sourceUploads: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload>;
-}): Promise<SourceConfig> {
-    if (Object.keys(sourceUploads).length == 0 && sourceUploader.sourceTypes.has("protobuf")) {
-        // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
-        // files are required for successful code generation.
-        context.failAndThrow("Did not successfully upload Protobuf source files.");
-    }
-
-    context.logger.debug(`Uploading source files ...`);
-    return await sourceUploader.uploadSources(sourceUploads);
 }
 
 function convertToFdrApiDefinitionSources(sources: IdentifiableSource[]): Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.Source> {

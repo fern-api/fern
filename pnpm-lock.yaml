@@ -3177,10 +3177,6 @@ importers:
         specifier: 4.6.4
         version: 4.6.4
 
-  packages/cli/cli/dist/dev: {}
-
-  packages/cli/cli/dist/prod: {}
-
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -4008,6 +4004,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../logger
+      '@fern-api/logging-execa':
+        specifier: workspace:*
+        version: link:../../../../commons/logging-execa
       '@fern-api/register':
         specifier: workspace:*
         version: link:../../../register
