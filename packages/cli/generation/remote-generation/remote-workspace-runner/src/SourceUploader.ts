@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { InteractiveTaskContext } from "@fern-api/task-context";
-import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
+import { IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernRegistry as FdrAPI } from "@fern-fern/fdr-cjs-sdk";
 import { readFile, unlink } from "fs/promises";
 import tmp from "tmp-promise";
@@ -12,71 +12,24 @@ const PROTOBUF_ZIP_FILENAME = "proto.zip";
 export type SourceType = "asyncapi" | "openapi" | "protobuf";
 
 export class SourceUploader {
+    public sourceTypes: Set<SourceType>;
     private context: InteractiveTaskContext;
     private sources: Record<string, IdentifiableSource>;
-    private sourceTypes: Set<SourceType>;
 
-    constructor(context: InteractiveTaskContext, workspace: FernWorkspace) {
+    constructor(context: InteractiveTaskContext, sources: IdentifiableSource[]) {
         this.context = context;
-        this.sources = Object.fromEntries(workspace.getSources().map((source) => [source.id, source]));
+        this.sources = Object.fromEntries(sources.map((source) => [source.id, source]));
         this.sourceTypes = new Set<SourceType>(Object.values(this.sources).map((source) => source.type));
-    }
-
-    public getSourceTypes(): Set<SourceType> {
-        return this.sourceTypes;
-    }
-
-    public getFdrApiDefinitionSources():
-        | Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.Source>
-        | undefined {
-        if (Object.keys(this.sources).length === 0) {
-            return undefined;
-        }
-        return Object.fromEntries(
-            Object.entries(this.sources).map(([id, source]) => [
-                id,
-                {
-                    type: source.type === "protobuf" ? "proto" : source.type
-                }
-            ])
-        );
-    }
-
-    public convertFdrSourceUploadsToSourceConfig(
-        sources: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload>
-    ): SourceConfig {
-        const apiDefinitionSources: ApiDefinitionSource[] = [];
-        for (const [id, sourceUpload] of Object.entries(sources)) {
-            const identifiableSource = this.getSourceOrThrow(id);
-            switch (identifiableSource.type) {
-                case "protobuf":
-                    apiDefinitionSources.push(
-                        ApiDefinitionSource.proto({
-                            id,
-                            protoRootUrl: sourceUpload.downloadUrl
-                        })
-                    );
-                    continue;
-                case "openapi":
-                    apiDefinitionSources.push(ApiDefinitionSource.openapi());
-                    continue;
-                case "asyncapi":
-                    // AsyncAPI sources aren't modeled in the IR yet.
-                    continue;
-            }
-        }
-        return {
-            sources: apiDefinitionSources
-        };
     }
 
     public async uploadSources(
         sources: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload>
-    ): Promise<void> {
+    ): Promise<SourceConfig> {
         for (const [id, source] of Object.entries(sources)) {
             const identifiableSource = this.getSourceOrThrow(id);
             await this.uploadSource(identifiableSource, source.uploadUrl);
         }
+        return this.convertFdrSourceUploadsToSourceConfig(sources);
     }
 
     private async uploadSource(source: IdentifiableSource, uploadURL: string): Promise<void> {
@@ -127,6 +80,34 @@ export class SourceUploader {
         });
 
         return destination;
+    }
+
+    private convertFdrSourceUploadsToSourceConfig(
+        sources: Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.SourceUpload>
+    ): SourceConfig {
+        const apiDefinitionSources: ApiDefinitionSource[] = [];
+        for (const [id, sourceUpload] of Object.entries(sources)) {
+            const identifiableSource = this.getSourceOrThrow(id);
+            switch (identifiableSource.type) {
+                case "protobuf":
+                    apiDefinitionSources.push(
+                        ApiDefinitionSource.proto({
+                            id,
+                            protoRootUrl: sourceUpload.downloadUrl
+                        })
+                    );
+                    continue;
+                case "openapi":
+                    apiDefinitionSources.push(ApiDefinitionSource.openapi());
+                    continue;
+                case "asyncapi":
+                    // AsyncAPI sources aren't modeled in the IR yet.
+                    continue;
+            }
+        }
+        return {
+            sources: apiDefinitionSources
+        };
     }
 
     private getSourceOrThrow(id: string): IdentifiableSource {
