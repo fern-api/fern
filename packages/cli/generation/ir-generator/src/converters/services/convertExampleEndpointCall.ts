@@ -17,7 +17,7 @@ import {
     RawSchemas,
     visitExampleResponseSchema
 } from "@fern-api/yaml-schema";
-import crypto from 'crypto';
+import crypto from "crypto";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -34,7 +34,7 @@ import { getQueryParameterName } from "./convertQueryParameter";
 
 function hashJSON(obj: any): string {
     const jsonString = JSON.stringify(obj);
-    return crypto.createHash('sha256').update(jsonString).digest('hex');
+    return crypto.createHash("sha256").update(jsonString).digest("hex");
 }
 
 export function convertExampleEndpointCall({
