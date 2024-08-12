@@ -3177,6 +3177,19 @@ importers:
         specifier: 4.6.4
         version: 4.6.4
 
+  packages/cli/cli/dist/dev: {}
+
+  packages/cli/cli/dist/local:
+    devDependencies:
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
+      vitest:
+        specifier: ^2.0.5
+        version: 2.0.5(@types/node@18.7.18)(jsdom@20.0.3)(sass@1.72.0)(terser@5.31.5)
+
+  packages/cli/cli/dist/prod: {}
+
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -4866,6 +4879,9 @@ importers:
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../logger
+      '@fern-api/project-loader':
+        specifier: workspace:*
+        version: link:../../project-loader
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../../task-context
@@ -4899,6 +4915,9 @@ importers:
       remark-math:
         specifier: ^6.0.0
         version: 6.0.0
+      strip-ansi:
+        specifier: ^7.1.0
+        version: 7.1.0
       tinycolor2:
         specifier: ^1.6.0
         version: 1.6.0
