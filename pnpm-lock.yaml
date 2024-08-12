@@ -161,9 +161,6 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
-      '@fern-fern/ir-sdk':
-        specifier: 0.0.3294
-        version: 0.0.3294
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -6698,9 +6695,6 @@ packages:
 
   '@fern-fern/ir-sdk@0.0.2828':
     resolution: {integrity: sha512-qFZZHyw0cuHtoR9v7KsrPpz0PFH0V6/ORSMHdTKU/82KcaNCMjk0BbzicK8jjrMD0mYS4JxNUzEjcUOvgeuqaA==}
-
-  '@fern-fern/ir-sdk@0.0.3294':
-    resolution: {integrity: sha512-Oz2YcT2glZffIhC48x1HVz5F5Vn8UaB19bIS7qZUafK7X4g4Ndbw3y8/7opqzYk5ro6UxpgRiTZhrkgLIlk26g==}
 
   '@fern-fern/ir-sdk@39.0.0':
     resolution: {integrity: sha512-cx8g0hX3gS/JveQPKanSWAyhM8SGhVOiQEcovqmcF/j9wvpjO8FXXNNI1+ZR1Wdmkcggx9UIqXDbS7jzefh6Rw==}
@@ -13775,8 +13769,6 @@ snapshots:
       - encoding
 
   '@fern-fern/ir-sdk@0.0.2828': {}
-
-  '@fern-fern/ir-sdk@0.0.3294': {}
 
   '@fern-fern/ir-sdk@39.0.0': {}
 
