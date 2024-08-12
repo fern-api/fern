@@ -32,6 +32,7 @@
     "@fern-api/docs-markdown-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/project-loader": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
@@ -43,6 +44,7 @@
     "rehype-katex": "^7.0.0",
     "remark-gfm": "^4.0.0",
     "remark-math": "^6.0.0",
+    "strip-ansi": "^7.1.0",
     "tinycolor2": "^1.6.0",
     "zod": "^3.22.3"
   },

@@ -2,10 +2,10 @@ import {
     APIS_DIRECTORY,
     ASYNCAPI_DIRECTORY,
     DEFINITION_DIRECTORY,
-    fernConfigJson,
     FERN_DIRECTORY,
-    generatorsYml,
+    fernConfigJson,
     GENERATORS_CONFIGURATION_FILENAME,
+    generatorsYml,
     getFernDirectory,
     OPENAPI_DIRECTORY
 } from "@fern-api/configuration";
@@ -35,33 +35,48 @@ export declare namespace loadProject {
         nameOverride?: string;
         sdkLanguage?: generatorsYml.GenerationLanguage;
     }
+
+    export interface LoadProjectFromDirectoryArgs extends Args {
+        absolutePathToFernDirectory: AbsoluteFilePath;
+    }
 }
 
-export async function loadProject({
-    cliName,
-    cliVersion,
-    commandLineApiWorkspace,
-    defaultToAllApiWorkspaces,
-    context,
-    nameOverride
-}: loadProject.Args): Promise<Project> {
+export async function loadProject({ context, nameOverride, ...args }: loadProject.Args): Promise<Project> {
     const fernDirectory = await getFernDirectory(nameOverride);
     if (fernDirectory == null) {
         return context.failAndThrow(`Directory "${nameOverride ?? FERN_DIRECTORY}" not found.`);
     }
 
+    return await loadProjectFromDirectory({
+        absolutePathToFernDirectory: fernDirectory,
+        context,
+        nameOverride,
+        ...args
+    });
+}
+
+export async function loadProjectFromDirectory({
+    absolutePathToFernDirectory,
+    cliName,
+    cliVersion,
+    commandLineApiWorkspace,
+    defaultToAllApiWorkspaces,
+    context
+}: loadProject.LoadProjectFromDirectoryArgs): Promise<Project> {
     let apiWorkspaces: APIWorkspace[] = [];
 
     if (
-        (await doesPathExist(join(fernDirectory, RelativeFilePath.of(APIS_DIRECTORY)))) ||
-        doesPathExist(join(fernDirectory, RelativeFilePath.of(DEFINITION_DIRECTORY))) ||
-        doesPathExist(join(fernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))) ||
-        doesPathExist(join(fernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY))) ||
-        doesPathExist(join(fernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY)))
+        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(APIS_DIRECTORY)))) ||
+        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(DEFINITION_DIRECTORY)))) ||
+        (await doesPathExist(
+            join(absolutePathToFernDirectory, RelativeFilePath.of(GENERATORS_CONFIGURATION_FILENAME))
+        )) ||
+        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(OPENAPI_DIRECTORY)))) ||
+        (await doesPathExist(join(absolutePathToFernDirectory, RelativeFilePath.of(ASYNCAPI_DIRECTORY))))
     ) {
         apiWorkspaces = await loadApis({
             cliName,
-            fernDirectory,
+            fernDirectory: absolutePathToFernDirectory,
             cliVersion,
             context,
             commandLineApiWorkspace,
@@ -70,9 +85,9 @@ export async function loadProject({
     }
 
     return {
-        config: await fernConfigJson.loadProjectConfig({ directory: fernDirectory, context }),
+        config: await fernConfigJson.loadProjectConfig({ directory: absolutePathToFernDirectory, context }),
         apiWorkspaces,
-        docsWorkspaces: await loadDocsWorkspace({ fernDirectory, context }),
+        docsWorkspaces: await loadDocsWorkspace({ fernDirectory: absolutePathToFernDirectory, context }),
         loadAPIWorkspace: (name: string | undefined): APIWorkspace | undefined => {
             if (name == null) {
                 return apiWorkspaces[0];
