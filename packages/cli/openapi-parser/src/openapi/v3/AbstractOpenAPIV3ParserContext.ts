@@ -64,6 +64,11 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         return this.refOccurrences[schema.$ref] ?? 0;
     }
 
+    public resolveTags(operationTags: string[] | undefined): string[] {
+        const tags = this.namespace ? [this.namespace] : [];
+        return tags.concat(operationTags ?? [])
+    }
+
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
         // Step 1: Get keys
         const keys = schema.$ref

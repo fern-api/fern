@@ -196,7 +196,7 @@ export function parseAsyncAPI({
                     publish: publishSchema,
                     subscribe: subscribeSchema,
                     source,
-                    namespace: namespace,
+                    namespace,
                 });
             } else {
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({

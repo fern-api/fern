@@ -61,7 +61,7 @@ export function convertWebhookOperation({
         sdkName: sdkMethodName,
         method,
         operationId: operation.operationId,
-        tags: operation.tags ?? [],
+        tags: context.resolveTags(operation.tags),
         headers: convertedParameters.headers,
         generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs),
         payload: convertedPayload.schema,

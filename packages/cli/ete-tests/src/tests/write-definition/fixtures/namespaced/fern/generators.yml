@@ -1,4 +1,4 @@
 api:
   namespaced:
     trains: ./openapi/trains/openapi.yml
-    pets: ./openapi/petstore/openapi.yml
+    neopets: ./openapi/petstore/openapi.yml
