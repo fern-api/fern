@@ -7,6 +7,7 @@ import {
     HttpService,
     Name,
     ProtobufService,
+    ProtobufType,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -59,6 +60,14 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
                 TYPES_FOLDER_NAME
             ].join("/")
         );
+    }
+
+    public getProtobufTypeForTypeId(typeId: TypeId): ProtobufType | undefined {
+        const typeDeclaration = this.getTypeDeclaration(typeId);
+        if (typeDeclaration == null || typeDeclaration.source == null) {
+            return undefined;
+        }
+        return typeDeclaration.source.type === "proto" ? typeDeclaration.source.value : undefined;
     }
 
     public getDirectoryForError(declaredErrorName: DeclaredErrorName): RelativeFilePath {
@@ -216,6 +225,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     public getGrpcClientClassName(protobufService: ProtobufService): string {
         const serviceName = protobufService.name.pascalCase.unsafeName;
         return `${serviceName}Client`;
+    }
+
+    public getProtoConverterClassName(): string {
+        return "ProtoConverter";
     }
 
     public getEnvironmentsClassReference(): csharp.ClassReference {

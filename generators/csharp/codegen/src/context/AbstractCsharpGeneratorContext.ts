@@ -208,11 +208,15 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
-        const typeDeclaration = this.ir.types[typeId];
+        const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
             throw new Error(`Type declaration with id ${typeId} not found`);
         }
         return typeDeclaration;
+    }
+
+    public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
+        return this.ir.types[typeId];
     }
 
     public getCoreDirectory(): RelativeFilePath {

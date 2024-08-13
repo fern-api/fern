@@ -1,5 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ClassReference, OneOfClassReference, StringEnumClassReference } from "./ClassReference";
+import {
+    ClassReference,
+    OneOfBaseClassReference,
+    OneOfClassReference,
+    StringEnumClassReference
+} from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { CoreClassReference } from "./CoreClassReference";
@@ -17,12 +22,15 @@ type InternalType =
     | DateTime
     | Uuid
     | Object_
+    | Array
+    | ListType
     | List
     | Set
     | Map
     | Optional
     | Reference
     | OneOf
+    | OneOfBase
     | StringEnum
     | CoreReference;
 
@@ -74,6 +82,16 @@ interface Object_ {
     type: "object";
 }
 
+interface Array {
+    type: "array";
+    value: Type;
+}
+
+interface ListType {
+    type: "listType";
+    value: Type;
+}
+
 interface List {
     type: "list";
     value: Type;
@@ -107,6 +125,11 @@ interface CoreReference {
 
 interface OneOf {
     type: "oneOf";
+    memberValues: Type[];
+}
+
+interface OneOfBase {
+    type: "oneOfBase";
     memberValues: Type[];
 }
 
@@ -159,6 +182,15 @@ export class Type extends AstNode {
             case "object":
                 writer.write("object");
                 break;
+            case "array":
+                this.internalType.value.write(writer);
+                writer.write("[]");
+                break;
+            case "listType":
+                writer.write("List<");
+                this.internalType.value.write(writer);
+                writer.write(">");
+                break;
             case "list":
                 writer.write("IEnumerable<");
                 this.internalType.value.write(writer);
@@ -204,6 +236,17 @@ export class Type extends AstNode {
             case "oneOf":
                 writer.addReference(OneOfClassReference);
                 writer.write("OneOf<");
+                this.internalType.memberValues.forEach((value, index) => {
+                    if (index !== 0) {
+                        writer.write(", ");
+                    }
+                    value.write(writer);
+                });
+                writer.write(">");
+                break;
+            case "oneOfBase":
+                writer.addReference(OneOfBaseClassReference);
+                writer.write("OneOfBase<");
                 this.internalType.memberValues.forEach((value, index) => {
                     if (index !== 0) {
                         writer.write(", ");
@@ -336,6 +379,20 @@ export class Type extends AstNode {
         });
     }
 
+    public static array(value: Type): Type {
+        return new this({
+            type: "array",
+            value
+        });
+    }
+
+    public static listType(value: Type): Type {
+        return new this({
+            type: "listType",
+            value
+        });
+    }
+
     public static list(value: Type): Type {
         return new this({
             type: "list",
@@ -382,6 +439,13 @@ export class Type extends AstNode {
     public static oneOf(memberValues: Type[]): Type {
         return new this({
             type: "oneOf",
+            memberValues
+        });
+    }
+
+    public static oneOfBase(memberValues: Type[]): Type {
+        return new this({
+            type: "oneOfBase",
             memberValues
         });
     }

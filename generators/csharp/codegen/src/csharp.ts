@@ -15,6 +15,7 @@ import {
     MethodInvocation,
     Parameter,
     Set,
+    Switch,
     Ternary,
     TestClass,
     Type
@@ -82,6 +83,10 @@ export function list(args: List.Args): List {
 
 export function set(args: Set.Args): Set {
     return new Set(args);
+}
+
+export function switch_(args: Switch.Args): Switch {
+    return new Switch(args);
 }
 
 export function ternary(args: Ternary.Args): Ternary {
