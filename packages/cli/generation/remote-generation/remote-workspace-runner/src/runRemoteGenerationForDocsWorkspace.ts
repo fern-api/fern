@@ -32,8 +32,8 @@ export async function runRemoteGenerationForDocsWorkspace({
     // Although this logic is separate from generating a remote, placing it here helps us
     // avoid making cascading changes to other workflows.
     // docsWorkspace = substituteEnvVariables(docsWorkspace, context, { substituteAsEmpty: preview });
-    docsWorkspace = replaceEnvVariables(
-        docsWorkspace,
+    docsWorkspace.config = replaceEnvVariables(
+        docsWorkspace.config,
         // Wrap in a closure for correct binding of `this` downstream
         { onError: (e) => context.failAndThrow(e) },
         { substituteAsEmpty: preview }
