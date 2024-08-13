@@ -23,8 +23,6 @@ export async function runRemoteGenerationForDocsWorkspace({
 }): Promise<void> {
     const instances = docsWorkspace.config.instances;
 
-    console.log(docsWorkspace.config.analytics);
-
     // Substitute templated environment variables:
     // If the run is a preview, we'll substitute ALL environment variables as empty strings
     //
@@ -40,8 +38,6 @@ export async function runRemoteGenerationForDocsWorkspace({
         { onError: (e) => context.failAndThrow(e) },
         { substituteAsEmpty: preview }
     );
-
-    console.log(docsWorkspace.config.analytics);
 
     if (instances.length === 0) {
         context.failAndThrow("No instances specified in docs.yml! Cannot register docs.");
