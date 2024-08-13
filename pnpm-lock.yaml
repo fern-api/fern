@@ -3186,9 +3186,6 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../commons/core-utils
-      '@fern-api/docs-markdown-utils':
-        specifier: workspace:*
-        version: link:../docs-markdown-utils
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../commons/fs-utils
@@ -5220,9 +5217,6 @@ importers:
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../../../commons/core-utils
-      '@fern-api/fs-utils':
-        specifier: workspace:*
-        version: link:../../../commons/fs-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../../ir-sdk

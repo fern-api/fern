@@ -29,7 +29,6 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/docs-markdown-utils": "workspace:*",
     "@fern-fern/fdr-cjs-sdk": "0.1.0",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
