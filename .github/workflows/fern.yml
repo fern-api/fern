@@ -26,6 +26,6 @@ jobs:
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
           pnpm --filter @fern-api/cli dist:cli:prod
-          cli_path="$(pnpm --filter @fern-api/cli bin fern:prod)"
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs"
           node $cli_path check
 
