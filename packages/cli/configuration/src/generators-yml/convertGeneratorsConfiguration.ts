@@ -74,7 +74,7 @@ export async function convertGeneratorsConfiguration({
 }
 
 async function parseAPIConfigurationToApiLocations(
-    apiConfiguration: APIConfigurationSchemaInternal,
+    apiConfiguration: APIConfigurationSchemaInternal | undefined,
     rawConfiguration: GeneratorsConfigurationSchema
 ): Promise<APIDefinitionLocation[]> {
     const apiDefinitions: APIDefinitionLocation[] = [];
@@ -185,7 +185,6 @@ async function parseAPIConfigurationToApiLocations(
         const openapiOverrides = rawConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
         const asyncapi = rawConfiguration[ASYNC_API_LOCATION_KEY];
         const settings = rawConfiguration[API_SETTINGS_KEY];
-
         if (openapi != null && typeof openapi === "string") {
             apiDefinitions.push({
                 schema: {
@@ -259,10 +258,7 @@ async function parseAPIConfiguration(
 
     return {
         type: "singleNamespace",
-        definitions:
-            apiConfiguration != null
-                ? await parseAPIConfigurationToApiLocations(apiConfiguration, rawGeneratorsConfiguration)
-                : []
+        definitions: await parseAPIConfigurationToApiLocations(apiConfiguration, rawGeneratorsConfiguration)
     };
 }
 
