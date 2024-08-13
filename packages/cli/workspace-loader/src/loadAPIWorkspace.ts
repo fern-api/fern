@@ -1,5 +1,4 @@
 import { ASYNCAPI_DIRECTORY, DEFINITION_DIRECTORY, generatorsYml, OPENAPI_DIRECTORY } from "@fern-api/configuration";
-import { APIDefinitionLocation } from "@fern-api/configuration/src/generators-yml/GeneratorsConfiguration";
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { getValidAbsolutePathToAsyncAPIFromFolder } from "./loadAsyncAPIFile";
@@ -16,7 +15,7 @@ export async function loadSingleNamespaceAPIWorkspace({
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     namespace: string | undefined;
-    definitions: APIDefinitionLocation[];
+    definitions: generatorsYml.APIDefinitionLocation[];
 }): Promise<Spec[] | WorkspaceLoader.Result> {
     const specs: Spec[] = [];
 

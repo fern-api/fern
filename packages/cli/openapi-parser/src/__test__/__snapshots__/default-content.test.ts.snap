@@ -31,7 +31,7 @@ exports[`open api parser > default-content > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GenerateContentRequestModel",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,

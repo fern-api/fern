@@ -265,7 +265,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
               "description": null,
               "encoding": null,
               "generatedName": "BadRequestErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -638,7 +638,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
               "description": null,
               "encoding": null,
               "generatedName": "ForbiddenErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -805,7 +805,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
             "availability": null,
             "description": null,
             "generatedName": "ContentTooLargeErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": "The size of the request is too large.",
@@ -843,7 +843,7 @@ curl -F "UPLOADCARE_PUB_KEY=YOUR_PUBLIC_KEY" -F "my_file.jpg=@my_file.jpg" "http
             "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": "Request was throttled.",
@@ -1044,7 +1044,7 @@ Log.d("TAG", file.toString())
                 "availability": null,
                 "description": null,
                 "generatedName": "baseUploadRequestUploadcareStore",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -1081,7 +1081,7 @@ Log.d("TAG", file.toString())
                 "availability": null,
                 "description": null,
                 "generatedName": "baseUploadRequestMetadataKey",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -1109,7 +1109,7 @@ Log.d("TAG", file.toString())
                 "availability": null,
                 "description": null,
                 "generatedName": "baseUploadRequestSignature",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -1137,7 +1137,7 @@ Log.d("TAG", file.toString())
                 "availability": null,
                 "description": null,
                 "generatedName": "baseUploadRequestExpire",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -1176,7 +1176,7 @@ Log.d("TAG", file.toString())
 the value is the unique ID of the file on our systems.
 ",
           "generatedName": "BaseUploadResponse",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -1190,14 +1190,14 @@ the value is the unique ID of the file on our systems.
                 "availability": null,
                 "description": null,
                 "generatedName": "baseUploadResponseFilename",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "BaseUploadResponseFilename",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1495,7 +1495,7 @@ To upload large files, 3 requests are sent in sequence:
               "description": null,
               "encoding": null,
               "generatedName": "BadRequestErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -1907,7 +1907,7 @@ To upload large files, 3 requests are sent in sequence:
               "description": null,
               "encoding": null,
               "generatedName": "ForbiddenErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -2074,7 +2074,7 @@ To upload large files, 3 requests are sent in sequence:
             "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": "Request was throttled.",
@@ -2345,7 +2345,7 @@ Log.d("TAG", file.toString())
                 "availability": null,
                 "description": null,
                 "generatedName": "multipartFileUploadStartRequestUploadcareStore",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -2373,7 +2373,7 @@ Log.d("TAG", file.toString())
                 "availability": null,
                 "description": "Original file name of the uploaded file",
                 "generatedName": "MultipartFileUploadStartRequestFilename",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -2398,7 +2398,7 @@ Log.d("TAG", file.toString())
 **Note**: The size should not exceed max file size cap for your project.
 ",
                 "generatedName": "MultipartFileUploadStartRequestSize",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -2422,7 +2422,7 @@ Log.d("TAG", file.toString())
                 "availability": null,
                 "description": null,
                 "generatedName": "multipartFileUploadStartRequestPartSize",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -2436,7 +2436,7 @@ we recommend to bump the part size and to pass the expected chunk size
 to us as a value of the \`part_size\` parameter (in bytes).
 ",
                   "generatedName": "MultipartFileUploadStartRequestPartSize",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": 5242880,
@@ -2461,7 +2461,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
                 "availability": null,
                 "description": "File's MIME-type.",
                 "generatedName": "MultipartFileUploadStartRequestContentType",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -2484,7 +2484,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
                 "availability": null,
                 "description": null,
                 "generatedName": "multipartFileUploadStartRequestMetadataKey",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -2512,7 +2512,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
                 "availability": null,
                 "description": null,
                 "generatedName": "multipartFileUploadStartRequestSignature",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -2540,7 +2540,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
                 "availability": null,
                 "description": null,
                 "generatedName": "multipartFileUploadStartRequestExpire",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -2577,7 +2577,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
           "availability": null,
           "description": null,
           "generatedName": "MultipartFileUploadStartResponse",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -2591,7 +2591,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
                 "availability": null,
                 "description": "File's UUID.",
                 "generatedName": "MultipartFileUploadStartResponseUuid",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -2615,14 +2615,14 @@ to us as a value of the \`part_size\` parameter (in bytes).
                 "availability": null,
                 "description": null,
                 "generatedName": "MultipartFileUploadStartResponseParts",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "array",
                 "value": {
                   "availability": null,
                   "description": "Upload file parts here.",
                   "generatedName": "MultipartFileUploadStartResponsePartsItem",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -2955,7 +2955,7 @@ upload session to assemble all the file parts into a single resulting file.
               "description": null,
               "encoding": null,
               "generatedName": "BadRequestErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -3149,7 +3149,7 @@ upload session to assemble all the file parts into a single resulting file.
               "description": null,
               "encoding": null,
               "generatedName": "ForbiddenErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -3950,7 +3950,7 @@ Log.d("TAG", file.toString())
                 "availability": null,
                 "description": "File's UUID from the \`/multipart/start/\` endpoint.",
                 "generatedName": "MultipartFileUploadCompleteRequestUuid",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -4294,7 +4294,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
               "description": null,
               "encoding": null,
               "generatedName": "BadRequestErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -4732,7 +4732,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
               "description": null,
               "encoding": null,
               "generatedName": "ForbiddenErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -4899,7 +4899,7 @@ uploads, pass the \`save_URL_duplicates\` and \`check_URL_duplicates\` parameter
             "availability": null,
             "description": null,
             "generatedName": "TooManyRequestsErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": "Request was throttled.",
@@ -5804,7 +5804,7 @@ Log.d("TAG", file.toString())
 **Note**: The URL should point to a resource publicly available via HTTP/HTTPS.
 ",
                 "generatedName": "FromUrlUploadRequestSourceUrl",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -5827,7 +5827,7 @@ Log.d("TAG", file.toString())
                 "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestStore",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -5855,7 +5855,7 @@ Log.d("TAG", file.toString())
                 "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestFilename",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -5868,7 +5868,7 @@ response headers or the \`source_url\`'s path.
 \`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._\`.
 ",
                   "generatedName": "FromUrlUploadRequestFilename",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -5892,7 +5892,7 @@ response headers or the \`source_url\`'s path.
                 "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestCheckUrlDuplicates",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -5915,7 +5915,7 @@ Specifically, if the \`source_url\` had already been fetched and uploaded previo
 this request will return information about the already uploaded file.
 ",
                   "generatedName": "FromUrlUploadRequestCheckUrlDuplicates",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "source": {
                     "file": "uploadcare/openapi.json",
@@ -5963,7 +5963,7 @@ this request will return information about the already uploaded file.
                 "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestSaveUrlDuplicates",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -5974,7 +5974,7 @@ fetched/uploaded URLs. If the value is not defined explicitly, it is set
 to the value of the \`check_URL_duplicates\` parameter.
 ",
                   "generatedName": "FromUrlUploadRequestSaveUrlDuplicates",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "source": {
                     "file": "uploadcare/openapi.json",
@@ -6022,7 +6022,7 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestMetadataKey",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -6050,7 +6050,7 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestSignature",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -6078,7 +6078,7 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "availability": null,
                 "description": null,
                 "generatedName": "fromUrlUploadRequestExpire",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -6115,7 +6115,7 @@ to the value of the \`check_URL_duplicates\` parameter.
             "description": null,
             "encoding": null,
             "generatedName": "FromUrlUploadResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": [
               {
@@ -7400,7 +7400,7 @@ Log.d("TAG", status.toString())
             "availability": null,
             "description": null,
             "generatedName": "FromUrlUploadStatusRequestToken",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -7431,7 +7431,7 @@ Log.d("TAG", status.toString())
             "description": null,
             "encoding": null,
             "generatedName": "FromUrlUploadStatusResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": [
               {
@@ -7577,7 +7577,7 @@ Log.d("TAG", status.toString())
               "description": null,
               "encoding": null,
               "generatedName": "BadRequestErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -7667,7 +7667,7 @@ Log.d("TAG", status.toString())
               "description": null,
               "encoding": null,
               "generatedName": "ForbiddenErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -8449,7 +8449,7 @@ Log.d("TAG", file.toString())
             "availability": null,
             "description": null,
             "generatedName": "FileUploadInfoRequestFileId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -8629,7 +8629,7 @@ is to create a new one.
               "description": null,
               "encoding": null,
               "generatedName": "BadRequestErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -8874,7 +8874,7 @@ is to create a new one.
               "description": null,
               "encoding": null,
               "generatedName": "ForbiddenErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -9802,14 +9802,14 @@ Each element can be a file UUID with or without the applied image
 processing operations.
 ",
                 "generatedName": "CreateFilesGroupRequestFiles",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "array",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "CreateFilesGroupRequestFilesItem",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -9833,7 +9833,7 @@ processing operations.
                 "availability": null,
                 "description": null,
                 "generatedName": "createFilesGroupRequestSignature",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -9861,7 +9861,7 @@ processing operations.
                 "availability": null,
                 "description": null,
                 "generatedName": "createFilesGroupRequestExpire",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
@@ -9964,7 +9964,7 @@ number of the files in the group, etc).
               "description": null,
               "encoding": null,
               "generatedName": "BadRequestErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -10041,7 +10041,7 @@ number of the files in the group, etc).
               "description": null,
               "encoding": null,
               "generatedName": "ForbiddenErrorBody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schemas": [
                 {
@@ -10898,7 +10898,7 @@ Log.d("TAG", group.toString())
             "availability": null,
             "description": null,
             "generatedName": "FilesGroupInfoRequestGroupId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11044,7 +11044,7 @@ Log.d("TAG", group.toString())
       "availability": null,
       "description": null,
       "generatedName": "AccountBlockedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Account has been blocked.",
@@ -11060,7 +11060,7 @@ Log.d("TAG", group.toString())
       "availability": null,
       "description": null,
       "generatedName": "AccountLimitsExceededError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Account has reached its limits.",
@@ -11076,7 +11076,7 @@ Log.d("TAG", group.toString())
       "availability": null,
       "description": null,
       "generatedName": "AccountUnpaidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Account has been blocked for non payment.",
@@ -11092,7 +11092,7 @@ Log.d("TAG", group.toString())
       "availability": null,
       "description": null,
       "generatedName": "AutoStoreDisabledError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Autostore is disabled.",
@@ -11108,7 +11108,7 @@ Log.d("TAG", group.toString())
       "availability": null,
       "description": "Information about file content.",
       "generatedName": "ContentInfo",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "type": "nullable",
       "value": {
@@ -11118,7 +11118,7 @@ Log.d("TAG", group.toString())
         "availability": null,
         "description": "Information about file content.",
         "generatedName": "ContentInfo",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "properties": [
           {
@@ -11132,7 +11132,7 @@ Log.d("TAG", group.toString())
               "availability": null,
               "description": null,
               "generatedName": "contentInfoMime",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "optional",
               "value": {
@@ -11142,7 +11142,7 @@ Log.d("TAG", group.toString())
                 "availability": null,
                 "description": "MIME type.",
                 "generatedName": "ContentInfoMime",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "properties": [
                   {
@@ -11156,7 +11156,7 @@ Log.d("TAG", group.toString())
                       "availability": null,
                       "description": "Full MIME type.",
                       "generatedName": "ContentInfoMimeMime",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -11180,7 +11180,7 @@ Log.d("TAG", group.toString())
                       "availability": null,
                       "description": "Type of MIME type.",
                       "generatedName": "ContentInfoMimeType",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -11204,7 +11204,7 @@ Log.d("TAG", group.toString())
                       "availability": null,
                       "description": "Subtype of MIME type.",
                       "generatedName": "ContentInfoMimeSubtype",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -11237,7 +11237,7 @@ Log.d("TAG", group.toString())
               "availability": null,
               "description": null,
               "generatedName": "contentInfoImage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "optional",
               "value": {
@@ -11266,7 +11266,7 @@ Log.d("TAG", group.toString())
               "availability": null,
               "description": null,
               "generatedName": "contentInfoVideo",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "optional",
               "value": {
@@ -11299,7 +11299,7 @@ The parameter defines the time during which your signature is valid. It's a UNIX
 See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
 ",
       "generatedName": "ExpireType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -11316,7 +11316,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileIdInvalidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "file_id is invalid.",
@@ -11332,7 +11332,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileIdRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "file_id is required.",
@@ -11348,7 +11348,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileInfectedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "The file is infected by <VIRUS-NAME> virus.",
@@ -11364,7 +11364,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileMetadataKeyDuplicatedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "File's metadata key \`<KEY>\` has a duplicate.",
@@ -11380,7 +11380,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileMetadataKeyEmptyError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "File's metadata key can not be empty.",
@@ -11396,7 +11396,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileMetadataKeyForbiddenError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "File's metadata key \`<KEY>\` contains symbols not allowed by the metadata key format.",
@@ -11412,7 +11412,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileMetadataKeyLengthTooBigError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Length of file metadata key \`<KEY>\` can not be more than <LENGTH> symbols.",
@@ -11428,7 +11428,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileMetadataKeysNumberTooBigError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "A file can not have more than <NUMBER> metadata keys.",
@@ -11444,7 +11444,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileMetadataValueEmptyError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Value of the file metadata key \`<KEY>\` can not be empty.",
@@ -11460,7 +11460,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileMetadataValueForbiddenError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Value of file metadata key \`<KEY>\` contains symbols not allowed by the metadata value format.",
@@ -11476,7 +11476,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileMetadataValueLengthTooBigError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Value of file metadata's key \`<KEY>\` can not be more than <LENGTH> symbols in length.",
@@ -11492,7 +11492,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileNotFoundError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "File is not found.",
@@ -11508,7 +11508,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileSizeLimitExceededError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "File is too large.",
@@ -11524,7 +11524,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileTypeForbiddenError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Uploading of these file types is not allowed.",
@@ -11543,7 +11543,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": "Information about an uploaded file.",
       "generatedName": "FileUploadInfo",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -11557,7 +11557,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "File's unique ID.",
             "generatedName": "FileUploadInfoUuid",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11581,7 +11581,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "Same as \`uuid\`",
             "generatedName": "FileUploadInfoFileId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11605,7 +11605,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "File's size in bytes.",
             "generatedName": "FileUploadInfoSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11630,7 +11630,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "Same as \`size\`.",
             "generatedName": "FileUploadInfoTotal",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11655,7 +11655,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "Same as \`size\`.",
             "generatedName": "FileUploadInfoDone",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11680,7 +11680,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "Original file of the uploaded file.",
             "generatedName": "FileUploadInfoOriginalFilename",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11704,7 +11704,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "Sanitized \`original_filename\`.",
             "generatedName": "FileUploadInfoFilename",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11728,7 +11728,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "File's MIME-type.",
             "generatedName": "FileUploadInfoMimeType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11836,7 +11836,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "True if the uploaded file is an image of a supported file format.",
             "generatedName": "FileUploadInfoIsImage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11856,7 +11856,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "True if the file has been marked as stored.",
             "generatedName": "FileUploadInfoIsStored",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11876,7 +11876,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": "True if the file is ready to be fetched from Uploadcare's CDN.",
             "generatedName": "FileUploadInfoIsReady",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11896,21 +11896,21 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoS3Bucket",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
               "generatedName": "FileUploadInfoS3Bucket",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "nullable",
               "value": {
                 "availability": null,
                 "description": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
                 "generatedName": "FileUploadInfoS3Bucket",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -11939,7 +11939,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoErrorStatus",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -11953,7 +11953,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoErrorStatusStatus",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -11961,7 +11961,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
               "description": "The system failed to fetch and/or upload the file.
 ",
               "generatedName": "FileUploadInfoErrorStatusStatus",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {
@@ -11982,7 +11982,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoErrorStatusError",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -11990,7 +11990,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
               "description": "Human readable description of the issue with the fetch/upload task.
 ",
               "generatedName": "FileUploadInfoErrorStatusError",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12015,7 +12015,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoErrorStatusErrorCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12026,7 +12026,7 @@ Note: See the [Errors > FromURL upload errors](#tag/Errors) section of this
 page for a full list of all possible error codes.
 ",
               "generatedName": "FileUploadInfoErrorStatusErrorCode",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12067,7 +12067,7 @@ page for a full list of all possible error codes.
       "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoFromUrl",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12081,14 +12081,14 @@ page for a full list of all possible error codes.
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoFromUrlType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "FileUploadInfoFromUrlType",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {
@@ -12112,7 +12112,7 @@ page for a full list of all possible error codes.
       "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoProgressStatus",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12126,7 +12126,7 @@ page for a full list of all possible error codes.
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoProgressStatusStatus",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12134,7 +12134,7 @@ page for a full list of all possible error codes.
               "description": "The system is fetching/uploading the file.
 ",
               "generatedName": "FileUploadInfoProgressStatusStatus",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {
@@ -12155,7 +12155,7 @@ page for a full list of all possible error codes.
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoProgressStatusTotal",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12167,7 +12167,7 @@ does not provide the information or if the server is returning the file in, for
 example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).
 ",
               "generatedName": "FileUploadInfoProgressStatusTotal",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "nullable",
               "value": {
@@ -12179,7 +12179,7 @@ does not provide the information or if the server is returning the file in, for
 example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).
 ",
                 "generatedName": "FileUploadInfoProgressStatusTotal",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -12206,7 +12206,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoProgressStatusDone",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12214,7 +12214,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
               "description": "How many bytes of the file have been fetched so far.
 ",
               "generatedName": "FileUploadInfoProgressStatusDone",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12256,7 +12256,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoSuccessStatus",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12270,14 +12270,14 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoSuccessStatusStatus",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The file has been fetched/uploaded successfully.",
               "generatedName": "FileUploadInfoSuccessStatusStatus",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {
@@ -12301,7 +12301,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoUnknownStatus",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12315,7 +12315,7 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoUnknownStatusStatus",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12327,7 +12327,7 @@ period of time only. The endpoint can return the status \`unknown\` for the task
 that are tool old (or that have not been created at all).
 ",
               "generatedName": "FileUploadInfoUnknownStatusStatus",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {
@@ -12351,7 +12351,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": null,
       "generatedName": "FileUploadInfoWaitingStatus",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12365,7 +12365,7 @@ that are tool old (or that have not been created at all).
             "availability": null,
             "description": null,
             "generatedName": "fileUploadInfoWaitingStatusStatus",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12373,7 +12373,7 @@ that are tool old (or that have not been created at all).
               "description": "The system is preparing to handle the request.
 ",
               "generatedName": "FileUploadInfoWaitingStatusStatus",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {
@@ -12394,7 +12394,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": null,
       "generatedName": "FilesRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Request does not contain files.",
@@ -12413,7 +12413,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": "\`/from_url/\` upload response.",
       "generatedName": "FromUrlUploadResponseSchema",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12427,14 +12427,14 @@ that are tool old (or that have not been created at all).
             "availability": null,
             "description": null,
             "generatedName": "fromUrlUploadResponseSchemaType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "FromUrlUploadResponseSchemaType",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {
@@ -12455,14 +12455,14 @@ that are tool old (or that have not been created at all).
             "availability": null,
             "description": null,
             "generatedName": "fromUrlUploadResponseSchemaToken",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Token to identify a \`/from_url/\` request.",
               "generatedName": "FromUrlUploadResponseSchemaToken",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12487,7 +12487,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": null,
       "generatedName": "GroupFileUrlParsingFailedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "No files[N] parameters found.",
@@ -12503,7 +12503,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": null,
       "generatedName": "GroupFilesInvalidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "This is not valid file url: %s.",
@@ -12519,7 +12519,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": null,
       "generatedName": "GroupFilesNotFoundError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Some files not found.",
@@ -12535,7 +12535,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": null,
       "generatedName": "GroupIdRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "group_id is required.",
@@ -12554,7 +12554,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": "File group information object.",
       "generatedName": "GroupInfo",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12568,14 +12568,14 @@ that are tool old (or that have not been created at all).
             "availability": null,
             "description": null,
             "generatedName": "groupInfoId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Group's unique ID.",
               "generatedName": "GroupInfoId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12600,14 +12600,14 @@ that are tool old (or that have not been created at all).
             "availability": null,
             "description": null,
             "generatedName": "groupInfoDatetimeCreated",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "ISO-8601 date and time when the group was created.",
               "generatedName": "GroupInfoDatetimeCreated",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "datetime",
@@ -12627,21 +12627,21 @@ that are tool old (or that have not been created at all).
             "availability": "Deprecated",
             "description": null,
             "generatedName": "groupInfoDatetimeStored",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": "Deprecated",
               "description": "ISO-8601 date and time when the group was marked as stored.",
               "generatedName": "GroupInfoDatetimeStored",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "nullable",
               "value": {
                 "availability": "Deprecated",
                 "description": "ISO-8601 date and time when the group was marked as stored.",
                 "generatedName": "GroupInfoDatetimeStored",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "type": "datetime",
@@ -12662,14 +12662,14 @@ that are tool old (or that have not been created at all).
             "availability": null,
             "description": null,
             "generatedName": "groupInfoFilesCount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Number of the files in the group.",
               "generatedName": "GroupInfoFilesCount",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12695,14 +12695,14 @@ that are tool old (or that have not been created at all).
             "availability": null,
             "description": null,
             "generatedName": "groupInfoCdnUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Group's CDN URL.",
               "generatedName": "GroupInfoCdnUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12727,14 +12727,14 @@ that are tool old (or that have not been created at all).
             "availability": null,
             "description": null,
             "generatedName": "groupInfoUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details.",
               "generatedName": "GroupInfoUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12759,7 +12759,7 @@ that are tool old (or that have not been created at all).
             "availability": null,
             "description": null,
             "generatedName": "groupInfoFiles",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12767,7 +12767,7 @@ that are tool old (or that have not been created at all).
               "description": "The list of files in the group. An array may contain null values if a file has been removed.
 ",
               "generatedName": "GroupInfoFiles",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "nullable",
               "value": {
@@ -12775,7 +12775,7 @@ that are tool old (or that have not been created at all).
                 "description": "The list of files in the group. An array may contain null values if a file has been removed.
 ",
                 "generatedName": "GroupInfoFiles",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "array",
                 "value": {
@@ -12798,7 +12798,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": null,
       "generatedName": "GroupNotFoundError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "group_id is invalid.",
@@ -12814,7 +12814,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": null,
       "generatedName": "HostnameNotFoundError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Host does not exist.",
@@ -12830,7 +12830,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": "Image metadata.",
       "generatedName": "ImageInfo",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "type": "nullable",
       "value": {
@@ -12840,7 +12840,7 @@ that are tool old (or that have not been created at all).
         "availability": null,
         "description": "Image metadata.",
         "generatedName": "ImageInfo",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "properties": [
           {
@@ -12855,7 +12855,7 @@ that are tool old (or that have not been created at all).
               "default": null,
               "description": "Image color mode.",
               "generatedName": "ImageInfoColorMode",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "source": {
                 "file": "uploadcare/openapi.json",
@@ -13046,14 +13046,14 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": "Image orientation from EXIF.",
               "generatedName": "ImageInfoOrientation",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "nullable",
               "value": {
                 "availability": null,
                 "description": "Image orientation from EXIF.",
                 "generatedName": "ImageInfoOrientation",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -13079,7 +13079,7 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": "Image format.",
               "generatedName": "ImageInfoFormat",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -13103,7 +13103,7 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": "Set to true if a file contains a sequence of images (GIF for example).",
               "generatedName": "ImageInfoSequence",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -13123,7 +13123,7 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": "Image height in pixels.",
               "generatedName": "ImageInfoHeight",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -13148,7 +13148,7 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": "Image width in pixels.",
               "generatedName": "ImageInfoWidth",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -13173,7 +13173,7 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": "Geo-location of image from EXIF.",
               "generatedName": "ImageInfoGeoLocation",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "nullable",
               "value": {
@@ -13183,7 +13183,7 @@ that are tool old (or that have not been created at all).
                 "availability": null,
                 "description": "Geo-location of image from EXIF.",
                 "generatedName": "ImageInfoGeoLocation",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "properties": [
                   {
@@ -13197,7 +13197,7 @@ that are tool old (or that have not been created at all).
                       "availability": null,
                       "description": "Location latitude.",
                       "generatedName": "ImageInfoGeoLocationLatitude",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -13222,7 +13222,7 @@ that are tool old (or that have not been created at all).
                       "availability": null,
                       "description": "Location longitude.",
                       "generatedName": "ImageInfoGeoLocationLongitude",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -13256,14 +13256,14 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
               "generatedName": "ImageInfoDatetimeOriginal",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "nullable",
               "value": {
                 "availability": null,
                 "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
                 "generatedName": "ImageInfoDatetimeOriginal",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "type": "datetime",
@@ -13283,21 +13283,21 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": "Image DPI for two dimensions.",
               "generatedName": "ImageInfoDpi",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "nullable",
               "value": {
                 "availability": null,
                 "description": "Image DPI for two dimensions.",
                 "generatedName": "ImageInfoDpi",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "array",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "ImageInfoDpiItem",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -13325,7 +13325,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": "Video metadata.",
       "generatedName": "LegacyVideoInfo",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "type": "nullable",
       "value": {
@@ -13335,7 +13335,7 @@ that are tool old (or that have not been created at all).
         "availability": null,
         "description": "Video metadata.",
         "generatedName": "LegacyVideoInfo",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "properties": [
           {
@@ -13349,14 +13349,14 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": null,
               "generatedName": "legacyVideoInfoDuration",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "optional",
               "value": {
                 "availability": null,
                 "description": "Video file's duration in milliseconds.",
                 "generatedName": "LegacyVideoInfoDuration",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -13382,14 +13382,14 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": null,
               "generatedName": "legacyVideoInfoFormat",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "optional",
               "value": {
                 "availability": null,
                 "description": "Video file's format.",
                 "generatedName": "LegacyVideoInfoFormat",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -13414,14 +13414,14 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": null,
               "generatedName": "legacyVideoInfoBitrate",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "optional",
               "value": {
                 "availability": null,
                 "description": "Video file's bitrate.",
                 "generatedName": "LegacyVideoInfoBitrate",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -13447,14 +13447,14 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": null,
               "generatedName": "legacyVideoInfoAudio",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "optional",
               "value": {
                 "availability": null,
                 "description": "Audio stream's metadata.",
                 "generatedName": "LegacyVideoInfoAudio",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "nullable",
                 "value": {
@@ -13464,7 +13464,7 @@ that are tool old (or that have not been created at all).
                   "availability": null,
                   "description": "Audio stream's metadata.",
                   "generatedName": "LegacyVideoInfoAudio",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "properties": [
                     {
@@ -13478,21 +13478,21 @@ that are tool old (or that have not been created at all).
                         "availability": null,
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioBitrate",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "type": "optional",
                         "value": {
                           "availability": null,
                           "description": "Audio stream's bitrate.",
                           "generatedName": "LegacyVideoInfoAudioBitrate",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "type": "nullable",
                           "value": {
                             "availability": null,
                             "description": "Audio stream's bitrate.",
                             "generatedName": "LegacyVideoInfoAudioBitrate",
-                            "groupName": null,
+                            "groupName": [],
                             "nameOverride": null,
                             "schema": {
                               "default": null,
@@ -13519,21 +13519,21 @@ that are tool old (or that have not been created at all).
                         "availability": null,
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioCodec",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "type": "optional",
                         "value": {
                           "availability": null,
                           "description": "Audio stream's codec.",
                           "generatedName": "LegacyVideoInfoAudioCodec",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "type": "nullable",
                           "value": {
                             "availability": null,
                             "description": "Audio stream's codec.",
                             "generatedName": "LegacyVideoInfoAudioCodec",
-                            "groupName": null,
+                            "groupName": [],
                             "nameOverride": null,
                             "schema": {
                               "default": null,
@@ -13559,21 +13559,21 @@ that are tool old (or that have not been created at all).
                         "availability": null,
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioSampleRate",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "type": "optional",
                         "value": {
                           "availability": null,
                           "description": "Audio stream's sample rate.",
                           "generatedName": "LegacyVideoInfoAudioSampleRate",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "type": "nullable",
                           "value": {
                             "availability": null,
                             "description": "Audio stream's sample rate.",
                             "generatedName": "LegacyVideoInfoAudioSampleRate",
-                            "groupName": null,
+                            "groupName": [],
                             "nameOverride": null,
                             "schema": {
                               "default": null,
@@ -13600,21 +13600,21 @@ that are tool old (or that have not been created at all).
                         "availability": null,
                         "description": null,
                         "generatedName": "legacyVideoInfoAudioChannels",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "type": "optional",
                         "value": {
                           "availability": null,
                           "description": "Audio stream's number of channels.",
                           "generatedName": "LegacyVideoInfoAudioChannels",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "type": "nullable",
                           "value": {
                             "availability": null,
                             "description": "Audio stream's number of channels.",
                             "generatedName": "LegacyVideoInfoAudioChannels",
-                            "groupName": null,
+                            "groupName": [],
                             "nameOverride": null,
                             "schema": {
                               "default": null,
@@ -13650,7 +13650,7 @@ that are tool old (or that have not been created at all).
               "availability": null,
               "description": null,
               "generatedName": "legacyVideoInfoVideo",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "optional",
               "value": {
@@ -13660,7 +13660,7 @@ that are tool old (or that have not been created at all).
                 "availability": null,
                 "description": "Video stream's metadata.",
                 "generatedName": "LegacyVideoInfoVideo",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "properties": [
                   {
@@ -13674,14 +13674,14 @@ that are tool old (or that have not been created at all).
                       "availability": null,
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoHeight",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
                         "availability": null,
                         "description": "Video stream's image height.",
                         "generatedName": "LegacyVideoInfoVideoHeight",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schema": {
                           "default": null,
@@ -13707,14 +13707,14 @@ that are tool old (or that have not been created at all).
                       "availability": null,
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoWidth",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
                         "availability": null,
                         "description": "Video stream's image width.",
                         "generatedName": "LegacyVideoInfoVideoWidth",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schema": {
                           "default": null,
@@ -13740,14 +13740,14 @@ that are tool old (or that have not been created at all).
                       "availability": null,
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoFrameRate",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
                         "availability": null,
                         "description": "Video stream's frame rate.",
                         "generatedName": "LegacyVideoInfoVideoFrameRate",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schema": {
                           "default": null,
@@ -13773,14 +13773,14 @@ that are tool old (or that have not been created at all).
                       "availability": null,
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoBitrate",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
                         "availability": null,
                         "description": "Video stream's bitrate.",
                         "generatedName": "LegacyVideoInfoVideoBitrate",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schema": {
                           "default": null,
@@ -13806,14 +13806,14 @@ that are tool old (or that have not been created at all).
                       "availability": null,
                       "description": null,
                       "generatedName": "legacyVideoInfoVideoCodec",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
                         "availability": null,
                         "description": "Video stream codec.",
                         "generatedName": "LegacyVideoInfoVideoCodec",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schema": {
                           "default": null,
@@ -13848,7 +13848,7 @@ that are tool old (or that have not been created at all).
       "availability": null,
       "description": "Arbitrary metadata associated with a file.",
       "generatedName": "Metadata",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "type": "nullable",
       "value": {
@@ -13856,12 +13856,12 @@ that are tool old (or that have not been created at all).
         "description": "Arbitrary metadata associated with a file.",
         "encoding": null,
         "generatedName": "Metadata",
-        "groupName": null,
+        "groupName": [],
         "key": {
           "availability": null,
           "description": null,
           "generatedName": "MetadataKey",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "schema": {
             "default": null,
@@ -13887,7 +13887,7 @@ that are tool old (or that have not been created at all).
 See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-refs/rest-api/v0.7.0/#tag/File-metadata) for more information.
 ",
       "generatedName": "MetadataValue",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -13903,7 +13903,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartFileAlreadyUploadedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "File is already uploaded.",
@@ -13919,7 +13919,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartFileCompletionFailedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Can not complete upload. Wrong parts size?",
@@ -13935,7 +13935,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartFileIdRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "uuid is required.",
@@ -13951,7 +13951,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartFileSizeLimitExceededError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "File size exceeds project limit.",
@@ -13967,7 +13967,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartFileSizeTooSmallError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "File size can not be less than <SIZE> bytes. Please use direct upload instead of multipart.",
@@ -13983,7 +13983,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartPartSizeInvalidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Multipart Upload Part Size should be an integer.",
@@ -13999,7 +13999,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartPartSizeTooBigError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Multipart Upload Part Size can not be more than <SIZE> bytes.",
@@ -14015,7 +14015,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartPartSizeTooSmallError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Multipart Upload Part Size can not be less than <SIZE> bytes.",
@@ -14031,7 +14031,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartSizeInvalidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "size should be integer.",
@@ -14047,7 +14047,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartUploadSizeTooLargeError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Uploaded size is more than expected.",
@@ -14063,7 +14063,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "MultipartUploadSizeTooSmallError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "File size mismatch. Not all parts uploaded?",
@@ -14079,7 +14079,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "NullCharactersForbiddenError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Null characters are not allowed.",
@@ -14095,7 +14095,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "PostRequestParserFailedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "HTTP POST request parsing failed.",
@@ -14111,7 +14111,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "ProjectPublicKeyRemovedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Project <PUB-KEY> is marked as removed.",
@@ -14127,7 +14127,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": "Public key identifying an Uploadcare project your uploads will go to.",
       "generatedName": "ProjectPublicKeyType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -14143,7 +14143,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "PublicKeyInvalidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "pub_key is invalid.",
@@ -14159,7 +14159,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "PublicKeyRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "pub_key is required.",
@@ -14175,7 +14175,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "RequestFiledsNumberLimitExceededError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "The request contains too many HTTP POST fields.",
@@ -14191,7 +14191,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "RequestParamRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "<PARAMETER-NAME> is required.",
@@ -14210,7 +14210,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": "Image metadata.",
       "generatedName": "SchemasImageInfo",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -14225,7 +14225,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "default": null,
             "description": "Image color mode.",
             "generatedName": "SchemasImageInfoColorMode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "source": {
               "file": "uploadcare/openapi.json",
@@ -14416,14 +14416,14 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "availability": null,
             "description": "Image orientation from EXIF.",
             "generatedName": "SchemasImageInfoOrientation",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": "Image orientation from EXIF.",
               "generatedName": "SchemasImageInfoOrientation",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -14449,7 +14449,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "availability": null,
             "description": "Image format.",
             "generatedName": "SchemasImageInfoFormat",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14473,7 +14473,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "availability": null,
             "description": "Set to true if a file contains a sequence of images (GIF for example).",
             "generatedName": "SchemasImageInfoSequence",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14493,7 +14493,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "availability": null,
             "description": "Image height in pixels.",
             "generatedName": "SchemasImageInfoHeight",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14518,7 +14518,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "availability": null,
             "description": "Image width in pixels.",
             "generatedName": "SchemasImageInfoWidth",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14543,7 +14543,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "availability": null,
             "description": "Geo-location of image from EXIF.",
             "generatedName": "SchemasImageInfoGeoLocation",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
@@ -14553,7 +14553,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
               "availability": null,
               "description": "Geo-location of image from EXIF.",
               "generatedName": "SchemasImageInfoGeoLocation",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "properties": [
                 {
@@ -14567,7 +14567,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                     "availability": null,
                     "description": "Location latitude.",
                     "generatedName": "SchemasImageInfoGeoLocationLatitude",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -14592,7 +14592,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
                     "availability": null,
                     "description": "Location longitude.",
                     "generatedName": "SchemasImageInfoGeoLocationLongitude",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -14626,14 +14626,14 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "availability": null,
             "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "generatedName": "SchemasImageInfoDatetimeOriginal",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
               "generatedName": "SchemasImageInfoDatetimeOriginal",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "datetime",
@@ -14653,21 +14653,21 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "availability": null,
             "description": "Image DPI for two dimensions.",
             "generatedName": "SchemasImageInfoDpi",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": "Image DPI for two dimensions.",
               "generatedName": "SchemasImageInfoDpi",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
                 "availability": null,
                 "description": null,
                 "generatedName": "SchemasImageInfoDpiItem",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -14694,7 +14694,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "SignatureExpirationError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Expired signature.",
@@ -14710,7 +14710,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "SignatureExpirationInvalidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "\`expire\` must be a UNIX timestamp.",
@@ -14726,7 +14726,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "SignatureExpirationRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "\`expire\` is required.",
@@ -14742,7 +14742,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "SignatureInvalidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Invalid signature.",
@@ -14758,7 +14758,7 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "availability": null,
       "description": null,
       "generatedName": "SignatureRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "\`signature\` is required.",
@@ -14778,7 +14778,7 @@ The signature should be generated on your backend.
 See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for details.
 ",
       "generatedName": "SignatureType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -14794,7 +14794,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
       "availability": null,
       "description": null,
       "generatedName": "SourceUrlRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "source_url is required.",
@@ -14840,7 +14840,7 @@ To ensure that file storage in the project matches the settings in the Dashboard
 change the value to \`auto\`.
 ",
       "generatedName": "StoreType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "uploadcare/openapi.json",
@@ -14893,7 +14893,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "TokenRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "token is required.",
@@ -14909,7 +14909,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UploadFailedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Upload failed.",
@@ -14925,7 +14925,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UploadcarePublicKeyInvalidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "UPLOADCARE_PUB_KEY is invalid.",
@@ -14941,7 +14941,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UploadcarePublicKeyRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "UPLOADCARE_PUB_KEY is required.",
@@ -14957,7 +14957,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UrlBlacklistedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Source is blacklisted.",
@@ -14973,7 +14973,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UrlHostMalformedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "URL host is malformed.",
@@ -14989,7 +14989,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UrlHostPrivateIpForbiddenError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Only public IPs are allowed.",
@@ -15005,7 +15005,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UrlHostRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "No URL host supplied.",
@@ -15021,7 +15021,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UrlParsingFailedError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Failed to parse URL.",
@@ -15037,7 +15037,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UrlSchemeInvalidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "Invalid URL scheme.",
@@ -15053,7 +15053,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UrlSchemeRequiredError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "No URL scheme supplied.",
@@ -15069,7 +15069,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": null,
       "generatedName": "UuidInvalidError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": "uuid is invalid.",
@@ -15088,7 +15088,7 @@ change the value to \`auto\`.
       "availability": null,
       "description": "Video metadata.",
       "generatedName": "VideoInfo",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -15102,14 +15102,14 @@ change the value to \`auto\`.
             "availability": null,
             "description": "Video file's duration in milliseconds.",
             "generatedName": "VideoInfoDuration",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": "Video file's duration in milliseconds.",
               "generatedName": "VideoInfoDuration",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -15135,7 +15135,7 @@ change the value to \`auto\`.
             "availability": null,
             "description": "Video file's format.",
             "generatedName": "VideoInfoFormat",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -15159,14 +15159,14 @@ change the value to \`auto\`.
             "availability": null,
             "description": "Video file's bitrate.",
             "generatedName": "VideoInfoBitrate",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": "Video file's bitrate.",
               "generatedName": "VideoInfoBitrate",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -15192,7 +15192,7 @@ change the value to \`auto\`.
             "availability": null,
             "description": null,
             "generatedName": "VideoInfoAudio",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -15202,7 +15202,7 @@ change the value to \`auto\`.
               "availability": null,
               "description": "Audio stream's metadata.",
               "generatedName": "VideoInfoAudioItem",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "properties": [
                 {
@@ -15216,14 +15216,14 @@ change the value to \`auto\`.
                     "availability": null,
                     "description": "Audio stream's bitrate.",
                     "generatedName": "VideoInfoAudioItemBitrate",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
                       "availability": null,
                       "description": "Audio stream's bitrate.",
                       "generatedName": "VideoInfoAudioItemBitrate",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -15249,14 +15249,14 @@ change the value to \`auto\`.
                     "availability": null,
                     "description": "Audio stream's codec.",
                     "generatedName": "VideoInfoAudioItemCodec",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
                       "availability": null,
                       "description": "Audio stream's codec.",
                       "generatedName": "VideoInfoAudioItemCodec",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -15281,14 +15281,14 @@ change the value to \`auto\`.
                     "availability": null,
                     "description": "Audio stream's sample rate.",
                     "generatedName": "VideoInfoAudioItemSampleRate",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
                       "availability": null,
                       "description": "Audio stream's sample rate.",
                       "generatedName": "VideoInfoAudioItemSampleRate",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -15314,14 +15314,14 @@ change the value to \`auto\`.
                     "availability": null,
                     "description": "Audio stream's number of channels.",
                     "generatedName": "VideoInfoAudioItemChannels",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
                       "availability": null,
                       "description": "Audio stream's number of channels.",
                       "generatedName": "VideoInfoAudioItemChannels",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -15356,7 +15356,7 @@ change the value to \`auto\`.
             "availability": null,
             "description": null,
             "generatedName": "VideoInfoVideo",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -15366,7 +15366,7 @@ change the value to \`auto\`.
               "availability": null,
               "description": "Video stream's metadata.",
               "generatedName": "VideoInfoVideoItem",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "properties": [
                 {
@@ -15380,7 +15380,7 @@ change the value to \`auto\`.
                     "availability": null,
                     "description": "Video stream's image height.",
                     "generatedName": "VideoInfoVideoItemHeight",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -15405,7 +15405,7 @@ change the value to \`auto\`.
                     "availability": null,
                     "description": "Video stream's image width.",
                     "generatedName": "VideoInfoVideoItemWidth",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -15430,7 +15430,7 @@ change the value to \`auto\`.
                     "availability": null,
                     "description": "Video stream's frame rate.",
                     "generatedName": "VideoInfoVideoItemFrameRate",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -15455,14 +15455,14 @@ change the value to \`auto\`.
                     "availability": null,
                     "description": "Video stream's bitrate.",
                     "generatedName": "VideoInfoVideoItemBitrate",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
                       "availability": null,
                       "description": "Video stream's bitrate.",
                       "generatedName": "VideoInfoVideoItemBitrate",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -15488,14 +15488,14 @@ change the value to \`auto\`.
                     "availability": null,
                     "description": "Video stream's codec.",
                     "generatedName": "VideoInfoVideoItemCodec",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "type": "nullable",
                     "value": {
                       "availability": null,
                       "description": "Video stream's codec.",
                       "generatedName": "VideoInfoVideoItemCodec",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,

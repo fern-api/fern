@@ -20,7 +20,7 @@ exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
         "description": null,
         "encoding": null,
         "generatedName": "UnionJob",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "schemas": [
           {

@@ -156,14 +156,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListNumbersRequestPage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListNumbersRequestPage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Page",
               "schema": {
                 "default": 1,
@@ -191,14 +191,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListNumbersRequestSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListNumbersRequestSize",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Size",
               "schema": {
                 "default": 10,
@@ -303,7 +303,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetNumberRequestPhoneNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -458,7 +458,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UpdateNumberRequestPhoneNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -583,7 +583,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CancelNumberRequestPhoneNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -814,14 +814,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListCallsRequestPage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListCallsRequestPage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Page",
               "schema": {
                 "default": 1,
@@ -849,14 +849,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListCallsRequestSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListCallsRequestSize",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Size",
               "schema": {
                 "default": 10,
@@ -961,7 +961,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetCallRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -1064,7 +1064,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "EndCallRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -1305,7 +1305,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetRecordingRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -1493,7 +1493,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetActionRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -1525,7 +1525,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "discriminantProperty": "type",
             "encoding": null,
             "generatedName": "GetActionResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": {
               "action_dtmf": {
@@ -1683,14 +1683,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListActionsRequestPage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListActionsRequestPage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Page",
               "schema": {
                 "default": 1,
@@ -1718,14 +1718,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListActionsRequestSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListActionsRequestSize",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Size",
               "schema": {
                 "default": 10,
@@ -1857,7 +1857,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "discriminantProperty": "type",
             "encoding": null,
             "generatedName": "CreateActionResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": {
               "action_dtmf": {
@@ -1974,7 +1974,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UpdateActionRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -2028,7 +2028,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "discriminantProperty": "type",
             "encoding": null,
             "generatedName": "UpdateActionResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": {
               "action_dtmf": {
@@ -2145,7 +2145,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetAgentRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -2364,14 +2364,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListAgentsRequestPage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListAgentsRequestPage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Page",
               "schema": {
                 "default": 1,
@@ -2399,14 +2399,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListAgentsRequestSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListAgentsRequestSize",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Size",
               "schema": {
                 "default": 10,
@@ -2609,7 +2609,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UpdateAgentRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -2734,7 +2734,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetVoiceRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -2766,7 +2766,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "discriminantProperty": "type",
             "encoding": null,
             "generatedName": "GetVoiceResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": {
               "voice_azure": {
@@ -2937,14 +2937,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListVoicesRequestPage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListVoicesRequestPage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Page",
               "schema": {
                 "default": 1,
@@ -2972,14 +2972,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListVoicesRequestSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListVoicesRequestSize",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Size",
               "schema": {
                 "default": 10,
@@ -3111,7 +3111,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "discriminantProperty": "type",
             "encoding": null,
             "generatedName": "CreateVoiceResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": {
               "voice_azure": {
@@ -3241,7 +3241,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UpdateVoiceRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -3295,7 +3295,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "discriminantProperty": "type",
             "encoding": null,
             "generatedName": "UpdateVoiceResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": {
               "voice_azure": {
@@ -3486,7 +3486,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetWebhookRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -3670,14 +3670,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListWebhooksRequestPage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListWebhooksRequestPage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Page",
               "schema": {
                 "default": 1,
@@ -3705,14 +3705,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListWebhooksRequestSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListWebhooksRequestSize",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Size",
               "schema": {
                 "default": 10,
@@ -4049,7 +4049,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UpdateWebhookRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -4171,7 +4171,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "ActionPage",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "ActionPage",
       "properties": [
         {
@@ -4185,7 +4185,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ActionPageItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Items",
             "type": "array",
             "value": {
@@ -4197,7 +4197,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "discriminantProperty": "type",
                 "encoding": null,
                 "generatedName": "ActionPageItemsItem",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": {
                   "action_dtmf": {
@@ -4260,7 +4260,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ActionPagePage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "schema": {
               "default": null,
@@ -4285,7 +4285,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ActionPageSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "schema": {
               "default": null,
@@ -4310,7 +4310,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ActionPageHasMore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4335,7 +4335,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         "discriminantProperty": "type",
         "encoding": null,
         "generatedName": "ActionParamsRequest",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": "ActionParamsRequest",
         "schemas": {
           "action_dtmf": {
@@ -4394,7 +4394,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         "discriminantProperty": "type",
         "encoding": null,
         "generatedName": "ActionUpdateParamsRequest",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": "ActionUpdateParamsRequest",
         "schemas": {
           "action_dtmf": {
@@ -4451,7 +4451,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Agent",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "Agent",
       "properties": [
         {
@@ -4465,7 +4465,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AgentId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -4489,7 +4489,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AgentUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4513,7 +4513,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AgentPrompt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Prompt",
             "schema": {
               "default": null,
@@ -4537,14 +4537,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentLanguage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Agent",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AgentLanguage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Language",
               "source": {
@@ -4566,7 +4566,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AgentActions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Actions",
             "type": "array",
             "value": {
@@ -4578,7 +4578,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "discriminantProperty": "type",
                 "encoding": null,
                 "generatedName": "AgentActionsItem",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": {
                   "action_dtmf": {
@@ -4646,7 +4646,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
               "discriminantProperty": "type",
               "encoding": null,
               "generatedName": "AgentVoice",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Voice",
               "schemas": {
                 "voice_azure": {
@@ -4721,14 +4721,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentInitialMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Agent",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AgentInitialMessage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -4753,7 +4753,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentWebhook",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Agent",
             "type": "optional",
             "value": {
@@ -4782,7 +4782,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentVectorDatabase",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Agent",
             "type": "optional",
             "value": {
@@ -4811,14 +4811,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentInterruptSensitivity",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Agent",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AgentInterruptSensitivity",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "InterruptSensitivity",
               "source": {
@@ -4843,7 +4843,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "AgentPage",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "AgentPage",
       "properties": [
         {
@@ -4857,7 +4857,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AgentPageItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Items",
             "type": "array",
             "value": {
@@ -4886,7 +4886,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AgentPagePage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "schema": {
               "default": null,
@@ -4911,7 +4911,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AgentPageSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "schema": {
               "default": null,
@@ -4936,7 +4936,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AgentPageHasMore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4959,7 +4959,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "AgentParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "AgentParams",
       "properties": [
         {
@@ -4973,7 +4973,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AgentParamsPrompt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Prompt",
             "schema": {
               "default": null,
@@ -4997,14 +4997,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentParamsLanguage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AgentParamsLanguage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Language",
               "source": {
@@ -5026,14 +5026,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentParamsActions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AgentParamsActions",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Actions",
               "type": "array",
               "value": {
@@ -5043,14 +5043,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                   "description": null,
                   "encoding": null,
                   "generatedName": "AgentParamsActionsItem",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schemas": [
                     {
                       "availability": null,
                       "description": null,
                       "generatedName": "AgentParamsActionsItem",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -5071,7 +5071,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                         "discriminantProperty": "type",
                         "encoding": null,
                         "generatedName": "AgentParamsActionsItemOne",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schemas": {
                           "action_dtmf": {
@@ -5146,14 +5146,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
               "description": null,
               "encoding": null,
               "generatedName": "AgentParamsVoice",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Voice",
               "schemas": [
                 {
                   "availability": null,
                   "description": null,
                   "generatedName": "AgentParamsVoice",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -5174,7 +5174,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                     "discriminantProperty": "type",
                     "encoding": null,
                     "generatedName": "AgentParamsVoiceOne",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schemas": {
                       "voice_azure": {
@@ -5257,14 +5257,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentParamsInitialMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AgentParamsInitialMessage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -5289,7 +5289,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentParamsWebhook",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentParams",
             "type": "optional",
             "value": {
@@ -5299,14 +5299,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AgentParamsWebhook",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Webhook",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AgentParamsWebhook",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -5352,7 +5352,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentParamsVectorDatabase",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentParams",
             "type": "optional",
             "value": {
@@ -5362,14 +5362,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AgentParamsVectorDatabase",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AgentParamsVectorDatabase",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -5415,14 +5415,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentParamsInterruptSensitivity",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AgentParamsInterruptSensitivity",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "InterruptSensitivity",
               "source": {
@@ -5447,7 +5447,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "AgentUpdateParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "AgentUpdateParams",
       "properties": [
         {
@@ -5461,7 +5461,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentUpdateParamsPrompt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentUpdateParams",
             "type": "optional",
             "value": {
@@ -5471,14 +5471,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AgentUpdateParamsPrompt",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Prompt",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AgentUpdateParamsPrompt",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -5524,7 +5524,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentUpdateParamsLanguage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentUpdateParams",
             "type": "optional",
             "value": {
@@ -5534,7 +5534,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AgentUpdateParamsLanguage",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Language",
                 "schemas": [
                   {
@@ -5584,7 +5584,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentUpdateParamsActions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentUpdateParams",
             "type": "optional",
             "value": {
@@ -5594,14 +5594,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AgentUpdateParamsActions",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Actions",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AgentUpdateParamsActions",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "type": "array",
                     "value": {
@@ -5611,14 +5611,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                         "description": null,
                         "encoding": null,
                         "generatedName": "AgentUpdateParamsActionsItem",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schemas": [
                           {
                             "availability": null,
                             "description": null,
                             "generatedName": "AgentUpdateParamsActionsItem",
-                            "groupName": null,
+                            "groupName": [],
                             "nameOverride": null,
                             "schema": {
                               "default": null,
@@ -5639,7 +5639,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                               "discriminantProperty": "type",
                               "encoding": null,
                               "generatedName": "AgentUpdateParamsActionsItemOne",
-                              "groupName": null,
+                              "groupName": [],
                               "nameOverride": null,
                               "schemas": {
                                 "action_dtmf": {
@@ -5732,7 +5732,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentUpdateParamsVoice",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentUpdateParams",
             "type": "optional",
             "value": {
@@ -5742,14 +5742,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AgentUpdateParamsVoice",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Voice",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AgentUpdateParamsVoice",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -5770,7 +5770,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                       "discriminantProperty": "type",
                       "encoding": null,
                       "generatedName": "AgentUpdateParamsVoiceOne",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schemas": {
                         "voice_azure": {
@@ -5867,7 +5867,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentUpdateParamsInitialMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentUpdateParams",
             "type": "optional",
             "value": {
@@ -5877,14 +5877,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AgentUpdateParamsInitialMessage",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AgentUpdateParamsInitialMessage",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -5930,7 +5930,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentUpdateParamsWebhook",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentUpdateParams",
             "type": "optional",
             "value": {
@@ -5940,14 +5940,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AgentUpdateParamsWebhook",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Webhook",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AgentUpdateParamsWebhook",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -6006,7 +6006,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentUpdateParamsVectorDatabase",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentUpdateParams",
             "type": "optional",
             "value": {
@@ -6016,14 +6016,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AgentUpdateParamsVectorDatabase",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AgentUpdateParamsVectorDatabase",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -6082,7 +6082,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "agentUpdateParamsInterruptSensitivity",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AgentUpdateParams",
             "type": "optional",
             "value": {
@@ -6092,7 +6092,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AgentUpdateParamsInterruptSensitivity",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
@@ -6145,7 +6145,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "AzureVoice",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "AzureVoice",
       "properties": [
         {
@@ -6159,7 +6159,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AzureVoiceId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -6183,7 +6183,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AzureVoiceUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6207,7 +6207,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AzureVoiceVoiceName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6231,14 +6231,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "azureVoicePitch",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AzureVoice",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AzureVoicePitch",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Pitch",
               "schema": {
                 "default": 0,
@@ -6264,14 +6264,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "azureVoiceRate",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AzureVoice",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AzureVoiceRate",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Rate",
               "schema": {
                 "default": 15,
@@ -6300,7 +6300,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "AzureVoiceParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "AzureVoiceParams",
       "properties": [
         {
@@ -6314,7 +6314,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "AzureVoiceParamsVoiceName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6338,14 +6338,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "azureVoiceParamsPitch",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AzureVoiceParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AzureVoiceParamsPitch",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Pitch",
               "schema": {
                 "default": 0,
@@ -6371,14 +6371,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "azureVoiceParamsRate",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AzureVoiceParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AzureVoiceParamsRate",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Rate",
               "schema": {
                 "default": 15,
@@ -6407,7 +6407,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "AzureVoiceUpdateParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "AzureVoiceUpdateParams",
       "properties": [
         {
@@ -6421,7 +6421,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "azureVoiceUpdateParamsVoiceName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AzureVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -6431,14 +6431,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AzureVoiceUpdateParamsVoiceName",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AzureVoiceUpdateParamsVoiceName",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -6484,7 +6484,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "azureVoiceUpdateParamsPitch",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AzureVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -6494,14 +6494,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AzureVoiceUpdateParamsPitch",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Pitch",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AzureVoiceUpdateParamsPitch",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -6548,7 +6548,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "azureVoiceUpdateParamsRate",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "AzureVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -6558,14 +6558,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "AzureVoiceUpdateParamsRate",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Rate",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "AzureVoiceUpdateParamsRate",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -6615,7 +6615,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Call",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "Call",
       "properties": [
         {
@@ -6629,7 +6629,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CallId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -6653,7 +6653,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CallUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6677,14 +6677,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "callStatus",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Call",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CallStatus",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "CallStatus",
               "source": {
@@ -6706,14 +6706,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "callErrorMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Call",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CallErrorMessage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -6738,14 +6738,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "callRecordingAvailable",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Call",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CallRecordingAvailable",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": false,
@@ -6766,14 +6766,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "callTranscript",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Call",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CallTranscript",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Transcript",
               "schema": {
                 "default": null,
@@ -6798,7 +6798,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CallToNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6822,7 +6822,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CallFromNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6867,7 +6867,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CallAgentPhoneNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6891,14 +6891,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "callStartTime",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Call",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CallStartTime",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "datetime",
@@ -6918,14 +6918,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "callEndTime",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Call",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CallEndTime",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "datetime",
@@ -6948,7 +6948,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "CallPage",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "CallPage",
       "properties": [
         {
@@ -6962,7 +6962,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CallPageItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Items",
             "type": "array",
             "value": {
@@ -6991,7 +6991,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CallPagePage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "schema": {
               "default": null,
@@ -7016,7 +7016,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CallPageSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "schema": {
               "default": null,
@@ -7041,7 +7041,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CallPageHasMore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -7062,7 +7062,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "default": null,
       "description": "An enumeration.",
       "generatedName": "CallStatus",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "CallStatus",
       "source": {
         "file": "vocode/openapi.json",
@@ -7131,7 +7131,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "CreateCallAgentParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "CreateCallAgentParams",
       "properties": [
         {
@@ -7145,7 +7145,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CreateCallAgentParamsPrompt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Prompt",
             "schema": {
               "default": null,
@@ -7169,14 +7169,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "createCallAgentParamsLanguage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "CreateCallAgentParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CreateCallAgentParamsLanguage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Language",
               "source": {
@@ -7198,14 +7198,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "createCallAgentParamsActions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "CreateCallAgentParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CreateCallAgentParamsActions",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Actions",
               "type": "array",
               "value": {
@@ -7215,14 +7215,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                   "description": null,
                   "encoding": null,
                   "generatedName": "CreateCallAgentParamsActionsItem",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schemas": [
                     {
                       "availability": null,
                       "description": null,
                       "generatedName": "CreateCallAgentParamsActionsItem",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -7243,7 +7243,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                         "discriminantProperty": "type",
                         "encoding": null,
                         "generatedName": "CreateCallAgentParamsActionsItemOne",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schemas": {
                           "action_dtmf": {
@@ -7315,7 +7315,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "createCallAgentParamsVoice",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "CreateCallAgentParams",
             "type": "optional",
             "value": {
@@ -7325,14 +7325,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "CreateCallAgentParamsVoice",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Voice",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "CreateCallAgentParamsVoice",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -7353,7 +7353,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                       "discriminantProperty": "type",
                       "encoding": null,
                       "generatedName": "CreateCallAgentParamsVoiceOne",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schemas": {
                         "voice_azure": {
@@ -7437,14 +7437,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "createCallAgentParamsInitialMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "CreateCallAgentParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CreateCallAgentParamsInitialMessage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -7469,7 +7469,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "createCallAgentParamsWebhook",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "CreateCallAgentParams",
             "type": "optional",
             "value": {
@@ -7479,14 +7479,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "CreateCallAgentParamsWebhook",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Webhook",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "CreateCallAgentParamsWebhook",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -7532,7 +7532,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "createCallAgentParamsVectorDatabase",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "CreateCallAgentParams",
             "type": "optional",
             "value": {
@@ -7542,14 +7542,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "CreateCallAgentParamsVectorDatabase",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "CreateCallAgentParamsVectorDatabase",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -7595,14 +7595,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "createCallAgentParamsInterruptSensitivity",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "CreateCallAgentParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CreateCallAgentParamsInterruptSensitivity",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "InterruptSensitivity",
               "source": {
@@ -7627,7 +7627,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "CreateCallRequest",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "CreateCallRequest",
       "properties": [
         {
@@ -7641,7 +7641,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CreateCallRequestFromNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -7665,7 +7665,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CreateCallRequestToNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -7692,14 +7692,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
               "description": null,
               "encoding": null,
               "generatedName": "CreateCallRequestAgent",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Agent",
               "schemas": [
                 {
                   "availability": null,
                   "description": null,
                   "generatedName": "CreateCallRequestAgent",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -7747,7 +7747,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "DtmfAction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "DTMFAction",
       "properties": [
         {
@@ -7761,7 +7761,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "DtmfActionId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -7785,7 +7785,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "DtmfActionUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -7809,7 +7809,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "dtmfActionConfig",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "DTMFAction",
             "type": "optional",
             "value": {
@@ -7841,7 +7841,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "DtmfActionParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "DTMFActionParams",
       "properties": [
         {
@@ -7855,7 +7855,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "dtmfActionParamsConfig",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "DTMFActionParams",
             "type": "optional",
             "value": {
@@ -7887,7 +7887,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "DtmfActionUpdateParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "DTMFActionUpdateParams",
       "properties": [
         {
@@ -7901,7 +7901,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "dtmfActionUpdateParamsConfig",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "DTMFActionUpdateParams",
             "type": "optional",
             "value": {
@@ -7911,7 +7911,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "DtmfActionUpdateParamsConfig",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Config",
                 "schemas": [
                   {
@@ -7964,7 +7964,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "ElevenLabsVoice",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "ElevenLabsVoice",
       "properties": [
         {
@@ -7978,7 +7978,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ElevenLabsVoiceId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -8002,7 +8002,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ElevenLabsVoiceUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -8026,7 +8026,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ElevenLabsVoiceVoiceId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -8050,14 +8050,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "elevenLabsVoiceStability",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "ElevenLabsVoice",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ElevenLabsVoiceStability",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Stability",
               "schema": {
                 "default": null,
@@ -8083,14 +8083,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "elevenLabsVoiceSimilarityBoost",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "ElevenLabsVoice",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ElevenLabsVoiceSimilarityBoost",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -8116,7 +8116,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ElevenLabsVoiceApiKey",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -8143,7 +8143,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "ElevenLabsVoiceParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "ElevenLabsVoiceParams",
       "properties": [
         {
@@ -8157,7 +8157,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ElevenLabsVoiceParamsVoiceId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -8181,14 +8181,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "elevenLabsVoiceParamsStability",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "ElevenLabsVoiceParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ElevenLabsVoiceParamsStability",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Stability",
               "schema": {
                 "default": null,
@@ -8214,14 +8214,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "elevenLabsVoiceParamsSimilarityBoost",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "ElevenLabsVoiceParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ElevenLabsVoiceParamsSimilarityBoost",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -8247,7 +8247,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ElevenLabsVoiceParamsApiKey",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -8274,7 +8274,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "ElevenLabsVoiceUpdateParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "ElevenLabsVoiceUpdateParams",
       "properties": [
         {
@@ -8288,7 +8288,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "elevenLabsVoiceUpdateParamsVoiceId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "ElevenLabsVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -8298,14 +8298,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "ElevenLabsVoiceUpdateParamsVoiceId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "ElevenLabsVoiceUpdateParamsVoiceId",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -8351,7 +8351,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "elevenLabsVoiceUpdateParamsStability",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "ElevenLabsVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -8361,14 +8361,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "ElevenLabsVoiceUpdateParamsStability",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Stability",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "ElevenLabsVoiceUpdateParamsStability",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -8415,7 +8415,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "elevenLabsVoiceUpdateParamsSimilarityBoost",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "ElevenLabsVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -8425,14 +8425,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "ElevenLabsVoiceUpdateParamsSimilarityBoost",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "ElevenLabsVoiceUpdateParamsSimilarityBoost",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -8479,7 +8479,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "elevenLabsVoiceUpdateParamsApiKey",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "ElevenLabsVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -8489,14 +8489,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "ElevenLabsVoiceUpdateParamsApiKey",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "ElevenLabsVoiceUpdateParamsApiKey",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -8545,7 +8545,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "EmptyActionConfig",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "EmptyActionConfig",
       "properties": [],
       "source": {
@@ -8561,7 +8561,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "EndConversationAction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "EndConversationAction",
       "properties": [
         {
@@ -8575,7 +8575,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "EndConversationActionId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -8599,7 +8599,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "EndConversationActionUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -8623,7 +8623,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "endConversationActionConfig",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "EndConversationAction",
             "type": "optional",
             "value": {
@@ -8655,7 +8655,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "EndConversationActionParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "EndConversationActionParams",
       "properties": [
         {
@@ -8669,7 +8669,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "endConversationActionParamsConfig",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "EndConversationActionParams",
             "type": "optional",
             "value": {
@@ -8701,7 +8701,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "EndConversationActionUpdateParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "EndConversationActionUpdateParams",
       "properties": [
         {
@@ -8715,7 +8715,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "endConversationActionUpdateParamsConfig",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "EndConversationActionUpdateParams",
             "type": "optional",
             "value": {
@@ -8725,7 +8725,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "EndConversationActionUpdateParamsConfig",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Config",
                 "schemas": [
                   {
@@ -8776,7 +8776,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "default": null,
       "description": "An enumeration.",
       "generatedName": "EventType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "EventType",
       "source": {
         "file": "vocode/openapi.json",
@@ -8869,7 +8869,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "default": null,
       "description": "An enumeration.",
       "generatedName": "HttpMethod",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "HTTPMethod",
       "source": {
         "file": "vocode/openapi.json",
@@ -8912,7 +8912,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "HttpValidationError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "HTTPValidationError",
       "properties": [
         {
@@ -8926,14 +8926,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "httpValidationErrorDetail",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "HTTPValidationError",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "HttpValidationErrorDetail",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Detail",
               "type": "array",
               "value": {
@@ -8964,7 +8964,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "default": null,
       "description": "An enumeration.",
       "generatedName": "InterruptSensitivity",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "InterruptSensitivity",
       "source": {
         "file": "vocode/openapi.json",
@@ -9005,7 +9005,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "default": null,
       "description": "An enumeration.",
       "generatedName": "Language",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "Language",
       "source": {
         "file": "vocode/openapi.json",
@@ -9061,7 +9061,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "NormalizedAgent",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "NormalizedAgent",
       "properties": [
         {
@@ -9075,7 +9075,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedAgentId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -9099,7 +9099,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedAgentUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -9123,7 +9123,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedAgentPrompt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Prompt",
             "schema": {
               "default": null,
@@ -9147,14 +9147,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedAgentLanguage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedAgent",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedAgentLanguage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Language",
               "source": {
@@ -9176,14 +9176,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedAgentActions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Actions",
             "type": "array",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedAgentActionsItem",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -9208,7 +9208,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedAgentVoice",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Voice",
             "schema": {
               "default": null,
@@ -9232,14 +9232,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedAgentInitialMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedAgent",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedAgentInitialMessage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -9264,14 +9264,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedAgentWebhook",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedAgent",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedAgentWebhook",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Webhook",
               "schema": {
                 "default": null,
@@ -9296,7 +9296,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedAgentVectorDatabase",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedAgent",
             "type": "optional",
             "value": {
@@ -9306,14 +9306,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "NormalizedAgentVectorDatabase",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "NormalizedAgentVectorDatabase",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -9359,14 +9359,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedAgentInterruptSensitivity",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedAgent",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedAgentInterruptSensitivity",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "InterruptSensitivity",
               "source": {
@@ -9391,7 +9391,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "NormalizedCall",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "NormalizedCall",
       "properties": [
         {
@@ -9405,7 +9405,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedCallId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -9429,7 +9429,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedCallUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -9453,14 +9453,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedCallStatus",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedCall",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedCallStatus",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "CallStatus",
               "source": {
@@ -9482,14 +9482,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedCallErrorMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedCall",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedCallErrorMessage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -9514,14 +9514,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedCallRecordingAvailable",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedCall",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedCallRecordingAvailable",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": false,
@@ -9542,14 +9542,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedCallTranscript",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedCall",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedCallTranscript",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Transcript",
               "schema": {
                 "default": null,
@@ -9574,7 +9574,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedCallToNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -9598,7 +9598,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedCallFromNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -9622,7 +9622,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedCallAgent",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Agent",
             "schema": {
               "default": null,
@@ -9646,7 +9646,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedCallAgentPhoneNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -9670,14 +9670,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedCallStartTime",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedCall",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedCallStartTime",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "datetime",
@@ -9697,14 +9697,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedCallEndTime",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedCall",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedCallEndTime",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "datetime",
@@ -9727,7 +9727,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "NormalizedPhoneNumber",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "NormalizedPhoneNumber",
       "properties": [
         {
@@ -9741,7 +9741,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedPhoneNumberId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -9765,7 +9765,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedPhoneNumberUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -9789,14 +9789,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedPhoneNumberActive",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedPhoneNumber",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedPhoneNumberActive",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Active",
               "schema": {
                 "default": true,
@@ -9817,14 +9817,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "normalizedPhoneNumberLabel",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NormalizedPhoneNumber",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NormalizedPhoneNumberLabel",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Label",
               "schema": {
                 "default": "",
@@ -9849,7 +9849,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedPhoneNumberInboundAgent",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -9873,7 +9873,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NormalizedPhoneNumberNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Number",
             "schema": {
               "default": null,
@@ -9900,7 +9900,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "PhoneNumber",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "PhoneNumber",
       "properties": [
         {
@@ -9914,7 +9914,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PhoneNumberId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -9938,7 +9938,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PhoneNumberUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -9962,14 +9962,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "phoneNumberActive",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "PhoneNumber",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "PhoneNumberActive",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Active",
               "schema": {
                 "default": true,
@@ -9990,14 +9990,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "phoneNumberLabel",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "PhoneNumber",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "PhoneNumberLabel",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Label",
               "schema": {
                 "default": "",
@@ -10043,7 +10043,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PhoneNumberNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Number",
             "schema": {
               "default": null,
@@ -10070,7 +10070,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "PhoneNumberPage",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "PhoneNumberPage",
       "properties": [
         {
@@ -10084,7 +10084,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PhoneNumberPageItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Items",
             "type": "array",
             "value": {
@@ -10113,7 +10113,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PhoneNumberPagePage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "schema": {
               "default": null,
@@ -10138,7 +10138,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PhoneNumberPageSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "schema": {
               "default": null,
@@ -10163,7 +10163,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PhoneNumberPageHasMore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10186,7 +10186,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "PineconeVectorDatabase",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "PineconeVectorDatabase",
       "properties": [
         {
@@ -10200,7 +10200,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -10224,7 +10224,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10248,7 +10248,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Type",
             "type": "literal",
             "value": {
@@ -10268,7 +10268,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseIndex",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Index",
             "schema": {
               "default": null,
@@ -10292,7 +10292,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseApiKey",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10316,7 +10316,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseApiEnvironment",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10343,7 +10343,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "PineconeVectorDatabaseParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "PineconeVectorDatabaseParams",
       "properties": [
         {
@@ -10357,7 +10357,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseParamsType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Type",
             "type": "literal",
             "value": {
@@ -10377,7 +10377,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseParamsIndex",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Index",
             "schema": {
               "default": null,
@@ -10401,7 +10401,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseParamsApiKey",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10425,7 +10425,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseParamsApiEnvironment",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10452,7 +10452,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "PineconeVectorDatabaseUpdateParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "PineconeVectorDatabaseUpdateParams",
       "properties": [
         {
@@ -10466,7 +10466,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PineconeVectorDatabaseUpdateParamsType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Type",
             "type": "literal",
             "value": {
@@ -10486,7 +10486,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "pineconeVectorDatabaseUpdateParamsIndex",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "PineconeVectorDatabaseUpdateParams",
             "type": "optional",
             "value": {
@@ -10496,14 +10496,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "PineconeVectorDatabaseUpdateParamsIndex",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Index",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "PineconeVectorDatabaseUpdateParamsIndex",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -10549,7 +10549,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "pineconeVectorDatabaseUpdateParamsApiKey",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "PineconeVectorDatabaseUpdateParams",
             "type": "optional",
             "value": {
@@ -10559,14 +10559,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "PineconeVectorDatabaseUpdateParamsApiKey",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "PineconeVectorDatabaseUpdateParamsApiKey",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -10612,7 +10612,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "pineconeVectorDatabaseUpdateParamsApiEnvironment",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "PineconeVectorDatabaseUpdateParams",
             "type": "optional",
             "value": {
@@ -10622,14 +10622,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "PineconeVectorDatabaseUpdateParamsApiEnvironment",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "PineconeVectorDatabaseUpdateParamsApiEnvironment",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -10676,7 +10676,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "default": null,
       "description": "An enumeration.",
       "generatedName": "PlanType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "PlanType",
       "source": {
         "file": "vocode/openapi.json",
@@ -10732,7 +10732,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "PlayHtVoice",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "PlayHtVoice",
       "properties": [
         {
@@ -10746,7 +10746,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PlayHtVoiceId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -10770,7 +10770,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PlayHtVoiceUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10794,7 +10794,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PlayHtVoiceVoiceId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10818,7 +10818,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PlayHtVoiceApiUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10842,7 +10842,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PlayHtVoiceApiKey",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10869,7 +10869,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "PlayHtVoiceParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "PlayHtVoiceParams",
       "properties": [
         {
@@ -10883,7 +10883,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PlayHtVoiceParamsVoiceId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10907,7 +10907,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PlayHtVoiceParamsApiUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10931,7 +10931,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PlayHtVoiceParamsApiKey",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10958,7 +10958,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "PlayHtVoiceUpdateParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "PlayHtVoiceUpdateParams",
       "properties": [
         {
@@ -10972,7 +10972,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "playHtVoiceUpdateParamsVoiceId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "PlayHtVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -10982,14 +10982,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "PlayHtVoiceUpdateParamsVoiceId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "PlayHtVoiceUpdateParamsVoiceId",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -11035,7 +11035,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "playHtVoiceUpdateParamsApiUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "PlayHtVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -11045,14 +11045,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "PlayHtVoiceUpdateParamsApiUserId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "PlayHtVoiceUpdateParamsApiUserId",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -11098,7 +11098,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "playHtVoiceUpdateParamsApiKey",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "PlayHtVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -11108,14 +11108,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "PlayHtVoiceUpdateParamsApiKey",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "PlayHtVoiceUpdateParamsApiKey",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -11164,7 +11164,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "RimeVoice",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "RimeVoice",
       "properties": [
         {
@@ -11178,7 +11178,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "RimeVoiceId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -11202,7 +11202,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "RimeVoiceUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11226,7 +11226,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "RimeVoiceSpeaker",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Speaker",
             "schema": {
               "default": null,
@@ -11253,7 +11253,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "RimeVoiceParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "RimeVoiceParams",
       "properties": [
         {
@@ -11267,7 +11267,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "RimeVoiceParamsSpeaker",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Speaker",
             "schema": {
               "default": null,
@@ -11294,7 +11294,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "RimeVoiceUpdateParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "RimeVoiceUpdateParams",
       "properties": [
         {
@@ -11308,7 +11308,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "rimeVoiceUpdateParamsSpeaker",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "RimeVoiceUpdateParams",
             "type": "optional",
             "value": {
@@ -11318,14 +11318,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "RimeVoiceUpdateParamsSpeaker",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Speaker",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "RimeVoiceUpdateParamsSpeaker",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -11374,7 +11374,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "TransferCallAction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "TransferCallAction",
       "properties": [
         {
@@ -11388,7 +11388,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "TransferCallActionId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -11412,7 +11412,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "TransferCallActionUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11460,7 +11460,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "TransferCallActionParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "TransferCallActionParams",
       "properties": [
         {
@@ -11498,7 +11498,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "TransferCallActionUpdateParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "TransferCallActionUpdateParams",
       "properties": [
         {
@@ -11512,7 +11512,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "transferCallActionUpdateParamsConfig",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "TransferCallActionUpdateParams",
             "type": "optional",
             "value": {
@@ -11522,7 +11522,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "TransferCallActionUpdateParamsConfig",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Config",
                 "schemas": [
                   {
@@ -11575,7 +11575,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "TransferCallConfig",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "TransferCallConfig",
       "properties": [
         {
@@ -11589,7 +11589,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "TransferCallConfigPhoneNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11616,7 +11616,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Undefined",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "Undefined",
       "properties": [],
       "source": {
@@ -11632,7 +11632,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "UpdateNumberRequest",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "UpdateNumberRequest",
       "properties": [
         {
@@ -11646,7 +11646,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "updateNumberRequestLabel",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "UpdateNumberRequest",
             "type": "optional",
             "value": {
@@ -11656,14 +11656,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "UpdateNumberRequestLabel",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Label",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "UpdateNumberRequestLabel",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -11709,7 +11709,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "updateNumberRequestInboundAgent",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "UpdateNumberRequest",
             "type": "optional",
             "value": {
@@ -11719,14 +11719,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "UpdateNumberRequestInboundAgent",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "UpdateNumberRequestInboundAgent",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -11788,7 +11788,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Usage",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "Usage",
       "properties": [
         {
@@ -11802,7 +11802,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UsageUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11847,7 +11847,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UsageMonthlyUsageMinutes",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11872,7 +11872,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UsageMonthlyUsageLimitMinutes",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11900,7 +11900,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "ValidationError",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "ValidationError",
       "properties": [
         {
@@ -11914,7 +11914,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ValidationErrorLoc",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Location",
             "type": "array",
             "value": {
@@ -11924,14 +11924,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "ValidationErrorLocItem",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "ValidationErrorLocItem",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -11947,7 +11947,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                     "availability": null,
                     "description": null,
                     "generatedName": "ValidationErrorLocItem",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -11981,7 +11981,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ValidationErrorMsg",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Message",
             "schema": {
               "default": null,
@@ -12005,7 +12005,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ValidationErrorType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -12032,7 +12032,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "VoicePage",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "VoicePage",
       "properties": [
         {
@@ -12046,7 +12046,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "VoicePageItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Items",
             "type": "array",
             "value": {
@@ -12058,7 +12058,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "discriminantProperty": "type",
                 "encoding": null,
                 "generatedName": "VoicePageItemsItem",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schemas": {
                   "voice_azure": {
@@ -12134,7 +12134,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "VoicePagePage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "schema": {
               "default": null,
@@ -12159,7 +12159,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "VoicePageSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "schema": {
               "default": null,
@@ -12184,7 +12184,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "VoicePageHasMore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -12209,7 +12209,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         "discriminantProperty": "type",
         "encoding": null,
         "generatedName": "VoiceParamsRequest",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": "VoiceParamsRequest",
         "schemas": {
           "voice_azure": {
@@ -12281,7 +12281,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
         "discriminantProperty": "type",
         "encoding": null,
         "generatedName": "VoiceUpdateParamsRequest",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": "VoiceUpdateParamsRequest",
         "schemas": {
           "voice_azure": {
@@ -12351,7 +12351,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Webhook",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "Webhook",
       "properties": [
         {
@@ -12365,7 +12365,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "WebhookId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Id",
             "schema": {
               "default": null,
@@ -12389,7 +12389,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "WebhookUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -12413,7 +12413,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "WebhookSubscriptions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -12442,7 +12442,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "WebhookUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Url",
             "schema": {
               "default": null,
@@ -12466,14 +12466,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "webhookMethod",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Webhook",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "WebhookMethod",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "HTTPMethod",
               "source": {
@@ -12498,7 +12498,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "WebhookPage",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "WebhookPage",
       "properties": [
         {
@@ -12512,7 +12512,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "WebhookPageItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Items",
             "type": "array",
             "value": {
@@ -12541,7 +12541,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "WebhookPagePage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Page",
             "schema": {
               "default": null,
@@ -12566,7 +12566,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "WebhookPageSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Size",
             "schema": {
               "default": null,
@@ -12591,7 +12591,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "WebhookPageHasMore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -12614,7 +12614,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "WebhookParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "WebhookParams",
       "properties": [
         {
@@ -12628,7 +12628,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "WebhookParamsSubscriptions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -12657,7 +12657,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "WebhookParamsUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Url",
             "schema": {
               "default": null,
@@ -12681,14 +12681,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "webhookParamsMethod",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "WebhookParams",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "WebhookParamsMethod",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "HTTPMethod",
               "source": {
@@ -12713,7 +12713,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "WebhookUpdateParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "WebhookUpdateParams",
       "properties": [
         {
@@ -12727,7 +12727,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "webhookUpdateParamsSubscriptions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "WebhookUpdateParams",
             "type": "optional",
             "value": {
@@ -12737,14 +12737,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "WebhookUpdateParamsSubscriptions",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Subscriptions",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "WebhookUpdateParamsSubscriptions",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "type": "array",
                     "value": {
@@ -12795,7 +12795,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "webhookUpdateParamsUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "WebhookUpdateParams",
             "type": "optional",
             "value": {
@@ -12805,14 +12805,14 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "WebhookUpdateParamsUrl",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Url",
                 "schemas": [
                   {
                     "availability": null,
                     "description": null,
                     "generatedName": "WebhookUpdateParamsUrl",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schema": {
                       "default": null,
@@ -12858,7 +12858,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "webhookUpdateParamsMethod",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "WebhookUpdateParams",
             "type": "optional",
             "value": {
@@ -12868,7 +12868,7 @@ exports[`open api parser > vocode > parse open api 1`] = `
                 "description": null,
                 "encoding": null,
                 "generatedName": "WebhookUpdateParamsMethod",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": "Method",
                 "schemas": [
                   {

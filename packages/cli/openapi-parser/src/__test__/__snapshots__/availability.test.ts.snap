@@ -90,14 +90,14 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXDeprecatedHeader",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXDeprecatedHeader",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -125,14 +125,14 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXActiveHeader",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXActiveHeader",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -192,14 +192,14 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityHeader",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityHeader",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -233,7 +233,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -259,7 +259,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestActiveId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -308,7 +308,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityPathParam",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -337,14 +337,14 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestDeprecatedLang",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestDeprecatedLang",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -371,14 +371,14 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestActiveLang",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestActiveLang",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -436,14 +436,14 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityQueryParam",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GetCollectionIdActiveIdDeprecatedRefIdXFernAvailabilityPathParamRequestXFernAvailabilityQueryParam",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -647,7 +647,7 @@ exports[`open api parser > availability > parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "PostSuccessInlinePropertyDeprecationRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -661,14 +661,14 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "availability": "Deprecated",
                 "description": null,
                 "generatedName": "postSuccessInlinePropertyDeprecationRequestDeprecatedSetting",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": "Deprecated",
                   "description": null,
                   "generatedName": "PostSuccessInlinePropertyDeprecationRequestDeprecatedSetting",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -689,14 +689,14 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "postSuccessInlinePropertyDeprecationRequestNewSetting",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "PostSuccessInlinePropertyDeprecationRequestNewSetting",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -805,7 +805,7 @@ exports[`open api parser > availability > parse open api 1`] = `
           "availability": "Deprecated",
           "description": null,
           "generatedName": "PostSuccessInlineObjectDeprecationRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -819,14 +819,14 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "postSuccessInlineObjectDeprecationRequestFineSetting",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "PostSuccessInlineObjectDeprecationRequestFineSetting",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -935,7 +935,7 @@ exports[`open api parser > availability > parse open api 1`] = `
           "availability": "Beta",
           "description": null,
           "generatedName": "PostSuccessInlineBetaBodyRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -949,14 +949,14 @@ exports[`open api parser > availability > parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "postSuccessInlineBetaBodyRequestFineSetting",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "PostSuccessInlineBetaBodyRequestFineSetting",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1026,7 +1026,7 @@ exports[`open api parser > availability > parse open api 1`] = `
       "availability": "Deprecated",
       "description": null,
       "generatedName": "DeprecatedParam",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -1045,7 +1045,7 @@ exports[`open api parser > availability > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "NotDeprecatedSettings",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1059,14 +1059,14 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "notDeprecatedSettingsNotDeprecatedSetting",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "NotDeprecatedSettingsNotDeprecatedSetting",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1090,7 +1090,7 @@ exports[`open api parser > availability > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Settings",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1104,14 +1104,14 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": "Deprecated",
             "description": null,
             "generatedName": "settingsDeprecatedSetting",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": "Deprecated",
               "description": null,
               "generatedName": "SettingsDeprecatedSetting",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1132,14 +1132,14 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "settingsNewSetting",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "SettingsNewSetting",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1163,7 +1163,7 @@ exports[`open api parser > availability > parse open api 1`] = `
       "availability": "Deprecated",
       "description": null,
       "generatedName": "WholeDeprecatedSettings",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1177,14 +1177,14 @@ exports[`open api parser > availability > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "wholeDeprecatedSettingsFineSetting",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "WholeDeprecatedSettingsFineSetting",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,

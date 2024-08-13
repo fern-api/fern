@@ -20,7 +20,7 @@ exports[`open api parser > defaults > parse open api 1`] = `
       "availability": null,
       "description": "Fields used to compose other joint owner invitation schemas.",
       "generatedName": "JointOwnerInvitationFields",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -34,7 +34,7 @@ exports[`open api parser > defaults > parse open api 1`] = `
             "availability": null,
             "description": "The invitee's first name.",
             "generatedName": "JointOwnerInvitationFieldsFirstName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": "Jane",
@@ -58,7 +58,7 @@ exports[`open api parser > defaults > parse open api 1`] = `
             "availability": null,
             "description": "The invitee's last name.",
             "generatedName": "JointOwnerInvitationFieldsLastName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": "Doe",
@@ -82,7 +82,7 @@ exports[`open api parser > defaults > parse open api 1`] = `
             "availability": null,
             "description": "The invitee's age.",
             "generatedName": "JointOwnerInvitationFieldsAge",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": 1000000,
@@ -102,7 +102,7 @@ exports[`open api parser > defaults > parse open api 1`] = `
             "availability": null,
             "description": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
             "generatedName": "JointOwnerInvitationFieldsDisallowDebitCardAccess",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": false,
