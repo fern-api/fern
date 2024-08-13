@@ -1,6 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { HttpMethodSchema } from "@fern-api/yaml-schema/src/schemas";
 import { buildEnumTypeDeclaration } from "./buildTypeDeclaration";
 import { EndpointLocation } from "./FernDefnitionBuilder";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
@@ -343,7 +342,7 @@ function getMethodAndUrl(endpointReference: string): [string | undefined, string
     } else if (splitOperation.length === 2) {
         // We'll throw an error here if the method is not a valid HTTP method
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        const method = HttpMethodSchema.parse(splitOperation[0]!.toUpperCase());
+        const method = RawSchemas.HttpMethodSchema.parse(splitOperation[0]!.toUpperCase());
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         return [method, splitOperation[1]!];
     }
