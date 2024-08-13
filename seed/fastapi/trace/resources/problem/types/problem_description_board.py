@@ -8,6 +8,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -17,33 +18,33 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return ProblemDescriptionBoard(
                 root=_ProblemDescriptionBoard.Html(type="html", value=value)
-            )
+            )  # type: ignore
         else:
             return ProblemDescriptionBoard(
                 __root__=_ProblemDescriptionBoard.Html(type="html", value=value)
-            )
+            )  # type: ignore
 
     def variable(self, value: VariableValue) -> ProblemDescriptionBoard:
         if IS_PYDANTIC_V2:
             return ProblemDescriptionBoard(
                 root=_ProblemDescriptionBoard.Variable(type="variable", value=value)
-            )
+            )  # type: ignore
         else:
             return ProblemDescriptionBoard(
                 __root__=_ProblemDescriptionBoard.Variable(type="variable", value=value)
-            )
+            )  # type: ignore
 
     def test_case_id(self, value: str) -> ProblemDescriptionBoard:
         if IS_PYDANTIC_V2:
             return ProblemDescriptionBoard(
                 root=_ProblemDescriptionBoard.TestCaseId(type="testCaseId", value=value)
-            )
+            )  # type: ignore
         else:
             return ProblemDescriptionBoard(
                 __root__=_ProblemDescriptionBoard.TestCaseId(
                     type="testCaseId", value=value
                 )
-            )
+            )  # type: ignore
 
 
 class ProblemDescriptionBoard(UniversalRootModel):
@@ -113,3 +114,6 @@ class _ProblemDescriptionBoard:
     class TestCaseId(UniversalBaseModel):
         type: typing.Literal["testCaseId"] = "testCaseId"
         value: str
+
+
+update_forward_refs(ProblemDescriptionBoard)

@@ -7,6 +7,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -14,15 +15,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def html(self, value: str) -> Metadata:
         if IS_PYDANTIC_V2:
-            return Metadata(root=_Metadata.Html(type="html", value=value))
+            return Metadata(root=_Metadata.Html(type="html", value=value))  # type: ignore
         else:
-            return Metadata(__root__=_Metadata.Html(type="html", value=value))
+            return Metadata(__root__=_Metadata.Html(type="html", value=value))  # type: ignore
 
     def markdown(self, value: str) -> Metadata:
         if IS_PYDANTIC_V2:
-            return Metadata(root=_Metadata.Markdown(type="markdown", value=value))
+            return Metadata(root=_Metadata.Markdown(type="markdown", value=value))  # type: ignore
         else:
-            return Metadata(__root__=_Metadata.Markdown(type="markdown", value=value))
+            return Metadata(__root__=_Metadata.Markdown(type="markdown", value=value))  # type: ignore
 
 
 class Metadata(UniversalRootModel):
@@ -73,3 +74,6 @@ class _Metadata:
     class Markdown(UniversalBaseModel):
         type: typing.Literal["markdown"] = "markdown"
         value: str
+
+
+update_forward_refs(Metadata)

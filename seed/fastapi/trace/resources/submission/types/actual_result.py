@@ -12,6 +12,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -19,9 +20,9 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def value(self, value: VariableValue) -> ActualResult:
         if IS_PYDANTIC_V2:
-            return ActualResult(root=_ActualResult.Value(type="value", value=value))
+            return ActualResult(root=_ActualResult.Value(type="value", value=value))  # type: ignore
         else:
-            return ActualResult(__root__=_ActualResult.Value(type="value", value=value))
+            return ActualResult(__root__=_ActualResult.Value(type="value", value=value))  # type: ignore
 
     def exception(self, value: ExceptionInfo) -> ActualResult:
         if IS_PYDANTIC_V2:
@@ -29,13 +30,13 @@ class _Factory:
                 root=_ActualResult.Exception(
                     **value.dict(exclude_unset=True), type="exception"
                 )
-            )
+            )  # type: ignore
         else:
             return ActualResult(
                 __root__=_ActualResult.Exception(
                     **value.dict(exclude_unset=True), type="exception"
                 )
-            )
+            )  # type: ignore
 
     def exception_v_2(
         self, value: resources_submission_types_exception_v_2_ExceptionV2
@@ -43,11 +44,11 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return ActualResult(
                 root=_ActualResult.ExceptionV2(type="exceptionV2", value=value)
-            )
+            )  # type: ignore
         else:
             return ActualResult(
                 __root__=_ActualResult.ExceptionV2(type="exceptionV2", value=value)
-            )
+            )  # type: ignore
 
 
 class ActualResult(UniversalRootModel):
@@ -114,3 +115,6 @@ class _ActualResult:
     class ExceptionV2(UniversalBaseModel):
         type: typing.Literal["exceptionV2"] = "exceptionV2"
         value: resources_submission_types_exception_v_2_ExceptionV2
+
+
+update_forward_refs(ActualResult)

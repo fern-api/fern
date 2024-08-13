@@ -297,7 +297,7 @@ def _get_model_fields(
     if IS_PYDANTIC_V2:
         return model.model_fields  # type: ignore # Pydantic v2
     else:
-        return model.__fields__
+        return model.__fields__  # type: ignore # Pydantic v1
 
 
 def _get_field_default(field: PydanticField) -> typing.Any:

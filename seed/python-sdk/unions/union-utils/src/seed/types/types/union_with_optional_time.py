@@ -8,6 +8,7 @@ from ...core.pydantic_utilities import UniversalRootModel
 import typing_extensions
 import pydantic
 from ...core.pydantic_utilities import UniversalBaseModel
+from ...core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -15,15 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def date(self, value: typing.Optional[dt.date]) -> UnionWithOptionalTime:
         if IS_PYDANTIC_V2:
-            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Date(type="date", value=value))
+            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Date(type="date", value=value))  # type: ignore
         else:
-            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Date(type="date", value=value))
+            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Date(type="date", value=value))  # type: ignore
 
     def dateimte(self, value: typing.Optional[dt.datetime]) -> UnionWithOptionalTime:
         if IS_PYDANTIC_V2:
-            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))
+            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))  # type: ignore
         else:
-            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))
+            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))  # type: ignore
 
 
 class UnionWithOptionalTime(UniversalRootModel):
@@ -82,3 +83,6 @@ class _UnionWithOptionalTime:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(UnionWithOptionalTime)

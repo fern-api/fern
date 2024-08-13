@@ -17,6 +17,7 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -28,13 +29,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.BuildingExecutor(
                     **value.dict(exclude_unset=True), type="buildingExecutor"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.BuildingExecutor(
                     **value.dict(exclude_unset=True), type="buildingExecutor"
                 )
-            )
+            )  # type: ignore
 
     def running(self, value: RunningResponse) -> CodeExecutionUpdate:
         if IS_PYDANTIC_V2:
@@ -42,13 +43,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.Running(
                     **value.dict(exclude_unset=True), type="running"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.Running(
                     **value.dict(exclude_unset=True), type="running"
                 )
-            )
+            )  # type: ignore
 
     def errored(self, value: ErroredResponse) -> CodeExecutionUpdate:
         if IS_PYDANTIC_V2:
@@ -56,13 +57,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.Errored(
                     **value.dict(exclude_unset=True), type="errored"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.Errored(
                     **value.dict(exclude_unset=True), type="errored"
                 )
-            )
+            )  # type: ignore
 
     def stopped(self, value: StoppedResponse) -> CodeExecutionUpdate:
         if IS_PYDANTIC_V2:
@@ -70,13 +71,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.Stopped(
                     **value.dict(exclude_unset=True), type="stopped"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.Stopped(
                     **value.dict(exclude_unset=True), type="stopped"
                 )
-            )
+            )  # type: ignore
 
     def graded(self, value: GradedResponse) -> CodeExecutionUpdate:
         if IS_PYDANTIC_V2:
@@ -84,13 +85,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.Graded(
                     **value.dict(exclude_unset=True), type="graded"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.Graded(
                     **value.dict(exclude_unset=True), type="graded"
                 )
-            )
+            )  # type: ignore
 
     def graded_v_2(self, value: GradedResponseV2) -> CodeExecutionUpdate:
         if IS_PYDANTIC_V2:
@@ -98,13 +99,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.GradedV2(
                     **value.dict(exclude_unset=True), type="gradedV2"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.GradedV2(
                     **value.dict(exclude_unset=True), type="gradedV2"
                 )
-            )
+            )  # type: ignore
 
     def workspace_ran(self, value: WorkspaceRanResponse) -> CodeExecutionUpdate:
         if IS_PYDANTIC_V2:
@@ -112,13 +113,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.WorkspaceRan(
                     **value.dict(exclude_unset=True), type="workspaceRan"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.WorkspaceRan(
                     **value.dict(exclude_unset=True), type="workspaceRan"
                 )
-            )
+            )  # type: ignore
 
     def recording(self, value: RecordingResponseNotification) -> CodeExecutionUpdate:
         if IS_PYDANTIC_V2:
@@ -126,13 +127,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.Recording(
                     **value.dict(exclude_unset=True), type="recording"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.Recording(
                     **value.dict(exclude_unset=True), type="recording"
                 )
-            )
+            )  # type: ignore
 
     def recorded(self, value: RecordedResponseNotification) -> CodeExecutionUpdate:
         if IS_PYDANTIC_V2:
@@ -140,13 +141,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.Recorded(
                     **value.dict(exclude_unset=True), type="recorded"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.Recorded(
                     **value.dict(exclude_unset=True), type="recorded"
                 )
-            )
+            )  # type: ignore
 
     def invalid_request(self, value: InvalidRequestResponse) -> CodeExecutionUpdate:
         if IS_PYDANTIC_V2:
@@ -154,13 +155,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.InvalidRequest(
                     **value.dict(exclude_unset=True), type="invalidRequest"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.InvalidRequest(
                     **value.dict(exclude_unset=True), type="invalidRequest"
                 )
-            )
+            )  # type: ignore
 
     def finished(self, value: FinishedResponse) -> CodeExecutionUpdate:
         if IS_PYDANTIC_V2:
@@ -168,13 +169,13 @@ class _Factory:
                 root=_CodeExecutionUpdate.Finished(
                     **value.dict(exclude_unset=True), type="finished"
                 )
-            )
+            )  # type: ignore
         else:
             return CodeExecutionUpdate(
                 __root__=_CodeExecutionUpdate.Finished(
                     **value.dict(exclude_unset=True), type="finished"
                 )
-            )
+            )  # type: ignore
 
 
 class CodeExecutionUpdate(UniversalRootModel):
@@ -365,3 +366,6 @@ class _CodeExecutionUpdate:
 
     class Finished(FinishedResponse):
         type: typing.Literal["finished"] = "finished"
+
+
+update_forward_refs(CodeExecutionUpdate)

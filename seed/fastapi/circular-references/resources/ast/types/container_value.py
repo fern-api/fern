@@ -15,21 +15,21 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def list_(self, value: typing.List[FieldValue]) -> ContainerValue:
         if IS_PYDANTIC_V2:
-            return ContainerValue(root=_ContainerValue.List(type="list", value=value))
+            return ContainerValue(root=_ContainerValue.List(type="list", value=value))  # type: ignore
         else:
             return ContainerValue(
                 __root__=_ContainerValue.List(type="list", value=value)
-            )
+            )  # type: ignore
 
     def optional(self, value: typing.Optional[FieldValue]) -> ContainerValue:
         if IS_PYDANTIC_V2:
             return ContainerValue(
                 root=_ContainerValue.Optional(type="optional", value=value)
-            )
+            )  # type: ignore
         else:
             return ContainerValue(
                 __root__=_ContainerValue.Optional(type="optional", value=value)
-            )
+            )  # type: ignore
 
 
 class ContainerValue(UniversalRootModel):

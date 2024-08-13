@@ -9,6 +9,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -18,21 +19,21 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return CreateProblemResponse(
                 root=_CreateProblemResponse.Success(type="success", value=value)
-            )
+            )  # type: ignore
         else:
             return CreateProblemResponse(
                 __root__=_CreateProblemResponse.Success(type="success", value=value)
-            )
+            )  # type: ignore
 
     def error(self, value: CreateProblemError) -> CreateProblemResponse:
         if IS_PYDANTIC_V2:
             return CreateProblemResponse(
                 root=_CreateProblemResponse.Error(type="error", value=value)
-            )
+            )  # type: ignore
         else:
             return CreateProblemResponse(
                 __root__=_CreateProblemResponse.Error(type="error", value=value)
-            )
+            )  # type: ignore
 
 
 class CreateProblemResponse(UniversalRootModel):
@@ -79,3 +80,6 @@ class _CreateProblemResponse:
     class Error(UniversalBaseModel):
         type: typing.Literal["error"] = "error"
         value: CreateProblemError
+
+
+update_forward_refs(CreateProblemResponse)

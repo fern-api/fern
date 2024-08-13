@@ -8,6 +8,7 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -15,15 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def dog(self, value: types_union_types_dog_Dog) -> Animal:
         if IS_PYDANTIC_V2:
-            return Animal(root=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))
+            return Animal(root=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))  # type: ignore
         else:
-            return Animal(__root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))
+            return Animal(__root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog"))  # type: ignore
 
     def cat(self, value: types_union_types_cat_Cat) -> Animal:
         if IS_PYDANTIC_V2:
-            return Animal(root=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
+            return Animal(root=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))  # type: ignore
         else:
-            return Animal(__root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))
+            return Animal(__root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat"))  # type: ignore
 
 
 class Animal(UniversalRootModel):
@@ -78,3 +79,6 @@ class _Animal:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(Animal)

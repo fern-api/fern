@@ -6,6 +6,7 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2
 from ...core.pydantic_utilities import UniversalRootModel
 import typing
 import pydantic
+from ...core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -15,11 +16,11 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return UnionWithSingleElement(
                 root=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
-            )
+            )  # type: ignore
         else:
             return UnionWithSingleElement(
                 __root__=_UnionWithSingleElement.Foo(**value.dict(exclude_unset=True), type="foo")
-            )
+            )  # type: ignore
 
 
 class UnionWithSingleElement(UniversalRootModel):
@@ -53,3 +54,6 @@ class _UnionWithSingleElement:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(UnionWithSingleElement)

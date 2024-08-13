@@ -9,6 +9,7 @@ import typing
 import typing_extensions
 import pydantic
 from ........core.pydantic_utilities import UniversalBaseModel
+from ........core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -20,13 +21,13 @@ class _Factory:
                 root=_TestCaseImplementationReference.TemplateId(
                     type="templateId", value=value
                 )
-            )
+            )  # type: ignore
         else:
             return TestCaseImplementationReference(
                 __root__=_TestCaseImplementationReference.TemplateId(
                     type="templateId", value=value
                 )
-            )
+            )  # type: ignore
 
     def implementation(
         self, value: TestCaseImplementation
@@ -36,13 +37,13 @@ class _Factory:
                 root=_TestCaseImplementationReference.Implementation(
                     **value.dict(exclude_unset=True), type="implementation"
                 )
-            )
+            )  # type: ignore
         else:
             return TestCaseImplementationReference(
                 __root__=_TestCaseImplementationReference.Implementation(
                     **value.dict(exclude_unset=True), type="implementation"
                 )
-            )
+            )  # type: ignore
 
 
 class TestCaseImplementationReference(UniversalRootModel):
@@ -104,3 +105,6 @@ class _TestCaseImplementationReference:
 
     class Implementation(TestCaseImplementation):
         type: typing.Literal["implementation"] = "implementation"
+
+
+update_forward_refs(TestCaseImplementationReference)

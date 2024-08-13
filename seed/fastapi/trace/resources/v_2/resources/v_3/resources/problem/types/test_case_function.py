@@ -10,6 +10,7 @@ from ........core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ........core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -23,13 +24,13 @@ class _Factory:
                 root=_TestCaseFunction.WithActualResult(
                     **value.dict(exclude_unset=True), type="withActualResult"
                 )
-            )
+            )  # type: ignore
         else:
             return TestCaseFunction(
                 __root__=_TestCaseFunction.WithActualResult(
                     **value.dict(exclude_unset=True), type="withActualResult"
                 )
-            )
+            )  # type: ignore
 
     def custom(self, value: VoidFunctionDefinition) -> TestCaseFunction:
         if IS_PYDANTIC_V2:
@@ -37,13 +38,13 @@ class _Factory:
                 root=_TestCaseFunction.Custom(
                     **value.dict(exclude_unset=True), type="custom"
                 )
-            )
+            )  # type: ignore
         else:
             return TestCaseFunction(
                 __root__=_TestCaseFunction.Custom(
                     **value.dict(exclude_unset=True), type="custom"
                 )
-            )
+            )  # type: ignore
 
 
 class TestCaseFunction(UniversalRootModel):
@@ -98,3 +99,6 @@ class _TestCaseFunction:
 
     class Custom(VoidFunctionDefinition):
         type: typing.Literal["custom"] = "custom"
+
+
+update_forward_refs(TestCaseFunction)
