@@ -55,6 +55,9 @@ class FernAwarePydanticModel:
         # Since we create new classes for union members, we need to know the original type name
         # to appropriately detect circular imports.
         original_type_id: Optional[ir_types.TypeId] = None,
+        # With the addition of __root__ and root definitions conditionally to the Pydantic model
+        # when leveraging union utils, we need to update refs to pick up the types.
+        force_update_forward_refs: bool = False,
     ):
         self._class_name = class_name
         self._type_name = type_name
@@ -105,6 +108,8 @@ class FernAwarePydanticModel:
             include_model_config=include_model_config,
             update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
         )
+
+        self._force_update_forward_refs = force_update_forward_refs
 
     def to_reference(self) -> LocalClassReference:
         return self._pydantic_model.to_reference()
@@ -253,7 +258,7 @@ class FernAwarePydanticModel:
         if self._custom_config.include_validators:
             self._pydantic_model.add_partial_class()
             self._get_validators_generator().add_validators()
-        if self._model_contains_forward_refs:
+        if self._model_contains_forward_refs or self._force_update_forward_refs:
             self._pydantic_model.update_forward_refs()
 
         self._pydantic_model.finish()

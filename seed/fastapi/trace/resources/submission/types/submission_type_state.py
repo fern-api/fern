@@ -8,6 +8,7 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -19,13 +20,13 @@ class _Factory:
                 root=_SubmissionTypeState.Test(
                     **value.dict(exclude_unset=True), type="test"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionTypeState(
                 __root__=_SubmissionTypeState.Test(
                     **value.dict(exclude_unset=True), type="test"
                 )
-            )
+            )  # type: ignore
 
     def workspace(self, value: WorkspaceSubmissionState) -> SubmissionTypeState:
         if IS_PYDANTIC_V2:
@@ -33,13 +34,13 @@ class _Factory:
                 root=_SubmissionTypeState.Workspace(
                     **value.dict(exclude_unset=True), type="workspace"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionTypeState(
                 __root__=_SubmissionTypeState.Workspace(
                     **value.dict(exclude_unset=True), type="workspace"
                 )
-            )
+            )  # type: ignore
 
 
 class SubmissionTypeState(UniversalRootModel):
@@ -92,3 +93,6 @@ class _SubmissionTypeState:
 
     class Workspace(WorkspaceSubmissionState):
         type: typing.Literal["workspace"] = "workspace"
+
+
+update_forward_refs(SubmissionTypeState)

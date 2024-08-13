@@ -13,6 +13,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -27,13 +28,13 @@ class _Factory:
                 root=_SubmissionRequest.InitializeProblemRequest(
                     **value.dict(exclude_unset=True), type="initializeProblemRequest"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionRequest(
                 __root__=_SubmissionRequest.InitializeProblemRequest(
                     **value.dict(exclude_unset=True), type="initializeProblemRequest"
                 )
-            )
+            )  # type: ignore
 
     def initialize_workspace_request(self) -> SubmissionRequest:
         if IS_PYDANTIC_V2:
@@ -41,13 +42,13 @@ class _Factory:
                 root=_SubmissionRequest.InitializeWorkspaceRequest(
                     type="initializeWorkspaceRequest"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionRequest(
                 __root__=_SubmissionRequest.InitializeWorkspaceRequest(
                     type="initializeWorkspaceRequest"
                 )
-            )
+            )  # type: ignore
 
     def submit_v_2(self, value: SubmitRequestV2) -> SubmissionRequest:
         if IS_PYDANTIC_V2:
@@ -55,13 +56,13 @@ class _Factory:
                 root=_SubmissionRequest.SubmitV2(
                     **value.dict(exclude_unset=True), type="submitV2"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionRequest(
                 __root__=_SubmissionRequest.SubmitV2(
                     **value.dict(exclude_unset=True), type="submitV2"
                 )
-            )
+            )  # type: ignore
 
     def workspace_submit(self, value: WorkspaceSubmitRequest) -> SubmissionRequest:
         if IS_PYDANTIC_V2:
@@ -69,13 +70,13 @@ class _Factory:
                 root=_SubmissionRequest.WorkspaceSubmit(
                     **value.dict(exclude_unset=True), type="workspaceSubmit"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionRequest(
                 __root__=_SubmissionRequest.WorkspaceSubmit(
                     **value.dict(exclude_unset=True), type="workspaceSubmit"
                 )
-            )
+            )  # type: ignore
 
     def stop(self, value: StopRequest) -> SubmissionRequest:
         if IS_PYDANTIC_V2:
@@ -83,13 +84,13 @@ class _Factory:
                 root=_SubmissionRequest.Stop(
                     **value.dict(exclude_unset=True), type="stop"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionRequest(
                 __root__=_SubmissionRequest.Stop(
                     **value.dict(exclude_unset=True), type="stop"
                 )
-            )
+            )  # type: ignore
 
 
 class SubmissionRequest(UniversalRootModel):
@@ -199,3 +200,6 @@ class _SubmissionRequest:
 
     class Stop(StopRequest):
         type: typing.Literal["stop"] = "stop"
+
+
+update_forward_refs(SubmissionRequest)

@@ -4,7 +4,8 @@
 import datetime as dt
 import typing
 from collections import defaultdict
-from functools import wraps
+
+import typing_extensions
 
 import pydantic
 
@@ -128,15 +129,14 @@ class UniversalBaseModel(pydantic.BaseModel):
             )
 
 
-UniversalRootModel: typing.Type[pydantic.BaseModel]
 if IS_PYDANTIC_V2:
 
     class V2RootModel(UniversalBaseModel, pydantic.RootModel):  # type: ignore # Pydantic v2
         pass
 
-    UniversalRootModel = V2RootModel
+    UniversalRootModel: typing_extensions.TypeAlias = V2RootModel  # type: ignore
 else:
-    UniversalRootModel = UniversalBaseModel
+    UniversalRootModel: typing_extensions.TypeAlias = UniversalBaseModel  # type: ignore
 
 
 def encode_by_type(o: typing.Any) -> typing.Any:

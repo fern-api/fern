@@ -7,6 +7,7 @@ import typing
 import typing_extensions
 import pydantic
 from ......core.pydantic_utilities import UniversalBaseModel
+from ......core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -14,15 +15,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def string(self, value: str) -> Data:
         if IS_PYDANTIC_V2:
-            return Data(root=_Data.String(type="string", value=value))
+            return Data(root=_Data.String(type="string", value=value))  # type: ignore
         else:
-            return Data(__root__=_Data.String(type="string", value=value))
+            return Data(__root__=_Data.String(type="string", value=value))  # type: ignore
 
     def base_64(self, value: str) -> Data:
         if IS_PYDANTIC_V2:
-            return Data(root=_Data.Base64(type="base64", value=value))
+            return Data(root=_Data.Base64(type="base64", value=value))  # type: ignore
         else:
-            return Data(__root__=_Data.Base64(type="base64", value=value))
+            return Data(__root__=_Data.Base64(type="base64", value=value))  # type: ignore
 
 
 class Data(UniversalRootModel):
@@ -73,3 +74,6 @@ class _Data:
     class Base64(UniversalBaseModel):
         type: typing.Literal["base64"] = "base64"
         value: str
+
+
+update_forward_refs(Data)

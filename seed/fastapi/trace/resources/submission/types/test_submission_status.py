@@ -10,6 +10,7 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -19,31 +20,31 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return TestSubmissionStatus(
                 root=_TestSubmissionStatus.Stopped(type="stopped")
-            )
+            )  # type: ignore
         else:
             return TestSubmissionStatus(
                 __root__=_TestSubmissionStatus.Stopped(type="stopped")
-            )
+            )  # type: ignore
 
     def errored(self, value: ErrorInfo) -> TestSubmissionStatus:
         if IS_PYDANTIC_V2:
             return TestSubmissionStatus(
                 root=_TestSubmissionStatus.Errored(type="errored", value=value)
-            )
+            )  # type: ignore
         else:
             return TestSubmissionStatus(
                 __root__=_TestSubmissionStatus.Errored(type="errored", value=value)
-            )
+            )  # type: ignore
 
     def running(self, value: RunningSubmissionState) -> TestSubmissionStatus:
         if IS_PYDANTIC_V2:
             return TestSubmissionStatus(
                 root=_TestSubmissionStatus.Running(type="running", value=value)
-            )
+            )  # type: ignore
         else:
             return TestSubmissionStatus(
                 __root__=_TestSubmissionStatus.Running(type="running", value=value)
-            )
+            )  # type: ignore
 
     def test_case_id_to_state(
         self, value: typing.Dict[str, SubmissionStatusForTestCase]
@@ -53,13 +54,13 @@ class _Factory:
                 root=_TestSubmissionStatus.TestCaseIdToState(
                     type="testCaseIdToState", value=value
                 )
-            )
+            )  # type: ignore
         else:
             return TestSubmissionStatus(
                 __root__=_TestSubmissionStatus.TestCaseIdToState(
                     type="testCaseIdToState", value=value
                 )
-            )
+            )  # type: ignore
 
 
 class TestSubmissionStatus(UniversalRootModel):
@@ -141,3 +142,6 @@ class _TestSubmissionStatus:
     class TestCaseIdToState(UniversalBaseModel):
         type: typing.Literal["testCaseIdToState"] = "testCaseIdToState"
         value: typing.Dict[str, SubmissionStatusForTestCase]
+
+
+update_forward_refs(TestSubmissionStatus)

@@ -11,6 +11,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -20,13 +21,13 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return WorkspaceSubmissionUpdateInfo(
                 root=_WorkspaceSubmissionUpdateInfo.Running(type="running", value=value)
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
                 __root__=_WorkspaceSubmissionUpdateInfo.Running(
                     type="running", value=value
                 )
-            )
+            )  # type: ignore
 
     def ran(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
@@ -34,33 +35,33 @@ class _Factory:
                 root=_WorkspaceSubmissionUpdateInfo.Ran(
                     **value.dict(exclude_unset=True), type="ran"
                 )
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
                 __root__=_WorkspaceSubmissionUpdateInfo.Ran(
                     **value.dict(exclude_unset=True), type="ran"
                 )
-            )
+            )  # type: ignore
 
     def stopped(self) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return WorkspaceSubmissionUpdateInfo(
                 root=_WorkspaceSubmissionUpdateInfo.Stopped(type="stopped")
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
                 __root__=_WorkspaceSubmissionUpdateInfo.Stopped(type="stopped")
-            )
+            )  # type: ignore
 
     def traced(self) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return WorkspaceSubmissionUpdateInfo(
                 root=_WorkspaceSubmissionUpdateInfo.Traced(type="traced")
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
                 __root__=_WorkspaceSubmissionUpdateInfo.Traced(type="traced")
-            )
+            )  # type: ignore
 
     def traced_v_2(self, value: WorkspaceTracedUpdate) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
@@ -68,35 +69,35 @@ class _Factory:
                 root=_WorkspaceSubmissionUpdateInfo.TracedV2(
                     **value.dict(exclude_unset=True), type="tracedV2"
                 )
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
                 __root__=_WorkspaceSubmissionUpdateInfo.TracedV2(
                     **value.dict(exclude_unset=True), type="tracedV2"
                 )
-            )
+            )  # type: ignore
 
     def errored(self, value: ErrorInfo) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return WorkspaceSubmissionUpdateInfo(
                 root=_WorkspaceSubmissionUpdateInfo.Errored(type="errored", value=value)
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
                 __root__=_WorkspaceSubmissionUpdateInfo.Errored(
                     type="errored", value=value
                 )
-            )
+            )  # type: ignore
 
     def finished(self) -> WorkspaceSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return WorkspaceSubmissionUpdateInfo(
                 root=_WorkspaceSubmissionUpdateInfo.Finished(type="finished")
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionUpdateInfo(
                 __root__=_WorkspaceSubmissionUpdateInfo.Finished(type="finished")
-            )
+            )  # type: ignore
 
 
 class WorkspaceSubmissionUpdateInfo(UniversalRootModel):
@@ -213,3 +214,6 @@ class _WorkspaceSubmissionUpdateInfo:
 
     class Finished(UniversalBaseModel):
         type: typing.Literal["finished"] = "finished"
+
+
+update_forward_refs(WorkspaceSubmissionUpdateInfo)
