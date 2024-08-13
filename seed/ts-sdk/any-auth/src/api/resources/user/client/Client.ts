@@ -36,7 +36,7 @@ export class User {
      */
     public async get(requestOptions?: User.RequestOptions): Promise<SeedAnyAuth.User[]> {
         const _response = await core.fetcher({
-            url: urlJoin(await core.Supplier.get(this._options.environment), "/users"),
+            url: urlJoin(await core.Supplier.get(this._options.environment), "users"),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),

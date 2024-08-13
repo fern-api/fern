@@ -14,5 +14,5 @@ export function register(
     }
 ): void {
     (expressApp as any).use("/", services.auth.toRouter());
-    (expressApp as any).use("/", services.user.toRouter());
+    (expressApp as any).use("", services.user.toRouter());
 }

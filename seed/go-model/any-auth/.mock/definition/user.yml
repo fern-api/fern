@@ -5,8 +5,8 @@ types:
       name: string
 
 service:
-  auth: false
-  base-path: /
+  auth: true
+  base-path: ""
   endpoints:
     get:
       path: /users

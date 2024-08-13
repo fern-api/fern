@@ -22,7 +22,7 @@ public partial class UserClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/users",
+                Path = "users",
                 Options = options
             }
         );

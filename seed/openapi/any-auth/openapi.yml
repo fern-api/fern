@@ -58,6 +58,10 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+      security:
+        - BearerAuth: []
+        - ApiKeyAuth: []
+        - BearerAuth: []
 components:
   schemas:
     TokenResponse:
