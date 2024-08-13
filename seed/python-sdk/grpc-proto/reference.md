@@ -1,6 +1,6 @@
 # Reference
-## User
-<details><summary><code>client.user.<a href="src/seed/user/client.py">create</a>(...)</code></summary>
+## UserService
+<details><summary><code>client.userservice.<a href="src/seed/userservice/client.py">create</a>(...)</code></summary>
 <dl>
 <dd>
 
@@ -18,7 +18,7 @@ from seed import SeedApi
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
-client.user.create()
+client.userservice.create()
 
 ```
 </dd>

@@ -1,2 +1,2 @@
-export * as user from "./user";
-export * from "./user/service/requests";
+export * as userservice from "./userservice";
+export * from "./userservice/service/requests";

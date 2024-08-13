@@ -3,9 +3,9 @@
 import typing
 import httpx
 from .core.client_wrapper import SyncClientWrapper
-from .user.client import UserClient
+from .userservice.client import UserserviceClient
 from .core.client_wrapper import AsyncClientWrapper
-from .user.client import AsyncUserClient
+from .userservice.client import AsyncUserserviceClient
 
 
 class SeedApi:
@@ -53,7 +53,7 @@ class SeedApi:
             else httpx.Client(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.user = UserClient(client_wrapper=self._client_wrapper)
+        self.userservice = UserserviceClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedApi:
@@ -101,4 +101,4 @@ class AsyncSeedApi:
             else httpx.AsyncClient(timeout=_defaulted_timeout),
             timeout=_defaulted_timeout,
         )
-        self.user = AsyncUserClient(client_wrapper=self._client_wrapper)
+        self.userservice = AsyncUserserviceClient(client_wrapper=self._client_wrapper)
