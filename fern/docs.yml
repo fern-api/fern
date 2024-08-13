@@ -33,6 +33,10 @@ tabs:
 
 css: ./assets/styles.css
 
+redirects: 
+  - source: /api-definition/fern/api-yml-reference
+    destination: /api-definition/fern/api-yml/overview
+
 navigation:
   - tab: home
     layout:
@@ -86,8 +90,19 @@ navigation:
             path: ./pages/api-definition/fern-definition/audiences.mdx
           - page: Availability
             path: ./pages/api-definition/fern-definition/availability.mdx
-          - page: api.yml reference
-            path: ./pages/api-definition/fern-definition/api-yml.mdx
+          - section: api.yml reference
+            slug: api-yml
+            contents: 
+              - page: Overview
+                path: ./pages/api-definition/fern-definition/api-yml/overview.mdx
+              - page: Authentication
+                path: ./pages/api-definition/fern-definition/api-yml/auth.mdx
+              - page: Environments
+                path: ./pages/api-definition/fern-definition/api-yml/environments.mdx
+              - page: Global headers
+                path: ./pages/api-definition/fern-definition/api-yml/global-configuration.mdx
+              - page: Errors
+                path: ./pages/api-definition/fern-definition/api-yml/errors.mdx
           - page: Packages
             path: ./pages/api-definition/fern-definition/packages.mdx
           - page: Comparison with OpenAPI

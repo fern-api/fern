@@ -1,5 +1,6 @@
 import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { AbstractAPIWorkspace } from "@fern-api/workspace-loader";
 import { NodePath } from "@fern-api/yaml-schema";
 
@@ -16,7 +17,11 @@ export interface DocsConfigFileAstNodeTypes {
     };
     markdownPage: { title: string; content: string; absoluteFilepath: AbsoluteFilePath };
     versionFile: { path: string; content: unknown };
-    apiSection: { config: docsYml.RawSchemas.ApiReferenceConfiguration; workspace: AbstractAPIWorkspace<unknown> };
+    apiSection: {
+        config: docsYml.RawSchemas.ApiReferenceConfiguration;
+        workspace: AbstractAPIWorkspace<unknown>;
+        context: TaskContext;
+    };
 }
 
 export type DocsConfigFileAstNodeVisitor<K extends keyof DocsConfigFileAstNodeTypes, R = void | Promise<void>> = (

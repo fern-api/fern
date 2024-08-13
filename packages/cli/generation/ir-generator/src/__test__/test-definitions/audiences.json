@@ -2636,6 +2636,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -3020,7 +3023,7 @@
                                         }
                                     }
                                 },
-                                "id": "b9e628d816c7ef24dbdb994cda6432e6fb1e45e9",
+                                "id": "7b87c786ba2352af3e217c9322a8a6992133d30f",
                                 "docs": null
                             }
                         }

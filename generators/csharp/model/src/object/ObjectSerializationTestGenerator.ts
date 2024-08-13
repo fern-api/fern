@@ -98,6 +98,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
             clazz: testClass.getClass(),
             directory: SERIALIZATION_TEST_FOLDER,
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
         });

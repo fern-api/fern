@@ -532,7 +532,7 @@ export class Users {
         let _offset = request?.page != null ? request?.page : 1;
         return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
             response: await list(request),
-            hasNextPage: (response) => (response?.data ?? []).length > 0,
+            hasNextPage: (response) => response?.hasNextPage ?? (response?.data ?? []).length > 0,
             getItems: (response) => response?.data ?? [],
             loadPage: (response) => {
                 _offset += response?.data != null ? response.data.length : 1;

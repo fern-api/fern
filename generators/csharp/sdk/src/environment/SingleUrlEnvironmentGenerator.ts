@@ -49,6 +49,7 @@ export class SingleUrlEnvironmentGenerator extends FileGenerator<
             clazz: class_,
             directory: RelativeFilePath.of(this.context.getPublicCoreDirectory()),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
         });

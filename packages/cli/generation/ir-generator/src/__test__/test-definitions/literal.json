@@ -1201,7 +1201,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "6d0a9c5737aa902875d5d924a905ece8994557d4e0d3566ae27b49e98ddec95b",
                                 "name": null,
                                 "url": "/headers",
                                 "rootPathParameters": [],
@@ -2569,7 +2569,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "9f3971bb6ec43b6e5c733eb3690907ef68af0d8d6d3958e92233e5c602cfc7a4",
                                 "name": null,
                                 "url": "/inlined",
                                 "rootPathParameters": [],
@@ -4399,7 +4399,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "dd252617730e8943b3c64efe59a54461bf566c68339330ad2b2c820e103934cb",
                                 "name": null,
                                 "url": "/path/123",
                                 "rootPathParameters": [],
@@ -5304,7 +5304,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "34175d6b3be4f97692eff1ea38b28c122c71047a88c84f3635b650b9b1f70c80",
                                 "name": null,
                                 "url": "/query",
                                 "rootPathParameters": [],
@@ -5350,6 +5350,9 @@
                                                 }
                                             },
                                             "jsonExample": "You are a helpful assistant"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -5387,6 +5390,9 @@
                                                 }
                                             },
                                             "jsonExample": false
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -5423,6 +5429,9 @@
                                                 }
                                             },
                                             "jsonExample": "What is the weather today"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -5715,6 +5724,9 @@
                                                 }
                                             },
                                             "jsonExample": "You are a helpful assistant"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -5751,6 +5763,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -5788,6 +5803,9 @@
                                                 }
                                             },
                                             "jsonExample": false
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -6029,7 +6047,7 @@
                                         }
                                     }
                                 },
-                                "id": "6e82e9406c170062638ae18e9ecc61af60047249",
+                                "id": "cfdabcd8ad8a805d71102459c8670d238b09324a",
                                 "docs": null
                             }
                         }
@@ -6355,7 +6373,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "0b21117fd3b45836fd5a4194efa1114bce6bb4ec40c8f92856c06f20a67303c2",
                                 "name": null,
                                 "url": "/reference",
                                 "rootPathParameters": [],

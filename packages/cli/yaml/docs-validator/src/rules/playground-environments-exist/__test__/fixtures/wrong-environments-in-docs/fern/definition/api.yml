@@ -1,0 +1,6 @@
+name: api
+environments: 
+  Production: prod.com
+  Dev: dev.com
+error-discrimination:
+  strategy: status-code
