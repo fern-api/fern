@@ -239,7 +239,7 @@ function isValidDate(value: string): boolean {
 // Customize the lodash isEqualWith function to handle date-like strings
 // returning undefined in this comparitor indicates to lodash to perform it's
 // internal comparison logic.
-function dateishCustomizer(value: unknown, other: unknown): boolean | undefined {
+export function dateishCustomizer(value: unknown, other: unknown): boolean | undefined {
     if (isPlainObject(value) || isPlainObject(other)) {
         return undefined;
     }
@@ -253,8 +253,8 @@ function dateishCustomizer(value: unknown, other: unknown): boolean | undefined 
         if (isValidDate(value) && isValidDate(other)) {
             const valueDate = new Date(value);
             const otherDate = new Date(other);
-            // Is variance less than a day
-            return Math.abs(valueDate.getTime() - otherDate.getTime()) <= 24 * 60 * 60 * 1000;
+            // Is variance less than 12 hours
+            return Math.abs(valueDate.getTime() - otherDate.getTime()) <= 12 * 60 * 60 * 1000;
         }
     }
     return undefined;
