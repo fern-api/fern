@@ -1,6 +1,6 @@
 ---
 title: Configure your site navigation
-description: Set up the navigation for your documentation site built with Fern Docs using the docs.yml file, including tabs, sections, pages, versions, and more.
+description: Set up the navigation for your documentation site built with Fern Docs using the docs.yml file, including tabs, sections, pages, versions, redirects, and more.
 ---
 
 ## Use docs.yml
@@ -233,5 +233,19 @@ tabs:
            contents: 
               - page: Contact Us
                  path: contact-us.mdx
+```
+</CodeBlock>
+
+## Redirects
+
+The `redirects` object allows you to redirect traffic from one path to another.
+
+<CodeBlock title="docs.yml">
+```yml
+redirects:
+  - source: "/old-path"
+    destination: "/new-path"
+  - source: "/incorrect/path"
+    destination: "/correct/path"
 ```
 </CodeBlock>
