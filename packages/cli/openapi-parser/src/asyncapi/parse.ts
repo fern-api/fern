@@ -121,7 +121,14 @@ export function parseAsyncAPI({
                 const resolvedHeader = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
                 headers.push({
                     name,
-                    schema: convertSchema(resolvedHeader, !required.includes(name), context, breadcrumbs, source, namespace),
+                    schema: convertSchema(
+                        resolvedHeader,
+                        !required.includes(name),
+                        context,
+                        breadcrumbs,
+                        source,
+                        namespace
+                    ),
                     description: resolvedHeader.description,
                     parameterNameOverride: undefined,
                     env: undefined,
@@ -145,7 +152,8 @@ export function parseAsyncAPI({
                         !required.includes(name),
                         context,
                         breadcrumbs,
-                        source, namespace
+                        source,
+                        namespace
                     ),
                     description: resolvedQueryParameter.description,
                     parameterNameOverride: undefined,
@@ -196,7 +204,7 @@ export function parseAsyncAPI({
                     publish: publishSchema,
                     subscribe: subscribeSchema,
                     source,
-                    namespace,
+                    namespace
                 });
             } else {
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({

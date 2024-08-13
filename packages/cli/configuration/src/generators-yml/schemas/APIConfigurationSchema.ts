@@ -110,7 +110,7 @@ export type APIConfigurationSchemaInternal = z.infer<typeof APIConfigurationSche
 /**
  * Allow for namespacing of the API and it's contents, the name on the record will be applied throughout the API.
  * Note we nest the namespaced config under a `namespaced` key to disambiguate from the top-level keys from the APIConfigurationSchemaInternal (proto, settings, etc.)
- * 
+ *
  * @example
  * api:
  *  namespaced:
@@ -123,6 +123,9 @@ export type APIConfigurationSchemaInternal = z.infer<typeof APIConfigurationSche
  *          target: proto/user/v1/user.proto
  *    sdks: ./sdks/openapi.yml
  */
-export const APIConfigurationSchema = z.union([APIConfigurationSchemaInternal, z.strictObject({namespaced: z.record(APIConfigurationSchemaInternal)})]);
+export const APIConfigurationSchema = z.union([
+    APIConfigurationSchemaInternal,
+    z.strictObject({ namespaced: z.record(APIConfigurationSchemaInternal) })
+]);
 
 export type APIConfigurationSchema = z.infer<typeof APIConfigurationSchema>;

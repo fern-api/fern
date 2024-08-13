@@ -175,7 +175,15 @@ export function convertRequest({
     if (jsonMediaObject == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(jsonMediaObject.schema, false, context, requestBreadcrumbs, source, namespace, true);
+    const requestSchema = convertSchema(
+        jsonMediaObject.schema,
+        false,
+        context,
+        requestBreadcrumbs,
+        source,
+        namespace,
+        true
+    );
     return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,

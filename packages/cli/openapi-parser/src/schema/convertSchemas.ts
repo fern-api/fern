@@ -111,7 +111,7 @@ export function convertReferenceObject(
               encoding,
               source,
               namespace,
-              new Set(),
+              new Set()
           )
         : SchemaWithExample.reference(convertToReferencedSchema(schema, breadcrumbs, source));
     if (wrapAsNullable) {

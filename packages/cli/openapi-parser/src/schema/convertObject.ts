@@ -184,7 +184,7 @@ export function convertObject({
                       description: undefined,
                       availability,
                       value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace),
-                      groupName,
+                      groupName
                   });
 
             const conflicts: Record<SchemaId, ObjectPropertyConflictInfo> = {};

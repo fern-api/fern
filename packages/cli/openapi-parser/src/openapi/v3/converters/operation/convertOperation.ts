@@ -45,7 +45,7 @@ export function convertOperation({
     context,
     pathItemContext,
     operation,
-    convertToWebhook,
+    convertToWebhook
 }: {
     context: AbstractOpenAPIV3ParserContext;
     pathItemContext: PathItemContext;
@@ -126,7 +126,10 @@ export function convertOperation({
     return { type: "http", value: convertedHttpOperation };
 }
 
-function getSdkGroupAndMethod(operation: OpenAPIV3.OperationObject, namespace: string | undefined): EndpointSdkName | undefined {
+function getSdkGroupAndMethod(
+    operation: OpenAPIV3.OperationObject,
+    namespace: string | undefined
+): EndpointSdkName | undefined {
     const sdkMethodName = getExtension<string>(operation, FernOpenAPIExtension.SDK_METHOD_NAME);
     const sdkGroupName = getExtension(operation, FernOpenAPIExtension.SDK_GROUP_NAME) ?? [];
     if (sdkMethodName != null) {

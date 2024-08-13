@@ -20,7 +20,7 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
     constructor({
         document,
         taskContext,
-        options, 
+        options,
         namespace
     }: {
         document: AsyncAPIV2.Document;

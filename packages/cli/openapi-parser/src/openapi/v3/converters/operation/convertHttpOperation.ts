@@ -20,7 +20,7 @@ export function convertHttpOperation({
     responseStatusCode,
     suffix,
     streamFormat,
-    source,
+    source
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;

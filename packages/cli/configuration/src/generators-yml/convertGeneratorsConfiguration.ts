@@ -73,7 +73,10 @@ export async function convertGeneratorsConfiguration({
     };
 }
 
-async function parseAPIConfigurationToApiLocations(apiConfiguration: APIConfigurationSchemaInternal, rawConfiguration: GeneratorsConfigurationSchema): Promise<APIDefinitionLocation[]> {
+async function parseAPIConfigurationToApiLocations(
+    apiConfiguration: APIConfigurationSchemaInternal,
+    rawConfiguration: GeneratorsConfigurationSchema
+): Promise<APIDefinitionLocation[]> {
     const apiDefinitions: APIDefinitionLocation[] = [];
 
     if (apiConfiguration != null) {
@@ -233,17 +236,20 @@ async function parseAPIConfigurationToApiLocations(apiConfiguration: APIConfigur
         }
     }
 
-    return apiDefinitions
+    return apiDefinitions;
 }
 
 async function parseAPIConfiguration(
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema
 ): Promise<APIDefinition> {
-    const apiConfiguration = rawGeneratorsConfiguration.api
+    const apiConfiguration = rawGeneratorsConfiguration.api;
     if (isPlainObject(apiConfiguration) && "namespaced" in apiConfiguration) {
         const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
         for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaced)) {
-            namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(configuration, rawGeneratorsConfiguration);
+            namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(
+                configuration,
+                rawGeneratorsConfiguration
+            );
         }
         return {
             type: "multiNamespace",
@@ -253,7 +259,10 @@ async function parseAPIConfiguration(
 
     return {
         type: "singleNamespace",
-        definitions: apiConfiguration != null ? await parseAPIConfigurationToApiLocations(apiConfiguration, rawGeneratorsConfiguration) : []
+        definitions:
+            apiConfiguration != null
+                ? await parseAPIConfigurationToApiLocations(apiConfiguration, rawGeneratorsConfiguration)
+                : []
     };
 }
 

@@ -12,7 +12,7 @@ import { LazyFernWorkspace } from "./workspaces/FernWorkspace";
 export async function loadSingleNamespaceAPIWorkspace({
     absolutePathToWorkspace,
     namespace,
-    definitions,
+    definitions
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     namespace: string | undefined;
@@ -42,9 +42,9 @@ export async function loadSingleNamespaceAPIWorkspace({
             }
 
             const absoluteFilepathToProtobufTarget = join(
-                    absolutePathToWorkspace,
-                    RelativeFilePath.of(definition.schema.target)
-                )
+                absolutePathToWorkspace,
+                RelativeFilePath.of(definition.schema.target)
+            );
 
             if (!(await doesPathExist(absoluteFilepathToProtobufTarget))) {
                 return {
@@ -145,7 +145,12 @@ export async function loadAPIWorkspace({
     const absolutePathToAsyncAPIFolder = join(absolutePathToWorkspace, RelativeFilePath.of(ASYNCAPI_DIRECTORY));
     const asyncApiDirectoryExists = await doesPathExist(absolutePathToAsyncAPIFolder);
 
-    if (generatorsConfiguration?.api != null && ((generatorsConfiguration.api.type === "singleNamespace" && generatorsConfiguration.api.definitions.length > 0) || generatorsConfiguration.api.type === "multiNamespace")) {
+    if (
+        generatorsConfiguration?.api != null &&
+        ((generatorsConfiguration.api.type === "singleNamespace" &&
+            generatorsConfiguration.api.definitions.length > 0) ||
+            generatorsConfiguration.api.type === "multiNamespace")
+    ) {
         const specs: Spec[] = [];
 
         if (generatorsConfiguration.api.type === "singleNamespace") {
@@ -171,7 +176,7 @@ export async function loadAPIWorkspace({
                 specs.push(...maybeSpecs);
             }
         }
-        
+
         return {
             didSucceed: true,
             workspace: new OSSWorkspace({

@@ -151,7 +151,14 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         schema: convertSchemaWithExampleToSchema(
-                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source, namespace)
+                            convertSchema(
+                                jsonMediaObject.schema,
+                                false,
+                                context,
+                                responseBreadcrumbs,
+                                source,
+                                namespace
+                            )
                         ),
                         source
                     });
@@ -160,7 +167,14 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         schema: convertSchemaWithExampleToSchema(
-                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source, namespace)
+                            convertSchema(
+                                jsonMediaObject.schema,
+                                false,
+                                context,
+                                responseBreadcrumbs,
+                                source,
+                                namespace
+                            )
                         ),
                         source
                     });

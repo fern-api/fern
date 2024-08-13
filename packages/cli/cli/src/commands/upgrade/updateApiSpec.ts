@@ -74,7 +74,13 @@ export async function updateApiSpec({
                         );
                     } else if (isPlainObject(api)) {
                         for (const [_, value] of Object.entries(api)) {
-                            if (isPlainObject(value) && "origin" in value && typeof value.origin === "string" && "path" in value && typeof value.path === "string") {
+                            if (
+                                isPlainObject(value) &&
+                                "origin" in value &&
+                                typeof value.origin === "string" &&
+                                "path" in value &&
+                                typeof value.path === "string"
+                            ) {
                                 cliContext.logger.info(`Origin found, fetching spec from ${value.origin}`);
                                 await fetchAndWriteFile(
                                     value.origin,

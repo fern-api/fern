@@ -97,7 +97,14 @@ export function convertAdditionalProperties({
             }),
             groupName: undefined
         },
-        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"], source, namespace),
+        valueSchema: convertSchema(
+            additionalProperties,
+            wrapAsNullable,
+            context,
+            [...breadcrumbs, "Value"],
+            source,
+            namespace
+        ),
         groupName,
         example,
         encoding

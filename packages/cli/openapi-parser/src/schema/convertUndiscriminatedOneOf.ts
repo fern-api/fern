@@ -79,7 +79,9 @@ export function convertUndiscriminatedOneOf({
                 subtypePrefix = override.name;
             }
         }
-        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source, namespace)];
+        return [
+            convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source, namespace)
+        ];
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];

@@ -73,7 +73,14 @@ export function convertDiscriminatedOneOf({
         })
         .map(([propertyName, propertySchema]) => {
             const isRequired = required != null && required.includes(propertyName);
-            const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName], source, namespace);
+            const schema = convertSchema(
+                propertySchema,
+                !isRequired,
+                context,
+                [...breadcrumbs, propertyName],
+                source,
+                namespace
+            );
             return {
                 key: propertyName,
                 schema
@@ -161,7 +168,14 @@ export function convertDiscriminatedOneOfWithVariants({
         })
         .map(([propertyName, propertySchema]) => {
             const isRequired = required != null && required.includes(propertyName);
-            const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName], source, namespace);
+            const schema = convertSchema(
+                propertySchema,
+                !isRequired,
+                context,
+                [...breadcrumbs, propertyName],
+                source,
+                namespace
+            );
             return {
                 key: propertyName,
                 schema

@@ -57,7 +57,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.source = source;
         this.DUMMY = this.getDummy();
 
-        this.namespace = namespace
+        this.namespace = namespace;
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
@@ -66,7 +66,7 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
     public resolveTags(operationTags: string[] | undefined): string[] {
         const tags = this.namespace ? [this.namespace] : [];
-        return tags.concat(operationTags ?? [])
+        return tags.concat(operationTags ?? []);
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
