@@ -4325,9 +4325,6 @@ importers:
       '@types/express':
         specifier: ^4.17.21
         version: 4.17.21
-      '@types/jest':
-        specifier: ^29.5.12
-        version: 29.5.12
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
@@ -4340,6 +4337,9 @@ importers:
       eslint:
         specifier: ^8.56.0
         version: 8.56.0
+      globals:
+        specifier: link:@types/vitest/globals
+        version: link:@types/vitest/globals
       organize-imports-cli:
         specifier: ^0.10.0
         version: 0.10.0
