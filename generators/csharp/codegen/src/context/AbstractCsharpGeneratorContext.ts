@@ -125,7 +125,7 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
-        const namespace = protobufFile.options?.csharp?.namespace ?? undefined;
+        const namespace = protobufFile.options?.csharp?.namespace;
         if (namespace == null) {
             throw new Error(
                 `The 'csharp_namespace' file option must be declared in Protobuf file ${protobufFile.filepath}`

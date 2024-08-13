@@ -89,7 +89,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getPublicCoreAsIsFiles(): string[] {
-        return [AsIsFiles.GrpcRequestOptions];
+        if (this.hasGrpcEndpoints()) {
+            return [AsIsFiles.GrpcRequestOptions];
+        }
+        return [];
     }
 
     public getNamespaceForServiceId(serviceId: ServiceId): string {
