@@ -16,7 +16,7 @@ export function getFernVersion({
             document,
             FernOpenAPIExtension.FERN_VERSION,
             RawSchemas.VersionDeclarationSchema,
-            context
+            context.logger
         ) ?? undefined
     );
 }

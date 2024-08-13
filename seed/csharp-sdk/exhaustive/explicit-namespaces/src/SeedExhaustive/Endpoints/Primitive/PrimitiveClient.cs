@@ -1,16 +1,17 @@
 using System.Net.Http;
 using System.Text.Json;
+using SeedExhaustive;
 using SeedExhaustive.Core;
 
 #nullable enable
 
 namespace SeedExhaustive.Endpoints.Primitive;
 
-public class PrimitiveClient
+public partial class PrimitiveClient
 {
     private RawClient _client;
 
-    public PrimitiveClient(RawClient client)
+    internal PrimitiveClient(RawClient client)
     {
         _client = client;
     }
@@ -46,7 +47,7 @@ public class PrimitiveClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -78,7 +79,7 @@ public class PrimitiveClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -110,7 +111,7 @@ public class PrimitiveClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -145,7 +146,7 @@ public class PrimitiveClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -177,7 +178,7 @@ public class PrimitiveClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -212,7 +213,7 @@ public class PrimitiveClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -247,7 +248,7 @@ public class PrimitiveClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -279,7 +280,7 @@ public class PrimitiveClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -314,7 +315,7 @@ public class PrimitiveClient
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

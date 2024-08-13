@@ -626,7 +626,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "cac3b9bdbb00fd2646e858928e97c9da4d1534711bdfd188ace396470014a02b",
                                 "name": null,
                                 "url": "/telemetry",
                                 "rootPathParameters": [],
@@ -1300,6 +1300,9 @@
                                                 }
                                             },
                                             "jsonExample": true
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -1884,7 +1887,7 @@
                                         }
                                     }
                                 },
-                                "id": "e3b2fb4112907027d3b290ac22a16838d6ccd505",
+                                "id": "337f19bbcfef06f6ad6ca31baa24b35dcb74a5dd",
                                 "docs": null
                             }
                         }

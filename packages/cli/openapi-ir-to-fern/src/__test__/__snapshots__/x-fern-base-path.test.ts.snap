@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-base-path x-fern-base-path docs 1`] = `
+exports[`x-fern-base-path > x-fern-base-path > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {},
@@ -18,7 +18,7 @@ exports[`x-fern-base-path x-fern-base-path docs 1`] = `
 }
 `;
 
-exports[`x-fern-base-path x-fern-base-path docs 2`] = `
+exports[`x-fern-base-path > x-fern-base-path > docs 2`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -57,7 +57,7 @@ exports[`x-fern-base-path x-fern-base-path docs 2`] = `
 }
 `;
 
-exports[`x-fern-base-path x-fern-base-path simple 1`] = `
+exports[`x-fern-base-path > x-fern-base-path > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {},
@@ -75,7 +75,7 @@ exports[`x-fern-base-path x-fern-base-path simple 1`] = `
 }
 `;
 
-exports[`x-fern-base-path x-fern-base-path simple 2`] = `
+exports[`x-fern-base-path > x-fern-base-path > simple 2`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {

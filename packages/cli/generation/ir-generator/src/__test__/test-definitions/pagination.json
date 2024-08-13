@@ -2860,7 +2860,7 @@
                             },
                             "allowMultiple": false,
                             "availability": null,
-                            "docs": "The cursor used for pagination in order to fetch \nthe next page of results."
+                            "docs": "The cursor used for pagination in order to fetch\nthe next page of results."
                         }
                     ],
                     "headers": [],
@@ -3070,6 +3070,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3124,6 +3127,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3321,6 +3327,9 @@
                                                 }
                                             },
                                             "jsonExample": "asc"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3377,6 +3386,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -4171,7 +4183,7 @@
                                         }
                                     }
                                 },
-                                "id": "24465125ceac2266067cf274200baf3798810ebf",
+                                "id": "c1ee45b68dcbeaac49bd0631fac443c344c339a8",
                                 "docs": null
                             }
                         }
@@ -4222,7 +4234,7 @@
                                 },
                                 "allowMultiple": false,
                                 "availability": null,
-                                "docs": "The cursor used for pagination in order to fetch \nthe next page of results."
+                                "docs": "The cursor used for pagination in order to fetch\nthe next page of results."
                             },
                             "propertyPath": null
                         },
@@ -5833,7 +5845,7 @@
                                         }
                                     }
                                 },
-                                "id": "0ed5ade35b528598ccbd6d598ef62552abdacca0",
+                                "id": "2680d3b74122a74e3324206eac4ba45330bdcd78",
                                 "docs": null
                             }
                         }
@@ -6361,7 +6373,7 @@
                             },
                             "allowMultiple": false,
                             "availability": null,
-                            "docs": "The cursor used for pagination in order to fetch \nthe next page of results."
+                            "docs": "The cursor used for pagination in order to fetch\nthe next page of results."
                         }
                     ],
                     "headers": [],
@@ -6571,6 +6583,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -6625,6 +6640,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -6822,6 +6840,9 @@
                                                 }
                                             },
                                             "jsonExample": "asc"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -6878,6 +6899,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -7672,7 +7696,7 @@
                                         }
                                     }
                                 },
-                                "id": "24465125ceac2266067cf274200baf3798810ebf",
+                                "id": "c1ee45b68dcbeaac49bd0631fac443c344c339a8",
                                 "docs": null
                             }
                         }
@@ -9255,7 +9279,7 @@
                                         }
                                     }
                                 },
-                                "id": "591d4a5d57e97e7911239d2e799977bd90b775f8",
+                                "id": "88c485cab1413b451fe7b482c724d45657935986",
                                 "docs": null
                             }
                         }
@@ -9872,6 +9896,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -9926,6 +9953,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -10123,6 +10153,9 @@
                                                 }
                                             },
                                             "jsonExample": "asc"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -10917,7 +10950,7 @@
                                         }
                                     }
                                 },
-                                "id": "a7d2ecbd48c6225e51f014de15ba584bf6cac138",
+                                "id": "4a136f7454631af3dc2e4998f0c8984319280de7",
                                 "docs": null
                             }
                         }
@@ -11123,52 +11156,7 @@
                             },
                             "propertyPath": null
                         },
-                        "hasNextPage": {
-                            "property": {
-                                "name": {
-                                    "name": {
-                                        "originalName": "limit",
-                                        "camelCase": {
-                                            "unsafeName": "limit",
-                                            "safeName": "limit"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "limit",
-                                            "safeName": "limit"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "LIMIT",
-                                            "safeName": "LIMIT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Limit",
-                                            "safeName": "Limit"
-                                        }
-                                    },
-                                    "wireValue": "limit"
-                                },
-                                "valueType": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "optional",
-                                        "optional": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "INTEGER",
-                                                "v2": {
-                                                    "type": "integer",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                                "availability": null,
-                                "docs": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
-                            },
-                            "propertyPath": null
-                        }
+                        "hasNextPage": null
                     },
                     "availability": null,
                     "docs": null
@@ -11607,6 +11595,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -11661,6 +11652,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -11858,6 +11852,9 @@
                                                 }
                                             },
                                             "jsonExample": "asc"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -12652,7 +12649,7 @@
                                         }
                                     }
                                 },
-                                "id": "a7d2ecbd48c6225e51f014de15ba584bf6cac138",
+                                "id": "4a136f7454631af3dc2e4998f0c8984319280de7",
                                 "docs": null
                             }
                         }
@@ -12859,28 +12856,29 @@
                             "propertyPath": null
                         },
                         "hasNextPage": {
+                            "propertyPath": [],
                             "property": {
                                 "name": {
                                     "name": {
-                                        "originalName": "limit",
+                                        "originalName": "hasNextPage",
                                         "camelCase": {
-                                            "unsafeName": "limit",
-                                            "safeName": "limit"
+                                            "unsafeName": "hasNextPage",
+                                            "safeName": "hasNextPage"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "limit",
-                                            "safeName": "limit"
+                                            "unsafeName": "has_next_page",
+                                            "safeName": "has_next_page"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "LIMIT",
-                                            "safeName": "LIMIT"
+                                            "unsafeName": "HAS_NEXT_PAGE",
+                                            "safeName": "HAS_NEXT_PAGE"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "Limit",
-                                            "safeName": "Limit"
+                                            "unsafeName": "HasNextPage",
+                                            "safeName": "HasNextPage"
                                         }
                                     },
-                                    "wireValue": "limit"
+                                    "wireValue": "hasNextPage"
                                 },
                                 "valueType": {
                                     "_type": "container",
@@ -12889,20 +12887,15 @@
                                         "optional": {
                                             "_type": "primitive",
                                             "primitive": {
-                                                "v1": "INTEGER",
-                                                "v2": {
-                                                    "type": "integer",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
+                                                "v1": "BOOLEAN",
+                                                "v2": null
                                             }
                                         }
                                     }
                                 },
                                 "availability": null,
-                                "docs": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
-                            },
-                            "propertyPath": null
+                                "docs": null
+                            }
                         }
                     },
                     "availability": null,
@@ -13189,6 +13182,9 @@
                                                 }
                                             },
                                             "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -13912,7 +13908,7 @@
                                         }
                                     }
                                 },
-                                "id": "081f40460a6c04a8761d8d84c643c110334884e6",
+                                "id": "3a9598c36296f95cae97b633fbb72b13ae796752",
                                 "docs": null
                             }
                         }
@@ -14211,7 +14207,7 @@
                             },
                             "allowMultiple": false,
                             "availability": null,
-                            "docs": "The cursor used for pagination in order to fetch \nthe next page of results."
+                            "docs": "The cursor used for pagination in order to fetch\nthe next page of results."
                         }
                     ],
                     "headers": [],
@@ -14385,6 +14381,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -14524,7 +14523,7 @@
                                         }
                                     }
                                 },
-                                "id": "a9df0c1f71f9916f5b8c23c2926bfb306cccbaaf",
+                                "id": "7976aa0c67abf77dd060bfb4b64dd3eea15c0151",
                                 "docs": null
                             }
                         }
@@ -14575,7 +14574,7 @@
                                 },
                                 "allowMultiple": false,
                                 "availability": null,
-                                "docs": "The cursor used for pagination in order to fetch \nthe next page of results."
+                                "docs": "The cursor used for pagination in order to fetch\nthe next page of results."
                             },
                             "propertyPath": null
                         },
@@ -15004,6 +15003,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -15220,7 +15222,7 @@
                                         }
                                     }
                                 },
-                                "id": "f97f68192d4af5fa738d4f87d238b0c2d51b0b7d",
+                                "id": "9c34520cf167549286b39d9553bad39f82e535e1",
                                 "docs": null
                             }
                         }

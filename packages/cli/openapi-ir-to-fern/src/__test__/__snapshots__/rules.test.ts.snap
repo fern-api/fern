@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`rules rules docs 1`] = `
+exports[`rules > rules > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -41,7 +41,10 @@ exports[`rules rules docs 1`] = `
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
         "union": [
           "Schema",
           "GetExampleResponseMessage",
@@ -132,7 +135,7 @@ exports[`rules rules docs 1`] = `
 }
 `;
 
-exports[`rules rules simple 1`] = `
+exports[`rules > rules > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -173,7 +176,10 @@ exports[`rules rules simple 1`] = `
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
         "union": [
           "Schema",
           "GetExampleResponseMessage",

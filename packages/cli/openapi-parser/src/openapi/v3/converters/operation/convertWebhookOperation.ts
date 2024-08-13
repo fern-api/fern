@@ -42,7 +42,8 @@ export function convertWebhookOperation({
         document,
         context,
         requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
-        source
+        source,
+        namespace: context.namespace
     });
 
     if (convertedPayload == null || convertedPayload.type !== "json") {
@@ -60,7 +61,7 @@ export function convertWebhookOperation({
         sdkName: sdkMethodName,
         method,
         operationId: operation.operationId,
-        tags: operation.tags ?? [],
+        tags: context.resolveTags(operation.tags),
         headers: convertedParameters.headers,
         generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs),
         payload: convertedPayload.schema,

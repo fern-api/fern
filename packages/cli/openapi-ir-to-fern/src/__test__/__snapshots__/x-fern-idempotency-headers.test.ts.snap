@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-idempotency-headers x-fern-idempotency-headers docs 1`] = `
+exports[`x-fern-idempotency-headers > x-fern-idempotency-headers > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -66,7 +66,7 @@ exports[`x-fern-idempotency-headers x-fern-idempotency-headers docs 1`] = `
 }
 `;
 
-exports[`x-fern-idempotency-headers x-fern-idempotency-headers simple 1`] = `
+exports[`x-fern-idempotency-headers > x-fern-idempotency-headers > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {

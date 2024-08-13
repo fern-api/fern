@@ -1,16 +1,17 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
 using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class PlaylistClient
+public partial class PlaylistClient
 {
     private RawClient _client;
 
-    public PlaylistClient(RawClient client)
+    internal PlaylistClient(RawClient client)
     {
         _client = client;
     }
@@ -59,7 +60,7 @@ public class PlaylistClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -107,7 +108,7 @@ public class PlaylistClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -145,7 +146,7 @@ public class PlaylistClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -185,7 +186,7 @@ public class PlaylistClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -215,7 +216,7 @@ public class PlaylistClient
         throw new SeedTraceApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

@@ -9,18 +9,21 @@ export async function generateIr({
     openApi,
     taskContext,
     options,
-    source
+    source,
+    namespace
 }: {
     openApi: OpenAPIV2.Document;
     taskContext: TaskContext;
     options: ParseOpenAPIOptions;
     source: Source;
+    namespace: string | undefined;
 }): Promise<OpenApiIntermediateRepresentation> {
     const conversionResult = await convertObj(openApi, {});
     return generateIrFromV3({
         openApi: conversionResult.openapi,
         taskContext,
         options,
-        source
+        source,
+        namespace
     });
 }

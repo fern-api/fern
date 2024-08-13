@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-version x-fern-version docs 1`] = `
+exports[`x-fern-version > x-fern-version > docs 1`] = `
 {
   "definitionFiles": {
     "chatCompletions.yml": {
@@ -101,7 +101,7 @@ exports[`x-fern-version x-fern-version docs 1`] = `
 }
 `;
 
-exports[`x-fern-version x-fern-version simple 1`] = `
+exports[`x-fern-version > x-fern-version > simple 1`] = `
 {
   "definitionFiles": {
     "chatCompletions.yml": {

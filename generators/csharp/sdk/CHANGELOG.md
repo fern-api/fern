@@ -5,6 +5,50 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1 - 2024-08-12]
+
+- Feature: Add support for Protobuf file dependencies to generate gRPC client stubs.
+- Fix: Build on the fix in `0.10.0` to resolve more potential namespace and type conflicts.
+
+## [1.1.0 - 2024-08-11]
+
+- Improvement: If a generated client receieves a generic error response, the string response is used directly in the resulting Exception rather than attempting to deserialize it to an `object`.
+
+## [1.0.0 - 2024-08-11]
+
+- Break: The C# SDK is now on major version 1. To take this upgrade without any breaks, please add the following configuration to your `generators.yml` file:
+
+```yml
+generators:
+  - name: fernapi/fern-csharp-sdk
+    config:
+      root-namespace-for-core-classes: false
+      pascal-case-environments: false
+      simplify-object-dictionaries: false
+```
+
+- Improvement: Core classes that are exposed publicly are now in the root namespace rather than the Core namespace.
+- Improvement: Types that were previously generated as `Dictionary<string, object?>` are now simplified to just `object`.
+- Improvement: Environment names are now Pascal-cased.
+- Feature: Generating specific error types can now be turned off via the following config:
+
+```yml
+generators:
+  - name: fernapi/fern-csharp-sdk
+    config:
+      generate-error-types: false
+```
+
+## [0.12.0 - 2024-08-10]
+
+- Improvement: Get better Unit Testing JSON comparison results by using `FluentAssertions`.
+
+## [0.11.0 - 2024-08-09]
+
+- Improvement: Mark internal files `internal`.
+- Improvement: Make all client classes `Partial`.
+- Improvement: Don't override `toString` on Exceptions
+
 ## [0.10.0 - 2024-08-07]
 
 - Fix: Fix a bug where conflicting class names and namespaces cause compile to fail.

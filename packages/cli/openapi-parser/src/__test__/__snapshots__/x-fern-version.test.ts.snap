@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-version x-fern-version parse open api 1`] = `
+exports[`x-fern-version > x-fern-version > parse open api 1`] = `
 {
   "apiVersion": {
     "default": "2.0.0",
@@ -92,7 +92,7 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "ChatCompletionsCreateResponse",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "schema": {
             "default": null,
@@ -138,7 +138,7 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Completion",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -152,14 +152,14 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "completionText",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CompletionText",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -187,7 +187,7 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "CompletionChunk",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -201,14 +201,14 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "completionChunkText",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CompletionChunkText",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -236,7 +236,7 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "CreateCompletionRequest",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -250,14 +250,14 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "createCompletionRequestStream",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "CreateCompletionRequestStream",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -278,7 +278,7 @@ exports[`x-fern-version x-fern-version parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "CreateCompletionRequestPrompt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,

@@ -16,7 +16,7 @@ export function getRefreshTokenConfiguration({
               securityScheme.flows.clientCredentials,
               FernOpenAPIExtension.FERN_OAUTH_REFRESH_TOKEN_ENDPOINT,
               RefreshTokenEndpointSchema,
-              context
+              context.logger
           )
         : undefined;
 }
@@ -33,7 +33,7 @@ export function getAccessTokenConfiguration({
               securityScheme.flows.clientCredentials,
               FernOpenAPIExtension.FERN_OAUTH_ACCESS_TOKEN_ENDPOINT,
               AccessTokenEndpointSchema,
-              context
+              context.logger
           )
         : undefined;
 }

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2;
 
 #nullable enable
 
@@ -18,5 +17,5 @@ public record TestSubmissionStatusV2
     public required int ProblemVersion { get; set; }
 
     [JsonPropertyName("problemInfo")]
-    public required ProblemInfoV2 ProblemInfo { get; set; }
+    public required V2.ProblemInfoV2 ProblemInfo { get; set; }
 }

@@ -1,8 +1,10 @@
 import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
 import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
 import { LocalTaskHandler } from "@fern-api/local-workspace-runner/src/LocalTaskHandler";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import * as GeneratorExecSerialization from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import path from "path";
@@ -64,6 +66,7 @@ export class LocalTestRunner extends TestRunner {
             publishMetadata,
             readme
         });
+
         const ir = await getIntermediateRepresentation({
             workspace: fernWorkspace,
             audiences: {
@@ -73,7 +76,8 @@ export class LocalTestRunner extends TestRunner {
             irVersionOverride: irVersion,
             generatorInvocation,
             packageName: undefined,
-            version: undefined
+            version: undefined,
+            sourceConfig: this.getSourceConfig(fernWorkspace)
         });
         let generatorConfig = getGeneratorConfig({
             generatorInvocation,
@@ -158,5 +162,19 @@ export class LocalTestRunner extends TestRunner {
             );
         }
         return this.generator.workspaceConfig.local;
+    }
+
+    private getSourceConfig(workspace: FernWorkspace): SourceConfig {
+        return {
+            sources: workspace.getSources().map((source) => {
+                if (source.type === "protobuf") {
+                    return ApiDefinitionSource.proto({
+                        id: source.id,
+                        protoRootUrl: `file:///${source.absoluteFilePath}`
+                    });
+                }
+                return ApiDefinitionSource.openapi();
+            })
+        };
     }
 }

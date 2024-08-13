@@ -31,19 +31,22 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
     public readonly DUMMY: SchemaParserContext;
     public readonly options: ParseOpenAPIOptions;
     public readonly source: Source;
+    public readonly namespace: string | undefined;
 
     constructor({
         document,
         taskContext,
         authHeaders,
         options,
-        source
+        source,
+        namespace
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
         options: ParseOpenAPIOptions;
         source: Source;
+        namespace: string | undefined;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
@@ -53,10 +56,17 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         this.options = options;
         this.source = source;
         this.DUMMY = this.getDummy();
+
+        this.namespace = namespace;
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
         return this.refOccurrences[schema.$ref] ?? 0;
+    }
+
+    public resolveTags(operationTags: string[] | undefined): string[] {
+        const tags = this.namespace ? [this.namespace] : [];
+        return tags.concat(operationTags ?? []);
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`uint uint docs 1`] = `
+exports[`uint > uint > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -70,7 +70,7 @@ exports[`uint uint docs 1`] = `
 }
 `;
 
-exports[`uint uint simple 1`] = `
+exports[`uint > uint > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser aries docs 1`] = `
+exports[`open api parser > aries > docs 1`] = `
 {
   "definitionFiles": {
     "actionMenu.yml": {
@@ -23226,7 +23226,7 @@ exports[`open api parser aries docs 1`] = `
 }
 `;
 
-exports[`open api parser aries simple 1`] = `
+exports[`open api parser > aries > simple 1`] = `
 {
   "definitionFiles": {
     "actionMenu.yml": {

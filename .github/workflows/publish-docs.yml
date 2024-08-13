@@ -15,13 +15,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 18
-          cache: "yarn"
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Install
-        run: yarn install
+        uses: ./.github/actions/install
 
       - name: Publish Docs
         env:
@@ -30,9 +28,9 @@ jobs:
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
-          yarn workspace @fern-api/cli dist:cli:prod
-          cli_path="$(yarn workspace @fern-api/cli bin fern:prod)"
-          node $cli_path generate --docs --log-level debug --instance fern.docs.buildwithfern.com/learn
+          pnpm --filter @fern-api/cli dist:cli:prod
+          cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs" 
+          node $cli_path --docs --log-level debug --instance fern.docs.buildwithfern.com/learn
 
       # - name: Install fern-dev CLI
       #   run: |

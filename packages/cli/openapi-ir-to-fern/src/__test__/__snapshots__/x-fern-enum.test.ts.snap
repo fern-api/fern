@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-enum x-fern-enum docs 1`] = `
+exports[`x-fern-enum > x-fern-enum > docs 1`] = `
 {
   "definitionFiles": {
     "transcripts.yml": {
@@ -32,7 +32,7 @@ exports[`x-fern-enum x-fern-enum docs 1`] = `
 }
 `;
 
-exports[`x-fern-enum x-fern-enum simple 1`] = `
+exports[`x-fern-enum > x-fern-enum > simple 1`] = `
 {
   "definitionFiles": {
     "transcripts.yml": {

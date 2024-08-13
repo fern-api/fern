@@ -1,4 +1,16 @@
 {
-  "ignores": ["@types/jest", "@types/node", "@ts-morph/common", "ts-loader", "ts-node", "@types/tmp"],
-  "ignore-patterns": ["lib", "docker/bundle.js"]
+  "ignores": [
+    "@types/jest",
+    "globals",
+    "globals",
+    "@types/node",
+    "@ts-morph/common",
+    "ts-loader",
+    "ts-node",
+    "@types/tmp"
+  ],
+  "ignore-patterns": [
+    "lib",
+    "docker/bundle.js"
+  ]
 }

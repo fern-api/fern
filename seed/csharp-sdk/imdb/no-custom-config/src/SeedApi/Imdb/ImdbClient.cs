@@ -6,11 +6,11 @@ using SeedApi.Core;
 
 namespace SeedApi;
 
-public class ImdbClient
+public partial class ImdbClient
 {
     private RawClient _client;
 
-    public ImdbClient(RawClient client)
+    internal ImdbClient(RawClient client)
     {
         _client = client;
     }
@@ -49,7 +49,7 @@ public class ImdbClient
         throw new SeedApiApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -92,7 +92,7 @@ public class ImdbClient
         throw new SeedApiApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

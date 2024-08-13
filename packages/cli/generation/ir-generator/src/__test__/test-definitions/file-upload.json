@@ -755,7 +755,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "f32b5d879ed8fcaf5933837461e79585e7e4a73f",
+                                "id": "c3e4c3123d71e0b8473cfee570e2258a07174237",
                                 "docs": null
                             }
                         }
@@ -943,7 +943,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "903c450ec52a401654f7d94d7eabd28bc813f7ff",
+                                "id": "5fa770e673d7b872753c4a89e09f450a4b086c70",
                                 "docs": null
                             }
                         }
@@ -1385,6 +1385,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -1419,6 +1422,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -1473,6 +1479,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -1509,6 +1518,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     },
                                     {
@@ -1565,6 +1577,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -1577,7 +1592,7 @@
                                         "value": null
                                     }
                                 },
-                                "id": "ac2c611c62bae6ad5db764e1395a18321d2d0fc5",
+                                "id": "11521834f2cf87d8de4b4564420889b252731803",
                                 "docs": null
                             }
                         }

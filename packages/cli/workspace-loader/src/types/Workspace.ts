@@ -23,6 +23,7 @@ export interface OpenAPISpec {
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     source: Source;
+    namespace?: string;
     settings?: SpecImportSettings;
 }
 
@@ -33,6 +34,12 @@ export interface ProtobufSpec {
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     generateLocally: boolean;
     settings?: SpecImportSettings;
+}
+
+export interface IdentifiableSource {
+    type: "asyncapi" | "openapi" | "protobuf";
+    id: string;
+    absoluteFilePath: AbsoluteFilePath;
 }
 
 export type Source = AsyncAPISource | OpenAPISource | ProtobufSource;
@@ -49,6 +56,7 @@ export interface OpenAPISource {
 
 export interface ProtobufSource {
     type: "protobuf";
+    root: AbsoluteFilePath;
     file: AbsoluteFilePath;
 }
 

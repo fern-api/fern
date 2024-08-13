@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`help no arguments 1`] = `
+exports[`help > no arguments 1`] = `
 "fern-dev
 
 Commands:

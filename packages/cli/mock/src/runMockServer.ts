@@ -1,3 +1,4 @@
+import { isPlainObject } from "@fern-api/core-utils";
 import {
     ExampleEndpointCall,
     ExamplePathParameter,
@@ -10,7 +11,7 @@ import { TaskContext } from "@fern-api/task-context";
 import express, { Request, Response } from "express";
 import getPort from "get-port";
 import { IncomingHttpHeaders, Server } from "http";
-import { isEqual, noop } from "lodash-es";
+import { isEqualWith, noop } from "lodash-es";
 import urlJoin from "url-join";
 
 type RequestHandler = (req: Request, res: Response) => void;
@@ -230,6 +231,35 @@ function getRequestHandler(endpoints: HttpEndpoint[]): RequestHandler {
     };
 }
 
+function isValidDate(value: string): boolean {
+    const date = new Date(value);
+    return !isNaN(date.getTime());
+}
+
+// Customize the lodash isEqualWith function to handle date-like strings
+// returning undefined in this comparitor indicates to lodash to perform it's
+// internal comparison logic.
+export function dateishCustomizer(value: unknown, other: unknown): boolean | undefined {
+    if (isPlainObject(value) || isPlainObject(other)) {
+        return undefined;
+    }
+    if (typeof value === "string" && typeof other === "string") {
+        // If the strings are equal, short circuit and return true
+        if (value === other) {
+            return true;
+        }
+
+        // Otherwise check if they're dates to give them another chance
+        if (isValidDate(value) && isValidDate(other)) {
+            const valueDate = new Date(value);
+            const otherDate = new Date(other);
+            // Is variance less than 12 hours
+            return Math.abs(valueDate.getTime() - otherDate.getTime()) <= 12 * 60 * 60 * 1000;
+        }
+    }
+    return undefined;
+}
+
 function isRequestMatch(req: Request, example: ExampleEndpointCall): boolean {
     return (
         validatePathParameters(example, req) &&
@@ -249,7 +279,7 @@ function validatePathParameters(example: ExampleEndpointCall, req: Request): boo
         return false;
     }
     if (Object.keys(examplePathParameters).length > 0) {
-        if (!isEqual(req.params, examplePathParameters)) {
+        if (!isEqualWith(req.params, examplePathParameters, dateishCustomizer)) {
             return false;
         }
     }
@@ -272,7 +302,7 @@ function validateQueryParameters(example: ExampleEndpointCall, req: Request): bo
     }
 
     // TODO: confirm how deep-object query params works with this.
-    return isEqual(req.query, stringifiedQueryParams);
+    return isEqualWith(exampleQueryParameters, stringifiedQueryParams, dateishCustomizer);
 }
 
 function validateHeaders(example: ExampleEndpointCall, headers: IncomingHttpHeaders): boolean {
@@ -300,7 +330,7 @@ function validateRequestBody(example: ExampleEndpointCall, req: Request): boolea
             req.body[key] = value.toISOString();
         }
     }
-    return isEqual(req.body, example.request.jsonExample);
+    return isEqualWith(req.body, example.request.jsonExample, dateishCustomizer);
 }
 
 // ExampleWithWireValue is implemented by both example headers and example query parameters.

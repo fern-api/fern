@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser hume parse open api 1`] = `
+exports[`open api parser > hume > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -48,14 +48,14 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestLimit",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListJobsRequestLimit",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 50,
@@ -83,14 +83,14 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestStatus",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListJobsRequestStatus",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -122,7 +122,7 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestWhen",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
@@ -153,14 +153,14 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestTimestampMs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ListJobsRequestTimestampMs",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -183,7 +183,7 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestSortBy",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
@@ -214,7 +214,7 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "ListJobsRequestDirection",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
@@ -246,7 +246,7 @@ exports[`open api parser hume parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "ListJobsResponse",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "type": "array",
           "value": {
@@ -430,7 +430,7 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetJobPredictionsRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -459,7 +459,7 @@ exports[`open api parser hume parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "GetJobPredictionsResponse",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "type": "array",
           "value": {
@@ -517,7 +517,7 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetJobArtifactsRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -582,7 +582,7 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetJobRequestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -710,7 +710,7 @@ exports[`open api parser hume parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "BaseRequest",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -724,14 +724,14 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "baseRequestModels",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "BaseRequestModels",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Models",
               "source": {
@@ -753,14 +753,14 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "baseRequestTranscription",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "BaseRequestTranscription",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Transcription",
               "source": {
@@ -782,7 +782,7 @@ exports[`open api parser hume parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "baseRequestUrls",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -791,14 +791,14 @@ exports[`open api parser hume parse open api 1`] = `
 
 If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
               "generatedName": "BaseRequestUrls",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
                 "availability": null,
                 "description": null,
                 "generatedName": "BaseRequestUrlsItem",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -824,14 +824,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "baseRequestCallbackUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
               "generatedName": "BaseRequestCallbackUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -856,14 +856,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "baseRequestNotify",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Whether to send an email notification to the user upon job failure.",
               "generatedName": "BaseRequestNotify",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": false,
@@ -885,7 +885,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "default": null,
       "description": null,
       "generatedName": "Bcp47Tag",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "hume/openapi.yaml",
@@ -1279,7 +1279,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": "A bounding box around a face.",
       "generatedName": "BoundingBox",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1293,7 +1293,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "x-coordinate of bounding box top left corner.",
             "generatedName": "BoundingBoxX",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1318,7 +1318,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "y-coordinate of bounding box top left corner.",
             "generatedName": "BoundingBoxY",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1343,7 +1343,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Bounding box width.",
             "generatedName": "BoundingBoxW",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1368,7 +1368,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Bounding box height.",
             "generatedName": "BoundingBoxH",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1396,7 +1396,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "BurstPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1431,7 +1431,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "BurstPredictionEmotions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -1460,7 +1460,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Modality-specific descriptive features and their scores.",
             "generatedName": "BurstPredictionDescriptions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -1492,7 +1492,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "Completed",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1506,7 +1506,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "When this job was created (Unix timestamp in milliseconds).",
             "generatedName": "CompletedCreatedTimestampMs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1526,7 +1526,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "When this job started (Unix timestamp in milliseconds).",
             "generatedName": "CompletedStartedTimestampMs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1546,7 +1546,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "When this job ended (Unix timestamp in milliseconds).",
             "generatedName": "CompletedEndedTimestampMs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1566,7 +1566,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "The number of predictions that were generated by this job.",
             "generatedName": "CompletedNumPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1591,7 +1591,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "The number of errors that occurred while running this job.",
             "generatedName": "CompletedNumErrors",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1619,7 +1619,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "DescriptionsScore",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1633,7 +1633,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Name of the descriptive feature being expressed.",
             "generatedName": "DescriptionsScoreName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1657,7 +1657,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Embedding value for the descriptive feature being expressed.",
             "generatedName": "DescriptionsScoreScore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1682,7 +1682,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "default": null,
       "description": null,
       "generatedName": "Direction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "hume/openapi.yaml",
@@ -1725,7 +1725,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "EmotionScore",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1739,7 +1739,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Name of the emotion being expressed.",
             "generatedName": "EmotionScoreName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1763,7 +1763,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Embedding value for the emotion being expressed.",
             "generatedName": "EmotionScoreScore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1786,13 +1786,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "Empty": {
       "availability": null,
       "description": "To include predictions for this model type, set this field to \`{}\`. It is currently not configurable further.",
+      "encoding": null,
       "generatedName": "Empty",
-      "groupName": null,
+      "groupName": [],
       "key": {
         "availability": null,
         "description": null,
         "generatedName": "EmptyKey",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "schema": {
           "default": null,
@@ -1818,7 +1819,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "Error",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1832,7 +1833,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "An error message.",
             "generatedName": "ErrorMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1856,7 +1857,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "A file path relative to the top level source URL or file.",
             "generatedName": "ErrorFile",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "File",
             "schema": {
               "default": null,
@@ -1883,7 +1884,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "Face",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1897,14 +1898,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "faceFpsPred",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
               "generatedName": "FaceFpsPred",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 3,
@@ -1930,14 +1931,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "faceProbThreshold",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Face detection probability threshold. Faces detected with a probability less than this threshold will be omitted from the response.",
               "generatedName": "FaceProbThreshold",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 0.99,
@@ -1963,14 +1964,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "faceIdentifyFaces",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Whether to return identifiers for faces across frames. If \`true\`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If \`false\`, all faces will be tagged with an \`unknown\` ID.",
               "generatedName": "FaceIdentifyFaces",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": false,
@@ -1991,14 +1992,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "faceMinFaceSize",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
               "generatedName": "FaceMinFaceSize",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "uint64",
@@ -2018,14 +2019,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "faceFacs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "FaceFacs",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Empty",
               "source": {
@@ -2047,14 +2048,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "faceDescriptions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "FaceDescriptions",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Empty",
               "source": {
@@ -2076,14 +2077,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "faceSaveFaces",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
               "generatedName": "FaceSaveFaces",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": false,
@@ -2107,7 +2108,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "FacePrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -2121,7 +2122,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Frame number",
             "generatedName": "FacePredictionFrame",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "type": "uint64",
@@ -2140,7 +2141,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Time in seconds when face detection occurred.",
             "generatedName": "FacePredictionTime",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2165,7 +2166,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "The predicted probability that a detected face was actually a face.",
             "generatedName": "FacePredictionProb",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2211,7 +2212,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "FacePredictionEmotions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -2240,14 +2241,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "facePredictionFacs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "FACS 2.0 features and their scores.",
               "generatedName": "FacePredictionFacs",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -2277,14 +2278,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "facePredictionDescriptions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Modality-specific descriptive features and their scores.",
               "generatedName": "FacePredictionDescriptions",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -2317,7 +2318,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "FacemeshPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -2331,7 +2332,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "FacemeshPredictionEmotions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -2363,7 +2364,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "FacsScore",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -2377,7 +2378,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Name of the FACS 2.0 feature being expressed.",
             "generatedName": "FacsScoreName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2401,7 +2402,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Embedding value for the FACS 2.0 feature being expressed.",
             "generatedName": "FacsScoreScore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2428,7 +2429,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "Failed",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -2442,7 +2443,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "When this job was created (Unix timestamp in milliseconds).",
             "generatedName": "FailedCreatedTimestampMs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2462,7 +2463,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "When this job started (Unix timestamp in milliseconds).",
             "generatedName": "FailedStartedTimestampMs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2482,7 +2483,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "When this job ended (Unix timestamp in milliseconds).",
             "generatedName": "FailedEndedTimestampMs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2502,7 +2503,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "An error message.",
             "generatedName": "FailedMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2529,7 +2530,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "File",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -2543,14 +2544,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "fileFilename",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The name of the file.",
               "generatedName": "FileFilename",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -2575,14 +2576,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "fileContentType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The content type of the file.",
               "generatedName": "FileContentType",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -2607,7 +2608,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "The MD5 checksum of the file.",
             "generatedName": "FileMd5Sum",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2632,7 +2633,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "default": null,
       "description": "The granularity at which to generate predictions. \`utterance\` corresponds to a natural pause or break in conversation, while \`conversational_turn\` corresponds to a change in speaker.",
       "generatedName": "Granularity",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "hume/openapi.yaml",
@@ -2701,7 +2702,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsBurstPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -2715,7 +2716,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsBurstPredictionId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2739,7 +2740,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsBurstPredictionPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -2771,7 +2772,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsFacePrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -2785,7 +2786,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsFacePredictionId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2809,7 +2810,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsFacePredictionPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -2841,7 +2842,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsFacemeshPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -2855,7 +2856,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsFacemeshPredictionId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2879,7 +2880,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsFacemeshPredictionPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -2911,7 +2912,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsLanguagePrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -2925,7 +2926,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsLanguagePredictionId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2949,7 +2950,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsLanguagePredictionPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -2981,7 +2982,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsNerPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -2995,7 +2996,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsNerPredictionId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -3019,7 +3020,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsNerPredictionPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -3051,7 +3052,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "GroupedPredictionsProsodyPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -3065,7 +3066,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
             "generatedName": "GroupedPredictionsProsodyPredictionId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -3089,7 +3090,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "GroupedPredictionsProsodyPredictionPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -3121,7 +3122,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "InProgress",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -3135,7 +3136,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "When this job was created (Unix timestamp in milliseconds).",
             "generatedName": "InProgressCreatedTimestampMs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -3155,7 +3156,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "When this job started (Unix timestamp in milliseconds).",
             "generatedName": "InProgressStartedTimestampMs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -3178,7 +3179,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "JobId",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -3192,7 +3193,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "The ID of the started job.",
             "generatedName": "JobIdJobId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -3219,7 +3220,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "JobRequest",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -3233,7 +3234,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Your user ID.",
             "generatedName": "JobRequestUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -3257,7 +3258,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "The ID associated with this job.",
             "generatedName": "JobRequestJobId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -3326,7 +3327,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "Language",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -3340,14 +3341,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "languageGranularity",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "LanguageGranularity",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Granularity",
               "source": {
@@ -3369,14 +3370,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "languageIdentifySpeakers",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "generatedName": "LanguageIdentifySpeakers",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": false,
@@ -3397,14 +3398,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "languageSentiment",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "LanguageSentiment",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Empty",
               "source": {
@@ -3426,14 +3427,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "languageToxicity",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "LanguageToxicity",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Empty",
               "source": {
@@ -3458,7 +3459,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "LanguagePrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -3472,7 +3473,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "A segment of text (like a word or a sentence).",
             "generatedName": "LanguagePredictionText",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "Text",
             "schema": {
               "default": null,
@@ -3517,7 +3518,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "languagePredictionTime",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -3546,14 +3547,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "languagePredictionConfidence",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "LanguagePredictionConfidence",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Confidence",
               "schema": {
                 "default": null,
@@ -3579,14 +3580,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "languagePredictionSpeakerConfidence",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "generatedName": "LanguagePredictionSpeakerConfidence",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -3612,7 +3613,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "LanguagePredictionEmotions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -3641,7 +3642,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "languagePredictionSentiment",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -3650,7 +3651,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
 
 Compared to returning one estimate of sentiment, this enables a more nuanced analysis of a text's meaning. For example, a text with very neutral sentiment would have an average rating of \`5\`. But also a text that could be interpreted as having very positive sentiment or very negative sentiment would also have an average rating of \`5\`. The average sentiment is less informative than the distribution over sentiment, so this API returns a value for each sentiment level.",
               "generatedName": "LanguagePredictionSentiment",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -3680,14 +3681,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "languagePredictionToxicity",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: \`toxic\`, \`severe_toxic\`, \`obscene\`, \`threat\`, \`insult\`, and \`identity_hate\`.",
               "generatedName": "LanguagePredictionToxicity",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -3720,7 +3721,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "Models",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -3734,14 +3735,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsFace",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsFace",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Face",
               "source": {
@@ -3763,14 +3764,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsBurst",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsBurst",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Empty",
               "source": {
@@ -3792,14 +3793,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsProsody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsProsody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Prosody",
               "source": {
@@ -3821,14 +3822,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsLanguage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsLanguage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Language",
               "source": {
@@ -3850,14 +3851,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsNer",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsNer",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Ner",
               "source": {
@@ -3879,14 +3880,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsFacemesh",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsFacemesh",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Empty",
               "source": {
@@ -3911,7 +3912,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "ModelsPredictions",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -3925,14 +3926,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsFace",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsFace",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Predictions_optional_Null_FacePrediction",
               "source": {
@@ -3954,14 +3955,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsBurst",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsBurst",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Predictions_optional_Null_BurstPrediction",
               "source": {
@@ -3983,14 +3984,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsProsody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsProsody",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Predictions_optional_TranscriptionMetadata_ProsodyPrediction",
               "source": {
@@ -4012,14 +4013,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsLanguage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsLanguage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Predictions_optional_TranscriptionMetadata_LanguagePrediction",
               "source": {
@@ -4041,14 +4042,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsNer",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsNer",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Predictions_optional_TranscriptionMetadata_NerPrediction",
               "source": {
@@ -4070,14 +4071,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "modelsPredictionsFacemesh",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ModelsPredictionsFacemesh",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Predictions_optional_Null_FacemeshPrediction",
               "source": {
@@ -4102,7 +4103,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "Ner",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4116,14 +4117,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "nerIdentifySpeakers",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "generatedName": "NerIdentifySpeakers",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": false,
@@ -4147,7 +4148,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "NerPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4161,7 +4162,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "The recognized topic or entity.",
             "generatedName": "NerPredictionEntity",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4206,7 +4207,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "Our NER model's relative confidence in the recognized topic or entity.",
             "generatedName": "NerPredictionEntityConfidence",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4231,7 +4232,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "A measure of how often the entity is linked to by other entities.",
             "generatedName": "NerPredictionSupport",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4256,7 +4257,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "A URL which provides more information about the recognized topic or entity.",
             "generatedName": "NerPredictionUri",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4280,7 +4281,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "The specific word to which the emotion predictions are linked.",
             "generatedName": "NerPredictionLinkWord",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4304,7 +4305,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "nerPredictionTime",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -4333,14 +4334,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "nerPredictionConfidence",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "NerPredictionConfidence",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Confidence",
               "schema": {
                 "default": null,
@@ -4366,14 +4367,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "nerPredictionSpeakerConfidence",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "generatedName": "NerPredictionSpeakerConfidence",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -4399,7 +4400,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "NerPredictionEmotions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -4427,13 +4428,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
     "Null": {
       "availability": null,
       "description": "No associated metadata for this model. Value will be \`null\`.",
+      "encoding": null,
       "generatedName": "Null",
-      "groupName": null,
+      "groupName": [],
       "key": {
         "availability": null,
         "description": null,
         "generatedName": "NullKey",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "schema": {
           "default": null,
@@ -4459,7 +4461,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
       "generatedName": "PositionInterval",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4473,7 +4475,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "The index of the first character in the text segment, inclusive.",
             "generatedName": "PositionIntervalBegin",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "type": "uint64",
@@ -4492,7 +4494,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "The index of the last character in the text segment, exclusive.",
             "generatedName": "PositionIntervalEnd",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "type": "uint64",
@@ -4514,7 +4516,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "Prediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4528,7 +4530,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "A file path relative to the top level source URL or file.",
             "generatedName": "PredictionFile",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "File",
             "schema": {
               "default": null,
@@ -4576,7 +4578,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalNullBurstPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4590,7 +4592,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalNullBurstPredictionMetadata",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -4619,7 +4621,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalNullBurstPredictionGroupedPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -4651,7 +4653,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalNullFacePrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4665,7 +4667,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalNullFacePredictionMetadata",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -4694,7 +4696,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalNullFacePredictionGroupedPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -4726,7 +4728,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalNullFacemeshPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4740,7 +4742,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalNullFacemeshPredictionMetadata",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -4769,7 +4771,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalNullFacemeshPredictionGroupedPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -4801,7 +4803,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4815,7 +4817,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -4844,7 +4846,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -4876,7 +4878,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalTranscriptionMetadataNerPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4890,7 +4892,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionMetadata",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -4919,7 +4921,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -4951,7 +4953,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4965,7 +4967,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -4994,7 +4996,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -5026,7 +5028,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": "NOTE: the \`granularity\` field is ignored if transcription is not enabled or if the \`window\` field has been set.",
       "generatedName": "Prosody",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -5040,14 +5042,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "prosodyGranularity",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ProsodyGranularity",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Granularity",
               "source": {
@@ -5069,14 +5071,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "prosodyIdentifySpeakers",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "generatedName": "ProsodyIdentifySpeakers",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": false,
@@ -5097,14 +5099,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "prosodyWindow",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ProsodyWindow",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Window",
               "source": {
@@ -5129,7 +5131,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "ProsodyPrediction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -5143,14 +5145,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "prosodyPredictionText",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "A segment of text (like a word or a sentence).",
               "generatedName": "ProsodyPredictionText",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Text",
               "schema": {
                 "default": null,
@@ -5196,14 +5198,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "prosodyPredictionConfidence",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "ProsodyPredictionConfidence",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": "Confidence",
               "schema": {
                 "default": null,
@@ -5229,14 +5231,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "prosodyPredictionSpeakerConfidence",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "generatedName": "ProsodyPredictionSpeakerConfidence",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -5262,7 +5264,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "ProsodyPredictionEmotions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -5294,7 +5296,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "Queued",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -5308,7 +5310,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": "When this job was created (Unix timestamp in milliseconds).",
             "generatedName": "QueuedCreatedTimestampMs",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -5331,7 +5333,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "availability": null,
       "description": null,
       "generatedName": "Request",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -5345,14 +5347,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "requestModels",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "RequestModels",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Models",
               "source": {
@@ -5374,14 +5376,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "requestTranscription",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "RequestTranscription",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Transcription",
               "source": {
@@ -5403,7 +5405,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "availability": null,
             "description": null,
             "generatedName": "requestUrls",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -5412,14 +5414,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
 
 If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
               "generatedName": "RequestUrls",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
                 "availability": null,
                 "description": null,
                 "generatedName": "RequestUrlsItem",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -5445,14 +5447,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "requestCallbackUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
               "generatedName": "RequestCallbackUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -5477,14 +5479,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "requestNotify",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Whether to send an email notification to the user upon job completion/failure.",
               "generatedName": "RequestNotify",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": false,
@@ -5505,7 +5507,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "RequestFiles",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -5537,7 +5539,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "Results",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -5551,7 +5553,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "ResultsPredictions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -5580,7 +5582,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "ResultsErrors",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -5612,7 +5614,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "SentimentScore",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -5626,7 +5628,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Level of sentiment, ranging from \`1\` (negative) to \`9\` (positive)",
             "generatedName": "SentimentScoreName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -5650,7 +5652,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Prediction for this level of sentiment",
             "generatedName": "SentimentScoreScore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -5675,7 +5677,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "default": null,
       "description": null,
       "generatedName": "SortBy",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "hume/openapi.yaml",
@@ -5731,8 +5733,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "Source",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "schemas": {
           "file": {
@@ -5776,7 +5779,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "SourceResult",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -5811,7 +5814,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "sourceResultResults",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -5840,14 +5843,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "sourceResultError",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "An error message.",
               "generatedName": "SourceResultError",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -5888,7 +5891,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "SourceFile",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -5917,7 +5920,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "SourceUrl",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -5933,8 +5936,9 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "status",
+        "encoding": null,
         "generatedName": "State",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "schemas": {
           "COMPLETED": {
@@ -6017,7 +6021,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "StateCompleted",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -6046,7 +6050,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "StateFailed",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -6075,7 +6079,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "StateInProgress",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -6104,7 +6108,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "StateQueued",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -6118,7 +6122,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "default": null,
       "description": null,
       "generatedName": "Status",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "hume/openapi.yaml",
@@ -6187,7 +6191,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": "A time range with a beginning and end, measured in seconds.",
       "generatedName": "TimeInterval",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -6201,7 +6205,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Beginning of time range in seconds.",
             "generatedName": "TimeIntervalBegin",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6226,7 +6230,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "End of time range in seconds.",
             "generatedName": "TimeIntervalEnd",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6254,7 +6258,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "ToxicityScore",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -6268,7 +6272,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Category of toxicity.",
             "generatedName": "ToxicityScoreName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6292,7 +6296,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Prediction for this category of toxicity",
             "generatedName": "ToxicityScoreScore",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6319,7 +6323,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "Transcription",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -6333,14 +6337,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "transcriptionLanguage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TranscriptionLanguage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Bcp47Tag",
               "source": {
@@ -6365,7 +6369,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": "Transcription metadata for your media file.",
       "generatedName": "TranscriptionMetadata",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -6379,7 +6383,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "Value between \`0.0\` and \`1.0\` indicating our transcription model’s relative confidence in the transcription of your media file.",
             "generatedName": "TranscriptionMetadataConfidence",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6404,14 +6408,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "transcriptionMetadataDetectedLanguage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TranscriptionMetadataDetectedLanguage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "Bcp47Tag",
               "source": {
@@ -6436,7 +6440,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "Url",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -6450,7 +6454,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": "The URL of the source media file.",
             "generatedName": "UrlUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -6475,7 +6479,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "default": null,
       "description": null,
       "generatedName": "When",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "hume/openapi.yaml",
@@ -6518,7 +6522,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "availability": null,
       "description": null,
       "generatedName": "Window",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -6532,14 +6536,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "windowLength",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The length of the sliding window.",
               "generatedName": "WindowLength",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 4,
@@ -6565,14 +6569,14 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "availability": null,
             "description": null,
             "generatedName": "windowStep",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The step size of the sliding window.",
               "generatedName": "WindowStep",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 1,

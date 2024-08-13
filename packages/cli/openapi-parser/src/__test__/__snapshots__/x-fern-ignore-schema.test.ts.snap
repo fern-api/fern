@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
+exports[`x-fern-ignore-schema > x-fern-ignore-schema > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -20,7 +20,7 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "SchemaToKeep",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -34,14 +34,14 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "schemaToKeepId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "SchemaToKeepId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,

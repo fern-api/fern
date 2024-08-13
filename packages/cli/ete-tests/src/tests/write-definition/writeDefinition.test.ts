@@ -9,6 +9,10 @@ describe("validate", () => {
     itFixture("petstore");
 });
 
+describe("validate namespaced API", () => {
+    itFixture("namespaced");
+});
+
 function itFixture(fixtureName: string) {
     it(
         // eslint-disable-next-line jest/valid-title

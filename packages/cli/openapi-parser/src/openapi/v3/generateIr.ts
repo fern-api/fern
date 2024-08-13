@@ -49,12 +49,14 @@ export function generateIr({
     openApi,
     taskContext,
     options,
-    source
+    source,
+    namespace
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
     options: ParseOpenAPIOptions;
     source: Source;
+    namespace: string | undefined;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
     // We need a context to do extract and validate, but we don't have headers at this time since that's
@@ -96,7 +98,8 @@ export function generateIr({
         taskContext,
         authHeaders,
         options,
-        source
+        source,
+        namespace
     });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);
@@ -172,12 +175,13 @@ export function generateIr({
                                 false,
                                 context,
                                 [key],
-                                source
+                                source,
+                                namespace
                             )
                         ];
                     }
                 }
-                return [key, convertSchema(schema, false, context, [key], source)];
+                return [key, convertSchema(schema, false, context, [key], source, namespace)];
             })
             .filter((entry) => entry.length > 0)
     );

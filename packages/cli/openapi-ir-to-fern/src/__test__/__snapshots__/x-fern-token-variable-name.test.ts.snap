@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-token-variable-name x-fern-token-variable-name docs 1`] = `
+exports[`x-fern-token-variable-name > x-fern-token-variable-name > docs 1`] = `
 {
   "definitionFiles": {
     "chatCompletions.yml": {
@@ -95,7 +95,7 @@ exports[`x-fern-token-variable-name x-fern-token-variable-name docs 1`] = `
 }
 `;
 
-exports[`x-fern-token-variable-name x-fern-token-variable-name simple 1`] = `
+exports[`x-fern-token-variable-name > x-fern-token-variable-name > simple 1`] = `
 {
   "definitionFiles": {
     "chatCompletions.yml": {

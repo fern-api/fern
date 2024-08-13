@@ -6,11 +6,11 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public class PathClient
+public partial class PathClient
 {
     private RawClient _client;
 
-    public PathClient(RawClient client)
+    internal PathClient(RawClient client)
     {
         _client = client;
     }
@@ -42,7 +42,7 @@ public class PathClient
         throw new SeedLiteralApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

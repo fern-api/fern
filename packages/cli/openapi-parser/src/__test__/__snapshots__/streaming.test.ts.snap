@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser streaming parse open api 1`] = `
+exports[`open api parser > streaming > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -35,7 +35,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "UserStreamRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -49,14 +49,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userStreamRequestId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": "",
                   "generatedName": "UserStreamRequestId",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -81,7 +81,7 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "UserStreamRequestStream",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -197,7 +197,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "UserRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -211,14 +211,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userRequestId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": "",
                   "generatedName": "UserRequestId",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -243,7 +243,7 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "UserRequestStream",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -325,7 +325,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "UserV2StreamRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -339,14 +339,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userV2StreamRequestId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": "",
                   "generatedName": "UserV2StreamRequestId",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -371,7 +371,7 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "UserV2StreamRequestStream",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -501,7 +501,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "UserV2Request",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -515,14 +515,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userV2RequestId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": "",
                   "generatedName": "UserV2RequestId",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -547,7 +547,7 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "UserV2RequestStream",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -629,7 +629,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "UserV3StreamRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -643,14 +643,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userV3StreamRequestId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": "",
                   "generatedName": "UserV3StreamRequestId",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -675,7 +675,7 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "UserV3StreamRequestStream",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -708,7 +708,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "UserV3StreamResponse",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -722,14 +722,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userV3StreamResponseId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "UserV3StreamResponseId",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -754,14 +754,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userV3StreamResponseInline",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "UserV3StreamResponseInline",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -782,14 +782,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userV3StreamResponseStreamed",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "UserV3StreamResponseStreamed",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -890,7 +890,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "UserV3Request",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -904,14 +904,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userV3RequestId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": "",
                   "generatedName": "UserV3RequestId",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -936,7 +936,7 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "UserV3RequestStream",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -969,7 +969,7 @@ exports[`open api parser streaming parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "UserV3Response",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -983,14 +983,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userV3ResponseId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "UserV3ResponseId",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1015,14 +1015,14 @@ exports[`open api parser streaming parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "userV3ResponseInline",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "UserV3ResponseInline",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1073,7 +1073,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "BaseStreamUser",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1087,14 +1087,14 @@ exports[`open api parser streaming parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "baseStreamUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "BaseStreamUserId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1122,7 +1122,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "BaseUser",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1136,14 +1136,14 @@ exports[`open api parser streaming parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "baseUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "BaseUserId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1171,7 +1171,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "StreamUser",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1185,14 +1185,14 @@ exports[`open api parser streaming parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "streamUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "StreamUserId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1217,14 +1217,14 @@ exports[`open api parser streaming parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "streamUserName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "StreamUserName",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1249,14 +1249,14 @@ exports[`open api parser streaming parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "streamUserStreamed",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "StreamUserStreamed",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {
@@ -1280,7 +1280,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "User",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -1294,14 +1294,14 @@ exports[`open api parser streaming parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "userId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "UserId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1326,14 +1326,14 @@ exports[`open api parser streaming parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "userName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "UserName",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1358,14 +1358,14 @@ exports[`open api parser streaming parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "userStreamed",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "UserStreamed",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {

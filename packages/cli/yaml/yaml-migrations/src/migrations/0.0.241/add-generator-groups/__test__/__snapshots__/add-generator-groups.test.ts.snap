@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`add-generator-groups simple 1`] = `
+exports[`add-generator-groups > simple 1`] = `
 "default-group: server
 groups:
   server:

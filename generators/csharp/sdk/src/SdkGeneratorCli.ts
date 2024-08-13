@@ -4,7 +4,7 @@ import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
-import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator copy";
+import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
@@ -120,9 +120,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const baseApiException = new BaseApiExceptionGenerator(context);
         context.project.addSourceFiles(baseApiException.generate());
 
-        for (const [_, _error] of Object.entries(context.ir.errors)) {
-            const errorGenerator = new ErrorGenerator(context, _error);
-            context.project.addSourceFiles(errorGenerator.generate());
+        if (context.customConfig["generate-error-types"] ?? true) {
+            for (const _error of Object.values(context.ir.errors)) {
+                const errorGenerator = new ErrorGenerator(context, _error);
+                context.project.addSourceFiles(errorGenerator.generate());
+            }
         }
 
         const rootClient = new RootClientGenerator(context);

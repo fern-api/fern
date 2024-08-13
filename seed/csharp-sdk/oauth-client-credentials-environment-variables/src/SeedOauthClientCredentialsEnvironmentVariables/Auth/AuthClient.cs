@@ -6,11 +6,11 @@ using SeedOauthClientCredentialsEnvironmentVariables.Core;
 
 namespace SeedOauthClientCredentialsEnvironmentVariables;
 
-public class AuthClient
+public partial class AuthClient
 {
     private RawClient _client;
 
-    public AuthClient(RawClient client)
+    internal AuthClient(RawClient client)
     {
         _client = client;
     }
@@ -49,7 +49,7 @@ public class AuthClient
         throw new SeedOauthClientCredentialsEnvironmentVariablesApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -87,7 +87,7 @@ public class AuthClient
         throw new SeedOauthClientCredentialsEnvironmentVariablesApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
+exports[`x-fern-property-name > x-fern-property-name > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -20,7 +20,7 @@ exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "BaseUser",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -34,14 +34,14 @@ exports[`x-fern-property-name x-fern-property-name parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "baseUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "BaseUserId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,

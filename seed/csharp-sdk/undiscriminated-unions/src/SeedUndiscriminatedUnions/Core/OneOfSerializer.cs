@@ -5,7 +5,7 @@ using OneOf;
 
 namespace SeedUndiscriminatedUnions.Core;
 
-public class OneOfSerializer<TOneOf> : JsonConverter<TOneOf>
+internal class OneOfSerializer<TOneOf> : JsonConverter<TOneOf>
     where TOneOf : IOneOf
 {
     public override TOneOf? Read(

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`union-extension union-extension docs 1`] = `
+exports[`union-extension > union-extension > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -47,7 +47,10 @@ exports[`union-extension union-extension docs 1`] = `
       "PartyAccount": {
         "discriminated": false,
         "docs": "PartyAccount with excluded currency in response",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "union-extension/openapi.yml",
+        },
         "union": [
           "IbanField",
           "OtherField",
@@ -65,7 +68,7 @@ exports[`union-extension union-extension docs 1`] = `
 }
 `;
 
-exports[`union-extension union-extension simple 1`] = `
+exports[`union-extension > union-extension > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -112,7 +115,10 @@ exports[`union-extension union-extension simple 1`] = `
       "PartyAccount": {
         "discriminated": false,
         "docs": "PartyAccount with excluded currency in response",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "union-extension/openapi.yml",
+        },
         "union": [
           "IbanField",
           "OtherField",

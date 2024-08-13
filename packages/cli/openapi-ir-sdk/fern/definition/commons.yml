@@ -6,6 +6,10 @@ types:
     properties:
       source: optional<Source>
 
+  WithEncoding:
+    properties:
+      encoding: optional<Encoding>
+
   WithDescription:
     properties:
       description: optional<string>
@@ -39,6 +43,14 @@ types:
   ProtobufSource:
     properties:
       file: string
+
+  Encoding:
+    union:
+      protobuf: ProtobufEncoding
+
+  ProtobufEncoding:
+    properties:
+      typeName: string
 
   SchemaId:
     type: string

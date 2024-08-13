@@ -37,15 +37,20 @@ export function parseAsyncAPI({
     taskContext,
     options,
     source,
-    asyncApiOptions
+    asyncApiOptions,
+    namespace
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
     options: ParseOpenAPIOptions;
     source: Source;
     asyncApiOptions: ParseAsyncAPIOptions;
+    namespace: string | undefined;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
+    if (namespace != null) {
+        breadcrumbs.push(namespace);
+    }
     if (document.tags?.[0] != null) {
         breadcrumbs.push(document.tags[0].name);
     } else if (asyncApiOptions.naming !== "v2") {
@@ -58,14 +63,15 @@ export function parseAsyncAPI({
     const context = new AsyncAPIV2ParserContext({
         document,
         taskContext,
-        options
+        options,
+        namespace
     });
 
     const schemas: Record<SchemaId, SchemaWithExample> = {};
     let parsedChannel: WebsocketChannel | undefined = undefined;
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        const convertedSchema = convertSchema(schema, false, context, [schemaId], source);
+        const convertedSchema = convertSchema(schema, false, context, [schemaId], source, namespace);
         schemas[schemaId] = convertedSchema;
     }
 
@@ -85,7 +91,7 @@ export function parseAsyncAPI({
                     description: parameter.description,
                     schema:
                         parameter.schema != null
-                            ? convertSchema(parameter.schema, false, context, breadcrumbs, source)
+                            ? convertSchema(parameter.schema, false, context, breadcrumbs, source, namespace)
                             : SchemaWithExample.primitive({
                                   schema: PrimitiveSchemaValueWithExample.string({
                                       default: undefined,
@@ -115,7 +121,14 @@ export function parseAsyncAPI({
                 const resolvedHeader = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
                 headers.push({
                     name,
-                    schema: convertSchema(resolvedHeader, !required.includes(name), context, breadcrumbs, source),
+                    schema: convertSchema(
+                        resolvedHeader,
+                        !required.includes(name),
+                        context,
+                        breadcrumbs,
+                        source,
+                        namespace
+                    ),
                     description: resolvedHeader.description,
                     parameterNameOverride: undefined,
                     env: undefined,
@@ -139,7 +152,8 @@ export function parseAsyncAPI({
                         !required.includes(name),
                         context,
                         breadcrumbs,
-                        source
+                        source,
+                        namespace
                     ),
                     description: resolvedQueryParameter.description,
                     parameterNameOverride: undefined,
@@ -189,7 +203,8 @@ export function parseAsyncAPI({
                     },
                     publish: publishSchema,
                     subscribe: subscribeSchema,
-                    source
+                    source,
+                    namespace
                 });
             } else {
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({
@@ -302,7 +317,9 @@ function convertMessageToSchema({
             wrapAsNullable: false,
             breadcrumbs,
             context,
+            encoding: undefined,
             source,
+            namespace: context.namespace,
             subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
         });
     }

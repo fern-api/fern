@@ -6,11 +6,11 @@ using SeedPagination.Core;
 
 namespace SeedPagination;
 
-public class UsersClient
+public partial class UsersClient
 {
     private RawClient _client;
 
-    public UsersClient(RawClient client)
+    internal UsersClient(RawClient client)
     {
         _client = client;
     }
@@ -63,7 +63,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -98,7 +98,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -150,7 +150,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -185,7 +185,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -233,7 +233,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -281,7 +281,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -321,7 +321,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -361,7 +361,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -401,7 +401,7 @@ public class UsersClient
         throw new SeedPaginationApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

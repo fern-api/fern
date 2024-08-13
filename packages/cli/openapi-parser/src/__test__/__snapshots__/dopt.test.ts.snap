@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser dopt parse open api 1`] = `
+exports[`open api parser > dopt > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -25,7 +25,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BadRequestErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "BadRequestErrorResponseBody",
             "properties": [
               {
@@ -40,7 +40,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "default": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "source": {
                     "file": "dopt/openapi.json",
@@ -88,7 +88,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -125,7 +125,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "UnauthorizedErrorResponseBody",
             "properties": [
               {
@@ -139,7 +139,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -159,7 +159,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -196,7 +196,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NotFoundErrorResponseBody",
             "properties": [
               {
@@ -210,7 +210,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "NotFoundErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -230,7 +230,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "NotFoundErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -267,7 +267,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "InternalServerErrorResponseBody",
             "properties": [
               {
@@ -281,7 +281,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "InternalServerErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -301,7 +301,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "InternalServerErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -510,7 +510,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "FindBlocksRequestUid",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -539,7 +539,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "FindBlocksRequestVersion",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -566,7 +566,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "FindBlocksRequestUserIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -596,7 +596,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "FindBlocksResponse",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -610,7 +610,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "FindBlocksResponseKind",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -630,7 +630,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "FindBlocksResponseUid",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -654,7 +654,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "FindBlocksResponseSid",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -678,7 +678,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "FindBlocksResponseVersion",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -706,7 +706,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "FindBlocksResponseState",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "properties": [
                   {
@@ -720,7 +720,7 @@ exports[`open api parser dopt parse open api 1`] = `
                       "availability": null,
                       "description": null,
                       "generatedName": "FindBlocksResponseStateActive",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -740,7 +740,7 @@ exports[`open api parser dopt parse open api 1`] = `
                       "availability": null,
                       "description": null,
                       "generatedName": "FindBlocksResponseStateEntered",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -760,7 +760,7 @@ exports[`open api parser dopt parse open api 1`] = `
                       "availability": null,
                       "description": null,
                       "generatedName": "FindBlocksResponseStateExited",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -788,14 +788,14 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "findBlocksResponseContainerUid",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "FindBlocksResponseContainerUid",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -819,13 +819,14 @@ exports[`open api parser dopt parse open api 1`] = `
               "schema": {
                 "availability": null,
                 "description": null,
+                "encoding": null,
                 "generatedName": "FindBlocksResponseTransitioned",
-                "groupName": null,
+                "groupName": [],
                 "key": {
                   "availability": null,
                   "description": null,
                   "generatedName": "FindBlocksResponseTransitionedKey",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -842,7 +843,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "FindBlocksResponseTransitionedValue",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -864,7 +865,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "default": null,
                 "description": null,
                 "generatedName": "FindBlocksResponseType",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "source": {
                   "file": "dopt/openapi.json",
@@ -964,7 +965,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "FindBlocksResponseFields",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "array",
                 "value": {
@@ -974,8 +975,9 @@ exports[`open api parser dopt parse open api 1`] = `
                     "commonProperties": [],
                     "description": null,
                     "discriminantProperty": "type",
+                    "encoding": null,
                     "generatedName": "FindBlocksResponseFieldsItem",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "schemas": {
                       "boolean": {
@@ -985,7 +987,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "availability": null,
                         "description": null,
                         "generatedName": "FindBlocksResponseFieldsItemBoolean",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "properties": [
                           {
@@ -999,7 +1001,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "availability": null,
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemBooleanSid",
-                              "groupName": null,
+                              "groupName": [],
                               "nameOverride": null,
                               "schema": {
                                 "default": null,
@@ -1023,14 +1025,14 @@ exports[`open api parser dopt parse open api 1`] = `
                               "availability": null,
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemBooleanValue",
-                              "groupName": null,
+                              "groupName": [],
                               "nameOverride": null,
                               "type": "nullable",
                               "value": {
                                 "availability": null,
                                 "description": null,
                                 "generatedName": "FindBlocksResponseFieldsItemBooleanValue",
-                                "groupName": null,
+                                "groupName": [],
                                 "nameOverride": null,
                                 "schema": {
                                   "default": null,
@@ -1054,7 +1056,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "availability": null,
                         "description": null,
                         "generatedName": "FindBlocksResponseFieldsItemNumber",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "properties": [
                           {
@@ -1068,7 +1070,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "availability": null,
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemNumberSid",
-                              "groupName": null,
+                              "groupName": [],
                               "nameOverride": null,
                               "schema": {
                                 "default": null,
@@ -1092,14 +1094,14 @@ exports[`open api parser dopt parse open api 1`] = `
                               "availability": null,
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemNumberValue",
-                              "groupName": null,
+                              "groupName": [],
                               "nameOverride": null,
                               "type": "nullable",
                               "value": {
                                 "availability": null,
                                 "description": null,
                                 "generatedName": "FindBlocksResponseFieldsItemNumberValue",
-                                "groupName": null,
+                                "groupName": [],
                                 "nameOverride": null,
                                 "schema": {
                                   "default": null,
@@ -1128,7 +1130,7 @@ exports[`open api parser dopt parse open api 1`] = `
                         "availability": null,
                         "description": null,
                         "generatedName": "FindBlocksResponseFieldsItemString",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "properties": [
                           {
@@ -1142,7 +1144,7 @@ exports[`open api parser dopt parse open api 1`] = `
                               "availability": null,
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemStringSid",
-                              "groupName": null,
+                              "groupName": [],
                               "nameOverride": null,
                               "schema": {
                                 "default": null,
@@ -1166,14 +1168,14 @@ exports[`open api parser dopt parse open api 1`] = `
                               "availability": null,
                               "description": null,
                               "generatedName": "FindBlocksResponseFieldsItemStringValue",
-                              "groupName": null,
+                              "groupName": [],
                               "nameOverride": null,
                               "type": "nullable",
                               "value": {
                                 "availability": null,
                                 "description": null,
                                 "generatedName": "FindBlocksResponseFieldsItemStringValue",
-                                "groupName": null,
+                                "groupName": [],
                                 "nameOverride": null,
                                 "schema": {
                                   "default": null,
@@ -1246,7 +1248,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BadRequestErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "BadRequestErrorResponseBody",
             "properties": [
               {
@@ -1261,7 +1263,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "default": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "source": {
                     "file": "dopt/openapi.json",
@@ -1309,7 +1311,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1346,7 +1348,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "UnauthorizedErrorResponseBody",
             "properties": [
               {
@@ -1360,7 +1362,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -1380,7 +1382,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1417,7 +1419,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NotFoundErrorResponseBody",
             "properties": [
               {
@@ -1431,7 +1433,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "NotFoundErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -1451,7 +1453,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "NotFoundErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1488,7 +1490,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "InternalServerErrorResponseBody",
             "properties": [
               {
@@ -1502,7 +1504,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "InternalServerErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -1522,7 +1524,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "InternalServerErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1566,7 +1568,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BlockTransitionsRequestUid",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1595,14 +1597,14 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BlockTransitionsRequestTransitions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "BlockTransitionsRequestTransitionsItem",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1629,7 +1631,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BlockTransitionsRequestVersion",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1656,7 +1658,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BlockTransitionsRequestUserIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -1682,14 +1684,14 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BlockTransitionsRequestGroupIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "BlockTransitionsRequestGroupIdentifier",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -1740,7 +1742,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BadRequestErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "BadRequestErrorResponseBody",
             "properties": [
               {
@@ -1755,7 +1757,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "default": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "source": {
                     "file": "dopt/openapi.json",
@@ -1803,7 +1805,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1840,7 +1842,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "UnauthorizedErrorResponseBody",
             "properties": [
               {
@@ -1854,7 +1856,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -1874,7 +1876,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1911,7 +1913,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NotFoundErrorResponseBody",
             "properties": [
               {
@@ -1925,7 +1927,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "NotFoundErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -1945,7 +1947,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "NotFoundErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -1982,7 +1984,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "InternalServerErrorResponseBody",
             "properties": [
               {
@@ -1996,7 +1998,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "InternalServerErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -2016,7 +2018,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "InternalServerErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -2289,7 +2291,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetFlowRequestSid",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2318,7 +2320,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetFlowRequestVersion",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2345,14 +2347,14 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetFlowRequestInclude",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GetFlowRequestInclude",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {
@@ -2375,7 +2377,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetFlowRequestUserIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -2401,14 +2403,14 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetFlowRequestGroupIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GetFlowRequestGroupIdentifier",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -2439,7 +2441,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "GetFlowResponse",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -2453,7 +2455,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "GetFlowResponseKind",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -2473,7 +2475,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "GetFlowResponseType",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -2493,7 +2495,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "GetFlowResponseUid",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -2517,7 +2519,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "GetFlowResponseSid",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -2541,7 +2543,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "GetFlowResponseVersion",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -2569,7 +2571,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "GetFlowResponseState",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "properties": [
                   {
@@ -2583,7 +2585,7 @@ exports[`open api parser dopt parse open api 1`] = `
                       "availability": null,
                       "description": null,
                       "generatedName": "GetFlowResponseStateStopped",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -2603,7 +2605,7 @@ exports[`open api parser dopt parse open api 1`] = `
                       "availability": null,
                       "description": null,
                       "generatedName": "GetFlowResponseStateStarted",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -2623,7 +2625,7 @@ exports[`open api parser dopt parse open api 1`] = `
                       "availability": null,
                       "description": null,
                       "generatedName": "GetFlowResponseStateFinished",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "schema": {
                         "default": null,
@@ -2651,14 +2653,14 @@ exports[`open api parser dopt parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "getFlowResponseBlocks",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "optional",
                 "value": {
                   "availability": null,
                   "description": null,
                   "generatedName": "GetFlowResponseBlocks",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "array",
                   "value": {
@@ -2668,7 +2670,7 @@ exports[`open api parser dopt parse open api 1`] = `
                     "availability": null,
                     "description": null,
                     "generatedName": "GetFlowResponseBlocksItem",
-                    "groupName": null,
+                    "groupName": [],
                     "nameOverride": null,
                     "properties": [
                       {
@@ -2682,7 +2684,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           "availability": null,
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemKind",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "type": "literal",
                           "value": {
@@ -2702,7 +2704,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           "availability": null,
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemUid",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "schema": {
                             "default": null,
@@ -2726,7 +2728,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           "availability": null,
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemSid",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "schema": {
                             "default": null,
@@ -2750,7 +2752,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           "availability": null,
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemVersion",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "schema": {
                             "default": null,
@@ -2778,7 +2780,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           "availability": null,
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemState",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "properties": [
                             {
@@ -2792,7 +2794,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                 "availability": null,
                                 "description": null,
                                 "generatedName": "GetFlowResponseBlocksItemStateActive",
-                                "groupName": null,
+                                "groupName": [],
                                 "nameOverride": null,
                                 "schema": {
                                   "default": null,
@@ -2812,7 +2814,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                 "availability": null,
                                 "description": null,
                                 "generatedName": "GetFlowResponseBlocksItemStateEntered",
-                                "groupName": null,
+                                "groupName": [],
                                 "nameOverride": null,
                                 "schema": {
                                   "default": null,
@@ -2832,7 +2834,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                 "availability": null,
                                 "description": null,
                                 "generatedName": "GetFlowResponseBlocksItemStateExited",
-                                "groupName": null,
+                                "groupName": [],
                                 "nameOverride": null,
                                 "schema": {
                                   "default": null,
@@ -2860,14 +2862,14 @@ exports[`open api parser dopt parse open api 1`] = `
                           "availability": null,
                           "description": null,
                           "generatedName": "getFlowResponseBlocksItemContainerUid",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "type": "optional",
                           "value": {
                             "availability": null,
                             "description": null,
                             "generatedName": "GetFlowResponseBlocksItemContainerUid",
-                            "groupName": null,
+                            "groupName": [],
                             "nameOverride": null,
                             "schema": {
                               "default": null,
@@ -2891,13 +2893,14 @@ exports[`open api parser dopt parse open api 1`] = `
                         "schema": {
                           "availability": null,
                           "description": null,
+                          "encoding": null,
                           "generatedName": "GetFlowResponseBlocksItemTransitioned",
-                          "groupName": null,
+                          "groupName": [],
                           "key": {
                             "availability": null,
                             "description": null,
                             "generatedName": "GetFlowResponseBlocksItemTransitionedKey",
-                            "groupName": null,
+                            "groupName": [],
                             "nameOverride": null,
                             "schema": {
                               "default": null,
@@ -2914,7 +2917,7 @@ exports[`open api parser dopt parse open api 1`] = `
                             "availability": null,
                             "description": null,
                             "generatedName": "GetFlowResponseBlocksItemTransitionedValue",
-                            "groupName": null,
+                            "groupName": [],
                             "nameOverride": null,
                             "schema": {
                               "default": null,
@@ -2936,7 +2939,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           "default": null,
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemType",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "source": {
                             "file": "dopt/openapi.json",
@@ -3036,7 +3039,7 @@ exports[`open api parser dopt parse open api 1`] = `
                           "availability": null,
                           "description": null,
                           "generatedName": "GetFlowResponseBlocksItemFields",
-                          "groupName": null,
+                          "groupName": [],
                           "nameOverride": null,
                           "type": "array",
                           "value": {
@@ -3046,8 +3049,9 @@ exports[`open api parser dopt parse open api 1`] = `
                               "commonProperties": [],
                               "description": null,
                               "discriminantProperty": "type",
+                              "encoding": null,
                               "generatedName": "GetFlowResponseBlocksItemFieldsItem",
-                              "groupName": null,
+                              "groupName": [],
                               "nameOverride": null,
                               "schemas": {
                                 "boolean": {
@@ -3057,7 +3061,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                   "availability": null,
                                   "description": null,
                                   "generatedName": "GetFlowResponseBlocksItemFieldsItemBoolean",
-                                  "groupName": null,
+                                  "groupName": [],
                                   "nameOverride": null,
                                   "properties": [
                                     {
@@ -3071,7 +3075,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         "availability": null,
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemBooleanSid",
-                                        "groupName": null,
+                                        "groupName": [],
                                         "nameOverride": null,
                                         "schema": {
                                           "default": null,
@@ -3095,14 +3099,14 @@ exports[`open api parser dopt parse open api 1`] = `
                                         "availability": null,
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemBooleanValue",
-                                        "groupName": null,
+                                        "groupName": [],
                                         "nameOverride": null,
                                         "type": "nullable",
                                         "value": {
                                           "availability": null,
                                           "description": null,
                                           "generatedName": "GetFlowResponseBlocksItemFieldsItemBooleanValue",
-                                          "groupName": null,
+                                          "groupName": [],
                                           "nameOverride": null,
                                           "schema": {
                                             "default": null,
@@ -3126,7 +3130,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                   "availability": null,
                                   "description": null,
                                   "generatedName": "GetFlowResponseBlocksItemFieldsItemNumber",
-                                  "groupName": null,
+                                  "groupName": [],
                                   "nameOverride": null,
                                   "properties": [
                                     {
@@ -3140,7 +3144,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         "availability": null,
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemNumberSid",
-                                        "groupName": null,
+                                        "groupName": [],
                                         "nameOverride": null,
                                         "schema": {
                                           "default": null,
@@ -3164,14 +3168,14 @@ exports[`open api parser dopt parse open api 1`] = `
                                         "availability": null,
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemNumberValue",
-                                        "groupName": null,
+                                        "groupName": [],
                                         "nameOverride": null,
                                         "type": "nullable",
                                         "value": {
                                           "availability": null,
                                           "description": null,
                                           "generatedName": "GetFlowResponseBlocksItemFieldsItemNumberValue",
-                                          "groupName": null,
+                                          "groupName": [],
                                           "nameOverride": null,
                                           "schema": {
                                             "default": null,
@@ -3200,7 +3204,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                   "availability": null,
                                   "description": null,
                                   "generatedName": "GetFlowResponseBlocksItemFieldsItemString",
-                                  "groupName": null,
+                                  "groupName": [],
                                   "nameOverride": null,
                                   "properties": [
                                     {
@@ -3214,7 +3218,7 @@ exports[`open api parser dopt parse open api 1`] = `
                                         "availability": null,
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemStringSid",
-                                        "groupName": null,
+                                        "groupName": [],
                                         "nameOverride": null,
                                         "schema": {
                                           "default": null,
@@ -3238,14 +3242,14 @@ exports[`open api parser dopt parse open api 1`] = `
                                         "availability": null,
                                         "description": null,
                                         "generatedName": "GetFlowResponseBlocksItemFieldsItemStringValue",
-                                        "groupName": null,
+                                        "groupName": [],
                                         "nameOverride": null,
                                         "type": "nullable",
                                         "value": {
                                           "availability": null,
                                           "description": null,
                                           "generatedName": "GetFlowResponseBlocksItemFieldsItemStringValue",
-                                          "groupName": null,
+                                          "groupName": [],
                                           "nameOverride": null,
                                           "schema": {
                                             "default": null,
@@ -3328,7 +3332,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BadRequestErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "BadRequestErrorResponseBody",
             "properties": [
               {
@@ -3343,7 +3347,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "default": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "source": {
                     "file": "dopt/openapi.json",
@@ -3391,7 +3395,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "BadRequestErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -3428,7 +3432,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "UnauthorizedErrorResponseBody",
             "properties": [
               {
@@ -3442,7 +3446,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -3462,7 +3466,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "UnauthorizedErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -3499,7 +3503,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "NotFoundErrorResponseBody",
             "properties": [
               {
@@ -3513,7 +3517,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "NotFoundErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -3533,7 +3537,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "NotFoundErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -3570,7 +3574,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorBody",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "InternalServerErrorResponseBody",
             "properties": [
               {
@@ -3584,7 +3588,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "InternalServerErrorBodyCode",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "type": "literal",
                   "value": {
@@ -3604,7 +3608,7 @@ exports[`open api parser dopt parse open api 1`] = `
                   "availability": null,
                   "description": null,
                   "generatedName": "InternalServerErrorBodyDetails",
-                  "groupName": null,
+                  "groupName": [],
                   "nameOverride": null,
                   "schema": {
                     "default": null,
@@ -3699,7 +3703,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "FlowIntentRequestUid",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -3726,7 +3730,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "default": null,
             "description": null,
             "generatedName": "FlowIntentRequestIntent",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "source": {
               "file": "dopt/openapi.json",
@@ -3805,7 +3809,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "FlowIntentRequestVersion",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -3832,7 +3836,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "FlowIntentRequestUserIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -3858,14 +3862,14 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "FlowIntentRequestGroupIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "FlowIntentRequestGroupIdentifier",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -3912,7 +3916,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "BadRequestErrorResponseBody",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "BadRequestErrorResponseBody",
       "properties": [
         {
@@ -3927,7 +3931,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "default": null,
             "description": null,
             "generatedName": "BadRequestErrorResponseBodyCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "source": {
               "file": "dopt/openapi.json",
@@ -3975,7 +3979,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BadRequestErrorResponseBodyDetails",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4002,7 +4006,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "BlockTransitionQueryString",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4016,14 +4020,14 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BlockTransitionQueryStringTransitions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "BlockTransitionQueryStringTransitionsItem",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -4048,7 +4052,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BlockTransitionQueryStringVersion",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4073,7 +4077,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BlockTransitionQueryStringUserIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4097,14 +4101,14 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "blockTransitionQueryStringGroupIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "BlockTransitionQueryStringGroupIdentifier",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -4132,7 +4136,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "BlockTransitionRequestParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4146,7 +4150,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "BlockTransitionRequestParamsUid",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4173,7 +4177,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "FlowIntentQueryString",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4187,7 +4191,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "FlowIntentQueryStringVersion",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4212,7 +4216,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "FlowIntentQueryStringUserIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4236,14 +4240,14 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "flowIntentQueryStringGroupIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "FlowIntentQueryStringGroupIdentifier",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -4271,7 +4275,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "FlowIntentRequestParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4285,7 +4289,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "FlowIntentRequestParamsUid",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4310,7 +4314,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "default": null,
             "description": null,
             "generatedName": "FlowIntentRequestParamsIntent",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "source": {
               "file": "dopt/openapi.json",
@@ -4387,7 +4391,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "GetBlockQueryString",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4401,7 +4405,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetBlockQueryStringVersion",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4426,7 +4430,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetBlockQueryStringUserIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4453,7 +4457,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "GetBlockRequestParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4467,7 +4471,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetBlockRequestParamsUid",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4494,7 +4498,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "GetFlowQueryString",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4508,7 +4512,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetFlowQueryStringVersion",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4533,14 +4537,14 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "getFlowQueryStringInclude",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GetFlowQueryStringInclude",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "literal",
               "value": {
@@ -4561,7 +4565,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetFlowQueryStringUserIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4585,14 +4589,14 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "getFlowQueryStringGroupIdentifier",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GetFlowQueryStringGroupIdentifier",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -4620,7 +4624,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "GetFlowRequestParams",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4634,7 +4638,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "GetFlowRequestParamsSid",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4661,7 +4665,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "HealthCheckResponseBody",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -4675,7 +4679,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "HealthCheckResponseBodyApplication",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4699,7 +4703,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "HealthCheckResponseBodyStatus",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4727,7 +4731,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "InternalServerErrorResponseBody",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "InternalServerErrorResponseBody",
       "properties": [
         {
@@ -4741,7 +4745,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorResponseBodyCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "literal",
             "value": {
@@ -4761,7 +4765,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "InternalServerErrorResponseBodyDetails",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4788,7 +4792,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "NotFoundErrorResponseBody",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "NotFoundErrorResponseBody",
       "properties": [
         {
@@ -4802,7 +4806,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorResponseBodyCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "literal",
             "value": {
@@ -4822,7 +4826,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "NotFoundErrorResponseBodyDetails",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4849,7 +4853,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "TimeoutErrorResponseBody",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "TimeoutErrorResponseBody",
       "properties": [
         {
@@ -4863,7 +4867,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "TimeoutErrorResponseBodyCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "literal",
             "value": {
@@ -4883,7 +4887,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "TimeoutErrorResponseBodyDetails",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4910,7 +4914,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "UnauthorizedErrorResponseBody",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "UnauthorizedErrorResponseBody",
       "properties": [
         {
@@ -4924,7 +4928,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorResponseBodyCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "literal",
             "value": {
@@ -4944,7 +4948,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UnauthorizedErrorResponseBodyDetails",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,

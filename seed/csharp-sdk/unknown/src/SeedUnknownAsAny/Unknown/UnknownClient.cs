@@ -6,11 +6,11 @@ using SeedUnknownAsAny.Core;
 
 namespace SeedUnknownAsAny;
 
-public class UnknownClient
+public partial class UnknownClient
 {
     private RawClient _client;
 
-    public UnknownClient(RawClient client)
+    internal UnknownClient(RawClient client)
     {
         _client = client;
     }
@@ -43,7 +43,7 @@ public class UnknownClient
         throw new SeedUnknownAsAnyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -78,7 +78,7 @@ public class UnknownClient
         throw new SeedUnknownAsAnyApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

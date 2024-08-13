@@ -17,9 +17,9 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "jest --passWithNoTests",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
+    "lint:eslint:fix": "pnpm lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
@@ -34,7 +34,7 @@
   "devDependencies": {
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
-    "@fern-fern/ir-sdk": "53.4.0",
+    "@fern-fern/ir-sdk": "53.5.0",
     "@fern-typescript/abstract-generator-cli": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
@@ -47,6 +47,7 @@
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
+    "ts-jest": "^29.2.4",
     "lodash-es": "^4.17.21",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",

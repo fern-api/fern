@@ -2020,7 +2020,7 @@
                                         }
                                     }
                                 },
-                                "id": "b2e29598593bf44ad8501986e063385507b138c4",
+                                "id": "24acf1ac8a765743eadf4e4bd9cd4e3d7996c86f",
                                 "docs": null
                             }
                         }
@@ -2347,6 +2347,9 @@
                                                 }
                                             },
                                             "jsonExample": 1.1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -2381,6 +2384,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -2417,6 +2423,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -2765,7 +2774,7 @@
                                         }
                                     }
                                 },
-                                "id": "079037cc77a3807e86ea63698c2df4d8b23c0a7f",
+                                "id": "ae71b98074886bc2999428472fd01fc529456be7",
                                 "docs": null
                             }
                         }

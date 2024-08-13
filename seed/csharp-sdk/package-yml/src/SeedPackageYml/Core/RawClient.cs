@@ -8,7 +8,7 @@ namespace SeedPackageYml.Core;
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
-public class RawClient(
+internal class RawClient(
     Dictionary<string, string> headers,
     Dictionary<string, Func<string>> headerSuppliers,
     ClientOptions clientOptions

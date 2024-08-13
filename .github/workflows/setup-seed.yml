@@ -9,10 +9,10 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: "yarn"
+          cache: "pnpm"
 
-      - name: Yarn Install
-        run: yarn install
+      - name: pnpm Install
+        run: pnpm install
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:

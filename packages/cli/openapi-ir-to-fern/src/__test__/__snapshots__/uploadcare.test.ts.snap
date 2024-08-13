@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser uploadcare docs 1`] = `
+exports[`open api parser > uploadcare > docs 1`] = `
 {
   "definitionFiles": {
     "groups.yml": {
@@ -2467,7 +2467,10 @@ to the value of the \`check_URL_duplicates\` parameter.
         "FromUrlUploadResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
           "union": [
             "root.FromUrlUploadResponseSchema",
             "root.FileUploadInfoFromUrl",
@@ -2476,7 +2479,10 @@ to the value of the \`check_URL_duplicates\` parameter.
         "FromUrlUploadStatusResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
           "union": [
             "root.FileUploadInfoWaitingStatus",
             "root.FileUploadInfoProgressStatus",
@@ -3380,7 +3386,10 @@ to the value of the \`check_URL_duplicates\` parameter.
       "BaseUploadRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -3405,7 +3414,10 @@ to the value of the \`check_URL_duplicates\` parameter.
       "BaseUploadRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "UploadcarePublicKeyRequiredError",
           "UploadcarePublicKeyInvalidError",
@@ -3456,7 +3468,10 @@ to the value of the \`check_URL_duplicates\` parameter.
       "CreateFilesGroupRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -3472,7 +3487,10 @@ to the value of the \`check_URL_duplicates\` parameter.
       "CreateFilesGroupRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3674,7 +3692,10 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "FileUploadInfoRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "NullCharactersForbiddenError",
           "FileIdRequiredError",
@@ -3684,7 +3705,10 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "FileUploadInfoRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3738,7 +3762,10 @@ that are tool old (or that have not been created at all).
       "FilesGroupInfoRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "NullCharactersForbiddenError",
           "GroupIdRequiredError",
@@ -3747,7 +3774,10 @@ that are tool old (or that have not been created at all).
       "FilesGroupInfoRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3759,7 +3789,10 @@ that are tool old (or that have not been created at all).
       "FromUrlUploadRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -3789,7 +3822,10 @@ that are tool old (or that have not been created at all).
       "FromUrlUploadRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -4090,7 +4126,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadCompleteRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -4108,7 +4147,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadCompleteRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "UploadcarePublicKeyRequiredError",
           "UploadcarePublicKeyInvalidError",
@@ -4117,7 +4159,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadStartRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -4145,7 +4190,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadStartRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "UploadcarePublicKeyRequiredError",
           "UploadcarePublicKeyInvalidError",
@@ -4475,7 +4523,7 @@ change the value to \`auto\`.
 }
 `;
 
-exports[`open api parser uploadcare simple 1`] = `
+exports[`open api parser > uploadcare > simple 1`] = `
 {
   "definitionFiles": {
     "groups.yml": {
@@ -6942,7 +6990,10 @@ to the value of the \`check_URL_duplicates\` parameter.
         "FromUrlUploadResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
           "union": [
             "root.FromUrlUploadResponseSchema",
             "root.FileUploadInfoFromUrl",
@@ -6951,7 +7002,10 @@ to the value of the \`check_URL_duplicates\` parameter.
         "FromUrlUploadStatusResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
           "union": [
             "root.FileUploadInfoWaitingStatus",
             "root.FileUploadInfoProgressStatus",
@@ -7119,7 +7173,10 @@ to the value of the \`check_URL_duplicates\` parameter.
       "BadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "NullCharactersForbiddenError",
           "GroupIdRequiredError",
@@ -7396,7 +7453,10 @@ that are tool old (or that have not been created at all).
       "ForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",

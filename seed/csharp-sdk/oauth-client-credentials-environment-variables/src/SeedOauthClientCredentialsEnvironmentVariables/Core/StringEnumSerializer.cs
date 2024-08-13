@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace SeedOauthClientCredentialsEnvironmentVariables.Core;
 
-public class StringEnumSerializer<TEnum> : JsonConverter<TEnum>
+internal class StringEnumSerializer<TEnum> : JsonConverter<TEnum>
     where TEnum : struct, System.Enum
 {
     private readonly Dictionary<TEnum, string> _enumToString = new();

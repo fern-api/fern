@@ -4,11 +4,11 @@ using SeedWebsocket.Core;
 
 namespace SeedWebsocket;
 
-public class RealtimeClient
+public partial class RealtimeClient
 {
     private RawClient _client;
 
-    public RealtimeClient(RawClient client)
+    internal RealtimeClient(RawClient client)
     {
         _client = client;
     }

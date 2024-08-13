@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`seam seam docs 1`] = `
+exports[`seam > seam > docs 1`] = `
 {
   "definitionFiles": {
     "access_codes.yml": {
@@ -5176,7 +5176,10 @@ exports[`seam seam docs 1`] = `
         "ConnectWebviewsCreateRequestCustomMetadataValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             {
               "type": "string",
@@ -5246,7 +5249,10 @@ exports[`seam seam docs 1`] = `
         "ConnectWebviewsListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -5525,7 +5531,10 @@ exports[`seam seam docs 1`] = `
         "ConnectedAccountsGetRequest": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "ConnectedAccountsGetRequestConnectedAccountId",
             "ConnectedAccountsGetRequestEmail",
@@ -5578,7 +5587,10 @@ exports[`seam seam docs 1`] = `
         "ConnectedAccountsListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -5597,7 +5609,10 @@ exports[`seam seam docs 1`] = `
         "ConnectedAccountsUpdateRequestCustomMetadataValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             {
               "type": "string",
@@ -6244,7 +6259,10 @@ exports[`seam seam docs 1`] = `
         "DevicesListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -6412,7 +6430,10 @@ exports[`seam seam docs 1`] = `
         "DevicesUpdateRequestCustomMetadataValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             {
               "type": "string",
@@ -6909,7 +6930,10 @@ exports[`seam seam docs 1`] = `
         "UnmanagedListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -7272,7 +7296,10 @@ exports[`seam seam docs 1`] = `
         "EventsListRequestBetweenItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "datetime",
@@ -8629,7 +8656,10 @@ exports[`seam seam docs 1`] = `
         "LocksListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -10582,7 +10612,10 @@ exports[`seam seam docs 1`] = `
         "ThermostatsListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -12106,7 +12139,10 @@ exports[`seam seam docs 1`] = `
         "UserIdentitiesGetRequest": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "UserIdentitiesGetRequestUserIdentityId",
             "UserIdentitiesGetRequestUserIdentityKey",
@@ -14981,6 +15017,7 @@ exports[`seam seam docs 1`] = `
         "base-properties": {},
         "discriminant": "error_code",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "seam/openapi.json",
         },
@@ -15155,7 +15192,10 @@ exports[`seam seam docs 1`] = `
       "ActionAttempt": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           {
             "docs": "Locking door.",
@@ -16873,7 +16913,10 @@ exports[`seam seam docs 1`] = `
       "ConnectWebviewCustomMetadataValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           "string",
           "boolean",
@@ -16927,7 +16970,10 @@ exports[`seam seam docs 1`] = `
       "ConnectedAccountCustomMetadataValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           "string",
           "boolean",
@@ -17048,7 +17094,10 @@ exports[`seam seam docs 1`] = `
       "DeviceCustomMetadataValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           "string",
           "boolean",
@@ -17395,7 +17444,10 @@ exports[`seam seam docs 1`] = `
       "DevicePropertiesCodeConstraintsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           "DevicePropertiesCodeConstraintsItemZero",
           "DevicePropertiesCodeConstraintsItemMaxLength",
@@ -18236,7 +18288,10 @@ exports[`seam seam docs 1`] = `
       "PhoneCustomMetadataValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           "string",
           "boolean",
@@ -18858,7 +18913,7 @@ exports[`seam seam docs 1`] = `
 }
 `;
 
-exports[`seam seam simple 1`] = `
+exports[`seam > seam > simple 1`] = `
 {
   "definitionFiles": {
     "access_codes.yml": {
@@ -24034,7 +24089,10 @@ exports[`seam seam simple 1`] = `
         "ConnectWebviewsCreateRequestCustomMetadataValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             {
               "type": "string",
@@ -24104,7 +24162,10 @@ exports[`seam seam simple 1`] = `
         "ConnectWebviewsListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -24383,7 +24444,10 @@ exports[`seam seam simple 1`] = `
         "ConnectedAccountsGetRequest": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "ConnectedAccountsGetRequestConnectedAccountId",
             "ConnectedAccountsGetRequestEmail",
@@ -24436,7 +24500,10 @@ exports[`seam seam simple 1`] = `
         "ConnectedAccountsListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -24455,7 +24522,10 @@ exports[`seam seam simple 1`] = `
         "ConnectedAccountsUpdateRequestCustomMetadataValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             {
               "type": "string",
@@ -25102,7 +25172,10 @@ exports[`seam seam simple 1`] = `
         "DevicesListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -25270,7 +25343,10 @@ exports[`seam seam simple 1`] = `
         "DevicesUpdateRequestCustomMetadataValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             {
               "type": "string",
@@ -25767,7 +25843,10 @@ exports[`seam seam simple 1`] = `
         "UnmanagedListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -26130,7 +26209,10 @@ exports[`seam seam simple 1`] = `
         "EventsListRequestBetweenItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "datetime",
@@ -27487,7 +27569,10 @@ exports[`seam seam simple 1`] = `
         "LocksListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -29440,7 +29525,10 @@ exports[`seam seam simple 1`] = `
         "ThermostatsListRequestCustomMetadataHasValue": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "string",
             "boolean",
@@ -30964,7 +31052,10 @@ exports[`seam seam simple 1`] = `
         "UserIdentitiesGetRequest": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "seam/openapi.json",
+          },
           "union": [
             "UserIdentitiesGetRequestUserIdentityId",
             "UserIdentitiesGetRequestUserIdentityKey",
@@ -32579,6 +32670,7 @@ exports[`seam seam simple 1`] = `
         "base-properties": {},
         "discriminant": "error_code",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "seam/openapi.json",
         },
@@ -32753,7 +32845,10 @@ exports[`seam seam simple 1`] = `
       "ActionAttempt": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           {
             "docs": "Locking door.",
@@ -34471,7 +34566,10 @@ exports[`seam seam simple 1`] = `
       "ConnectWebviewCustomMetadataValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           "string",
           "boolean",
@@ -34525,7 +34623,10 @@ exports[`seam seam simple 1`] = `
       "ConnectedAccountCustomMetadataValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           "string",
           "boolean",
@@ -34646,7 +34747,10 @@ exports[`seam seam simple 1`] = `
       "DeviceCustomMetadataValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           "string",
           "boolean",
@@ -34993,7 +35097,10 @@ exports[`seam seam simple 1`] = `
       "DevicePropertiesCodeConstraintsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           "DevicePropertiesCodeConstraintsItemZero",
           "DevicePropertiesCodeConstraintsItemMaxLength",
@@ -35834,7 +35941,10 @@ exports[`seam seam simple 1`] = `
       "PhoneCustomMetadataValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "seam/openapi.json",
+        },
         "union": [
           "string",
           "boolean",

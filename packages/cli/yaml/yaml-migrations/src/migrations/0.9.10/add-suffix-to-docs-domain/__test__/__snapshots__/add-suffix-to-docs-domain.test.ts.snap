@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`add-suffix-to-docs-domain simple 1`] = `
+exports[`add-suffix-to-docs-domain > simple 1`] = `
 "default-group: server
 groups:
   server:

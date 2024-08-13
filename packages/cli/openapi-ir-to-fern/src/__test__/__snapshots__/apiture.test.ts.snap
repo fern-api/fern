@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser apiture docs 1`] = `
+exports[`open api parser > apiture > docs 1`] = `
 {
   "definitionFiles": {
     "accountJointOwners.yml": {
@@ -6062,7 +6062,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 }
 `;
 
-exports[`open api parser apiture simple 1`] = `
+exports[`open api parser > apiture > simple 1`] = `
 {
   "definitionFiles": {
     "accountJointOwners.yml": {

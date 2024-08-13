@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser flexport docs 1`] = `
+exports[`open api parser > flexport > docs 1`] = `
 {
   "definitionFiles": {
     "booking.yml": {
@@ -13067,7 +13067,10 @@ Other details about this invoice",
       "GenericObjectRefId": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "flexport/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -13495,7 +13498,10 @@ Other details about this invoice",
       "MetadataCreate": {
         "discriminated": false,
         "docs": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "flexport/openapi.yml",
+        },
         "union": [
           {
             "docs": "Object format.",
@@ -13905,7 +13911,10 @@ Other details about this invoice",
       "PlaceDetailsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "flexport/openapi.yml",
+        },
         "union": [
           "Airport",
           "Placeport",
@@ -14920,7 +14929,10 @@ Other details about this invoice",
       "ShipmentEventDataResource": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "flexport/openapi.yml",
+        },
         "union": [
           "Shipment",
           "ShipmentLeg",
@@ -15500,7 +15512,7 @@ Other details about this invoice",
 }
 `;
 
-exports[`open api parser flexport simple 1`] = `
+exports[`open api parser > flexport > simple 1`] = `
 {
   "definitionFiles": {
     "booking.yml": {
@@ -28009,7 +28021,10 @@ Other details about this invoice",
       "GenericObjectRefId": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "flexport/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -28385,7 +28400,10 @@ Other details about this invoice",
       "MetadataCreate": {
         "discriminated": false,
         "docs": "Metadata has two allowed formats. Either array format or object format. Refer to the metadata section in this documentation for more information.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "flexport/openapi.yml",
+        },
         "union": [
           {
             "docs": "Object format.",
@@ -28600,7 +28618,10 @@ Other details about this invoice",
       "PlaceDetailsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "flexport/openapi.yml",
+        },
         "union": [
           "Airport",
           "Placeport",
@@ -29472,7 +29493,10 @@ Other details about this invoice",
       "ShipmentEventDataResource": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "flexport/openapi.yml",
+        },
         "union": [
           "Shipment",
           "ShipmentLeg",

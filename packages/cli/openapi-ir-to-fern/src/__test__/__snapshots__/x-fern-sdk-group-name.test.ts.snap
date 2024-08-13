@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
+exports[`x-fern-sdk-group-name > x-fern-sdk-group-name > docs 1`] = `
 {
   "definitionFiles": {
     "auth/user.yml": {
@@ -109,7 +109,7 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name docs 1`] = `
 }
 `;
 
-exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
+exports[`x-fern-sdk-group-name > x-fern-sdk-group-name > simple 1`] = `
 {
   "definitionFiles": {
     "auth/user.yml": {

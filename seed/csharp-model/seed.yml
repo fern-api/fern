@@ -1,6 +1,6 @@
 irVersion: v53
 docker: fernapi/fern-csharp-model:latest
-dockerCommand: yarn workspace @fern-api/fern-csharp-model dockerTagLatest
+dockerCommand: pnpm --filter @fern-api/fern-csharp-model dockerTagLatest
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
@@ -12,7 +12,7 @@ scripts:
 local:
   workingDirectory: generators/csharp
   buildCommand:
-    - yarn workspace @fern-api/fern-csharp-model dist:cli
+    - pnpm --filter @fern-api/fern-csharp-model dist:cli
   runCommand: node model/dist/bundle.cjs
 allowedFailures:
   - objects-with-imports

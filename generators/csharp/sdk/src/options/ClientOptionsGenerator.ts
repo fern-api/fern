@@ -18,8 +18,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
 
     public doGenerate(): CSharpFile {
         const class_ = csharp.class_({
-            name: CLIENT_OPTIONS_CLASS_NAME,
-            namespace: this.context.getCoreNamespace(),
+            ...this.context.getClientOptionsClassReference(),
             partial: true,
             access: "public"
         });
@@ -33,15 +32,17 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         return new CSharpFile({
             clazz: class_,
-            directory: this.context.getCoreDirectory(),
+            directory: this.context.getPublicCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
-            namespace: this.context.getNamespace()
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.project.filepaths.getCoreFilesDirectory(),
+            this.context.project.filepaths.getPublicCoreFilesDirectory(),
             RelativeFilePath.of(`${CLIENT_OPTIONS_CLASS_NAME}.cs`)
         );
     }
@@ -64,6 +65,10 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 _other: () => undefined
             });
         }
+        const defaultEnvironmentName =
+            this.context.customConfig["pascal-case-environments"] ?? true
+                ? defaultEnvironment?.pascalCase.safeName
+                : defaultEnvironment?.screamingSnakeCase.safeName;
 
         if (this.context.ir.environments != null) {
             const field = this.context.ir.environments.environments._visit({
@@ -80,7 +85,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                             defaultEnvironment != null
                                 ? csharp.codeblock((writer) => {
                                       writer.writeNode(this.context.getEnvironmentsClassReference());
-                                      writer.write(`.${defaultEnvironment?.screamingSnakeCase.safeName}`);
+                                      writer.write(`.${defaultEnvironmentName}`);
                                   })
                                 : csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
                     });
@@ -98,7 +103,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                             defaultEnvironment != null
                                 ? csharp.codeblock((writer) => {
                                       writer.writeNode(this.context.getEnvironmentsClassReference());
-                                      writer.write(`.${defaultEnvironment?.screamingSnakeCase.safeName}`);
+                                      writer.write(`.${defaultEnvironmentName}`);
                                   })
                                 : csharp.codeblock("null") // TODO: remove this logic since it sets url to null
                     });
@@ -122,7 +127,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 defaultEnvironment != null
                     ? csharp.codeblock((writer) => {
                           writer.writeNode(this.context.getEnvironmentsClassReference());
-                          writer.write(`.${defaultEnvironment?.screamingSnakeCase.safeName}`);
+                          writer.write(`.${defaultEnvironmentName}`);
                       })
                     : csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
         });

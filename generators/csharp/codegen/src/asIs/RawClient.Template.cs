@@ -8,7 +8,7 @@ namespace <%= namespace%>;
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
-public class RawClient(
+internal class RawClient(
     Dictionary<string, string> headers,
     Dictionary<string, Func<string>> headerSuppliers,
     ClientOptions clientOptions
@@ -131,7 +131,8 @@ public class RawClient(
                         .Cast<object>()
                         .Select(value => $"{queryItem.Key}={value}")
                         .ToList();
-                    if (items.Any()) {
+                    if (items.Any())
+                    {
                         current += string.Join("&", items) + "&";
                     }
                 }

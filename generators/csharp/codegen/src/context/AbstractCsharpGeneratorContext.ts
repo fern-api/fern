@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import {
     FernFilepath,
@@ -21,7 +21,8 @@ import {
 } from "../AsIs";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
-import { CORE_DIRECTORY_NAME } from "../project/CsharpProject";
+import { Namespace } from "../project/CSharpFile";
+import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
 export abstract class AbstractCsharpGeneratorContext<
@@ -31,7 +32,8 @@ export abstract class AbstractCsharpGeneratorContext<
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
-    private allNamespaceSegmentsCache?: Set<string>;
+    private allNamespaceSegments?: Set<string>;
+    private allTypeClassReferences?: Map<string, Set<Namespace>>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -77,17 +79,33 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getAllNamespaceSegments(): Set<string> {
-        if (this.allNamespaceSegmentsCache == null) {
-            const namespaces: string[] = [];
-            for (const [_, subpackage] of Object.entries(this.ir.subpackages)) {
-                const namespaceSegments = this.getFullNamespaceSegments(subpackage.fernFilepath);
-                if (namespaceSegments != null) {
-                    namespaces.push(...namespaceSegments);
-                }
-            }
-            this.allNamespaceSegmentsCache = new Set(namespaces);
+        if (this.allNamespaceSegments == null) {
+            this.allNamespaceSegments = new Set(
+                Object.values(this.ir.subpackages).flatMap((subpackage) =>
+                    this.getFullNamespaceSegments(subpackage.fernFilepath)
+                )
+            );
         }
-        return this.allNamespaceSegmentsCache;
+        return this.allNamespaceSegments;
+    }
+
+    public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
+        if (this.allTypeClassReferences == null) {
+            const resultMap = new Map<string, Set<string>>();
+            Object.values(this.ir.types).forEach((typeDeclaration) => {
+                const classReference = this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
+                const key = classReference.name;
+                const value = classReference.namespace;
+
+                if (!resultMap.has(key)) {
+                    resultMap.set(key, new Set<string>());
+                }
+
+                resultMap.get(key)?.add(value);
+            });
+            this.allTypeClassReferences = resultMap;
+        }
+        return this.allTypeClassReferences;
     }
 
     public getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
@@ -125,6 +143,20 @@ export abstract class AbstractCsharpGeneratorContext<
         return csharp.classReference({
             namespace: "System.Text.Json",
             name: "JsonException"
+        });
+    }
+
+    public getJTokenClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "JToken",
+            namespace: "Newtonsoft.Json.Linq"
+        });
+    }
+
+    public getFluentAssetionsJsonClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "",
+            namespace: "FluentAssertions.Json"
         });
     }
 
@@ -169,6 +201,10 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getCoreDirectory(): RelativeFilePath {
         return RelativeFilePath.of(CORE_DIRECTORY_NAME);
+    }
+
+    public getPublicCoreDirectory(): RelativeFilePath {
+        return join(this.getCoreDirectory(), RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME));
     }
 
     public getAsUndiscriminatedUnionTypeDeclaration(

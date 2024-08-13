@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`convertColorsConfiguration should support accentPrimaryDeprecated 1`] = `
+exports[`convertColorsConfiguration > should support accentPrimaryDeprecated 1`] = `
 {
   "accentPrimary": {
     "a": 1,

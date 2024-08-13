@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
+exports[`x-fern-global-headers > x-fern-global-headers > docs 1`] = `
 {
   "definitionFiles": {
     "user.yml": {
@@ -183,7 +183,7 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
 }
 `;
 
-exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
+exports[`x-fern-global-headers > x-fern-global-headers > simple 1`] = `
 {
   "definitionFiles": {
     "user.yml": {

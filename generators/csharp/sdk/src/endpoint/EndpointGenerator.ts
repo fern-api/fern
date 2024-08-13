@@ -179,7 +179,11 @@ export class EndpointGenerator {
                     `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
                 );
             }
-            if (endpoint.errors.length > 0 && this.context.ir.errorDiscriminationStrategy.type === "statusCode") {
+            if (
+                endpoint.errors.length > 0 &&
+                this.context.ir.errorDiscriminationStrategy.type === "statusCode" &&
+                (this.context.customConfig["generate-error-types"] ?? true)
+            ) {
                 writer.writeLine("try");
                 writer.writeLine("{");
                 writer.indent();
@@ -208,8 +212,7 @@ export class EndpointGenerator {
             writer.write(
                 `($"Error with status code {${RESPONSE_VARIABLE_NAME}.StatusCode}", ${RESPONSE_VARIABLE_NAME}.StatusCode, `
             );
-            writer.writeNode(this.context.getJsonUtilsClassReference());
-            writer.writeTextStatement(`.Deserialize<object>(${RESPONSE_BODY_VARIABLE_NAME}))`);
+            writer.writeTextStatement(`${RESPONSE_BODY_VARIABLE_NAME})`);
         });
     }
 

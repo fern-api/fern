@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser valtown docs 1`] = `
+exports[`open api parser > valtown > docs 1`] = `
 {
   "definitionFiles": {
     "alias.yml": {
@@ -524,7 +524,10 @@ API endpoints",
         "EmailData": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "string",
             {
@@ -536,7 +539,10 @@ API endpoints",
         "EmailDataInput": {
           "discriminated": false,
           "docs": "A single email or list of emails for one of the address fields",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "EmailData",
             "list<EmailData>",
@@ -564,7 +570,10 @@ API endpoints",
         "ReplyToList": {
           "discriminated": false,
           "docs": "A reply-to list of email addresses",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             {
               "docs": "An email address and name",
@@ -1410,7 +1419,10 @@ give access to details and data from the requesting user.",
         "SqliteBatchRequestStatementsItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             {
               "docs": "Simple SQL statement to run in SQLite",
@@ -1425,7 +1437,10 @@ give access to details and data from the requesting user.",
         "SqliteExecuteRequestStatement": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             {
               "docs": "Simple SQL statement to run in SQLite",
@@ -1440,7 +1455,10 @@ give access to details and data from the requesting user.",
         "StatementArg": {
           "discriminated": false,
           "docs": "List of arguments to be used in the given statement",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "list<optional<TursoValue>>",
             "map<string, optional<TursoValue>>",
@@ -1449,7 +1467,10 @@ give access to details and data from the requesting user.",
         "TursoValue": {
           "discriminated": false,
           "docs": "A value to be used as a parameter",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "string",
             "double",
@@ -2354,7 +2375,10 @@ let you get, create, and run vals.",
         "EvalGetResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "string",
             "double",
@@ -2366,7 +2390,10 @@ let you get, create, and run vals.",
         "EvalPostResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "string",
             "double",
@@ -2973,7 +3000,10 @@ This value is not specified for other SQL statements.",
         "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
         "union": [
           "string",
           "double",
@@ -3066,7 +3096,7 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
 }
 `;
 
-exports[`open api parser valtown simple 1`] = `
+exports[`open api parser > valtown > simple 1`] = `
 {
   "definitionFiles": {
     "alias.yml": {
@@ -3590,7 +3620,10 @@ API endpoints",
         "EmailData": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "string",
             {
@@ -3602,7 +3635,10 @@ API endpoints",
         "EmailDataInput": {
           "discriminated": false,
           "docs": "A single email or list of emails for one of the address fields",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "EmailData",
             "list<EmailData>",
@@ -3630,7 +3666,10 @@ API endpoints",
         "ReplyToList": {
           "discriminated": false,
           "docs": "A reply-to list of email addresses",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             {
               "docs": "An email address and name",
@@ -4476,7 +4515,10 @@ give access to details and data from the requesting user.",
         "SqliteBatchRequestStatementsItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             {
               "docs": "Simple SQL statement to run in SQLite",
@@ -4491,7 +4533,10 @@ give access to details and data from the requesting user.",
         "SqliteExecuteRequestStatement": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             {
               "docs": "Simple SQL statement to run in SQLite",
@@ -4506,7 +4551,10 @@ give access to details and data from the requesting user.",
         "StatementArg": {
           "discriminated": false,
           "docs": "List of arguments to be used in the given statement",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "list<optional<TursoValue>>",
             "map<string, optional<TursoValue>>",
@@ -4515,7 +4563,10 @@ give access to details and data from the requesting user.",
         "TursoValue": {
           "discriminated": false,
           "docs": "A value to be used as a parameter",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "string",
             "double",
@@ -5420,7 +5471,10 @@ let you get, create, and run vals.",
         "EvalGetResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "string",
             "double",
@@ -5432,7 +5486,10 @@ let you get, create, and run vals.",
         "EvalPostResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "valtown/openapi.yml",
+          },
           "union": [
             "string",
             "double",
@@ -6013,7 +6070,10 @@ This value is not specified for other SQL statements.",
         "docs": "ROWID of the last inserted row.
 
 This value is not specified if the SQL statement was not an INSERT or if the table was not a ROWID table.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "valtown/openapi.yml",
+        },
         "union": [
           "string",
           "double",

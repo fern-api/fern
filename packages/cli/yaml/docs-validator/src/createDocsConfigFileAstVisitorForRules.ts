@@ -1,6 +1,10 @@
-import { docsYml } from "@fern-api/configuration";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { NodePath } from "@fern-api/yaml-schema";
+import {
+    DocsConfigFileAstNodeTypes,
+    DocsConfigFileAstNodeVisitor,
+    DocsConfigFileAstVisitor
+} from "./docsAst/DocsConfigFileAstVisitor";
 import { RuleVisitor } from "./Rule";
 import { ValidationViolation } from "./ValidationViolation";
 
@@ -10,14 +14,14 @@ export function createDocsConfigFileAstVisitorForRules({
     addViolations
 }: {
     relativeFilepath: RelativeFilePath;
-    allRuleVisitors: RuleVisitor<docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeTypes>[];
+    allRuleVisitors: RuleVisitor<DocsConfigFileAstNodeTypes>[];
     addViolations: (newViolations: ValidationViolation[]) => void;
-}): docsYml.RawSchemas.Visitors.DocsConfigFileAstVisitor {
-    function createAstNodeVisitor<K extends keyof docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeTypes>(
+}): DocsConfigFileAstVisitor {
+    function createAstNodeVisitor<K extends keyof DocsConfigFileAstNodeTypes>(
         nodeType: K
-    ): Record<K, docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeVisitor<K>> {
-        const visit: docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeVisitor<K> = async (
-            node: docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeTypes[K],
+    ): Record<K, DocsConfigFileAstNodeVisitor<K>> {
+        const visit: DocsConfigFileAstNodeVisitor<K> = async (
+            node: DocsConfigFileAstNodeTypes[K],
             nodePath: NodePath
         ) => {
             for (const ruleVisitors of allRuleVisitors) {
@@ -36,13 +40,14 @@ export function createDocsConfigFileAstVisitorForRules({
             }
         };
 
-        return { [nodeType]: visit } as Record<K, docsYml.RawSchemas.Visitors.DocsConfigFileAstNodeVisitor<K>>;
+        return { [nodeType]: visit } as Record<K, DocsConfigFileAstNodeVisitor<K>>;
     }
 
     return {
         ...createAstNodeVisitor("file"),
         ...createAstNodeVisitor("filepath"),
         ...createAstNodeVisitor("markdownPage"),
-        ...createAstNodeVisitor("versionFile")
+        ...createAstNodeVisitor("versionFile"),
+        ...createAstNodeVisitor("apiSection")
     };
 }

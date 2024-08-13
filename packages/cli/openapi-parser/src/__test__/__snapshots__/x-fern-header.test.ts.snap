@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-header x-fern-header parse open api 1`] = `
+exports[`x-fern-header > x-fern-header > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -31,7 +31,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UserGetStreamRequestUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -62,7 +62,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "UserGetStreamRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -78,7 +78,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "UserGetStreamRequestStream",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -213,7 +213,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "UserGetRequestUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -244,7 +244,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "availability": null,
           "description": null,
           "generatedName": "UserGetRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
@@ -260,7 +260,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "UserGetRequestStream",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -336,7 +336,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "StreamUser",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -350,14 +350,14 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "streamUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "StreamUserId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -382,7 +382,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "streamUserStreamed",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -413,7 +413,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "User",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -427,14 +427,14 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "userId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "UserId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -459,7 +459,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "userStreamed",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {

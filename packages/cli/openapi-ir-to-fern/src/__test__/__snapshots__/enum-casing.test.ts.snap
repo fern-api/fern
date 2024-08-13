@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser enum-casing docs 1`] = `
+exports[`open api parser > enum-casing > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -86,7 +86,7 @@ exports[`open api parser enum-casing docs 1`] = `
 }
 `;
 
-exports[`open api parser enum-casing simple 1`] = `
+exports[`open api parser > enum-casing > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {

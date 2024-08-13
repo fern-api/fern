@@ -19,6 +19,7 @@ import com.seed.pagination.resources.users.requests.ListUsersExtendedRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersOffsetStepPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
+import com.seed.pagination.resources.users.requests.ListWithOffsetPaginationHasNextPageRequest;
 import com.seed.pagination.resources.users.types.ListUsersExtendedResponse;
 import com.seed.pagination.resources.users.types.ListUsersPaginationResponse;
 import com.seed.pagination.resources.users.types.NextPage;
@@ -273,6 +274,55 @@ public class UsersClient {
 
     public ListUsersPaginationResponse listWithOffsetStepPagination(
             ListUsersOffsetStepPaginationRequest request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("users");
+        if (request.getPage().isPresent()) {
+            httpUrl.addQueryParameter("page", request.getPage().get().toString());
+        }
+        if (request.getLimit().isPresent()) {
+            httpUrl.addQueryParameter("limit", request.getLimit().get().toString());
+        }
+        if (request.getOrder().isPresent()) {
+            httpUrl.addQueryParameter("order", request.getOrder().get().toString());
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
+                .method("GET", null)
+                .headers(Headers.of(clientOptions.headers(requestOptions)))
+                .addHeader("Content-Type", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful()) {
+                return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), ListUsersPaginationResponse.class);
+            }
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedPaginationApiException(
+                    "Error with status code " + response.code(),
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
+        } catch (IOException e) {
+            throw new SeedPaginationException("Network error executing HTTP request", e);
+        }
+    }
+
+    public ListUsersPaginationResponse listWithOffsetPaginationHasNextPage() {
+        return listWithOffsetPaginationHasNextPage(
+                ListWithOffsetPaginationHasNextPageRequest.builder().build());
+    }
+
+    public ListUsersPaginationResponse listWithOffsetPaginationHasNextPage(
+            ListWithOffsetPaginationHasNextPageRequest request) {
+        return listWithOffsetPaginationHasNextPage(request, null);
+    }
+
+    public ListUsersPaginationResponse listWithOffsetPaginationHasNextPage(
+            ListWithOffsetPaginationHasNextPageRequest request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users");

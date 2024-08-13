@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-audiences x-fern-audiences docs 1`] = `
+exports[`x-fern-audiences > x-fern-audiences > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -75,7 +75,7 @@ exports[`x-fern-audiences x-fern-audiences docs 1`] = `
 }
 `;
 
-exports[`x-fern-audiences x-fern-audiences simple 1`] = `
+exports[`x-fern-audiences > x-fern-audiences > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {

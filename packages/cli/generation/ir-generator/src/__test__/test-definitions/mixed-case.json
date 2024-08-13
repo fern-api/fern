@@ -3191,7 +3191,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "625e8d23ceadb5d4efb47ccef83f3feebb7acd8051c753945c49f3c20f3dc769",
                                 "name": null,
                                 "url": "/resource/rsc-xyz",
                                 "rootPathParameters": [],
@@ -4408,7 +4408,7 @@
                                         }
                                     }
                                 },
-                                "id": "bc3f389ada4cbab1f7b18ba8e38de5dd38f1691d",
+                                "id": "2b0a7fedc0e5245fc5aed8c406d93256fcc11357",
                                 "docs": null
                             }
                         }
@@ -4680,7 +4680,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "One",
                                 "name": {
                                     "originalName": "One",
                                     "camelCase": {
@@ -4739,6 +4739,9 @@
                                                 }
                                             },
                                             "jsonExample": 10
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -4773,6 +4776,9 @@
                                                 }
                                             },
                                             "jsonExample": "2023-01-01"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -5477,6 +5483,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -5511,6 +5520,9 @@
                                                 }
                                             },
                                             "jsonExample": "2023-01-15"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -6169,7 +6181,7 @@
                                         }
                                     }
                                 },
-                                "id": "ad9ec15d2c892c241c8dc3aad0b27896920b1ac8",
+                                "id": "49bdd315d3187f56322bb06f45a5ad607801690b",
                                 "docs": null
                             }
                         }

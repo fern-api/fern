@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser undiscriminated-enums parse open api 1`] = `
+exports[`open api parser > undiscriminated-enums > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -75,8 +75,9 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
         "commonProperties": [],
         "description": null,
         "discriminantProperty": "type",
+        "encoding": null,
         "generatedName": "Conversation",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "schemas": {
           "goodbye": {
@@ -120,7 +121,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Farewell",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -134,14 +135,14 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "farewellMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "FarewellMessage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -167,7 +168,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "default": null,
       "description": null,
       "generatedName": "FarewellEnum",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "undiscriminated-enums/openapi.yml",
@@ -210,7 +211,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Greeting",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -224,14 +225,14 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "greetingMessage",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "GreetingMessage",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -257,7 +258,7 @@ exports[`open api parser undiscriminated-enums parse open api 1`] = `
       "default": null,
       "description": null,
       "generatedName": "GreetingEnum",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "undiscriminated-enums/openapi.yml",

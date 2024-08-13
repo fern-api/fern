@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser axle docs 1`] = `
+exports[`open api parser > axle > docs 1`] = `
 {
   "definitionFiles": {
     "accounts.yml": {
@@ -875,7 +875,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
 }
 `;
 
-exports[`open api parser axle simple 1`] = `
+exports[`open api parser > axle > simple 1`] = `
 {
   "definitionFiles": {
     "accounts.yml": {

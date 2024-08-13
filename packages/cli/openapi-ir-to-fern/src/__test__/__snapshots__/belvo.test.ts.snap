@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser belvo docs 1`] = `
+exports[`open api parser > belvo > docs 1`] = `
 {
   "definitionFiles": {
     "accounts.yml": {
@@ -5315,7 +5315,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "CreateBankAccountRequest": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.CreateBankAccountOfpi",
             "root.CreateBankAccountPse",
@@ -5324,7 +5327,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "CreateBankAccountResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.BankAccountOfpiResponse",
             "root.BankAccountPseResponse",
@@ -5333,7 +5339,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "DetailBankAccountResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.BankAccountOfpiResponse",
             "root.BankAccountPseResponse",
@@ -5976,7 +5985,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "CreateCustomerRequest": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.CreateCustomerOfpi",
             "root.CreateCustomerPse",
@@ -5985,7 +5997,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "CreateCustomerResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.CustomerOfpi",
             "root.CustomerPse",
@@ -5994,7 +6009,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "DetailCustomerResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.CustomerOfpi",
             "root.CustomerPse",
@@ -12414,7 +12432,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "DetailInvoiceResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.InvoiceWithIdSat",
             "root.InvoiceDian",
@@ -12423,7 +12444,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "PatchInvoicesResponseItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.InvoiceWithIdSat",
             "root.InvoiceDian",
@@ -12432,7 +12456,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "RetrieveInvoicesResponseItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.InvoiceWithIdSat",
             "root.InvoiceDian",
@@ -14989,7 +15016,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
 
 **Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
 ",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             {
               "type": "string",
@@ -15244,7 +15274,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "CreatePaymentlinkRequest": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.CreatePaymentLinkOfpi",
             "root.CreatePaymentLinkPse",
@@ -15253,7 +15286,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "CreatePaymentlinkResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.PaymentLinkOfpi",
             "root.PaymentLinkPse",
@@ -15262,7 +15298,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "DetailCreatePaymentlinkResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.PaymentLinkOfpi",
             "root.PaymentLinkPse",
@@ -19730,7 +19769,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "DetailTaxDeclarationResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxDeclarationIndividual",
             "root.TaxDeclarationBusiness",
@@ -19739,7 +19781,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "ListTaxDeclarationsResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxDeclarationIndividualPaginated",
             "root.TaxDeclarationBusinessPaginated",
@@ -19748,7 +19793,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "RetrieveTaxDeclarationsResponseItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxDeclarationBusiness",
             "root.TaxDeclarationIndividual",
@@ -24815,7 +24863,10 @@ client.connect()
         "DetailTaxReturnResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxReturnPersonal",
             "root.TaxReturnPersonalMonthly",
@@ -24826,7 +24877,10 @@ client.connect()
         "ListTaxReturnsResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxReturnsPersonalPaginated",
             "root.TaxReturnsPersonalMonthlyPaginated",
@@ -24837,7 +24891,10 @@ client.connect()
         "RetrieveTaxReturnsRequestBody": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxReturnsMonthlyRequest",
             "root.TaxReturnsYearlyRequest",
@@ -24846,7 +24903,10 @@ client.connect()
         "RetrieveTaxReturnsResponseItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxReturnPersonal",
             "root.TaxReturnPersonalMonthly",
@@ -26172,7 +26232,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "DetailTaxStatusResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxStatusSat",
             "root.TaxStatusDian",
@@ -26181,7 +26244,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "RetrieveTaxStatusResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxStatusSat",
             "root.TaxStatusDian",
@@ -31296,7 +31362,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "BadRequestErrorBodyItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "InvalidAccessMode",
           "TooManySessionsError",
@@ -31528,7 +31597,10 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "BankAccountHolderRequestOfpiInformation": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BUSINESS",
           "INDIVIDUAL",
@@ -31620,7 +31692,10 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "BankAccountOfpiResponseDetails": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BankAccountDetailsOfpi",
           "BankAccountDetailsOfpiPix",
@@ -31656,7 +31731,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "BankAccountPaginatedResponseResultsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BankAccountOfpiResponse",
           "BankAccountPseResponse",
@@ -31701,7 +31779,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "BeneficiaryBankAccountOfpiDetails": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BankAccountDetailsOpenFinance",
           "BankAccountDetailsOpenFinancePix",
@@ -32009,7 +32090,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "ChargePaymentMethodDetails": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "PSE",
           "OFPI",
@@ -32112,7 +32196,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "CreateBankAccountOfpiDetails": {
         "discriminated": false,
         "docs": "Information regarding the bank account.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BankAccountDetailsOfpi",
           "BankAccountDetailsOfpiPix",
@@ -32296,7 +32383,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 
 **Note:** You can send through this value either as a string or an float. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`1234.12\`.
 ",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           {
             "type": "string",
@@ -32365,7 +32455,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 
 **Note:** You can send this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
 ",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           {
             "type": "string",
@@ -32481,7 +32574,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "CustomerPaginatedResponseResultsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "CustomerOfpi",
           "CustomerPse",
@@ -34334,7 +34430,10 @@ We return one of the following enum values:
       "HolderResponseOfpiInformation": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BUSINESS",
           "INDIVIDUAL",
@@ -36442,7 +36541,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "InvoicesResponsePaginatedResponseResultsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "InvoiceWithIdSat",
           "InvoiceDian",
@@ -37442,6 +37544,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "belvo/openapi.yml",
         },
@@ -37457,7 +37560,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "PaymentIntentOfpiPaymentMethodDetails": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "INDIVIDUAL",
           "BUSINESS",
@@ -37716,7 +37822,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "PaymentIntentPseLastError": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "LastErrorInvalidCredentials",
           "LastErrorInvalidToken",
@@ -37730,6 +37839,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "belvo/openapi.yml",
         },
@@ -38023,7 +38133,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "PaymentLinkPaginatedResponseResultsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "PaymentLinkListOfpi",
           "PaymentLinkListPse",
@@ -38267,7 +38380,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "PaymentTransactionPayer": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "TransactionBankAccountOfpi",
           "TransactionBankAccountPse",
@@ -40810,7 +40926,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "TaxStatusPaginatedResponseResultsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "TaxStatusSat",
           "TaxStatusDian",
@@ -41365,7 +41484,10 @@ For \`too_many_sessions\` errors, the description is:
       "TransactionBankAccountPse": {
         "discriminated": false,
         "docs": "Object containing the payer's bank account information.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "TransactionBankAccountBodyPse",
           "BankAccountInformationPse",
@@ -41710,7 +41832,7 @@ For \`session_expired\` errors, the description can be (among others):
 }
 `;
 
-exports[`open api parser belvo simple 1`] = `
+exports[`open api parser > belvo > simple 1`] = `
 {
   "definitionFiles": {
     "accounts.yml": {
@@ -47025,7 +47147,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "CreateBankAccountRequest": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.CreateBankAccountOfpi",
             "root.CreateBankAccountPse",
@@ -47034,7 +47159,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "CreateBankAccountResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.BankAccountOfpiResponse",
             "root.BankAccountPseResponse",
@@ -47043,7 +47171,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "DetailBankAccountResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.BankAccountOfpiResponse",
             "root.BankAccountPseResponse",
@@ -47686,7 +47817,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "CreateCustomerRequest": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.CreateCustomerOfpi",
             "root.CreateCustomerPse",
@@ -47695,7 +47829,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "CreateCustomerResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.CustomerOfpi",
             "root.CustomerPse",
@@ -47704,7 +47841,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "DetailCustomerResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.CustomerOfpi",
             "root.CustomerPse",
@@ -54124,7 +54264,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "DetailInvoiceResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.InvoiceWithIdSat",
             "root.InvoiceDian",
@@ -54133,7 +54276,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "PatchInvoicesResponseItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.InvoiceWithIdSat",
             "root.InvoiceDian",
@@ -54142,7 +54288,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "RetrieveInvoicesResponseItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.InvoiceWithIdSat",
             "root.InvoiceDian",
@@ -56699,7 +56848,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
 
 **Note:** You can send through this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
 ",
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             {
               "type": "string",
@@ -56954,7 +57106,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "CreatePaymentlinkRequest": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.CreatePaymentLinkOfpi",
             "root.CreatePaymentLinkPse",
@@ -56963,7 +57118,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "CreatePaymentlinkResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.PaymentLinkOfpi",
             "root.PaymentLinkPse",
@@ -56972,7 +57130,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
         "DetailCreatePaymentlinkResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.PaymentLinkOfpi",
             "root.PaymentLinkPse",
@@ -61440,7 +61601,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "DetailTaxDeclarationResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxDeclarationIndividual",
             "root.TaxDeclarationBusiness",
@@ -61449,7 +61613,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "ListTaxDeclarationsResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxDeclarationIndividualPaginated",
             "root.TaxDeclarationBusinessPaginated",
@@ -61458,7 +61625,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "RetrieveTaxDeclarationsResponseItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxDeclarationBusiness",
             "root.TaxDeclarationIndividual",
@@ -66525,7 +66695,10 @@ client.connect()
         "DetailTaxReturnResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxReturnPersonal",
             "root.TaxReturnPersonalMonthly",
@@ -66536,7 +66709,10 @@ client.connect()
         "ListTaxReturnsResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxReturnsPersonalPaginated",
             "root.TaxReturnsPersonalMonthlyPaginated",
@@ -66547,7 +66723,10 @@ client.connect()
         "RetrieveTaxReturnsRequestBody": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxReturnsMonthlyRequest",
             "root.TaxReturnsYearlyRequest",
@@ -66556,7 +66735,10 @@ client.connect()
         "RetrieveTaxReturnsResponseItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxReturnPersonal",
             "root.TaxReturnPersonalMonthly",
@@ -67882,7 +68064,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "DetailTaxStatusResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxStatusSat",
             "root.TaxStatusDian",
@@ -67891,7 +68076,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "RetrieveTaxStatusResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "belvo/openapi.yml",
+          },
           "union": [
             "root.TaxStatusSat",
             "root.TaxStatusDian",
@@ -71631,7 +71819,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "BadRequestErrorBodyItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "InvalidAccessMode",
           "TooManySessionsError",
@@ -71863,7 +72054,10 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "BankAccountHolderRequestOfpiInformation": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BUSINESS",
           "INDIVIDUAL",
@@ -71955,7 +72149,10 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "BankAccountOfpiResponseDetails": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BankAccountDetailsOfpi",
           "BankAccountDetailsOfpiPix",
@@ -71991,7 +72188,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "BankAccountPaginatedResponseResultsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BankAccountOfpiResponse",
           "BankAccountPseResponse",
@@ -72036,7 +72236,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "BeneficiaryBankAccountOfpiDetails": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BankAccountDetailsOpenFinance",
           "BankAccountDetailsOpenFinancePix",
@@ -72344,7 +72547,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "ChargePaymentMethodDetails": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "PSE",
           "OFPI",
@@ -72447,7 +72653,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "CreateBankAccountOfpiDetails": {
         "discriminated": false,
         "docs": "Information regarding the bank account.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BankAccountDetailsOfpi",
           "BankAccountDetailsOfpiPix",
@@ -72631,7 +72840,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 
 **Note:** You can send through this value either as a string or an float. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`1234.12\`.
 ",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           {
             "type": "string",
@@ -72700,7 +72912,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 
 **Note:** You can send this value either as a string or an integer. Regardless of the type you choose to send the \`amount\` as, Belvo returns a string with two decimal points, separated by a period ( \`.\`). For example, \`350000.00\`.
 ",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           {
             "type": "string",
@@ -72816,7 +73031,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "CustomerPaginatedResponseResultsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "CustomerOfpi",
           "CustomerPse",
@@ -74669,7 +74887,10 @@ We return one of the following enum values:
       "HolderResponseOfpiInformation": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "BUSINESS",
           "INDIVIDUAL",
@@ -76777,7 +76998,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "InvoicesResponsePaginatedResponseResultsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "InvoiceWithIdSat",
           "InvoiceDian",
@@ -77777,6 +78001,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "belvo/openapi.yml",
         },
@@ -77792,7 +78017,10 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
       "PaymentIntentOfpiPaymentMethodDetails": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "INDIVIDUAL",
           "BUSINESS",
@@ -78051,7 +78279,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "PaymentIntentPseLastError": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "LastErrorInvalidCredentials",
           "LastErrorInvalidToken",
@@ -78065,6 +78296,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "belvo/openapi.yml",
         },
@@ -78358,7 +78590,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "PaymentLinkPaginatedResponseResultsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "PaymentLinkListOfpi",
           "PaymentLinkListPse",
@@ -78602,7 +78837,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "PaymentTransactionPayer": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "TransactionBankAccountOfpi",
           "TransactionBankAccountPse",
@@ -81145,7 +81383,10 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "TaxStatusPaginatedResponseResultsItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "TaxStatusSat",
           "TaxStatusDian",
@@ -81700,7 +81941,10 @@ For \`too_many_sessions\` errors, the description is:
       "TransactionBankAccountPse": {
         "discriminated": false,
         "docs": "Object containing the payer's bank account information.",
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "belvo/openapi.yml",
+        },
         "union": [
           "TransactionBankAccountBodyPse",
           "BankAccountInformationPse",

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser suger docs 1`] = `
+exports[`open api parser > suger > docs 1`] = `
 {
   "definitionFiles": {
     "api.yml": {
@@ -8495,7 +8495,7 @@ the same customer, dimension, and time, but a different quantity.",
 }
 `;
 
-exports[`open api parser suger simple 1`] = `
+exports[`open api parser > suger > simple 1`] = `
 {
   "definitionFiles": {
     "api.yml": {

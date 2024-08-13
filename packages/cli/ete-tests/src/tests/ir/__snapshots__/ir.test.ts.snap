@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ir {"name":"auth-header-prefix"} 1`] = `
+exports[`ir > {"name":"auth-header-prefix"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -146,7 +146,7 @@ exports[`ir {"name":"auth-header-prefix"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"extended-examples"} 1`] = `
+exports[`ir > {"name":"extended-examples"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -1353,7 +1353,7 @@ exports[`ir {"name":"extended-examples"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"file-upload"} 1`] = `
+exports[`ir > {"name":"file-upload"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -1732,7 +1732,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
                                         "value": null
                                     }
                                 },
-                                "id": "2d9028cedc3afcbd39cbb0c21b9674b32c7e66fe",
+                                "id": "a0fdf41861e41b2f4b6148df251506b910eced8d",
                                 "docs": null
                             }
                         }
@@ -1891,6 +1891,7 @@ exports[`ir {"name":"file-upload"} 1`] = `
 }"
 `;
 
+<<<<<<< HEAD
 exports[`ir {"name":"gen-yml-auth"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
@@ -4145,6 +4146,9 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
 `;
 
 exports[`ir {"name":"migration","version":"v1"} 1`] = `
+=======
+exports[`ir > {"name":"migration","version":"v1"} 1`] = `
+>>>>>>> main
 "{
     "apiName": "my-api",
     "auth": {
@@ -10212,7 +10216,7 @@ exports[`ir {"name":"migration","version":"v1"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"multiple-environment-urls"} 1`] = `
+exports[`ir > {"name":"multiple-environment-urls"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -10374,7 +10378,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                                         "value": null
                                     }
                                 },
-                                "id": "972345e0c98c8ef5da199d6a74ce80a26de13be3",
+                                "id": "dd0fb90862cae827d2bc79120e874478db88c441",
                                 "docs": null
                             }
                         }
@@ -10448,7 +10452,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                                         "value": null
                                     }
                                 },
-                                "id": "2ba1284ff6e0ef5f86df327c1836906e3328b8dd",
+                                "id": "7f81c94df8c0708e25f4ad0d752ffdffd3d65abe",
                                 "docs": null
                             }
                         }
@@ -10586,7 +10590,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
                                         "value": null
                                     }
                                 },
-                                "id": "d6c6ed9738b2481b8cf22457a7bb62b68d6eedde",
+                                "id": "f9a90b798c9662a33e5c0834f56d48af5c5ba48d",
                                 "docs": null
                             }
                         }
@@ -10926,7 +10930,7 @@ exports[`ir {"name":"multiple-environment-urls"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"navigation-points-to"} 1`] = `
+exports[`ir > {"name":"navigation-points-to"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -11226,7 +11230,7 @@ exports[`ir {"name":"navigation-points-to"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"nested-example-reference"} 1`] = `
+exports[`ir > {"name":"nested-example-reference"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -11956,7 +11960,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "5a6f08f1a5b7c467c617c891b9b6e1f85c3cdaa17c9bc1a56012234eeb809937",
                                 "name": null,
                                 "url": "/nested",
                                 "rootPathParameters": [],
@@ -13191,7 +13195,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "dbc628efc9741a6d3a6e5d0a140f62613e3acd6e",
+                                "id": "6915e2440983bdca0790eef2f49a5bb6e18e9b01",
                                 "docs": null
                             }
                         }
@@ -13361,7 +13365,7 @@ exports[`ir {"name":"nested-example-reference"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"packages"} 1`] = `
+exports[`ir > {"name":"packages"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -14035,7 +14039,7 @@ exports[`ir {"name":"packages"} 1`] = `
                                         "value": null
                                     }
                                 },
-                                "id": "d6c6ed9738b2481b8cf22457a7bb62b68d6eedde",
+                                "id": "f9a90b798c9662a33e5c0834f56d48af5c5ba48d",
                                 "docs": null
                             }
                         }
@@ -14575,7 +14579,7 @@ exports[`ir {"name":"packages"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"response-property"} 1`] = `
+exports[`ir > {"name":"response-property"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -15681,7 +15685,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "f1f38c86ba842bbc916b5d2b5e3ffbf671a80f71",
+                                "id": "24caf8a6a35bd8757806b7c7190b0e21d782f051",
                                 "docs": null
                             }
                         }
@@ -15944,7 +15948,7 @@ exports[`ir {"name":"response-property"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "0ff4719dd98db569e10f93de562bf01f7cef0ef1",
+                                "id": "4657f4adabf58530a4a9996aeb69f3262a319cf5",
                                 "docs": null
                             }
                         }
@@ -16114,7 +16118,7 @@ exports[`ir {"name":"response-property"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
+exports[`ir > {"name":"simple","audiences":["internal"]} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -17173,7 +17177,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "a16b5fde1f41adf2cb5c8aef09c71491b1782ac3",
+                                "id": "30d4f2e0ae0d7652f3ee14d56319ac7b21d6275b",
                                 "docs": null
                             }
                         },
@@ -17471,7 +17475,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
                                     },
                                     "body": null
                                 },
-                                "id": "3e6163938ad55cceb9b6fb6b3d4457481e1194d9",
+                                "id": "35280da7b49b0f3ac3416f1b00ef2af5dd3fa6ec",
                                 "docs": null
                             }
                         }
@@ -17804,7 +17808,7 @@ exports[`ir {"name":"simple","audiences":["internal"]} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
+exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -19154,7 +19158,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "0ec9625807680a71388bf490199238a7c22569a5bf7092901fcb77bdd393e496",
                                 "name": null,
                                 "url": "/movies",
                                 "rootPathParameters": [
@@ -19637,7 +19641,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                         },
                         {
                             "example": {
-                                "id": null,
+                                "id": "624277beb517e6d1281e37e2781b35851d2d5de808ab821d6bad4c0917b014a5",
                                 "name": null,
                                 "url": "/movies",
                                 "rootPathParameters": [
@@ -20586,7 +20590,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "181d939e789eb0d29f2bb5cccfc5375ed039cd37",
+                                "id": "70d147ad266aaa4a356c108d2a06d14b4853e628",
                                 "docs": null
                             }
                         },
@@ -21068,7 +21072,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "181d939e789eb0d29f2bb5cccfc5375ed039cd37",
+                                "id": "70d147ad266aaa4a356c108d2a06d14b4853e628",
                                 "docs": null
                             }
                         },
@@ -21527,7 +21531,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
                                     },
                                     "body": null
                                 },
-                                "id": "7719d117aa55b7a0a06be30825cd95761e68b931",
+                                "id": "0a974dc042443d6aad36cfb432c4fc3e52674186",
                                 "docs": null
                             }
                         }
@@ -21862,7 +21866,7 @@ exports[`ir {"name":"simple","audiences":["test"]} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"simple"} 1`] = `
+exports[`ir > {"name":"simple"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -29372,7 +29376,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "a16b5fde1f41adf2cb5c8aef09c71491b1782ac3",
+                                "id": "30d4f2e0ae0d7652f3ee14d56319ac7b21d6275b",
                                 "docs": null
                             }
                         },
@@ -29670,7 +29674,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                     },
                                     "body": null
                                 },
-                                "id": "3e6163938ad55cceb9b6fb6b3d4457481e1194d9",
+                                "id": "35280da7b49b0f3ac3416f1b00ef2af5dd3fa6ec",
                                 "docs": null
                             }
                         }
@@ -30080,7 +30084,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "0ec9625807680a71388bf490199238a7c22569a5bf7092901fcb77bdd393e496",
                                 "name": null,
                                 "url": "/movies",
                                 "rootPathParameters": [
@@ -30563,7 +30567,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": null,
+                                "id": "624277beb517e6d1281e37e2781b35851d2d5de808ab821d6bad4c0917b014a5",
                                 "name": null,
                                 "url": "/movies",
                                 "rootPathParameters": [
@@ -31512,7 +31516,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "181d939e789eb0d29f2bb5cccfc5375ed039cd37",
+                                "id": "70d147ad266aaa4a356c108d2a06d14b4853e628",
                                 "docs": null
                             }
                         },
@@ -31994,7 +31998,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "181d939e789eb0d29f2bb5cccfc5375ed039cd37",
+                                "id": "70d147ad266aaa4a356c108d2a06d14b4853e628",
                                 "docs": null
                             }
                         },
@@ -32453,7 +32457,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                     },
                                     "body": null
                                 },
-                                "id": "7719d117aa55b7a0a06be30825cd95761e68b931",
+                                "id": "0a974dc042443d6aad36cfb432c4fc3e52674186",
                                 "docs": null
                             }
                         }
@@ -33057,7 +33061,7 @@ exports[`ir {"name":"simple"} 1`] = `
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "b631e6a0d36395e53918c8b8aa048cf1bfe8180757f41402426ec3c109737ddd",
                                 "name": null,
                                 "url": "/movies/id-123",
                                 "rootPathParameters": [
@@ -33242,6 +33246,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "hello"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -33713,7 +33720,7 @@ exports[`ir {"name":"simple"} 1`] = `
                         },
                         {
                             "example": {
-                                "id": null,
+                                "id": "e0f04d26bcd1b030581f6d67cbd9d4be232fc0bc43bad08ffb1adb038ecbce8f",
                                 "name": null,
                                 "url": "/movies/id-123",
                                 "rootPathParameters": [
@@ -33898,6 +33905,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "hello"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -34173,6 +34183,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -34639,7 +34652,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "c31d0a00f664df9938064fde5ab39352e548bd05",
+                                "id": "d65d8e7f98d6c222dcef542d6a7037342c660d56",
                                 "docs": null
                             }
                         },
@@ -34828,6 +34841,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -35294,7 +35310,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "1be4f34f8b77401ebd38f067fb5e87c0c4053a6e",
+                                "id": "3ce7e25be6592d1a48fe0e39e8ec5df52ab99063",
                                 "docs": null
                             }
                         },
@@ -35483,6 +35499,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -35557,7 +35576,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                     },
                                     "body": null
                                 },
-                                "id": "b1abc4b36c6b66836558d64000446b6bb9f3a8bd",
+                                "id": "2485c38e84ae60f90209d11446cc3e5716d8ae7d",
                                 "docs": null
                             }
                         },
@@ -35746,6 +35765,9 @@ exports[`ir {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -35820,7 +35842,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                     },
                                     "body": null
                                 },
-                                "id": "0a1b7d4c2ef7232675d53dd288caf70cdd8fbb23",
+                                "id": "9c9bdbb3b52d6d1a8583aa6c9359f7fa566dbaeb",
                                 "docs": null
                             }
                         }
@@ -36340,7 +36362,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                         "value": null
                                     }
                                 },
-                                "id": "bce9a848a5f585213943006d1ff84e3ee794eb7b",
+                                "id": "d15422bb3a98bb5321fdad995e9476e90c2cee09",
                                 "docs": null
                             }
                         },
@@ -36566,7 +36588,7 @@ exports[`ir {"name":"simple"} 1`] = `
                                     },
                                     "body": null
                                 },
-                                "id": "d3b0bcb695d15a97459cd0cbff875b2c73a87657",
+                                "id": "76f633145db74c6bf109d8f1f3331c4c5bcb2034",
                                 "docs": null
                             }
                         }
@@ -37004,7 +37026,7 @@ exports[`ir {"name":"simple"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"streaming"} 1`] = `
+exports[`ir > {"name":"streaming"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -37209,7 +37231,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                                         ]
                                     }
                                 },
-                                "id": "28aec953dfec1f2528cfffd051a0dd52a94babf7",
+                                "id": "3d23617ca735015070c6afa350c92a92937d0e22",
                                 "docs": null
                             }
                         }
@@ -37489,7 +37511,7 @@ exports[`ir {"name":"streaming"} 1`] = `
                                         ]
                                     }
                                 },
-                                "id": "971e543e8647d0710fbcc981703bc932529d4af9",
+                                "id": "93edb27b70e1ae781d66b87205e4590af78657fb",
                                 "docs": null
                             }
                         }
@@ -37648,7 +37670,7 @@ exports[`ir {"name":"streaming"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"variables"} 1`] = `
+exports[`ir > {"name":"variables"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -38421,7 +38443,7 @@ exports[`ir {"name":"variables"} 1`] = `
                                         "value": null
                                     }
                                 },
-                                "id": "382cb8d2bcec5a9757159c7febf6c28785994c8d",
+                                "id": "705a25659aeaf9d4f1e8d33008a257016d639586",
                                 "docs": null
                             }
                         }
@@ -38853,7 +38875,7 @@ exports[`ir {"name":"variables"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"webhooks"} 1`] = `
+exports[`ir > {"name":"webhooks"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,

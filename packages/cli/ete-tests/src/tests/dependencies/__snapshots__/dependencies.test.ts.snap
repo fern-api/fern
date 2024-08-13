@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`dependencies correctly incorporates dependencies 1`] = `
+exports[`dependencies > correctly incorporates dependencies 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -512,7 +512,7 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                                         "value": null
                                     }
                                 },
-                                "id": "d6c6ed9738b2481b8cf22457a7bb62b68d6eedde",
+                                "id": "f9a90b798c9662a33e5c0834f56d48af5c5ba48d",
                                 "docs": null
                             }
                         }
@@ -871,4 +871,4 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies file dependencies 1`] = `3037640`;
+exports[`dependencies > file dependencies 1`] = `3049151`;

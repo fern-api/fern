@@ -1,5 +1,6 @@
 import {
     Availability,
+    Encoding,
     LiteralSchemaValue,
     OneOfSchemaWithExample,
     SchemaWithExample,
@@ -37,8 +38,10 @@ export function convertUndiscriminatedOneOf({
     context,
     subtypes,
     groupName,
+    encoding,
     source,
-    subtypePrefixOverrides
+    subtypePrefixOverrides,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -49,7 +52,9 @@ export function convertUndiscriminatedOneOf({
     context: SchemaParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
     groupName: SdkGroupName | undefined;
+    encoding: Encoding | undefined;
     source: Source;
+    namespace: string | undefined;
     subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
 }): SchemaWithExample {
     const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
@@ -74,7 +79,9 @@ export function convertUndiscriminatedOneOf({
                 subtypePrefix = override.name;
             }
         }
-        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source)];
+        return [
+            convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source, namespace)
+        ];
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];
@@ -137,6 +144,7 @@ export function convertUndiscriminatedOneOf({
         availability,
         subtypes: uniqueSubtypes,
         groupName,
+        encoding,
         source
     });
 }
@@ -150,7 +158,9 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     context,
     groupName,
     discriminator,
-    source
+    encoding,
+    source,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -160,13 +170,23 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
     discriminator: OpenAPIV3.DiscriminatorObject;
+    encoding: Encoding | undefined;
     source: Source;
+    namespace: string | undefined;
 }): SchemaWithExample {
     const convertedSubtypes = Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema], index) => {
         const subtypeReferenceSchema = {
             $ref: schema
         };
-        const subtypeReference = convertReferenceObject(subtypeReferenceSchema, false, context, [schema], source);
+        const subtypeReference = convertReferenceObject(
+            subtypeReferenceSchema,
+            false,
+            context,
+            [schema],
+            encoding,
+            source,
+            namespace
+        );
         context.markSchemaWithDiscriminantValue(subtypeReferenceSchema, discriminator.propertyName, discriminantValue);
 
         // If the reference is an object (which I think it has to be?), add the discriminant value as a property
@@ -249,6 +269,7 @@ export function convertUndiscriminatedOneOfWithDiscriminant({
         availability,
         subtypes: uniqueSubtypes,
         groupName,
+        encoding,
         source
     });
 }
@@ -320,6 +341,7 @@ export function wrapUndiscriminantedOneOf({
     availability,
     subtypes,
     groupName,
+    encoding,
     source
 }: {
     wrapAsNullable: boolean;
@@ -329,6 +351,7 @@ export function wrapUndiscriminantedOneOf({
     availability: Availability | undefined;
     subtypes: SchemaWithExample[];
     groupName: SdkGroupName | undefined;
+    encoding: Encoding | undefined;
     source: Source;
 }): SchemaWithExample {
     if (wrapAsNullable) {
@@ -343,6 +366,7 @@ export function wrapUndiscriminantedOneOf({
                     generatedName,
                     schemas: subtypes,
                     groupName,
+                    encoding,
                     source
                 })
             ),
@@ -359,6 +383,7 @@ export function wrapUndiscriminantedOneOf({
             generatedName,
             schemas: subtypes,
             groupName,
+            encoding,
             source
         })
     );

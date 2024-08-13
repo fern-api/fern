@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`json-string json-string docs 1`] = `
+exports[`json-string > json-string > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -35,7 +35,7 @@ exports[`json-string json-string docs 1`] = `
 }
 `;
 
-exports[`json-string json-string simple 1`] = `
+exports[`json-string > json-string > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {

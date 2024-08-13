@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser flagright docs 1`] = `
+exports[`open api parser > flagright > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -2107,6 +2107,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "base-properties": {},
         "discriminant": "method",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "flagright/openapi.yml",
         },
@@ -4329,6 +4330,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "base-properties": {},
         "discriminant": "method",
         "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
+        "encoding": undefined,
         "source": {
           "openapi": "flagright/openapi.yml",
         },
@@ -4348,6 +4350,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "base-properties": {},
         "discriminant": "method",
         "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
+        "encoding": undefined,
         "source": {
           "openapi": "flagright/openapi.yml",
         },
@@ -4692,7 +4695,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
 }
 `;
 
-exports[`open api parser flagright simple 1`] = `
+exports[`open api parser > flagright > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -6694,6 +6697,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "base-properties": {},
         "discriminant": "method",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "flagright/openapi.yml",
         },
@@ -8916,6 +8920,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "base-properties": {},
         "discriminant": "method",
         "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
+        "encoding": undefined,
         "source": {
           "openapi": "flagright/openapi.yml",
         },
@@ -8935,6 +8940,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "base-properties": {},
         "discriminant": "method",
         "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
+        "encoding": undefined,
         "source": {
           "openapi": "flagright/openapi.yml",
         },

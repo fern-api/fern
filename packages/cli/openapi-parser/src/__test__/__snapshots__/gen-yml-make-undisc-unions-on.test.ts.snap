@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
+exports[`open api parser > gen-yml-make-undisc-unions > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -18,8 +18,9 @@ exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
       "value": {
         "availability": null,
         "description": null,
+        "encoding": null,
         "generatedName": "UnionJob",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "schemas": [
           {
@@ -75,7 +76,10 @@ exports[`open api parser gen-yml-make-undisc-unions parse open api 1`] = `
             "type": "reference",
           },
         ],
-        "source": null,
+        "source": {
+          "file": "gen-yml-make-undisc-unions/openapi.json",
+          "type": "openapi",
+        },
         "type": "undisciminated",
       },
     },

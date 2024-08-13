@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`intercom intercom docs 1`] = `
+exports[`intercom > intercom > docs 1`] = `
 {
   "definitionFiles": {
     "admins.yml": {
@@ -10911,7 +10911,10 @@ If you want to reply to a coveration or take an action such as assign, unassign,
         "AttachContactToConversationRequestCustomer": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": [
             "AttachContactToConversationRequestCustomerIntercomUserId",
             "AttachContactToConversationRequestCustomerUserId",
@@ -11091,6 +11094,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
           "base-properties": {},
           "discriminant": "message_type",
           "docs": undefined,
+          "encoding": undefined,
           "source": {
             "openapi": "intercom/openapi.yml",
           },
@@ -12399,7 +12403,10 @@ You can optionally define the result page size as well with the \`per_page\` par
         "LisDataEventsRequestFilter": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": [
             "LisDataEventsRequestFilterUserId",
             "LisDataEventsRequestFilterIntercomUserId",
@@ -17112,7 +17119,10 @@ This will return a tag object.
         "CreateTagRequestBody": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": [
             "root.CreateOrUpdateTagRequest",
             "root.TagCompanyRequest",
@@ -19499,7 +19509,10 @@ The table below shows the operators you can use to define how you want to search
         "CreateTicketRequestContactsItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": [
             "ID",
             "CreateTicketRequestContactsItemExternalId",
@@ -19545,7 +19558,10 @@ The table below shows the operators you can use to define how you want to search
         "ReplyTicketRequestBody": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": [
             "root.ContactReplyTicketRequest",
             "root.AdminReplyTicketRequest",
@@ -25390,7 +25406,10 @@ The table below shows the operators you can use to define how you want to search
       "ContactReplyConversationRequest": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "ContactReplyIntercomUserIdRequest",
           "Email",
@@ -25434,7 +25453,10 @@ The table below shows the operators you can use to define how you want to search
       "ContactReplyTicketRequest": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "ContactReplyTicketIntercomUserIdRequest",
           "ContactReplyTicketUserIdRequest",
@@ -26057,7 +26079,10 @@ The table below shows the operators you can use to define how you want to search
       "CreateTicketReplyWithCommentRequest": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "ContactReplyTicketRequest",
           "AdminReplyTicketRequest",
@@ -26143,7 +26168,10 @@ A "cursor" or pointer is used to keep track of the current position in the resul
       "CustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "string",
           "optional<customObjectInstances.CustomObjectInstance>",
@@ -26152,7 +26180,10 @@ A "cursor" or pointer is used to keep track of the current position in the resul
       "CustomerRequest": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "CustomerRequestIntercomUserId",
           "CustomerRequestUserId",
@@ -26906,7 +26937,10 @@ A "cursor" or pointer is used to keep track of the current position in the resul
       "MultipleFilterSearchRequestValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           {
             "docs": "Add mutiple filters.",
@@ -27051,6 +27085,7 @@ Their responses are likely to contain a pages object that hosts pagination links
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "intercom/openapi.yml",
         },
@@ -27128,6 +27163,7 @@ Their responses are likely to contain a pages object that hosts pagination links
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "intercom/openapi.yml",
         },
@@ -27193,7 +27229,10 @@ Their responses are likely to contain a pages object that hosts pagination links
       "ReplyConversationRequest": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "ContactReplyConversationRequest",
           "AdminReplyConversationRequest",
@@ -27212,7 +27251,10 @@ Their responses are likely to contain a pages object that hosts pagination links
       "SearchRequestQuery": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "SingleFilterSearchRequest",
           "MultipleFilterSearchRequest",
@@ -27530,7 +27572,10 @@ Important: if there are any canceled sla_events for the conversation - meaning a
       "TicketCustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "optional<string>",
           "double",
@@ -27681,7 +27726,10 @@ Important: if there are any canceled sla_events for the conversation - meaning a
       "TicketRequestCustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "optional<string>",
           "double",
@@ -28262,7 +28310,7 @@ You can copy the \`icon\` property for your ticket type from [Twemoji Cheatsheet
 }
 `;
 
-exports[`intercom intercom simple 1`] = `
+exports[`intercom > intercom > simple 1`] = `
 {
   "definitionFiles": {
     "admins.yml": {
@@ -38825,7 +38873,10 @@ If you want to reply to a coveration or take an action such as assign, unassign,
         "AttachContactToConversationRequestCustomer": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": [
             "AttachContactToConversationRequestCustomerIntercomUserId",
             "AttachContactToConversationRequestCustomerUserId",
@@ -39005,6 +39056,7 @@ If you want to reply to a coveration or take an action such as assign, unassign,
           "base-properties": {},
           "discriminant": "message_type",
           "docs": undefined,
+          "encoding": undefined,
           "source": {
             "openapi": "intercom/openapi.yml",
           },
@@ -40279,7 +40331,10 @@ You can optionally define the result page size as well with the \`per_page\` par
         "LisDataEventsRequestFilter": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": [
             "LisDataEventsRequestFilterUserId",
             "LisDataEventsRequestFilterIntercomUserId",
@@ -44691,7 +44746,10 @@ This will return a tag object.
         "CreateTagRequestBody": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": [
             "root.CreateOrUpdateTagRequest",
             "root.TagCompanyRequest",
@@ -46985,7 +47043,10 @@ The table below shows the operators you can use to define how you want to search
         "CreateTicketRequestContactsItem": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": [
             "ID",
             "CreateTicketRequestContactsItemExternalId",
@@ -47031,7 +47092,10 @@ The table below shows the operators you can use to define how you want to search
         "ReplyTicketRequestBody": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "intercom/openapi.yml",
+          },
           "union": [
             "root.ContactReplyTicketRequest",
             "root.AdminReplyTicketRequest",
@@ -50495,7 +50559,10 @@ The table below shows the operators you can use to define how you want to search
       "ContactReplyConversationRequest": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "ContactReplyIntercomUserIdRequest",
           "Email",
@@ -50539,7 +50606,10 @@ The table below shows the operators you can use to define how you want to search
       "ContactReplyTicketRequest": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "ContactReplyTicketIntercomUserIdRequest",
           "ContactReplyTicketUserIdRequest",
@@ -51162,7 +51232,10 @@ The table below shows the operators you can use to define how you want to search
       "CreateTicketReplyWithCommentRequest": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "ContactReplyTicketRequest",
           "AdminReplyTicketRequest",
@@ -51248,7 +51321,10 @@ A "cursor" or pointer is used to keep track of the current position in the resul
       "CustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "string",
           "optional<customObjectInstances.CustomObjectInstance>",
@@ -51257,7 +51333,10 @@ A "cursor" or pointer is used to keep track of the current position in the resul
       "CustomerRequest": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "CustomerRequestIntercomUserId",
           "CustomerRequestUserId",
@@ -52011,7 +52090,10 @@ A "cursor" or pointer is used to keep track of the current position in the resul
       "MultipleFilterSearchRequestValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           {
             "docs": "Add mutiple filters.",
@@ -52156,6 +52238,7 @@ Their responses are likely to contain a pages object that hosts pagination links
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "intercom/openapi.yml",
         },
@@ -52233,6 +52316,7 @@ Their responses are likely to contain a pages object that hosts pagination links
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "intercom/openapi.yml",
         },
@@ -52298,7 +52382,10 @@ Their responses are likely to contain a pages object that hosts pagination links
       "ReplyConversationRequest": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "ContactReplyConversationRequest",
           "AdminReplyConversationRequest",
@@ -52317,7 +52404,10 @@ Their responses are likely to contain a pages object that hosts pagination links
       "SearchRequestQuery": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "SingleFilterSearchRequest",
           "MultipleFilterSearchRequest",
@@ -52635,7 +52725,10 @@ Important: if there are any canceled sla_events for the conversation - meaning a
       "TicketCustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "optional<string>",
           "double",
@@ -52786,7 +52879,10 @@ Important: if there are any canceled sla_events for the conversation - meaning a
       "TicketRequestCustomAttributesValue": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "intercom/openapi.yml",
+        },
         "union": [
           "optional<string>",
           "double",

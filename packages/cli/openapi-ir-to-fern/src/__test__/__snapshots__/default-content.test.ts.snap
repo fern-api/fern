@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api ir to fern default-content docs 1`] = `
+exports[`open api ir to fern > default-content > docs 1`] = `
 {
   "definitionFiles": {
     "generativelanguage.yml": {
@@ -71,7 +71,7 @@ exports[`open api ir to fern default-content docs 1`] = `
 }
 `;
 
-exports[`open api ir to fern default-content simple 1`] = `
+exports[`open api ir to fern > default-content > simple 1`] = `
 {
   "definitionFiles": {
     "generativelanguage.yml": {

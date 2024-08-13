@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser buzzshot docs 1`] = `
+exports[`open api parser > buzzshot > docs 1`] = `
 {
   "definitionFiles": {
     "api.yml": {
@@ -1225,7 +1225,7 @@ exports[`open api parser buzzshot docs 1`] = `
 }
 `;
 
-exports[`open api parser buzzshot simple 1`] = `
+exports[`open api parser > buzzshot > simple 1`] = `
 {
   "definitionFiles": {
     "api.yml": {

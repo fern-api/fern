@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser webhooks parse open api 1`] = `
+exports[`open api parser > webhooks > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -20,7 +20,7 @@ exports[`open api parser webhooks parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Pet",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -34,7 +34,7 @@ exports[`open api parser webhooks parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PetId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -54,7 +54,7 @@ exports[`open api parser webhooks parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "PetName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -78,14 +78,14 @@ exports[`open api parser webhooks parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "petTag",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "PetTag",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,

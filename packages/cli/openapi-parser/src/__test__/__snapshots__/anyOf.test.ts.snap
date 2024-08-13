@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser anyOf parse open api 1`] = `
+exports[`open api parser > anyOf > parse open api 1`] = `
 {
   "apiVersion": null,
   "basePath": null,
@@ -122,7 +122,7 @@ exports[`open api parser anyOf parse open api 1`] = `
       "description": "A generic request type used throughout the API.
 ",
       "generatedName": "Request",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -136,7 +136,7 @@ exports[`open api parser anyOf parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "requestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -144,14 +144,14 @@ exports[`open api parser anyOf parse open api 1`] = `
               "description": "An optional string value.
 ",
               "generatedName": "RequestId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "nullable",
               "value": {
                 "availability": null,
                 "description": null,
                 "generatedName": "RequestId",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -181,7 +181,7 @@ exports[`open api parser anyOf parse open api 1`] = `
       "description": "A generic response type used throughout the API.
 ",
       "generatedName": "Response",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -195,7 +195,7 @@ exports[`open api parser anyOf parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "responseValue",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -203,14 +203,14 @@ exports[`open api parser anyOf parse open api 1`] = `
               "description": "An optional numerical value.
 ",
               "generatedName": "ResponseValue",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "nullable",
               "value": {
                 "availability": null,
                 "description": null,
                 "generatedName": "ResponseValue",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser vellum docs 1`] = `
+exports[`open api parser > vellum > docs 1`] = `
 {
   "definitionFiles": {
     "deployments.yml": {
@@ -3084,6 +3084,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "vellum/openapi.yml",
         },
@@ -3204,6 +3205,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "vellum/openapi.yml",
         },
@@ -3269,6 +3271,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "vellum/openapi.yml",
         },
@@ -3333,6 +3336,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "vellum/openapi.yml",
         },
@@ -3397,6 +3401,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "vellum/openapi.yml",
         },
@@ -3435,7 +3440,7 @@ Used to submit feedback regarding the quality of previously generated completion
 }
 `;
 
-exports[`open api parser vellum simple 1`] = `
+exports[`open api parser > vellum > simple 1`] = `
 {
   "definitionFiles": {
     "deployments.yml": {
@@ -6451,6 +6456,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "vellum/openapi.yml",
         },
@@ -6571,6 +6577,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "vellum/openapi.yml",
         },
@@ -6636,6 +6643,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "vellum/openapi.yml",
         },
@@ -6700,6 +6708,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "vellum/openapi.yml",
         },
@@ -6764,6 +6773,7 @@ Used to submit feedback regarding the quality of previously generated completion
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
         "source": {
           "openapi": "vellum/openapi.yml",
         },

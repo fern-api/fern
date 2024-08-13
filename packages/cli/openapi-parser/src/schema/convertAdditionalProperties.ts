@@ -1,5 +1,6 @@
 import {
     Availability,
+    Encoding,
     PrimitiveSchemaValueWithExample,
     PrimitiveSchemaWithExample,
     SchemaWithExample,
@@ -22,7 +23,9 @@ export function convertAdditionalProperties({
     context,
     groupName,
     example,
-    source
+    encoding,
+    source,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -34,7 +37,9 @@ export function convertAdditionalProperties({
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
+    encoding: Encoding | undefined;
     source: Source;
+    namespace: string | undefined;
 }): SchemaWithExample {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties)) {
         return wrapMap({
@@ -67,7 +72,8 @@ export function convertAdditionalProperties({
                 groupName: undefined
             }),
             groupName,
-            example
+            example,
+            encoding
         });
     }
     return wrapMap({
@@ -91,9 +97,17 @@ export function convertAdditionalProperties({
             }),
             groupName: undefined
         },
-        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"], source),
+        valueSchema: convertSchema(
+            additionalProperties,
+            wrapAsNullable,
+            context,
+            [...breadcrumbs, "Value"],
+            source,
+            namespace
+        ),
         groupName,
-        example
+        example,
+        encoding
     });
 }
 
@@ -106,7 +120,8 @@ export function wrapMap({
     description,
     availability,
     groupName,
-    example
+    example,
+    encoding
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -117,6 +132,7 @@ export function wrapMap({
     availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
+    encoding: Encoding | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -130,6 +146,7 @@ export function wrapMap({
                 key: keySchema,
                 value: valueSchema,
                 groupName,
+                encoding,
                 example
             }),
             description,
@@ -145,6 +162,7 @@ export function wrapMap({
         key: keySchema,
         value: valueSchema,
         groupName,
+        encoding,
         example
     });
 }

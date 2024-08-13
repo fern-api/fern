@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading.Tasks;
 using OneOf;
 using SeedEnum.Core;
 
@@ -6,11 +7,11 @@ using SeedEnum.Core;
 
 namespace SeedEnum;
 
-public class PathParamClient
+public partial class PathParamClient
 {
     private RawClient _client;
 
-    public PathParamClient(RawClient client)
+    internal PathParamClient(RawClient client)
     {
         _client = client;
     }
@@ -40,7 +41,7 @@ public class PathParamClient
         throw new SeedEnumApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

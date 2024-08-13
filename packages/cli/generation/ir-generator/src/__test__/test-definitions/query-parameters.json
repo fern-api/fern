@@ -1541,6 +1541,9 @@
                                                 }
                                             },
                                             "jsonExample": 1
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -1575,6 +1578,9 @@
                                                 }
                                             },
                                             "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -1609,6 +1615,9 @@
                                                 }
                                             },
                                             "jsonExample": "2023-01-15"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -1643,6 +1652,9 @@
                                                 }
                                             },
                                             "jsonExample": "2024-01-15T09:30:00Z"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -1679,6 +1691,9 @@
                                                 }
                                             },
                                             "jsonExample": "SGVsbG8gd29ybGQh"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -2010,6 +2025,9 @@
                                                     "string"
                                                 ]
                                             }
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -2427,6 +2445,9 @@
                                                     ]
                                                 }
                                             ]
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -2477,6 +2498,9 @@
                                                 }
                                             },
                                             "jsonExample": "2024-01-15T09:30:00Z"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -2562,6 +2586,9 @@
                                             "jsonExample": {
                                                 "string": "string"
                                             }
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -2618,6 +2645,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3223,6 +3253,9 @@
                                                     ]
                                                 }
                                             }
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3636,6 +3669,9 @@
                                                     "string"
                                                 ]
                                             }
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3967,6 +4003,9 @@
                                                     "string"
                                                 ]
                                             }
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     },
                                     {
@@ -4003,6 +4042,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -4321,7 +4363,7 @@
                                         }
                                     }
                                 },
-                                "id": "f18d9c279504853c33fb9cfa107a6ab8600e3c35",
+                                "id": "c4be9a325df719e21dbfba536e8881635fef52de",
                                 "docs": null
                             }
                         }

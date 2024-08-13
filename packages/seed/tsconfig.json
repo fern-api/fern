@@ -10,6 +10,7 @@
     { "path": "../cli/workspace-loader" },
     { "path": "../commons/core-utils" },
     { "path": "../commons/fs-utils" },
-    { "path": "../commons/logging-execa" }
+    { "path": "../commons/logging-execa" },
+    { "path": "../ir-sdk" }
   ]
 }

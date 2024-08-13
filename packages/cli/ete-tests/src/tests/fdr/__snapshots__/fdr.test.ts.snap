@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fdr {"name":"changelog"} 1`] = `
+exports[`fdr > {"name":"changelog"} 1`] = `
 "{
     "types": {
         "type_commons:UndiscriminatedUnion": {
@@ -708,7 +708,7 @@ exports[`fdr {"name":"changelog"} 1`] = `
 }"
 `;
 
-exports[`fdr {"name":"simple"} 1`] = `
+exports[`fdr > {"name":"simple"} 1`] = `
 "{
     "types": {
         "type_commons:UndiscriminatedUnion": {

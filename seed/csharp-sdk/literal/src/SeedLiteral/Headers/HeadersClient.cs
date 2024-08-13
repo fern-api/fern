@@ -6,11 +6,11 @@ using SeedLiteral.Core;
 
 namespace SeedLiteral;
 
-public class HeadersClient
+public partial class HeadersClient
 {
     private RawClient _client;
 
-    public HeadersClient(RawClient client)
+    internal HeadersClient(RawClient client)
     {
         _client = client;
     }
@@ -51,7 +51,7 @@ public class HeadersClient
         throw new SeedLiteralApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

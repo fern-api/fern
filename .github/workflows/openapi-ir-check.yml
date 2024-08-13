@@ -33,7 +33,7 @@ jobs:
           FERN_TOKEN: dummy
         run: |
           cd packages/cli/openapi-ir-sdk
-          yarn generate
+          pnpm generate
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code

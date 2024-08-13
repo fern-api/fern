@@ -1,5 +1,6 @@
 import { ClassReference } from "..";
 import { csharp } from "../..";
+import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { AstNode } from "./AstNode";
 
 type Namespace = string;
@@ -11,9 +12,13 @@ export declare namespace Writer {
         /* The namespace that is being written to */
         namespace: string;
         /* All base namespaces in the project */
-        allBaseNamespaces: Set<string>;
+        allNamespaceSegments: Set<string>;
+        /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
+        allTypeClassReferences: Map<string, Set<Namespace>>;
         /* The root namespace of the project */
         rootNamespace: string;
+        /* Custom generator config */
+        customConfig: BaseCsharpCustomConfigSchema;
     }
 }
 
@@ -31,14 +36,20 @@ export class Writer {
     /* The namespace that is being written to */
     private namespace: string;
     /* All base namespaces in the project */
-    private allBaseNamespaces: Set<string>;
+    private allNamespaceSegments: Set<string>;
+    /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
+    private allTypeClassReferences: Map<string, Set<Namespace>>;
     /* The root namespace of the project */
     private rootNamespace: string;
+    /* Whether or not dictionary<string, object?> should be simplified to just objects */
+    private customConfig: BaseCsharpCustomConfigSchema;
 
-    constructor({ namespace, allBaseNamespaces, rootNamespace }: Writer.Args) {
+    constructor({ namespace, allNamespaceSegments, allTypeClassReferences, rootNamespace, customConfig }: Writer.Args) {
         this.namespace = namespace;
-        this.allBaseNamespaces = allBaseNamespaces;
+        this.allNamespaceSegments = allNamespaceSegments;
+        this.allTypeClassReferences = allTypeClassReferences;
         this.rootNamespace = rootNamespace;
+        this.customConfig = customConfig;
     }
 
     public write(text: string): void {
@@ -142,8 +153,12 @@ export class Writer {
         }
     }
 
-    public getAllNamespaceSegments(): Set<string> {
-        return this.allBaseNamespaces;
+    public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
+        return this.allTypeClassReferences;
+    }
+
+    public getAllNamespaceSegmentsAndTypes(): Set<string | ClassReference> {
+        return this.allNamespaceSegments;
     }
 
     public getRootNamespace(): string {
@@ -152,6 +167,10 @@ export class Writer {
 
     public getNamespace(): string {
         return this.namespace;
+    }
+
+    public getSimplifyObjectDictionaries(): boolean {
+        return this.customConfig["simplify-object-dictionaries"] ?? true;
     }
 
     public toString(): string {

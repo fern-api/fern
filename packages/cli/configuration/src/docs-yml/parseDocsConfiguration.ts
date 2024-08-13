@@ -1,7 +1,7 @@
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
-import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
+import { FernRegistry as CjsFdrSdk } from "@fern-fern/fdr-cjs-sdk";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 import { WithoutQuestionMarks } from "../commons/WithoutQuestionMarks";
@@ -221,7 +221,7 @@ async function convertJsConfig(
     js: RawDocs.JsConfig | undefined,
     absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): Promise<JavascriptConfig> {
-    const remote: DocsV1Write.JsRemoteConfig[] = [];
+    const remote: CjsFdrSdk.docs.v1.commons.JsRemoteConfig[] = [];
     const files: AbsoluteJsFileConfig[] = [];
     if (js == null) {
         return { files: [] };
@@ -261,23 +261,27 @@ function convertLayoutConfig(layout: RawDocs.LayoutConfig | undefined): ParsedDo
 
         searchbarPlacement:
             layout.searchbarPlacement === "header"
-                ? DocsV1Write.SearchbarPlacement.Header
+                ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Header
                 : layout.searchbarPlacement === "header-tabs"
-                ? DocsV1Write.SearchbarPlacement.HeaderTabs
-                : DocsV1Write.SearchbarPlacement.Sidebar,
+                ? CjsFdrSdk.docs.v1.commons.SearchbarPlacement.HeaderTabs
+                : CjsFdrSdk.docs.v1.commons.SearchbarPlacement.Sidebar,
         tabsPlacement:
-            layout.tabsPlacement === "header" ? DocsV1Write.TabsPlacement.Header : DocsV1Write.TabsPlacement.Sidebar,
+            layout.tabsPlacement === "header"
+                ? CjsFdrSdk.docs.v1.commons.TabsPlacement.Header
+                : CjsFdrSdk.docs.v1.commons.TabsPlacement.Sidebar,
         contentAlignment:
             layout.contentAlignment === "left"
-                ? DocsV1Write.ContentAlignment.Left
-                : DocsV1Write.ContentAlignment.Center,
+                ? CjsFdrSdk.docs.v1.commons.ContentAlignment.Left
+                : CjsFdrSdk.docs.v1.commons.ContentAlignment.Center,
         headerPosition:
-            layout.headerPosition === "static" ? DocsV1Write.HeaderPosition.Absolute : DocsV1Write.HeaderPosition.Fixed,
+            layout.headerPosition === "static"
+                ? CjsFdrSdk.docs.v1.commons.HeaderPosition.Absolute
+                : CjsFdrSdk.docs.v1.commons.HeaderPosition.Fixed,
         disableHeader: layout.disableHeader ?? false
     };
 }
 
-function parseSizeConfig(sizeAsString: string | undefined): DocsV1Write.SizeConfig | undefined {
+function parseSizeConfig(sizeAsString: string | undefined): CjsFdrSdk.docs.v1.commons.SizeConfig | undefined {
     if (sizeAsString == null) {
         return undefined;
     }
@@ -833,8 +837,10 @@ function isTabbedNavigationConfig(
     );
 }
 
-function convertNavbarLinks(navbarLinks: RawDocs.NavbarLink[] | undefined): DocsV1Write.NavbarLink[] | undefined {
-    return navbarLinks?.map((navbarLink): DocsV1Write.NavbarLink => {
+function convertNavbarLinks(
+    navbarLinks: RawDocs.NavbarLink[] | undefined
+): CjsFdrSdk.docs.v1.commons.NavbarLink[] | undefined {
+    return navbarLinks?.map((navbarLink): CjsFdrSdk.docs.v1.commons.NavbarLink => {
         if (navbarLink.type === "github") {
             return { type: "github", url: navbarLink.value };
         }
@@ -850,12 +856,14 @@ function convertNavbarLinks(navbarLinks: RawDocs.NavbarLink[] | undefined): Docs
     });
 }
 
-function convertFooterLinks(footerLinks: RawDocs.FooterLinksConfig | undefined): DocsV1Write.FooterLink[] | undefined {
+function convertFooterLinks(
+    footerLinks: RawDocs.FooterLinksConfig | undefined
+): CjsFdrSdk.docs.v1.commons.FooterLink[] | undefined {
     if (footerLinks == null) {
         return undefined;
     }
 
-    const links: DocsV1Write.FooterLink[] = [];
+    const links: CjsFdrSdk.docs.v1.commons.FooterLink[] = [];
 
     (Object.keys(footerLinks) as (keyof RawDocs.FooterLinksConfig)[]).forEach((key) => {
         const link = footerLinks[key];

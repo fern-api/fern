@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser permit docs 1`] = `
+exports[`open api parser > permit > docs 1`] = `
 {
   "definitionFiles": {
     "bulkOperations.yml": {
@@ -1487,7 +1487,10 @@ Fields that will be provided will be completely overwritten.",
         "ListConditionSetsResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultConditionSetRead",
             "list<root.ConditionSetRead>",
@@ -5518,7 +5521,10 @@ Fields that will be provided will be completely overwritten.",
         "ListResourcesResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultResourceRead",
             "list<root.ResourceRead>",
@@ -6494,7 +6500,10 @@ Fields that will be provided will be completely overwritten.",
         "ListRolesResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultRoleRead",
             "list<root.RoleRead>",
@@ -7003,7 +7012,10 @@ Fields that will be provided will be completely overwritten.",
         "ListTenantsResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultTenantRead",
             "list<root.TenantRead>",
@@ -10680,7 +10692,10 @@ The actions represents the ways you can interact with a protected resource.",
       "Roles": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
         "union": [
           "list<RoleRead>",
           "PaginatedResultRoleRead",
@@ -11070,7 +11085,10 @@ The actions represents the ways you can interact with a protected resource.",
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
         "union": [
           "string",
           "integer",
@@ -11098,7 +11116,7 @@ The actions represents the ways you can interact with a protected resource.",
 }
 `;
 
-exports[`open api parser permit simple 1`] = `
+exports[`open api parser > permit > simple 1`] = `
 {
   "definitionFiles": {
     "bulkOperations.yml": {
@@ -12585,7 +12603,10 @@ Fields that will be provided will be completely overwritten.",
         "ListConditionSetsResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultConditionSetRead",
             "list<root.ConditionSetRead>",
@@ -16616,7 +16637,10 @@ Fields that will be provided will be completely overwritten.",
         "ListResourcesResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultResourceRead",
             "list<root.ResourceRead>",
@@ -17592,7 +17616,10 @@ Fields that will be provided will be completely overwritten.",
         "ListRolesResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultRoleRead",
             "list<root.RoleRead>",
@@ -18101,7 +18128,10 @@ Fields that will be provided will be completely overwritten.",
         "ListTenantsResponse": {
           "discriminated": false,
           "docs": undefined,
-          "source": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "permit/openapi.json",
+          },
           "union": [
             "root.PaginatedResultTenantRead",
             "list<root.TenantRead>",
@@ -21273,7 +21303,10 @@ The actions represents the ways you can interact with a protected resource.",
       "Roles": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
         "union": [
           "list<RoleRead>",
           "PaginatedResultRoleRead",
@@ -21663,7 +21696,10 @@ The actions represents the ways you can interact with a protected resource.",
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
-        "source": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "permit/openapi.json",
+        },
         "union": [
           "string",
           "integer",

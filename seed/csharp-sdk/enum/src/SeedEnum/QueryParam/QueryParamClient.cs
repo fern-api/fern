@@ -1,16 +1,17 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading.Tasks;
 using SeedEnum.Core;
 
 #nullable enable
 
 namespace SeedEnum;
 
-public class QueryParamClient
+public partial class QueryParamClient
 {
     private RawClient _client;
 
-    public QueryParamClient(RawClient client)
+    internal QueryParamClient(RawClient client)
     {
         _client = client;
     }
@@ -46,7 +47,7 @@ public class QueryParamClient
         throw new SeedEnumApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 
@@ -84,7 +85,7 @@ public class QueryParamClient
         throw new SeedEnumApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
-            JsonUtils.Deserialize<object>(responseBody)
+            responseBody
         );
     }
 }

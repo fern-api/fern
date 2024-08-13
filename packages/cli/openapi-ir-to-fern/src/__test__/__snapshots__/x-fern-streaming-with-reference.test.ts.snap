@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference docs 1`] = `
+exports[`x-fern-streaming-with-reference > x-fern-streaming-with-reference > docs 1`] = `
 {
   "definitionFiles": {
     "chatCompletions.yml": {
@@ -108,7 +108,7 @@ exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference docs 1`
 }
 `;
 
-exports[`x-fern-streaming-with-reference x-fern-streaming-with-reference simple 1`] = `
+exports[`x-fern-streaming-with-reference > x-fern-streaming-with-reference > simple 1`] = `
 {
   "definitionFiles": {
     "chatCompletions.yml": {

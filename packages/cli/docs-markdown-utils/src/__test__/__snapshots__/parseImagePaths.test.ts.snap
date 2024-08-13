@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`bland should replace all images with full path 1`] = `
+exports[`bland > should replace all images with full path 1`] = `
 [
   "/Volume/git/fern/tutorials/node.png",
   "/Volume/git/fern/tutorials/new_pathway.png",
@@ -24,7 +24,7 @@ exports[`bland should replace all images with full path 1`] = `
 ]
 `;
 
-exports[`bland should replace all images with full path 2`] = `
+exports[`bland > should replace all images with full path 2`] = `
 [
   {
     "added": undefined,
@@ -327,7 +327,7 @@ description: >-
 ]
 `;
 
-exports[`bland should replace all images with full path 3`] = `
+exports[`bland > should replace all images with full path 3`] = `
 [
   {
     "added": undefined,
@@ -630,7 +630,7 @@ description: >-
 ]
 `;
 
-exports[`hume should replace all images with full path 1`] = `
+exports[`hume > should replace all images with full path 1`] = `
 [
   "/Volume/git/fern/my/docs/folder/img/add-tool-view.png",
   "/Volume/git/fern/my/docs/folder/img/evi-tools-view.png",
@@ -638,7 +638,7 @@ exports[`hume should replace all images with full path 1`] = `
 ]
 `;
 
-exports[`hume should replace all images with full path 2`] = `
+exports[`hume > should replace all images with full path 2`] = `
 [
   {
     "added": undefined,
@@ -726,7 +726,7 @@ exports[`hume should replace all images with full path 2`] = `
 ]
 `;
 
-exports[`hume should replace all images with full path 3`] = `
+exports[`hume > should replace all images with full path 3`] = `
 [
   {
     "added": undefined,
@@ -814,7 +814,7 @@ exports[`hume should replace all images with full path 3`] = `
 ]
 `;
 
-exports[`multimedia-file should replace all images with full path 1`] = `
+exports[`multimedia-file > should replace all images with full path 1`] = `
 [
   "/Volume/git/fern/my/docs/folder/image.png",
   "/Volume/git/fern/my/docs/folder/video.mp4",
@@ -824,7 +824,7 @@ exports[`multimedia-file should replace all images with full path 1`] = `
 ]
 `;
 
-exports[`multimedia-file should replace all images with full path 2`] = `
+exports[`multimedia-file > should replace all images with full path 2`] = `
 [
   {
     "added": undefined,
@@ -899,7 +899,7 @@ exports[`multimedia-file should replace all images with full path 2`] = `
 ]
 `;
 
-exports[`multimedia-file should replace all images with full path 3`] = `
+exports[`multimedia-file > should replace all images with full path 3`] = `
 [
   {
     "added": undefined,
@@ -974,8 +974,8 @@ exports[`multimedia-file should replace all images with full path 3`] = `
 ]
 `;
 
-exports[`zep should replace all images with full path 1`] = `[]`;
+exports[`zep > should replace all images with full path 1`] = `[]`;
 
-exports[`zep should replace all images with full path 2`] = `[]`;
+exports[`zep > should replace all images with full path 2`] = `[]`;
 
-exports[`zep should replace all images with full path 3`] = `[]`;
+exports[`zep > should replace all images with full path 3`] = `[]`;
