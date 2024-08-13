@@ -69,6 +69,7 @@ export function convertParameters({
                       context,
                       parameterBreadcrumbs,
                       source,
+                      context.namespace,
                       false,
                       new Set(),
                       getExamplesString({

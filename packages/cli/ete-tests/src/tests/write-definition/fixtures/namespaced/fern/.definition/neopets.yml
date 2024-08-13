@@ -1,0 +1,68 @@
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listPets:
+      path: /pets
+      method: GET
+      auth: false
+      display-name: List all pets
+      request:
+        name: ListPetsRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: How many items to return at one time (max 100)
+      response:
+        docs: A paged array of pets
+        type: Pets
+      examples:
+        - response:
+            body:
+              - id: 1000000
+                name: name
+                tag: tag
+    createPets:
+      path: /pets
+      method: POST
+      auth: false
+      display-name: Create a pet
+      examples:
+        - {}
+    showPetById:
+      path: /pets/{petId}
+      method: GET
+      auth: false
+      path-parameters:
+        petId:
+          type: string
+          docs: The id of the pet to retrieve
+      display-name: Info for a specific pet
+      response:
+        docs: Expected response to a valid request
+        type: Pet
+      examples:
+        - path-parameters:
+            petId: petId
+          response:
+            body:
+              id: 1000000
+              name: name
+              tag: tag
+  source:
+    openapi: openapi/petstore/openapi.yml
+types:
+  Pet:
+    properties:
+      id: long
+      name: string
+      tag: optional<string>
+    source:
+      openapi: openapi/petstore/openapi.yml
+  Pets: list<Pet>
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: openapi/petstore/openapi.yml

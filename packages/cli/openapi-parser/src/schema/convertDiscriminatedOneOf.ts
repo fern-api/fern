@@ -25,7 +25,8 @@ export function convertDiscriminatedOneOf({
     context,
     groupName,
     encoding,
-    source
+    source,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -40,6 +41,7 @@ export function convertDiscriminatedOneOf({
     groupName: SdkGroupName | undefined;
     encoding: Encoding | undefined;
     source: Source;
+    namespace: string | undefined;
 }): SchemaWithExample {
     const discriminant = discriminator.propertyName;
     const unionSubTypes = Object.fromEntries(
@@ -52,7 +54,8 @@ export function convertDiscriminatedOneOf({
                 context,
                 [schema],
                 encoding,
-                source
+                source,
+                namespace
             );
             context.markReferencedByDiscriminatedUnion(
                 {
@@ -70,7 +73,14 @@ export function convertDiscriminatedOneOf({
         })
         .map(([propertyName, propertySchema]) => {
             const isRequired = required != null && required.includes(propertyName);
-            const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName], source);
+            const schema = convertSchema(
+                propertySchema,
+                !isRequired,
+                context,
+                [...breadcrumbs, propertyName],
+                source,
+                namespace
+            );
             return {
                 key: propertyName,
                 schema
@@ -104,7 +114,8 @@ export function convertDiscriminatedOneOfWithVariants({
     context,
     groupName,
     encoding,
-    source
+    source,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -120,6 +131,7 @@ export function convertDiscriminatedOneOfWithVariants({
     groupName: SdkGroupName | undefined;
     encoding: Encoding | undefined;
     source: Source;
+    namespace: string | undefined;
 }): SchemaWithExample {
     const unionSubTypes = Object.fromEntries(
         Object.entries(variants).map(([discriminantValue, schema]) => {
@@ -130,7 +142,8 @@ export function convertDiscriminatedOneOfWithVariants({
                     context,
                     [schema.$ref],
                     encoding,
-                    source
+                    source,
+                    namespace
                 );
                 context.markReferencedByDiscriminatedUnion(schema, discriminant, 1);
                 return [discriminantValue, subtypeReference];
@@ -142,6 +155,7 @@ export function convertDiscriminatedOneOfWithVariants({
                     [...breadcrumbs, discriminantValue],
                     encoding,
                     source,
+                    namespace,
                     new Set([discriminant])
                 );
                 return [discriminantValue, variantSchema];
@@ -154,7 +168,14 @@ export function convertDiscriminatedOneOfWithVariants({
         })
         .map(([propertyName, propertySchema]) => {
             const isRequired = required != null && required.includes(propertyName);
-            const schema = convertSchema(propertySchema, !isRequired, context, [...breadcrumbs, propertyName], source);
+            const schema = convertSchema(
+                propertySchema,
+                !isRequired,
+                context,
+                [...breadcrumbs, propertyName],
+                source,
+                namespace
+            );
             return {
                 key: propertyName,
                 schema

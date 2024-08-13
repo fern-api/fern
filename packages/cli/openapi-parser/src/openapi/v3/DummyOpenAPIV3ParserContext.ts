@@ -14,19 +14,22 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
         document,
         taskContext,
         options,
-        source
+        source,
+        namespace
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         options: ParseOpenAPIOptions;
         source: Source;
+        namespace: string | undefined;
     }) {
         super({
             document,
             taskContext,
             authHeaders: new Set(),
             options,
-            source
+            source,
+            namespace
         });
     }
 

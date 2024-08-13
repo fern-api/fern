@@ -425,14 +425,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "AccountsListAccountsRequestProductType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AccountsListAccountsRequestProductType",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -464,7 +464,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "AccountsListAccountsRequestLocation",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
@@ -472,7 +472,7 @@ This error response may have one of the following \`type\` values:
               "default": null,
               "description": null,
               "generatedName": "AccountsListAccountsRequestLocation",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "source": {
                 "file": "apiture/openapi.yml",
@@ -523,14 +523,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "AccountsListAccountsRequestAllows",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AccountsListAccountsRequestAllows",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -562,14 +562,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "AccountsListAccountsRequestStart",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AccountsListAccountsRequestStart",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": "",
@@ -596,14 +596,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "AccountsListAccountsRequestLimit",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AccountsListAccountsRequestLimit",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 100,
@@ -1493,14 +1493,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "AccountsListAccountBalancesRequestRetryCount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AccountsListAccountBalancesRequestRetryCount",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -2042,7 +2042,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "AccountsListEligibleAchAccountsRequestAllows",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -2127,14 +2127,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "AccountsListEligibleAchAccountsRequestStart",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AccountsListEligibleAchAccountsRequestStart",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": "",
@@ -2161,14 +2161,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "AccountsListEligibleAchAccountsRequestLimit",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "AccountsListEligibleAchAccountsRequestLimit",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 100,
@@ -2617,14 +2617,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestStart",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestStart",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": "",
@@ -2651,14 +2651,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestLimit",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "OverdraftProtectionListEligibleOverdraftAccountsRequestLimit",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 100,
@@ -4133,7 +4133,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestLocator",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4182,7 +4182,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the financial institution.",
             "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestCountryCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4208,14 +4208,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestIncludeIntermediaryInstitutions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "InstitutionsLookUpInstitutionByLocatorRequestIncludeIntermediaryInstitutions",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -4685,7 +4685,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "InstitutionsListTransferScheduleRequestStartsOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -4711,14 +4711,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "InstitutionsListTransferScheduleRequestEndsOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "InstitutionsListTransferScheduleRequestEndsOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -4768,14 +4768,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "InstitutionsListTransferScheduleRequestCount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "InstitutionsListTransferScheduleRequestCount",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 6,
@@ -5195,14 +5195,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "InstitutionsGetCutoffTimesRequestIfNoneMatch",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "InstitutionsGetCutoffTimesRequestIfNoneMatch",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -6111,14 +6111,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "InstitutionsGetTransferDateRestrictionsRequestStartsOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "InstitutionsGetTransferDateRestrictionsRequestStartsOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -6145,14 +6145,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "InstitutionsGetTransferDateRestrictionsRequestEndsOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "InstitutionsGetTransferDateRestrictionsRequestEndsOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -6883,14 +6883,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransactionsListTransactionsRequestStart",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransactionsListTransactionsRequestStart",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": "",
@@ -6917,14 +6917,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransactionsListTransactionsRequestLimit",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransactionsListTransactionsRequestLimit",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 100,
@@ -6952,14 +6952,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransactionsListTransactionsRequestOccurredOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransactionsListTransactionsRequestOccurredOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -6986,14 +6986,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransactionsListTransactionsRequestPosted",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransactionsListTransactionsRequestPosted",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -7078,14 +7078,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransactionsListTransactionsRequestCategory",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransactionsListTransactionsRequestCategory",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -7117,14 +7117,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransactionsListTransactionsRequestType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransactionsListTransactionsRequestType",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -7156,14 +7156,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransactionsListTransactionsRequestSubtype",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransactionsListTransactionsRequestSubtype",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -7257,14 +7257,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransactionsListTransactionsRequestRetryCount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransactionsListTransactionsRequestRetryCount",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -7544,14 +7544,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransactionCategoriesListTransactionCategoriesRequestIfNoneMatch",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransactionCategoriesListTransactionCategoriesRequestIfNoneMatch",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -8246,14 +8246,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransfersListTransfersRequestHistorical",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransfersListTransfersRequestHistorical",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -8276,14 +8276,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransfersListTransfersRequestStart",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransfersListTransfersRequestStart",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": "",
@@ -8310,14 +8310,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "TransfersListTransfersRequestLimit",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "nullable",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "TransfersListTransfersRequestLimit",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 100,
@@ -10212,7 +10212,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": "An abstract schema used to define other request and response body model schemas.",
       "generatedName": "AbstractBody",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -10253,7 +10253,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": "An abstract schema used to define paginated collections of resources. Collection classes which extend this schema define an array of \`items\` which represent a page of data.",
       "generatedName": "AbstractPagedBody",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -10267,14 +10267,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "abstractPagedBodyStart",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The opaque cursor that specifies the starting location of this page of items.",
               "generatedName": "AbstractPagedBodyStart",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -10302,7 +10302,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": "Common properties of collection page responses.",
       "generatedName": "AbstractPagedBodyFields",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -10316,7 +10316,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "The number of items requested for this page response. The length of the \`items\` array may be less that \`limit\`.",
             "generatedName": "AbstractPagedBodyFieldsLimit",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": 100,
@@ -10341,14 +10341,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "abstractPagedBodyFieldsNextPageUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
               "generatedName": "AbstractPagedBodyFieldsNextPageUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -10401,7 +10401,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": "An internal customer account.",
       "generatedName": "Account",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -10415,7 +10415,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "Flags which indicate the permissions the current authorized user has on this account resource.",
             "generatedName": "AccountAllows",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": "fullAccountPermissions",
             "source": {
@@ -10436,7 +10436,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "If \`true\`, the customer has opted in to receive account statements electronically.",
             "generatedName": "AccountElectronicStatements",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10497,7 +10497,7 @@ This error response may have one of the following \`type\` values:
 
 ",
       "generatedName": "AccountAllowsFilter",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -10605,7 +10605,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": "The current balances of the given account.",
       "generatedName": "AccountBalance",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -10640,14 +10640,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountBalanceAvailable",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
               "generatedName": "AccountBalanceAvailable",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "creditOrDebitValue",
               "source": {
@@ -10669,14 +10669,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountBalanceCurrent",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
               "generatedName": "AccountBalanceCurrent",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "creditOrDebitValue",
               "source": {
@@ -10698,7 +10698,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountBalanceUpdatedAt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -10727,14 +10727,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountBalanceCurrentWithPending",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
               "generatedName": "AccountBalanceCurrentWithPending",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "creditOrDebitValue",
               "source": {
@@ -10756,7 +10756,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "If \`true\`, the response is incomplete and the client may retry the operation after the \`Retry-After\` time in order to fetch balances for any incomplete accounts in the \`items\`. The retry operation should only pass in accounts that are \`incomplete\`.",
             "generatedName": "AccountBalanceIncomplete",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10792,7 +10792,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": "An array of account balances by account ID.",
       "generatedName": "AccountBalances",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -10806,7 +10806,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
             "generatedName": "AccountBalancesItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -10838,7 +10838,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": "Fragment schema use to build other account schemas.",
       "generatedName": "AccountFields",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -10852,7 +10852,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "The unique identifier for this account resource. This is an immutable opaque string.",
             "generatedName": "AccountFieldsId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": "readOnlyResourceId",
             "source": {
@@ -10873,7 +10873,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "generatedName": "AccountFieldsLabel",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -10897,7 +10897,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountFieldsNickname",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -10968,7 +10968,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "Indicates where an account is held.",
             "generatedName": "AccountFieldsLocation",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": "accountLocation",
             "source": {
@@ -10989,7 +10989,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": "An array of account IDs.",
       "generatedName": "AccountIds",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "type": "array",
       "value": {
@@ -11026,7 +11026,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": "An account item in a list items in the \`accounts\` schema.",
       "generatedName": "AccountItem",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -11044,14 +11044,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountItemId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The unique identifier for this account resource. This is an immutable opaque string.",
               "generatedName": "AccountItemId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "readOnlyResourceId",
               "source": {
@@ -11077,14 +11077,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountItemLabel",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "generatedName": "AccountItemLabel",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -11113,7 +11113,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountItemNickname",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -11146,7 +11146,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountItemMaskedNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -11200,7 +11200,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountItemProduct",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -11233,14 +11233,14 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": null,
             "generatedName": "accountItemLocation",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Indicates where an account is held.",
               "generatedName": "AccountItemLocation",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": "accountLocation",
               "source": {
@@ -11278,7 +11278,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": "Representation of account joint owner resources.",
       "generatedName": "AccountJointOwner",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -11313,7 +11313,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "The full name of the joint owner.",
             "generatedName": "AccountJointOwnerName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11340,7 +11340,7 @@ This error response may have one of the following \`type\` values:
       "availability": null,
       "description": null,
       "generatedName": "AccountJointOwners",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -11354,7 +11354,7 @@ This error response may have one of the following \`type\` values:
             "availability": null,
             "description": "An array containing account joint owner items.",
             "generatedName": "AccountJointOwnersItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -11388,7 +11388,7 @@ This error response may have one of the following \`type\` values:
   * \`outside\` accounts non-banking accounts such as brokerage and fund accounts.
 Account transfers are only allowed between \`internal\` and \`external\` accounts. All accounts are considered when calculating total cash balance.",
       "generatedName": "AccountLocation",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -11441,7 +11441,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
       "generatedName": "AccountNickname",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -11460,7 +11460,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "Flags which indicate the permissions the current authorized user has on this account item resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in account items in the [\`accounts\`](#schema-accounts) list. See [\`fullAccountPermissions\`](#schema-fullAccountPermissions) for all capabilities a customer has on an account (the \`account.allows\` object in the [\`account\`](#schema-account) object response from [\`getAccount\`](#op-getAccount).)",
       "generatedName": "AccountPermissions",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -11474,7 +11474,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "If \`true\`, the customer may use this account for Bill Pay.",
             "generatedName": "AccountPermissionsBillPay",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11494,7 +11494,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "If \`true\`, the customer may use this account for mobile check deposits.",
             "generatedName": "AccountPermissionsMobileCheckDeposit",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11514,7 +11514,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "If \`true\`, the customer may use this account as the target (deposit) account for account-to-account transfers.",
             "generatedName": "AccountPermissionsTransferFrom",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11534,7 +11534,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "If \`true\`, the customer may use this account as the source (debit) account for account-to-account transfers.",
             "generatedName": "AccountPermissionsTransferTo",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11554,7 +11554,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "If \`true\`, the customer may view the details of this account, including the account balance and transactions.",
             "generatedName": "AccountPermissionsView",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11574,7 +11574,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "If \`true\`, the customer may view debit cards associated with this account.",
             "generatedName": "AccountPermissionsViewCards",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11594,7 +11594,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "If true, the customer may manage debit cards associated with this account. This includes locking and unlocking cards, changing card controls, ordering cards, or canceling cards.",
             "generatedName": "AccountPermissionsManageCards",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -11614,7 +11614,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "An account ABA routing and transit number.",
       "generatedName": "AccountRoutingNumber",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -11646,7 +11646,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "A paginated list of the customer's accounts. This list contains internal banking accounts and external banking accounts. and outside fund accounts. The \`location\` property indicates where the account is held. Items in the list contain \`url\` links to the actual account resource which are in the \`accounts\`, \`externalAccounts\` or \`outsideAccounts\` collections.",
       "generatedName": "Accounts",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -11660,7 +11660,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "The array of items in this page of accounts. This array may be empty.",
             "generatedName": "AccountsItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -11689,14 +11689,14 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "accountsCount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
               "generatedName": "AccountsCount",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -11722,7 +11722,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "accountsPrimaryAccountId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -11755,14 +11755,14 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "accountsNextPageUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
               "generatedName": "AccountsNextPageUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -11816,7 +11816,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
       "generatedName": "AchAccountRisk",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -11925,7 +11925,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
       "generatedName": "AchSecCode",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -12085,7 +12085,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "A postal address that can hold a US address or an international (non-US) postal addresses.",
       "generatedName": "Address",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12099,14 +12099,14 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "addressRegionName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
               "generatedName": "AddressRegionName",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12131,14 +12131,14 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "addressRegionCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
               "generatedName": "AddressRegionCode",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12163,7 +12163,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "The postal code, which varies in format by country. If \`countryCode\` is \`US\`, this should be a five digit US ZIP code or ten character ZIP+4.",
             "generatedName": "AddressPostalCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -12191,7 +12191,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
             "generatedName": "AddressCountryCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -12218,7 +12218,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "Properties of a simple address, used to compose other addresses.",
       "generatedName": "AddressFields",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12232,7 +12232,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "The first line of the postal address. In the US, this typically includes the building number and street name.",
             "generatedName": "AddressFieldsAddress1",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -12256,14 +12256,14 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "addressFieldsAddress2",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
               "generatedName": "AddressFieldsAddress2",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12288,7 +12288,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "The city/town/municipality of the address.",
             "generatedName": "AddressFieldsLocality",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -12312,7 +12312,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "The [ISO-3611 alpha-2](https://www.iso.org/glossary-for-iso-3166.html) value for the country associated with the postal address.",
             "generatedName": "AddressFieldsCountryCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -12336,7 +12336,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
       "generatedName": "AmountRange",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -12355,7 +12355,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
       "generatedName": "ApiProblem",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12369,7 +12369,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "apiProblemType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12377,7 +12377,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "description": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
 ",
               "generatedName": "ApiProblemType",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12402,7 +12402,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "apiProblemTitle",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12410,7 +12410,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "description": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
 ",
               "generatedName": "ApiProblemTitle",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12435,7 +12435,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "apiProblemStatus",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12443,7 +12443,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "description": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
 ",
               "generatedName": "ApiProblemStatus",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12469,7 +12469,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "apiProblemDetail",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12477,7 +12477,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "description": "A human-readable explanation specific to this occurrence of the problem.
 ",
               "generatedName": "ApiProblemDetail",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12502,7 +12502,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "apiProblemInstance",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12510,7 +12510,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "description": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
 ",
               "generatedName": "ApiProblemInstance",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -12535,7 +12535,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "apiProblemId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12564,7 +12564,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "apiProblemOccurredAt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12593,14 +12593,14 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "apiProblemProblems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Optional root-causes if there are multiple problems in the request or API call processing.",
               "generatedName": "ApiProblemProblems",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -12630,7 +12630,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "apiProblemAttributes",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12638,12 +12638,12 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "description": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
               "encoding": null,
               "generatedName": "ApiProblemAttributes",
-              "groupName": null,
+              "groupName": [],
               "key": {
                 "availability": null,
                 "description": null,
                 "generatedName": "ApiProblemAttributesKey",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -12678,7 +12678,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "An challenge factor. See [\`requiredIdentityChallenge\`](#schema-requiredIdentityChallenge) for multiple examples.",
       "generatedName": "ChallengeFactor",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12713,21 +12713,21 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "challengeFactorLabels",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
               "generatedName": "ChallengeFactorLabels",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
                 "availability": null,
                 "description": null,
                 "generatedName": "ChallengeFactorLabelsItem",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "schema": {
                   "default": null,
@@ -12753,7 +12753,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": null,
             "generatedName": "challengeFactorSecurityQuestions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -12815,7 +12815,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
       "generatedName": "ChallengeFactorType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -12894,7 +12894,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "The unique ID of a prompt (such as a security question) in a challenge factor.",
       "generatedName": "ChallengePromptId",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -12913,7 +12913,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "A single security question within the \`questions\` array of the [\`challengeSecurityQuestions\`](#schema-challengeSecurityQuestions)",
       "generatedName": "ChallengeSecurityQuestion",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12948,7 +12948,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "The text prompt of this security question.",
             "generatedName": "ChallengeSecurityQuestionPrompt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -12975,7 +12975,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "Describes a \`securityQuestions\` challenge. This is omitted if the challenge \`type\` is not \`securityQuestions\`.",
       "generatedName": "ChallengeSecurityQuestions",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -12989,7 +12989,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "The array of security questions.",
             "generatedName": "ChallengeSecurityQuestionsQuestions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -13018,7 +13018,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "The value of the identity \`Challenge\` request header that the client must send when retrying an operation which required a challenge.",
       "generatedName": "ChallengeToken",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -13034,7 +13034,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "A numeric range for a checking account check number.",
       "generatedName": "CheckNumberRange",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": "positiveIntegerRange",
       "source": {
@@ -13047,7 +13047,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "The monetary value representing a credit (positive amounts with no prefix or a \`+\` prefix) or debit (negative amounts with a \`-\` prefix). The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`creditOrDebitValue\` was added on version \`0.4.0\` of the API.",
       "generatedName": "CreditOrDebitValue",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -13066,7 +13066,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "A representation of a cutoff time for a money movement process at a financial institution.",
       "generatedName": "CutoffTime",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -13101,7 +13101,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "availability": null,
             "description": "The cutoff time for a product formatted in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) \`time\` format: \`hh:mm\`. The time is expressed in 24 hour time and is set to the local time zone of the financial institution.",
             "generatedName": "CutoffTimeTime",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -13161,7 +13161,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 
 ",
       "generatedName": "CutoffTimeType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -13282,7 +13282,7 @@ Account transfers are only allowed between \`internal\` and \`external\` account
       "availability": null,
       "description": "A representation of financial institution cutoff times for different money movement processes. A money movement process can have multiple cutoff times. The cutoff times are sorted in ascending chronological order by money movement process.",
       "generatedName": "CutoffTimes",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -13318,7 +13318,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "A list of cutoff times for a financial institution.",
             "generatedName": "CutoffTimesItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -13347,7 +13347,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A date range, supporting inclusive or exclusive endpoints. Dates ranges use dates expressed in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. The value may have the following forms: <ul> <li>\`YYYY-MM-DD\` match the date exactly; equivalent to matching dates in the range \`[YYYY-MM-DD,YYYY-MM-DD]\`</li> <li>\`[YYYY-MM-DD,YYYY-MM-DD]\` between two dates, inclusive of the endpoints</li> <li>\`(YYYY-MM-DD,YYYY-MM-DD)\` between two dates, exclusive of the endpoints</li> <li>\`[YYYY-MM-DD,]\` on or after the date</li> <li>\`(YYYY-MM-DD,)\` after the date</li> <li>\`[,YYYY-MM-DD]\` before or on the date</li> <li>\`(,YYYY-MM-DD)\` before the date</li> </ul>",
       "generatedName": "DateRange",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -13363,7 +13363,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "An account that is eligible to be assigned as an overdraft protection account for another account.",
       "generatedName": "EligibleOverdraftAccountItem",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": "overdraftAccountFields",
       "source": {
@@ -13392,7 +13392,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A page of zero or more accounts that are eligible to be assigned as an overdraft protection account for another account.",
       "generatedName": "EligibleOverdraftAccounts",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -13419,7 +13419,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
             "generatedName": "EligibleOverdraftAccountsMaximumOverdraftAccounts",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -13448,14 +13448,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "eligibleOverdraftAccountsNextPageUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
               "generatedName": "EligibleOverdraftAccountsNextPageUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -13505,7 +13505,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
       "generatedName": "ExternalAccountVerificationMethod",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -13558,7 +13558,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
       "generatedName": "FullAccountNumber",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -13590,7 +13590,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Flags which indicate the permissions the current authorized user has on this account resource. Most of these properties may only be \`true\` for internal accounts. These permissions are available in [\`account\`](#schema-account) response from the [\`getAccount\`](#op-getAccount) operation. See [\`accountPermissions\`](#schema-accountPermissions) for the subset of permission in \`account.allows\` flags in the [\`listAccounts\`](#op-listAccounts) response.",
       "generatedName": "FullAccountPermissions",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -13604,7 +13604,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "If \`true\`, the customer can list the other joint owners on the account and invite new joint owners.",
             "generatedName": "FullAccountPermissionsManageJointOwners",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -13624,7 +13624,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "If \`true\`, the customer can list and manage overdraft account settings.",
             "generatedName": "FullAccountPermissionsManageOverdraftAccounts",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -13660,7 +13660,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "An array of account balances by account ID, some of which are incomplete. Use the values in \`incompleteAccounts\` and \`retryCount\` to retry the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
       "generatedName": "IncompleteAccountBalances",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -13674,7 +13674,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
             "generatedName": "IncompleteAccountBalancesItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -13724,7 +13724,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listAccountBalances\`](#op-listAccountBalances) operation.",
             "generatedName": "IncompleteAccountBalancesRetryCount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -13765,7 +13765,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Response when requesting transactions that are not yet available.",
       "generatedName": "IncompleteTransactions",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -13779,7 +13779,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "Pass this value as the as the \`?retryCount=\` parameter with the next retry of the [\`listTransactions\`](#op-listTransactions) operation.",
             "generatedName": "IncompleteTransactionsRetryCount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -13804,7 +13804,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "The unique immutable identifier of a financial institution.",
       "generatedName": "InstitutionId",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -13845,7 +13845,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
       "generatedName": "InstitutionLocatorType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -13914,7 +13914,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Successful institution lookup result.",
       "generatedName": "InstitutionLookupResult",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -13928,7 +13928,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "\`true\` if a financial institution was found matching the requested FI locator, \`false\` if none was found.",
             "generatedName": "InstitutionLookupResultFound",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -13948,7 +13948,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "institutionLookupResultInstitution",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -13977,14 +13977,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "institutionLookupResultIntermediaryInstitutions",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "Optional intermediary institutions, if requested and if intermediary institutions are required for for international wire transfers to the beneficiary institution. This array is omitted if there none are required.",
               "generatedName": "InstitutionLookupResultIntermediaryInstitutions",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -14042,7 +14042,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A joint owner invitation.",
       "generatedName": "JointOwnerInvitation",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -14080,7 +14080,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Fields used to compose other joint owner invitation schemas.",
       "generatedName": "JointOwnerInvitationFields",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -14094,7 +14094,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The invitee's first name.",
             "generatedName": "JointOwnerInvitationFieldsFirstName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14118,7 +14118,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The invitee's last name name.",
             "generatedName": "JointOwnerInvitationFieldsLastName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14142,14 +14142,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "jointOwnerInvitationFieldsTaxId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
               "generatedName": "JointOwnerInvitationFieldsTaxId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -14174,7 +14174,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "A string shared by the inviter with the invitee to verify their identity. This is not sent in the invitation. The inviter should share this string with the invitee though another channel.",
             "generatedName": "JointOwnerInvitationFieldsSharedSecret",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14198,7 +14198,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The invitee's email address.",
             "generatedName": "JointOwnerInvitationFieldsEmailAddress",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14222,14 +14222,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "jointOwnerInvitationFieldsDisallowDebitCardAccess",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
               "generatedName": "JointOwnerInvitationFieldsDisallowDebitCardAccess",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": false,
@@ -14250,7 +14250,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A masked account number: an asterisk \`*\` followed by one to four characters of the \`fullAccountNumber\`.",
       "generatedName": "MaskedAccountNumber",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -14266,7 +14266,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "The monetary value, supporting only positive amounts. The numeric value is  represented as a string so that it can be exact with no loss of precision.<br>The schema \`monetaryValue\` was added on version \`0.4.0\` of the API.",
       "generatedName": "MonetaryValue",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -14310,7 +14310,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A request to create an invitation to add a new joint owner to an account.",
       "generatedName": "NewJointOwnerInvitation",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -14351,7 +14351,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Representation used to create a new transfer.",
       "generatedName": "NewTransfer",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -14365,7 +14365,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "newTransferSchedule",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -14397,7 +14397,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Fields of an overdraft protection account, used to compose other schemas.",
       "generatedName": "OverdraftAccountFields",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -14411,7 +14411,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "overdraftAccountFieldsId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -14440,14 +14440,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "overdraftAccountFieldsLabel",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "generatedName": "OverdraftAccountFieldsLabel",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -14472,7 +14472,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "overdraftAccountFieldsMaskedNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -14501,7 +14501,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "An overdraft protection account linked to another protected account. The \`label\` and \`maskedNumber\` are informational only.",
       "generatedName": "OverdraftAccountItem",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": "overdraftAccountFields",
       "source": {
@@ -14542,7 +14542,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Representation of the overdraft protection settings, consisting of a list of overdraft protection accounts linked to the account identified by the \`{accountId}\`.",
       "generatedName": "OverdraftProtection",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -14556,7 +14556,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The maximum number of overdraft protection accounts that may be linked to the account.",
             "generatedName": "OverdraftProtectionMaximumOverdraftAccounts",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14584,7 +14584,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Fields used to compose other overdraft protection schemas.",
       "generatedName": "OverdraftProtectionFields",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -14598,7 +14598,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "overdraftProtectionFieldsAccounts",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -14647,7 +14647,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Representation of request used to patch the overdraft protection settings consisting of a list of overdraft protection accounts linked to the account identified by the \`{accountId}\`.",
       "generatedName": "OverdraftProtectionPatch",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -14660,7 +14660,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A positive integer range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200\` match the integer 1,200 exactly</li> <li>\`[1000,1200)\` matches items where \`1000 <= number < 1200\`</li> <li>\`[1000,1199]\` matches items where\`1000 <= number <= 1199\`</li> <li>\`[999,1200]\` matches items where \`999 < number < 1200\`</li> <li>\`[1200,]\`  \`number >= 1200\`</li> <li>\`(1200,)\` greater than the value: \`number >= 1200\`</li> <li>\`[,1200]\` less than or equal to the value: \`number <= 1200\`</li> <li>\`(,1200)\` less than the value: \`number < 1200\`</li> </ul>",
       "generatedName": "PositiveIntegerRange",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -14704,7 +14704,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "API problem or error response, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
       "generatedName": "ProblemResponse",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -14720,7 +14720,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A reference to a banking product.",
       "generatedName": "ProductReference",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -14755,7 +14755,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The product's product code. Codes are unique to the financial institution.",
             "generatedName": "ProductReferenceCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14779,7 +14779,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "A human-readable label for this banking product.",
             "generatedName": "ProductReferenceLabel",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14803,7 +14803,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "A human-readable description of this banking product.",
             "generatedName": "ProductReferenceDescription",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -14864,7 +14864,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
       "generatedName": "ProductType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -14956,7 +14956,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "The unique, opaque system-assigned identifier for a resource. This case-sensitive ID is also used in URLs as path parameters or in other properties or parameters that reference a resource by ID rather than URL. Resource IDs are immutable.",
       "generatedName": "ReadOnlyResourceId",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": "resourceId",
       "source": {
@@ -14969,7 +14969,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A readonly or derived timestamp (an instant in time) formatted in [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date-time\` UTC format: \`YYYY-MM-DDThh:mm:ss.sssZ\`.<br>The schema \`readOnlyTimestamp\` was added on version \`0.4.0\` of the API.",
       "generatedName": "ReadOnlyTimestamp",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "type": "datetime",
@@ -14983,7 +14983,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A request from the service for the user to verify their identity. This contains a challenge ID, the corresponding operation ID, and a list of challenge factors for identity verification. The user must complete one of these challenge factors to satisfy the challenge. This schema defines the attributes in the 401 [Unauthorized problem response](#schema-apiProblem) when the 401 problem type name is \`challengeRequired\`. See the "Challenge API" for details.",
       "generatedName": "RequiredIdentityChallenge",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -15039,7 +15039,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "A list of challenge factors. The user must complete one of these challenge factors. The \`labels\` in each factor identify one or more channels the user may use, such as a list of email addresses the system may use to send a one-time passcode to the user. ***Note**: The same channel may be used by multiple factors in the array of factors. For example, the user's primary mobile phone number may be used for both an \`sms\` factor and a \`voice\` factor.",
             "generatedName": "RequiredIdentityChallengeFactors",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -15068,7 +15068,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "The unique, opaque system identifier for a resource. This case-sensitive ID is also used as path parameters in URLs or in other properties or parameters that reference a resource by ID rather than URL.",
       "generatedName": "ResourceId",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -15087,7 +15087,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A simple representation of a financial institution.",
       "generatedName": "SimpleInstitution",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -15101,7 +15101,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The financial institution's name.",
             "generatedName": "SimpleInstitutionName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -15146,7 +15146,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The [American Bankers Association routing number](https://www.aba.com/about-us/routingnumber), [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code), or [IBAN account number](https://www.ecbs.org/iban.htm) of the institution. The form of this institution locator string is set with the \`locatorType\` property.",
             "generatedName": "SimpleInstitutionLocator",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -15191,7 +15191,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
       "generatedName": "TimeZoneId",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -15210,7 +15210,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Timestamps which describe when a resource was created or last updated.",
       "generatedName": "TimestampFields",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -15224,14 +15224,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "timestampFieldsCreatedAt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
               "generatedName": "TimestampFieldsCreatedAt",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "datetime",
@@ -15251,14 +15251,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "timestampFieldsUpdatedAt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
               "generatedName": "TimestampFieldsUpdatedAt",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "datetime",
@@ -15281,7 +15281,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": null,
       "generatedName": "TransactionCategories",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -15295,7 +15295,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "An array containing transaction category items.",
             "generatedName": "TransactionCategoriesItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -15327,7 +15327,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "The transaction categorization.",
       "generatedName": "TransactionCategorization",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -15362,7 +15362,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The unique ID of this transaction's category.",
             "generatedName": "TransactionCategorizationId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -15414,7 +15414,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Representation of transaction category resources.",
       "generatedName": "TransactionCategory",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -15449,7 +15449,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "The label of a transaction category, such as \`"Shopping"\`, \`"Deposit"\`, \`"Bill"\`, \`"Transfer"\`, or \`"Other"\`.",
       "generatedName": "TransactionCategoryLabel",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "schema": {
         "default": null,
@@ -15486,7 +15486,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
       "generatedName": "TransactionCategoryType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -15529,7 +15529,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
       "generatedName": "TransactionCheck",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -15543,7 +15543,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The check number.",
             "generatedName": "TransactionCheckNumber",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -15568,14 +15568,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionCheckImageFrontUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The URL for downloading the image of the front of the check.",
               "generatedName": "TransactionCheckImageFrontUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -15600,14 +15600,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionCheckImageBackUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The URL for downloading the image of the front of the check.",
               "generatedName": "TransactionCheckImageBackUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -15635,7 +15635,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Common fields of the transaction resource used to build other model schemas.",
       "generatedName": "TransactionFields",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -15649,7 +15649,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "This transaction's unique identifier.",
             "generatedName": "TransactionFieldsId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -15715,7 +15715,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The date of the transaction in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.",
             "generatedName": "TransactionFieldsOccurredOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -15739,14 +15739,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": "Deprecated",
             "description": null,
             "generatedName": "transactionFieldsCreatedOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": "Deprecated",
               "description": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
               "generatedName": "TransactionFieldsCreatedOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -15771,14 +15771,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": "Deprecated",
             "description": null,
             "generatedName": "transactionFieldsPostedOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": "Deprecated",
               "description": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
               "generatedName": "TransactionFieldsPostedOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -15824,14 +15824,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionFieldsPosted",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "If \`true\`, the transaction has been posted (cleared) and applied to the account. If \`false\`, the transaction is still pending and might be canceled. \`posted\` is only valid for credit and debit transactions and omitted for balance transactions.",
               "generatedName": "TransactionFieldsPosted",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -15852,7 +15852,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionFieldsBalance",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -15881,14 +15881,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionFieldsMemo",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The user-settable transaction memo.",
               "generatedName": "TransactionFieldsMemo",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -15913,14 +15913,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionFieldsDescription",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The transaction description assigned by the transaction cleansing service.",
               "generatedName": "TransactionFieldsDescription",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -15945,7 +15945,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionFieldsCategory",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -15974,7 +15974,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionFieldsMerchant",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -16003,7 +16003,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionFieldsCheck",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -16060,7 +16060,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Summary representation of a transaction resource in transactions collections.",
       "generatedName": "TransactionItem",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -16076,7 +16076,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Describes the merchant associated with a transaction.",
       "generatedName": "TransactionMerchant",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -16090,14 +16090,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionMerchantName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The merchant\\'s name.",
               "generatedName": "TransactionMerchantName",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -16122,14 +16122,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionMerchantWebsiteUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The merchant's website URL.",
               "generatedName": "TransactionMerchantWebsiteUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -16154,14 +16154,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionMerchantLogoUrl",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
               "generatedName": "TransactionMerchantLogoUrl",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -16207,7 +16207,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
       "generatedName": "TransactionSubType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -16272,7 +16272,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
       "generatedName": "TransactionType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -16341,7 +16341,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Collection of transactions. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link.",
       "generatedName": "Transactions",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -16355,14 +16355,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionsItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "An array containing a page of transaction items.",
               "generatedName": "TransactionsItems",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -16392,14 +16392,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transactionsCount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
               "generatedName": "TransactionsCount",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -16453,7 +16453,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "Representation of a transfer resource.",
       "generatedName": "Transfer",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [],
       "source": {
@@ -16469,7 +16469,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
       "generatedName": "TransferAccountReference",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -16504,14 +16504,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transferAccountReferenceLabel",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
               "generatedName": "TransferAccountReferenceLabel",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -16536,7 +16536,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transferAccountReferenceType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -16565,7 +16565,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transferAccountReferenceLocation",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -16597,7 +16597,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "availability": null,
       "description": "A date where a transfer restriction occurs, and the \`reason\` it is restricted. If the \`reason\` is \`holiday\`, \`closure\` and the transfer is an ACH transfer, the object also contains either a \`debitOn\` or \`creditOn\` date or both.",
       "generatedName": "TransferDateRestriction",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -16611,7 +16611,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": "The date that a transfers restriction occurs, is in the [ISO 8601 Date](https://en.wikipedia.org/wiki/ISO_8601#Calendar_dates) format, \`yyyy-mm-dd\`.",
             "generatedName": "TransferDateRestrictionOccursOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -16656,14 +16656,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transferDateRestrictionCreditOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
               "generatedName": "TransferDateRestrictionCreditOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -16688,14 +16688,14 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "availability": null,
             "description": null,
             "generatedName": "transferDateRestrictionDebitOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
               "generatedName": "TransferDateRestrictionDebitOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -16757,7 +16757,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
 
 ",
       "generatedName": "TransferDateRestrictionType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -16866,7 +16866,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
       "description": "A list of the financial institution's transfer date restrictions. This is a list of weekdays and specific dates when the institution cannot perform the requested transfers.
 The response may include dates prior to requested the start date, as that is useful for populating a calendar that shows the current month and the last few days of the previous month.",
       "generatedName": "TransferDateRestrictions",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -16880,14 +16880,14 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferDateRestrictionsRestrictedDates",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "A list of restricted transfer dates as determined by the requested transfer parameters, holidays, and scheduled closures. This includes dates that correspond to normal day-of-week restrictions as listed in \`restrictedDays\`.",
               "generatedName": "TransferDateRestrictionsRestrictedDates",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {
@@ -16917,14 +16917,14 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferDateRestrictionsAccuracyEndsOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
               "generatedName": "TransferDateRestrictionsAccuracyEndsOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -16952,7 +16952,7 @@ The response may include dates prior to requested the start date, as that is use
       "availability": null,
       "description": "Common fields of the transfer resource used to build other model schemas.",
       "generatedName": "TransferFields",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -16966,7 +16966,7 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferFieldsAmount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -16995,7 +16995,7 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferFieldsSourceAccount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -17024,7 +17024,7 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferFieldsTargetAccount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -17053,14 +17053,14 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferFieldsMemo",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "A customer-defined memo to describe the transfer.",
               "generatedName": "TransferFieldsMemo",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -17150,7 +17150,7 @@ The response may include dates prior to requested the start date, as that is use
 
 ",
       "generatedName": "TransferFrequency",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -17361,7 +17361,7 @@ The response may include dates prior to requested the start date, as that is use
       "availability": null,
       "description": "Summary representation of a transfer resource in transfers collections. To fetch the full representation of this transfer, use the [\`getTransfer\`](#op-getTransfer) operation, passing this item's \`id\` field as the \`transferId\` path parameter.",
       "generatedName": "TransferItem",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -17375,7 +17375,7 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": "The unique identifier for this transfer resource. This is an immutable opaque string.",
             "generatedName": "TransferItemId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": "readOnlyResourceId",
             "source": {
@@ -17417,7 +17417,7 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": "The state of this transfer resource.",
             "generatedName": "TransferItemState",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": "transferState",
             "source": {
@@ -17438,14 +17438,14 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferItemProcessedAt",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The date/time the transfer was processed.",
               "generatedName": "TransferItemProcessedAt",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "datetime",
@@ -17465,14 +17465,14 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferItemUpdatedBy",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The full name of the banking customer who last updated the transfer.",
               "generatedName": "TransferItemUpdatedBy",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -17513,7 +17513,7 @@ The response may include dates prior to requested the start date, as that is use
       "availability": null,
       "description": "A transfer's schedule: when the transfer is scheduled, its recurrence properties, and derived credit and debit dates.",
       "generatedName": "TransferItemSchedule",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -17527,14 +17527,14 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferItemScheduleDebitsOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The effective date the transfer is scheduled to debit the source account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
               "generatedName": "TransferItemScheduleDebitsOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -17559,14 +17559,14 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferItemScheduleCreditsOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The effective the transfer is scheduled to credit the target account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
               "generatedName": "TransferItemScheduleCreditsOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -17619,7 +17619,7 @@ The response may include dates prior to requested the start date, as that is use
       "availability": null,
       "description": "Representation used to patch an existing transfer using the [JSON Merge Patch](https://datatracker.ietf.org/doc/html/rfc7396) format and processing rules.",
       "generatedName": "TransferPatch",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -17633,7 +17633,7 @@ The response may include dates prior to requested the start date, as that is use
             "availability": null,
             "description": null,
             "generatedName": "transferPatchSchedule",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -17683,7 +17683,7 @@ The response may include dates prior to requested the start date, as that is use
 
 ",
       "generatedName": "TransferRecurrenceType",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -17728,7 +17728,7 @@ The response may include dates prior to requested the start date, as that is use
 
 For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are mutually exclusive.",
       "generatedName": "TransferSchedule",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -17742,14 +17742,14 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": null,
             "generatedName": "transferScheduleScheduledOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
               "generatedName": "TransferScheduleScheduledOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -17774,7 +17774,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": null,
             "generatedName": "transferScheduleRecurrenceType",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -17824,14 +17824,14 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": null,
             "generatedName": "transferScheduleEndsOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
               "generatedName": "TransferScheduleEndsOn",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -17856,14 +17856,14 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": null,
             "generatedName": "transferScheduleCount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "For recurring schedules (\`frequency\` is not \`once\`), this is the total number of transfers to make, including the first transfer. This property is ignored if \`frequency\` is \`once\`.",
               "generatedName": "TransferScheduleCount",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 1,
@@ -17889,7 +17889,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": null,
             "generatedName": "transferScheduleAmountLimit",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
@@ -17943,7 +17943,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 
 ",
       "generatedName": "TransferScheduleDirection",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -17999,7 +17999,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "availability": null,
       "description": "Summary representation of a transfer schedule resource in transfer schedule list.",
       "generatedName": "TransferScheduleItem",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -18013,7 +18013,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": "The scheduled date of the calculated calendar recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format.",
             "generatedName": "TransferScheduleItemScheduledOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -18037,7 +18037,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": "The effective date of the recurrence in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. When the effective date differs from the scheduled date, it is due to a banking holiday, weekend, or other non-business day. The date is adjusted to before the scheduled date when the transfer direction is \`credit\` and adjusted to after the scheduled date when the transfer direction is \`debit\`.",
             "generatedName": "TransferScheduleItemEffectiveOn",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -18077,7 +18077,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "availability": null,
       "description": "List of transfer methods. The items in the list are ordered in the \`items\` array.",
       "generatedName": "TransferSchedules",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -18091,7 +18091,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": "An array containing upcoming transfer schedule items.",
             "generatedName": "TransferSchedulesItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -18161,7 +18161,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 
 ",
       "generatedName": "TransferState",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -18313,7 +18313,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
 
 ",
       "generatedName": "TransferTypeForDateRestrictions",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "apiture/openapi.yml",
@@ -18421,7 +18421,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "availability": null,
       "description": "Collection of transfers. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link..",
       "generatedName": "Transfers",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -18435,7 +18435,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": "An array containing a page of transfer items.",
             "generatedName": "TransfersItems",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "array",
             "value": {
@@ -18464,14 +18464,14 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": null,
             "generatedName": "transfersCount",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The number of transfers that meet the filters in the \`listTransfers\` operation. This is optional and only included if the service can calculate it efficiently.",
               "generatedName": "TransfersCount",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -18513,7 +18513,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "availability": null,
       "description": "A representation of a financial institution used for wire transfers.",
       "generatedName": "WireTransferInstitution",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -18527,14 +18527,14 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "availability": null,
             "description": null,
             "generatedName": "wireTransferInstitutionLocalClearingCode",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": "The clearing code used to identify the financial institution for select countries.",
               "generatedName": "WireTransferInstitutionLocalClearingCode",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
