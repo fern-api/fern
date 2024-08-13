@@ -28,6 +28,9 @@ jobs:
           cd packages/cli/openapi-ir-sdk
           fern check
 
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Check IR Definitions
         env:
           FERN_TOKEN: dummy
