@@ -1,3 +1,4 @@
+import { isPlainObject } from "@fern-api/core-utils";
 import {
     ExampleEndpointCall,
     ExamplePathParameter,
@@ -230,19 +231,33 @@ function getRequestHandler(endpoints: HttpEndpoint[]): RequestHandler {
     };
 }
 
-function isValidDate(value: unknown): boolean {
-    const date = new Date(value as string);
+function isValidDate(value: string): boolean {
+    const date = new Date(value);
     return !isNaN(date.getTime());
 }
 
-function dateishCustomizer(value: unknown, other: unknown): boolean {
-    if (isValidDate(value) && isValidDate(other)) {
-        const valueDate = new Date(value as string);
-        const otherDate = new Date(other as string);
-        // Is variance less than a day
-        return valueDate.getTime() - otherDate.getTime() >= 24 * 60 * 60 * 1000;
+// Customize the lodash isEqualWith function to handle date-like strings
+// returning undefined in this comparitor indicates to lodash to perform it's
+// internal comparison logic.
+function dateishCustomizer(value: unknown, other: unknown): boolean | undefined {
+    if (isPlainObject(value) || isPlainObject(other)) {
+        return undefined;
     }
-    return value === other;
+    if (typeof value === "string" && typeof other === "string") {
+        // If the strings are equal, short circuit and return true
+        if (value === other) {
+            return true;
+        }
+
+        // Otherwise check if they're dates to give them another chance
+        if (isValidDate(value) && isValidDate(other)) {
+            const valueDate = new Date(value);
+            const otherDate = new Date(other);
+            // Is variance less than a day
+            return Math.abs(valueDate.getTime() - otherDate.getTime()) <= 24 * 60 * 60 * 1000;
+        }
+    }
+    return undefined;
 }
 
 function isRequestMatch(req: Request, example: ExampleEndpointCall): boolean {

@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@fern-api/ir-sdk": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@types/lodash-es": "^4.17.12",
     "express": "^4.19.2",

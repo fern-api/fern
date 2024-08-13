@@ -3177,6 +3177,10 @@ importers:
         specifier: 4.6.4
         version: 4.6.4
 
+  packages/cli/cli/dist/dev: {}
+
+  packages/cli/cli/dist/prod: {}
+
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -4293,6 +4297,9 @@ importers:
 
   packages/cli/mock:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../../ir-sdk
