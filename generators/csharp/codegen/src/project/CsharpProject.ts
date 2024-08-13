@@ -433,7 +433,7 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
             result.push(
                 `    <Protobuf Include="${pathToProtobufDirectory}\\${protobufSourceWindowsPath}" GrpcServices="Client" ProtoRoot="${pathToProtobufDirectory}">`
             );
-            result.push(`    </Protobuf>`);
+            result.push("    </Protobuf>");
         }
         result.push("</ItemGroup>\n");
 

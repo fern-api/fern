@@ -173,7 +173,7 @@ export class RawGrpcClientGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 writer.writeNodeStatement(headerSupplierDictionary);
                 writer.writeLine();
 
-                writer.write(`var grpcOptions = `);
+                writer.write("var grpcOptions = ");
                 writer.writeNodeStatement(
                     csharp.invokeMethod({
                         method: "PrepareGrpcChannelOptions",
