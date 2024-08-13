@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint docs 1`] = `
+exports[`x-fern-access-token-endpoint > x-fern-access-token-endpoint > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -73,6 +73,9 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "x-fern-access-token-endpoint/openapi.yml",
+      },
     },
     "types": {
       "PostRefreshResponse": {
@@ -81,6 +84,9 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint docs 1`] = `
           "accessToken": "string",
           "refreshToken": "string",
         },
+        "source": {
+          "openapi": "x-fern-access-token-endpoint/openapi.yml",
+        },
       },
       "PostTokenResponse": {
         "docs": undefined,
@@ -88,10 +94,14 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint docs 1`] = `
           "accessToken": "string",
           "refreshToken": "string",
         },
+        "source": {
+          "openapi": "x-fern-access-token-endpoint/openapi.yml",
+        },
       },
     },
   },
   "rootApiFile": {
+    "auth": "OAuthScheme",
     "auth-schemes": {
       "OAuthScheme": {
         "client-id-env": undefined,
@@ -132,13 +142,16 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint docs 1`] = `
     "display-name": "Test extension \`x-fern-access-token-endpoint\`.",
     "error-discrimination": {
       "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
     },
     "name": "api",
   },
 }
 `;
 
-exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint simple 1`] = `
+exports[`x-fern-access-token-endpoint > x-fern-access-token-endpoint > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -211,6 +224,9 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint simple 1`] = 
           },
         },
       },
+      "source": {
+        "openapi": "x-fern-access-token-endpoint/openapi.yml",
+      },
     },
     "types": {
       "PostRefreshResponse": {
@@ -219,6 +235,9 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint simple 1`] = 
           "accessToken": "string",
           "refreshToken": "string",
         },
+        "source": {
+          "openapi": "x-fern-access-token-endpoint/openapi.yml",
+        },
       },
       "PostTokenResponse": {
         "docs": undefined,
@@ -226,10 +245,14 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint simple 1`] = 
           "accessToken": "string",
           "refreshToken": "string",
         },
+        "source": {
+          "openapi": "x-fern-access-token-endpoint/openapi.yml",
+        },
       },
     },
   },
   "rootApiFile": {
+    "auth": "OAuthScheme",
     "auth-schemes": {
       "OAuthScheme": {
         "client-id-env": undefined,
@@ -270,6 +293,9 @@ exports[`x-fern-access-token-endpoint x-fern-access-token-endpoint simple 1`] = 
     "display-name": "Test extension \`x-fern-access-token-endpoint\`.",
     "error-discrimination": {
       "strategy": "status-code",
+    },
+    "imports": {
+      "root": "__package__.yml",
     },
     "name": "api",
   },
