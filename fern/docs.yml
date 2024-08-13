@@ -357,7 +357,7 @@ logo:
 #   dark: ./images/background.svg
 colors:
   accentPrimary:
-    dark: "#ADFF8C"
+    dark: "#1DA32B"
     light: "#1DA32B"
   background:
     dark: "#081008"
