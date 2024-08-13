@@ -184,7 +184,8 @@ export async function visitDocsConfigFileYamlAst(
             visitor,
             nodePath: ["navigation"],
             absoluteFilepathToConfiguration,
-            loadAPIWorkspace
+            loadAPIWorkspace,
+            context
         });
     }
 
@@ -270,7 +271,8 @@ export async function visitDocsConfigFileYamlAst(
                         visitor,
                         nodePath: ["navigation"],
                         absoluteFilepathToConfiguration: absoluteFilepath,
-                        loadAPIWorkspace
+                        loadAPIWorkspace,
+                        context
                     });
                 }
             })
@@ -307,13 +309,15 @@ async function visitNavigation({
     visitor,
     nodePath,
     absoluteFilepathToConfiguration,
-    loadAPIWorkspace
+    loadAPIWorkspace,
+    context
 }: {
     navigation: docsYml.RawSchemas.NavigationConfig;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
     loadAPIWorkspace: APIWorkspaceLoader;
+    context: TaskContext;
 }): Promise<void> {
     if (navigationConfigIsTabbed(navigation)) {
         await Promise.all(
@@ -326,7 +330,8 @@ async function visitNavigation({
                                 visitor,
                                 nodePath: [...nodePath, `${tabIdx}`, "layout", `${itemIdx}`],
                                 absoluteFilepathToConfiguration,
-                                loadAPIWorkspace
+                                loadAPIWorkspace,
+                                context
                             });
                         })
                     );
@@ -341,7 +346,8 @@ async function visitNavigation({
                     visitor,
                     nodePath: [...nodePath, `${itemIdx}`],
                     absoluteFilepathToConfiguration,
-                    loadAPIWorkspace
+                    loadAPIWorkspace,
+                    context
                 });
             })
         );
@@ -353,13 +359,15 @@ async function visitNavigationItem({
     visitor,
     nodePath,
     absoluteFilepathToConfiguration,
-    loadAPIWorkspace
+    loadAPIWorkspace,
+    context
 }: {
     navigationItem: docsYml.RawSchemas.NavigationItem;
     visitor: Partial<DocsConfigFileAstVisitor>;
     nodePath: NodePath;
     absoluteFilepathToConfiguration: AbsoluteFilePath;
     loadAPIWorkspace: APIWorkspaceLoader;
+    context: TaskContext;
 }): Promise<void> {
     if (navigationItemIsPage(navigationItem)) {
         await visitFilepath({
@@ -391,7 +399,8 @@ async function visitNavigationItem({
                     visitor,
                     nodePath: [...nodePath, "section", "contents", `${itemIdx}`],
                     absoluteFilepathToConfiguration,
-                    loadAPIWorkspace
+                    loadAPIWorkspace,
+                    context
                 });
             })
         );
@@ -403,7 +412,8 @@ async function visitNavigationItem({
             await visitor.apiSection?.(
                 {
                     config: navigationItem,
-                    workspace
+                    workspace,
+                    context
                 },
                 [...nodePath, "api"]
             );

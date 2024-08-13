@@ -656,16 +656,19 @@ export class ApiReferenceNodeConverter {
         if (playgroundSettings) {
             return {
                 environments:
-                    playgroundSettings.environments &&
-                    playgroundSettings.environments.map((environmentId) => FernNavigation.EnvironmentId(environmentId)),
+                    playgroundSettings.environments != null && playgroundSettings.environments.length > 0
+                        ? playgroundSettings.environments.map((environmentId) =>
+                              FernNavigation.EnvironmentId(environmentId)
+                          )
+                        : undefined,
                 button:
-                    playgroundSettings.button && playgroundSettings.button.href
+                    playgroundSettings.button != null && playgroundSettings.button.href
                         ? { href: FernNavigation.Url(playgroundSettings.button.href) }
                         : undefined
             };
-        } else {
-            return undefined;
         }
+
+        return;
     }
 
     private mergeEndpointPairs(children: FernNavigation.ApiPackageChild[]): FernNavigation.ApiPackageChild[] {

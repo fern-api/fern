@@ -28,6 +28,7 @@ export class BaseExceptionGenerator extends FileGenerator<CSharpFile, SdkCustomC
             clazz: class_,
             directory: this.context.getPublicCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
         });

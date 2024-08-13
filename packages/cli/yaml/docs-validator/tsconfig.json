@@ -10,6 +10,7 @@
     { "path": "../../logger" },
     { "path": "../../task-context" },
     { "path": "../../workspace-loader" },
+    { "path": "../../project-loader" },
     { "path": "../yaml-schema" }
   ]
 }

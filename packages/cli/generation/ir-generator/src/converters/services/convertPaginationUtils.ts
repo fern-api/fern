@@ -32,7 +32,7 @@ export function getPaginationPropertyComponents(
             step: endpointPagination.step != null ? getRequestPropertyComponents(endpointPagination.step) : undefined,
             hasNextPage:
                 endpointPagination["has-next-page"] != null
-                    ? getRequestPropertyComponents(endpointPagination["has-next-page"])
+                    ? getResponsePropertyComponents(endpointPagination["has-next-page"])
                     : undefined
         };
     }

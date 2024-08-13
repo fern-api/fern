@@ -508,7 +508,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "Stream completions",
                                 "name": {
                                     "originalName": "Stream completions",
                                     "camelCase": {

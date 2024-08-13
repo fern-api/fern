@@ -5,12 +5,13 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
 import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
+import { SourceUploader } from "./SourceUploader";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -57,15 +58,35 @@ export async function runRemoteGenerationForGenerator({
         version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation }))
     });
 
+    const sources = workspace.getSources();
     const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig: {} });
     const response = await fdr.api.v1.register.registerApiDefinition({
         orgId: organization,
         apiId: ir.apiName.originalName,
-        definition: apiDefinition
+        definition: apiDefinition,
+        sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
     });
+
     let fdrApiDefinitionId;
+    let sourceUploads;
     if (response.ok) {
         fdrApiDefinitionId = response.body.apiDefinitionId;
+        sourceUploads = response.body.sources;
+    }
+
+    const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
+    if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
+        // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
+        // files are required for successful code generation.
+        interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
+    }
+
+    if (sourceUploads != null) {
+        interactiveTaskContext.logger.debug("Uploading source files ...");
+        const sourceConfig = await sourceUploader.uploadSources(sourceUploads);
+
+        interactiveTaskContext.logger.debug("Setting IR source configuration ...");
+        ir.sourceConfig = sourceConfig;
     }
 
     const job = await createAndStartJob({
@@ -160,4 +181,17 @@ async function computeSemanticVersion({
         return undefined;
     }
     return response.body.version;
+}
+
+function convertToFdrApiDefinitionSources(
+    sources: IdentifiableSource[]
+): Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.Source> {
+    return Object.fromEntries(
+        Object.values(sources).map((source) => [
+            source.id,
+            {
+                type: source.type === "protobuf" ? "proto" : source.type
+            }
+        ])
+    );
 }

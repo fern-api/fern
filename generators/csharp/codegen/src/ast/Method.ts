@@ -113,7 +113,13 @@ export class Method extends AstNode {
         }
         if (this.return == null) {
             if (this.isAsync) {
-                writer.write("Task ");
+                writer.writeNode(
+                    new ClassReference({
+                        name: "Task",
+                        namespace: "System.Threading.Tasks"
+                    })
+                );
+                writer.write(" ");
             } else {
                 writer.write("void ");
             }
