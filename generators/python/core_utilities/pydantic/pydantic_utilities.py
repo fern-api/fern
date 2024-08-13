@@ -2,6 +2,7 @@
 import datetime as dt
 import typing
 from collections import defaultdict
+
 import typing_extensions
 
 import pydantic
@@ -131,9 +132,9 @@ if IS_PYDANTIC_V2:
     class V2RootModel(UniversalBaseModel, pydantic.RootModel):  # type: ignore # Pydantic v2
         pass
 
-    UniversalRootModel: typing_extensions.TypeAlias = V2RootModel # type: ignore 
+    UniversalRootModel: typing_extensions.TypeAlias = V2RootModel  # type: ignore
 else:
-    UniversalRootModel: typing_extensions.TypeAlias = UniversalBaseModel # type: ignore 
+    UniversalRootModel: typing_extensions.TypeAlias = UniversalBaseModel  # type: ignore
 
 
 def encode_by_type(o: typing.Any) -> typing.Any:

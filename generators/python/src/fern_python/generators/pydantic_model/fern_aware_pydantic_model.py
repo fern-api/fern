@@ -111,7 +111,6 @@ class FernAwarePydanticModel:
 
         self._force_update_forward_refs = force_update_forward_refs
 
-
     def to_reference(self) -> LocalClassReference:
         return self._pydantic_model.to_reference()
 
