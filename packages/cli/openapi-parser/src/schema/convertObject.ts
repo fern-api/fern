@@ -45,7 +45,8 @@ export function convertObject({
     additionalProperties,
     availability,
     encoding,
-    source
+    source,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -63,6 +64,7 @@ export function convertObject({
     availability: Availability | undefined;
     encoding: Encoding | undefined;
     source: Source;
+    namespace: string | undefined;
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
@@ -88,7 +90,8 @@ export function convertObject({
                         false,
                         context.DUMMY,
                         breadcrumbs,
-                        source
+                        source,
+                        namespace
                     );
                     if (convertedOneOfSchema.type === "object") {
                         inlinedParentProperties.push(
@@ -122,11 +125,11 @@ export function convertObject({
             parents.push({
                 schemaId,
                 convertedSchema: convertToReferencedSchema(allOfElement, [schemaId], source),
-                properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source })
+                properties: getAllProperties({ schema: allOfElement, context, breadcrumbs, source, namespace })
             });
             context.markSchemaAsReferencedByNonRequest(schemaId);
         } else {
-            const allOfSchema = convertSchema(allOfElement, false, context, breadcrumbs, source);
+            const allOfSchema = convertSchema(allOfElement, false, context, breadcrumbs, source, namespace);
             if (allOfSchema.type === "object") {
                 inlinedParentProperties.push(...allOfSchema.properties);
             }
@@ -174,13 +177,13 @@ export function convertObject({
             const propertyBreadcrumbs = [...breadcrumbs, propertyName];
             const generatedName = getGeneratedPropertyName(propertyBreadcrumbs);
             const schema = isRequired
-                ? convertSchema(propertySchema, false, context, propertyBreadcrumbs, source)
+                ? convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace)
                 : SchemaWithExample.optional({
                       nameOverride,
                       generatedName,
                       description: undefined,
                       availability,
-                      value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source),
+                      value: convertSchema(propertySchema, false, context, propertyBreadcrumbs, source, namespace),
                       groupName
                   });
 
@@ -310,12 +313,14 @@ function getAllProperties({
     schema,
     context,
     breadcrumbs,
-    source
+    source,
+    namespace
 }: {
     schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     context: SchemaParserContext;
     breadcrumbs: string[];
     source: Source;
+    namespace: string | undefined;
 }): Record<string, SchemaWithExample> {
     let properties: Record<string, SchemaWithExample> = {};
     const [resolvedSchema, resolvedBreadCrumbs] = isReferenceObject(schema)
@@ -324,7 +329,7 @@ function getAllProperties({
     for (const allOfElement of resolvedSchema.allOf ?? []) {
         properties = {
             ...properties,
-            ...getAllProperties({ schema: allOfElement, context, breadcrumbs: resolvedBreadCrumbs, source })
+            ...getAllProperties({ schema: allOfElement, context, breadcrumbs: resolvedBreadCrumbs, source, namespace })
         };
     }
     for (const [propertyName, propertySchema] of Object.entries(resolvedSchema.properties ?? {})) {
@@ -333,7 +338,8 @@ function getAllProperties({
             false,
             context,
             [...resolvedBreadCrumbs, propertyName],
-            source
+            source,
+            namespace
         );
         properties[propertyName] = convertedPropertySchema;
     }

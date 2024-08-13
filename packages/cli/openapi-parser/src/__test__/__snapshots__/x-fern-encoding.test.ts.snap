@@ -24,12 +24,12 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
         "typeName": "google.protobuf.Struct",
       },
       "generatedName": "Metadata",
-      "groupName": null,
+      "groupName": [],
       "key": {
         "availability": null,
         "description": null,
         "generatedName": "MetadataKey",
-        "groupName": null,
+        "groupName": [],
         "nameOverride": null,
         "schema": {
           "default": null,
@@ -60,7 +60,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "MetadataValue",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "type": "nullable",
       "value": {
@@ -73,14 +73,14 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
             "typeName": "google.protobuf.Value",
           },
           "generatedName": "MetadataValue",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "schemas": [
             {
               "availability": null,
               "description": null,
               "generatedName": "MetadataValue",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -97,7 +97,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
               "availability": null,
               "description": null,
               "generatedName": "MetadataValue",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -113,7 +113,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
               "availability": null,
               "description": null,
               "generatedName": "MetadataValue",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -125,7 +125,7 @@ exports[`x-fern-encoding > x-fern-encoding > parse open api 1`] = `
               "availability": null,
               "description": null,
               "generatedName": "MetadataValue",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "type": "array",
               "value": {

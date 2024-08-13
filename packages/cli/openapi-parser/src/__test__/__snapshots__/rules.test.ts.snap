@@ -73,7 +73,7 @@ exports[`rules > rules > parse open api 1`] = `
             "description": null,
             "encoding": null,
             "generatedName": "GetExampleResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": [
               {
@@ -96,7 +96,7 @@ exports[`rules > rules > parse open api 1`] = `
                 "availability": null,
                 "description": null,
                 "generatedName": "GetExampleResponseMessage",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "properties": [
                   {
@@ -110,14 +110,14 @@ exports[`rules > rules > parse open api 1`] = `
                       "availability": null,
                       "description": null,
                       "generatedName": "getExampleResponseMessageMessage",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
                         "availability": null,
                         "description": null,
                         "generatedName": "GetExampleResponseMessageMessage",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schema": {
                           "default": null,
@@ -177,7 +177,7 @@ exports[`rules > rules > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "Schema",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -191,14 +191,14 @@ exports[`rules > rules > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "schemaId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "SchemaId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 50,
@@ -224,14 +224,14 @@ exports[`rules > rules > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "schemaName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "SchemaName",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": "type",
@@ -256,14 +256,14 @@ exports[`rules > rules > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "schemaValue",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "SchemaValue",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 1.1,

@@ -5,6 +5,7 @@ export { GeneratorName } from "./GeneratorName";
 export {
     GenerationLanguage,
     getPackageName,
+    type APIDefinitionLocation,
     type GeneratorGroup,
     type GeneratorInvocation,
     type GeneratorsConfiguration,
@@ -18,7 +19,11 @@ export {
     loadGeneratorsConfiguration,
     loadRawGeneratorsConfiguration
 } from "./loadGeneratorsConfiguration";
-export { type APIConfigurationSchema, type ProtobufAPIDefinitionSchema } from "./schemas/APIConfigurationSchema";
+export {
+    type APIConfigurationSchema,
+    type APIConfigurationSchemaInternal,
+    type ProtobufAPIDefinitionSchema
+} from "./schemas/APIConfigurationSchema";
 export { type GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 export { type GeneratorPublishMetadataSchema } from "./schemas/GeneratorPublishMetadataSchema";
 export {

@@ -129,7 +129,7 @@ exports[`float > float > parse open api 1`] = `
       "description": "A generic request type used throughout the API.
 ",
       "generatedName": "Request",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -143,14 +143,14 @@ exports[`float > float > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "requestId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "RequestId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "float",
@@ -174,7 +174,7 @@ exports[`float > float > parse open api 1`] = `
       "description": "A generic response type used throughout the API.
 ",
       "generatedName": "Response",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -188,14 +188,14 @@ exports[`float > float > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "responseId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ResponseId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "float",
@@ -215,14 +215,14 @@ exports[`float > float > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "responseValue",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "ResponseValue",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "type": "float",

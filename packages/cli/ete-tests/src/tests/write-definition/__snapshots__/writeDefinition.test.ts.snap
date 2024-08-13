@@ -96,3 +96,964 @@ service:
   },
 ]
 `;
+
+exports[`validate namespaced API > namespaced 1`] = `
+[
+  {
+    "contents": "types:
+  OauthScope:
+    enum:
+      - value: read
+        docs: Read access
+      - value: write
+        docs: Write access
+    source:
+      openapi: openapi/trains/openapi.yml
+imports:
+  trains: trains.yml
+errors:
+  BadRequestError:
+    status-code: 400
+    type: trains.Problem
+    docs: Bad Request
+    examples:
+      - value:
+          type: https://example.com/errors/bad-request
+          title: Bad Request
+          status: 400
+          detail: The request is invalid or missing required parameters.
+  UnauthorizedError:
+    status-code: 401
+    type: trains.Problem
+    docs: Unauthorized
+    examples:
+      - value:
+          type: https://example.com/errors/unauthorized
+          title: Unauthorized
+          status: 401
+          detail: You do not have the necessary permissions.
+  ForbiddenError:
+    status-code: 403
+    type: trains.Problem
+    docs: Forbidden
+    examples:
+      - value:
+          type: https://example.com/errors/forbidden
+          title: Forbidden
+          status: 403
+          detail: Access is forbidden with the provided credentials.
+  TooManyRequestsError:
+    status-code: 429
+    type: trains.Problem
+    docs: Too Many Requests
+    examples:
+      - value:
+          type: https://example.com/errors/too-many-requests
+          title: Too Many Requests
+          status: 429
+          detail: You have exceeded the rate limit.
+  InternalServerError:
+    status-code: 500
+    type: trains.Problem
+    docs: Internal Server Error
+    examples:
+      - value:
+          type: https://example.com/errors/internal-server-error
+          title: Internal Server Error
+          status: 500
+          detail: An unexpected error occurred.
+  NotFoundError:
+    status-code: 404
+    type: trains.Problem
+    docs: Not Found
+    examples:
+      - value:
+          type: https://example.com/errors/not-found
+          title: Not Found
+          status: 404
+          detail: The requested resource was not found.
+  ConflictError:
+    status-code: 409
+    type: trains.Problem
+    docs: Conflict
+    examples:
+      - value:
+          type: https://example.com/errors/conflict
+          title: Conflict
+          status: 409
+          detail: There is a conflict with an existing resource.
+",
+    "name": "__package__.yml",
+    "type": "file",
+  },
+  {
+    "contents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Train Travel API
+default-environment: Production
+environments:
+  Production: https://api.example.com
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+auth: BearerAuthScheme
+",
+    "name": "api.yml",
+    "type": "file",
+  },
+  {
+    "contents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    listPets:
+      path: /pets
+      method: GET
+      auth: false
+      display-name: List all pets
+      request:
+        name: ListPetsRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: How many items to return at one time (max 100)
+      response:
+        docs: A paged array of pets
+        type: Pets
+      examples:
+        - response:
+            body:
+              - id: 1000000
+                name: name
+                tag: tag
+    createPets:
+      path: /pets
+      method: POST
+      auth: false
+      display-name: Create a pet
+      examples:
+        - {}
+    showPetById:
+      path: /pets/{petId}
+      method: GET
+      auth: false
+      path-parameters:
+        petId:
+          type: string
+          docs: The id of the pet to retrieve
+      display-name: Info for a specific pet
+      response:
+        docs: Expected response to a valid request
+        type: Pet
+      examples:
+        - path-parameters:
+            petId: petId
+          response:
+            body:
+              id: 1000000
+              name: name
+              tag: tag
+  source:
+    openapi: openapi/petstore/openapi.yml
+types:
+  Pet:
+    properties:
+      id: long
+      name: string
+      tag: optional<string>
+    source:
+      openapi: openapi/petstore/openapi.yml
+  Pets: list<Pet>
+  Error:
+    properties:
+      code: integer
+      message: string
+    source:
+      openapi: openapi/petstore/openapi.yml
+",
+    "name": "neopets.yml",
+    "type": "file",
+  },
+  {
+    "contents": "types:
+  GetStationsResponseLinks:
+    properties: {}
+    extends:
+      - LinksSelf
+      - LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetStationsResponse:
+    properties:
+      data: optional<list<Station>>
+      links: optional<GetStationsResponseLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetTripsResponseLinks:
+    properties: {}
+    extends:
+      - LinksSelf
+      - LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetTripsResponse:
+    properties:
+      data: optional<list<Trip>>
+      links: optional<GetTripsResponseLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetBookingsResponseLinks:
+    properties: {}
+    extends:
+      - LinksSelf
+      - LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetBookingsResponse:
+    properties:
+      data: optional<list<Booking>>
+      links: optional<GetBookingsResponseLinks>
+    source:
+      openapi: openapi/trains/openapi.yml
+  CreateBookingResponse:
+    properties:
+      links: optional<LinksSelf>
+    extends:
+      - Booking
+    source:
+      openapi: openapi/trains/openapi.yml
+  GetBookingResponse:
+    properties:
+      links: optional<LinksSelf>
+    extends:
+      - Booking
+    source:
+      openapi: openapi/trains/openapi.yml
+  CreateBookingPaymentResponse:
+    properties:
+      links: optional<LinksBooking>
+    extends:
+      - BookingPayment
+    source:
+      openapi: openapi/trains/openapi.yml
+  NewBookingPayloadLinks:
+    properties: {}
+    extends:
+      - LinksSelf
+      - LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  NewBookingPayload:
+    properties:
+      links: optional<NewBookingPayloadLinks>
+    extends:
+      - Booking
+    source:
+      openapi: openapi/trains/openapi.yml
+  Station:
+    properties:
+      id:
+        type: string
+        docs: Unique identifier for the station.
+        validation:
+          format: uuid
+      name:
+        type: string
+        docs: The name of the station
+      address:
+        type: string
+        docs: The address of the station.
+      country_code:
+        type: string
+        docs: The country code of the station.
+      timezone:
+        type: optional<string>
+        docs: >-
+          The timezone of the station in the [IANA Time Zone Database
+          format](https://www.iana.org/time-zones).
+    source:
+      openapi: openapi/trains/openapi.yml
+  LinksSelf:
+    properties:
+      self:
+        type: optional<string>
+        validation:
+          format: uri
+    source:
+      openapi: openapi/trains/openapi.yml
+  LinksPagination:
+    properties:
+      next:
+        type: optional<string>
+        validation:
+          format: uri
+      prev:
+        type: optional<string>
+        validation:
+          format: uri
+    source:
+      openapi: openapi/trains/openapi.yml
+  Problem:
+    properties:
+      type:
+        type: optional<string>
+        docs: A URI reference that identifies the problem type
+      title:
+        type: optional<string>
+        docs: A short, human-readable summary of the problem type
+      detail:
+        type: optional<string>
+        docs: >-
+          A human-readable explanation specific to this occurrence of the
+          problem
+      instance:
+        type: optional<string>
+        docs: A URI reference that identifies the specific occurrence of the problem
+      status:
+        type: optional<integer>
+        docs: The HTTP status code
+    source:
+      openapi: openapi/trains/openapi.yml
+  Trip:
+    properties:
+      id:
+        type: optional<string>
+        docs: Unique identifier for the trip
+        validation:
+          format: uuid
+      origin:
+        type: optional<string>
+        docs: The starting station of the trip
+      destination:
+        type: optional<string>
+        docs: The destination station of the trip
+      departure_time:
+        type: optional<datetime>
+        docs: The date and time when the trip departs
+      arrival_time:
+        type: optional<datetime>
+        docs: The date and time when the trip arrives
+      operator:
+        type: optional<string>
+        docs: The name of the operator of the trip
+      price:
+        type: optional<double>
+        docs: The cost of the trip
+      bicycles_allowed:
+        type: optional<boolean>
+        docs: Indicates whether bicycles are allowed on the trip
+      dogs_allowed:
+        type: optional<boolean>
+        docs: Indicates whether dogs are allowed on the trip
+    source:
+      openapi: openapi/trains/openapi.yml
+  Booking:
+    properties:
+      id:
+        type: optional<string>
+        docs: Unique identifier for the booking
+        validation:
+          format: uuid
+      trip_id:
+        type: optional<string>
+        docs: Identifier of the booked trip
+        validation:
+          format: uuid
+      passenger_name:
+        type: optional<string>
+        docs: Name of the passenger
+      has_bicycle:
+        type: optional<boolean>
+        docs: Indicates whether the passenger has a bicycle.
+      has_dog:
+        type: optional<boolean>
+        docs: Indicates whether the passenger has a dog.
+    source:
+      openapi: openapi/trains/openapi.yml
+  WrapperCollection:
+    docs: >-
+      This is a generic request/response wrapper which contains both data and
+      links which serve as hypermedia controls (HATEOAS).
+    properties:
+      data:
+        type: optional<list<map<string, unknown>>>
+        docs: The wrapper for a collection is an array of objects.
+      links:
+        type: optional<map<string, unknown>>
+        docs: A set of hypermedia links which serve as controls for the client.
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentCurrency:
+    enum:
+      - bam
+      - bgn
+      - chf
+      - eur
+      - gbp
+      - nok
+      - sek
+      - try
+    docs: >-
+      Three-letter [ISO currency
+      code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+    source:
+      openapi: openapi/trains/openapi.yml
+  Card:
+    docs: A card (debit or credit) to take payment from.
+    properties:
+      name:
+        type: string
+        docs: Cardholder's full name as it appears on the card.
+      number:
+        type: string
+        docs: >-
+          The card number, as a string without any separators. On read all but
+          the last four digits will be masked for security.
+      cvc:
+        type: integer
+        docs: >-
+          Card security code, 3 or 4 digits usually found on the back of the
+          card.
+      exp_month:
+        type: long
+        docs: Two-digit number representing the card's expiration month.
+      exp_year:
+        type: long
+        docs: Four-digit number representing the card's expiration year.
+      address_line1: optional<string>
+      address_line2: optional<string>
+      address_city: optional<string>
+      address_country: string
+      address_post_code: optional<string>
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentSourceBankAccountAccountType:
+    enum:
+      - individual
+      - company
+    docs: >-
+      The type of entity that holds the account. This can be either \`individual\`
+      or \`company\`.
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentSourceBankAccount:
+    docs: >-
+      A bank account to take payment from. Must be able to make payments in the
+      currency specified in the payment.
+    properties:
+      name: string
+      number:
+        type: string
+        docs: >-
+          The account number for the bank account, in string form. Must be a
+          current account.
+      sort_code:
+        type: optional<string>
+        docs: >-
+          The sort code for the bank account, in string form. Must be a
+          six-digit number.
+      account_type:
+        type: BookingPaymentSourceBankAccountAccountType
+        docs: >-
+          The type of entity that holds the account. This can be either
+          \`individual\` or \`company\`.
+      bank_name:
+        type: string
+        docs: The name of the bank associated with the routing number.
+      country:
+        type: string
+        docs: Two-letter country code (ISO 3166-1 alpha-2).
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentSource:
+    discriminant: object
+    base-properties: {}
+    docs: >-
+      The payment source to take the payment from. This can be a card or a bank
+      account. Some of these properties will be hidden on read to protect PII
+      leaking.
+    union:
+      card:
+        type: Card
+        docs: A card (debit or credit) to take payment from.
+      bank_account:
+        type: BookingPaymentSourceBankAccount
+        docs: >-
+          A bank account to take payment from. Must be able to make payments in
+          the currency specified in the payment.
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPaymentStatus:
+    enum:
+      - pending
+      - succeeded
+      - failed
+    docs: The status of the payment, one of \`pending\`, \`succeeded\`, or \`failed\`.
+    source:
+      openapi: openapi/trains/openapi.yml
+  BookingPayment:
+    properties:
+      id:
+        type: optional<string>
+        docs: >-
+          Unique identifier for the payment. This will be a unique identifier
+          for the payment, and is used to reference the payment in other
+          objects.
+        validation:
+          format: uuid
+      amount:
+        type: optional<double>
+        docs: >-
+          Amount intended to be collected by this payment. A positive decimal
+          figure describing the amount to be collected.
+      currency:
+        type: optional<BookingPaymentCurrency>
+        docs: >-
+          Three-letter [ISO currency
+          code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase.
+      source:
+        type: optional<BookingPaymentSource>
+        docs: >-
+          The payment source to take the payment from. This can be a card or a
+          bank account. Some of these properties will be hidden on read to
+          protect PII leaking.
+      status:
+        type: optional<BookingPaymentStatus>
+        docs: The status of the payment, one of \`pending\`, \`succeeded\`, or \`failed\`.
+    source:
+      openapi: openapi/trains/openapi.yml
+  LinksBooking:
+    properties:
+      booking:
+        type: optional<string>
+        validation:
+          format: uri
+    source:
+      openapi: openapi/trains/openapi.yml
+imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    get-stations:
+      path: /stations
+      method: GET
+      auth: true
+      docs: Returns a list of all train stations in the system.
+      display-name: Get a list of train stations
+      response:
+        docs: A list of train stations
+        type: GetStationsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+      examples:
+        - response:
+            body:
+              data:
+                - id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                  name: Berlin Hauptbahnhof
+                  address: Invalidenstraße 10557 Berlin, Germany
+                  country_code: DE
+                  timezone: Europe/Berlin
+                - id: b2e783e1-c824-4d63-b37a-d8d698862f1d
+                  name: Paris Gare du Nord
+                  address: 18 Rue de Dunkerque 75010 Paris, France
+                  country_code: FR
+                  timezone: Europe/Paris
+              links:
+                next: https://api.example.com/stations?page=3
+                prev: https://api.example.com/stations?page=1
+                self: https://api.example.com/stations&page=2
+    get-trips:
+      path: /trips
+      method: GET
+      auth: true
+      docs: >-
+        Returns a list of available train trips between the specified origin and
+        destination stations on the given date, and allows for filtering by
+        bicycle and dog allowances.
+      display-name: Get available train trips
+      request:
+        name: GetTripsRequest
+        query-parameters:
+          origin:
+            type: string
+            docs: The ID of the origin station
+          destination:
+            type: string
+            docs: The ID of the destination station
+          date:
+            type: datetime
+            docs: >-
+              The date and time of the trip in ISO 8601 format in origin
+              station's timezone.
+          bicycles:
+            type: optional<boolean>
+            docs: Only return trips where bicycles are known to be allowed
+          dogs:
+            type: optional<boolean>
+            docs: Only return trips where dogs are known to be allowed
+      response:
+        docs: A list of available train trips
+        type: GetTripsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+      examples:
+        - query-parameters:
+            origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+            destination: b2e783e1-c824-4d63-b37a-d8d698862f1d
+            date: '2024-02-01T09:00:00Z'
+          response:
+            body:
+              data:
+                - id: ea399ba1-6d95-433f-92d1-83f67b775594
+                  origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                  destination: b2e783e1-c824-4d63-b37a-d8d698862f1d
+                  departure_time: '2024-02-01T10:00:00Z'
+                  arrival_time: '2024-02-01T16:00:00Z'
+                  operator: Deutsche Bahn
+                  price: 50
+                  bicycles_allowed: true
+                  dogs_allowed: true
+                - id: 4d67459c-af07-40bb-bb12-178dbb88e09f
+                  origin: b2e783e1-c824-4d63-b37a-d8d698862f1d
+                  destination: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                  departure_time: '2024-02-01T12:00:00Z'
+                  arrival_time: '2024-02-01T18:00:00Z'
+                  operator: SNCF
+                  price: 50
+                  bicycles_allowed: true
+                  dogs_allowed: true
+              links:
+                next: >-
+                  https://api.example.com/trips?origin=efdbb9d1-02c2-4bc3-afb7-6788d8782b1e&destination=b2e783e1-c824-4d63-b37a-d8d698862f1d&date=2024-02-01&page=2
+                prev: prev
+                self: >-
+                  https://api.example.com/trips?origin=efdbb9d1-02c2-4bc3-afb7-6788d8782b1e&destination=b2e783e1-c824-4d63-b37a-d8d698862f1d&date=2024-02-01
+    get-bookings:
+      path: /bookings
+      method: GET
+      auth: true
+      docs: Returns a list of all trip bookings by the authenticated user.
+      display-name: List existing bookings
+      response:
+        docs: A list of bookings
+        type: GetBookingsResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+      examples:
+        - response:
+            body:
+              data:
+                - id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                  trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+                  passenger_name: John Doe
+                  has_bicycle: true
+                  has_dog: true
+                - id: b2e783e1-c824-4d63-b37a-d8d698862f1d
+                  trip_id: b2e783e1-c824-4d63-b37a-d8d698862f1d
+                  passenger_name: Jane Smith
+                  has_bicycle: false
+                  has_dog: false
+              links:
+                next: https://api.example.com/bookings?page=2
+                prev: prev
+                self: https://api.example.com/bookings
+    create-booking:
+      path: /bookings
+      method: POST
+      auth: true
+      docs: >-
+        A booking is a temporary hold on a trip. It is not confirmed until the
+        payment is processed.
+      display-name: Create a booking
+      request:
+        body: Booking
+      response:
+        docs: Booking successful
+        type: CreateBookingResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.NotFoundError
+        - root.ConflictError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+      examples:
+        - request: {}
+          response:
+            body:
+              id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+              trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+              passenger_name: John Doe
+              has_bicycle: true
+              has_dog: true
+              links:
+                self: >-
+                  https://api.example.com/bookings/efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+    get-booking:
+      path: /bookings/{bookingId}
+      method: GET
+      auth: true
+      docs: Returns the details of a specific booking.
+      path-parameters:
+        bookingId:
+          type: string
+          docs: The ID of the booking to retrieve.
+      display-name: Get a booking
+      response:
+        docs: The booking details
+        type: GetBookingResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          response:
+            body:
+              id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+              trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+              passenger_name: John Doe
+              has_bicycle: true
+              has_dog: true
+              links:
+                self: >-
+                  https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
+    delete-booking:
+      path: /bookings/{bookingId}
+      method: DELETE
+      auth: true
+      docs: Deletes a booking, cancelling the hold on the trip.
+      path-parameters:
+        bookingId:
+          type: string
+          docs: The ID of the booking to retrieve.
+      display-name: Delete a booking
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.NotFoundError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+      examples:
+        - path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+    create-booking-payment:
+      path: /bookings/{bookingId}/payment
+      method: POST
+      auth: true
+      docs: >-
+        A payment is an attempt to pay for the booking, which will confirm the
+        booking for the user and enable them to get their tickets.
+      path-parameters:
+        bookingId:
+          type: string
+          docs: The ID of the booking to pay for.
+      display-name: Pay for a Booking
+      request:
+        body: BookingPayment
+      response:
+        docs: Payment successful
+        type: CreateBookingPaymentResponse
+      errors:
+        - root.BadRequestError
+        - root.UnauthorizedError
+        - root.ForbiddenError
+        - root.TooManyRequestsError
+        - root.InternalServerError
+      examples:
+        - name: Card Payment
+          path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          request:
+            amount: 49.99
+            currency: gbp
+            source:
+              object: card
+              name: J. Doe
+              number: '4242424242424242'
+              cvc: 123
+              exp_month: 12
+              exp_year: 2025
+              address_line1: 123 Fake Street
+              address_line2: 4th Floor
+              address_city: London
+              address_country: gb
+              address_post_code: N12 9XX
+          response:
+            body:
+              id: 2e3b4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a
+              amount: 49.99
+              currency: gbp
+              source:
+                object: card
+                name: J. Doe
+                number: '************4242'
+                cvc: 123
+                exp_month: 12
+                exp_year: 2025
+                address_line1: source
+                address_line2: source
+                address_city: source
+                address_country: gb
+                address_post_code: N12 9XX
+              status: succeeded
+              links:
+                booking: >-
+                  https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb/payment
+        - name: Bank Account Payment
+          path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          request:
+            amount: 100.5
+            currency: gbp
+            source:
+              object: bank_account
+              name: J. Doe
+              number: '00012345'
+              sort_code: '000123'
+              account_type: individual
+              bank_name: Starling Bank
+              country: gb
+          response:
+            body:
+              id: 2e3b4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a
+              amount: 49.99
+              currency: gbp
+              source:
+                object: card
+                name: J. Doe
+                number: '************4242'
+                cvc: 123
+                exp_month: 12
+                exp_year: 2025
+                address_line1: source
+                address_line2: source
+                address_city: source
+                address_country: gb
+                address_post_code: N12 9XX
+              status: succeeded
+              links:
+                booking: >-
+                  https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb/payment
+        - name: Card Payment
+          path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          request:
+            amount: 49.99
+            currency: gbp
+            source:
+              object: card
+              name: J. Doe
+              number: '4242424242424242'
+              cvc: 123
+              exp_month: 12
+              exp_year: 2025
+              address_line1: 123 Fake Street
+              address_line2: 4th Floor
+              address_city: London
+              address_country: gb
+              address_post_code: N12 9XX
+          response:
+            body:
+              id: 2e3b4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a
+              amount: 49.99
+              currency: gbp
+              source:
+                object: card
+                name: J. Doe
+                number: '************4242'
+                cvc: 123
+                exp_month: 12
+                exp_year: 2025
+                address_line1: source
+                address_line2: source
+                address_city: source
+                address_country: gb
+                address_post_code: N12 9XX
+              status: succeeded
+              links:
+                booking: >-
+                  https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb/payment
+        - name: Bank Account Payment
+          path-parameters:
+            bookingId: 1725ff48-ab45-4bb5-9d02-88745177dedb
+          request:
+            amount: 49.99
+            currency: gbp
+            source:
+              object: card
+              name: J. Doe
+              number: '4242424242424242'
+              cvc: 123
+              exp_month: 12
+              exp_year: 2025
+              address_line1: 123 Fake Street
+              address_line2: 4th Floor
+              address_city: London
+              address_country: gb
+              address_post_code: N12 9XX
+          response:
+            body:
+              id: 2e3b4f5a-6b7c-8d9e-0f1a-2b3c4d5e6f7a
+              amount: 100.5
+              currency: gbp
+              source:
+                object: bank_account
+                name: J. Doe
+                number: '*********2345'
+                sort_code: '000123'
+                account_type: individual
+                bank_name: Starling Bank
+                country: gb
+              status: succeeded
+              links:
+                booking: >-
+                  https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
+  source:
+    openapi: openapi/trains/openapi.yml
+webhooks:
+  new-booking:
+    method: POST
+    display-name: New Booking
+    headers: {}
+    payload: NewBookingPayload
+    examples:
+      - payload:
+          id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+          trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+          passenger_name: John Doe
+          has_bicycle: true
+          has_dog: true
+          links:
+            self: >-
+              https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
+    docs: >
+      Subscribe to new bookings being created, to update integrations for your
+      users.  Related data is available via the links provided in the request.
+",
+    "name": "trains.yml",
+    "type": "file",
+  },
+]
+`;

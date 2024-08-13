@@ -20,7 +20,7 @@ exports[`open api parser > gen-yml-use-title > parse open api 1`] = `
       "availability": null,
       "description": null,
       "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElse",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": "EnticingTitle",
       "properties": [
         {
@@ -34,14 +34,14 @@ exports[`open api parser > gen-yml-use-title > parse open api 1`] = `
             "availability": null,
             "description": null,
             "generatedName": "schemaWithALongNameIsRightHereAndNotSomewhereElseId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": "EnticingTitle",
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "SchemaWithALongNameIsRightHereAndNotSomewhereElseId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
