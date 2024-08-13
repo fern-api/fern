@@ -203,47 +203,6 @@ auth: BearerAuthScheme
     "type": "file",
   },
   {
-    "contents": "imports:
-  trains: trains.yml
-types:
-  NewBookingPayloadLinks:
-    properties: {}
-    extends:
-      - trains.LinksSelf
-      - trains.LinksPagination
-    source:
-      openapi: openapi/trains/openapi.yml
-  NewBookingPayload:
-    properties:
-      links: optional<NewBookingPayloadLinks>
-    extends:
-      - trains.Booking
-    source:
-      openapi: openapi/trains/openapi.yml
-webhooks:
-  new-booking:
-    method: POST
-    display-name: New Booking
-    headers: {}
-    payload: NewBookingPayload
-    examples:
-      - payload:
-          id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
-          trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
-          passenger_name: John Doe
-          has_bicycle: true
-          has_dog: true
-          links:
-            self: >-
-              https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
-    docs: >
-      Subscribe to new bookings being created, to update integrations for your
-      users.  Related data is available via the links provided in the request.
-",
-    "name": "bookings.yml",
-    "type": "file",
-  },
-  {
     "contents": "service:
   auth: false
   base-path: ''
@@ -313,7 +272,7 @@ types:
     source:
       openapi: openapi/petstore/openapi.yml
 ",
-    "name": "petNamespace.yml",
+    "name": "neopets.yml",
     "type": "file",
   },
   {
@@ -376,6 +335,20 @@ types:
       links: optional<LinksBooking>
     extends:
       - BookingPayment
+    source:
+      openapi: openapi/trains/openapi.yml
+  NewBookingPayloadLinks:
+    properties: {}
+    extends:
+      - LinksSelf
+      - LinksPagination
+    source:
+      openapi: openapi/trains/openapi.yml
+  NewBookingPayload:
+    properties:
+      links: optional<NewBookingPayloadLinks>
+    extends:
+      - Booking
     source:
       openapi: openapi/trains/openapi.yml
   Station:
@@ -1059,6 +1032,25 @@ service:
                   https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
   source:
     openapi: openapi/trains/openapi.yml
+webhooks:
+  new-booking:
+    method: POST
+    display-name: New Booking
+    headers: {}
+    payload: NewBookingPayload
+    examples:
+      - payload:
+          id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+          trip_id: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
+          passenger_name: John Doe
+          has_bicycle: true
+          has_dog: true
+          links:
+            self: >-
+              https://api.example.com/bookings/1725ff48-ab45-4bb5-9d02-88745177dedb
+    docs: >
+      Subscribe to new bookings being created, to update integrations for your
+      users.  Related data is available via the links provided in the request.
 ",
     "name": "trains.yml",
     "type": "file",
