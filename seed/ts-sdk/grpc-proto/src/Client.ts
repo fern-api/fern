@@ -3,7 +3,7 @@
  */
 
 import * as core from "./core";
-import { User } from "./api/resources/user/client/Client";
+import { Userservice } from "./api/resources/userservice/client/Client";
 
 export declare namespace SeedApiClient {
     interface Options {
@@ -23,9 +23,9 @@ export declare namespace SeedApiClient {
 export class SeedApiClient {
     constructor(protected readonly _options: SeedApiClient.Options) {}
 
-    protected _user: User | undefined;
+    protected _userservice: Userservice | undefined;
 
-    public get user(): User {
-        return (this._user ??= new User(this._options));
+    public get userservice(): Userservice {
+        return (this._userservice ??= new Userservice(this._options));
     }
 }

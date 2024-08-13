@@ -4,6 +4,7 @@ import {
     FernFilepath,
     IntermediateRepresentation,
     Name,
+    ProtobufFile,
     TypeDeclaration,
     TypeId,
     TypeReference,
@@ -71,6 +72,11 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.namespace}.Test`;
     }
 
+    public hasGrpcEndpoints(): boolean {
+        // TODO: Replace this with the this.ir.sdkConfig.hasGrpcEndpoints property (when available).
+        return Object.values(this.ir.services).some((service) => service.transport?.type === "grpc");
+    }
+
     public getConstantsClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -116,6 +122,16 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getFullNamespaceSegments(fernFilepath: FernFilepath): string[] {
         return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
+    }
+
+    public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
+        const namespace = protobufFile.options?.csharp?.namespace;
+        if (namespace == null) {
+            throw new Error(
+                `The 'csharp_namespace' file option must be declared in Protobuf file ${protobufFile.filepath}`
+            );
+        }
+        return namespace;
     }
 
     public getStringEnumSerializerClassReference(): csharp.ClassReference {
@@ -250,7 +266,9 @@ export abstract class AbstractCsharpGeneratorContext<
         return undefined;
     }
 
-    public abstract getAsIsFiles(): string[];
+    public abstract getCoreAsIsFiles(): string[];
+
+    public abstract getPublicCoreAsIsFiles(): string[];
 
     public abstract getDirectoryForTypeId(typeId: TypeId): string;
 

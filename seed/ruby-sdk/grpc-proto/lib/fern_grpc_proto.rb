@@ -2,12 +2,12 @@
 
 require_relative "types_export"
 require_relative "requests"
-require_relative "fern_grpc_proto/user/client"
+require_relative "fern_grpc_proto/userservice/client"
 
 module SeedApiClient
   class Client
-    # @return [SeedApiClient::UserClient]
-    attr_reader :user
+    # @return [SeedApiClient::UserserviceClient]
+    attr_reader :userservice
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -19,13 +19,13 @@ module SeedApiClient
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds
       )
-      @user = SeedApiClient::UserClient.new(request_client: @request_client)
+      @userservice = SeedApiClient::UserserviceClient.new(request_client: @request_client)
     end
   end
 
   class AsyncClient
-    # @return [SeedApiClient::AsyncUserClient]
-    attr_reader :user
+    # @return [SeedApiClient::AsyncUserserviceClient]
+    attr_reader :userservice
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -37,7 +37,7 @@ module SeedApiClient
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds
       )
-      @user = SeedApiClient::AsyncUserClient.new(request_client: @async_request_client)
+      @userservice = SeedApiClient::AsyncUserserviceClient.new(request_client: @async_request_client)
     end
   end
 end

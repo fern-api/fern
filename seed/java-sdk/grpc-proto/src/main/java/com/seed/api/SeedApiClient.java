@@ -5,21 +5,21 @@ package com.seed.api;
 
 import com.seed.api.core.ClientOptions;
 import com.seed.api.core.Suppliers;
-import com.seed.api.resources.user.UserClient;
+import com.seed.api.resources.userservice.UserserviceClient;
 import java.util.function.Supplier;
 
 public class SeedApiClient {
     protected final ClientOptions clientOptions;
 
-    protected final Supplier<UserClient> userClient;
+    protected final Supplier<UserserviceClient> userserviceClient;
 
     public SeedApiClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
-        this.userClient = Suppliers.memoize(() -> new UserClient(clientOptions));
+        this.userserviceClient = Suppliers.memoize(() -> new UserserviceClient(clientOptions));
     }
 
-    public UserClient user() {
-        return this.userClient.get();
+    public UserserviceClient userservice() {
+        return this.userserviceClient.get();
     }
 
     public static SeedApiClientBuilder builder() {

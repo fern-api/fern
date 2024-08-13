@@ -6,6 +6,7 @@ import {
     HttpEndpoint,
     HttpService,
     Name,
+    ProtobufService,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -74,7 +75,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.getNamespaceFromFernFilepath(typeDeclaration.name.fernFilepath);
     }
 
-    public getAsIsFiles(): string[] {
+    public getCoreAsIsFiles(): string[] {
         return [
             AsIsFiles.RawClient,
             AsIsFiles.StringEnumSerializer,
@@ -85,6 +86,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.DateTimeSerializer,
             AsIsFiles.JsonConfiguration
         ];
+    }
+
+    public getPublicCoreAsIsFiles(): string[] {
+        if (this.hasGrpcEndpoints()) {
+            return [AsIsFiles.GrpcRequestOptions];
+        }
+        return [];
     }
 
     public getNamespaceForServiceId(serviceId: ServiceId): string {
@@ -157,11 +165,57 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["client-class-name"] ?? this.getComputedClientName();
     }
 
+    public getRawClientClassName(): string {
+        return "RawClient";
+    }
+
     public getRawClientClassReference(): csharp.ClassReference {
         return csharp.classReference({
-            name: "RawClient",
+            name: this.getRawClientClassName(),
             namespace: this.getCoreNamespace()
         });
+    }
+
+    public getRawGrpcClientClassName(): string {
+        return "RawGrpcClient";
+    }
+
+    public getRawGrpcClientClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRawGrpcClientClassName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getGrpcRequestOptionsName(): string {
+        return "GrpcRequestOptions";
+    }
+
+    public getGrpcCreateCallOptionsMethodName(): string {
+        return "CreateCallOptions";
+    }
+
+    public getGrpcRequestOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getGrpcRequestOptionsName(),
+            namespace: this.getNamespace()
+        });
+    }
+
+    public getGrpcChannelOptionsFieldName(): string {
+        return "GrpcOptions";
+    }
+
+    public getGrpcChannelOptionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "GrpcChannelOptions",
+            namespace: "Grpc.Net.Client"
+        });
+    }
+
+    public getGrpcClientClassName(protobufService: ProtobufService): string {
+        const serviceName = protobufService.name.pascalCase.unsafeName;
+        return `${serviceName}Client`;
     }
 
     public getEnvironmentsClassReference(): csharp.ClassReference {

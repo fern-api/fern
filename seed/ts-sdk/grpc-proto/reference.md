@@ -1,8 +1,8 @@
 # Reference
 
-## User
+## UserService
 
-<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">create</a>({ ...params }) -> SeedApi.CreateResponse</code></summary>
+<details><summary><code>client.userservice.<a href="/src/api/resources/userservice/client/Client.ts">create</a>({ ...params }) -> SeedApi.CreateResponse</code></summary>
 <dl>
 <dd>
 
@@ -15,7 +15,7 @@
 <dd>
 
 ```typescript
-await client.user.create();
+await client.userservice.create();
 ```
 
 </dd>
@@ -39,7 +39,7 @@ await client.user.create();
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions`
+**requestOptions:** `Userservice.RequestOptions`
 
 </dd>
 </dl>
