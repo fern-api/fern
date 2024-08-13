@@ -109,11 +109,11 @@ export type APIConfigurationSchemaInternal = z.infer<typeof APIConfigurationSche
 
 /**
  * Allow for namespacing of the API and it's contents, the name on the record will be applied throughout the API.
- * Note we nest the namespaced config under a `namespaced` key to disambiguate from the top-level keys from the APIConfigurationSchemaInternal (proto, settings, etc.)
+ * Note we nest the namespaced config under a `namespaces` key to disambiguate from the top-level keys from the APIConfigurationSchemaInternal (proto, settings, etc.)
  *
  * @example
  * api:
- *  namespaced:
+ *  namespaces:
  *    docs:
  *      - path: openapi.yml
  *        overrides: overrides.yml
@@ -125,7 +125,7 @@ export type APIConfigurationSchemaInternal = z.infer<typeof APIConfigurationSche
  */
 export const APIConfigurationSchema = z.union([
     APIConfigurationSchemaInternal,
-    z.strictObject({ namespaced: z.record(APIConfigurationSchemaInternal) })
+    z.strictObject({ namespaces: z.record(APIConfigurationSchemaInternal) })
 ]);
 
 export type APIConfigurationSchema = z.infer<typeof APIConfigurationSchema>;

@@ -242,9 +242,9 @@ async function parseAPIConfiguration(
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema
 ): Promise<APIDefinition> {
     const apiConfiguration = rawGeneratorsConfiguration.api;
-    if (isPlainObject(apiConfiguration) && "namespaced" in apiConfiguration) {
+    if (isPlainObject(apiConfiguration) && "namespaces" in apiConfiguration) {
         const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
-        for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaced)) {
+        for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
             namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(
                 configuration,
                 rawGeneratorsConfiguration

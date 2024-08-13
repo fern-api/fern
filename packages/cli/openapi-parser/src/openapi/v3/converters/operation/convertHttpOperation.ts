@@ -104,7 +104,6 @@ export function convertHttpOperation({
 
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
-    const tags = context.namespace ? [context.namespace] : [];
     return {
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
@@ -114,7 +113,7 @@ export function convertHttpOperation({
             operation.operationId != null && suffix != null
                 ? operation.operationId + "_" + suffix
                 : operation.operationId,
-        tags: tags.concat(operation.tags ?? []),
+        tags: context.resolveTags(operation.tags),
         sdkName: sdkMethodName,
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,

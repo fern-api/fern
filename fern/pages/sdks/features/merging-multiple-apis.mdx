@@ -56,13 +56,13 @@ If you have multiple API Definitions, you can specify them in `generators.yml` a
 <Accordion title="Namespaced APIs">
 If you have multiple API Definitions that have overlapping schema names or operation names, 
 you can specify a `namespace` for each API Definition. A namespace is often used to 
-handle API versioning. Note these are nested under a `namespaced` block.
+handle API versioning. Note these are nested under a `namespaces` block.
 
 <CodeBlocks>
   <CodeBlock title="generators.yml">
     ```yaml {3,6}
     api: 
-      namespaced:
+      namespaces:
         v1: 
           - path/to/petstore.yml
           - path/to/plantstore.yml
