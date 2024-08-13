@@ -335,7 +335,7 @@ navbar-links:
 
 logo:
   href: https://www.buildwithfern.com
-  light: ./images/logo-green.png
+  light: ./images/logo-primary.png
   dark: ./images/logo-white.png
   height: 30
 # background-image:
@@ -343,10 +343,10 @@ logo:
 colors:
   accentPrimary:
     dark: "#ADFF8C"
-    light: "#209d63"
+    light: "#1DA32B"
   background:
-    dark: "#000000"
-    light: "#FFFFFF"
+    dark: "#081008"
+    light: "#FBFFFA"
 favicon: ./images/favicon.ico
 
 layout:
