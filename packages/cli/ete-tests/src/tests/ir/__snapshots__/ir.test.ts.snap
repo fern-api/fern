@@ -1891,8 +1891,7 @@ exports[`ir > {"name":"file-upload"} 1`] = `
 }"
 `;
 
-<<<<<<< HEAD
-exports[`ir {"name":"gen-yml-auth"} 1`] = `
+exports[`ir > {"name":"gen-yml-auth"} 1`] = `
 "{
     "fdrApiDefinitionId": null,
     "apiVersion": null,
@@ -2746,7 +2745,7 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "7df5ad411ccb2712dcc192299961d128e674bc39dff77df9cb4789082d02c7ed",
                                 "name": null,
                                 "url": "/refresh",
                                 "rootPathParameters": [],
@@ -2789,6 +2788,9 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "refresh_token"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -3015,6 +3017,9 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -3193,7 +3198,7 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "b8d3a61a50e6e606a6a829c5c168be7cd49f4fc1",
+                                "id": "4bacf436f33408758586f597f56dd34fd72dc8dd",
                                 "docs": null
                             }
                         }
@@ -3463,7 +3468,7 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": null,
+                                "id": "6cdc8c937dd1e310bf1f6936ea826e71b2fd64f1b3334b26fd1d314178577739",
                                 "name": null,
                                 "url": "/token",
                                 "rootPathParameters": [],
@@ -3506,6 +3511,9 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "client_id"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3542,6 +3550,9 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "client_secret"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3578,6 +3589,9 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "scopes"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -3804,6 +3818,9 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3840,6 +3857,9 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -3876,6 +3896,9 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     }
                                 ],
@@ -4054,7 +4077,7 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "214a8ee282b364c5d9dc5f6461eac833d1bdb7c0",
+                                "id": "6fe4f26ce1fbb1dff0cb7354bd70441339ac1500",
                                 "docs": null
                             }
                         }
@@ -4145,10 +4168,7 @@ exports[`ir {"name":"gen-yml-auth"} 1`] = `
 }"
 `;
 
-exports[`ir {"name":"migration","version":"v1"} 1`] = `
-=======
 exports[`ir > {"name":"migration","version":"v1"} 1`] = `
->>>>>>> main
 "{
     "apiName": "my-api",
     "auth": {

@@ -1,12 +1,3 @@
-types:
-  OauthScope:
-    enum:
-      - value: read
-        docs: Read access
-      - value: write
-        docs: Write access
-    source:
-      openapi: openapi/trains/openapi.yml
 imports:
   trains: trains.yml
 errors:
@@ -80,3 +71,12 @@ errors:
           title: Conflict
           status: 409
           detail: There is a conflict with an existing resource.
+types:
+  OauthScope:
+    enum:
+      - value: read
+        docs: Read access
+      - value: write
+        docs: Write access
+    source:
+      openapi: openapi/trains/openapi.yml
