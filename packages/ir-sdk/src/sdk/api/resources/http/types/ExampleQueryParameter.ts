@@ -7,4 +7,5 @@ import * as FernIr from "../../../index";
 export interface ExampleQueryParameter {
     name: FernIr.NameAndWireValue;
     value: FernIr.ExampleTypeReference;
+    shape: FernIr.ExampleQueryParameterShape | undefined;
 }

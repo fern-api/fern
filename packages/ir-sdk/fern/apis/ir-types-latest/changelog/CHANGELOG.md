@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v53.7.0] - 2024-08-12
+
+- Improvement: The IR now contains a `shape` field on the `ExampleQueryParameter` type that denotes whether the parameter
+  allows multiple values, and if so, whether they should be comma-separated or exploded.
+
 ## [v53.6.0] - 2024-08-05
 
 - Internal: Bump to the latest typescript SDK generator. 

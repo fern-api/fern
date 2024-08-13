@@ -30363,6 +30363,9 @@
                                                 }
                                             },
                                             "jsonExample": false
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -30419,6 +30422,9 @@
                                                 }
                                             },
                                             "jsonExample": "development"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -30673,6 +30679,9 @@
                                                 }
                                             },
                                             "jsonExample": true
+                                        },
+                                        "shape": {
+                                            "type": "single"
                                         }
                                     },
                                     {
@@ -30729,6 +30738,9 @@
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -30884,7 +30896,7 @@
                                         }
                                     }
                                 },
-                                "id": "fd9b690d002357d8c4bc82a17515623f15b64ac2",
+                                "id": "433b6a5115d162b754cf027ddae0b2ddc98aa057",
                                 "docs": null
                             }
                         }

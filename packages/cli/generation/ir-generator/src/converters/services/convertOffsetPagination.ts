@@ -37,11 +37,11 @@ export async function convertOffsetPagination({
                   })
                 : undefined,
         hasNextPage:
-            paginationPropertyComponents.step != null
-                ? await propertyResolver.resolveRequestPropertyOrThrow({
+            paginationPropertyComponents.hasNextPage != null
+                ? await propertyResolver.resolveResponsePropertyOrThrow({
                       file,
                       endpoint: endpointName,
-                      propertyComponents: paginationPropertyComponents.step
+                      propertyComponents: paginationPropertyComponents.hasNextPage
                   })
                 : undefined
     });

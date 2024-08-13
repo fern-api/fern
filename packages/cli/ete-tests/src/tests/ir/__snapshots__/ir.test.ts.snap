@@ -30989,6 +30989,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "hello"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -31645,6 +31648,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "hello"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -31920,6 +31926,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -32386,7 +32395,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "67c5bfba771a0f083f9f01fd3110b4d5fbdd5309",
+                                "id": "d65d8e7f98d6c222dcef542d6a7037342c660d56",
                                 "docs": null
                             }
                         },
@@ -32575,6 +32584,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -33041,7 +33053,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                         }
                                     }
                                 },
-                                "id": "4ea0ed165636e7cdc784414f7172b1b5ac46ed48",
+                                "id": "3ce7e25be6592d1a48fe0e39e8ec5df52ab99063",
                                 "docs": null
                             }
                         },
@@ -33230,6 +33242,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -33304,7 +33319,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     },
                                     "body": null
                                 },
-                                "id": "ba93f96b519a523a573c61bd4c5002264774c0b4",
+                                "id": "2485c38e84ae60f90209d11446cc3e5716d8ae7d",
                                 "docs": null
                             }
                         },
@@ -33493,6 +33508,9 @@ exports[`ir > {"name":"simple"} 1`] = `
                                                 }
                                             },
                                             "jsonExample": "string"
+                                        },
+                                        "shape": {
+                                            "type": "exploded"
                                         }
                                     }
                                 ],
@@ -33567,7 +33585,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                                     },
                                     "body": null
                                 },
-                                "id": "573f8177aeb54a888e78580484cef66637513991",
+                                "id": "9c9bdbb3b52d6d1a8583aa6c9359f7fa566dbaeb",
                                 "docs": null
                             }
                         }
