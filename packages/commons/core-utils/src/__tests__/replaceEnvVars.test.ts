@@ -1,6 +1,6 @@
 import { replaceEnvVariables } from "../replaceEnvVars";
 
-describe("substituteEnvVariables", () => {
+describe("replaceEnvVariables", () => {
     it("works and can replace templated env vars, even when they are nested", () => {
         process.env.FOO_VAR = "foo";
         process.env.BAR_VAR = "bar";
