@@ -118,7 +118,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         }
 
         if IS_PYDANTIC_V2:
-            super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
+            return super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
         else:
             return super().dict(**kwargs_with_defaults_exclude_unset)
 
