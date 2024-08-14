@@ -112,7 +112,6 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
             exports={
-                "deep_union_pydantic_dicts",
                 "parse_obj_as",
                 "UniversalBaseModel",
                 "IS_PYDANTIC_V2",
@@ -491,15 +490,6 @@ class CoreUtilities:
                     ("get_next", get_next),
                 ],
             )
-        )
-
-    def get_pydantic_deep_union_import(self) -> AST.Reference:
-        return AST.Reference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
-                named_import="deep_union_pydantic_dicts",
-            ),
         )
 
     def get_encode_query(self, obj: AST.Expression) -> AST.Expression:

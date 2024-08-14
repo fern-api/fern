@@ -55,6 +55,12 @@ class Animal(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         dog: typing.Callable[[resources_types_resources_union_types_dog_Dog], T_Result],

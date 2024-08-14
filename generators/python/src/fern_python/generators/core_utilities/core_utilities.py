@@ -34,7 +34,6 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
             exports={
-                "deep_union_pydantic_dicts",
                 "parse_obj_as",
                 "UniversalBaseModel",
                 "IS_PYDANTIC_V2",
@@ -161,15 +160,6 @@ class CoreUtilities:
             self._construct_type(type_of_obj, obj)
             if self._allow_skipping_validation
             else self.get_parse_obj_as(type_of_obj, obj)
-        )
-
-    def get_pydantic_deep_union_import(self) -> AST.Reference:
-        return AST.Reference(
-            qualified_name_excluding_import=(),
-            import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
-                named_import="deep_union_pydantic_dicts",
-            ),
         )
 
     def get_universal_base_model(self) -> AST.ClassReference:
