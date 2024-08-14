@@ -2,3 +2,4 @@ api:
   namespaces:
     trains: ./openapi/trains/openapi.yml
     neopets: ./openapi/petstore/openapi.yml
+    stream: ./asyncapi/sample.yml
