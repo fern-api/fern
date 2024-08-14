@@ -43,14 +43,15 @@ types:
   SegmentConfig:
     properties:
       write-key: string
-
+  
   FullStoryAnalyticsConfig:
     properties:
-      api-key: string
+      orgId: string
 
   IntercomConfig:
     properties:
-      access-token: string
+      appId: string
+      apiBase: optional<string>
 
   PostHogConfig:
     properties:
