@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improvement: `.dict` performance is increased, consolidating to a single call to Pydantic's `.dict` instead of 2 in attempts to remove unset optional values.
 
+## [3.10.3] - 2024-08-14
+
+- Fix: Query encoding now appropriately takes arrays of deep objects into account.
+
 ## [3.10.2] - 2024-08-13
 
 - Fix: Unions with utils now update forward refs again, a regression that was introduced in version 3.7.0
