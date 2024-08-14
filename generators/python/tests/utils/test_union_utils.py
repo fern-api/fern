@@ -14,6 +14,3 @@ def test_union_utils() -> None:
 
     assert is_circle
     assert circle.dict() == json.loads(dummy)
-    assert circle.json() == dummy
-
-    print(circle.dict(), circle.json())

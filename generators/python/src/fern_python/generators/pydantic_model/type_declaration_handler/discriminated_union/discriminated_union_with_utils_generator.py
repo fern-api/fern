@@ -1,3 +1,4 @@
+from re import A
 from typing import List, Optional, Set
 
 import fern.ir.resources as ir_types
@@ -298,6 +299,27 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         # referenced type_name circularly references this type.
                         for type_id in forward_refed_types:
                             external_pydantic_model.add_ghost_reference(type_id)
+
+
+            def get_dict_method(writer: AST.NodeWriter) -> None:
+                writer.write_line("if IS_PYDANTIC_V2:")
+                with writer.indent():
+                    writer.write_line('return self.root.dict(**kwargs)')
+                writer.write_line("else:")
+                with writer.indent():
+                    writer.write_line('return self.__root__.dict(**kwargs)')
+                
+            external_pydantic_model.add_method_unsafe(
+                declaration=AST.FunctionDeclaration(
+                name="dict",
+                signature=AST.FunctionSignature(
+                    parameters=[AST.FunctionParameter(name="**kwargs", type_hint=AST.TypeHint.any())],
+                    return_type=AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any()),
+                ),
+                body=AST.CodeWriter(get_dict_method),
+            )
+            )
+            
 
             external_pydantic_model.add_method_unsafe(
                 get_visit_method(
