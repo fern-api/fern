@@ -1,3 +1,4 @@
+import { vi } from 'vitest';
 import { replaceEnvVariables } from "../replaceEnvVars";
 
 describe("replaceEnvVariables", () => {
@@ -14,7 +15,7 @@ describe("replaceEnvVariables", () => {
             plugh: "${FOO_VAR}-${BAR_VAR}"
         };
 
-        const onError = jest.fn();
+        const onError = vi.fn();
         const substituted = replaceEnvVariables(content, { onError });
 
         expect(substituted).toEqual({ foo: "bar", baz: { qux: { thud: "foo" } }, plugh: "foo-bar" });
@@ -31,7 +32,7 @@ describe("replaceEnvVariables", () => {
             },
             plugh: "${FOO_VAR}"
         };
-        const onError = jest.fn();
+        const onError = vi.fn();
         replaceEnvVariables(content, { onError }, { substituteAsEmpty: false });
         expect(onError).toHaveBeenCalled();
     });
@@ -47,7 +48,7 @@ describe("replaceEnvVariables", () => {
             },
             plugh: "${FOO_VAR}"
         };
-        const onError = jest.fn();
+        const onError = vi.fn();
         const substituted = replaceEnvVariables(content, { onError }, { substituteAsEmpty: true });
 
         expect(onError).toHaveBeenCalledTimes(0);
