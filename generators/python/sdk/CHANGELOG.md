@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.10.4] - 2024-08-14
+
+- Improvement: `.dict` performance is increased, consolidating to a single call to Pydantic's `.dict` instead of 2 in attempts to remove unset optional values.
+
 ## [3.10.3] - 2024-08-14
 
 - Fix: Query encoding now appropriately takes arrays of deep objects into account.
