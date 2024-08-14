@@ -67,6 +67,12 @@ class SubmissionTypeState(UniversalRootModel):
         ) -> typing.Union[_SubmissionTypeState.Test, _SubmissionTypeState.Workspace]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         test: typing.Callable[[TestSubmissionState], T_Result],

@@ -133,7 +133,6 @@ class CoreUtilities:
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
             exports={
-                "deep_union_pydantic_dicts",
                 "parse_obj_as",
                 "UniversalBaseModel",
                 "IS_PYDANTIC_V2",
