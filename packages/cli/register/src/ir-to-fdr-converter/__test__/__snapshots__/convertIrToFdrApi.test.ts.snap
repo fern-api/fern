@@ -323,6 +323,18 @@ exports[`fdr test definitions > api-wide-base-path 1`] = `
             "parts": [
               {
                 "type": "literal",
+                "value": "/test/",
+              },
+              {
+                "type": "pathParameter",
+                "value": "pathParam",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
                 "value": "/",
               },
               {
@@ -15706,6 +15718,18 @@ exports[`fdr test definitions > package-yml 1`] = `
               "value": "/",
             },
             {
+              "type": "pathParameter",
+              "value": "id",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/",
+            },
+            {
               "type": "literal",
               "value": "",
             },
@@ -15808,6 +15832,18 @@ exports[`fdr test definitions > package-yml 1`] = `
           "originalEndpointId": "endpoint_service.nop",
           "path": {
             "parts": [
+              {
+                "type": "literal",
+                "value": "/",
+              },
+              {
+                "type": "pathParameter",
+                "value": "id",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
               {
                 "type": "literal",
                 "value": "/",
