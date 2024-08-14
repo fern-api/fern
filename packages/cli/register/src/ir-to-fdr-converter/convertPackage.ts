@@ -87,7 +87,7 @@ function convertService(
                     })
                 ),
                 parts: [
-                    ...ir.basePath != null ? convertHttpPath(ir.basePath) : [],
+                    ...(ir.basePath != null ? convertHttpPath(ir.basePath) : []),
                     ...convertHttpPath(irService.basePath),
                     ...convertHttpPath(irEndpoint.path)
                 ]
