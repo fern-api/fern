@@ -24,8 +24,10 @@ You can specify path parameters that are meant to be included on every request:
 <CodeBlock title="api.yml">
 ```yaml
 name: api
+base-path: /{userId}/{orgId}
 path-parameters:
   userId: string
+  orgId: string
 ```
 </CodeBlock>
 
