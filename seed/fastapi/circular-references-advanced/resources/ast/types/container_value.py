@@ -56,6 +56,12 @@ class ContainerValue(UniversalRootModel):
         ) -> typing.Union[_ContainerValue.List, _ContainerValue.Optional]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         list_: typing.Callable[[typing.List["FieldValue"]], T_Result],

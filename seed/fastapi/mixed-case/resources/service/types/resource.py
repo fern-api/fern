@@ -79,6 +79,12 @@ class Resource(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_Resource.User, _Resource.Organization]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         user: typing.Callable[[resources_service_types_user_User], T_Result],
