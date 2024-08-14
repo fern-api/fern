@@ -2,9 +2,8 @@
 
 from .circle import Circle
 from .color import Color
-from .name import Name
 from .shape import Shape
 from .square import Square
 from .undiscriminated_shape import UndiscriminatedShape
 
-__all__ = ["Circle", "Color", "Name", "Shape", "Square", "UndiscriminatedShape"]
+__all__ = ["Circle", "Color", "Shape", "Square", "UndiscriminatedShape"]

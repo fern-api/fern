@@ -2,7 +2,6 @@
 
 # nopycln: file
 import datetime as dt
-from tkinter import E
 import typing
 from collections import defaultdict
 
@@ -56,19 +55,6 @@ T = typing.TypeVar("T")
 Model = typing.TypeVar("Model", bound=pydantic.BaseModel)
 
 
-def deep_union_pydantic_dicts(
-    source: typing.Dict[str, typing.Any], destination: typing.Dict[str, typing.Any]
-) -> typing.Dict[str, typing.Any]:
-    for key, value in source.items():
-        if isinstance(value, dict):
-            node = destination.setdefault(key, {})
-            deep_union_pydantic_dicts(value, node)
-        else:
-            destination[key] = value
-
-    return destination
-
-
 def parse_obj_as(type_: typing.Type[T], object_: typing.Any) -> T:
     if IS_PYDANTIC_V2:
         adapter = pydantic.TypeAdapter(type_)  # type: ignore # Pydantic v2
@@ -107,9 +93,14 @@ class UniversalBaseModel(pydantic.BaseModel):
             return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        """
+        Override the default dict method to `exclude_unset` by default. This function patches
+        `exclude_unset` to work include fields within non-None default values.
+        """
+
         _fields_set = self.__fields_set__
         fields = _get_model_fields(self.__class__)
-        for name, field in fields.items():            
+        for name, field in fields.items():
             if field not in _fields_set:
                 default = _get_field_default(field)
 
@@ -127,7 +118,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         }
 
         if IS_PYDANTIC_V2:
-            return super().model_dump(**kwargs_with_defaults_exclude_unset),  # type: ignore # Pydantic v2
+            return (super().model_dump(**kwargs_with_defaults_exclude_unset),)  # type: ignore # Pydantic v2
         else:
             return super().dict(**kwargs_with_defaults_exclude_unset)
 
@@ -179,20 +170,20 @@ def universal_root_validator(
     return decorator
 
 
-def universal_field_validator(
-    field_name: str, pre: bool = False
-) -> typing.Callable[[AnyCallable], AnyCallable]:
+def universal_field_validator(field_name: str, pre: bool = False) -> typing.Callable[[AnyCallable], AnyCallable]:
     def decorator(func: AnyCallable) -> AnyCallable:
         if IS_PYDANTIC_V2:
-            return pydantic.field_validator(
-                field_name, mode="before" if pre else "after"
-            )(func)  # type: ignore # Pydantic v2
+            return pydantic.field_validator(field_name, mode="before" if pre else "after")(
+                func
+            )  # type: ignore # Pydantic v2
         else:
             return pydantic.validator(field_name, pre=pre)(func)  # type: ignore # Pydantic v1
 
     return decorator
 
+
 PydanticField = typing.Union[ModelField, pydantic.fields.FieldInfo]
+
 
 def _get_model_fields(
     model: typing.Type["Model"],
