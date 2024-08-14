@@ -23,11 +23,11 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return FieldValue(
                 root=_FieldValue.PrimitiveValue(type="primitive_value", value=value)
-            )
+            )  # type: ignore
         else:
             return FieldValue(
                 __root__=_FieldValue.PrimitiveValue(type="primitive_value", value=value)
-            )
+            )  # type: ignore
 
     def object_value(
         self, value: resources_ast_types_object_value_ObjectValue
@@ -37,13 +37,13 @@ class _Factory:
                 root=_FieldValue.ObjectValue(
                     **value.dict(exclude_unset=True), type="object_value"
                 )
-            )
+            )  # type: ignore
         else:
             return FieldValue(
                 __root__=_FieldValue.ObjectValue(
                     **value.dict(exclude_unset=True), type="object_value"
                 )
-            )
+            )  # type: ignore
 
     def container_value(
         self, value: resources_ast_types_container_value_ContainerValue
@@ -51,11 +51,11 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return FieldValue(
                 root=_FieldValue.ContainerValue(type="container_value", value=value)
-            )
+            )  # type: ignore
         else:
             return FieldValue(
                 __root__=_FieldValue.ContainerValue(type="container_value", value=value)
-            )
+            )  # type: ignore
 
 
 class FieldValue(UniversalRootModel):

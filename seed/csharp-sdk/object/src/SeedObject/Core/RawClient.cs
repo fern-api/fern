@@ -24,6 +24,12 @@ internal class RawClient(
     /// </summary>
     private readonly Dictionary<string, string> _headers = headers;
 
+    /// <summary>
+    /// Global headers to be sent with every request. These headers take
+    /// precedence over the others.
+    /// </summary>
+    private readonly Dictionary<string, Func<string>> _headerSuppliers = headerSuppliers;
+
     public async Task<ApiResponse> MakeRequestAsync(BaseApiRequest request)
     {
         var url = BuildUrl(request);
@@ -38,7 +44,7 @@ internal class RawClient(
             httpRequest.Headers.Add(header.Key, header.Value);
         }
         // Add global headers to the request from supplier
-        foreach (var header in headerSuppliers)
+        foreach (var header in _headerSuppliers)
         {
             httpRequest.Headers.Add(header.Key, header.Value.Invoke());
         }

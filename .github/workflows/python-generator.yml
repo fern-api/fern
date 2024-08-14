@@ -53,6 +53,9 @@ jobs:
           cd ../typeddict_models
           fern generate --group dummy_td_types --local
 
+          cd ../union_utils
+          fern generate --group dummy_union_types --local
+
       - name: Install Dependencies - Pydantic V1
         working-directory: ./generators/python
         run: |

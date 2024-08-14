@@ -52,7 +52,10 @@ export class ExampleGenerator {
                     return csharp.dictionary({
                         keyType: csharp.Type.object(),
                         valueType: csharp.Type.optional(csharp.Type.object()),
-                        entries
+                        values: {
+                            type: "entries",
+                            entries
+                        }
                     });
                 }
                 break;
@@ -143,9 +146,12 @@ export class ExampleGenerator {
                     };
                 });
                 return csharp.dictionary({
-                    entries,
                     keyType: this.context.csharpTypeMapper.convert({ reference: p.keyType }),
-                    valueType: this.context.csharpTypeMapper.convert({ reference: p.valueType })
+                    valueType: this.context.csharpTypeMapper.convert({ reference: p.valueType }),
+                    values: {
+                        type: "entries",
+                        entries
+                    }
                 });
             },
             _other: (value) => {

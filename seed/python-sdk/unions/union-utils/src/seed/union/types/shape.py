@@ -8,6 +8,7 @@ from ...core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ...core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -15,15 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def circle(self, value: union_types_circle_Circle) -> Shape:
         if IS_PYDANTIC_V2:
-            return Shape(root=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))
+            return Shape(root=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))  # type: ignore
         else:
-            return Shape(__root__=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))
+            return Shape(__root__=_Shape.Circle(**value.dict(exclude_unset=True), type="circle"))  # type: ignore
 
     def square(self, value: union_types_square_Square) -> Shape:
         if IS_PYDANTIC_V2:
-            return Shape(root=_Shape.Square(**value.dict(exclude_unset=True), type="square"))
+            return Shape(root=_Shape.Square(**value.dict(exclude_unset=True), type="square"))  # type: ignore
         else:
-            return Shape(__root__=_Shape.Square(**value.dict(exclude_unset=True), type="square"))
+            return Shape(__root__=_Shape.Square(**value.dict(exclude_unset=True), type="square"))  # type: ignore
 
 
 class Shape(UniversalRootModel):
@@ -78,3 +79,6 @@ class _Shape:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(Shape)

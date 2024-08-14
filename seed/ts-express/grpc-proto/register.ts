@@ -3,13 +3,13 @@
  */
 
 import express from "express";
-import { UserService } from "./api/resources/user/service/UserService";
+import { UserserviceService } from "./api/resources/userservice/service/UserserviceService";
 
 export function register(
     expressApp: express.Express | express.Router,
     services: {
-        user: UserService;
+        userservice: UserserviceService;
     }
 ): void {
-    (expressApp as any).use("", services.user.toRouter());
+    (expressApp as any).use("", services.userservice.toRouter());
 }

@@ -10,6 +10,7 @@ from ........core.pydantic_utilities import UniversalRootModel
 import typing_extensions
 import pydantic
 from ........core.pydantic_utilities import UniversalBaseModel
+from ........core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -19,19 +20,19 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return CustomFiles(
                 root=_CustomFiles.Basic(**value.dict(exclude_unset=True), type="basic")
-            )
+            )  # type: ignore
         else:
             return CustomFiles(
                 __root__=_CustomFiles.Basic(
                     **value.dict(exclude_unset=True), type="basic"
                 )
-            )
+            )  # type: ignore
 
     def custom(self, value: typing.Dict[Language, Files]) -> CustomFiles:
         if IS_PYDANTIC_V2:
-            return CustomFiles(root=_CustomFiles.Custom(type="custom", value=value))
+            return CustomFiles(root=_CustomFiles.Custom(type="custom", value=value))  # type: ignore
         else:
-            return CustomFiles(__root__=_CustomFiles.Custom(type="custom", value=value))
+            return CustomFiles(__root__=_CustomFiles.Custom(type="custom", value=value))  # type: ignore
 
 
 class CustomFiles(UniversalRootModel):
@@ -77,3 +78,6 @@ class _CustomFiles:
     class Custom(UniversalBaseModel):
         type: typing.Literal["custom"] = "custom"
         value: typing.Dict[Language, Files]
+
+
+update_forward_refs(CustomFiles)

@@ -8,6 +8,7 @@ import typing
 import typing_extensions
 import pydantic
 from ...core.pydantic_utilities import UniversalBaseModel
+from ...core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -15,15 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: types_types_foo_Foo) -> UnionWithUnknown:
         if IS_PYDANTIC_V2:
-            return UnionWithUnknown(root=_UnionWithUnknown.Foo(**value.dict(exclude_unset=True), type="foo"))
+            return UnionWithUnknown(root=_UnionWithUnknown.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
         else:
-            return UnionWithUnknown(__root__=_UnionWithUnknown.Foo(**value.dict(exclude_unset=True), type="foo"))
+            return UnionWithUnknown(__root__=_UnionWithUnknown.Foo(**value.dict(exclude_unset=True), type="foo"))  # type: ignore
 
     def unknown(self) -> UnionWithUnknown:
         if IS_PYDANTIC_V2:
-            return UnionWithUnknown(root=_UnionWithUnknown.Unknown(type="unknown"))
+            return UnionWithUnknown(root=_UnionWithUnknown.Unknown(type="unknown"))  # type: ignore
         else:
-            return UnionWithUnknown(__root__=_UnionWithUnknown.Unknown(type="unknown"))
+            return UnionWithUnknown(__root__=_UnionWithUnknown.Unknown(type="unknown"))  # type: ignore
 
 
 class UnionWithUnknown(UniversalRootModel):
@@ -76,3 +77,6 @@ class _UnionWithUnknown:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(UnionWithUnknown)

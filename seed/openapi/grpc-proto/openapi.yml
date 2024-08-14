@@ -5,9 +5,9 @@ info:
 paths:
   /users:
     post:
-      operationId: user_create
+      operationId: userservice_create
       tags:
-        - User
+        - Userservice
       parameters: []
       responses:
         '200':

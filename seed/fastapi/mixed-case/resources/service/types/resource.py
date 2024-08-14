@@ -10,6 +10,7 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -21,13 +22,13 @@ class _Factory:
                 root=_Resource.User(
                     **value.dict(exclude_unset=True), resource_type="user"
                 )
-            )
+            )  # type: ignore
         else:
             return Resource(
                 __root__=_Resource.User(
                     **value.dict(exclude_unset=True), resource_type="user"
                 )
-            )
+            )  # type: ignore
 
     def organization(
         self, value: resources_service_types_organization_Organization
@@ -37,13 +38,13 @@ class _Factory:
                 root=_Resource.Organization(
                     **value.dict(exclude_unset=True), resource_type="Organization"
                 )
-            )
+            )  # type: ignore
         else:
             return Resource(
                 __root__=_Resource.Organization(
                     **value.dict(exclude_unset=True), resource_type="Organization"
                 )
-            )
+            )  # type: ignore
 
 
 class Resource(UniversalRootModel):
@@ -106,3 +107,6 @@ class _Resource:
 
     class Organization(resources_service_types_organization_Organization):
         resource_type: typing.Literal["Organization"] = "Organization"
+
+
+update_forward_refs(Resource)

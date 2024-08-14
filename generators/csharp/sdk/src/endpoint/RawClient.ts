@@ -47,7 +47,7 @@ export class RawClient {
         queryBagReference,
         requestType
     }: RawClient.MakeRequestArgs): csharp.MethodInvocation {
-        const arguments_: csharp.ClassInstantiation.Arguments = [
+        const arguments_: csharp.Arguments = [
             {
                 name: "BaseUrl",
                 assignment: baseUrl

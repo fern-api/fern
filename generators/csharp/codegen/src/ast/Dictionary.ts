@@ -1,3 +1,5 @@
+import { assertNever } from "@fern-api/core-utils";
+import { UnnamedArgument } from "./Argument";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { Type } from "./Type";
@@ -6,25 +8,37 @@ export declare namespace Dictionary {
     interface Args {
         keyType: Type;
         valueType: Type;
-        entries: MapEntry[];
+        values: Values | undefined;
     }
 
     interface MapEntry {
         key: AstNode;
         value: AstNode;
     }
+
+    type Values = MapEntryValues | UnnamedArgumentValues;
+
+    interface MapEntryValues {
+        type: "entries";
+        entries: MapEntry[];
+    }
+
+    interface UnnamedArgumentValues {
+        type: "argument";
+        argument: UnnamedArgument;
+    }
 }
 
 export class Dictionary extends AstNode {
     private keyType: Type;
     private valueType: Type;
-    private entries: Dictionary.MapEntry[];
+    private values: Dictionary.Values | undefined;
 
-    constructor({ keyType, valueType, entries }: Dictionary.Args) {
+    constructor({ keyType, valueType, values }: Dictionary.Args) {
         super();
         this.keyType = keyType;
         this.valueType = valueType;
-        this.entries = entries;
+        this.values = values;
     }
 
     public write(writer: Writer): void {
@@ -32,17 +46,36 @@ export class Dictionary extends AstNode {
         this.keyType.write(writer);
         writer.write(", ");
         this.valueType.write(writer);
-        writer.write(">() {");
-        writer.newLine();
-        writer.indent();
-        for (const { key, value } of this.entries) {
-            writer.write("{ ");
-            key.write(writer);
-            writer.write(", ");
-            value.write(writer);
-            writer.writeLine(" }, ");
+        writer.write(">");
+
+        if (this.values == null) {
+            writer.write("() {}");
+            return;
         }
-        writer.dedent();
-        writer.write("}");
+
+        switch (this.values.type) {
+            case "argument": {
+                writer.write("(");
+                this.values.argument.write(writer);
+                writer.write(")");
+                break;
+            }
+            case "entries": {
+                writer.writeLine("() {");
+                writer.indent();
+                for (const { key, value } of this.values.entries) {
+                    writer.write("{ ");
+                    key.write(writer);
+                    writer.write(", ");
+                    value.write(writer);
+                    writer.writeLine(" }, ");
+                }
+                writer.dedent();
+                writer.write("}");
+                break;
+            }
+            default:
+                assertNever(this.values);
+        }
     }
 }

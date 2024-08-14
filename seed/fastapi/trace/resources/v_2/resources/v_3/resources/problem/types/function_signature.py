@@ -11,6 +11,7 @@ from ........core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ........core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -22,13 +23,13 @@ class _Factory:
                 root=_FunctionSignature.Void(
                     **value.dict(exclude_unset=True), type="void"
                 )
-            )
+            )  # type: ignore
         else:
             return FunctionSignature(
                 __root__=_FunctionSignature.Void(
                     **value.dict(exclude_unset=True), type="void"
                 )
-            )
+            )  # type: ignore
 
     def non_void(self, value: NonVoidFunctionSignature) -> FunctionSignature:
         if IS_PYDANTIC_V2:
@@ -36,13 +37,13 @@ class _Factory:
                 root=_FunctionSignature.NonVoid(
                     **value.dict(exclude_unset=True), type="nonVoid"
                 )
-            )
+            )  # type: ignore
         else:
             return FunctionSignature(
                 __root__=_FunctionSignature.NonVoid(
                     **value.dict(exclude_unset=True), type="nonVoid"
                 )
-            )
+            )  # type: ignore
 
     def void_that_takes_actual_result(
         self, value: VoidFunctionSignatureThatTakesActualResult
@@ -52,13 +53,13 @@ class _Factory:
                 root=_FunctionSignature.VoidThatTakesActualResult(
                     **value.dict(exclude_unset=True), type="voidThatTakesActualResult"
                 )
-            )
+            )  # type: ignore
         else:
             return FunctionSignature(
                 __root__=_FunctionSignature.VoidThatTakesActualResult(
                     **value.dict(exclude_unset=True), type="voidThatTakesActualResult"
                 )
-            )
+            )  # type: ignore
 
 
 class FunctionSignature(UniversalRootModel):
@@ -139,3 +140,6 @@ class _FunctionSignature:
 
     class VoidThatTakesActualResult(VoidFunctionSignatureThatTakesActualResult):
         type: typing.Literal["voidThatTakesActualResult"] = "voidThatTakesActualResult"
+
+
+update_forward_refs(FunctionSignature)

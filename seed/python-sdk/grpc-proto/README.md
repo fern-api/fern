@@ -21,7 +21,7 @@ from seed import SeedApi
 client = SeedApi(
     base_url="https://yourhost.com/path/to/api",
 )
-client.user.create()
+client.userservice.create()
 ```
 
 ## Async Client
@@ -39,7 +39,7 @@ client = AsyncSeedApi(
 
 
 async def main() -> None:
-    await client.user.create()
+    await client.userservice.create()
 
 
 asyncio.run(main())
@@ -54,7 +54,7 @@ will be thrown.
 from seed.core.api_error import ApiError
 
 try:
-    client.user.create()
+    client.userservice.create()
 except ApiError as e:
     print(e.status_code)
     print(e.body)
@@ -77,7 +77,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `max_retries` request option to configure this behavior.
 
 ```python
-client.user.create({
+client.userservice.create({
     "max_retries": 1
 })
 ```
@@ -97,7 +97,7 @@ client = SeedApi(
 
 
 # Override timeout for a specific method
-client.user.create({
+client.userservice.create({
     "timeout_in_seconds": 1
 })
 ```

@@ -66,7 +66,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     csharp.dictionary({
                         keyType: csharp.Type.string(),
                         valueType: csharp.Type.object(),
-                        entries: []
+                        values: undefined
                     })
                 );
                 for (const query of requiredQueryParameters) {
@@ -127,12 +127,15 @@ export class WrappedEndpointRequest extends EndpointRequest {
                     csharp.dictionary({
                         keyType: csharp.Type.string(),
                         valueType: csharp.Type.string(),
-                        entries: requiredHeaders.map((header) => {
-                            return {
-                                key: csharp.codeblock(`"${header.name.wireValue}"`),
-                                value: this.stringify({ reference: header.valueType, name: header.name.name })
-                            };
-                        })
+                        values: {
+                            type: "entries",
+                            entries: requiredHeaders.map((header) => {
+                                return {
+                                    key: csharp.codeblock(`"${header.name.wireValue}"`),
+                                    value: this.stringify({ reference: header.valueType, name: header.name.name })
+                                };
+                            })
+                        }
                     })
                 );
                 for (const header of optionalHeaders) {

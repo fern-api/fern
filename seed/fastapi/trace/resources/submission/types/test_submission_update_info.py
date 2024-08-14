@@ -11,6 +11,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -20,31 +21,31 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return TestSubmissionUpdateInfo(
                 root=_TestSubmissionUpdateInfo.Running(type="running", value=value)
-            )
+            )  # type: ignore
         else:
             return TestSubmissionUpdateInfo(
                 __root__=_TestSubmissionUpdateInfo.Running(type="running", value=value)
-            )
+            )  # type: ignore
 
     def stopped(self) -> TestSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return TestSubmissionUpdateInfo(
                 root=_TestSubmissionUpdateInfo.Stopped(type="stopped")
-            )
+            )  # type: ignore
         else:
             return TestSubmissionUpdateInfo(
                 __root__=_TestSubmissionUpdateInfo.Stopped(type="stopped")
-            )
+            )  # type: ignore
 
     def errored(self, value: ErrorInfo) -> TestSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return TestSubmissionUpdateInfo(
                 root=_TestSubmissionUpdateInfo.Errored(type="errored", value=value)
-            )
+            )  # type: ignore
         else:
             return TestSubmissionUpdateInfo(
                 __root__=_TestSubmissionUpdateInfo.Errored(type="errored", value=value)
-            )
+            )  # type: ignore
 
     def graded_test_case(self, value: GradedTestCaseUpdate) -> TestSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
@@ -52,13 +53,13 @@ class _Factory:
                 root=_TestSubmissionUpdateInfo.GradedTestCase(
                     **value.dict(exclude_unset=True), type="gradedTestCase"
                 )
-            )
+            )  # type: ignore
         else:
             return TestSubmissionUpdateInfo(
                 __root__=_TestSubmissionUpdateInfo.GradedTestCase(
                     **value.dict(exclude_unset=True), type="gradedTestCase"
                 )
-            )
+            )  # type: ignore
 
     def recorded_test_case(
         self, value: RecordedTestCaseUpdate
@@ -68,23 +69,23 @@ class _Factory:
                 root=_TestSubmissionUpdateInfo.RecordedTestCase(
                     **value.dict(exclude_unset=True), type="recordedTestCase"
                 )
-            )
+            )  # type: ignore
         else:
             return TestSubmissionUpdateInfo(
                 __root__=_TestSubmissionUpdateInfo.RecordedTestCase(
                     **value.dict(exclude_unset=True), type="recordedTestCase"
                 )
-            )
+            )  # type: ignore
 
     def finished(self) -> TestSubmissionUpdateInfo:
         if IS_PYDANTIC_V2:
             return TestSubmissionUpdateInfo(
                 root=_TestSubmissionUpdateInfo.Finished(type="finished")
-            )
+            )  # type: ignore
         else:
             return TestSubmissionUpdateInfo(
                 __root__=_TestSubmissionUpdateInfo.Finished(type="finished")
-            )
+            )  # type: ignore
 
 
 class TestSubmissionUpdateInfo(UniversalRootModel):
@@ -191,3 +192,6 @@ class _TestSubmissionUpdateInfo:
 
     class Finished(UniversalBaseModel):
         type: typing.Literal["finished"] = "finished"
+
+
+update_forward_refs(TestSubmissionUpdateInfo)
