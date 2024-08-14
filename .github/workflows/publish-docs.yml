@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "fern/**"
+      - ".github/workflows/publish-docs.yml"
     branches:
       - main
 
