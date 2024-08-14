@@ -45,12 +45,6 @@ class Shape(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_Shape.Circle, _Shape.Square]:
             return self.__root__
 
-    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
-        if IS_PYDANTIC_V2:
-            return self.root.dict(**kwargs)
-        else:
-            return self.__root__.dict(**kwargs)
-
     def visit(
         self,
         circle: typing.Callable[[union_types_circle_Circle], T_Result],

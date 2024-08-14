@@ -96,7 +96,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         `exclude_unset` to work include fields within non-None default values.
         """
         _fields_set = self.__fields_set__
-        
+
         fields = _get_model_fields(self.__class__)
         for name, field in fields.items():
             if name not in _fields_set:
