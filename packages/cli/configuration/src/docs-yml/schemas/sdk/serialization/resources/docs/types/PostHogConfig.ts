@@ -10,13 +10,13 @@ export const PostHogConfig: core.serialization.ObjectSchema<
     serializers.PostHogConfig.Raw,
     FernDocsConfig.PostHogConfig
 > = core.serialization.object({
-    apiKey: core.serialization.string(),
+    apiKey: core.serialization.property("api-key", core.serialization.string()),
     endpoint: core.serialization.string().optional(),
 });
 
 export declare namespace PostHogConfig {
     interface Raw {
-        apiKey: string;
+        "api-key": string;
         endpoint?: string | null;
     }
 }

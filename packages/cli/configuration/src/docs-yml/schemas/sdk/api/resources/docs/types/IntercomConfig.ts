@@ -3,5 +3,6 @@
  */
 
 export interface IntercomConfig {
-    accessToken: string;
+    appId: string;
+    apiBase?: string;
 }

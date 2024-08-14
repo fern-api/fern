@@ -10,11 +10,11 @@ export const FullStoryAnalyticsConfig: core.serialization.ObjectSchema<
     serializers.FullStoryAnalyticsConfig.Raw,
     FernDocsConfig.FullStoryAnalyticsConfig
 > = core.serialization.object({
-    apiKey: core.serialization.property("api-key", core.serialization.string()),
+    orgId: core.serialization.property("org-id", core.serialization.string()),
 });
 
 export declare namespace FullStoryAnalyticsConfig {
     interface Raw {
-        "api-key": string;
+        "org-id": string;
     }
 }

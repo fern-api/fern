@@ -46,16 +46,16 @@ types:
   
   FullStoryAnalyticsConfig:
     properties:
-      orgId: string
+      org-id: string
 
   IntercomConfig:
     properties:
-      appId: string
-      apiBase: optional<string>
+      app-id: string
+      api-base: optional<string>
 
   PostHogConfig:
     properties:
-      apiKey: string
+      api-key: string
       endpoint: optional<string>
 
   # GTMConfig:

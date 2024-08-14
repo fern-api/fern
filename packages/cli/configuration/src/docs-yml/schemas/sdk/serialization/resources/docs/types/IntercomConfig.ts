@@ -10,11 +10,13 @@ export const IntercomConfig: core.serialization.ObjectSchema<
     serializers.IntercomConfig.Raw,
     FernDocsConfig.IntercomConfig
 > = core.serialization.object({
-    accessToken: core.serialization.property("access-token", core.serialization.string()),
+    appId: core.serialization.property("app-id", core.serialization.string()),
+    apiBase: core.serialization.property("api-base", core.serialization.string().optional()),
 });
 
 export declare namespace IntercomConfig {
     interface Raw {
-        "access-token": string;
+        "app-id": string;
+        "api-base"?: string | null;
     }
 }

@@ -3,5 +3,5 @@
  */
 
 export interface FullStoryAnalyticsConfig {
-    apiKey: string;
+    orgId: string;
 }
