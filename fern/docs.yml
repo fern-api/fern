@@ -307,6 +307,12 @@ navigation:
             path: ./pages/docs/comparison/readme.mdx
       - section: Analytics
         contents:
+          - page: PostHog
+            path: ./pages/docs/analytics/posthog.mdx
+          - page: Intercom
+            path: ./pages/docs/analytics/intercom.mdx
+          - page: Fullstory
+            path: ./pages/docs/analytics/fullstory.mdx
           - page: Segment
             path: ./pages/docs/analytics/segment.mdx
   - tab: cli-api
