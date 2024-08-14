@@ -1,6 +1,6 @@
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { NOOP_LOGGER } from "@fern-api/logger";
 import { createMockTaskContext, FernCliError } from "@fern-api/task-context";
-import { substituteEnvVariables } from "../substituteEnvVariables";
 
 describe("substituteEnvVariables", () => {
     it("basic", () => {
@@ -15,7 +15,9 @@ describe("substituteEnvVariables", () => {
             },
             plugh: "${FOO_VAR}-${BAR_VAR}"
         };
-        const substituted = substituteEnvVariables(content, createMockTaskContext());
+
+        const context = createMockTaskContext();
+        const substituted = replaceEnvVariables(content, { onError: (e) => context.failAndThrow(e) });
 
         expect(substituted).toEqual({ foo: "bar", baz: { qux: { thud: "foo" } }, plugh: "foo-bar" });
     });
@@ -31,8 +33,7 @@ describe("substituteEnvVariables", () => {
             },
             plugh: "${FOO_VAR}"
         };
-        expect(() => substituteEnvVariables(content, createMockTaskContext({ logger: NOOP_LOGGER }))).toThrow(
-            FernCliError
-        );
+        const context = createMockTaskContext({ logger: NOOP_LOGGER });
+        expect(() => replaceEnvVariables(content, { onError: (e) => context.failAndThrow(e) })).toThrow(FernCliError);
     });
 });
