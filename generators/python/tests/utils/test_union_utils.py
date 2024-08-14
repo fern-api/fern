@@ -1,3 +1,4 @@
+import json
 from .union_utils.types.resources.types.shape import Shape
 
 
@@ -12,3 +13,7 @@ def test_union_utils() -> None:
     )
 
     assert is_circle
+    assert circle.dict() == json.loads(dummy)
+    assert circle.json() == dummy
+
+    print(circle.dict(), circle.json())

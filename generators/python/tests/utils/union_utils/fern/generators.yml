@@ -12,3 +12,5 @@ groups:
           skip_validation: true
           use_provided_defaults: true
           include_union_utils: true
+          wrapped_aliases: true
+          version: v1
