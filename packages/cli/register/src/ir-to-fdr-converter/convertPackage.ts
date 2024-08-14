@@ -178,22 +178,18 @@ function convertWebSocketChannel(
                 name: example.name?.originalName,
                 description: example.docs,
                 path: example.url,
-                pathParameters: example.pathParameters.reduce<FdrCjsSdk.api.v1.register.ExampleWebSocketSession["pathParameters"]>(
-                    (pathParameters, irPathParameterExample) => {
-                        pathParameters[irPathParameterExample.name.originalName] =
-                            irPathParameterExample.value.jsonExample;
-                        return pathParameters;
-                    },
-                    {}
-                ),
-                queryParameters: example.queryParameters.reduce<FdrCjsSdk.api.v1.register.ExampleWebSocketSession["queryParameters"]>(
-                    (queryParameters, irQueryParameterExample) => {
-                        queryParameters[irQueryParameterExample.name.wireValue] =
-                            irQueryParameterExample.value.jsonExample;
-                        return queryParameters;
-                    },
-                    {}
-                ),
+                pathParameters: example.pathParameters.reduce<
+                    FdrCjsSdk.api.v1.register.ExampleWebSocketSession["pathParameters"]
+                >((pathParameters, irPathParameterExample) => {
+                    pathParameters[irPathParameterExample.name.originalName] = irPathParameterExample.value.jsonExample;
+                    return pathParameters;
+                }, {}),
+                queryParameters: example.queryParameters.reduce<
+                    FdrCjsSdk.api.v1.register.ExampleWebSocketSession["queryParameters"]
+                >((queryParameters, irQueryParameterExample) => {
+                    queryParameters[irQueryParameterExample.name.wireValue] = irQueryParameterExample.value.jsonExample;
+                    return queryParameters;
+                }, {}),
                 headers: example.headers.reduce<FdrCjsSdk.api.v1.register.ExampleWebSocketSession["headers"]>(
                     (headers, irHeaderExample) => {
                         headers[irHeaderExample.name.wireValue] = irHeaderExample.value.jsonExample;
@@ -212,7 +208,9 @@ function convertWebSocketChannel(
     };
 }
 
-export function convertIrAvailability(availability: Ir.Availability | undefined): FdrCjsSdk.api.v1.register.Availability | undefined {
+export function convertIrAvailability(
+    availability: Ir.Availability | undefined
+): FdrCjsSdk.api.v1.register.Availability | undefined {
     if (availability == null) {
         return undefined;
     }
@@ -329,87 +327,92 @@ function convertHttpPath(irPath: Ir.http.HttpPath): FdrCjsSdk.api.v1.register.En
 }
 
 function convertRequestBody(irRequest: Ir.http.HttpRequestBody): FdrCjsSdk.api.v1.register.HttpRequest | undefined {
-    const requestBodyShape = Ir.http.HttpRequestBody._visit<FdrCjsSdk.api.v1.register.HttpRequestBodyShape | undefined>(irRequest, {
-        inlinedRequestBody: (inlinedRequestBody) => {
-            return {
-                type: "json",
-                contentType: inlinedRequestBody.contentType ?? MediaType.APPLICATION_JSON,
-                shape: {
-                    type: "object",
-                    extends: inlinedRequestBody.extends.map((extension) => extension.typeId),
-                    properties: inlinedRequestBody.properties.map(
-                        (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
-                            description: property.docs ?? undefined,
-                            key: property.name.wireValue,
-                            valueType: convertTypeReference(property.valueType)
+    const requestBodyShape = Ir.http.HttpRequestBody._visit<FdrCjsSdk.api.v1.register.HttpRequestBodyShape | undefined>(
+        irRequest,
+        {
+            inlinedRequestBody: (inlinedRequestBody) => {
+                return {
+                    type: "json",
+                    contentType: inlinedRequestBody.contentType ?? MediaType.APPLICATION_JSON,
+                    shape: {
+                        type: "object",
+                        extends: inlinedRequestBody.extends.map((extension) => extension.typeId),
+                        properties: inlinedRequestBody.properties.map(
+                            (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
+                                description: property.docs ?? undefined,
+                                key: property.name.wireValue,
+                                valueType: convertTypeReference(property.valueType)
+                            })
+                        )
+                    }
+                };
+            },
+            reference: (reference) => {
+                return {
+                    type: "json",
+                    contentType: reference.contentType ?? MediaType.APPLICATION_JSON,
+                    shape: {
+                        type: "reference",
+                        value: convertTypeReference(reference.requestBodyType)
+                    }
+                };
+            },
+            fileUpload: (fileUpload) => ({
+                type: "fileUpload",
+                value: {
+                    name: fileUpload.name.originalName,
+                    // TODO: support description and availability
+                    description: undefined,
+                    availability: undefined,
+                    properties: fileUpload.properties
+                        .map((property) => {
+                            return property._visit<FdrCjsSdk.api.v1.register.FormDataProperty | undefined>({
+                                file: (file) => {
+                                    const fileValue = file._visit<
+                                        FdrCjsSdk.api.v1.register.FormDataFileProperty | undefined
+                                    >({
+                                        file: (singleFile) => ({
+                                            type: "file",
+                                            key: singleFile.key.wireValue,
+                                            isOptional: singleFile.isOptional
+                                        }),
+                                        fileArray: (multipleFiles) => ({
+                                            type: "fileArray",
+                                            key: multipleFiles.key.wireValue,
+                                            isOptional: multipleFiles.isOptional
+                                        }),
+                                        _other: () => undefined
+                                    });
+                                    if (fileValue == null) {
+                                        return;
+                                    }
+                                    return { type: "file", value: fileValue };
+                                },
+                                bodyProperty: (bodyProperty) => ({
+                                    type: "bodyProperty",
+                                    key: bodyProperty.name.wireValue,
+                                    valueType: convertTypeReference(bodyProperty.valueType),
+                                    description: bodyProperty.docs
+                                }),
+                                _other: () => undefined
+                            });
                         })
-                    )
+                        .filter(isNonNullish)
                 }
-            };
-        },
-        reference: (reference) => {
-            return {
-                type: "json",
-                contentType: reference.contentType ?? MediaType.APPLICATION_JSON,
-                shape: {
-                    type: "reference",
-                    value: convertTypeReference(reference.requestBodyType)
-                }
-            };
-        },
-        fileUpload: (fileUpload) => ({
-            type: "fileUpload",
-            value: {
-                name: fileUpload.name.originalName,
+            }),
+            bytes: (bytes) => ({
+                type: "bytes",
                 // TODO: support description and availability
                 description: undefined,
                 availability: undefined,
-                properties: fileUpload.properties
-                    .map((property) => {
-                        return property._visit<FdrCjsSdk.api.v1.register.FormDataProperty | undefined>({
-                            file: (file) => {
-                                const fileValue = file._visit<FdrCjsSdk.api.v1.register.FormDataFileProperty | undefined>({
-                                    file: (singleFile) => ({
-                                        type: "file",
-                                        key: singleFile.key.wireValue,
-                                        isOptional: singleFile.isOptional
-                                    }),
-                                    fileArray: (multipleFiles) => ({
-                                        type: "fileArray",
-                                        key: multipleFiles.key.wireValue,
-                                        isOptional: multipleFiles.isOptional
-                                    }),
-                                    _other: () => undefined
-                                });
-                                if (fileValue == null) {
-                                    return;
-                                }
-                                return { type: "file", value: fileValue };
-                            },
-                            bodyProperty: (bodyProperty) => ({
-                                type: "bodyProperty",
-                                key: bodyProperty.name.wireValue,
-                                valueType: convertTypeReference(bodyProperty.valueType),
-                                description: bodyProperty.docs
-                            }),
-                            _other: () => undefined
-                        });
-                    })
-                    .filter(isNonNullish)
+                isOptional: bytes.isOptional,
+                contentType: bytes.contentType
+            }),
+            _other: () => {
+                throw new Error("Unknown HttpRequestBody: " + irRequest.type);
             }
-        }),
-        bytes: (bytes) => ({
-            type: "bytes",
-            // TODO: support description and availability
-            description: undefined,
-            availability: undefined,
-            isOptional: bytes.isOptional,
-            contentType: bytes.contentType
-        }),
-        _other: () => {
-            throw new Error("Unknown HttpRequestBody: " + irRequest.type);
         }
-    });
+    );
     return requestBodyShape != null ? { type: requestBodyShape } : undefined;
 }
 
@@ -417,44 +420,47 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
     if (irResponse.body == null) {
         return undefined;
     }
-    const type = Ir.http.HttpResponseBody._visit<FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined>(irResponse.body, {
-        fileDownload: () => {
-            return {
-                type: "fileDownload"
-            };
-        },
-        json: (jsonResponse) => {
-            return {
-                type: "reference",
-                value: convertTypeReference(jsonResponse.responseBodyType)
-            };
-        },
-        text: () => undefined, // TODO: support text/plain in FDR
-        streamParameter: () => undefined, // TODO: support stream parameter in FDR
-        streaming: (streamingResponse) => {
-            if (streamingResponse.type === "text") {
+    const type = Ir.http.HttpResponseBody._visit<FdrCjsSdk.api.v1.register.HttpResponseBodyShape | undefined>(
+        irResponse.body,
+        {
+            fileDownload: () => {
                 return {
-                    type: "streamingText"
+                    type: "fileDownload"
                 };
-            } else if (streamingResponse.type === "json") {
+            },
+            json: (jsonResponse) => {
                 return {
-                    type: "stream",
-                    shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) }
+                    type: "reference",
+                    value: convertTypeReference(jsonResponse.responseBodyType)
                 };
-                // TODO(dsinghvi): update FDR with SSE.
-            } else if (streamingResponse.type === "sse") {
-                return {
-                    type: "stream",
-                    shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) }
-                };
-            }
+            },
+            text: () => undefined, // TODO: support text/plain in FDR
+            streamParameter: () => undefined, // TODO: support stream parameter in FDR
+            streaming: (streamingResponse) => {
+                if (streamingResponse.type === "text") {
+                    return {
+                        type: "streamingText"
+                    };
+                } else if (streamingResponse.type === "json") {
+                    return {
+                        type: "stream",
+                        shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) }
+                    };
+                    // TODO(dsinghvi): update FDR with SSE.
+                } else if (streamingResponse.type === "sse") {
+                    return {
+                        type: "stream",
+                        shape: { type: "reference", value: convertTypeReference(streamingResponse.payload) }
+                    };
+                }
 
-            return undefined;
-        },
-        _other: () => {
-            throw new Error("Unknown HttpResponse: " + irResponse.body);
+                return undefined;
+            },
+            _other: () => {
+                throw new Error("Unknown HttpResponse: " + irResponse.body);
+            }
         }
-    });
+    );
     if (type != null) {
         return { type, statusCode: irResponse.statusCode };
     } else {
@@ -578,13 +584,12 @@ function convertHttpEndpointExample({
             pathParameters[irPathParameterExample.name.originalName] = irPathParameterExample.value.jsonExample;
             return pathParameters;
         }, {}),
-        queryParameters: example.queryParameters.reduce<FdrCjsSdk.api.v1.register.ExampleEndpointCall["queryParameters"]>(
-            (queryParameters, irQueryParameterExample) => {
-                queryParameters[irQueryParameterExample.name.wireValue] = irQueryParameterExample.value.jsonExample;
-                return queryParameters;
-            },
-            {}
-        ),
+        queryParameters: example.queryParameters.reduce<
+            FdrCjsSdk.api.v1.register.ExampleEndpointCall["queryParameters"]
+        >((queryParameters, irQueryParameterExample) => {
+            queryParameters[irQueryParameterExample.name.wireValue] = irQueryParameterExample.value.jsonExample;
+            return queryParameters;
+        }, {}),
         headers: [...requiredGlobalHeaders, ...example.serviceHeaders, ...example.endpointHeaders].reduce<
             FdrCjsSdk.api.v1.register.ExampleEndpointCall["headers"]
         >((headers, irHeaderExample) => {
@@ -696,24 +701,27 @@ function convertHttpEndpointExample({
         // irExample.response.body != null ? { type: "json", value: irExample.response.body.jsonExample } : undefined,
         codeSamples: codeSamples
             ?.map((codeSample) =>
-                ExampleCodeSample._visit<WithoutQuestionMarks<FdrCjsSdk.api.v1.register.CustomCodeSample> | undefined>(codeSample, {
-                    language: (value) => ({
-                        language: value.language,
-                        code: value.code,
-                        name: value.name?.originalName,
-                        description: value.docs ?? undefined,
-                        install: value.install
-                    }),
-                    sdk: (value) => ({
-                        // TODO: switch to storing as SDK
-                        language: value.sdk,
-                        code: value.code,
-                        name: value.name?.originalName,
-                        description: value.docs ?? undefined,
-                        install: undefined
-                    }),
-                    _other: () => undefined
-                })
+                ExampleCodeSample._visit<WithoutQuestionMarks<FdrCjsSdk.api.v1.register.CustomCodeSample> | undefined>(
+                    codeSample,
+                    {
+                        language: (value) => ({
+                            language: value.language,
+                            code: value.code,
+                            name: value.name?.originalName,
+                            description: value.docs ?? undefined,
+                            install: value.install
+                        }),
+                        sdk: (value) => ({
+                            // TODO: switch to storing as SDK
+                            language: value.sdk,
+                            code: value.code,
+                            name: value.name?.originalName,
+                            description: value.docs ?? undefined,
+                            install: undefined
+                        }),
+                        _other: () => undefined
+                    }
+                )
             )
             .filter(isNonNullish)
     };
@@ -747,7 +755,9 @@ function convertWebhookPayload(irWebhookPayload: Ir.webhooks.WebhookPayload): Fd
     }
 }
 
-function convertMessageBody(irWebSocketBody: Ir.websocket.WebSocketMessageBody): FdrCjsSdk.api.v1.register.WebSocketMessageBodyShape {
+function convertMessageBody(
+    irWebSocketBody: Ir.websocket.WebSocketMessageBody
+): FdrCjsSdk.api.v1.register.WebSocketMessageBodyShape {
     switch (irWebSocketBody.type) {
         case "inlinedBody":
             return {

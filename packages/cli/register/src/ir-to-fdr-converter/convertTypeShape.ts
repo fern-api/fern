@@ -55,34 +55,35 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                     return {
                         description: variant.docs ?? undefined,
                         discriminantValue: variant.discriminantValue.wireValue,
-                        additionalProperties: Ir.types.SingleUnionTypeProperties._visit<FdrCjsSdk.api.v1.register.ObjectType>(
-                            variant.shape,
-                            {
-                                samePropertiesAsObject: (extension) => ({
-                                    extends: [extension.typeId],
-                                    properties: baseProperties
-                                }),
-                                singleProperty: (singleProperty) => ({
-                                    extends: [],
-                                    properties: [
-                                        {
-                                            key: singleProperty.name.wireValue,
-                                            valueType: convertTypeReference(singleProperty.type)
-                                        },
-                                        ...baseProperties
-                                    ]
-                                }),
-                                noProperties: () => ({
-                                    extends: [],
-                                    properties: baseProperties
-                                }),
-                                _other: () => {
-                                    throw new Error(
-                                        "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
-                                    );
+                        additionalProperties:
+                            Ir.types.SingleUnionTypeProperties._visit<FdrCjsSdk.api.v1.register.ObjectType>(
+                                variant.shape,
+                                {
+                                    samePropertiesAsObject: (extension) => ({
+                                        extends: [extension.typeId],
+                                        properties: baseProperties
+                                    }),
+                                    singleProperty: (singleProperty) => ({
+                                        extends: [],
+                                        properties: [
+                                            {
+                                                key: singleProperty.name.wireValue,
+                                                valueType: convertTypeReference(singleProperty.type)
+                                            },
+                                            ...baseProperties
+                                        ]
+                                    }),
+                                    noProperties: () => ({
+                                        extends: [],
+                                        properties: baseProperties
+                                    }),
+                                    _other: () => {
+                                        throw new Error(
+                                            "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
+                                        );
+                                    }
                                 }
-                            }
-                        )
+                            )
                     };
                 })
             };

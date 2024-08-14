@@ -1,3 +1,7 @@
+/* eslint-disable jest/valid-describe-callback */
+/* eslint-disable jest/valid-title */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { loadApis } from "@fern-api/project-loader";
