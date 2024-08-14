@@ -184,7 +184,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         const headerDictionary = csharp.dictionary({
             keyType: csharp.Types.string(),
             valueType: csharp.Types.string(),
-            entries: headerEntries
+            values: {
+                type: "entries",
+                entries: headerEntries
+            }
         });
 
         const headerSupplierDictionary = csharp.dictionary({
@@ -196,7 +199,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                     generics: [csharp.Types.string()]
                 })
             ),
-            entries: []
+            values: undefined
         });
         return {
             access: "public",

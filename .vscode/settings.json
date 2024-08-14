@@ -6,7 +6,7 @@
   "eslint.nodePath": ".yarn/sdks",
   "eslint.execArgv": ["--max_old_space_size=16384"],
   "eslint.workingDirectories": [ "./packages", "./generators" ],
-  "prettier.prettierPath": ".yarn/sdks/prettier/index.js",
+  "prettier.prettierPath": "node_modules/prettier/index.js",
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "editor.formatOnSave": true,

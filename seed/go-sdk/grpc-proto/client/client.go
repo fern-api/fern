@@ -5,7 +5,7 @@ package client
 import (
 	core "github.com/grpc-proto/fern/core"
 	option "github.com/grpc-proto/fern/option"
-	user "github.com/grpc-proto/fern/user"
+	userservice "github.com/grpc-proto/fern/userservice"
 	http "net/http"
 )
 
@@ -14,7 +14,7 @@ type Client struct {
 	caller  *core.Caller
 	header  http.Header
 
-	User *user.Client
+	Userservice *userservice.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -27,7 +27,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 				MaxAttempts: options.MaxAttempts,
 			},
 		),
-		header: options.ToHeader(),
-		User:   user.NewClient(opts...),
+		header:      options.ToHeader(),
+		Userservice: userservice.NewClient(opts...),
 	}
 }

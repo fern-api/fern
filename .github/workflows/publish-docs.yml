@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - "fern/**"
+      - ".github/workflows/publish-docs.yml"
     branches:
       - main
 
@@ -30,7 +31,7 @@ jobs:
         run: |
           pnpm --filter @fern-api/cli dist:cli:prod
           cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs" 
-          node $cli_path --docs --log-level debug --instance fern.docs.buildwithfern.com/learn
+          node $cli_path generate --docs --log-level debug --instance fern.docs.buildwithfern.com/learn
 
       # - name: Install fern-dev CLI
       #   run: |

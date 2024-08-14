@@ -6,19 +6,20 @@ export const CONSTANTS_CLASS_NAME = "Constants";
 export const JSON_UTILS_CLASS_NAME = "JsonUtils";
 
 export enum AsIsFiles {
+    CiYaml = "github-ci.yml",
+    CollectionItemSerializer = "CollectionItemSerializer.cs",
+    Constants = "Constants.cs",
+    DateTimeSerializer = "DateTimeSerializer.cs",
     EnumConverter = "EnumConverter.Template.cs",
+    GrpcRequestOptions = "GrpcRequestOptions.Template.cs",
+    HttpMethodExtensions = "HttpMethodExtensions.cs",
+    JsonConfiguration = "JsonConfiguration.cs",
+    OneOfSerializer = "OneOfSerializer.cs",
+    RawClient = "RawClient.Template.cs",
     StringEnum = "StringEnum.Template.cs",
+    StringEnumSerializer = "StringEnumSerializer.cs",
     TemplateCsProj = "Template.csproj",
     TemplateTestCsProj = "Template.Test.csproj",
     TemplateTestClientCs = "TemplateTestClient.cs",
-    UsingCs = "Using.cs",
-    RawClient = "RawClient.Template.cs",
-    CiYaml = "github-ci.yml",
-    StringEnumSerializer = "StringEnumSerializer.cs",
-    OneOfSerializer = "OneOfSerializer.cs",
-    CollectionItemSerializer = "CollectionItemSerializer.cs",
-    HttpMethodExtensions = "HttpMethodExtensions.cs",
-    Constants = "Constants.cs",
-    DateTimeSerializer = "DateTimeSerializer.cs",
-    JsonConfiguration = "JsonConfiguration.cs"
+    UsingCs = "Using.cs"
 }

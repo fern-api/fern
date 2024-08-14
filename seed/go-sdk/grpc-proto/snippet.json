@@ -4,11 +4,11 @@
             "id": {
                 "path": "/users",
                 "method": "POST",
-                "identifier_override": "endpoint_user.create"
+                "identifier_override": "endpoint_userservice.create"
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto/fern\"\n\tfernclient \"github.com/grpc-proto/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.User.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreateRequest{},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/grpc-proto/fern\"\n\tfernclient \"github.com/grpc-proto/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Userservice.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreateRequest{},\n)\n"
             }
         }
     ]

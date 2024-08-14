@@ -16,8 +16,8 @@ public partial class SeedApiClient
             new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
-        User = new UserClient(_client);
+        Userservice = new UserserviceClient(_client);
     }
 
-    public UserClient User { get; init; }
+    public UserserviceClient Userservice { get; init; }
 }
