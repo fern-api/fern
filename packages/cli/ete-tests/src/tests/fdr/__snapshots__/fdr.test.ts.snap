@@ -338,6 +338,18 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         "parts": [
                             {
                                 "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
+                            {
+                                "type": "literal",
                                 "value": "/movies"
                             },
                             {
@@ -469,6 +481,18 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
@@ -614,6 +638,18 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                         "parts": [
                             {
                                 "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
+                            {
+                                "type": "literal",
                                 "value": "/movies"
                             },
                             {
@@ -666,6 +702,18 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
@@ -1083,6 +1131,18 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         "parts": [
                             {
                                 "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
+                            {
+                                "type": "literal",
                                 "value": "/movies"
                             },
                             {
@@ -1214,6 +1274,18 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
@@ -1359,6 +1431,18 @@ exports[`fdr > {"name":"simple"} 1`] = `
                         "parts": [
                             {
                                 "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
+                            {
+                                "type": "literal",
                                 "value": "/movies"
                             },
                             {
@@ -1411,6 +1495,18 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
