@@ -15,7 +15,7 @@ def traverse_query_dict(dict_flat: Dict[str, Any], key_prefix: Optional[str] = N
                 if isinstance(arr_v, dict):
                     result.extend(traverse_query_dict(arr_v, key))
                 else:
-                    result.append((key, arr_v))   
+                    result.append((key, arr_v))
         else:
             result.append((key, v))
     return result
@@ -49,7 +49,7 @@ def single_query_encoder(query_key: str, query_value: Any) -> List[Tuple[str, An
 def encode_query(query: Optional[Dict[str, Any]]) -> Optional[List[Tuple[str, Any]]]:
     if query is None:
         return None
-    
+
     encoded_query = []
     for k, v in query.items():
         encoded_query.extend(single_query_encoder(k, v))
