@@ -107,6 +107,12 @@ class TestSubmissionStatus(UniversalRootModel):
         ]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         stopped: typing.Callable[[], T_Result],
