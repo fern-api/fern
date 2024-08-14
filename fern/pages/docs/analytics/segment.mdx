@@ -28,6 +28,6 @@ In your `docs.yml` file, add the Segment writeKey:
 ```yaml
 analytics:
   segment:
-    write-key: YOUR_SEGMENT_WRITE_KEY
+    write-key: ${SEGMENT_WRITE_KEY} # scans environment variable
 ```
 </CodeBlock>
