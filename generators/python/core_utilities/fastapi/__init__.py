@@ -1,10 +1,6 @@
 from .datetime_utils import serialize_datetime
 from .exceptions import FernHTTPException, UnauthorizedException
-from .pydantic_utilities import (
-    IS_PYDANTIC_V2,
-    UniversalBaseModel,
-    parse_obj_as,
-)
+from .pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, parse_obj_as
 from .route_args import route_args
 from .security import BearerToken
 

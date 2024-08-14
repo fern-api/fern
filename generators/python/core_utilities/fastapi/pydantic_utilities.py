@@ -101,7 +101,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         _fields_set = self.__fields_set__
         fields = _get_model_fields(self.__class__)
         for name, field in fields.items():
-            if field not in _fields_set:
+            if name not in _fields_set:
                 default = _get_field_default(field)
 
                 # If the default values are non-null act like they've been set
@@ -118,7 +118,7 @@ class UniversalBaseModel(pydantic.BaseModel):
         }
 
         if IS_PYDANTIC_V2:
-            return (super().model_dump(**kwargs_with_defaults_exclude_unset),)  # type: ignore # Pydantic v2
+            super().model_dump(**kwargs_with_defaults_exclude_unset)  # type: ignore # Pydantic v2
         else:
             return super().dict(**kwargs_with_defaults_exclude_unset)
 
