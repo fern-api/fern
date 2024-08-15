@@ -5,10 +5,12 @@ import {
     IntermediateRepresentation,
     Name,
     ProtobufFile,
+    ProtobufType,
     TypeDeclaration,
     TypeId,
     TypeReference,
-    UndiscriminatedUnionTypeDeclaration
+    UndiscriminatedUnionTypeDeclaration,
+    WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { csharp } from "..";
@@ -24,6 +26,7 @@ import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomC
 import { CsharpProject } from "../project";
 import { Namespace } from "../project/CSharpFile";
 import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
+import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
 export abstract class AbstractCsharpGeneratorContext<
@@ -132,6 +135,66 @@ export abstract class AbstractCsharpGeneratorContext<
             );
         }
         return namespace;
+    }
+
+    public resolveWellKnownProtobufTypeOrThrow(
+        wellKnownProtobufType: WellKnownProtobufType
+    ): ResolvedWellKnownProtobufType {
+        const resolvedType = this.resolveWellKnownProtobufType(wellKnownProtobufType);
+        if (resolvedType === undefined) {
+            throw new Error(`Well-known Protobuf type "${wellKnownProtobufType.type}" could not be found.`);
+        }
+        return resolvedType;
+    }
+
+    public resolveWellKnownProtobufType(
+        wellKnownProtobufType: WellKnownProtobufType
+    ): ResolvedWellKnownProtobufType | undefined {
+        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+            if (this.isWellKnownProtobufType({ typeId, wellKnownProtobufType })) {
+                return {
+                    typeDeclaration,
+                    wellKnownProtobufType: wellKnownProtobufType
+                };
+            }
+        }
+        return undefined;
+    }
+
+    public isProtobufStruct(typeId: TypeId): boolean {
+        return this.isWellKnownProtobufType({
+            typeId,
+            wellKnownProtobufType: WellKnownProtobufType.struct()
+        });
+    }
+
+    public isProtobufValue(typeId: TypeId): boolean {
+        return this.isWellKnownProtobufType({
+            typeId,
+            wellKnownProtobufType: WellKnownProtobufType.value()
+        });
+    }
+
+    public isWellKnownProtobufType({
+        typeId,
+        wellKnownProtobufType
+    }: {
+        typeId: TypeId;
+        wellKnownProtobufType: WellKnownProtobufType;
+    }): boolean {
+        const protobufType = this.getProtobufTypeForTypeId(typeId);
+        if (protobufType == null) {
+            return false;
+        }
+        return protobufType.type === "wellKnown" && protobufType.value.type === wellKnownProtobufType.type;
+    }
+
+    public getProtobufTypeForTypeId(typeId: TypeId): ProtobufType | undefined {
+        const typeDeclaration = this.getTypeDeclaration(typeId);
+        if (typeDeclaration == null || typeDeclaration.source == null) {
+            return undefined;
+        }
+        return typeDeclaration.source.type === "proto" ? typeDeclaration.source.value : undefined;
     }
 
     public getStringEnumSerializerClassReference(): csharp.ClassReference {
@@ -248,6 +311,10 @@ export abstract class AbstractCsharpGeneratorContext<
         }
 
         let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+        if (this.isProtobufStruct(declaration.name.typeId) || this.isProtobufValue(declaration.name.typeId)) {
+            return undefined;
+        }
+
         if (declaration.shape.type === "undiscriminatedUnion") {
             return { declaration: declaration.shape, isList: false };
         }

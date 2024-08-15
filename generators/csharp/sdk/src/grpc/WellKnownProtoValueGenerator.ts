@@ -1,14 +1,13 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { csharp, CSharpFile, FileGenerator, ResolvedWellKnownProtobufType } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { ResolvedWellKnownProtoType } from "./resolvers/ResolvedWellKnownProtoType";
 
 export declare namespace WellKnownProtoValueGenerator {
     interface Args {
         context: SdkGeneratorContext;
-        wellKnownProtoValue: ResolvedWellKnownProtoType;
-        wellKnownProtoStruct: ResolvedWellKnownProtoType;
+        wellKnownProtoValue: ResolvedWellKnownProtobufType;
+        wellKnownProtoStruct: ResolvedWellKnownProtobufType;
     }
 }
 
@@ -22,7 +21,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
     SdkCustomConfigSchema,
     SdkGeneratorContext
 > {
-    private wellKnownProtoValue: ResolvedWellKnownProtoType;
+    private wellKnownProtoValue: ResolvedWellKnownProtobufType;
     private wellKnownProtoValueClassReference: csharp.ClassReference;
     private wellKnownProtoValueType: csharp.Type;
     private wellKnownProtoStructType: csharp.Type;

@@ -6,7 +6,7 @@ import { TypeDeclaration, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
  *
  * For an exhaustive list, see https://protobuf.dev/reference/protobuf/google.protobuf
  */
-export interface ResolvedWellKnownProtoType {
+export interface ResolvedWellKnownProtobufType {
     typeDeclaration: TypeDeclaration;
     wellKnownProtobufType: WellKnownProtobufType;
 }

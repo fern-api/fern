@@ -7,7 +7,6 @@ import {
     HttpService,
     Name,
     ProtobufService,
-    ProtobufType,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -60,14 +59,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
                 TYPES_FOLDER_NAME
             ].join("/")
         );
-    }
-
-    public getProtobufTypeForTypeId(typeId: TypeId): ProtobufType | undefined {
-        const typeDeclaration = this.getTypeDeclaration(typeId);
-        if (typeDeclaration == null || typeDeclaration.source == null) {
-            return undefined;
-        }
-        return typeDeclaration.source.type === "proto" ? typeDeclaration.source.value : undefined;
     }
 
     public getDirectoryForError(declaredErrorName: DeclaredErrorName): RelativeFilePath {

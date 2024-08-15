@@ -5,7 +5,8 @@ import {
     Literal,
     PrimitiveType,
     PrimitiveTypeV1,
-    TypeReference
+    TypeReference,
+    WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 import { csharp } from "../";
 import { ClassReference, Type } from "../ast";
@@ -117,6 +118,21 @@ export class CsharpTypeMapper {
     private convertNamed({ named }: { named: DeclaredTypeName }): Type {
         const objectClassReference = this.convertToClassReference(named);
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+
+        if (this.context.isProtobufStruct(typeDeclaration.name.typeId)) {
+            const protobufValue = this.context.resolveWellKnownProtobufTypeOrThrow(WellKnownProtobufType.value());
+            return csharp.Type.map(
+                csharp.Type.string(),
+                csharp.Type.optional(
+                    csharp.Type.reference(this.convertToClassReference(protobufValue.typeDeclaration.name))
+                )
+            );
+        }
+
+        if (this.context.isProtobufValue(typeDeclaration.name.typeId)) {
+            return csharp.Type.reference(this.convertToClassReference(typeDeclaration.name));
+        }
+
         switch (typeDeclaration.shape.type) {
             case "alias":
                 return this.convert({ reference: typeDeclaration.shape.aliasOf });

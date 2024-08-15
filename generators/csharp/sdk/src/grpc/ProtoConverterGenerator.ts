@@ -1,16 +1,15 @@
-import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
+import { csharp, CSharpFile, FileGenerator, ResolvedWellKnownProtobufType } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
-import { ResolvedWellKnownProtoType } from "./resolvers/ResolvedWellKnownProtoType";
 
 const WELL_KNOWN_PROTO_TYPES_NAMESPACE = "Google.Protobuf.WellKnownTypes";
 
 export declare namespace ProtoConverterGenerator {
     interface Args {
         context: SdkGeneratorContext;
-        wellKnownProtoValue: ResolvedWellKnownProtoType;
-        wellKnownProtoStruct: ResolvedWellKnownProtoType;
+        wellKnownProtoValue: ResolvedWellKnownProtobufType;
+        wellKnownProtoStruct: ResolvedWellKnownProtobufType;
     }
 }
 

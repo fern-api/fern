@@ -10,7 +10,6 @@ import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { ProtoConverterGenerator } from "./grpc/ProtoConverterGenerator";
 import { RawGrpcClientGenerator } from "./grpc/RawGrpcClientGenerator";
-import { WellKnownProtoTypeResolver } from "./grpc/resolvers/WellKnownProtoTypeResolver";
 import { WellKnownProtoValueGenerator } from "./grpc/WellKnownProtoValueGenerator";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
@@ -185,9 +184,8 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     private generateWellKnownProtoTypeFiles({ context }: { context: SdkGeneratorContext }): CSharpFile[] | undefined {
-        const resolver = new WellKnownProtoTypeResolver({ context });
-        const wellKnownProtoStruct = resolver.resolveWellKnownProtoType(WellKnownProtobufType.struct());
-        const wellKnownProtoValue = resolver.resolveWellKnownProtoType(WellKnownProtobufType.value());
+        const wellKnownProtoStruct = context.resolveWellKnownProtobufType(WellKnownProtobufType.struct());
+        const wellKnownProtoValue = context.resolveWellKnownProtobufType(WellKnownProtobufType.value());
 
         if (wellKnownProtoStruct != null && wellKnownProtoValue == null) {
             const typeName = wellKnownProtoStruct.typeDeclaration.name.name.originalName;

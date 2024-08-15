@@ -1,14 +1,26 @@
 components:
   schemas:
+    UserModel:
+      properties:
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
+    CreateRequest:
+      properties:
+        metadata:
+          $ref: '#/components/schemas/Metadata'
+
     Metadata:
-      type: object
-      additionalProperties:
-        $ref: '#/components/schemas/MetadataValue'
+      oneOf:
+        - type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetadataValue'
+        - type: object
       x-fern-encoding:
         proto:
           type: google.protobuf.Struct
+
     MetadataValue:
-      nullable: true
       oneOf:
         - type: number
           format: double
