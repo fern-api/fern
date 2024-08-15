@@ -4,18 +4,17 @@ subtitle: Set titles, add meta descriptions, and more
 description: Use frontmatter to set a variety of page properties and metadata.
 ---
 
-You can optionally use front matter to set each page's title, full slug override, meta description, a URL to suggest edits to the page, and its OpenGraph image. You can also use front matter to disable certain page element like the table of contents and on-page feedback. 
+You can optionally use frontmatter to set each page's title, full slug override, meta description, a URL to suggest edits to the page, and its OpenGraph image. You can also use frontmatter to disable certain page element like the table of contents and on-page feedback. 
 
-Front matter must be added to the top of a `.md` or `.mdx` file, before the rest of the content. Use sets of three dashes to indicate the beginning and end of your front matter, as shown:
+Frontmatter must be added to the top of a `.md` or `.mdx` file, before the rest of the content. Use sets of three dashes to indicate the beginning and end of your frontmatter, as shown:
 
-<CodeBlock title="Example front matter">
+<CodeBlock title="Example frontmatter">
 ```mdx
 ---
 title: Customize content using frontmatter
 subtitle: Set titles, add meta descriptions, and more 
 slug: frontmatter
 description: Use frontmatter to set the page title, subtitle, slug, meta description, its OpenGraph image, and a URL to suggest edits.
-hidden: true
 ---
 ```
 
@@ -79,7 +78,7 @@ Renders as a subtitle on the page. If `description` is not set, `subtitle` is al
 **Type**: string<br />
 **Default**: None
 
-The `slug` you set in a page's front matter overrides the URL for that page derived from `docs.yml`. This slug begins from the root of your docs site, ignoring the tab or section that the page is under. This allows you to set a custom full slug for any page.
+The `slug` you set in a page's frontmatter overrides the URL for that page derived from `docs.yml`. This slug begins from the root of your docs site, ignoring the tab or section that the page is under. This allows you to set a custom full slug for any page.
 
 As an example, consider this navigation setup in `docs.yml`:
 
@@ -98,9 +97,9 @@ navigation:
 
 The `slug` set in `docs.yml` affects only the final part of the URL, so the `emailus.mdx` page is available at `/overview/support/email`.
 
-In contrast, the `slug` that you set in front matter affects the full URL. For example, you can set the front matter `slug` to `email`, as shown:
+In contrast, the `slug` that you set in frontmatter affects the full URL. For example, you can set the frontmatter `slug` to `email`, as shown:
 
-<CodeBlock title='Front matter in emailus.mdx'>
+<CodeBlock title='frontmatter in emailus.mdx'>
 ```mdx
 ---
 slug: email
