@@ -29,7 +29,7 @@ export const ValidDocsEndpoints: Rule = {
     })
 };
 
-function validEndpoint(endpoint: string) {
+export function validEndpoint(endpoint: string): boolean {
     try {
         const url = new URL(endpoint);
         return Boolean(url.protocol);
