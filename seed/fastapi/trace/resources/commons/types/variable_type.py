@@ -15,33 +15,33 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def integer_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
-            return VariableType(root=_VariableType.IntegerType(type="integerType"))
+            return VariableType(root=_VariableType.IntegerType(type="integerType"))  # type: ignore
         else:
-            return VariableType(__root__=_VariableType.IntegerType(type="integerType"))
+            return VariableType(__root__=_VariableType.IntegerType(type="integerType"))  # type: ignore
 
     def double_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
-            return VariableType(root=_VariableType.DoubleType(type="doubleType"))
+            return VariableType(root=_VariableType.DoubleType(type="doubleType"))  # type: ignore
         else:
-            return VariableType(__root__=_VariableType.DoubleType(type="doubleType"))
+            return VariableType(__root__=_VariableType.DoubleType(type="doubleType"))  # type: ignore
 
     def boolean_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
-            return VariableType(root=_VariableType.BooleanType(type="booleanType"))
+            return VariableType(root=_VariableType.BooleanType(type="booleanType"))  # type: ignore
         else:
-            return VariableType(__root__=_VariableType.BooleanType(type="booleanType"))
+            return VariableType(__root__=_VariableType.BooleanType(type="booleanType"))  # type: ignore
 
     def string_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
-            return VariableType(root=_VariableType.StringType(type="stringType"))
+            return VariableType(root=_VariableType.StringType(type="stringType"))  # type: ignore
         else:
-            return VariableType(__root__=_VariableType.StringType(type="stringType"))
+            return VariableType(__root__=_VariableType.StringType(type="stringType"))  # type: ignore
 
     def char_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
-            return VariableType(root=_VariableType.CharType(type="charType"))
+            return VariableType(root=_VariableType.CharType(type="charType"))  # type: ignore
         else:
-            return VariableType(__root__=_VariableType.CharType(type="charType"))
+            return VariableType(__root__=_VariableType.CharType(type="charType"))  # type: ignore
 
     def list_type(
         self, value: resources_commons_types_list_type_ListType
@@ -51,13 +51,13 @@ class _Factory:
                 root=_VariableType.ListType(
                     **value.dict(exclude_unset=True), type="listType"
                 )
-            )
+            )  # type: ignore
         else:
             return VariableType(
                 __root__=_VariableType.ListType(
                     **value.dict(exclude_unset=True), type="listType"
                 )
-            )
+            )  # type: ignore
 
     def map_type(self, value: resources_commons_types_map_type_MapType) -> VariableType:
         if IS_PYDANTIC_V2:
@@ -65,43 +65,43 @@ class _Factory:
                 root=_VariableType.MapType(
                     **value.dict(exclude_unset=True), type="mapType"
                 )
-            )
+            )  # type: ignore
         else:
             return VariableType(
                 __root__=_VariableType.MapType(
                     **value.dict(exclude_unset=True), type="mapType"
                 )
-            )
+            )  # type: ignore
 
     def binary_tree_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
             return VariableType(
                 root=_VariableType.BinaryTreeType(type="binaryTreeType")
-            )
+            )  # type: ignore
         else:
             return VariableType(
                 __root__=_VariableType.BinaryTreeType(type="binaryTreeType")
-            )
+            )  # type: ignore
 
     def singly_linked_list_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
             return VariableType(
                 root=_VariableType.SinglyLinkedListType(type="singlyLinkedListType")
-            )
+            )  # type: ignore
         else:
             return VariableType(
                 __root__=_VariableType.SinglyLinkedListType(type="singlyLinkedListType")
-            )
+            )  # type: ignore
 
     def doubly_linked_list_type(self) -> VariableType:
         if IS_PYDANTIC_V2:
             return VariableType(
                 root=_VariableType.DoublyLinkedListType(type="doublyLinkedListType")
-            )
+            )  # type: ignore
         else:
             return VariableType(
                 __root__=_VariableType.DoublyLinkedListType(type="doublyLinkedListType")
-            )
+            )  # type: ignore
 
 
 class VariableType(UniversalRootModel):
@@ -171,6 +171,12 @@ class VariableType(UniversalRootModel):
             _VariableType.DoublyLinkedListType,
         ]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,

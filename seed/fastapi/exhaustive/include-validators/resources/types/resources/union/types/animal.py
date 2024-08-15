@@ -9,6 +9,7 @@ import typing
 import typing_extensions
 import pydantic
 from ......core.pydantic_utilities import universal_root_validator
+from ......core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -18,21 +19,21 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return Animal(
                 root=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog")
-            )
+            )  # type: ignore
         else:
             return Animal(
                 __root__=_Animal.Dog(**value.dict(exclude_unset=True), animal="dog")
-            )
+            )  # type: ignore
 
     def cat(self, value: resources_types_resources_union_types_cat_Cat) -> Animal:
         if IS_PYDANTIC_V2:
             return Animal(
                 root=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat")
-            )
+            )  # type: ignore
         else:
             return Animal(
                 __root__=_Animal.Cat(**value.dict(exclude_unset=True), animal="cat")
-            )
+            )  # type: ignore
 
 
 class Animal(UniversalRootModel):
@@ -54,6 +55,12 @@ class Animal(UniversalRootModel):
 
         def get_as_union(self) -> typing.Union[_Animal.Dog, _Animal.Cat]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,
@@ -143,3 +150,6 @@ class _Animal:
 
     class Cat(resources_types_resources_union_types_cat_Cat):
         animal: typing.Literal["cat"] = "cat"
+
+
+update_forward_refs(Animal)

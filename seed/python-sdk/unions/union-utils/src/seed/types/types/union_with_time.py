@@ -8,6 +8,7 @@ import typing
 import typing_extensions
 import pydantic
 from ...core.pydantic_utilities import UniversalBaseModel
+from ...core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -15,21 +16,21 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def value(self, value: int) -> UnionWithTime:
         if IS_PYDANTIC_V2:
-            return UnionWithTime(root=_UnionWithTime.Value(type="value", value=value))
+            return UnionWithTime(root=_UnionWithTime.Value(type="value", value=value))  # type: ignore
         else:
-            return UnionWithTime(__root__=_UnionWithTime.Value(type="value", value=value))
+            return UnionWithTime(__root__=_UnionWithTime.Value(type="value", value=value))  # type: ignore
 
     def date(self, value: dt.date) -> UnionWithTime:
         if IS_PYDANTIC_V2:
-            return UnionWithTime(root=_UnionWithTime.Date(type="date", value=value))
+            return UnionWithTime(root=_UnionWithTime.Date(type="date", value=value))  # type: ignore
         else:
-            return UnionWithTime(__root__=_UnionWithTime.Date(type="date", value=value))
+            return UnionWithTime(__root__=_UnionWithTime.Date(type="date", value=value))  # type: ignore
 
     def datetime(self, value: dt.datetime) -> UnionWithTime:
         if IS_PYDANTIC_V2:
-            return UnionWithTime(root=_UnionWithTime.Datetime(type="datetime", value=value))
+            return UnionWithTime(root=_UnionWithTime.Datetime(type="datetime", value=value))  # type: ignore
         else:
-            return UnionWithTime(__root__=_UnionWithTime.Datetime(type="datetime", value=value))
+            return UnionWithTime(__root__=_UnionWithTime.Datetime(type="datetime", value=value))  # type: ignore
 
 
 class UnionWithTime(UniversalRootModel):
@@ -51,6 +52,12 @@ class UnionWithTime(UniversalRootModel):
 
         def get_as_union(self) -> typing.Union[_UnionWithTime.Value, _UnionWithTime.Date, _UnionWithTime.Datetime]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,
@@ -103,3 +110,6 @@ class _UnionWithTime:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(UnionWithTime)

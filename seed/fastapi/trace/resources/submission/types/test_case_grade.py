@@ -8,6 +8,7 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -19,13 +20,13 @@ class _Factory:
                 root=_TestCaseGrade.Hidden(
                     **value.dict(exclude_unset=True), type="hidden"
                 )
-            )
+            )  # type: ignore
         else:
             return TestCaseGrade(
                 __root__=_TestCaseGrade.Hidden(
                     **value.dict(exclude_unset=True), type="hidden"
                 )
-            )
+            )  # type: ignore
 
     def non_hidden(self, value: TestCaseNonHiddenGrade) -> TestCaseGrade:
         if IS_PYDANTIC_V2:
@@ -33,13 +34,13 @@ class _Factory:
                 root=_TestCaseGrade.NonHidden(
                     **value.dict(exclude_unset=True), type="nonHidden"
                 )
-            )
+            )  # type: ignore
         else:
             return TestCaseGrade(
                 __root__=_TestCaseGrade.NonHidden(
                     **value.dict(exclude_unset=True), type="nonHidden"
                 )
-            )
+            )  # type: ignore
 
 
 class TestCaseGrade(UniversalRootModel):
@@ -65,6 +66,12 @@ class TestCaseGrade(UniversalRootModel):
             self,
         ) -> typing.Union[_TestCaseGrade.Hidden, _TestCaseGrade.NonHidden]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,
@@ -92,3 +99,6 @@ class _TestCaseGrade:
 
     class NonHidden(TestCaseNonHiddenGrade):
         type: typing.Literal["nonHidden"] = "nonHidden"
+
+
+update_forward_refs(TestCaseGrade)

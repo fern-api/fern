@@ -8,6 +8,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -17,19 +18,19 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return UnionWithUnknown(
                 root=_UnionWithUnknown.Foo(**value.dict(exclude_unset=True), type="foo")
-            )
+            )  # type: ignore
         else:
             return UnionWithUnknown(
                 __root__=_UnionWithUnknown.Foo(
                     **value.dict(exclude_unset=True), type="foo"
                 )
-            )
+            )  # type: ignore
 
     def unknown(self) -> UnionWithUnknown:
         if IS_PYDANTIC_V2:
-            return UnionWithUnknown(root=_UnionWithUnknown.Unknown(type="unknown"))
+            return UnionWithUnknown(root=_UnionWithUnknown.Unknown(type="unknown"))  # type: ignore
         else:
-            return UnionWithUnknown(__root__=_UnionWithUnknown.Unknown(type="unknown"))
+            return UnionWithUnknown(__root__=_UnionWithUnknown.Unknown(type="unknown"))  # type: ignore
 
 
 class UnionWithUnknown(UniversalRootModel):
@@ -56,6 +57,12 @@ class UnionWithUnknown(UniversalRootModel):
         ) -> typing.Union[_UnionWithUnknown.Foo, _UnionWithUnknown.Unknown]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         foo: typing.Callable[[resources_types_types_foo_Foo], T_Result],
@@ -78,3 +85,6 @@ class _UnionWithUnknown:
 
     class Unknown(UniversalBaseModel):
         type: typing.Literal["unknown"] = "unknown"
+
+
+update_forward_refs(UnionWithUnknown)

@@ -31,7 +31,8 @@ export class ExampleWebsocketSessionFactory {
         publish,
         subscribe,
         handshake,
-        source
+        source,
+        namespace
     }: {
         context: AsyncAPIV2ParserContext;
         extensionExamples: WebsocketSessionExampleExtension[];
@@ -39,6 +40,7 @@ export class ExampleWebsocketSessionFactory {
         publish: SchemaWithExample | undefined;
         subscribe: SchemaWithExample | undefined;
         source: Source;
+        namespace: string | undefined;
     }): WebsocketSessionExample[] {
         const result: WebsocketSessionExample[] = [];
 
@@ -105,7 +107,14 @@ export class ExampleWebsocketSessionFactory {
                     ? context.resolveSchemaReference(messageSchema.payload)
                     : messageSchema.payload;
                 const example = this.exampleTypeFactory.buildExample({
-                    schema: convertSchema(resolvedSchema, false, context, [messageExample.messageId], source),
+                    schema: convertSchema(
+                        resolvedSchema,
+                        false,
+                        context,
+                        [messageExample.messageId],
+                        source,
+                        namespace
+                    ),
                     exampleId: undefined,
                     example: messageExample.value,
                     options: {

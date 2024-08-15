@@ -11,6 +11,7 @@ import typing
 import typing_extensions
 import pydantic
 from ......core.pydantic_utilities import UniversalBaseModel
+from ......core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -24,19 +25,19 @@ class _Factory:
                 root=_EventInfo.Metadata(
                     **value.dict(exclude_unset=True), type="metadata"
                 )
-            )
+            )  # type: ignore
         else:
             return EventInfo(
                 __root__=_EventInfo.Metadata(
                     **value.dict(exclude_unset=True), type="metadata"
                 )
-            )
+            )  # type: ignore
 
     def tag(self, value: resources_commons_resources_types_types_tag_Tag) -> EventInfo:
         if IS_PYDANTIC_V2:
-            return EventInfo(root=_EventInfo.Tag(type="tag", value=value))
+            return EventInfo(root=_EventInfo.Tag(type="tag", value=value))  # type: ignore
         else:
-            return EventInfo(__root__=_EventInfo.Tag(type="tag", value=value))
+            return EventInfo(__root__=_EventInfo.Tag(type="tag", value=value))  # type: ignore
 
 
 class EventInfo(UniversalRootModel):
@@ -71,6 +72,12 @@ class EventInfo(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_EventInfo.Metadata, _EventInfo.Tag]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         metadata: typing.Callable[
@@ -98,3 +105,6 @@ class _EventInfo:
     class Tag(UniversalBaseModel):
         type: typing.Literal["tag"] = "tag"
         value: resources_commons_resources_types_types_tag_Tag
+
+
+update_forward_refs(EventInfo)

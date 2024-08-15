@@ -8,6 +8,7 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -19,13 +20,13 @@ class _Factory:
                 root=_SubmissionStatusV2.Test(
                     **value.dict(exclude_unset=True), type="test"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionStatusV2(
                 __root__=_SubmissionStatusV2.Test(
                     **value.dict(exclude_unset=True), type="test"
                 )
-            )
+            )  # type: ignore
 
     def workspace(self, value: WorkspaceSubmissionStatusV2) -> SubmissionStatusV2:
         if IS_PYDANTIC_V2:
@@ -33,13 +34,13 @@ class _Factory:
                 root=_SubmissionStatusV2.Workspace(
                     **value.dict(exclude_unset=True), type="workspace"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionStatusV2(
                 __root__=_SubmissionStatusV2.Workspace(
                     **value.dict(exclude_unset=True), type="workspace"
                 )
-            )
+            )  # type: ignore
 
 
 class SubmissionStatusV2(UniversalRootModel):
@@ -65,6 +66,12 @@ class SubmissionStatusV2(UniversalRootModel):
             self,
         ) -> typing.Union[_SubmissionStatusV2.Test, _SubmissionStatusV2.Workspace]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,
@@ -92,3 +99,6 @@ class _SubmissionStatusV2:
 
     class Workspace(WorkspaceSubmissionStatusV2):
         type: typing.Literal["workspace"] = "workspace"
+
+
+update_forward_refs(SubmissionStatusV2)

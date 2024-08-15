@@ -8,6 +8,7 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -17,25 +18,25 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return UnionWithoutKey(
                 root=_UnionWithoutKey.Foo(**value.dict(exclude_unset=True), type="foo")
-            )
+            )  # type: ignore
         else:
             return UnionWithoutKey(
                 __root__=_UnionWithoutKey.Foo(
                     **value.dict(exclude_unset=True), type="foo"
                 )
-            )
+            )  # type: ignore
 
     def bar(self, value: resources_types_types_bar_Bar) -> UnionWithoutKey:
         if IS_PYDANTIC_V2:
             return UnionWithoutKey(
                 root=_UnionWithoutKey.Bar(**value.dict(exclude_unset=True), type="bar")
-            )
+            )  # type: ignore
         else:
             return UnionWithoutKey(
                 __root__=_UnionWithoutKey.Bar(
                     **value.dict(exclude_unset=True), type="bar"
                 )
-            )
+            )  # type: ignore
 
 
 class UnionWithoutKey(UniversalRootModel):
@@ -61,6 +62,12 @@ class UnionWithoutKey(UniversalRootModel):
             self,
         ) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,
@@ -88,3 +95,6 @@ class _UnionWithoutKey:
 
     class Bar(resources_types_types_bar_Bar):
         type: typing.Literal["bar"] = "bar"
+
+
+update_forward_refs(UnionWithoutKey)

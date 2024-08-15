@@ -1,5 +1,5 @@
+import { Arguments, NamedArgument, UnnamedArgument, isNamedArgument } from "./Argument";
 import { ClassReference } from "./ClassReference";
-import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -11,20 +11,11 @@ export declare namespace ClassInstantiation {
         // lets you use constructor (rather than object initializer syntax) even if you pass in named arguments
         forceUseConstructor?: boolean;
     }
-
-    type Arguments = NamedArgument[] | UnnamedArgument[];
-
-    interface NamedArgument {
-        name: string;
-        assignment: CodeBlock;
-    }
-
-    type UnnamedArgument = CodeBlock;
 }
 
 export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
-    public readonly arguments_: ClassInstantiation.NamedArgument[] | ClassInstantiation.UnnamedArgument[];
+    public readonly arguments_: NamedArgument[] | UnnamedArgument[];
     private readonly forceUseConstructor: boolean;
 
     constructor({ classReference, arguments_, forceUseConstructor }: ClassInstantiation.Args) {
@@ -35,11 +26,11 @@ export class ClassInstantiation extends AstNode {
     }
 
     public write(writer: Writer): void {
-        writer.addReference(this.classReference);
         const hasNamedArguments =
             this.arguments_.length > 0 && this.arguments_[0] != null && isNamedArgument(this.arguments_[0]);
 
-        writer.write(`new ${this.classReference.name}`);
+        writer.write("new ");
+        writer.writeNode(this.classReference);
 
         if (hasNamedArguments && !this.forceUseConstructor) {
             writer.write("{ ");
@@ -69,10 +60,4 @@ export class ClassInstantiation extends AstNode {
             writer.write(")");
         }
     }
-}
-
-function isNamedArgument(
-    argument: ClassInstantiation.NamedArgument | ClassInstantiation.UnnamedArgument
-): argument is ClassInstantiation.NamedArgument {
-    return (argument as ClassInstantiation.NamedArgument)?.name != null;
 }

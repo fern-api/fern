@@ -7,6 +7,7 @@ import typing
 import typing_extensions
 import pydantic
 from ......core.pydantic_utilities import UniversalBaseModel
+from ......core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -14,15 +15,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def string(self, value: str) -> Data:
         if IS_PYDANTIC_V2:
-            return Data(root=_Data.String(type="string", value=value))
+            return Data(root=_Data.String(type="string", value=value))  # type: ignore
         else:
-            return Data(__root__=_Data.String(type="string", value=value))
+            return Data(__root__=_Data.String(type="string", value=value))  # type: ignore
 
     def base_64(self, value: str) -> Data:
         if IS_PYDANTIC_V2:
-            return Data(root=_Data.Base64(type="base64", value=value))
+            return Data(root=_Data.Base64(type="base64", value=value))  # type: ignore
         else:
-            return Data(__root__=_Data.Base64(type="base64", value=value))
+            return Data(__root__=_Data.Base64(type="base64", value=value))  # type: ignore
 
 
 class Data(UniversalRootModel):
@@ -53,6 +54,12 @@ class Data(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_Data.String, _Data.Base64]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         string: typing.Callable[[str], T_Result],
@@ -73,3 +80,6 @@ class _Data:
     class Base64(UniversalBaseModel):
         type: typing.Literal["base64"] = "base64"
         value: str
+
+
+update_forward_refs(Data)

@@ -8,7 +8,7 @@
         "endpointId": {
             "path": "/users",
             "method": "POST",
-            "identifierOverride": "endpoint_user.create"
+            "identifierOverride": "endpoint_userservice.create"
         },
         "snippetTemplate": {
             "clientInstantiation": {
@@ -24,7 +24,7 @@
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
-                "templateString": "client.user.create(\n\t$FERN_INPUT\n)",
+                "templateString": "client.userservice.create(\n\t$FERN_INPUT\n)",
                 "templateInputs": [
                     {
                         "type": "template",
@@ -152,7 +152,7 @@
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
-                    "templateString": "await client.user.create(\n\t$FERN_INPUT\n)",
+                    "templateString": "await client.userservice.create(\n\t$FERN_INPUT\n)",
                     "templateInputs": [
                         {
                             "type": "template",

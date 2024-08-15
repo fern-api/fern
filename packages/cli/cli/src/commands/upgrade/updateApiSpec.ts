@@ -1,4 +1,5 @@
 import { generatorsYml, getFernDirectory } from "@fern-api/configuration";
+import { isPlainObject } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Logger } from "@fern-api/logger";
 import { Project } from "@fern-api/project-loader";
@@ -64,13 +65,30 @@ export async function updateApiSpec({
                     if (generatorsYml.isRawProtobufAPIDefinitionSchema(api)) {
                         continue;
                     }
-                    if (typeof api !== "string" && api.origin != null) {
+                    if (isPlainObject(api) && "origin" in api && api.origin != null) {
                         cliContext.logger.info(`Origin found, fetching spec from ${api.origin}`);
                         await fetchAndWriteFile(
                             api.origin,
                             join(workspace.absoluteFilepath, RelativeFilePath.of(api.path)),
                             cliContext.logger
                         );
+                    } else if (isPlainObject(api)) {
+                        for (const [_, value] of Object.entries(api)) {
+                            if (
+                                isPlainObject(value) &&
+                                "origin" in value &&
+                                typeof value.origin === "string" &&
+                                "path" in value &&
+                                typeof value.path === "string"
+                            ) {
+                                cliContext.logger.info(`Origin found, fetching spec from ${value.origin}`);
+                                await fetchAndWriteFile(
+                                    value.origin,
+                                    join(workspace.absoluteFilepath, RelativeFilePath.of(value.path)),
+                                    cliContext.logger
+                                );
+                            }
+                        }
                     }
                 }
             } else if (generatorConfig[generatorsYml.ASYNC_API_LOCATION_KEY] != null) {

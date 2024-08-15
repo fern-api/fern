@@ -164,7 +164,7 @@ export class Writer {
         return this.allTypeClassReferences;
     }
 
-    public getAllNamespaceSegmentsAndTypes(): Set<string | ClassReference> {
+    public getAllNamespaceSegments(): Set<string> {
         return this.allNamespaceSegments;
     }
 

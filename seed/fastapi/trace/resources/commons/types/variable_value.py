@@ -26,51 +26,51 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return VariableValue(
                 root=_VariableValue.IntegerValue(type="integerValue", value=value)
-            )
+            )  # type: ignore
         else:
             return VariableValue(
                 __root__=_VariableValue.IntegerValue(type="integerValue", value=value)
-            )
+            )  # type: ignore
 
     def boolean_value(self, value: bool) -> VariableValue:
         if IS_PYDANTIC_V2:
             return VariableValue(
                 root=_VariableValue.BooleanValue(type="booleanValue", value=value)
-            )
+            )  # type: ignore
         else:
             return VariableValue(
                 __root__=_VariableValue.BooleanValue(type="booleanValue", value=value)
-            )
+            )  # type: ignore
 
     def double_value(self, value: float) -> VariableValue:
         if IS_PYDANTIC_V2:
             return VariableValue(
                 root=_VariableValue.DoubleValue(type="doubleValue", value=value)
-            )
+            )  # type: ignore
         else:
             return VariableValue(
                 __root__=_VariableValue.DoubleValue(type="doubleValue", value=value)
-            )
+            )  # type: ignore
 
     def string_value(self, value: str) -> VariableValue:
         if IS_PYDANTIC_V2:
             return VariableValue(
                 root=_VariableValue.StringValue(type="stringValue", value=value)
-            )
+            )  # type: ignore
         else:
             return VariableValue(
                 __root__=_VariableValue.StringValue(type="stringValue", value=value)
-            )
+            )  # type: ignore
 
     def char_value(self, value: str) -> VariableValue:
         if IS_PYDANTIC_V2:
             return VariableValue(
                 root=_VariableValue.CharValue(type="charValue", value=value)
-            )
+            )  # type: ignore
         else:
             return VariableValue(
                 __root__=_VariableValue.CharValue(type="charValue", value=value)
-            )
+            )  # type: ignore
 
     def map_value(
         self, value: resources_commons_types_map_value_MapValue
@@ -80,23 +80,23 @@ class _Factory:
                 root=_VariableValue.MapValue(
                     **value.dict(exclude_unset=True), type="mapValue"
                 )
-            )
+            )  # type: ignore
         else:
             return VariableValue(
                 __root__=_VariableValue.MapValue(
                     **value.dict(exclude_unset=True), type="mapValue"
                 )
-            )
+            )  # type: ignore
 
     def list_value(self, value: typing.List[VariableValue]) -> VariableValue:
         if IS_PYDANTIC_V2:
             return VariableValue(
                 root=_VariableValue.ListValue(type="listValue", value=value)
-            )
+            )  # type: ignore
         else:
             return VariableValue(
                 __root__=_VariableValue.ListValue(type="listValue", value=value)
-            )
+            )  # type: ignore
 
     def binary_tree_value(
         self, value: resources_commons_types_binary_tree_value_BinaryTreeValue
@@ -106,13 +106,13 @@ class _Factory:
                 root=_VariableValue.BinaryTreeValue(
                     **value.dict(exclude_unset=True), type="binaryTreeValue"
                 )
-            )
+            )  # type: ignore
         else:
             return VariableValue(
                 __root__=_VariableValue.BinaryTreeValue(
                     **value.dict(exclude_unset=True), type="binaryTreeValue"
                 )
-            )
+            )  # type: ignore
 
     def singly_linked_list_value(
         self,
@@ -123,13 +123,13 @@ class _Factory:
                 root=_VariableValue.SinglyLinkedListValue(
                     **value.dict(exclude_unset=True), type="singlyLinkedListValue"
                 )
-            )
+            )  # type: ignore
         else:
             return VariableValue(
                 __root__=_VariableValue.SinglyLinkedListValue(
                     **value.dict(exclude_unset=True), type="singlyLinkedListValue"
                 )
-            )
+            )  # type: ignore
 
     def doubly_linked_list_value(
         self,
@@ -140,19 +140,19 @@ class _Factory:
                 root=_VariableValue.DoublyLinkedListValue(
                     **value.dict(exclude_unset=True), type="doublyLinkedListValue"
                 )
-            )
+            )  # type: ignore
         else:
             return VariableValue(
                 __root__=_VariableValue.DoublyLinkedListValue(
                     **value.dict(exclude_unset=True), type="doublyLinkedListValue"
                 )
-            )
+            )  # type: ignore
 
     def null_value(self) -> VariableValue:
         if IS_PYDANTIC_V2:
-            return VariableValue(root=_VariableValue.NullValue(type="nullValue"))
+            return VariableValue(root=_VariableValue.NullValue(type="nullValue"))  # type: ignore
         else:
-            return VariableValue(__root__=_VariableValue.NullValue(type="nullValue"))
+            return VariableValue(__root__=_VariableValue.NullValue(type="nullValue"))  # type: ignore
 
 
 class VariableValue(UniversalRootModel):
@@ -226,6 +226,12 @@ class VariableValue(UniversalRootModel):
             _VariableValue.NullValue,
         ]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,

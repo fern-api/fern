@@ -17,6 +17,7 @@ export interface Spec {
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     source: Source;
+    namespace?: string;
     settings?: SpecImportSettings;
 }
 
@@ -107,7 +108,8 @@ export async function parse({
                     openApi: openApiDocument,
                     taskContext,
                     options: getParseOptions({ specSettings: spec.settings, overrides: optionOverrides }),
-                    source
+                    source,
+                    namespace: spec.namespace
                 });
                 ir = merge(ir, openapiIr);
             } else if (isOpenApiV2(openApiDocument)) {
@@ -115,7 +117,8 @@ export async function parse({
                     openApi: openApiDocument,
                     taskContext,
                     options: getParseOptions({ specSettings: spec.settings }),
-                    source
+                    source,
+                    namespace: spec.namespace
                 });
                 ir = merge(ir, openapiIr);
             }
@@ -131,7 +134,8 @@ export async function parse({
                 taskContext,
                 options: getParseOptions({ specSettings: spec.settings }),
                 source,
-                asyncApiOptions: getParseAsyncOptions({ specSettings: spec.settings })
+                asyncApiOptions: getParseAsyncOptions({ specSettings: spec.settings }),
+                namespace: spec.namespace
             });
             if (parsedAsyncAPI.channel != null) {
                 ir.channel.push(parsedAsyncAPI.channel);

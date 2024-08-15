@@ -8,6 +8,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -19,19 +20,19 @@ class _Factory:
                 root=_Exception.Generic(
                     **value.dict(exclude_unset=True), type="generic"
                 )
-            )
+            )  # type: ignore
         else:
             return Exception(
                 __root__=_Exception.Generic(
                     **value.dict(exclude_unset=True), type="generic"
                 )
-            )
+            )  # type: ignore
 
     def timeout(self) -> Exception:
         if IS_PYDANTIC_V2:
-            return Exception(root=_Exception.Timeout(type="timeout"))
+            return Exception(root=_Exception.Timeout(type="timeout"))  # type: ignore
         else:
-            return Exception(__root__=_Exception.Timeout(type="timeout"))
+            return Exception(__root__=_Exception.Timeout(type="timeout"))  # type: ignore
 
 
 class Exception(UniversalRootModel):
@@ -66,6 +67,12 @@ class Exception(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_Exception.Generic, _Exception.Timeout]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         generic: typing.Callable[[ExceptionInfo], T_Result],
@@ -88,3 +95,6 @@ class _Exception:
 
     class Timeout(UniversalBaseModel):
         type: typing.Literal["timeout"] = "timeout"
+
+
+update_forward_refs(Exception)

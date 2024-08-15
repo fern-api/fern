@@ -8,6 +8,7 @@ import typing
 import typing_extensions
 import pydantic
 from ...core.pydantic_utilities import UniversalBaseModel
+from ...core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -15,25 +16,25 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def integer(self, value: int) -> UnionWithBaseProperties:
         if IS_PYDANTIC_V2:
-            return UnionWithBaseProperties(root=_UnionWithBaseProperties.Integer(type="integer", value=value))
+            return UnionWithBaseProperties(root=_UnionWithBaseProperties.Integer(type="integer", value=value))  # type: ignore
         else:
-            return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.Integer(type="integer", value=value))
+            return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.Integer(type="integer", value=value))  # type: ignore
 
     def string(self, value: str) -> UnionWithBaseProperties:
         if IS_PYDANTIC_V2:
-            return UnionWithBaseProperties(root=_UnionWithBaseProperties.String(type="string", value=value))
+            return UnionWithBaseProperties(root=_UnionWithBaseProperties.String(type="string", value=value))  # type: ignore
         else:
-            return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.String(type="string", value=value))
+            return UnionWithBaseProperties(__root__=_UnionWithBaseProperties.String(type="string", value=value))  # type: ignore
 
     def foo(self, value: types_types_foo_Foo) -> UnionWithBaseProperties:
         if IS_PYDANTIC_V2:
             return UnionWithBaseProperties(
                 root=_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo")
-            )
+            )  # type: ignore
         else:
             return UnionWithBaseProperties(
                 __root__=_UnionWithBaseProperties.Foo(**value.dict(exclude_unset=True), type="foo")
-            )
+            )  # type: ignore
 
 
 class UnionWithBaseProperties(UniversalRootModel):
@@ -67,6 +68,12 @@ class UnionWithBaseProperties(UniversalRootModel):
             _UnionWithBaseProperties.Integer, _UnionWithBaseProperties.String, _UnionWithBaseProperties.Foo
         ]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,
@@ -118,3 +125,6 @@ class _UnionWithBaseProperties:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(UnionWithBaseProperties)

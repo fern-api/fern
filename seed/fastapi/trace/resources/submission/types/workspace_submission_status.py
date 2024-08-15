@@ -10,6 +10,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -19,31 +20,31 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return WorkspaceSubmissionStatus(
                 root=_WorkspaceSubmissionStatus.Stopped(type="stopped")
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionStatus(
                 __root__=_WorkspaceSubmissionStatus.Stopped(type="stopped")
-            )
+            )  # type: ignore
 
     def errored(self, value: ErrorInfo) -> WorkspaceSubmissionStatus:
         if IS_PYDANTIC_V2:
             return WorkspaceSubmissionStatus(
                 root=_WorkspaceSubmissionStatus.Errored(type="errored", value=value)
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionStatus(
                 __root__=_WorkspaceSubmissionStatus.Errored(type="errored", value=value)
-            )
+            )  # type: ignore
 
     def running(self, value: RunningSubmissionState) -> WorkspaceSubmissionStatus:
         if IS_PYDANTIC_V2:
             return WorkspaceSubmissionStatus(
                 root=_WorkspaceSubmissionStatus.Running(type="running", value=value)
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionStatus(
                 __root__=_WorkspaceSubmissionStatus.Running(type="running", value=value)
-            )
+            )  # type: ignore
 
     def ran(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionStatus:
         if IS_PYDANTIC_V2:
@@ -51,13 +52,13 @@ class _Factory:
                 root=_WorkspaceSubmissionStatus.Ran(
                     **value.dict(exclude_unset=True), type="ran"
                 )
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionStatus(
                 __root__=_WorkspaceSubmissionStatus.Ran(
                     **value.dict(exclude_unset=True), type="ran"
                 )
-            )
+            )  # type: ignore
 
     def traced(self, value: WorkspaceRunDetails) -> WorkspaceSubmissionStatus:
         if IS_PYDANTIC_V2:
@@ -65,13 +66,13 @@ class _Factory:
                 root=_WorkspaceSubmissionStatus.Traced(
                     **value.dict(exclude_unset=True), type="traced"
                 )
-            )
+            )  # type: ignore
         else:
             return WorkspaceSubmissionStatus(
                 __root__=_WorkspaceSubmissionStatus.Traced(
                     **value.dict(exclude_unset=True), type="traced"
                 )
-            )
+            )  # type: ignore
 
 
 class WorkspaceSubmissionStatus(UniversalRootModel):
@@ -122,6 +123,12 @@ class WorkspaceSubmissionStatus(UniversalRootModel):
         ]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         stopped: typing.Callable[[], T_Result],
@@ -168,3 +175,6 @@ class _WorkspaceSubmissionStatus:
 
     class Traced(WorkspaceRunDetails):
         type: typing.Literal["traced"] = "traced"
+
+
+update_forward_refs(WorkspaceSubmissionStatus)

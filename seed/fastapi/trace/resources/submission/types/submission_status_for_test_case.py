@@ -10,6 +10,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -21,25 +22,25 @@ class _Factory:
                 root=_SubmissionStatusForTestCase.Graded(
                     **value.dict(exclude_unset=True), type="graded"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionStatusForTestCase(
                 __root__=_SubmissionStatusForTestCase.Graded(
                     **value.dict(exclude_unset=True), type="graded"
                 )
-            )
+            )  # type: ignore
 
     def graded_v_2(self, value: TestCaseGrade) -> SubmissionStatusForTestCase:
         if IS_PYDANTIC_V2:
             return SubmissionStatusForTestCase(
                 root=_SubmissionStatusForTestCase.GradedV2(type="gradedV2", value=value)
-            )
+            )  # type: ignore
         else:
             return SubmissionStatusForTestCase(
                 __root__=_SubmissionStatusForTestCase.GradedV2(
                     type="gradedV2", value=value
                 )
-            )
+            )  # type: ignore
 
     def traced(self, value: TracedTestCase) -> SubmissionStatusForTestCase:
         if IS_PYDANTIC_V2:
@@ -47,13 +48,13 @@ class _Factory:
                 root=_SubmissionStatusForTestCase.Traced(
                     **value.dict(exclude_unset=True), type="traced"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionStatusForTestCase(
                 __root__=_SubmissionStatusForTestCase.Traced(
                     **value.dict(exclude_unset=True), type="traced"
                 )
-            )
+            )  # type: ignore
 
 
 class SubmissionStatusForTestCase(UniversalRootModel):
@@ -96,6 +97,12 @@ class SubmissionStatusForTestCase(UniversalRootModel):
         ]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         graded: typing.Callable[[TestCaseResultWithStdout], T_Result],
@@ -129,3 +136,6 @@ class _SubmissionStatusForTestCase:
 
     class Traced(TracedTestCase):
         type: typing.Literal["traced"] = "traced"
+
+
+update_forward_refs(SubmissionStatusForTestCase)

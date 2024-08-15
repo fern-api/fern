@@ -7,6 +7,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -16,21 +17,21 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return UnionWithPrimitive(
                 root=_UnionWithPrimitive.Integer(type="integer", value=value)
-            )
+            )  # type: ignore
         else:
             return UnionWithPrimitive(
                 __root__=_UnionWithPrimitive.Integer(type="integer", value=value)
-            )
+            )  # type: ignore
 
     def string(self, value: str) -> UnionWithPrimitive:
         if IS_PYDANTIC_V2:
             return UnionWithPrimitive(
                 root=_UnionWithPrimitive.String(type="string", value=value)
-            )
+            )  # type: ignore
         else:
             return UnionWithPrimitive(
                 __root__=_UnionWithPrimitive.String(type="string", value=value)
-            )
+            )  # type: ignore
 
 
 class UnionWithPrimitive(UniversalRootModel):
@@ -57,6 +58,12 @@ class UnionWithPrimitive(UniversalRootModel):
         ) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         integer: typing.Callable[[int], T_Result],
@@ -77,3 +84,6 @@ class _UnionWithPrimitive:
     class String(UniversalBaseModel):
         type: typing.Literal["string"] = "string"
         value: str
+
+
+update_forward_refs(UnionWithPrimitive)

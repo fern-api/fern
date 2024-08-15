@@ -6,6 +6,7 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -17,13 +18,13 @@ class _Factory:
                 root=_CreateProblemError.Generic(
                     **value.dict(exclude_unset=True), error_type="generic"
                 )
-            )
+            )  # type: ignore
         else:
             return CreateProblemError(
                 __root__=_CreateProblemError.Generic(
                     **value.dict(exclude_unset=True), error_type="generic"
                 )
-            )
+            )  # type: ignore
 
 
 class CreateProblemError(UniversalRootModel):
@@ -39,6 +40,12 @@ class CreateProblemError(UniversalRootModel):
 
         def get_as_union(self) -> typing.Union[_CreateProblemError.Generic]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self, generic: typing.Callable[[GenericCreateProblemError], T_Result]
@@ -57,3 +64,6 @@ class _CreateProblemError:
         error_type: typing.Literal["generic"] = pydantic.Field(
             alias="_type", default="generic"
         )
+
+
+update_forward_refs(CreateProblemError)

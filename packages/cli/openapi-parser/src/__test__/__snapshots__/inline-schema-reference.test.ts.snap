@@ -59,7 +59,7 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
             "description": null,
             "encoding": null,
             "generatedName": "GetExampleResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": [
               {
@@ -69,7 +69,7 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
                 "availability": null,
                 "description": null,
                 "generatedName": "NotFound",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "properties": [
                   {
@@ -83,14 +83,14 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
                       "availability": null,
                       "description": null,
                       "generatedName": "notFoundMessage",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
                         "availability": null,
                         "description": null,
                         "generatedName": "NotFoundMessage",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schema": {
                           "default": null,
@@ -144,7 +144,7 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
                 "availability": null,
                 "description": null,
                 "generatedName": "GetExampleResponseMessage",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "properties": [
                   {
@@ -158,14 +158,14 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
                       "availability": null,
                       "description": null,
                       "generatedName": "getExampleResponseMessageMessage",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
                         "availability": null,
                         "description": null,
                         "generatedName": "GetExampleResponseMessageMessage",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schema": {
                           "default": null,
@@ -226,7 +226,7 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
       "availability": null,
       "description": null,
       "generatedName": "Schema1",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -240,14 +240,14 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
             "availability": null,
             "description": null,
             "generatedName": "schema1Id",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "Schema1Id",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -273,14 +273,14 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
             "availability": null,
             "description": null,
             "generatedName": "schema1Name",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "Schema1Name",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -308,7 +308,7 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
       "availability": null,
       "description": null,
       "generatedName": "Schema2",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -322,14 +322,14 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
             "availability": null,
             "description": null,
             "generatedName": "schema2Email",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "Schema2Email",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -354,14 +354,14 @@ exports[`inline-schema-reference > inline-schema-reference > parse open api 1`] 
             "availability": null,
             "description": null,
             "generatedName": "schema2Age",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
               "availability": null,
               "description": null,
               "generatedName": "Schema2Age",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,

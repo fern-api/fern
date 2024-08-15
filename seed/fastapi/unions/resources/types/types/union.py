@@ -9,6 +9,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -16,15 +17,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def foo(self, value: resources_types_types_foo_Foo) -> Union:
         if IS_PYDANTIC_V2:
-            return Union(root=_Union.Foo(type="foo", foo=value))
+            return Union(root=_Union.Foo(type="foo", foo=value))  # type: ignore
         else:
-            return Union(__root__=_Union.Foo(type="foo", foo=value))
+            return Union(__root__=_Union.Foo(type="foo", foo=value))  # type: ignore
 
     def bar(self, value: resources_types_types_bar_Bar) -> Union:
         if IS_PYDANTIC_V2:
-            return Union(root=_Union.Bar(type="bar", bar=value))
+            return Union(root=_Union.Bar(type="bar", bar=value))  # type: ignore
         else:
-            return Union(__root__=_Union.Bar(type="bar", bar=value))
+            return Union(__root__=_Union.Bar(type="bar", bar=value))  # type: ignore
 
 
 class Union(UniversalRootModel):
@@ -49,6 +50,12 @@ class Union(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_Union.Foo, _Union.Bar]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         foo: typing.Callable[[resources_types_types_foo_Foo], T_Result],
@@ -69,3 +76,6 @@ class _Union:
     class Bar(UniversalBaseModel):
         type: typing.Literal["bar"] = "bar"
         bar: resources_types_types_bar_Bar
+
+
+update_forward_refs(Union)

@@ -33,6 +33,10 @@ tabs:
 
 css: ./assets/styles.css
 
+redirects: 
+  - source: /api-definition/fern/api-yml-reference
+    destination: /api-definition/fern/api-yml/overview
+
 navigation:
   - tab: home
     layout:
@@ -86,8 +90,19 @@ navigation:
             path: ./pages/api-definition/fern-definition/audiences.mdx
           - page: Availability
             path: ./pages/api-definition/fern-definition/availability.mdx
-          - page: api.yml reference
-            path: ./pages/api-definition/fern-definition/api-yml.mdx
+          - section: api.yml reference
+            slug: api-yml
+            contents: 
+              - page: Overview
+                path: ./pages/api-definition/fern-definition/api-yml/overview.mdx
+              - page: Authentication
+                path: ./pages/api-definition/fern-definition/api-yml/auth.mdx
+              - page: Environments
+                path: ./pages/api-definition/fern-definition/api-yml/environments.mdx
+              - page: Global headers
+                path: ./pages/api-definition/fern-definition/api-yml/global-configuration.mdx
+              - page: Errors
+                path: ./pages/api-definition/fern-definition/api-yml/errors.mdx
           - page: Packages
             path: ./pages/api-definition/fern-definition/packages.mdx
           - page: Comparison with OpenAPI
@@ -307,6 +322,12 @@ navigation:
             path: ./pages/docs/comparison/readme.mdx
       - section: Analytics
         contents:
+          - page: PostHog
+            path: ./pages/docs/analytics/posthog.mdx
+          - page: Intercom
+            path: ./pages/docs/analytics/intercom.mdx
+          - page: Fullstory
+            path: ./pages/docs/analytics/fullstory.mdx
           - page: Segment
             path: ./pages/docs/analytics/segment.mdx
   - tab: cli-api
@@ -335,18 +356,18 @@ navbar-links:
 
 logo:
   href: https://www.buildwithfern.com
-  light: ./images/logo-green.png
-  dark: ./images/logo-white.png
+  light: ./images/logo-primary.svg
+  dark: ./images/logo-white.svg
   height: 30
 # background-image:
 #   dark: ./images/background.svg
 colors:
   accentPrimary:
-    dark: "#ADFF8C"
-    light: "#209d63"
+    dark: "#1DA32B"
+    light: "#1DA32B"
   background:
-    dark: "#000000"
-    light: "#FFFFFF"
+    dark: "#081008"
+    light: "#FBFFFA"
 favicon: ./images/favicon.ico
 
 layout:

@@ -13,6 +13,7 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -27,13 +28,13 @@ class _Factory:
                 root=_InvalidRequestCause.SubmissionIdNotFound(
                     **value.dict(exclude_unset=True), type="submissionIdNotFound"
                 )
-            )
+            )  # type: ignore
         else:
             return InvalidRequestCause(
                 __root__=_InvalidRequestCause.SubmissionIdNotFound(
                     **value.dict(exclude_unset=True), type="submissionIdNotFound"
                 )
-            )
+            )  # type: ignore
 
     def custom_test_cases_unsupported(
         self,
@@ -44,13 +45,13 @@ class _Factory:
                 root=_InvalidRequestCause.CustomTestCasesUnsupported(
                     **value.dict(exclude_unset=True), type="customTestCasesUnsupported"
                 )
-            )
+            )  # type: ignore
         else:
             return InvalidRequestCause(
                 __root__=_InvalidRequestCause.CustomTestCasesUnsupported(
                     **value.dict(exclude_unset=True), type="customTestCasesUnsupported"
                 )
-            )
+            )  # type: ignore
 
     def unexpected_language(
         self, value: UnexpectedLanguageError
@@ -60,13 +61,13 @@ class _Factory:
                 root=_InvalidRequestCause.UnexpectedLanguage(
                     **value.dict(exclude_unset=True), type="unexpectedLanguage"
                 )
-            )
+            )  # type: ignore
         else:
             return InvalidRequestCause(
                 __root__=_InvalidRequestCause.UnexpectedLanguage(
                     **value.dict(exclude_unset=True), type="unexpectedLanguage"
                 )
-            )
+            )  # type: ignore
 
 
 class InvalidRequestCause(UniversalRootModel):
@@ -108,6 +109,12 @@ class InvalidRequestCause(UniversalRootModel):
             _InvalidRequestCause.UnexpectedLanguage,
         ]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,
@@ -159,3 +166,6 @@ class _InvalidRequestCause:
 
     class UnexpectedLanguage(UnexpectedLanguageError):
         type: typing.Literal["unexpectedLanguage"] = "unexpectedLanguage"
+
+
+update_forward_refs(InvalidRequestCause)

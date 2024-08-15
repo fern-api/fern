@@ -1,8 +1,8 @@
 import { assertNever } from "@fern-api/core-utils";
-import { APIV1Write } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 
-export function convertAuth(auth: Ir.auth.ApiAuth): APIV1Write.ApiAuth | undefined {
+export function convertAuth(auth: Ir.auth.ApiAuth): FdrCjsSdk.api.v1.register.ApiAuth | undefined {
     const scheme = auth.schemes[0];
     if (auth.schemes.length === 1 && scheme != null) {
         switch (scheme.type) {

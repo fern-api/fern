@@ -23,59 +23,59 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return DebugVariableValue(
                 root=_DebugVariableValue.IntegerValue(type="integerValue", value=value)
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.IntegerValue(
                     type="integerValue", value=value
                 )
-            )
+            )  # type: ignore
 
     def boolean_value(self, value: bool) -> DebugVariableValue:
         if IS_PYDANTIC_V2:
             return DebugVariableValue(
                 root=_DebugVariableValue.BooleanValue(type="booleanValue", value=value)
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.BooleanValue(
                     type="booleanValue", value=value
                 )
-            )
+            )  # type: ignore
 
     def double_value(self, value: float) -> DebugVariableValue:
         if IS_PYDANTIC_V2:
             return DebugVariableValue(
                 root=_DebugVariableValue.DoubleValue(type="doubleValue", value=value)
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.DoubleValue(
                     type="doubleValue", value=value
                 )
-            )
+            )  # type: ignore
 
     def string_value(self, value: str) -> DebugVariableValue:
         if IS_PYDANTIC_V2:
             return DebugVariableValue(
                 root=_DebugVariableValue.StringValue(type="stringValue", value=value)
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.StringValue(
                     type="stringValue", value=value
                 )
-            )
+            )  # type: ignore
 
     def char_value(self, value: str) -> DebugVariableValue:
         if IS_PYDANTIC_V2:
             return DebugVariableValue(
                 root=_DebugVariableValue.CharValue(type="charValue", value=value)
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.CharValue(type="charValue", value=value)
-            )
+            )  # type: ignore
 
     def map_value(self, value: DebugMapValue) -> DebugVariableValue:
         if IS_PYDANTIC_V2:
@@ -83,23 +83,23 @@ class _Factory:
                 root=_DebugVariableValue.MapValue(
                     **value.dict(exclude_unset=True), type="mapValue"
                 )
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.MapValue(
                     **value.dict(exclude_unset=True), type="mapValue"
                 )
-            )
+            )  # type: ignore
 
     def list_value(self, value: typing.List[DebugVariableValue]) -> DebugVariableValue:
         if IS_PYDANTIC_V2:
             return DebugVariableValue(
                 root=_DebugVariableValue.ListValue(type="listValue", value=value)
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.ListValue(type="listValue", value=value)
-            )
+            )  # type: ignore
 
     def binary_tree_node_value(
         self, value: BinaryTreeNodeAndTreeValue
@@ -109,13 +109,13 @@ class _Factory:
                 root=_DebugVariableValue.BinaryTreeNodeValue(
                     **value.dict(exclude_unset=True), type="binaryTreeNodeValue"
                 )
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.BinaryTreeNodeValue(
                     **value.dict(exclude_unset=True), type="binaryTreeNodeValue"
                 )
-            )
+            )  # type: ignore
 
     def singly_linked_list_node_value(
         self, value: SinglyLinkedListNodeAndListValue
@@ -125,13 +125,13 @@ class _Factory:
                 root=_DebugVariableValue.SinglyLinkedListNodeValue(
                     **value.dict(exclude_unset=True), type="singlyLinkedListNodeValue"
                 )
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.SinglyLinkedListNodeValue(
                     **value.dict(exclude_unset=True), type="singlyLinkedListNodeValue"
                 )
-            )
+            )  # type: ignore
 
     def doubly_linked_list_node_value(
         self, value: DoublyLinkedListNodeAndListValue
@@ -141,33 +141,33 @@ class _Factory:
                 root=_DebugVariableValue.DoublyLinkedListNodeValue(
                     **value.dict(exclude_unset=True), type="doublyLinkedListNodeValue"
                 )
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.DoublyLinkedListNodeValue(
                     **value.dict(exclude_unset=True), type="doublyLinkedListNodeValue"
                 )
-            )
+            )  # type: ignore
 
     def undefined_value(self) -> DebugVariableValue:
         if IS_PYDANTIC_V2:
             return DebugVariableValue(
                 root=_DebugVariableValue.UndefinedValue(type="undefinedValue")
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.UndefinedValue(type="undefinedValue")
-            )
+            )  # type: ignore
 
     def null_value(self) -> DebugVariableValue:
         if IS_PYDANTIC_V2:
             return DebugVariableValue(
                 root=_DebugVariableValue.NullValue(type="nullValue")
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.NullValue(type="nullValue")
-            )
+            )  # type: ignore
 
     def generic_value(
         self, value: resources_commons_types_generic_value_GenericValue
@@ -177,13 +177,13 @@ class _Factory:
                 root=_DebugVariableValue.GenericValue(
                     **value.dict(exclude_unset=True), type="genericValue"
                 )
-            )
+            )  # type: ignore
         else:
             return DebugVariableValue(
                 __root__=_DebugVariableValue.GenericValue(
                     **value.dict(exclude_unset=True), type="genericValue"
                 )
-            )
+            )  # type: ignore
 
 
 class DebugVariableValue(UniversalRootModel):
@@ -265,6 +265,12 @@ class DebugVariableValue(UniversalRootModel):
             _DebugVariableValue.GenericValue,
         ]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,

@@ -117,7 +117,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
       "default": null,
       "description": null,
       "generatedName": "DocumentIdSeparators",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "source": {
         "file": "non-alphanumeric-characters/openapi.yml",
@@ -199,7 +199,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
       "availability": null,
       "description": null,
       "generatedName": "Settings",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
@@ -213,7 +213,7 @@ exports[`non alphanumeric characters > non-alphanumeric-characters > parse open 
             "availability": null,
             "description": null,
             "generatedName": "settingsSeparator",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {

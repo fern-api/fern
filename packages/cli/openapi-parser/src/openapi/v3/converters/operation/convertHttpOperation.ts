@@ -54,10 +54,12 @@ export function convertHttpOperation({
                       document: context.document,
                       taskContext: context.taskContext,
                       options: context.options,
-                      source: context.source
+                      source: context.source,
+                      namespace: context.namespace
                   }),
                   requestBreadcrumbs,
-                  source
+                  source,
+                  namespace: context.namespace
               })
             : undefined;
 
@@ -74,7 +76,8 @@ export function convertHttpOperation({
             document,
             context,
             requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
-            source
+            source,
+            namespace: context.namespace
         });
     } else if (operation.requestBody != null) {
         convertedRequest = convertRequest({
@@ -82,7 +85,8 @@ export function convertHttpOperation({
             document,
             context,
             requestBreadcrumbs: [...requestBreadcrumbs],
-            source
+            source,
+            namespace: context.namespace
         });
     }
 
@@ -100,7 +104,6 @@ export function convertHttpOperation({
 
     const availability = getFernAvailability(operation);
     const examples = getExamplesFromExtension(operationContext, operation, context);
-
     return {
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
@@ -110,7 +113,7 @@ export function convertHttpOperation({
             operation.operationId != null && suffix != null
                 ? operation.operationId + "_" + suffix
                 : operation.operationId,
-        tags: operation.tags ?? [],
+        tags: context.resolveTags(operation.tags),
         sdkName: sdkMethodName,
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,

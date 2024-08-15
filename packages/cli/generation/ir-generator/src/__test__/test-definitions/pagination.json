@@ -11156,52 +11156,7 @@
                             },
                             "propertyPath": null
                         },
-                        "hasNextPage": {
-                            "property": {
-                                "name": {
-                                    "name": {
-                                        "originalName": "limit",
-                                        "camelCase": {
-                                            "unsafeName": "limit",
-                                            "safeName": "limit"
-                                        },
-                                        "snakeCase": {
-                                            "unsafeName": "limit",
-                                            "safeName": "limit"
-                                        },
-                                        "screamingSnakeCase": {
-                                            "unsafeName": "LIMIT",
-                                            "safeName": "LIMIT"
-                                        },
-                                        "pascalCase": {
-                                            "unsafeName": "Limit",
-                                            "safeName": "Limit"
-                                        }
-                                    },
-                                    "wireValue": "limit"
-                                },
-                                "valueType": {
-                                    "_type": "container",
-                                    "container": {
-                                        "_type": "optional",
-                                        "optional": {
-                                            "_type": "primitive",
-                                            "primitive": {
-                                                "v1": "INTEGER",
-                                                "v2": {
-                                                    "type": "integer",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
-                                            }
-                                        }
-                                    }
-                                },
-                                "availability": null,
-                                "docs": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
-                            },
-                            "propertyPath": null
-                        }
+                        "hasNextPage": null
                     },
                     "availability": null,
                     "docs": null
@@ -12901,28 +12856,29 @@
                             "propertyPath": null
                         },
                         "hasNextPage": {
+                            "propertyPath": [],
                             "property": {
                                 "name": {
                                     "name": {
-                                        "originalName": "limit",
+                                        "originalName": "hasNextPage",
                                         "camelCase": {
-                                            "unsafeName": "limit",
-                                            "safeName": "limit"
+                                            "unsafeName": "hasNextPage",
+                                            "safeName": "hasNextPage"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "limit",
-                                            "safeName": "limit"
+                                            "unsafeName": "has_next_page",
+                                            "safeName": "has_next_page"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "LIMIT",
-                                            "safeName": "LIMIT"
+                                            "unsafeName": "HAS_NEXT_PAGE",
+                                            "safeName": "HAS_NEXT_PAGE"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "Limit",
-                                            "safeName": "Limit"
+                                            "unsafeName": "HasNextPage",
+                                            "safeName": "HasNextPage"
                                         }
                                     },
-                                    "wireValue": "limit"
+                                    "wireValue": "hasNextPage"
                                 },
                                 "valueType": {
                                     "_type": "container",
@@ -12931,20 +12887,15 @@
                                         "optional": {
                                             "_type": "primitive",
                                             "primitive": {
-                                                "v1": "INTEGER",
-                                                "v2": {
-                                                    "type": "integer",
-                                                    "default": null,
-                                                    "validation": null
-                                                }
+                                                "v1": "BOOLEAN",
+                                                "v2": null
                                             }
                                         }
                                     }
                                 },
                                 "availability": null,
-                                "docs": "The maxiumum number of elements to return.\nThis is also used as the step size in this\npaginated endpoint."
-                            },
-                            "propertyPath": null
+                                "docs": null
+                            }
                         }
                     },
                     "availability": null,

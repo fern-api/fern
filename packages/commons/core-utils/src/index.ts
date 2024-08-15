@@ -14,8 +14,10 @@ export { visitObject, type ObjectPropertiesVisitor } from "./ObjectPropertiesVis
 export { entries, type Entries } from "./objects/entries";
 export { isPlainObject } from "./objects/isPlainObject";
 export { keys } from "./objects/keys";
+export { mapValues } from "./objects/mapValues";
 export { values, type Values } from "./objects/values";
 export { PLATFORM, type Platform } from "./platform";
+export { replaceEnvVariables } from "./replaceEnvVars";
 export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
 export type { WithoutQuestionMarks } from "./withoutQuestionMarks";

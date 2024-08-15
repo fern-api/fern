@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using Grpc.Net.Client;
 
 #nullable enable
 
@@ -26,4 +27,9 @@ public partial class ClientOptions
     /// The timeout for the request.
     /// </summary>
     public TimeSpan Timeout { get; init; } = TimeSpan.FromSeconds(30);
+
+    /// <summary>
+    /// The options used for gRPC client endpoints.
+    /// </summary>
+    public GrpcChannelOptions? GrpcOptions { get; init; }
 }

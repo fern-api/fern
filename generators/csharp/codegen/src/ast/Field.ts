@@ -34,6 +34,8 @@ export declare namespace Field {
         jsonPropertyName?: string;
         /* If true, we will consider setting the field to required based on its type. If false, we will not. */
         useRequired?: boolean;
+        /* If true, the default initializer (if any) is not included. */
+        skipDefaultInitializer?: boolean;
     }
 }
 
@@ -51,6 +53,7 @@ export class Field extends AstNode {
     private jsonPropertyName: string | undefined;
     private static_: boolean | undefined;
     private useRequired: boolean;
+    private skipDefaultInitializer: boolean;
 
     constructor({
         name,
@@ -65,7 +68,8 @@ export class Field extends AstNode {
         summary,
         jsonPropertyName,
         static_,
-        useRequired
+        useRequired,
+        skipDefaultInitializer
     }: Field.Args) {
         super();
         this.name = name;
@@ -81,6 +85,7 @@ export class Field extends AstNode {
         this.jsonPropertyName = jsonPropertyName;
         this.static_ = static_;
         this.useRequired = useRequired ?? false;
+        this.skipDefaultInitializer = skipDefaultInitializer ?? false;
 
         if (this.jsonPropertyName != null) {
             this.annotations = [
@@ -152,7 +157,7 @@ export class Field extends AstNode {
             }
             this.initializer.write(writer);
             writer.writeLine(";");
-        } else if (!isOptional && isCollection) {
+        } else if (!this.skipDefaultInitializer && !isOptional && isCollection) {
             this.type.writeEmptyCollectionInitializer(writer);
         } else if (!this.get && !this.init) {
             writer.writeLine(";");

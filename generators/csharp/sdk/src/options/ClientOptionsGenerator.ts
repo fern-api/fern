@@ -31,6 +31,9 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
+        if (this.context.hasGrpcEndpoints()) {
+            class_.addField(this.getGrpcOptionsField());
+        }
         return new CSharpFile({
             clazz: class_,
             directory: this.context.getPublicCoreDirectory(),
@@ -131,6 +134,17 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
                           writer.write(`.${defaultEnvironmentName}`);
                       })
                     : csharp.codeblock('""') // TODO: remove this logic since it sets url to ""
+        });
+    }
+
+    private getGrpcOptionsField(): csharp.Field {
+        return csharp.field({
+            access: "public",
+            name: this.context.getGrpcChannelOptionsFieldName(),
+            get: true,
+            init: true,
+            type: csharp.Type.optional(csharp.Type.reference(this.context.getGrpcChannelOptionsClassReference())),
+            summary: "The options used for gRPC client endpoints."
         });
     }
 }

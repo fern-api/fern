@@ -5,6 +5,7 @@ import typing
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ....core.pydantic_utilities import UniversalRootModel
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -14,11 +15,11 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return UnionWithLiteral(
                 root=_UnionWithLiteral.Fern(type="fern", value=value)
-            )
+            )  # type: ignore
         else:
             return UnionWithLiteral(
                 __root__=_UnionWithLiteral.Fern(type="fern", value=value)
-            )
+            )  # type: ignore
 
 
 class UnionWithLiteral(UniversalRootModel):
@@ -35,6 +36,12 @@ class UnionWithLiteral(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_UnionWithLiteral.Fern]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self, fern: typing.Callable[[typing.Literal["fern"]], T_Result]
     ) -> T_Result:
@@ -47,3 +54,6 @@ class _UnionWithLiteral:
     class Fern(UniversalBaseModel):
         type: typing.Literal["fern"] = "fern"
         value: typing.Literal["fern"]
+
+
+update_forward_refs(UnionWithLiteral)

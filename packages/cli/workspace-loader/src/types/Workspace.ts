@@ -23,6 +23,7 @@ export interface OpenAPISpec {
     absoluteFilepath: AbsoluteFilePath;
     absoluteFilepathToOverrides: AbsoluteFilePath | undefined;
     source: Source;
+    namespace?: string;
     settings?: SpecImportSettings;
 }
 

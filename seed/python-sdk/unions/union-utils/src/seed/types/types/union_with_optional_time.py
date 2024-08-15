@@ -8,6 +8,7 @@ from ...core.pydantic_utilities import UniversalRootModel
 import typing_extensions
 import pydantic
 from ...core.pydantic_utilities import UniversalBaseModel
+from ...core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -15,15 +16,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def date(self, value: typing.Optional[dt.date]) -> UnionWithOptionalTime:
         if IS_PYDANTIC_V2:
-            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Date(type="date", value=value))
+            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Date(type="date", value=value))  # type: ignore
         else:
-            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Date(type="date", value=value))
+            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Date(type="date", value=value))  # type: ignore
 
     def dateimte(self, value: typing.Optional[dt.datetime]) -> UnionWithOptionalTime:
         if IS_PYDANTIC_V2:
-            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))
+            return UnionWithOptionalTime(root=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))  # type: ignore
         else:
-            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))
+            return UnionWithOptionalTime(__root__=_UnionWithOptionalTime.Dateimte(type="dateimte", value=value))  # type: ignore
 
 
 class UnionWithOptionalTime(UniversalRootModel):
@@ -45,6 +46,12 @@ class UnionWithOptionalTime(UniversalRootModel):
 
         def get_as_union(self) -> typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Dateimte]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,
@@ -82,3 +89,6 @@ class _UnionWithOptionalTime:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(UnionWithOptionalTime)

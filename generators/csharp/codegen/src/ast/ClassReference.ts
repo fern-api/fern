@@ -100,7 +100,7 @@ export class ClassReference extends AstNode {
     }
 
     private potentialConflictWithNamespaceSegment(writer: Writer) {
-        return writer.getAllNamespaceSegmentsAndTypes().has(this.name);
+        return writer.getAllNamespaceSegments().has(this.name);
     }
 
     private potentialConflictWithGeneratedType(writer: Writer) {

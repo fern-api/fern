@@ -7,6 +7,7 @@ import typing
 import typing_extensions
 import pydantic
 from ...core.pydantic_utilities import UniversalBaseModel
+from ...core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -14,15 +15,15 @@ T_Result = typing.TypeVar("T_Result")
 class _Factory:
     def integer(self, value: int) -> UnionWithPrimitive:
         if IS_PYDANTIC_V2:
-            return UnionWithPrimitive(root=_UnionWithPrimitive.Integer(type="integer", value=value))
+            return UnionWithPrimitive(root=_UnionWithPrimitive.Integer(type="integer", value=value))  # type: ignore
         else:
-            return UnionWithPrimitive(__root__=_UnionWithPrimitive.Integer(type="integer", value=value))
+            return UnionWithPrimitive(__root__=_UnionWithPrimitive.Integer(type="integer", value=value))  # type: ignore
 
     def string(self, value: str) -> UnionWithPrimitive:
         if IS_PYDANTIC_V2:
-            return UnionWithPrimitive(root=_UnionWithPrimitive.String(type="string", value=value))
+            return UnionWithPrimitive(root=_UnionWithPrimitive.String(type="string", value=value))  # type: ignore
         else:
-            return UnionWithPrimitive(__root__=_UnionWithPrimitive.String(type="string", value=value))
+            return UnionWithPrimitive(__root__=_UnionWithPrimitive.String(type="string", value=value))  # type: ignore
 
 
 class UnionWithPrimitive(UniversalRootModel):
@@ -42,6 +43,12 @@ class UnionWithPrimitive(UniversalRootModel):
 
         def get_as_union(self) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(self, integer: typing.Callable[[int], T_Result], string: typing.Callable[[str], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
@@ -75,3 +82,6 @@ class _UnionWithPrimitive:
             class Config:
                 frozen = True
                 smart_union = True
+
+
+update_forward_refs(UnionWithPrimitive)

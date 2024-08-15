@@ -15,6 +15,7 @@ from ....core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -28,13 +29,13 @@ class _Factory:
                 root=_ErrorInfo.CompileError(
                     **value.dict(exclude_unset=True), type="compileError"
                 )
-            )
+            )  # type: ignore
         else:
             return ErrorInfo(
                 __root__=_ErrorInfo.CompileError(
                     **value.dict(exclude_unset=True), type="compileError"
                 )
-            )
+            )  # type: ignore
 
     def runtime_error(
         self, value: resources_submission_types_runtime_error_RuntimeError
@@ -44,13 +45,13 @@ class _Factory:
                 root=_ErrorInfo.RuntimeError(
                     **value.dict(exclude_unset=True), type="runtimeError"
                 )
-            )
+            )  # type: ignore
         else:
             return ErrorInfo(
                 __root__=_ErrorInfo.RuntimeError(
                     **value.dict(exclude_unset=True), type="runtimeError"
                 )
-            )
+            )  # type: ignore
 
     def internal_error(
         self, value: resources_submission_types_internal_error_InternalError
@@ -60,13 +61,13 @@ class _Factory:
                 root=_ErrorInfo.InternalError(
                     **value.dict(exclude_unset=True), type="internalError"
                 )
-            )
+            )  # type: ignore
         else:
             return ErrorInfo(
                 __root__=_ErrorInfo.InternalError(
                     **value.dict(exclude_unset=True), type="internalError"
                 )
-            )
+            )  # type: ignore
 
 
 class ErrorInfo(UniversalRootModel):
@@ -104,6 +105,12 @@ class ErrorInfo(UniversalRootModel):
             _ErrorInfo.CompileError, _ErrorInfo.RuntimeError, _ErrorInfo.InternalError
         ]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,
@@ -147,3 +154,6 @@ class _ErrorInfo:
 
     class InternalError(resources_submission_types_internal_error_InternalError):
         type: typing.Literal["internalError"] = "internalError"
+
+
+update_forward_refs(ErrorInfo)

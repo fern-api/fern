@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.2] - 2024-08-14
+
+- Improvement: `.dict` performance is increased, consolidating to a single call to Pydantic's `.dict` instead of 2 in attempts to remove unset optional values.
+
+## [1.4.1] - 2024-08-13
+
+- Fix: Unions with utils now update forward refs again
+
 ## [1.4.0] - 2024-08-06
 
 - Improvement: expose `package_name` configuration option for pydantic models. This field controls the package from which users will import your client, for example, the following config would allow users to use: `from my_custom_package import Client`

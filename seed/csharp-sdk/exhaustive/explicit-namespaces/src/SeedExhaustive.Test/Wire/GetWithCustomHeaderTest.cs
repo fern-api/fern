@@ -1,5 +1,4 @@
 using NUnit.Framework;
-using SeedExhaustive.ReqWithHeaders;
 using SeedExhaustive.Test.Wire;
 
 #nullable enable
@@ -31,7 +30,11 @@ public class GetWithCustomHeaderTest : BaseWireTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.ReqWithHeaders.GetWithCustomHeaderAsync(
-                    new ReqWithHeaders { XTestEndpointHeader = "string", Body = "string" },
+                    new ReqWithHeaders.ReqWithHeaders
+                    {
+                        XTestEndpointHeader = "string",
+                        Body = "string"
+                    },
                     RequestOptions
                 )
         );

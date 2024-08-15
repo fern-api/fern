@@ -41,7 +41,7 @@ export function convertResponse({
     if (responses == null) {
         return { value: undefined, errors: {} };
     }
-    const errors = markErrorSchemas({ responses, context, source });
+    const errors = markErrorSchemas({ responses, context, source, namespace: context.namespace });
 
     let successStatusCodePresent = false;
     let convertedResponse: FernOpenapiIr.ResponseWithExample | undefined = undefined;
@@ -58,7 +58,8 @@ export function convertResponse({
                 context,
                 responseBreadcrumbs,
                 streamFormat,
-                source
+                source,
+                namespace: context.namespace
             });
         }
     }
@@ -71,7 +72,8 @@ export function convertResponse({
             context,
             responseBreadcrumbs,
             streamFormat,
-            source
+            source,
+            namespace: context.namespace
         });
     }
 
@@ -112,7 +114,8 @@ function convertResolvedResponse({
     response,
     context,
     responseBreadcrumbs,
-    source
+    source,
+    namespace
 }: {
     operationContext: OperationContext;
     streamFormat: "sse" | "json" | undefined;
@@ -120,6 +123,7 @@ function convertResolvedResponse({
     context: AbstractOpenAPIV3ParserContext;
     responseBreadcrumbs: string[];
     source: Source;
+    namespace: string | undefined;
 }): ResponseWithExample | undefined {
     const resolvedResponse = isReferenceObject(response) ? context.resolveResponseReference(response) : response;
 
@@ -147,7 +151,14 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         schema: convertSchemaWithExampleToSchema(
-                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source)
+                            convertSchema(
+                                jsonMediaObject.schema,
+                                false,
+                                context,
+                                responseBreadcrumbs,
+                                source,
+                                namespace
+                            )
                         ),
                         source
                     });
@@ -156,7 +167,14 @@ function convertResolvedResponse({
                         description: resolvedResponse.description,
                         responseProperty: undefined,
                         schema: convertSchemaWithExampleToSchema(
-                            convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source)
+                            convertSchema(
+                                jsonMediaObject.schema,
+                                false,
+                                context,
+                                responseBreadcrumbs,
+                                source,
+                                namespace
+                            )
                         ),
                         source
                     });
@@ -164,7 +182,7 @@ function convertResolvedResponse({
         }
         return ResponseWithExample.json({
             description: resolvedResponse.description,
-            schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source),
+            schema: convertSchema(jsonMediaObject.schema, false, context, responseBreadcrumbs, source, namespace),
             responseProperty: getExtension<string>(operationContext.operation, FernOpenAPIExtension.RESPONSE_PROPERTY),
             fullExamples: jsonMediaObject.examples,
             source
@@ -208,11 +226,13 @@ function convertResolvedResponse({
 function markErrorSchemas({
     responses,
     context,
-    source
+    source,
+    namespace
 }: {
     responses: OpenAPIV3.ResponsesObject;
     context: AbstractOpenAPIV3ParserContext;
     source: Source;
+    namespace: string | undefined;
 }): Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> {
     const errors: Record<FernOpenapiIr.StatusCode, FernOpenapiIr.HttpErrorWithExample> = {};
     for (const [statusCode, response] of Object.entries(responses)) {
@@ -236,7 +256,7 @@ function markErrorSchemas({
             nameOverride: undefined,
             generatedName: errorName,
             description: resolvedResponse.description,
-            schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, "Body"], source),
+            schema: convertSchema(mediaObject?.schema ?? {}, false, context, [errorName, "Body"], source, namespace),
             fullExamples: mediaObject?.examples,
             source
         };

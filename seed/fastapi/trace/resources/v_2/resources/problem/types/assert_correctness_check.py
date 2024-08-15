@@ -10,6 +10,7 @@ from ......core.pydantic_utilities import UniversalRootModel
 import typing
 import typing_extensions
 import pydantic
+from ......core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -23,13 +24,13 @@ class _Factory:
                 root=_AssertCorrectnessCheck.DeepEquality(
                     **value.dict(exclude_unset=True), type="deepEquality"
                 )
-            )
+            )  # type: ignore
         else:
             return AssertCorrectnessCheck(
                 __root__=_AssertCorrectnessCheck.DeepEquality(
                     **value.dict(exclude_unset=True), type="deepEquality"
                 )
-            )
+            )  # type: ignore
 
     def custom(
         self, value: VoidFunctionDefinitionThatTakesActualResult
@@ -39,13 +40,13 @@ class _Factory:
                 root=_AssertCorrectnessCheck.Custom(
                     **value.dict(exclude_unset=True), type="custom"
                 )
-            )
+            )  # type: ignore
         else:
             return AssertCorrectnessCheck(
                 __root__=_AssertCorrectnessCheck.Custom(
                     **value.dict(exclude_unset=True), type="custom"
                 )
-            )
+            )  # type: ignore
 
 
 class AssertCorrectnessCheck(UniversalRootModel):
@@ -80,6 +81,12 @@ class AssertCorrectnessCheck(UniversalRootModel):
         ]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         deep_equality: typing.Callable[[DeepEqualityCorrectnessCheck], T_Result],
@@ -108,3 +115,6 @@ class _AssertCorrectnessCheck:
 
     class Custom(VoidFunctionDefinitionThatTakesActualResult):
         type: typing.Literal["custom"] = "custom"
+
+
+update_forward_refs(AssertCorrectnessCheck)

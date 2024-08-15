@@ -162,6 +162,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
             # No reason to have model config overrides on the base model, but
             # also Pydantic V2's RootModel doesn't allow for a lot of the configuration.
             include_model_config=False,
+            force_update_forward_refs=True,
         ) as external_pydantic_model:
             external_pydantic_model.add_class_var_unsafe(
                 name="factory",
@@ -298,6 +299,25 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         for type_id in forward_refed_types:
                             external_pydantic_model.add_ghost_reference(type_id)
 
+            def get_dict_method(writer: AST.NodeWriter) -> None:
+                writer.write_line("if IS_PYDANTIC_V2:")
+                with writer.indent():
+                    writer.write_line("return self.root.dict(**kwargs)")
+                writer.write_line("else:")
+                with writer.indent():
+                    writer.write_line("return self.__root__.dict(**kwargs)")
+
+            external_pydantic_model.add_method_unsafe(
+                declaration=AST.FunctionDeclaration(
+                    name="dict",
+                    signature=AST.FunctionSignature(
+                        parameters=[AST.FunctionParameter(name="**kwargs", type_hint=AST.TypeHint.any())],
+                        return_type=AST.TypeHint.dict(AST.TypeHint.str_(), AST.TypeHint.any()),
+                    ),
+                    body=AST.CodeWriter(get_dict_method),
+                )
+            )
+
             external_pydantic_model.add_method_unsafe(
                 get_visit_method(
                     items=[
@@ -391,6 +411,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
                     writer.write("return ")
                     writer.write_node(sub_union_instantiation)
+                    writer.write("  # type: ignore")
 
                 return AST.CodeWriter(write_condition_for_root)
 

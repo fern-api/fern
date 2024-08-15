@@ -4,10 +4,10 @@
             "id": {
                 "path": "/users",
                 "method": "POST",
-                "identifierOverride": "endpoint_user.create"
+                "identifierOverride": "endpoint_userservice.create"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.user.create",
+                "client": "require \"fern_grpc_proto\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.userservice.create",
                 "type": "ruby"
             }
         },
@@ -15,10 +15,10 @@
             "id": {
                 "path": "/users",
                 "method": "POST",
-                "identifierOverride": "endpoint_user.create"
+                "identifierOverride": "endpoint_userservice.create"
             },
             "snippet": {
-                "client": "require \"fern_grpc_proto\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.user.create",
+                "client": "require \"fern_grpc_proto\"\n\napi = SeedApiClient::Client.new(base_url: \"https://api.example.com\")\napi.userservice.create",
                 "type": "ruby"
             }
         }

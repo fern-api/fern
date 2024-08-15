@@ -13,6 +13,7 @@ import typing
 import typing_extensions
 import pydantic
 from ....core.pydantic_utilities import UniversalBaseModel
+from ....core.pydantic_utilities import update_forward_refs
 
 T_Result = typing.TypeVar("T_Result")
 
@@ -22,11 +23,11 @@ class _Factory:
         if IS_PYDANTIC_V2:
             return SubmissionResponse(
                 root=_SubmissionResponse.ServerInitialized(type="serverInitialized")
-            )
+            )  # type: ignore
         else:
             return SubmissionResponse(
                 __root__=_SubmissionResponse.ServerInitialized(type="serverInitialized")
-            )
+            )  # type: ignore
 
     def problem_initialized(self, value: ProblemId) -> SubmissionResponse:
         if IS_PYDANTIC_V2:
@@ -34,13 +35,13 @@ class _Factory:
                 root=_SubmissionResponse.ProblemInitialized(
                     type="problemInitialized", value=value
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionResponse(
                 __root__=_SubmissionResponse.ProblemInitialized(
                     type="problemInitialized", value=value
                 )
-            )
+            )  # type: ignore
 
     def workspace_initialized(self) -> SubmissionResponse:
         if IS_PYDANTIC_V2:
@@ -48,13 +49,13 @@ class _Factory:
                 root=_SubmissionResponse.WorkspaceInitialized(
                     type="workspaceInitialized"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionResponse(
                 __root__=_SubmissionResponse.WorkspaceInitialized(
                     type="workspaceInitialized"
                 )
-            )
+            )  # type: ignore
 
     def server_errored(self, value: ExceptionInfo) -> SubmissionResponse:
         if IS_PYDANTIC_V2:
@@ -62,13 +63,13 @@ class _Factory:
                 root=_SubmissionResponse.ServerErrored(
                     **value.dict(exclude_unset=True), type="serverErrored"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionResponse(
                 __root__=_SubmissionResponse.ServerErrored(
                     **value.dict(exclude_unset=True), type="serverErrored"
                 )
-            )
+            )  # type: ignore
 
     def code_execution_update(
         self,
@@ -79,13 +80,13 @@ class _Factory:
                 root=_SubmissionResponse.CodeExecutionUpdate(
                     type="codeExecutionUpdate", value=value
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionResponse(
                 __root__=_SubmissionResponse.CodeExecutionUpdate(
                     type="codeExecutionUpdate", value=value
                 )
-            )
+            )  # type: ignore
 
     def terminated(self, value: TerminatedResponse) -> SubmissionResponse:
         if IS_PYDANTIC_V2:
@@ -93,13 +94,13 @@ class _Factory:
                 root=_SubmissionResponse.Terminated(
                     **value.dict(exclude_unset=True), type="terminated"
                 )
-            )
+            )  # type: ignore
         else:
             return SubmissionResponse(
                 __root__=_SubmissionResponse.Terminated(
                     **value.dict(exclude_unset=True), type="terminated"
                 )
-            )
+            )  # type: ignore
 
 
 class SubmissionResponse(UniversalRootModel):
@@ -153,6 +154,12 @@ class SubmissionResponse(UniversalRootModel):
             _SubmissionResponse.Terminated,
         ]:
             return self.__root__
+
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
 
     def visit(
         self,
@@ -209,3 +216,6 @@ class _SubmissionResponse:
 
     class Terminated(TerminatedResponse):
         type: typing.Literal["terminated"] = "terminated"
+
+
+update_forward_refs(SubmissionResponse)
