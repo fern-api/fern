@@ -3,6 +3,7 @@ import { AccentColorContrastRule } from "./rules/accent-color-contrast";
 import { FilepathsExistRule } from "./rules/filepaths-exist";
 import { OnlyVersionedNavigation } from "./rules/only-versioned-navigation";
 import { PlaygroundEnvironmentsExistRule } from "./rules/playground-environments-exist";
+import { ValidDocsEndpoints } from "./rules/valid-docs-endpoints/valid-docs-endpoints";
 import { ValidFileTypes } from "./rules/valid-file-types";
 import { ValidMarkdownRule } from "./rules/valid-markdown";
 import { ValidMarkdownLinks } from "./rules/valid-markdown-link";
@@ -17,6 +18,7 @@ export function getAllRules(): Rule[] {
         AccentColorContrastRule,
         ValidMarkdownLinks,
         ValidFileTypes,
-        PlaygroundEnvironmentsExistRule
+        PlaygroundEnvironmentsExistRule,
+        ValidDocsEndpoints
     ];
 }
