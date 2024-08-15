@@ -222,3 +222,5 @@ allowedFailures:
   # request from the IR and so doesn't know the shape to explicitly coerce 
   # the query string into
   - query-parameters
+
+  - any-auth

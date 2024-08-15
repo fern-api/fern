@@ -44,6 +44,12 @@ class UnionWithPrimitive(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_UnionWithPrimitive.Integer, _UnionWithPrimitive.String]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(self, integer: typing.Callable[[int], T_Result], string: typing.Callable[[str], T_Result]) -> T_Result:
         unioned_value = self.get_as_union()
         if unioned_value.type == "integer":

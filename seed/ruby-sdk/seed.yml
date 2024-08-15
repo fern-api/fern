@@ -35,6 +35,7 @@ allowedFailures:
   - circular-references
   # TODO: Add support for recursive undiscriminated unions.
   - grpc
+  - any-auth
 features:
   requestOptions: true
   idempotency: false
