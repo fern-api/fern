@@ -37,6 +37,14 @@ export abstract class AbstractAsyncAPIV2ParserContext implements SchemaParserCon
         this.namespace = namespace;
     }
 
+    public resolveTags(operationTags: string[] | undefined, fallback?: string): string[] {
+        if (this.namespace == null && operationTags == null && fallback != null) {
+            return [fallback];
+        }
+        const tags = this.namespace ? [this.namespace] : [];
+        return tags.concat(operationTags ?? []);
+    }
+
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
         if (
             this.document.components == null ||

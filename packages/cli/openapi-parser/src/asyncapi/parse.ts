@@ -220,7 +220,7 @@ export function parseAsyncAPI({
                 }
             }
 
-            const tag = document.tags?.[0];
+            const tags = document.tags?.[0]?.name != null ? [document.tags?.[0].name] : undefined;
             parsedChannel = {
                 handshake: {
                     headers: headers.map((header) => {
@@ -243,7 +243,7 @@ export function parseAsyncAPI({
                         };
                     })
                 },
-                groupName: tag?.name != null ? [tag.name] : ["Websocket"],
+                groupName: context.resolveTags(tags, "Websocket"),
                 publish: publishSchema != null ? convertSchemaWithExampleToSchema(publishSchema) : publishSchema,
                 subscribe:
                     subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
