@@ -3,7 +3,7 @@ import { Rule, RuleViolation } from "../../Rule";
 export const ValidDocsEndpoints: Rule = {
     name: "valid-docs-endpoints",
     create: () => ({
-        file: async ({config}) => {
+        file: async ({ config }) => {
             // Ignore empty analytics config
             if (!config.analytics || !Object.keys(config.analytics).length) {
                 return [];
@@ -12,7 +12,7 @@ export const ValidDocsEndpoints: Rule = {
             // Add each endpoint that should be included in this rule here
             const endpoints = [
                 [config.analytics.intercom?.apiBase, "Intercom API Base"],
-                [config.analytics.posthog?.endpoint, "Posthog Host Endpoint"],
+                [config.analytics.posthog?.endpoint, "Posthog Host Endpoint"]
             ];
 
             const violations = endpoints
@@ -26,14 +26,14 @@ export const ValidDocsEndpoints: Rule = {
 
             return violations;
         }
-    }),
+    })
 };
 
 function validEndpoint(endpoint: string) {
     try {
         const url = new URL(endpoint);
         return Boolean(url.protocol);
-    } catch(e) {
+    } catch (e) {
         return false;
     }
 }
