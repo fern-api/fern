@@ -36,3 +36,30 @@ Each webhook defines:
         completed: CompletedPaymentNotification
   ```
 </CodeBlock>
+
+### Inlined Paylods
+
+You can inline the schema of the payload by doing the following: 
+
+<CodeBlock title='webhooks.yml'>
+  ```yaml
+  webhooks: 
+    paymentNotification: 
+      display-name: Payment Notification
+      docs: Receive a notification when a payment changes status
+      method: POST 
+      headers: 
+        X-Signature-Primary: 
+          type: string 
+          docs: An HMAC signature of the payload
+      payload:
+        name: PaymentNotificationPayload
+        properties: 
+          id:
+            type: string
+            docs: The notification id
+          amount: double
+          currency: Currency
+  ```
+</CodeBlock>
+
