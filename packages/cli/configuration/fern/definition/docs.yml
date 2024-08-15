@@ -60,19 +60,19 @@ types:
 
   # GTMConfig:
   #   properties:
-  #     containerId: string
+  #     container-id: string
 
   # GoogleAnalytics4Config:
   #   properties:
-  #     measurementId: string
+  #     measurement-id: string
 
   # AmplitudeConfig:
   #   properties:
-  #     apiKey: string
+  #     api-key: string
 
   # MixpanelConfig:
   #   properties:
-  #     apiKey: string
+  #     api-key: string
 
   # HotJarConfig:
   #   properties:
@@ -81,11 +81,11 @@ types:
 
   # KoalaConfig:
   #   properties:
-  #     apiKey: string
+  #     api-key: string
 
   # LogRocketConfig:
   #   properties:
-  #     apiKey: string
+  #     api-key: string
 
   # PirschConfig:
   #   properties:
@@ -97,15 +97,15 @@ types:
 
   # FathomConfig:
   #   properties:
-  #     siteId: string
+  #     site-id: string
 
   # ClearBitConfig:
   #   properties:
-  #     apiKey: string
+  #     api-key: string
 
   # HeapConfig:
   #   properties:
-  #     appId: string
+  #     app-id: string
       
   DocsConfiguration:
     properties:
