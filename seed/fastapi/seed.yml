@@ -48,5 +48,6 @@ allowedFailures:
   - enum
   - server-sent-events
   - streaming-parameter
+  - any-auth
   # Complex circular refs
   - simple-fhir
