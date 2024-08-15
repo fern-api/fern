@@ -42,6 +42,7 @@ interface HeaderInfo {
 
 const GetFromEnvironmentOrThrow = "GetFromEnvironmentOrThrow";
 
+const CLIENT_OPTIONS_PARAMETER_NAME = "clientOptions";
 export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private rawClient: RawClient;
     private endpointGenerator: EndpointGenerator;
@@ -138,7 +139,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         }
         parameters.push(
             csharp.parameter({
-                name: "clientOptions",
+                name: CLIENT_OPTIONS_PARAMETER_NAME,
                 type: csharp.Type.optional(csharp.Type.reference(this.context.getClientOptionsClassReference())),
                 initializer: "null"
             })
@@ -250,6 +251,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
         });
         const arguments_ = [];
+        for (const header of this.context.ir.headers) {
+            if (header.valueType.type === "container" && header.valueType.container.type === "optional") {
+                continue;
+            }
+            arguments_.push(csharp.codeblock(`"${header.name.name.screamingSnakeCase.safeName}"`));
+        }
         if (this.context.ir.auth.requirement) {
             for (const scheme of this.context.ir.auth.schemes) {
                 switch (scheme.type) {
@@ -271,7 +278,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             }
         }
         if (clientOptionsArgument != null) {
-            arguments_.push(csharp.codeblock((writer) => writer.writeNode(clientOptionsArgument)));
+            arguments_.push(
+                csharp.codeblock((writer) => {
+                    writer.write(`${CLIENT_OPTIONS_PARAMETER_NAME}: `);
+                    writer.writeNode(clientOptionsArgument);
+                })
+            );
         }
         return new csharp.ClassInstantiation({
             classReference: this.context.getRootClientClassReference(),

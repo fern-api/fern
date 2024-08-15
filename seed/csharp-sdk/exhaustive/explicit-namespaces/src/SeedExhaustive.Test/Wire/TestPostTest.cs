@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExhaustive.Core;
 using SeedExhaustive.Test.Wire;
 using SeedExhaustive.Types.Object;
 
@@ -12,7 +14,7 @@ namespace SeedExhaustive.Test;
 public class TestPostTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -50,7 +52,7 @@ public class TestPostTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/http-methods")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -59,9 +61,13 @@ public class TestPostTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" })
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Endpoints.HttpMethods.TestPostAsync(
+            new ObjectWithRequiredField { String = "string" },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

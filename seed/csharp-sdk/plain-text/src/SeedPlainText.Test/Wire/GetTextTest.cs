@@ -1,5 +1,4 @@
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SeedPlainText.Test.Wire;
 
@@ -11,11 +10,9 @@ namespace SeedPlainText.Test;
 public class GetTextTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
-        const string mockResponse = """
-            "string"
-            """;
+        const string mockResponse = "string";
 
         Server
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/text").UsingPost())
@@ -23,10 +20,10 @@ public class GetTextTest : BaseWireTest
                 WireMock
                     .ResponseBuilders.Response.Create()
                     .WithStatusCode(200)
-                    .WithBody(mockResponse)
+                    .WithBodyAsJson(mockResponse)
             );
 
-        var response = Client.Service.GetTextAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.GetTextAsync(RequestOptions);
+        Assert.That(response, Is.EqualTo(mockResponse));
     }
 }

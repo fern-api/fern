@@ -17,6 +17,8 @@ public class DeleteTest : BaseWireTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(() => Client.Payment.DeleteAsync("string").GetAwaiter().GetResult());
+        Assert.DoesNotThrowAsync(
+            async () => await Client.Payment.DeleteAsync("string", RequestOptions)
+        );
     }
 }

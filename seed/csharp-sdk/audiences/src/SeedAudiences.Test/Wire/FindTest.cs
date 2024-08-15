@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAudiences;
+using SeedAudiences.Core;
 using SeedAudiences.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedAudiences.Test;
 public class FindTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -34,7 +36,7 @@ public class FindTest : BaseWireTest
                     .WithPath("/")
                     .WithParam("optionalString", "string")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -43,16 +45,18 @@ public class FindTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Foo.FindAsync(
-                new FindRequest
-                {
-                    OptionalString = "string",
-                    PublicProperty = "string",
-                    PrivateProperty = 1
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Foo.FindAsync(
+            new FindRequest
+            {
+                OptionalString = "string",
+                PublicProperty = "string",
+                PrivateProperty = 1
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

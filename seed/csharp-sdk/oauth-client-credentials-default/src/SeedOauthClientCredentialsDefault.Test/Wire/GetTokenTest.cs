@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedOauthClientCredentialsDefault;
+using SeedOauthClientCredentialsDefault.Core;
 using SeedOauthClientCredentialsDefault.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedOauthClientCredentialsDefault.Test;
 public class GetTokenTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -35,7 +37,7 @@ public class GetTokenTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -44,16 +46,18 @@ public class GetTokenTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Auth.GetTokenAsync(
-                new GetTokenRequest
-                {
-                    ClientId = "string",
-                    ClientSecret = "string",
-                    GrantType = "client_credentials"
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Auth.GetTokenAsync(
+            new GetTokenRequest
+            {
+                ClientId = "string",
+                ClientSecret = "string",
+                GrantType = "client_credentials"
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

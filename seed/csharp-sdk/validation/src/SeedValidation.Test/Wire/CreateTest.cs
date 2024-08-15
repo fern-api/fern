@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedValidation;
+using SeedValidation.Core;
 using SeedValidation.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedValidation.Test;
 public class CreateTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -38,7 +40,7 @@ public class CreateTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/create")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -47,17 +49,19 @@ public class CreateTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .CreateAsync(
-                new CreateRequest
-                {
-                    Decimal = 1.1,
-                    Even = 1,
-                    Name = "string",
-                    Shape = Shape.Square
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.CreateAsync(
+            new CreateRequest
+            {
+                Decimal = 1.1,
+                Even = 1,
+                Name = "string",
+                Shape = Shape.Square
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

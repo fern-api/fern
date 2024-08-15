@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExhaustive.Core;
 using SeedExhaustive.Test.Wire;
 using SeedExhaustive.Types.Enum;
 
@@ -12,7 +14,7 @@ namespace SeedExhaustive.Test;
 public class GetAndReturnEnumTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             "SUNNY"
@@ -28,7 +30,7 @@ public class GetAndReturnEnumTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/enum")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -37,7 +39,13 @@ public class GetAndReturnEnumTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny).Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Endpoints.Enum.GetAndReturnEnumAsync(
+            WeatherReport.Sunny,
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

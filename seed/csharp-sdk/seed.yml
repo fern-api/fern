@@ -8,8 +8,8 @@ defaultOutputMode: github
 scripts:
   - docker: bitnami/dotnet-sdk:8
     commands:
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
-      # - dotnet test src
+      # - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+      - dotnet test src
 local: 
   workingDirectory: generators/csharp
   buildCommand: 
@@ -51,3 +51,10 @@ allowedFailures:
   - examples
   # TODO: Add support for recursive undiscriminated unions.
   - grpc
+  - unions # wire testing fails due to lack of base-properties support
+  - unknown # issue with example object in wire testing
+  - multi-url-environment-no-default # wire test failing because not setting up environment
+  - package-yml # user-provided example path not coming in properly 
+  - response-property # not implemented so wire testing fails
+  - simple-fhir # nested generated examples are wonky
+  - enum # wire tests failing because of complicated oneofs

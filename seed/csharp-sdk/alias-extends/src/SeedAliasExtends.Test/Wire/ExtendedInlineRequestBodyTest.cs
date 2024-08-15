@@ -25,18 +25,16 @@ public class ExtendedInlineRequestBodyTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/extends/extended-inline-request-body")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .ExtendedInlineRequestBodyAsync(
-                        new InlinedChildRequest { Child = "string", Parent = "string" }
-                    )
-                    .GetAwaiter()
-                    .GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.ExtendedInlineRequestBodyAsync(
+                    new InlinedChildRequest { Child = "string", Parent = "string" },
+                    RequestOptions
+                )
         );
     }
 }

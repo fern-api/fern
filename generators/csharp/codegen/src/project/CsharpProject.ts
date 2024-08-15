@@ -100,7 +100,6 @@ export class CsharpProject {
         await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
 
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
-        await this.createTestUtilsDirectory({ absolutePathToTestProjectDirectory });
 
         await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
             doNotPipeOutput: true,
@@ -222,6 +221,9 @@ export class CsharpProject {
         return absolutePathToCoreDirectory;
     }
 
+    /*
+     * Unused after removing unneccessary utils file.
+     */
     private async createTestUtilsDirectory({
         absolutePathToTestProjectDirectory
     }: {
@@ -371,6 +373,11 @@ ${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${FOUR_SPAC
         <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
 ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>${this.context.project.filepaths.getTestProjectName()}</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
 
 </Project>
 `;

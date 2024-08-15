@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExhaustive.Core;
 using SeedExhaustive.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedExhaustive.Test;
 public class GetAndReturnLongTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             1000000
@@ -27,7 +29,7 @@ public class GetAndReturnLongTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/primitive/long")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -36,7 +38,13 @@ public class GetAndReturnLongTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Endpoints.Primitive.GetAndReturnLongAsync(1000000).Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Endpoints.Primitive.GetAndReturnLongAsync(
+            1000000,
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

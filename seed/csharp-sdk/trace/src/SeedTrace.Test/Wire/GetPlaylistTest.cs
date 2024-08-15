@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedTrace.Core;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedTrace.Test;
 public class GetPlaylistTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             {
@@ -38,7 +40,10 @@ public class GetPlaylistTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Playlist.GetPlaylistAsync(1, "string").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Playlist.GetPlaylistAsync(1, "string", RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

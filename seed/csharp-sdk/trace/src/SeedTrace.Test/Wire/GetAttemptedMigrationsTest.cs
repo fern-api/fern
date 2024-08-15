@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace;
+using SeedTrace.Core;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedTrace.Test;
 public class GetAttemptedMigrationsTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             [
@@ -38,11 +40,13 @@ public class GetAttemptedMigrationsTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Migration.GetAttemptedMigrationsAsync(
-                new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Migration.GetAttemptedMigrationsAsync(
+            new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

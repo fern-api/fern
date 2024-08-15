@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedCodeSamples;
+using SeedCodeSamples.Core;
 using SeedCodeSamples.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedCodeSamples.Test;
 public class HelloTest : BaseWireTest
 {
     [Test]
-    public void WireTest_1()
+    public async Task WireTest_1()
     {
         const string requestJson = """
             {
@@ -33,7 +35,7 @@ public class HelloTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/hello")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -42,12 +44,18 @@ public class HelloTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Service.HelloAsync(new MyRequest { NumEvents = 5 }).Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.HelloAsync(
+            new MyRequest { NumEvents = 5 },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 
     [Test]
-    public void WireTest_2()
+    public async Task WireTest_2()
     {
         const string requestJson = """
             {
@@ -68,7 +76,7 @@ public class HelloTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/hello")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -77,7 +85,13 @@ public class HelloTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Service.HelloAsync(new MyRequest { NumEvents = 5 }).Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.HelloAsync(
+            new MyRequest { NumEvents = 5 },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

@@ -23,16 +23,16 @@ public class SetHomepageProblemsTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/homepage-problems")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .Homepage.SetHomepageProblemsAsync(new List<string>() { "string" })
-                    .GetAwaiter()
-                    .GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Homepage.SetHomepageProblemsAsync(
+                    new List<string>() { "string" },
+                    RequestOptions
+                )
         );
     }
 }

@@ -15,6 +15,8 @@ public class GetUserTest : BaseWireTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users/string").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(() => Client.User.GetUserAsync("string").GetAwaiter().GetResult());
+        Assert.DoesNotThrowAsync(
+            async () => await Client.User.GetUserAsync("string", RequestOptions)
+        );
     }
 }

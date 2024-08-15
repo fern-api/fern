@@ -15,6 +15,8 @@ public class GetTest : BaseWireTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/type-kaljhv87").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(() => Client.GetAsync("type-kaljhv87").GetAwaiter().GetResult());
+        Assert.DoesNotThrowAsync(
+            async () => await Client.GetAsync("type-kaljhv87", RequestOptions)
+        );
     }
 }

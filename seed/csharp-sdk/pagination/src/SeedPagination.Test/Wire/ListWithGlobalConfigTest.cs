@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPagination;
+using SeedPagination.Core;
 using SeedPagination.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedPagination.Test;
 public class ListWithGlobalConfigTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             {
@@ -23,7 +25,13 @@ public class ListWithGlobalConfigTest : BaseWireTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/users").UsingGet())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/users")
+                    .WithParam("offset", "1")
+                    .UsingGet()
+            )
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -31,9 +39,13 @@ public class ListWithGlobalConfigTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Users.ListWithGlobalConfigAsync(new ListWithGlobalConfigRequest { Offset = 1 })
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Users.ListWithGlobalConfigAsync(
+            new ListWithGlobalConfigRequest { Offset = 1 },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

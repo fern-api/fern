@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExtraProperties;
+using SeedExtraProperties.Core;
 using SeedExtraProperties.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedExtraProperties.Test;
 public class CreateUserTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -34,7 +36,7 @@ public class CreateUserTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/user")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -43,16 +45,18 @@ public class CreateUserTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .User.CreateUserAsync(
-                new CreateUserRequest
-                {
-                    Type = "CreateUserRequest",
-                    Version = "v1",
-                    Name = "string"
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.User.CreateUserAsync(
+            new CreateUserRequest
+            {
+                Type = "CreateUserRequest",
+                Version = "v1",
+                Name = "string"
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

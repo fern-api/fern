@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace;
+using SeedTrace.Core;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedTrace.Test;
 public class GetDefaultStarterFilesTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -56,7 +58,7 @@ public class GetDefaultStarterFilesTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/problem-crud/default-starter-files")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -65,23 +67,25 @@ public class GetDefaultStarterFilesTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Problem.GetDefaultStarterFilesAsync(
-                new GetDefaultStarterFilesRequest
+        var response = await Client.Problem.GetDefaultStarterFilesAsync(
+            new GetDefaultStarterFilesRequest
+            {
+                InputParams = new List<VariableTypeAndName>()
                 {
-                    InputParams = new List<VariableTypeAndName>()
+                    new VariableTypeAndName
                     {
-                        new VariableTypeAndName
-                        {
-                            VariableType = "no-properties-union",
-                            Name = "string"
-                        }
-                    },
-                    OutputType = "no-properties-union",
-                    MethodName = "string"
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+                        VariableType = "no-properties-union",
+                        Name = "string"
+                    }
+                },
+                OutputType = "no-properties-union",
+                MethodName = "string"
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

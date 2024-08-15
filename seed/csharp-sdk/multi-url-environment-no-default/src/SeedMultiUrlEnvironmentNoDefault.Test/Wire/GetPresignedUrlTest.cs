@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMultiUrlEnvironmentNoDefault;
+using SeedMultiUrlEnvironmentNoDefault.Core;
 using SeedMultiUrlEnvironmentNoDefault.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedMultiUrlEnvironmentNoDefault.Test;
 public class GetPresignedUrlTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -30,7 +32,7 @@ public class GetPresignedUrlTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/s3/presigned-url")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -39,9 +41,13 @@ public class GetPresignedUrlTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .S3.GetPresignedUrlAsync(new GetPresignedUrlRequest { S3Key = "string" })
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.S3.GetPresignedUrlAsync(
+            new GetPresignedUrlRequest { S3Key = "string" },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

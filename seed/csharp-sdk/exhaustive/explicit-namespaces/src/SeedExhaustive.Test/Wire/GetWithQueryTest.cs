@@ -18,18 +18,17 @@ public class GetWithQueryTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/params")
                     .WithParam("query", "string")
+                    .WithParam("number", "1")
                     .UsingGet()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .Endpoints.Params.GetWithQueryAsync(
-                        new GetWithQuery { Query = "string", Number = 1 }
-                    )
-                    .GetAwaiter()
-                    .GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Endpoints.Params.GetWithQueryAsync(
+                    new GetWithQuery { Query = "string", Number = 1 },
+                    RequestOptions
+                )
         );
     }
 }

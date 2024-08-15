@@ -20,8 +20,8 @@ public class DeletePlaylistTest : BaseWireTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () => Client.Playlist.DeletePlaylistAsync(1, "string").GetAwaiter().GetResult()
+        Assert.DoesNotThrowAsync(
+            async () => await Client.Playlist.DeletePlaylistAsync(1, "string", RequestOptions)
         );
     }
 }

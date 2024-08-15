@@ -20,8 +20,8 @@ public class StopExecutionSessionTest : BaseWireTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () => Client.Submission.StopExecutionSessionAsync("string").GetAwaiter().GetResult()
+        Assert.DoesNotThrowAsync(
+            async () => await Client.Submission.StopExecutionSessionAsync("string", RequestOptions)
         );
     }
 }

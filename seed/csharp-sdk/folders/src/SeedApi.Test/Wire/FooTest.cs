@@ -15,6 +15,6 @@ public class FooTest : BaseWireTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/").UsingPost())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(() => Client.Folder.FooAsync().GetAwaiter().GetResult());
+        Assert.DoesNotThrowAsync(async () => await Client.Folder.FooAsync(RequestOptions));
     }
 }

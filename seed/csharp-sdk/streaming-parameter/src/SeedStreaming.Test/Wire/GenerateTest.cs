@@ -1,5 +1,3 @@
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedStreaming;
 using SeedStreaming.Test.Wire;
@@ -21,33 +19,23 @@ public class GenerateTest : BaseWireTest
             }
             """;
 
-        const string mockResponse = """
-            {
-              "id": "id",
-              "name": "name"
-            }
-            """;
-
         Server
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/generate")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        var response = Client
-            .Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 })
-            .GetAwaiter()
-            .GetResult();
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Dummy.GenerateAsync(
+                    new GenerateRequest { Stream = false, NumEvents = 5 },
+                    RequestOptions
+                )
+        );
     }
 
     [Test]
@@ -60,32 +48,22 @@ public class GenerateTest : BaseWireTest
             }
             """;
 
-        const string mockResponse = """
-            {
-              "id": "id",
-              "name": "name"
-            }
-            """;
-
         Server
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/generate")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        var response = Client
-            .Dummy.GenerateAsync(new GenerateRequest { Stream = false, NumEvents = 5 })
-            .GetAwaiter()
-            .GetResult();
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Dummy.GenerateAsync(
+                    new GenerateRequest { Stream = false, NumEvents = 5 },
+                    RequestOptions
+                )
+        );
     }
 }

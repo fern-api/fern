@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedTrace.Core;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedTrace.Test;
 public class GetLightweightProblemsTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             [
@@ -42,7 +44,10 @@ public class GetLightweightProblemsTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.V2.V3.Problem.GetLightweightProblemsAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.V2.V3.Problem.GetLightweightProblemsAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

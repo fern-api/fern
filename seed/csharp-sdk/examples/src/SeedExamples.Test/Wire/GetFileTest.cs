@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExamples.Core;
 using SeedExamples.File;
 using SeedExamples.Test.Wire;
 
@@ -12,7 +14,7 @@ namespace SeedExamples.Test;
 public class GetFileTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             {
@@ -36,7 +38,14 @@ public class GetFileTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.File.Service.GetFileAsync("string", new GetFileRequest()).Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.File.Service.GetFileAsync(
+            "string",
+            new GetFileRequest(),
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

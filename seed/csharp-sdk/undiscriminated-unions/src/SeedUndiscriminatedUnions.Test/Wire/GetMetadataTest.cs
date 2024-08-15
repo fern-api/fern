@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedUndiscriminatedUnions.Core;
 using SeedUndiscriminatedUnions.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedUndiscriminatedUnions.Test;
 public class GetMetadataTest : BaseWireTest
 {
     [Test]
-    public void WireTest_1()
+    public async Task WireTest_1()
     {
         const string mockResponse = """
             {
@@ -30,12 +32,15 @@ public class GetMetadataTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Union.GetMetadataAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Union.GetMetadataAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 
     [Test]
-    public void WireTest_2()
+    public async Task WireTest_2()
     {
         const string mockResponse = """
             {
@@ -54,7 +59,10 @@ public class GetMetadataTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Union.GetMetadataAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Union.GetMetadataAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

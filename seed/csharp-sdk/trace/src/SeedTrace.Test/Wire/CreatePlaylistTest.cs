@@ -1,7 +1,10 @@
+using System.Globalization;
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace;
+using SeedTrace.Core;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -12,7 +15,7 @@ namespace SeedTrace.Test;
 public class CreatePlaylistTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -39,10 +42,10 @@ public class CreatePlaylistTest : BaseWireTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/v2/playlist/1/create")
-                    .WithParam("datetime", "2024-01-15T09:30:00Z")
-                    .WithParam("optionalDatetime", "2024-01-15T09:30:00Z")
+                    .WithParam("datetime", "2024-01-15T09:30:00.000Z")
+                    .WithParam("optionalDatetime", "2024-01-15T09:30:00.000Z")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -51,21 +54,31 @@ public class CreatePlaylistTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Playlist.CreatePlaylistAsync(
-                1,
-                new CreatePlaylistRequest
+        var response = await Client.Playlist.CreatePlaylistAsync(
+            1,
+            new CreatePlaylistRequest
+            {
+                Datetime = DateTime.Parse(
+                    "2024-01-15T09:30:00.000Z",
+                    null,
+                    DateTimeStyles.AdjustToUniversal
+                ),
+                OptionalDatetime = DateTime.Parse(
+                    "2024-01-15T09:30:00.000Z",
+                    null,
+                    DateTimeStyles.AdjustToUniversal
+                ),
+                Body = new PlaylistCreateRequest
                 {
-                    Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-                    OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-                    Body = new PlaylistCreateRequest
-                    {
-                        Name = "string",
-                        Problems = new List<string>() { "string" }
-                    }
+                    Name = "string",
+                    Problems = new List<string>() { "string" }
                 }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

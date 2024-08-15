@@ -24,18 +24,16 @@ public class GetWithCustomHeaderTest : BaseWireTest
                     .WithHeader("X-TEST-SERVICE-HEADER", "string")
                     .WithHeader("X-TEST-ENDPOINT-HEADER", "string")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .ReqWithHeaders.GetWithCustomHeaderAsync(
-                        new ReqWithHeaders { XTestEndpointHeader = "string", Body = "string" }
-                    )
-                    .GetAwaiter()
-                    .GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.ReqWithHeaders.GetWithCustomHeaderAsync(
+                    new ReqWithHeaders { XTestEndpointHeader = "string", Body = "string" },
+                    RequestOptions
+                )
         );
     }
 }

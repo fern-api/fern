@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace;
+using SeedTrace.Core;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedTrace.Test;
 public class GetPlaylistsTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             [
@@ -32,6 +34,7 @@ public class GetPlaylistsTest : BaseWireTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/v2/playlist/1/all")
+                    .WithParam("limit", "1")
                     .WithParam("otherField", "string")
                     .WithParam("multiLineDocs", "string")
                     .WithParam("optionalMultipleField", "string")
@@ -45,19 +48,21 @@ public class GetPlaylistsTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Playlist.GetPlaylistsAsync(
-                1,
-                new GetPlaylistsRequest
-                {
-                    Limit = 1,
-                    OtherField = "string",
-                    MultiLineDocs = "string",
-                    OptionalMultipleField = "string",
-                    MultipleField = "string"
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Playlist.GetPlaylistsAsync(
+            1,
+            new GetPlaylistsRequest
+            {
+                Limit = 1,
+                OtherField = "string",
+                MultiLineDocs = "string",
+                OptionalMultipleField = ["string"],
+                MultipleField = ["string"]
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

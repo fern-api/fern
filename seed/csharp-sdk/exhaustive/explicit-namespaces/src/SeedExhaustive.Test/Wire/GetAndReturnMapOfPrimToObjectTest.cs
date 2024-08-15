@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExhaustive.Core;
 using SeedExhaustive.Test.Wire;
 using SeedExhaustive.Types.Object;
 
@@ -12,7 +14,7 @@ namespace SeedExhaustive.Test;
 public class GetAndReturnMapOfPrimToObjectTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -36,7 +38,7 @@ public class GetAndReturnMapOfPrimToObjectTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/container/map-prim-to-object")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -45,17 +47,19 @@ public class GetAndReturnMapOfPrimToObjectTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
-                new Dictionary<string, ObjectWithRequiredField>()
+        var response = await Client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
+            new Dictionary<string, ObjectWithRequiredField>()
+            {
                 {
-                    {
-                        "string",
-                        new ObjectWithRequiredField { String = "string" }
-                    },
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+                    "string",
+                    new ObjectWithRequiredField { String = "string" }
+                },
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

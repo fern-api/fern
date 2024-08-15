@@ -153,6 +153,13 @@ export class Writer {
         }
     }
 
+    public addNamespace(namespace: string): void {
+        const foundNamespace = this.references[namespace];
+        if (foundNamespace == null) {
+            this.references[namespace] = [];
+        }
+    }
+
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
         return this.allTypeClassReferences;
     }

@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedBearerTokenEnvironmentVariable.Core;
 using SeedBearerTokenEnvironmentVariable.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedBearerTokenEnvironmentVariable.Test;
 public class GetWithBearerTokenTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             "string"
@@ -26,7 +28,10 @@ public class GetWithBearerTokenTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Service.GetWithBearerTokenAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.GetWithBearerTokenAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

@@ -21,8 +21,9 @@ public class SetNumWarmInstancesTest : BaseWireTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () => Client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1).GetAwaiter().GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1, RequestOptions)
         );
     }
 }

@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExhaustive.Core;
 using SeedExhaustive.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedExhaustive.Test;
 public class ModifyWithPathTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             "string"
@@ -27,7 +29,7 @@ public class ModifyWithPathTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/params/path/string")
                     .UsingPut()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -36,7 +38,14 @@ public class ModifyWithPathTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Endpoints.Params.ModifyWithPathAsync("string", "string").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Endpoints.Params.ModifyWithPathAsync(
+            "string",
+            "string",
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

@@ -24,16 +24,16 @@ public class BootInstanceTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/ec2/boot")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .Ec2.BootInstanceAsync(new BootInstanceRequest { Size = "string" })
-                    .GetAwaiter()
-                    .GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Ec2.BootInstanceAsync(
+                    new BootInstanceRequest { Size = "string" },
+                    RequestOptions
+                )
         );
     }
 }

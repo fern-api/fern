@@ -8,6 +8,8 @@ export declare namespace ClassInstantiation {
         classReference: ClassReference;
         // A map of the field for the class and the value to be assigned to it.
         arguments_: Arguments;
+        // lets you use constructor (rather than object initializer syntax) even if you pass in named arguments
+        forceUseConstructor?: boolean;
     }
 
     type Arguments = NamedArgument[] | UnnamedArgument[];
@@ -23,11 +25,13 @@ export declare namespace ClassInstantiation {
 export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
     public readonly arguments_: ClassInstantiation.NamedArgument[] | ClassInstantiation.UnnamedArgument[];
+    private readonly forceUseConstructor: boolean;
 
-    constructor({ classReference, arguments_ }: ClassInstantiation.Args) {
+    constructor({ classReference, arguments_, forceUseConstructor }: ClassInstantiation.Args) {
         super();
         this.classReference = classReference;
         this.arguments_ = arguments_;
+        this.forceUseConstructor = forceUseConstructor ?? false;
     }
 
     public write(writer: Writer): void {
@@ -37,7 +41,7 @@ export class ClassInstantiation extends AstNode {
 
         writer.write(`new ${this.classReference.name}`);
 
-        if (hasNamedArguments) {
+        if (hasNamedArguments && !this.forceUseConstructor) {
             writer.write("{ ");
         } else {
             writer.write("(");
@@ -59,7 +63,7 @@ export class ClassInstantiation extends AstNode {
         writer.writeLine();
         writer.dedent();
 
-        if (hasNamedArguments) {
+        if (hasNamedArguments && !this.forceUseConstructor) {
             writer.write("}");
         } else {
             writer.write(")");

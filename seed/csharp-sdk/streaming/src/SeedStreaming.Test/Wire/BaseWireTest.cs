@@ -15,6 +15,8 @@ public class BaseWireTest
 
     protected static SeedStreamingClient Client { get; set; } = null!;
 
+    protected static RequestOptions RequestOptions { get; set; } = null!;
+
     [OneTimeSetUp]
     public void GlobalSetup()
     {
@@ -24,7 +26,9 @@ public class BaseWireTest
         );
 
         // Initialize the Client
-        Client = new SeedStreamingClient(new ClientOptions { BaseUrl = Server.Urls[0] });
+        Client = new SeedStreamingClient();
+
+        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }
 
     [OneTimeTearDown]

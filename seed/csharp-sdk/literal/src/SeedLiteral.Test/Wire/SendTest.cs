@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedLiteral;
+using SeedLiteral.Core;
 using SeedLiteral.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedLiteral.Test;
 public class SendTest : BaseWireTest
 {
     [Test]
-    public void WireTest_1()
+    public async Task WireTest_1()
     {
         const string requestJson = """
             {
@@ -37,7 +39,7 @@ public class SendTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/reference")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -46,22 +48,24 @@ public class SendTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Reference.SendAsync(
-                new SendRequest
-                {
-                    Prompt = "You are a helpful assistant",
-                    Stream = false,
-                    Context = "You're super wise",
-                    Query = "What is the weather today"
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Reference.SendAsync(
+            new SendRequest
+            {
+                Prompt = "You are a helpful assistant",
+                Stream = false,
+                Context = "You're super wise",
+                Query = "What is the weather today"
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 
     [Test]
-    public void WireTest_2()
+    public async Task WireTest_2()
     {
         const string requestJson = """
             {
@@ -86,7 +90,7 @@ public class SendTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/reference")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -95,17 +99,19 @@ public class SendTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Reference.SendAsync(
-                new SendRequest
-                {
-                    Prompt = "You are a helpful assistant",
-                    Stream = false,
-                    Context = "You're super wise",
-                    Query = "What is the weather today"
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Reference.SendAsync(
+            new SendRequest
+            {
+                Prompt = "You are a helpful assistant",
+                Stream = false,
+                Context = "You're super wise",
+                Query = "What is the weather today"
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

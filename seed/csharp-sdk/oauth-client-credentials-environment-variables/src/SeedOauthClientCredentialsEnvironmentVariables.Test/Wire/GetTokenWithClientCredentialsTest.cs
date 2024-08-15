@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedOauthClientCredentialsEnvironmentVariables;
+using SeedOauthClientCredentialsEnvironmentVariables.Core;
 using SeedOauthClientCredentialsEnvironmentVariables.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedOauthClientCredentialsEnvironmentVariables.Test;
 public class GetTokenWithClientCredentialsTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -38,7 +40,7 @@ public class GetTokenWithClientCredentialsTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/token")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -47,18 +49,20 @@ public class GetTokenWithClientCredentialsTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Auth.GetTokenWithClientCredentialsAsync(
-                new GetTokenRequest
-                {
-                    ClientId = "string",
-                    ClientSecret = "string",
-                    Audience = "https://api.example.com",
-                    GrantType = "client_credentials",
-                    Scope = "string"
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Auth.GetTokenWithClientCredentialsAsync(
+            new GetTokenRequest
+            {
+                ClientId = "string",
+                ClientSecret = "string",
+                Audience = "https://api.example.com",
+                GrantType = "client_credentials",
+                Scope = "string"
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

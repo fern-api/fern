@@ -84,12 +84,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.HttpMethodExtensions,
             AsIsFiles.Constants,
             AsIsFiles.DateTimeSerializer,
-            AsIsFiles.JsonConfiguration
+            AsIsFiles.JsonConfiguration,
+            AsIsFiles.Extensions
         ];
     }
 
     public getAsIsTestUtils(): string[] {
-        return [AsIsFiles.JsonDiffChecker];
+        return [];
     }
 
     public getNamespaceForServiceId(serviceId: ServiceId): string {
@@ -172,6 +173,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     public getRawClientClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: "RawClient",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExtensionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Extensions",
             namespace: this.getCoreNamespace()
         });
     }

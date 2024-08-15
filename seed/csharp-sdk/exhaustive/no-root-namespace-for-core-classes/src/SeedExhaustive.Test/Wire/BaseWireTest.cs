@@ -16,6 +16,8 @@ public class BaseWireTest
 
     protected static SeedExhaustiveClient Client { get; set; } = null!;
 
+    protected static RequestOptions RequestOptions { get; set; } = null!;
+
     [OneTimeSetUp]
     public void GlobalSetup()
     {
@@ -25,7 +27,9 @@ public class BaseWireTest
         );
 
         // Initialize the Client
-        Client = new SeedExhaustiveClient("TOKEN", new ClientOptions { BaseUrl = Server.Urls[0] });
+        Client = new SeedExhaustiveClient("TOKEN");
+
+        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }
 
     [OneTimeTearDown]

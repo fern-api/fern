@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExamples.Core;
 using SeedExamples.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedExamples.Test;
 public class EchoTest : BaseWireTest
 {
     [Test]
-    public void WireTest_1()
+    public async Task WireTest_1()
     {
         const string requestJson = """
             "Hello world!\\n\\nwith\\n\\tnewlines"
@@ -27,7 +29,7 @@ public class EchoTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -36,12 +38,18 @@ public class EchoTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.EchoAsync(
+            "Hello world!\\n\\nwith\\n\\tnewlines",
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 
     [Test]
-    public void WireTest_2()
+    public async Task WireTest_2()
     {
         const string requestJson = """
             "Hello world!\\n\\nwith\\n\\tnewlines"
@@ -57,7 +65,7 @@ public class EchoTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -66,7 +74,13 @@ public class EchoTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.EchoAsync(
+            "Hello world!\\n\\nwith\\n\\tnewlines",
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

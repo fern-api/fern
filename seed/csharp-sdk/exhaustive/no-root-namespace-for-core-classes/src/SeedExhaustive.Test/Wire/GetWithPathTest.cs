@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExhaustive.Core;
 using SeedExhaustive.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedExhaustive.Test;
 public class GetWithPathTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             "string"
@@ -28,7 +30,10 @@ public class GetWithPathTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Endpoints.Params.GetWithPathAsync("string").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Endpoints.Params.GetWithPathAsync("string", RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

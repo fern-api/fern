@@ -31,7 +31,7 @@ public partial class UsersClient
         }
         if (request.Order != null)
         {
-            _query["order"] = JsonSerializer.Serialize(request.Order.Value);
+            _query["order"] = request.Order.Value.Stringify();
         }
         if (request.StartingAfter != null)
         {
@@ -118,7 +118,7 @@ public partial class UsersClient
         }
         if (request.Order != null)
         {
-            _query["order"] = JsonSerializer.Serialize(request.Order.Value);
+            _query["order"] = request.Order.Value.Stringify();
         }
         if (request.StartingAfter != null)
         {
@@ -205,7 +205,7 @@ public partial class UsersClient
         }
         if (request.Order != null)
         {
-            _query["order"] = JsonSerializer.Serialize(request.Order.Value);
+            _query["order"] = request.Order.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -253,7 +253,7 @@ public partial class UsersClient
         }
         if (request.Order != null)
         {
-            _query["order"] = JsonSerializer.Serialize(request.Order.Value);
+            _query["order"] = request.Order.Value.Stringify();
         }
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

@@ -25,20 +25,18 @@ public class SendTest : BaseWireTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .QueryParam.SendAsync(
-                        new SendEnumAsQueryParamRequest
-                        {
-                            Operand = Operand.GreaterThan,
-                            MaybeOperand = Operand.GreaterThan,
-                            OperandOrColor = Color.Red,
-                            MaybeOperandOrColor = Color.Red
-                        }
-                    )
-                    .GetAwaiter()
-                    .GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.QueryParam.SendAsync(
+                    new SendEnumAsQueryParamRequest
+                    {
+                        Operand = Operand.GreaterThan,
+                        MaybeOperand = Operand.GreaterThan,
+                        OperandOrColor = Color.Red,
+                        MaybeOperandOrColor = Color.Red
+                    },
+                    RequestOptions
+                )
         );
     }
 
@@ -56,18 +54,16 @@ public class SendTest : BaseWireTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .QueryParam.SendAsync(
-                        new SendEnumAsQueryParamRequest
-                        {
-                            Operand = Operand.GreaterThan,
-                            OperandOrColor = Color.Red
-                        }
-                    )
-                    .GetAwaiter()
-                    .GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.QueryParam.SendAsync(
+                    new SendEnumAsQueryParamRequest
+                    {
+                        Operand = Operand.GreaterThan,
+                        OperandOrColor = Color.Red
+                    },
+                    RequestOptions
+                )
         );
     }
 }

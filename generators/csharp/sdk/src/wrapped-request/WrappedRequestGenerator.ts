@@ -1,14 +1,7 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import {
-    ExampleEndpointCall,
-    ExampleTypeReference,
-    HttpEndpoint,
-    Name,
-    SdkRequestWrapper,
-    ServiceId
-} from "@fern-fern/ir-sdk/api";
+import { ExampleEndpointCall, HttpEndpoint, Name, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -140,38 +133,56 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
     }
 
     public doGenerateSnippet(example: ExampleEndpointCall): csharp.CodeBlock {
-        const orderedFields: { name: Name; value: ExampleTypeReference }[] = [];
+        const orderedFields: { name: Name; value: csharp.CodeBlock }[] = [];
         for (const exampleQueryParameter of example.queryParameters) {
-            orderedFields.push({ name: exampleQueryParameter.name.name, value: exampleQueryParameter.value });
+            const isSingleQueryParameter =
+                exampleQueryParameter.shape == null || exampleQueryParameter.shape.type === "single";
+            const singleValueSnippet = this.exampleGenerator.getSnippetForTypeReference(exampleQueryParameter.value);
+            const value = isSingleQueryParameter
+                ? singleValueSnippet
+                : csharp.codeblock((writer) =>
+                      writer.writeNode(
+                          csharp.list({
+                              entries: [singleValueSnippet]
+                          })
+                      )
+                  );
+            orderedFields.push({
+                name: exampleQueryParameter.name.name,
+                value
+            });
         }
 
         for (const header of example.endpointHeaders) {
-            orderedFields.push({ name: header.name.name, value: header.value });
+            orderedFields.push({
+                name: header.name.name,
+                value: this.exampleGenerator.getSnippetForTypeReference(header.value)
+            });
         }
 
         example.request?._visit({
             reference: (reference) => {
-                orderedFields.push({ name: this.wrapper.bodyKey, value: reference });
+                orderedFields.push({
+                    name: this.wrapper.bodyKey,
+                    value: this.exampleGenerator.getSnippetForTypeReference(reference)
+                });
             },
             inlinedRequestBody: (inlinedRequestBody) => {
                 for (const property of inlinedRequestBody.properties) {
-                    orderedFields.push({ name: property.name.name, value: property.value });
+                    orderedFields.push({
+                        name: property.name.name,
+                        value: this.exampleGenerator.getSnippetForTypeReference(property.value)
+                    });
                 }
             },
             _other: () => undefined
         });
-        const args = orderedFields
-            .map(({ name, value }) => {
-                const assignment = this.exampleGenerator.getSnippetForTypeReference(value);
-                if (assignment === undefined) {
-                    return null;
-                }
-                return {
-                    name: name.pascalCase.safeName,
-                    assignment
-                };
-            })
-            .filter((value): value is { name: string; assignment: csharp.CodeBlock } => value != null);
+        const args = orderedFields.map(({ name, value }) => {
+            return {
+                name: name.pascalCase.safeName,
+                assignment: value
+            };
+        });
         const instantiateClass = csharp.instantiateClass({
             classReference: this.classReference,
             arguments_: args

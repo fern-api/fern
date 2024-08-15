@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedMixedCase.Core;
 using SeedMixedCase.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedMixedCase.Test;
 public class GetResourceTest : BaseWireTest
 {
     [Test]
-    public void WireTest_1()
+    public async Task WireTest_1()
     {
         const string mockResponse = """
             {
@@ -39,12 +41,15 @@ public class GetResourceTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Service.GetResourceAsync("string").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.GetResourceAsync("string", RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 
     [Test]
-    public void WireTest_2()
+    public async Task WireTest_2()
     {
         const string mockResponse = """
             {
@@ -72,7 +77,10 @@ public class GetResourceTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Service.GetResourceAsync("rsc-xyz").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.GetResourceAsync("rsc-xyz", RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

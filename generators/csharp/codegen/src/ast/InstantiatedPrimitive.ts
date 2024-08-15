@@ -1,3 +1,4 @@
+import { csharp } from "..";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -107,28 +108,25 @@ export class PrimitiveInstantiation extends AstNode {
                 break;
             case "date": {
                 const date = new Date(this.internalType.value);
-                const year = date.getFullYear();
-                const month = date.getMonth() + 1; // Months are zero-based
-                const day = date.getDate();
+                const year = date.getUTCFullYear();
+                const month = date.getUTCMonth() + 1;
+                const day = date.getUTCDate();
                 writer.write(`new DateOnly(${year}, ${month}, ${day})`);
                 break;
             }
             case "dateTime": {
-                const datetime = this.internalType.value;
-                const dateTimeYear = datetime.getFullYear();
-                const dateTimeMonth = (datetime.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-                const dateTimeDay = datetime.getDate().toString().padStart(2, "0");
-                const hours = datetime.getHours().toString().padStart(2, "0");
-                const minutes = datetime.getMinutes().toString().padStart(2, "0");
-                const seconds = datetime.getSeconds().toString().padStart(2, "0");
-                const milliseconds = datetime.getMilliseconds().toString().padStart(3, "0");
-                writer.write(
-                    `new DateTime(${dateTimeYear}, ${dateTimeMonth}, ${dateTimeDay}, ${hours}, ${minutes}, ${seconds}, ${milliseconds})`
+                writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, DateTimeStyles.`);
+                writer.writeNode(
+                    csharp.classReference({
+                        name: "AdjustToUniversal",
+                        namespace: "System.Globalization"
+                    })
                 );
+                writer.write(")");
                 break;
             }
             case "uuid":
-                writer.write('"this.internalType.value.toString()"');
+                writer.write(`"${this.internalType.value.toString()}"`);
                 break;
             case "null":
                 writer.write("null");
@@ -217,6 +215,20 @@ export class PrimitiveInstantiation extends AstNode {
         return new this({
             type: "null"
         });
+    }
+
+    /*
+     * Currently unused because it was easier to just use `.Parse` to get passing wire tests.
+     */
+    private constructDatetimeWithoutParse(datetime: Date): string {
+        const dateTimeYear = datetime.getUTCFullYear();
+        const dateTimeMonth = (datetime.getUTCMonth() + 1).toString().padStart(2, "0");
+        const dateTimeDay = datetime.getUTCDate().toString().padStart(2, "0");
+        const hours = datetime.getUTCHours().toString().padStart(2, "0");
+        const minutes = datetime.getUTCMinutes().toString().padStart(2, "0");
+        const seconds = datetime.getUTCSeconds().toString().padStart(2, "0");
+        const milliseconds = datetime.getUTCMilliseconds().toString().padStart(3, "0");
+        return `new DateTime(${dateTimeYear}, ${dateTimeMonth}, ${dateTimeDay}, ${hours}, ${minutes}, ${seconds}, ${milliseconds})`;
     }
 
     private static escapeForCSharp(input: string): string {

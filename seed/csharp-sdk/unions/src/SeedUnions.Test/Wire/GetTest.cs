@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedUnions.Core;
 using SeedUnions.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedUnions.Test;
 public class GetTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             {
@@ -30,7 +32,10 @@ public class GetTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Union.GetAsync("string").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Union.GetAsync("string", RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

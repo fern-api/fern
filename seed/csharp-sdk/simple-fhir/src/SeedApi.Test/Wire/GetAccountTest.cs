@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedApi.Core;
 using SeedApi.Test.Wire;
 
 #nullable enable
@@ -11,21 +13,60 @@ namespace SeedApi.Test;
 public class GetAccountTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             {
               "resource_type": "Account",
               "name": "string",
-              "patient": {},
-              "practitioner": {},
+              "patient": {
+                "resource_type": "Patient",
+                "name": "string",
+                "scripts": [
+                  {
+                    "key": "value"
+                  }
+                ],
+                "id": "string",
+                "related_resources": [
+                  {
+                    "key": "value"
+                  }
+                ],
+                "memo": {
+                  "description": "string",
+                  "account": {
+                    "key": "value"
+                  }
+                }
+              },
+              "practitioner": {
+                "resource_type": "Practitioner",
+                "name": "string",
+                "id": "string",
+                "related_resources": [
+                  {
+                    "key": "value"
+                  }
+                ],
+                "memo": {
+                  "description": "string",
+                  "account": {
+                    "key": "value"
+                  }
+                }
+              },
               "id": "string",
               "related_resources": [
-                {}
+                {
+                  "key": "value"
+                }
               ],
               "memo": {
                 "description": "string",
-                "account": {}
+                "account": {
+                  "key": "value"
+                }
               }
             }
             """;
@@ -39,7 +80,10 @@ public class GetAccountTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.GetAccountAsync("string").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.GetAccountAsync("string", RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

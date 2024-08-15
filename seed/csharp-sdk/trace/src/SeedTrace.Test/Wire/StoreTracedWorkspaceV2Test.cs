@@ -17,12 +17,33 @@ public class StoreTracedWorkspaceV2Test : BaseWireTest
               {
                 "submissionId": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 "lineNumber": 1,
-                "file": {},
+                "file": {
+                  "filename": "string",
+                  "directory": "string"
+                },
                 "returnValue": {
                   "type": "integerValue"
                 },
-                "expressionLocation": {},
-                "stack": {},
+                "expressionLocation": {
+                  "start": 1,
+                  "offset": 1
+                },
+                "stack": {
+                  "numStackFrames": 1,
+                  "topStackFrame": {
+                    "methodName": "string",
+                    "lineNumber": 1,
+                    "scopes": [
+                      {
+                        "variables": {
+                          "string": {
+                            "key": "value"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
                 "stdout": "string"
               }
             ]
@@ -36,31 +57,53 @@ public class StoreTracedWorkspaceV2Test : BaseWireTest
                         "/admin/store-workspace-trace-v2/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                     )
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .Admin.StoreTracedWorkspaceV2Async(
-                        "this.internalType.value.toString()",
-                        new List<TraceResponseV2>()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Admin.StoreTracedWorkspaceV2Async(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    new List<TraceResponseV2>()
+                    {
+                        new TraceResponseV2
                         {
-                            new TraceResponseV2
+                            SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                            LineNumber = 1,
+                            File = new TracedFile { Filename = "string", Directory = "string" },
+                            ReturnValue = 1,
+                            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },
+                            Stack = new StackInformation
                             {
-                                SubmissionId = "this.internalType.value.toString()",
-                                LineNumber = 1,
-                                File = new TracedFile(),
-                                ReturnValue = 1,
-                                ExpressionLocation = new ExpressionLocation(),
-                                Stack = new StackInformation(),
-                                Stdout = "string"
-                            }
+                                NumStackFrames = 1,
+                                TopStackFrame = new StackFrame
+                                {
+                                    MethodName = "string",
+                                    LineNumber = 1,
+                                    Scopes = new List<Scope>()
+                                    {
+                                        new Scope
+                                        {
+                                            Variables = new Dictionary<string, object>()
+                                            {
+                                                {
+                                                    "string",
+                                                    new Dictionary<object, object?>()
+                                                    {
+                                                        { "key", "value" },
+                                                    }
+                                                },
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            Stdout = "string"
                         }
-                    )
-                    .GetAwaiter()
-                    .GetResult()
+                    },
+                    RequestOptions
+                )
         );
     }
 }

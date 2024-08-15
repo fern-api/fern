@@ -1,6 +1,9 @@
+using System.Globalization;
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExhaustive.Core;
 using SeedExhaustive.Test.Wire;
 
 #nullable enable
@@ -11,7 +14,7 @@ namespace SeedExhaustive.Test;
 public class GetAndReturnDatetimeTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             "2024-01-15T09:30:00Z"
@@ -27,7 +30,7 @@ public class GetAndReturnDatetimeTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/primitive/datetime")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -36,11 +39,13 @@ public class GetAndReturnDatetimeTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Endpoints.Primitive.GetAndReturnDatetimeAsync(
-                new DateTime(2024, 01, 15, 09, 30, 00, 000)
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
+            DateTime.Parse("2024-01-15T09:30:00.000Z", null, DateTimeStyles.AdjustToUniversal),
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

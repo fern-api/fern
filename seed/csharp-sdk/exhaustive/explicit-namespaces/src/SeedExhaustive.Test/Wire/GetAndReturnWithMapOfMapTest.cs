@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExhaustive.Core;
 using SeedExhaustive.Test.Wire;
 using SeedExhaustive.Types.Object;
 
@@ -12,7 +14,7 @@ namespace SeedExhaustive.Test;
 public class GetAndReturnWithMapOfMapTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -40,7 +42,7 @@ public class GetAndReturnWithMapOfMapTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/object/get-and-return-with-map-of-map")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -49,20 +51,22 @@ public class GetAndReturnWithMapOfMapTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Endpoints.Object.GetAndReturnWithMapOfMapAsync(
-                new ObjectWithMapOfMap
+        var response = await Client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
+            new ObjectWithMapOfMap
+            {
+                Map = new Dictionary<string, Dictionary<string, string>>()
                 {
-                    Map = new Dictionary<string, Dictionary<string, string>>()
                     {
-                        {
-                            "string",
-                            new Dictionary<string, string>() { { "string", "string" }, }
-                        },
-                    }
+                        "string",
+                        new Dictionary<string, string>() { { "string", "string" }, }
+                    },
                 }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

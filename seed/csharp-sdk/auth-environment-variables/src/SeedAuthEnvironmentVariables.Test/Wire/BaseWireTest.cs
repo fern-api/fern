@@ -15,6 +15,8 @@ public class BaseWireTest
 
     protected static SeedAuthEnvironmentVariablesClient Client { get; set; } = null!;
 
+    protected static RequestOptions RequestOptions { get; set; } = null!;
+
     [OneTimeSetUp]
     public void GlobalSetup()
     {
@@ -24,10 +26,9 @@ public class BaseWireTest
         );
 
         // Initialize the Client
-        Client = new SeedAuthEnvironmentVariablesClient(
-            "API_KEY",
-            new ClientOptions { BaseUrl = Server.Urls[0] }
-        );
+        Client = new SeedAuthEnvironmentVariablesClient("X_ANOTHER_HEADER", "API_KEY");
+
+        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }
 
     [OneTimeTearDown]

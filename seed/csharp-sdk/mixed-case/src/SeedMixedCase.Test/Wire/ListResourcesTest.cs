@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMixedCase;
+using SeedMixedCase.Core;
 using SeedMixedCase.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedMixedCase.Test;
 public class ListResourcesTest : BaseWireTest
 {
     [Test]
-    public void WireTest_1()
+    public async Task WireTest_1()
     {
         const string mockResponse = """
             [
@@ -36,6 +38,7 @@ public class ListResourcesTest : BaseWireTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/resource")
+                    .WithParam("page_limit", "1")
                     .WithParam("beforeDate", "2023-01-15")
                     .UsingGet()
             )
@@ -46,16 +49,18 @@ public class ListResourcesTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Service.ListResourcesAsync(
-                new ListResourcesRequest { PageLimit = 1, BeforeDate = new DateOnly(2023, 1, 15) }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.ListResourcesAsync(
+            new ListResourcesRequest { PageLimit = 1, BeforeDate = new DateOnly(2023, 1, 15) },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 
     [Test]
-    public void WireTest_2()
+    public async Task WireTest_2()
     {
         const string mockResponse = """
             [
@@ -79,6 +84,7 @@ public class ListResourcesTest : BaseWireTest
                 WireMock
                     .RequestBuilders.Request.Create()
                     .WithPath("/resource")
+                    .WithParam("page_limit", "10")
                     .WithParam("beforeDate", "2023-01-01")
                     .UsingGet()
             )
@@ -89,11 +95,13 @@ public class ListResourcesTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Service.ListResourcesAsync(
-                new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.ListResourcesAsync(
+            new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

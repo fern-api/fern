@@ -57,6 +57,18 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
             })
         );
 
+        class_.addField(
+            csharp.field({
+                access: "protected",
+                name: "RequestOptions",
+                static_: true,
+                type: csharp.Type.reference(this.context.getRequestOptionsClassReference()),
+                get: true,
+                initializer: csharp.codeblock("null!"),
+                set: true
+            })
+        );
+
         class_.addMethod(
             csharp.method({
                 name: "GlobalSetup",
@@ -82,7 +94,16 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
 
                     writer.writeLine("// Initialize the Client");
                     writer.writeLine("Client = ");
-                    writer.writeNodeStatement(this.getClientInstantiation());
+                    writer.writeNodeStatement(this.rootClientGenerator.generateExampleClientInstantiationSnippet());
+                    writer.newLine();
+
+                    writer.writeLine("RequestOptions = ");
+                    writer.writeNodeStatement(
+                        new csharp.ClassInstantiation({
+                            classReference: this.context.getRequestOptionsClassReference(),
+                            arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
+                        })
+                    );
                 }),
                 isAsync: false,
                 parameters: [],
@@ -119,14 +140,6 @@ export class BaseWireTestGenerator extends FileGenerator<CSharpFile, SdkCustomCo
             namespace: this.context.getNamespace(),
             customConfig: this.context.customConfig
         });
-    }
-
-    private getClientInstantiation(): csharp.ClassInstantiation {
-        const clientOptions = new csharp.ClassInstantiation({
-            classReference: this.context.getClientOptionsClassReference(),
-            arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
-        });
-        return this.rootClientGenerator.generateExampleClientInstantiationSnippet(clientOptions);
     }
 
     protected getFilepath(): RelativeFilePath {

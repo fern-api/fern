@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExhaustive.Core;
 using SeedExhaustive.Test.Wire;
 using SeedExhaustive.Types;
 
@@ -12,7 +14,7 @@ namespace SeedExhaustive.Test;
 public class GetAndReturnOptionalTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -32,7 +34,7 @@ public class GetAndReturnOptionalTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/container/opt-objects")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -41,11 +43,13 @@ public class GetAndReturnOptionalTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Endpoints.Container.GetAndReturnOptionalAsync(
-                new ObjectWithRequiredField { String = "string" }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Endpoints.Container.GetAndReturnOptionalAsync(
+            new ObjectWithRequiredField { String = "string" },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

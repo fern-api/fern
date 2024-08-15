@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedCustomAuth.Core;
 using SeedCustomAuth.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedCustomAuth.Test;
 public class PostWithCustomAuthTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -29,7 +31,7 @@ public class PostWithCustomAuthTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/custom-auth")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -38,11 +40,13 @@ public class PostWithCustomAuthTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .CustomAuth.PostWithCustomAuthAsync(
-                new Dictionary<object, object?>() { { "key", "value" }, }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.CustomAuth.PostWithCustomAuthAsync(
+            new Dictionary<object, object?>() { { "key", "value" }, },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

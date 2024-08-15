@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedErrorProperty.Core;
 using SeedErrorProperty.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedErrorProperty.Test;
 public class ThrowErrorTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             "string"
@@ -31,7 +33,10 @@ public class ThrowErrorTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.PropertyBasedError.ThrowErrorAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.PropertyBasedError.ThrowErrorAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

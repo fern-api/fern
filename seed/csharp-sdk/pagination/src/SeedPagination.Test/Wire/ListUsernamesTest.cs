@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPagination;
+using SeedPagination.Core;
 using SeedPagination.Test.Wire;
 
 #nullable enable
@@ -12,11 +14,16 @@ namespace SeedPagination.Test;
 public class ListUsernamesTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             {
-              "cursor": {}
+              "cursor": {
+                "after": "string",
+                "data": [
+                  "string"
+                ]
+              }
             }
             """;
 
@@ -35,9 +42,13 @@ public class ListUsernamesTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Users.ListUsernamesAsync(new ListUsernamesRequest { StartingAfter = "string" })
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Users.ListUsernamesAsync(
+            new ListUsernamesRequest { StartingAfter = "string" },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

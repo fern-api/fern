@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedUnions;
+using SeedUnions.Core;
 using SeedUnions.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedUnions.Test;
 public class UpdateTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -32,7 +34,7 @@ public class UpdateTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/")
                     .UsingPatch()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -41,7 +43,13 @@ public class UpdateTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Union.UpdateAsync(new Circle { Id = "string", Radius = 1.1 }).Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Union.UpdateAsync(
+            new Circle { Id = "string", Radius = 1.1 },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

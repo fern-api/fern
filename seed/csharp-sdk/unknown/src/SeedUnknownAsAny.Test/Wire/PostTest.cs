@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedUnknownAsAny.Core;
 using SeedUnknownAsAny.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedUnknownAsAny.Test;
 public class PostTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -33,7 +35,7 @@ public class PostTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -42,9 +44,13 @@ public class PostTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "value" }, })
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Unknown.PostAsync(
+            new Dictionary<object, object?>() { { "key", "value" }, },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

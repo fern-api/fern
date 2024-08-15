@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedBasicAuthEnvironmentVariables.Core;
 using SeedBasicAuthEnvironmentVariables.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedBasicAuthEnvironmentVariables.Test;
 public class GetWithBasicAuthTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             true
@@ -26,7 +28,10 @@ public class GetWithBasicAuthTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.BasicAuth.GetWithBasicAuthAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.BasicAuth.GetWithBasicAuthAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

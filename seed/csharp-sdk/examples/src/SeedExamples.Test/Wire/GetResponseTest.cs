@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedExamples.Core;
 using SeedExamples.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedExamples.Test;
 public class GetResponseTest : BaseWireTest
 {
     [Test]
-    public void WireTest_1()
+    public async Task WireTest_1()
     {
         const string mockResponse = """
             {
@@ -40,12 +42,15 @@ public class GetResponseTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Service.GetResponseAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.GetResponseAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 
     [Test]
-    public void WireTest_2()
+    public async Task WireTest_2()
     {
         const string mockResponse = """
             {
@@ -74,7 +79,10 @@ public class GetResponseTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Service.GetResponseAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.GetResponseAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

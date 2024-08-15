@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedTrace.Core;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedTrace.Test;
 public class GetProblemsTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             [
@@ -38,12 +40,82 @@ public class GetProblemsTest : BaseWireTest
                 "customFiles": {
                   "type": "basic"
                 },
-                "generatedFiles": {},
+                "generatedFiles": {
+                  "generatedTestCaseFiles": {
+                    "string": {
+                      "files": [
+                        {
+                          "key": "value"
+                        }
+                      ]
+                    }
+                  },
+                  "generatedTemplateFiles": {
+                    "string": {
+                      "files": [
+                        {
+                          "key": "value"
+                        }
+                      ]
+                    }
+                  },
+                  "other": {
+                    "string": {
+                      "files": [
+                        {
+                          "key": "value"
+                        }
+                      ]
+                    }
+                  }
+                },
                 "customTestCaseTemplates": [
-                  {}
+                  {
+                    "templateId": "string",
+                    "name": "string",
+                    "implementation": {
+                      "description": {
+                        "boards": [
+                          {
+                            "type": "html",
+                            "key": "value"
+                          }
+                        ]
+                      },
+                      "function": {
+                        "type": "withActualResult"
+                      }
+                    }
+                  }
                 ],
                 "testcases": [
-                  {}
+                  {
+                    "metadata": {
+                      "id": "string",
+                      "name": "string",
+                      "hidden": true
+                    },
+                    "implementation": {
+                      "0": "s",
+                      "1": "t",
+                      "2": "r",
+                      "3": "i",
+                      "4": "n",
+                      "5": "g",
+                      "type": "templateId"
+                    },
+                    "arguments": {
+                      "string": {
+                        "type": "integerValue",
+                        "key": "value"
+                      }
+                    },
+                    "expects": {
+                      "expectedStdout": {
+                        "key": "value"
+                      }
+                    }
+                  }
                 ],
                 "isPublic": true
               }
@@ -64,7 +136,10 @@ public class GetProblemsTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.V2.V3.Problem.GetProblemsAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.V2.V3.Problem.GetProblemsAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

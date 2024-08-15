@@ -20,8 +20,9 @@ public class PostTest : BaseWireTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () => Client.Service.PostAsync("string", "string", "string", 1).GetAwaiter().GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Service.PostAsync("string", "string", "string", 1, RequestOptions)
         );
     }
 }

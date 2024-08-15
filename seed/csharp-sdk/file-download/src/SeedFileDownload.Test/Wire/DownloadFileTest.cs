@@ -1,5 +1,3 @@
-using FluentAssertions.Json;
-using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedFileDownload.Test.Wire;
 
@@ -13,20 +11,12 @@ public class DownloadFileTest : BaseWireTest
     [Test]
     public void WireTest()
     {
-        const string mockResponse = """
-            "SGVsbG8gd29ybGQh"
-            """;
-
         Server
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/").UsingPost())
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        var response = Client.Service.DownloadFileAsync().GetAwaiter().GetResult();
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        Assert.DoesNotThrowAsync(
+            async () => await Client.Service.DownloadFileAsync(RequestOptions)
+        );
     }
 }

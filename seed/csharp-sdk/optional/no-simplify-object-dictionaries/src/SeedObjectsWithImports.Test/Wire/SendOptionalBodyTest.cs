@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedObjectsWithImports.Core;
 using SeedObjectsWithImports.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedObjectsWithImports.Test;
 public class SendOptionalBodyTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -31,7 +33,7 @@ public class SendOptionalBodyTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/send-optional-body")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -40,17 +42,19 @@ public class SendOptionalBodyTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Optional.SendOptionalBodyAsync(
-                new Dictionary<string, object>()
+        var response = await Client.Optional.SendOptionalBodyAsync(
+            new Dictionary<string, object>()
+            {
                 {
-                    {
-                        "string",
-                        new Dictionary<object, object?>() { { "key", "value" }, }
-                    },
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+                    "string",
+                    new Dictionary<object, object?>() { { "key", "value" }, }
+                },
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

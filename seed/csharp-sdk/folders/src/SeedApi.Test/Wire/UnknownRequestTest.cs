@@ -23,18 +23,16 @@ public class UnknownRequestTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/service")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .Folder.Service.UnknownRequestAsync(
-                        new Dictionary<object, object?>() { { "key", "value" }, }
-                    )
-                    .GetAwaiter()
-                    .GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Folder.Service.UnknownRequestAsync(
+                    new Dictionary<object, object?>() { { "key", "value" }, },
+                    RequestOptions
+                )
         );
     }
 }

@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedResponseProperty.Core;
 using SeedResponseProperty.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedResponseProperty.Test;
 public class GetMovieMetadataTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             "string"
@@ -29,7 +31,7 @@ public class GetMovieMetadataTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/movie")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -38,7 +40,10 @@ public class GetMovieMetadataTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Service.GetMovieMetadataAsync("string").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.GetMovieMetadataAsync("string", RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

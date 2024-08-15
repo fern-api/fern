@@ -118,13 +118,14 @@ export class EndpointGenerator {
         clientVariableName,
         serviceId,
         serviceFilePath,
-        getResult = false
+        requestOptions
     }: {
         example: ExampleEndpointCall;
         endpoint: HttpEndpoint;
         clientVariableName: string;
         serviceId: ServiceId;
         serviceFilePath: FernFilepath;
+        requestOptions?: csharp.CodeBlock;
         getResult?: boolean;
     }): csharp.MethodInvocation | undefined {
         const requestBodyType = endpoint.requestBody?.type;
@@ -143,14 +144,16 @@ export class EndpointGenerator {
                 writer.write(`.${path.pascalCase.safeName}`);
             }
         });
+        if (requestOptions != null) {
+            args.push(requestOptions);
+        }
         this.getEndpointReturnType({ endpoint });
         return new csharp.MethodInvocation({
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
             on,
-            async: false,
-            generics: [],
-            result: getResult ? (this.getEndpointReturnType({ endpoint }) != null ? "value" : "void") : undefined
+            async: true,
+            generics: []
         });
     }
 
@@ -197,25 +200,6 @@ export class EndpointGenerator {
             throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
         }
         return this.exampleGenerator.getSnippetForTypeReference(exampleRequestBody);
-        // switch (exampleRequestBody.type) {
-        //     case "reference":
-        //         return this.exampleGenerator.getSnippetForTypeReference(exampleRequestBody);
-        //     case "inlinedRequestBody": {
-        //         const args: { name: string; assignment: CodeBlock }[] = [];
-        //         for (const property of exampleRequestBody.properties) {
-        //             const value = this.exampleGenerator.getSnippetForTypeReference(property.value);
-        //             args.push({ name: property.name.name.pascalCase.safeName, assignment: value });
-        //         }
-        //         if (shape.value.type === "bytes") {
-        //             throw new Error("Unexpected bytes type");
-        //         }
-        //         const instantiateClass = csharp.instantiateClass({
-        //             classReference: this.classReference,
-        //             arguments_: args
-        //         });
-        //     }
-        //     default:
-        // }
     }
 
     private getEndpointRequest({

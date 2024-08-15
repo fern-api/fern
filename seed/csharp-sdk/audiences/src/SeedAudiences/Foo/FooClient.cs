@@ -22,10 +22,10 @@ public partial class FooClient
         {
             _query["optionalString"] = request.OptionalString;
         }
-        var requestBody = new
+        var requestBody = new Dictionary<string, object>()
         {
-            publicProperty = request.PublicProperty,
-            privateProperty = request.PrivateProperty
+            { "publicProperty", request.PublicProperty },
+            { "privateProperty", request.PrivateProperty },
         };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

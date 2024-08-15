@@ -15,8 +15,8 @@ public class CheckTest : BaseWireTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/check/string").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () => Client.Health.Service.CheckAsync("string").GetAwaiter().GetResult()
+        Assert.DoesNotThrowAsync(
+            async () => await Client.Health.Service.CheckAsync("string", RequestOptions)
         );
     }
 
@@ -27,8 +27,8 @@ public class CheckTest : BaseWireTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/check/string").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () => Client.Health.Service.CheckAsync("string").GetAwaiter().GetResult()
+        Assert.DoesNotThrowAsync(
+            async () => await Client.Health.Service.CheckAsync("string", RequestOptions)
         );
     }
 
@@ -41,8 +41,8 @@ public class CheckTest : BaseWireTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () => Client.Health.Service.CheckAsync("id-2sdx82h").GetAwaiter().GetResult()
+        Assert.DoesNotThrowAsync(
+            async () => await Client.Health.Service.CheckAsync("id-2sdx82h", RequestOptions)
         );
     }
 
@@ -55,8 +55,8 @@ public class CheckTest : BaseWireTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () => Client.Health.Service.CheckAsync("id-3tey93i").GetAwaiter().GetResult()
+        Assert.DoesNotThrowAsync(
+            async () => await Client.Health.Service.CheckAsync("id-3tey93i", RequestOptions)
         );
     }
 }

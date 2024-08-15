@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace;
+using SeedTrace.Core;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedTrace.Test;
 public class UpdateProblemTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -86,7 +88,7 @@ public class UpdateProblemTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/problem-crud/update/string")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -95,59 +97,61 @@ public class UpdateProblemTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Problem.UpdateProblemAsync(
-                "string",
-                new CreateProblemRequest
+        var response = await Client.Problem.UpdateProblemAsync(
+            "string",
+            new CreateProblemRequest
+            {
+                ProblemName = "string",
+                ProblemDescription = new ProblemDescription
                 {
-                    ProblemName = "string",
-                    ProblemDescription = new ProblemDescription
+                    Boards = new List<object>() { "string" }
+                },
+                Files = new Dictionary<Language, ProblemFiles>()
+                {
                     {
-                        Boards = new List<object>() { "string" }
-                    },
-                    Files = new Dictionary<Language, ProblemFiles>()
-                    {
+                        Language.Java,
+                        new ProblemFiles
                         {
-                            Language.Java,
-                            new ProblemFiles
+                            SolutionFile = new FileInfo
                             {
-                                SolutionFile = new FileInfo
-                                {
-                                    Filename = "string",
-                                    Contents = "string"
-                                },
-                                ReadOnlyFiles = new List<FileInfo>()
-                                {
-                                    new FileInfo { Filename = "string", Contents = "string" }
-                                }
-                            }
-                        },
-                    },
-                    InputParams = new List<VariableTypeAndName>()
-                    {
-                        new VariableTypeAndName
-                        {
-                            VariableType = "no-properties-union",
-                            Name = "string"
-                        }
-                    },
-                    OutputType = "no-properties-union",
-                    Testcases = new List<TestCaseWithExpectedResult>()
-                    {
-                        new TestCaseWithExpectedResult
-                        {
-                            TestCase = new TestCase
-                            {
-                                Id = "string",
-                                Params = new List<object>() { 1 }
+                                Filename = "string",
+                                Contents = "string"
                             },
-                            ExpectedResult = 1
+                            ReadOnlyFiles = new List<FileInfo>()
+                            {
+                                new FileInfo { Filename = "string", Contents = "string" }
+                            }
                         }
                     },
-                    MethodName = "string"
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+                },
+                InputParams = new List<VariableTypeAndName>()
+                {
+                    new VariableTypeAndName
+                    {
+                        VariableType = "no-properties-union",
+                        Name = "string"
+                    }
+                },
+                OutputType = "no-properties-union",
+                Testcases = new List<TestCaseWithExpectedResult>()
+                {
+                    new TestCaseWithExpectedResult
+                    {
+                        TestCase = new TestCase
+                        {
+                            Id = "string",
+                            Params = new List<object>() { 1 }
+                        },
+                        ExpectedResult = 1
+                    }
+                },
+                MethodName = "string"
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

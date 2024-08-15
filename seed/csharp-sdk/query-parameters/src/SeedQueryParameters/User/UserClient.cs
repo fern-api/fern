@@ -23,7 +23,7 @@ public partial class UserClient
         var _query = new Dictionary<string, object>() { };
         _query["limit"] = request.Limit.ToString();
         _query["id"] = request.Id.ToString();
-        _query["date"] = request.Date.ToString();
+        _query["date"] = request.Date.ToString(Constants.DateFormat);
         _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
         _query["bytes"] = request.Bytes.ToString();
         _query["user"] = request.User.ToString();

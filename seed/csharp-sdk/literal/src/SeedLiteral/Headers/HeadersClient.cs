@@ -25,7 +25,7 @@ public partial class HeadersClient
             { "X-Endpoint-Version", request.EndpointVersion.ToString() },
             { "X-Async", request.Async.ToString() },
         };
-        var requestBody = new { query = request.Query };
+        var requestBody = new Dictionary<string, object>() { { "query", request.Query }, };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

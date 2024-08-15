@@ -21,5 +21,5 @@ export enum AsIsFiles {
     Constants = "Constants.cs",
     DateTimeSerializer = "DateTimeSerializer.cs",
     JsonConfiguration = "JsonConfiguration.cs",
-    JsonDiffChecker = "JsonDiffChecker.cs"
+    Extensions = "Extensions.cs"
 }

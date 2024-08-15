@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedApi.Core;
 using SeedApi.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedApi.Test;
 public class GetMovieTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             {
@@ -30,7 +32,10 @@ public class GetMovieTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Imdb.GetMovieAsync("string").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Imdb.GetMovieAsync("string", RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

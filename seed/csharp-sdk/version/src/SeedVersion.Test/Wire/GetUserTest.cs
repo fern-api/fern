@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedVersion.Core;
 using SeedVersion.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedVersion.Test;
 public class GetUserTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             {
@@ -29,7 +31,10 @@ public class GetUserTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.User.GetUserAsync("string").Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.User.GetUserAsync("string", RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

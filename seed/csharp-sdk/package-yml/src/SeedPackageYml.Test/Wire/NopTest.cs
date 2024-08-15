@@ -15,8 +15,8 @@ public class NopTest : BaseWireTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("/string//string").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () => Client.Service.NopAsync("string", "string").GetAwaiter().GetResult()
+        Assert.DoesNotThrowAsync(
+            async () => await Client.Service.NopAsync("string", "string", RequestOptions)
         );
     }
 
@@ -27,8 +27,8 @@ public class NopTest : BaseWireTest
             .Given(WireMock.RequestBuilders.Request.Create().WithPath("//id-219xca8").UsingGet())
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () => Client.Service.NopAsync("id-a2ijs82", "id-219xca8").GetAwaiter().GetResult()
+        Assert.DoesNotThrowAsync(
+            async () => await Client.Service.NopAsync("id-a2ijs82", "id-219xca8", RequestOptions)
         );
     }
 }

@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExamples;
+using SeedExamples.Core;
 using SeedExamples.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedExamples.Test;
 public class CreateMovieTest : BaseWireTest
 {
     [Test]
-    public void WireTest_1()
+    public async Task WireTest_1()
     {
         const string requestJson = """
             {
@@ -48,7 +50,7 @@ public class CreateMovieTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/movie")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -57,46 +59,43 @@ public class CreateMovieTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Service.CreateMovieAsync(
-                new Movie
+        var response = await Client.Service.CreateMovieAsync(
+            new Movie
+            {
+                Id = "movie-c06a4ad7",
+                Prequel = "movie-cv9b914f",
+                Title = "The Boy and the Heron",
+                From = "Hayao Miyazaki",
+                Rating = 8,
+                Type = "movie",
+                Tag = "tag-wf9as23d",
+                Metadata = new Dictionary<string, object>()
                 {
-                    Id = "movie-c06a4ad7",
-                    Prequel = "movie-cv9b914f",
-                    Title = "The Boy and the Heron",
-                    From = "Hayao Miyazaki",
-                    Rating = 8,
-                    Type = "movie",
-                    Tag = "tag-wf9as23d",
-                    Metadata = new Dictionary<string, object>()
                     {
+                        "actors",
+                        new List<object?>() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
+                    },
+                    { "releaseDate", "2023-12-08" },
+                    {
+                        "ratings",
+                        new Dictionary<object, object?>()
                         {
-                            "actors",
-                            new List<object?>()
-                            {
-                                "Christian Bale",
-                                "Florence Pugh",
-                                "Willem Dafoe"
-                            }
-                        },
-                        { "releaseDate", "2023-12-08" },
-                        {
-                            "ratings",
-                            new Dictionary<object, object?>()
-                            {
-                                { "imdb", 7.6 },
-                                { "rottenTomatoes", 97 },
-                            }
-                        },
-                    }
+                            { "imdb", 7.6 },
+                            { "rottenTomatoes", 97 },
+                        }
+                    },
                 }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 
     [Test]
-    public void WireTest_2()
+    public async Task WireTest_2()
     {
         const string requestJson = """
             {
@@ -132,7 +131,7 @@ public class CreateMovieTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("//movie")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -141,41 +140,38 @@ public class CreateMovieTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Service.CreateMovieAsync(
-                new Movie
+        var response = await Client.Service.CreateMovieAsync(
+            new Movie
+            {
+                Id = "movie-c06a4ad7",
+                Prequel = "movie-cv9b914f",
+                Title = "The Boy and the Heron",
+                From = "Hayao Miyazaki",
+                Rating = 8,
+                Type = "movie",
+                Tag = "tag-wf9as23d",
+                Metadata = new Dictionary<string, object>()
                 {
-                    Id = "movie-c06a4ad7",
-                    Prequel = "movie-cv9b914f",
-                    Title = "The Boy and the Heron",
-                    From = "Hayao Miyazaki",
-                    Rating = 8,
-                    Type = "movie",
-                    Tag = "tag-wf9as23d",
-                    Metadata = new Dictionary<string, object>()
                     {
+                        "actors",
+                        new List<object?>() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
+                    },
+                    { "releaseDate", "2023-12-08" },
+                    {
+                        "ratings",
+                        new Dictionary<object, object?>()
                         {
-                            "actors",
-                            new List<object?>()
-                            {
-                                "Christian Bale",
-                                "Florence Pugh",
-                                "Willem Dafoe"
-                            }
-                        },
-                        { "releaseDate", "2023-12-08" },
-                        {
-                            "ratings",
-                            new Dictionary<object, object?>()
-                            {
-                                { "imdb", 7.6 },
-                                { "rottenTomatoes", 97 },
-                            }
-                        },
-                    }
+                            { "imdb", 7.6 },
+                            { "rottenTomatoes", 97 },
+                        }
+                    },
                 }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

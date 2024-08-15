@@ -16,9 +16,16 @@ public class StoreTracedWorkspaceTest : BaseWireTest
             {
               "workspaceRunDetails": {
                 "exceptionV2": {
-                  "type": "generic"
+                  "type": "generic",
+                  "exceptionType": "string",
+                  "exceptionMessage": "string",
+                  "exceptionStacktrace": "string"
                 },
-                "exception": {},
+                "exception": {
+                  "exceptionType": "string",
+                  "exceptionMessage": "string",
+                  "exceptionStacktrace": "string"
+                },
                 "stdout": "string"
               },
               "traceResponses": [
@@ -28,8 +35,26 @@ public class StoreTracedWorkspaceTest : BaseWireTest
                   "returnValue": {
                     "type": "integerValue"
                   },
-                  "expressionLocation": {},
-                  "stack": {},
+                  "expressionLocation": {
+                    "start": 1,
+                    "offset": 1
+                  },
+                  "stack": {
+                    "numStackFrames": 1,
+                    "topStackFrame": {
+                      "methodName": "string",
+                      "lineNumber": 1,
+                      "scopes": [
+                        {
+                          "variables": {
+                            "string": {
+                              "key": "value"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
                   "stdout": "string"
                 }
               ]
@@ -44,39 +69,75 @@ public class StoreTracedWorkspaceTest : BaseWireTest
                         "/admin/store-workspace-trace/submission/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
                     )
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .Admin.StoreTracedWorkspaceAsync(
-                        "this.internalType.value.toString()",
-                        new StoreTracedWorkspaceRequest
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Admin.StoreTracedWorkspaceAsync(
+                    "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    new StoreTracedWorkspaceRequest
+                    {
+                        WorkspaceRunDetails = new WorkspaceRunDetails
                         {
-                            WorkspaceRunDetails = new WorkspaceRunDetails
+                            ExceptionV2 = new ExceptionInfo
                             {
-                                ExceptionV2 = new ExceptionInfo(),
-                                Exception = new ExceptionInfo(),
-                                Stdout = "string"
+                                ExceptionType = "string",
+                                ExceptionMessage = "string",
+                                ExceptionStacktrace = "string"
                             },
-                            TraceResponses = new List<TraceResponse>()
+                            Exception = new ExceptionInfo
                             {
-                                new TraceResponse
+                                ExceptionType = "string",
+                                ExceptionMessage = "string",
+                                ExceptionStacktrace = "string"
+                            },
+                            Stdout = "string"
+                        },
+                        TraceResponses = new List<TraceResponse>()
+                        {
+                            new TraceResponse
+                            {
+                                SubmissionId = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                                LineNumber = 1,
+                                ReturnValue = 1,
+                                ExpressionLocation = new ExpressionLocation
                                 {
-                                    SubmissionId = "this.internalType.value.toString()",
-                                    LineNumber = 1,
-                                    ReturnValue = 1,
-                                    ExpressionLocation = new ExpressionLocation(),
-                                    Stack = new StackInformation(),
-                                    Stdout = "string"
-                                }
+                                    Start = 1,
+                                    Offset = 1
+                                },
+                                Stack = new StackInformation
+                                {
+                                    NumStackFrames = 1,
+                                    TopStackFrame = new StackFrame
+                                    {
+                                        MethodName = "string",
+                                        LineNumber = 1,
+                                        Scopes = new List<Scope>()
+                                        {
+                                            new Scope
+                                            {
+                                                Variables = new Dictionary<string, object>()
+                                                {
+                                                    {
+                                                        "string",
+                                                        new Dictionary<object, object?>()
+                                                        {
+                                                            { "key", "value" },
+                                                        }
+                                                    },
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                Stdout = "string"
                             }
                         }
-                    )
-                    .GetAwaiter()
-                    .GetResult()
+                    },
+                    RequestOptions
+                )
         );
     }
 }

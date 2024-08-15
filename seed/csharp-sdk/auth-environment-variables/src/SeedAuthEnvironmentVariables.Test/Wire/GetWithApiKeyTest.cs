@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedAuthEnvironmentVariables.Core;
 using SeedAuthEnvironmentVariables.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedAuthEnvironmentVariables.Test;
 public class GetWithApiKeyTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             "string"
@@ -26,7 +28,10 @@ public class GetWithApiKeyTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Service.GetWithApiKeyAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Service.GetWithApiKeyAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

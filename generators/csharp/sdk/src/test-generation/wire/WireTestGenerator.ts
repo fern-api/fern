@@ -1,6 +1,12 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ExampleEndpointCall, FernFilepath, HttpEndpoint, ServiceId } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleEndpointCall,
+    ExampleTypeReference,
+    FernFilepath,
+    HttpEndpoint,
+    ServiceId
+} from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "../../endpoint/EndpointGenerator";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext, WIRE_TEST_FOLDER } from "../../SdkGeneratorContext";
@@ -38,6 +44,19 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
             parentClassReference: this.context.getBaseWireTestClassReference()
         });
         this.exampleEndpointCalls.forEach((example, index) => {
+            let responseSupported = false;
+            let jsonExampleResponse: unknown | undefined = undefined;
+            if (example.response != null) {
+                if (example.response.type !== "ok" || example.response.value.type !== "body") {
+                    throw new Error("Unexpected error response type");
+                }
+                jsonExampleResponse = example.response.value.value?.jsonExample;
+            }
+            const responseBodyType = this.endpoint.response?.body?.type;
+            // where or not we support this repsonse type in this generator; the example json may
+            // have a response that we can return, but our generated method actually returns void
+            responseSupported =
+                jsonExampleResponse != null && (responseBodyType === "json" || responseBodyType === "text");
             const methodBody = csharp.codeblock((writer) => {
                 if (example.request != null) {
                     writer.writeLine('const string requestJson = """');
@@ -45,33 +64,32 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
                     writer.writeTextStatement('"""');
                 }
                 writer.newLine();
-                let hasJsonExampleResponse = false;
-                if (example.response != null) {
-                    if (example.response.type !== "ok" || example.response.value.type !== "body") {
-                        throw new Error("Unexpected error response type");
-                    }
-                    const jsonExampleResponse = example.response.value.value?.jsonExample;
-                    if (jsonExampleResponse != null) {
-                        hasJsonExampleResponse = true;
+
+                if (jsonExampleResponse != null) {
+                    if (responseBodyType === "json") {
                         writer.writeLine('const string mockResponse = """');
                         writer.writeLine(JSON.stringify(jsonExampleResponse, null, 2));
                         writer.writeTextStatement('"""');
+                    } else if (responseBodyType === "text") {
+                        writer.writeTextStatement(`const string mockResponse = "${jsonExampleResponse as string}"`);
                     }
                 }
+
                 writer.newLine();
 
                 writer.write("Server.Given(WireMock.RequestBuilders.Request.Create()");
                 writer.write(`.WithPath("${example.url || "/"}")`);
 
-                // TODO: include examples that aren't strings, need to figure out encoding etc.
                 for (const parameter of example.queryParameters) {
-                    if (typeof parameter.value.jsonExample === "string") {
-                        writer.write(`.WithParam("${parameter.name.wireValue}", "${parameter.value.jsonExample}")`);
+                    const maybeParameterValue = this.exampleToQueryOrHeaderValue(parameter);
+                    if (maybeParameterValue != null) {
+                        writer.write(`.WithParam("${parameter.name.wireValue}", "${maybeParameterValue}")`);
                     }
                 }
                 for (const header of [...example.serviceHeaders, ...example.endpointHeaders]) {
-                    if (typeof header.value.jsonExample === "string") {
-                        writer.write(`.WithHeader("${header.name.wireValue}", "${header.value.jsonExample}")`);
+                    const maybeHeaderValue = this.exampleToQueryOrHeaderValue(header);
+                    if (maybeHeaderValue != null) {
+                        writer.write(`.WithHeader("${header.name.wireValue}", "${maybeHeaderValue}")`);
                     }
                 }
                 writer.write(
@@ -80,14 +98,18 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
                     }()`
                 );
                 if (example.request != null) {
-                    writer.write(".WithBody(requestJson)");
+                    writer.write(".WithBodyAsJson(requestJson)");
                 }
                 writer.writeLine(")");
                 writer.newLine();
                 writer.writeLine(".RespondWith(WireMock.ResponseBuilders.Response.Create()");
                 writer.writeLine(".WithStatusCode(200)");
-                if (hasJsonExampleResponse) {
-                    writer.writeTextStatement(".WithBody(mockResponse))");
+                if (responseSupported) {
+                    if (responseBodyType === "json") {
+                        writer.writeTextStatement(".WithBody(mockResponse))");
+                    } else if (responseBodyType === "text") {
+                        writer.writeTextStatement(".WithBodyAsJson(mockResponse))");
+                    }
                 } else {
                     writer.writeTextStatement(")");
                 }
@@ -99,36 +121,43 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
                     clientVariableName: "Client",
                     serviceId: this.serviceId,
                     serviceFilePath: this.serviceFilePath,
-                    getResult: true
+                    getResult: true,
+                    requestOptions: csharp.codeblock("RequestOptions")
                 });
                 if (endpointSnippet == null) {
                     throw new Error("Endpoint snippet is null");
                 }
-                if (hasJsonExampleResponse) {
+                if (responseSupported) {
                     writer.write("var response = ");
                 } else {
-                    writer.write("Assert.DoesNotThrow(() => ");
+                    writer.write("Assert.DoesNotThrowAsync(async () => ");
                 }
                 writer.writeNode(endpointSnippet);
-                if (!hasJsonExampleResponse) {
+                if (!responseSupported) {
                     writer.write(")");
                 }
                 writer.write(";");
 
-                if (hasJsonExampleResponse) {
+                if (responseSupported) {
                     writer.newLine();
-
-                    writer.addReference(this.context.getFluentAssetionsJsonClassReference());
-                    writer.writeNode(this.context.getJTokenClassReference());
-                    writer.write(".Parse(serializedJson).Should().BeEquivalentTo(");
-                    writer.writeNode(this.context.getJTokenClassReference());
-                        writer.writeTextStatement(".Parse(response))");
+                    if (responseBodyType === "json") {
+                        writer.addReference(this.context.getFluentAssetionsJsonClassReference());
+                        writer.writeNode(this.context.getJTokenClassReference());
+                        writer.write(".Parse(mockResponse).Should().BeEquivalentTo(");
+                        writer.writeNode(this.context.getJTokenClassReference());
+                        writer.write(".Parse(");
+                        writer.writeNode(this.context.getJsonUtilsClassReference());
+                        writer.writeTextStatement(".Serialize(response)))");
+                    } else if (responseBodyType === "text") {
+                        writer.writeTextStatement("Assert.That(response, Is.EqualTo(mockResponse))");
+                    }
                 }
             });
             const testNumber = this.exampleEndpointCalls.length > 1 ? `_${index + 1}` : "";
             testClass.addTestMethod({
                 name: `WireTest${testNumber}`,
-                body: methodBody
+                body: methodBody,
+                isAsync: responseSupported
             });
         });
         return new CSharpFile({
@@ -149,7 +178,46 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
         );
     }
 
+    /*
+     If the example not a string, skip for now. If it's a string, check if it's a datetime
+     and normalize the string so that we can match it in wire tests.
+     */
+    private exampleToQueryOrHeaderValue({ value }: { value: ExampleTypeReference }): string | undefined {
+        if (typeof value.jsonExample === "string") {
+            const maybeDatetime = this.getDateTime(value);
+            return maybeDatetime != null ? maybeDatetime.toISOString() : value.jsonExample;
+        }
+        if (typeof value.jsonExample === "number") {
+            return value.jsonExample.toString();
+        }
+        return undefined;
+    }
+
     private getTestClassName(): string {
         return `${this.classReference.name}Test`;
+    }
+
+    private getDateTime(exampleTypeReference: ExampleTypeReference): Date | undefined {
+        switch (exampleTypeReference.shape.type) {
+            case "container":
+                if (exampleTypeReference.shape.container.type !== "optional") {
+                    return undefined;
+                }
+                if (exampleTypeReference.shape.container.optional == null) {
+                    return undefined;
+                }
+                return this.getDateTime(exampleTypeReference.shape.container.optional);
+            case "named":
+                if (exampleTypeReference.shape.shape.type !== "alias") {
+                    return undefined;
+                }
+                return this.getDateTime(exampleTypeReference.shape.shape.value);
+            case "primitive":
+                return exampleTypeReference.shape.primitive.type === "datetime"
+                    ? exampleTypeReference.shape.primitive.datetime
+                    : undefined;
+            case "unknown":
+                return undefined;
+        }
     }
 }

@@ -1,7 +1,10 @@
+using System.Globalization;
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExhaustive;
+using SeedExhaustive.Core;
 using SeedExhaustive.Test.Wire;
 using SeedExhaustive.Types;
 
@@ -13,7 +16,7 @@ namespace SeedExhaustive.Test;
 public class PostWithObjectBodyandResponseTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -73,7 +76,7 @@ public class PostWithObjectBodyandResponseTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/req-bodies/object")
                     .UsingPost()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -82,31 +85,37 @@ public class PostWithObjectBodyandResponseTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .InlinedRequests.PostWithObjectBodyandResponseAsync(
-                new PostWithObjectBody
+        var response = await Client.InlinedRequests.PostWithObjectBodyandResponseAsync(
+            new PostWithObjectBody
+            {
+                String = "string",
+                Integer = 1,
+                NestedObject = new ObjectWithOptionalField
                 {
                     String = "string",
                     Integer = 1,
-                    NestedObject = new ObjectWithOptionalField
-                    {
-                        String = "string",
-                        Integer = 1,
-                        Long = 1000000,
-                        Double = 1.1,
-                        Bool = true,
-                        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-                        Date = new DateOnly(2023, 1, 15),
-                        Uuid = "this.internalType.value.toString()",
-                        Base64 = "SGVsbG8gd29ybGQh",
-                        List = new List<string>() { "string" },
-                        Set = new HashSet<string>() { "string" },
-                        Map = new Dictionary<int, string>() { { 1, "string" }, },
-                        Bigint = "123456789123456789"
-                    }
+                    Long = 1000000,
+                    Double = 1.1,
+                    Bool = true,
+                    Datetime = DateTime.Parse(
+                        "2024-01-15T09:30:00.000Z",
+                        null,
+                        DateTimeStyles.AdjustToUniversal
+                    ),
+                    Date = new DateOnly(2023, 1, 15),
+                    Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    Base64 = "SGVsbG8gd29ybGQh",
+                    List = new List<string>() { "string" },
+                    Set = new HashSet<string>() { "string" },
+                    Map = new Dictionary<int, string>() { { 1, "string" }, },
+                    Bigint = "123456789123456789"
                 }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

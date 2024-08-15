@@ -22,6 +22,8 @@ export declare namespace TestClass {
         name: string;
         /* The body of the test method */
         body: CodeBlock;
+        /* Whether the method is sync or async */
+        isAsync: boolean;
     }
 }
 
@@ -59,7 +61,7 @@ export class TestClass extends AstNode {
             _class.addMethod(
                 new Method({
                     access: Access.Public,
-                    isAsync: false,
+                    isAsync: testMethod.isAsync,
                     name: testMethod.name,
                     parameters: [],
                     body: testMethod.body,

@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace;
+using SeedTrace.Core;
 using SeedTrace.Test.Wire;
 
 #nullable enable
@@ -12,7 +14,7 @@ namespace SeedTrace.Test;
 public class UpdatePlaylistTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string requestJson = """
             {
@@ -40,7 +42,7 @@ public class UpdatePlaylistTest : BaseWireTest
                     .RequestBuilders.Request.Create()
                     .WithPath("/v2/playlist/1/string")
                     .UsingPut()
-                    .WithBody(requestJson)
+                    .WithBodyAsJson(requestJson)
             )
             .RespondWith(
                 WireMock
@@ -49,17 +51,19 @@ public class UpdatePlaylistTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client
-            .Playlist.UpdatePlaylistAsync(
-                1,
-                "string",
-                new UpdatePlaylistRequest
-                {
-                    Name = "string",
-                    Problems = new List<string>() { "string" }
-                }
-            )
-            .Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Playlist.UpdatePlaylistAsync(
+            1,
+            "string",
+            new UpdatePlaylistRequest
+            {
+                Name = "string",
+                Problems = new List<string>() { "string" }
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }

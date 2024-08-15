@@ -22,12 +22,9 @@ public class TestTest : BaseWireTest
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Assert.DoesNotThrow(
-            () =>
-                Client
-                    .Package.TestAsync(new TestRequest { For = "string" })
-                    .GetAwaiter()
-                    .GetResult()
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.Package.TestAsync(new TestRequest { For = "string" }, RequestOptions)
         );
     }
 }

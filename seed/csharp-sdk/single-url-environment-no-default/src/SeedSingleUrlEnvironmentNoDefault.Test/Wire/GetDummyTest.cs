@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using SeedSingleUrlEnvironmentNoDefault.Core;
 using SeedSingleUrlEnvironmentNoDefault.Test.Wire;
 
 #nullable enable
@@ -11,7 +13,7 @@ namespace SeedSingleUrlEnvironmentNoDefault.Test;
 public class GetDummyTest : BaseWireTest
 {
     [Test]
-    public void WireTest()
+    public async Task WireTest()
     {
         const string mockResponse = """
             "string"
@@ -26,7 +28,10 @@ public class GetDummyTest : BaseWireTest
                     .WithBody(mockResponse)
             );
 
-        var response = Client.Dummy.GetDummyAsync().Result;
-        JToken.Parse(serializedJson).Should().BeEquivalentTo(JToken.Parse(response));
+        var response = await Client.Dummy.GetDummyAsync(RequestOptions);
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
 }
