@@ -285,6 +285,319 @@ exports[`fdr test definitions > alias-extends 1`] = `
 }
 `;
 
+exports[`fdr test definitions > any-auth 1`] = `
+{
+  "auth": undefined,
+  "globalHeaders": [],
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_auth",
+      "subpackage_user",
+    ],
+    "types": [],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {},
+  "subpackages": {
+    "subpackage_auth": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "getToken",
+          "method": "POST",
+          "name": "Get Token",
+          "originalEndpointId": "endpoint_auth.getToken",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/",
+              },
+              {
+                "type": "literal",
+                "value": "/token",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "description": undefined,
+                    "key": "client_id",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "default": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "regex": undefined,
+                        "type": "string",
+                      },
+                    },
+                  },
+                  {
+                    "description": undefined,
+                    "key": "client_secret",
+                    "valueType": {
+                      "type": "primitive",
+                      "value": {
+                        "default": undefined,
+                        "maxLength": undefined,
+                        "minLength": undefined,
+                        "regex": undefined,
+                        "type": "string",
+                      },
+                    },
+                  },
+                  {
+                    "description": undefined,
+                    "key": "audience",
+                    "valueType": {
+                      "type": "literal",
+                      "value": {
+                        "type": "stringLiteral",
+                        "value": "https://api.example.com",
+                      },
+                    },
+                  },
+                  {
+                    "description": undefined,
+                    "key": "grant_type",
+                    "valueType": {
+                      "type": "literal",
+                      "value": {
+                        "type": "stringLiteral",
+                        "value": "client_credentials",
+                      },
+                    },
+                  },
+                  {
+                    "description": undefined,
+                    "key": "scope",
+                    "valueType": {
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "default": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "regex": undefined,
+                          "type": "string",
+                        },
+                      },
+                      "type": "optional",
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+              "type": "json",
+            },
+          },
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_auth:TokenResponse",
+              },
+            },
+          },
+        },
+      ],
+      "name": "auth",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_auth",
+      "subpackages": [],
+      "types": [
+        "type_auth:TokenResponse",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_user": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": true,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "get",
+          "method": "POST",
+          "name": "Get",
+          "originalEndpointId": "endpoint_user.get",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/users",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "itemType": {
+                  "type": "id",
+                  "value": "type_user:User",
+                },
+                "type": "list",
+              },
+            },
+          },
+        },
+      ],
+      "name": "user",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_user",
+      "subpackages": [],
+      "types": [
+        "type_user:User",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "type_auth:TokenResponse": {
+      "availability": undefined,
+      "description": "An OAuth token response.",
+      "name": "TokenResponse",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "access_token",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "expires_in",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maximum": undefined,
+                "minimum": undefined,
+                "type": "integer",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "refresh_token",
+            "valueType": {
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_user:User": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "User",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}
+`;
+
 exports[`fdr test definitions > api-wide-base-path 1`] = `
 {
   "auth": undefined,
