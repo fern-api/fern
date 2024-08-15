@@ -11,10 +11,18 @@ export const AnalyticsConfig: core.serialization.ObjectSchema<
     FernDocsConfig.AnalyticsConfig
 > = core.serialization.object({
     segment: core.serialization.lazyObject(async () => (await import("../../..")).SegmentConfig).optional(),
+    fullstory: core.serialization
+        .lazyObject(async () => (await import("../../..")).FullStoryAnalyticsConfig)
+        .optional(),
+    intercom: core.serialization.lazyObject(async () => (await import("../../..")).IntercomConfig).optional(),
+    posthog: core.serialization.lazyObject(async () => (await import("../../..")).PostHogConfig).optional(),
 });
 
 export declare namespace AnalyticsConfig {
     interface Raw {
         segment?: serializers.SegmentConfig.Raw | null;
+        fullstory?: serializers.FullStoryAnalyticsConfig.Raw | null;
+        intercom?: serializers.IntercomConfig.Raw | null;
+        posthog?: serializers.PostHogConfig.Raw | null;
     }
 }
