@@ -13,7 +13,7 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
         unitTests: {
             fromDirectory: RelativeFilePath.of("__test__"),
             findAndReplace: {
-                "../form-data-utils/FormDataWrapper": "../../src/core/form-data-utils/FormDataWrapper"
+                "../FormDataWrapper": "../../../src/core/form-data-utils/FormDataWrapper"
             }
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/form-data-utils"),

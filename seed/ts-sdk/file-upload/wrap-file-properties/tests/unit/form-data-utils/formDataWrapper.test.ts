@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Node18FormData, WebFormData } from "../FormDataWrapper";
+import { Node18FormData, WebFormData } from "../../../src/core/form-data-utils/FormDataWrapper";
 
 describe("CrossPlatformFormData", () => {
     describe("Node18FormData", () => {
