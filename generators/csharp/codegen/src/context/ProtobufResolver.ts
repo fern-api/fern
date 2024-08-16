@@ -30,7 +30,7 @@ export class ProtobufResolver {
 
     public getProtobufStructTypeOrThrow(): csharp.Type {
         const resolvedType = this.getProtobufStructType();
-        if (resolvedType === undefined) {
+        if (resolvedType == null) {
             throw new Error(
                 "Well-known google.protobuf.Struct type could not be found, which is required by google.protobuf.Value."
             );
@@ -135,7 +135,7 @@ export class ProtobufResolver {
 
     private getProtobufTypeForTypeId(typeId: TypeId): ProtobufType | undefined {
         const typeDeclaration = this.ir.types[typeId];
-        if (typeDeclaration == null || typeDeclaration.source == null) {
+        if (typeDeclaration?.source == null) {
             return undefined;
         }
         return typeDeclaration.source.type === "proto" ? typeDeclaration.source.value : undefined;

@@ -33,7 +33,7 @@ internal class ProtoConverter
     {
         if (value == null)
         {
-            Value.ForNull();
+            return Value.ForNull();
         }
         return value.Match<Value>(
             Value.ForString,
@@ -51,13 +51,11 @@ internal class ProtoConverter
     {
         return value.KindCase switch
         {
-            Value.KindOneofCase.StringValue => new MetadataValue(value.StringValue),
-            Value.KindOneofCase.NumberValue => new MetadataValue(value.NumberValue),
-            Value.KindOneofCase.BoolValue => new MetadataValue(value.BoolValue),
-            Value.KindOneofCase.ListValue
-                => new MetadataValue(value.ListValue.Values.Select(FromProtoValue).ToList()),
-            Value.KindOneofCase.StructValue
-                => new MetadataValue(FromProtoStruct(value.StructValue)),
+            Value.KindOneofCase.StringValue => value.StringValue,
+            Value.KindOneofCase.NumberValue => value.NumberValue,
+            Value.KindOneofCase.BoolValue => value.BoolValue,
+            Value.KindOneofCase.ListValue => value.ListValue.Values.Select(FromProtoValue).ToList(),
+            Value.KindOneofCase.StructValue => FromProtoStruct(value.StructValue),
             _ => null,
         };
     }

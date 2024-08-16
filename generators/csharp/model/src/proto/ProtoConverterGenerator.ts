@@ -156,6 +156,7 @@ export class ProtoConverterGenerator extends FileGenerator<CSharpFile, ModelCust
             return_: csharp.Type.reference(this.externalProtoValueClassReference),
             body: csharp.codeblock((writer) => {
                 writer.controlFlow("if", "value == null");
+                writer.write("return ");
                 writer.writeNodeStatement(
                     csharp.invokeMethod({
                         on: this.externalProtoValueClassReference,
@@ -227,56 +228,37 @@ export class ProtoConverterGenerator extends FileGenerator<CSharpFile, ModelCust
                                     writer.writeNode(csharp.Type.reference(this.externalProtoValueClassReference));
                                     writer.write(".KindOneofCase.StringValue");
                                 }),
-                                value: csharp.instantiateClass({
-                                    classReference: this.wellKnownProtoValueClassReference,
-                                    arguments_: [csharp.codeblock("value.StringValue")]
-                                })
+                                value: csharp.codeblock("value.StringValue")
                             },
                             {
                                 label: csharp.codeblock((writer) => {
                                     writer.writeNode(csharp.Type.reference(this.externalProtoValueClassReference));
                                     writer.write(".KindOneofCase.NumberValue");
                                 }),
-                                value: csharp.instantiateClass({
-                                    classReference: this.wellKnownProtoValueClassReference,
-                                    arguments_: [csharp.codeblock("value.NumberValue")]
-                                })
+                                value: csharp.codeblock("value.NumberValue")
                             },
                             {
                                 label: csharp.codeblock((writer) => {
                                     writer.writeNode(csharp.Type.reference(this.externalProtoValueClassReference));
                                     writer.write(".KindOneofCase.BoolValue");
                                 }),
-                                value: csharp.instantiateClass({
-                                    classReference: this.wellKnownProtoValueClassReference,
-                                    arguments_: [csharp.codeblock("value.BoolValue")]
-                                })
+                                value: csharp.codeblock("value.BoolValue")
                             },
                             {
                                 label: csharp.codeblock((writer) => {
                                     writer.writeNode(csharp.Type.reference(this.externalProtoValueClassReference));
                                     writer.write(".KindOneofCase.ListValue");
                                 }),
-                                value: csharp.instantiateClass({
-                                    classReference: this.wellKnownProtoValueClassReference,
-                                    arguments_: [
-                                        csharp.codeblock("value.ListValue.Values.Select(FromProtoValue).ToList()")
-                                    ]
-                                })
+                                value: csharp.codeblock("value.ListValue.Values.Select(FromProtoValue).ToList()")
                             },
                             {
                                 label: csharp.codeblock((writer) => {
                                     writer.writeNode(csharp.Type.reference(this.externalProtoValueClassReference));
                                     writer.write(".KindOneofCase.StructValue");
                                 }),
-                                value: csharp.instantiateClass({
-                                    classReference: this.wellKnownProtoValueClassReference,
-                                    arguments_: [
-                                        csharp.invokeMethod({
-                                            method: "FromProtoStruct",
-                                            arguments_: [csharp.codeblock("value.StructValue")]
-                                        })
-                                    ]
+                                value: csharp.invokeMethod({
+                                    method: "FromProtoStruct",
+                                    arguments_: [csharp.codeblock("value.StructValue")]
                                 })
                             },
                             {
