@@ -15998,7 +15998,9 @@ exports[`fdr test definitions > package-yml 1`] = `
             "headers": {},
             "name": undefined,
             "path": "/",
-            "pathParameters": {},
+            "pathParameters": {
+              "id": "id-ksfd9c1",
+            },
             "queryParameters": {},
             "requestBody": {
               "name": "Hello world!",
@@ -16128,6 +16130,7 @@ exports[`fdr test definitions > package-yml 1`] = `
               "name": undefined,
               "path": "//id-219xca8",
               "pathParameters": {
+                "id": "id-a2ijs82",
                 "nestedId": "id-219xca8",
               },
               "queryParameters": {},
