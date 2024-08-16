@@ -1,11 +1,11 @@
 import { FernToken } from "@fern-api/auth";
 import { Audiences } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { APIV1Write, FdrAPI } from "@fern-api/fdr-sdk";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { convertIrToFdrApi } from "./ir-to-fdr-converter/convertIrToFdrApi";
 
 export async function registerApi({
@@ -21,8 +21,8 @@ export async function registerApi({
     context: TaskContext;
     token: FernToken;
     audiences: Audiences;
-    snippetsConfig: APIV1Write.SnippetsConfig;
-}): Promise<{ id: FdrAPI.ApiDefinitionId; ir: IntermediateRepresentation }> {
+    snippetsConfig: FdrCjsSdk.api.v1.register.SnippetsConfig;
+}): Promise<{ id: FdrCjsSdk.ApiDefinitionId; ir: IntermediateRepresentation }> {
     const ir = await generateIntermediateRepresentation({
         workspace,
         audiences,

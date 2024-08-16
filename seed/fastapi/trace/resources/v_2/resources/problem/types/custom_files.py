@@ -55,6 +55,12 @@ class CustomFiles(UniversalRootModel):
         def get_as_union(self) -> typing.Union[_CustomFiles.Basic, _CustomFiles.Custom]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         basic: typing.Callable[[BasicCustomFiles], T_Result],

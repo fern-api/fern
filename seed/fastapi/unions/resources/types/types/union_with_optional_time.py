@@ -59,6 +59,12 @@ class UnionWithOptionalTime(UniversalRootModel):
         ) -> typing.Union[_UnionWithOptionalTime.Date, _UnionWithOptionalTime.Dateimte]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         date: typing.Callable[[typing.Optional[dt.date]], T_Result],

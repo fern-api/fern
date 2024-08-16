@@ -60,6 +60,12 @@ class CreateProblemResponse(UniversalRootModel):
         ) -> typing.Union[_CreateProblemResponse.Success, _CreateProblemResponse.Error]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         success: typing.Callable[[ProblemId], T_Result],

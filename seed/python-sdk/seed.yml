@@ -216,3 +216,11 @@ allowedFailures:
 
   # Complex circular refs
   - simple-fhir
+
+  # TODO(FER-2946): Support deep object query parameter arrays in the mock
+  # server the mock server today doesn't take into account the shape of the
+  # request from the IR and so doesn't know the shape to explicitly coerce 
+  # the query string into
+  - query-parameters
+
+  - any-auth

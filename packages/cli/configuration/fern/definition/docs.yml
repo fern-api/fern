@@ -24,10 +24,88 @@ types:
   AnalyticsConfig:
     properties:
       segment: optional<SegmentConfig>
+      fullstory: optional<FullStoryAnalyticsConfig>
+      intercom: optional<IntercomConfig>
+      posthog: optional<PostHogConfig>
+      # gtm: optional<GTMConfig>
+      # ga4: optional<GoogleAnalytics4Config>
+      # amplitude: optional<AmplitudeConfig>
+      # mixpanel: optional<MixpanelConfig>
+      # hotjar: optional<HotJarConfig>
+      # koala: optional<KoalaConfig>
+      # logrocket: optional<LogRocketConfig>
+      # pirsch: optional<PirschConfig>
+      # plausible: optional<PlausibleConfig>
+      # fathom: optional<FathomConfig>
+      # clearbit: optional<ClearBitConfig>
+      # heap: optional<HeapConfig>
 
   SegmentConfig:
     properties:
       write-key: string
+  
+  FullStoryAnalyticsConfig:
+    properties:
+      org-id: string
+
+  IntercomConfig:
+    properties:
+      app-id: string
+      api-base: optional<string>
+
+  PostHogConfig:
+    properties:
+      api-key: string
+      endpoint: optional<string>
+
+  # GTMConfig:
+  #   properties:
+  #     container-id: string
+
+  # GoogleAnalytics4Config:
+  #   properties:
+  #     measurement-id: string
+
+  # AmplitudeConfig:
+  #   properties:
+  #     api-key: string
+
+  # MixpanelConfig:
+  #   properties:
+  #     api-key: string
+
+  # HotJarConfig:
+  #   properties:
+  #     hjid: string
+  #     hjsv: string
+
+  # KoalaConfig:
+  #   properties:
+  #     api-key: string
+
+  # LogRocketConfig:
+  #   properties:
+  #     api-key: string
+
+  # PirschConfig:
+  #   properties:
+  #     id: string
+
+  # PlausibleConfig:
+  #   properties:
+  #     domain: string
+
+  # FathomConfig:
+  #   properties:
+  #     site-id: string
+
+  # ClearBitConfig:
+  #   properties:
+  #     api-key: string
+
+  # HeapConfig:
+  #   properties:
+  #     app-id: string
       
   DocsConfiguration:
     properties:
