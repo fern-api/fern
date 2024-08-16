@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.39.2] - 2024-08-16
 
 - Fix: Allows filenames to be passed from underlying File objects in Node 18+ and browsers
+  Users can now supply files like so, using a simple multipart upload API as an example:
+  ```
+  Client.api(new File([...blobParts], 'filename.ext'), ...)
+  ```
+  `filename.ext` will be encoded into the upload.
 
 ## [0.39.1] - 2024-08-07
 
