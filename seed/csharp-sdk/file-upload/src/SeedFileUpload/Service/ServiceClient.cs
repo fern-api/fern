@@ -66,7 +66,7 @@ public partial class ServiceClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["integer"] = request.Integer.ToString();
         _query["listOfStrings"] = request.ListOfStrings;
         _query["optionalListOfStrings"] = request.OptionalListOfStrings;

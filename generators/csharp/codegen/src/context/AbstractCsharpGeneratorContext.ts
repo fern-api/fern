@@ -4,7 +4,6 @@ import {
     FernFilepath,
     IntermediateRepresentation,
     Name,
-    ProtobufFile,
     TypeDeclaration,
     TypeId,
     TypeReference,
@@ -25,6 +24,7 @@ import { CsharpProject } from "../project";
 import { Namespace } from "../project/CSharpFile";
 import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
+import { ProtobufResolver } from "./ProtobufResolver";
 
 export abstract class AbstractCsharpGeneratorContext<
     CustomConfig extends BaseCsharpCustomConfigSchema
@@ -32,6 +32,7 @@ export abstract class AbstractCsharpGeneratorContext<
     private namespace: string;
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
+    public readonly protobufResolver: ProtobufResolver;
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
@@ -48,6 +49,7 @@ export abstract class AbstractCsharpGeneratorContext<
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
         this.project = new CsharpProject(this, this.namespace);
         this.csharpTypeMapper = new CsharpTypeMapper(this);
+        this.protobufResolver = new ProtobufResolver(this.ir, this.csharpTypeMapper);
         config.output.mode._visit<void>({
             github: (github) => {
                 if (github.publishInfo?.type === "nuget") {
@@ -124,16 +126,6 @@ export abstract class AbstractCsharpGeneratorContext<
         return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
     }
 
-    public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
-        const namespace = protobufFile.options?.csharp?.namespace;
-        if (namespace == null) {
-            throw new Error(
-                `The 'csharp_namespace' file option must be declared in Protobuf file ${protobufFile.filepath}`
-            );
-        }
-        return namespace;
-    }
-
     public getStringEnumSerializerClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -208,11 +200,15 @@ export abstract class AbstractCsharpGeneratorContext<
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
-        const typeDeclaration = this.ir.types[typeId];
+        const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
             throw new Error(`Type declaration with id ${typeId} not found`);
         }
         return typeDeclaration;
+    }
+
+    public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
+        return this.ir.types[typeId];
     }
 
     public getCoreDirectory(): RelativeFilePath {
@@ -244,6 +240,10 @@ export abstract class AbstractCsharpGeneratorContext<
         }
 
         let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+        if (this.protobufResolver.isAnyWellKnownProtobufType(declaration.name.typeId)) {
+            return undefined;
+        }
+
         if (declaration.shape.type === "undiscriminatedUnion") {
             return { declaration: declaration.shape, isList: false };
         }

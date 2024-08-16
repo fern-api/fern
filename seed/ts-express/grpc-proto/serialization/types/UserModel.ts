@@ -12,7 +12,7 @@ export const UserModel: core.serialization.ObjectSchema<serializers.UserModel.Ra
         email: core.serialization.string().optional(),
         age: core.serialization.number().optional(),
         weight: core.serialization.number().optional(),
-        metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
+        metadata: core.serialization.lazy(() => serializers.Metadata).optional(),
     });
 
 export declare namespace UserModel {
@@ -21,6 +21,6 @@ export declare namespace UserModel {
         email?: string | null;
         age?: number | null;
         weight?: number | null;
-        metadata?: Record<string, unknown> | null;
+        metadata?: serializers.Metadata.Raw | null;
     }
 }

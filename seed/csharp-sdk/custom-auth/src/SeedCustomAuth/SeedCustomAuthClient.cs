@@ -20,7 +20,7 @@ public partial class SeedCustomAuthClient
                 { "X-API-KEY", customAuthScheme },
                 { "X-Fern-Language", "C#" },
             },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         CustomAuth = new CustomAuthClient(_client);

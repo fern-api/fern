@@ -49,7 +49,7 @@ export class Dictionary extends AstNode {
         writer.write(">");
 
         if (this.values == null) {
-            writer.write("() {}");
+            writer.write("()");
             return;
         }
 

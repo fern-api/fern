@@ -333,7 +333,7 @@ associated with this client (which are sent on _every_ request).`,
             return {
                 classReference: csharp.classReference({
                     name: `${serviceName}.${className}`,
-                    namespace: this.context.getNamespaceFromProtobufFileOrThrow(service.file)
+                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(service.file)
                 }),
                 fieldName: className
             };

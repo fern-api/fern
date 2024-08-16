@@ -20,7 +20,7 @@ public partial class UserClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["limit"] = request.Limit.ToString();
         _query["id"] = request.Id.ToString();
         _query["date"] = request.Date.ToString();

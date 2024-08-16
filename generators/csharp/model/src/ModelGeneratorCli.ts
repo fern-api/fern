@@ -2,6 +2,7 @@ import { AbstractCsharpGeneratorCli } from "@fern-api/csharp-codegen";
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { generateModels } from "./generateModels";
+import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
@@ -30,17 +31,23 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
     }
 
     protected async writeForGithub(context: ModelGeneratorContext): Promise<void> {
+        return await this.generate(context);
+    }
+
+    protected async writeForDownload(context: ModelGeneratorContext): Promise<void> {
+        return await this.generate(context);
+    }
+
+    private async generate(context: ModelGeneratorContext): Promise<void> {
         const generatedTypes = generateModels({ context });
         for (const file of generatedTypes) {
             context.project.addSourceFiles(file);
         }
-        await context.project.persist();
-    }
-
-    protected async writeForDownload(context: ModelGeneratorContext): Promise<void> {
-        const generatedTypes = generateModels({ context });
-        for (const file of generatedTypes) {
-            context.project.addSourceFiles(file);
+        const protobufFiles = generateWellKnownProtobufFiles(context);
+        if (protobufFiles != null) {
+            for (const file of protobufFiles) {
+                context.project.addSourceFiles(file);
+            }
         }
         await context.project.persist();
     }

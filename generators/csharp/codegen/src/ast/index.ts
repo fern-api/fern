@@ -18,6 +18,7 @@ export { Method, MethodType } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
 export { Parameter } from "./Parameter";
 export { Set } from "./Set";
+export { Switch } from "./Switch";
 export { Ternary } from "./Ternary";
 export { TestClass } from "./TestClass";
 export { Type } from "./Type";

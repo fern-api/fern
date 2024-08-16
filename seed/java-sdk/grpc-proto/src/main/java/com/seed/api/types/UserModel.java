@@ -28,7 +28,7 @@ public final class UserModel {
 
     private final Optional<Double> weight;
 
-    private final Optional<Map<String, Object>> metadata;
+    private final Optional<Metadata> metadata;
 
     private final Map<String, Object> additionalProperties;
 
@@ -37,7 +37,7 @@ public final class UserModel {
             Optional<String> email,
             Optional<Integer> age,
             Optional<Double> weight,
-            Optional<Map<String, Object>> metadata,
+            Optional<Metadata> metadata,
             Map<String, Object> additionalProperties) {
         this.username = username;
         this.email = email;
@@ -68,7 +68,7 @@ public final class UserModel {
     }
 
     @JsonProperty("metadata")
-    public Optional<Map<String, Object>> getMetadata() {
+    public Optional<Metadata> getMetadata() {
         return metadata;
     }
 
@@ -115,7 +115,7 @@ public final class UserModel {
 
         private Optional<Double> weight = Optional.empty();
 
-        private Optional<Map<String, Object>> metadata = Optional.empty();
+        private Optional<Metadata> metadata = Optional.empty();
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
@@ -176,12 +176,12 @@ public final class UserModel {
         }
 
         @JsonSetter(value = "metadata", nulls = Nulls.SKIP)
-        public Builder metadata(Optional<Map<String, Object>> metadata) {
+        public Builder metadata(Optional<Metadata> metadata) {
             this.metadata = metadata;
             return this;
         }
 
-        public Builder metadata(Map<String, Object> metadata) {
+        public Builder metadata(Metadata metadata) {
             this.metadata = Optional.ofNullable(metadata);
             return this;
         }

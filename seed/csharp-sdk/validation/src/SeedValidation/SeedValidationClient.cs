@@ -15,7 +15,7 @@ public partial class SeedValidationClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
     }
@@ -54,7 +54,7 @@ public partial class SeedValidationClient
 
     public async Task<Type> GetAsync(GetRequest request, RequestOptions? options = null)
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["decimal"] = request.Decimal.ToString();
         _query["even"] = request.Even.ToString();
         _query["name"] = request.Name;

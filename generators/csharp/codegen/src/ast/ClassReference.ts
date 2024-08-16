@@ -6,7 +6,7 @@ export declare namespace ClassReference {
     interface Args {
         /* The name of the C# class */
         name: string;
-        /* The namespace of the C# class*/
+        /* The namespace of the C# class */
         namespace: string;
         /* Any generics used in the class reference */
         generics?: csharp.Type[];
@@ -27,7 +27,10 @@ export class ClassReference extends AstNode {
 
     public write(writer: Writer): void {
         if (this.qualifiedTypeNameRequired(writer)) {
-            const typeQualification = this.getTypeQualification(this.namespace, writer.getNamespace());
+            const typeQualification = this.getTypeQualification({
+                classReferenceNamespace: this.namespace,
+                namespaceToBeWrittenTo: writer.getNamespace()
+            });
             writer.write(`${typeQualification}${this.name}`);
         } else {
             writer.addReference(this);
@@ -55,7 +58,13 @@ export class ClassReference extends AstNode {
      *
      * Result: Engineer.Backend.
      */
-    private getTypeQualification(classReferenceNamespace: string, namespaceToBeWrittenTo: string): string {
+    private getTypeQualification({
+        classReferenceNamespace,
+        namespaceToBeWrittenTo
+    }: {
+        classReferenceNamespace: string;
+        namespaceToBeWrittenTo: string;
+    }): string {
         const classReferenceSegments = classReferenceNamespace.split(".");
         const namespaceToBeWrittenSegments = namespaceToBeWrittenTo.split(".");
 
@@ -118,6 +127,11 @@ export class ClassReference extends AstNode {
 
 export const OneOfClassReference = new ClassReference({
     name: "OneOf",
+    namespace: "OneOf"
+});
+
+export const OneOfBaseClassReference = new ClassReference({
+    name: "OneOfBase",
     namespace: "OneOf"
 });
 
