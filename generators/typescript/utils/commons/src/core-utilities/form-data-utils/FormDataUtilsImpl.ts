@@ -67,7 +67,9 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
                         ts.factory.createIdentifier("appendFile")
                     ),
                     undefined,
-                    [ts.factory.createStringLiteral(key), value]
+                    filename
+                        ? [ts.factory.createStringLiteral(key), value, filename]
+                        : [ts.factory.createStringLiteral(key), value]
                 )
             )
         );

@@ -31,7 +31,8 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 "../../stream-wrappers/chooseStreamWrapper":
                     "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
                 "../stream-wrappers/chooseStreamWrapper":
-                    "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper"
+                    "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
+                "../../form-data-utils/FormDataWrapper": "../../../src/core/form-data-utils/FormDataWrapper"
             }
         },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
