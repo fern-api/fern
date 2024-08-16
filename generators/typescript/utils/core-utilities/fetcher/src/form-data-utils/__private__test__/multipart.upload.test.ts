@@ -8,12 +8,12 @@ import { getFetchFn } from "../../fetcher/getFetchFn";
 import { RUNTIME } from "../../runtime";
 
 describe("Multipart Form Data Tests", () => {
-    let app = express();
+    const app = express();
     let s: Server;
 
     beforeAll(async () => {
         const storage = multer.memoryStorage();
-        const upload = multer({ storage: storage });
+        const upload = multer({ storage });
         // Define the file upload route
         app.post("/upload", upload.any(), (req: any, res: any) => {
             try {
@@ -24,13 +24,13 @@ describe("Multipart Form Data Tests", () => {
                     return res.status(200).send(`File sent: ${file.originalname}`);
                 }
             } catch (error) {
-                console.log(error);
                 res.status(500).send("Error uploading file.");
             }
             return res.status(200).send("File uploaded successfully.");
         });
         app.use(express.json());
         app.use(express.urlencoded({ extended: true }));
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         s = app.listen(4567, () => {});
     });
 
@@ -38,7 +38,7 @@ describe("Multipart Form Data Tests", () => {
         const b = new Blob(["test"]);
         const c = new Blob([b]);
 
-        expect(await b.text).toBe(await c.text);
+        expect(b.text).toBe(c.text);
     });
 
     it("should return a 200 status code for Blob", async () => {
@@ -46,9 +46,9 @@ describe("Multipart Form Data Tests", () => {
 
         const y = fs.readFileSync("package.json");
 
-        await fdw.appendFile("file", new Blob([y]), "asda");
+        await fdw.appendFile("file", new Blob([new Uint8Array(y)]), "asda");
 
-        let fetch = await getFetchFn();
+        const fetch = await getFetchFn();
         const response = await fetch("http://localhost:4567/upload", {
             method: "POST",
             ...(await fdw.getRequest()),
@@ -66,7 +66,7 @@ describe("Multipart Form Data Tests", () => {
             const y = fs.readFileSync("package.json");
             await fdw.appendFile("file", new File([y], "package.json"));
 
-            let fetch = await getFetchFn();
+            const fetch = await getFetchFn();
 
             const response = await fetch("http://localhost:4567/upload", {
                 method: "POST",
@@ -74,6 +74,7 @@ describe("Multipart Form Data Tests", () => {
                 ...(RUNTIME.parsedVersion && RUNTIME.parsedVersion < 18 ? {} : { duplex: "half" })
             });
 
+            // eslint-disable-next-line jest/no-conditional-expect
             expect(response.status).toBe(200);
         }
     });
@@ -84,7 +85,7 @@ describe("Multipart Form Data Tests", () => {
         const y = fs.createReadStream("package.json");
         await fdw.appendFile("file", y);
 
-        let fetch = await getFetchFn();
+        const fetch = await getFetchFn();
 
         const response = await fetch("http://localhost:4567/upload", {
             method: "POST",
@@ -96,6 +97,7 @@ describe("Multipart Form Data Tests", () => {
     });
 
     afterAll(async () => {
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
         s.close(() => {});
     });
 });
