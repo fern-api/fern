@@ -10,6 +10,12 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
         repoInfoForTesting: {
             path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/form-data-utils")
         },
+        unitTests: {
+            fromDirectory: RelativeFilePath.of("__test__"),
+            findAndReplace: {
+                "../form-data-utils/FormDataWrapper": "../../src/core/form-data-utils/FormDataWrapper"
+            }
+        },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/form-data-utils"),
         pathInCoreUtilities: [{ nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
