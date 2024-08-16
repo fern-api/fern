@@ -14,14 +14,14 @@ export function generateWellKnownProtobufFiles(context: ModelGeneratorContext): 
 
     if (wellKnownProtoStructType != null && wellKnownProtoValueType == null) {
         context.logger.debug(
-            `Skipping well-known type generation a google.protobuf.Struct was defined without a google.protobuf.Value type.`
+            "Skipping well-known type generation a google.protobuf.Struct was defined without a google.protobuf.Value type."
         );
         return undefined;
     }
 
     if (wellKnownProtoStructType == null && wellKnownProtoValueType != null) {
         context.logger.debug(
-            `Skipping well-known type generation a google.protobuf.Value was defined without a google.protobuf.Struct type.`
+            "Skipping well-known type generation a google.protobuf.Value was defined without a google.protobuf.Struct type."
         );
         return undefined;
     }

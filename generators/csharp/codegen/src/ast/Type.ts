@@ -22,7 +22,7 @@ type InternalType =
     | DateTime
     | Uuid
     | Object_
-    | Array
+    | Array_
     | ListType
     | List
     | Set
@@ -82,7 +82,7 @@ interface Object_ {
     type: "object";
 }
 
-interface Array {
+interface Array_ {
     type: "array";
     value: Type;
 }

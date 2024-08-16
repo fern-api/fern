@@ -32,7 +32,7 @@ export class ProtobufResolver {
         const resolvedType = this.getProtobufStructType();
         if (resolvedType === undefined) {
             throw new Error(
-                `Well-known google.protobuf.Struct type could not be found, which is required by google.protobuf.Value.`
+                "Well-known google.protobuf.Struct type could not be found, which is required by google.protobuf.Value."
             );
         }
         return resolvedType;
@@ -53,7 +53,7 @@ export class ProtobufResolver {
         const resolvedType = this.getProtobufStructType();
         if (resolvedType === undefined) {
             throw new Error(
-                `Well-known google.protobuf.Value type could not be found, which is required by google.protobuf.Struct.`
+                "Well-known google.protobuf.Value type could not be found, which is required by google.protobuf.Struct."
             );
         }
         return resolvedType;
@@ -112,7 +112,7 @@ export class ProtobufResolver {
             if (this.isWellKnownProtobufType({ typeId, wellKnownProtobufType })) {
                 return {
                     typeDeclaration,
-                    wellKnownProtobufType: wellKnownProtobufType
+                    wellKnownProtobufType
                 };
             }
         }
