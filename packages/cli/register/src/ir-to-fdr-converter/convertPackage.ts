@@ -582,12 +582,17 @@ function convertHttpEndpointExample({
         name: example.name?.originalName,
         description: example.docs,
         path: example.url,
-        pathParameters: [...example.servicePathParameters, ...example.endpointPathParameters].reduce<
-            FdrCjsSdk.api.v1.register.ExampleEndpointCall["pathParameters"]
-        >((pathParameters, irPathParameterExample) => {
-            pathParameters[irPathParameterExample.name.originalName] = irPathParameterExample.value.jsonExample;
-            return pathParameters;
-        }, {}),
+        pathParameters: [
+            ...example.rootPathParameters,
+            ...example.servicePathParameters,
+            ...example.endpointPathParameters
+        ].reduce<FdrCjsSdk.api.v1.register.ExampleEndpointCall["pathParameters"]>(
+            (pathParameters, irPathParameterExample) => {
+                pathParameters[irPathParameterExample.name.originalName] = irPathParameterExample.value.jsonExample;
+                return pathParameters;
+            },
+            {}
+        ),
         queryParameters: example.queryParameters.reduce<
             FdrCjsSdk.api.v1.register.ExampleEndpointCall["queryParameters"]
         >((queryParameters, irQueryParameterExample) => {
