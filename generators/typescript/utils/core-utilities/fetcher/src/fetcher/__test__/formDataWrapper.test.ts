@@ -1,5 +1,5 @@
-import { Readable } from "stream"; // Only needed for Node implementations
-import { Node18FormData, WebFormData } from "../FormDataWrapper"; // Adjust path as needed
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { Node18FormData, WebFormData } from "../../form-data-utils/FormDataWrapper"; // Adjust path as needed
 
 describe("CrossPlatformFormData", () => {
     describe("Node18FormData", () => {
@@ -11,7 +11,7 @@ describe("CrossPlatformFormData", () => {
         });
 
         it("should append a Readable stream with a specified filename", async () => {
-            const value = Readable.from(["file content"]);
+            const value = (await import("stream")).Readable.from(["file content"]);
             const filename = "testfile.txt";
 
             await formData.appendFile("file", value, filename);
@@ -42,7 +42,7 @@ describe("CrossPlatformFormData", () => {
 
         it("should append a File with a specified filename", async () => {
             const filename = "testfile.txt";
-            // @ts-ignore
+            // @ts-expect-error
             const value = new (await import("buffer")).File(["file content"], filename);
 
             await formData.appendFile("file", value);
@@ -58,7 +58,7 @@ describe("CrossPlatformFormData", () => {
 
         it("should append a File with an explicit filename", async () => {
             const filename = "testfile.txt";
-            // @ts-ignore
+            // @ts-expect-error
             const value = new (await import("buffer")).File(["file content"], filename);
 
             await formData.appendFile("file", value, "test.txt");
@@ -82,7 +82,7 @@ describe("CrossPlatformFormData", () => {
         });
 
         it("should append a Readable stream with a specified filename", async () => {
-            const value = Readable.from(["file content"]);
+            const value = (await import("stream")).Readable.from(["file content"]);
             const filename = "testfile.txt";
 
             await formData.appendFile("file", value, filename);
@@ -104,7 +104,7 @@ describe("CrossPlatformFormData", () => {
 
         it("should append a File with a specified filename", async () => {
             const filename = "testfile.txt";
-            // @ts-ignore
+            // @ts-expect-error
             const value = new (await import("buffer")).File(["file content"], filename);
 
             await formData.appendFile("file", value);
@@ -113,9 +113,9 @@ describe("CrossPlatformFormData", () => {
             expect(request.body.get("file").name).toBe(filename);
         });
 
-        it("should append a File with a specified filename", async () => {
+        it("should append a File with an explicit filename", async () => {
             const filename = "testfile.txt";
-            // @ts-ignore
+            // @ts-expect-error
             const value = new (await import("buffer")).File(["file content"], filename);
 
             await formData.appendFile("file", value, "test.txt");
