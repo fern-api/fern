@@ -3,13 +3,7 @@ import { csharp } from "../..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { AstNode } from "./AstNode";
 
-type Alias = string;
 type Namespace = string;
-
-interface AliasNamespace {
-    alias: string;
-    namespace: Namespace;
-}
 
 const TAB_SIZE = 4;
 
@@ -41,8 +35,6 @@ export class Writer {
     private references: Record<Namespace, ClassReference[]> = {};
     /* The namespace that is being written to */
     private namespace: string;
-    /* Namespace aliases */
-    private namespaceAliases: Record<Alias, Namespace> = {};
     /* All base namespaces in the project */
     private allNamespaceSegments: Set<string>;
     /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
@@ -182,7 +174,7 @@ export class Writer {
     }
 
     public toString(): string {
-        const imports = this.stringifyImportsAndAliases();
+        const imports = this.stringifyImports();
         if (imports.length > 0) {
             return `${imports}
 
@@ -213,19 +205,13 @@ ${this.buffer}`;
         return " ".repeat(this.indentLevel * TAB_SIZE);
     }
 
-    private stringifyImportsAndAliases(): string {
-        let result = Object.keys(this.references)
-            // Filter out the current namespace.
-            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
-            .map((ref) => `using ${ref};`)
-            .join("\n");
-
-        if (this.namespaceAliases != null) {
-            Object.keys(this.namespaceAliases).forEach((alias) => {
-                result += `using ${alias} = ${this.namespaceAliases[alias]};\n`;
-            });
-        }
-
-        return result;
+    private stringifyImports(): string {
+        return (
+            Object.keys(this.references)
+                // Filter out the current namespace.
+                .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+                .map((ref) => `using ${ref};`)
+                .join("\n")
+        );
     }
 }
