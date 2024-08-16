@@ -13,7 +13,7 @@ public partial class SeedNurseryApiClient
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         Package = new PackageClient(_client);

@@ -25,7 +25,7 @@ public partial class PlaylistClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["datetime"] = request.Datetime.ToString(Constants.DateTimeFormat);
         if (request.OptionalDatetime != null)
         {
@@ -73,7 +73,7 @@ public partial class PlaylistClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["otherField"] = request.OtherField;
         _query["multiLineDocs"] = request.MultiLineDocs;
         _query["optionalMultipleField"] = request.OptionalMultipleField;

@@ -4,13 +4,10 @@ import {
     FernFilepath,
     IntermediateRepresentation,
     Name,
-    ProtobufFile,
-    ProtobufType,
     TypeDeclaration,
     TypeId,
     TypeReference,
-    UndiscriminatedUnionTypeDeclaration,
-    WellKnownProtobufType
+    UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { csharp } from "..";
@@ -26,8 +23,8 @@ import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomC
 import { CsharpProject } from "../project";
 import { Namespace } from "../project/CSharpFile";
 import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
-import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
+import { ProtobufResolver } from "./ProtobufResolver";
 
 export abstract class AbstractCsharpGeneratorContext<
     CustomConfig extends BaseCsharpCustomConfigSchema
@@ -35,6 +32,7 @@ export abstract class AbstractCsharpGeneratorContext<
     private namespace: string;
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
+    public readonly protobufResolver: ProtobufResolver;
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
@@ -51,6 +49,7 @@ export abstract class AbstractCsharpGeneratorContext<
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
         this.project = new CsharpProject(this, this.namespace);
         this.csharpTypeMapper = new CsharpTypeMapper(this);
+        this.protobufResolver = new ProtobufResolver(this.ir, this.csharpTypeMapper);
         config.output.mode._visit<void>({
             github: (github) => {
                 if (github.publishInfo?.type === "nuget") {
@@ -125,76 +124,6 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getFullNamespaceSegments(fernFilepath: FernFilepath): string[] {
         return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
-    }
-
-    public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
-        const namespace = protobufFile.options?.csharp?.namespace;
-        if (namespace == null) {
-            throw new Error(
-                `The 'csharp_namespace' file option must be declared in Protobuf file ${protobufFile.filepath}`
-            );
-        }
-        return namespace;
-    }
-
-    public resolveWellKnownProtobufTypeOrThrow(
-        wellKnownProtobufType: WellKnownProtobufType
-    ): ResolvedWellKnownProtobufType {
-        const resolvedType = this.resolveWellKnownProtobufType(wellKnownProtobufType);
-        if (resolvedType === undefined) {
-            throw new Error(`Well-known Protobuf type "${wellKnownProtobufType.type}" could not be found.`);
-        }
-        return resolvedType;
-    }
-
-    public resolveWellKnownProtobufType(
-        wellKnownProtobufType: WellKnownProtobufType
-    ): ResolvedWellKnownProtobufType | undefined {
-        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
-            if (this.isWellKnownProtobufType({ typeId, wellKnownProtobufType })) {
-                return {
-                    typeDeclaration,
-                    wellKnownProtobufType: wellKnownProtobufType
-                };
-            }
-        }
-        return undefined;
-    }
-
-    public isProtobufStruct(typeId: TypeId): boolean {
-        return this.isWellKnownProtobufType({
-            typeId,
-            wellKnownProtobufType: WellKnownProtobufType.struct()
-        });
-    }
-
-    public isProtobufValue(typeId: TypeId): boolean {
-        return this.isWellKnownProtobufType({
-            typeId,
-            wellKnownProtobufType: WellKnownProtobufType.value()
-        });
-    }
-
-    public isWellKnownProtobufType({
-        typeId,
-        wellKnownProtobufType
-    }: {
-        typeId: TypeId;
-        wellKnownProtobufType: WellKnownProtobufType;
-    }): boolean {
-        const protobufType = this.getProtobufTypeForTypeId(typeId);
-        if (protobufType == null) {
-            return false;
-        }
-        return protobufType.type === "wellKnown" && protobufType.value.type === wellKnownProtobufType.type;
-    }
-
-    public getProtobufTypeForTypeId(typeId: TypeId): ProtobufType | undefined {
-        const typeDeclaration = this.getTypeDeclaration(typeId);
-        if (typeDeclaration == null || typeDeclaration.source == null) {
-            return undefined;
-        }
-        return typeDeclaration.source.type === "proto" ? typeDeclaration.source.value : undefined;
     }
 
     public getStringEnumSerializerClassReference(): csharp.ClassReference {
@@ -311,7 +240,7 @@ export abstract class AbstractCsharpGeneratorContext<
         }
 
         let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
-        if (this.isProtobufStruct(declaration.name.typeId) || this.isProtobufValue(declaration.name.typeId)) {
+        if (this.protobufResolver.isAnyWellKnownProtobufType(declaration.name.typeId)) {
             return undefined;
         }
 

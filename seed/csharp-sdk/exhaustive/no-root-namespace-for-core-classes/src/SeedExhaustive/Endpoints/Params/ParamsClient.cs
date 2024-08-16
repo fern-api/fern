@@ -55,7 +55,7 @@ public partial class ParamsClient
     /// </summary>
     public async Task GetWithQueryAsync(GetWithQuery request, RequestOptions? options = null)
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
         _query["number"] = request.Number.ToString();
         var response = await _client.MakeRequestAsync(
@@ -88,7 +88,7 @@ public partial class ParamsClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
         _query["numer"] = request.Numer.Select(_value => _value.ToString()).ToList();
         var response = await _client.MakeRequestAsync(
@@ -122,7 +122,7 @@ public partial class ParamsClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest

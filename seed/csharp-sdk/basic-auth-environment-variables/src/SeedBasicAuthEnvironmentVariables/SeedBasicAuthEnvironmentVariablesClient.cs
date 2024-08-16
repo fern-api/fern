@@ -25,7 +25,7 @@ public partial class SeedBasicAuthEnvironmentVariablesClient
         );
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         BasicAuth = new BasicAuthClient(_client);

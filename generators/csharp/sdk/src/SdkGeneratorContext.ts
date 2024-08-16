@@ -218,10 +218,6 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return `${serviceName}Client`;
     }
 
-    public getProtoConverterClassName(): string {
-        return "ProtoConverter";
-    }
-
     public getEnvironmentsClassReference(): csharp.ClassReference {
         let environmentsClassName: string;
         if (this.customConfig["client-class-name"] != null) {

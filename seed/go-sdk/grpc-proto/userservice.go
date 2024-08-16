@@ -3,9 +3,9 @@
 package api
 
 type CreateRequest struct {
-	Username *string                `json:"username,omitempty" url:"-"`
-	Email    *string                `json:"email,omitempty" url:"-"`
-	Age      *int                   `json:"age,omitempty" url:"-"`
-	Weight   *float64               `json:"weight,omitempty" url:"-"`
-	Metadata map[string]interface{} `json:"metadata,omitempty" url:"-"`
+	Username *string   `json:"username,omitempty" url:"-"`
+	Email    *string   `json:"email,omitempty" url:"-"`
+	Age      *int      `json:"age,omitempty" url:"-"`
+	Weight   *float64  `json:"weight,omitempty" url:"-"`
+	Metadata *Metadata `json:"metadata,omitempty" url:"-"`
 }

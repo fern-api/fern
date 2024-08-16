@@ -1,16 +1,14 @@
-import { AbstractCsharpGeneratorCli, CSharpFile, TestFileGenerator } from "@fern-api/csharp-codegen";
-import { generateModels, generateTests } from "@fern-api/fern-csharp-model";
+import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-codegen";
+import { generateModels, generateTests, generateWellKnownProtobufFiles } from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpService, IntermediateRepresentation, WellKnownProtobufType } from "@fern-fern/ir-sdk/api";
+import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
-import { ProtoConverterGenerator } from "./grpc/ProtoConverterGenerator";
 import { RawGrpcClientGenerator } from "./grpc/RawGrpcClientGenerator";
-import { WellKnownProtoValueGenerator } from "./grpc/WellKnownProtoValueGenerator";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
 import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
@@ -87,12 +85,6 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     protected async generate(context: SdkGeneratorContext): Promise<void> {
-        // TODO: The models need to be able to recognize what types are google.protobuf.Struct
-        // and google.protobuf.Value, and generate them with the Dictionary<string, MetadataValue?>
-        // type reference.
-        //
-        // We also need to be careful not to generate any type marked as these (just in case it's
-        // ever an ordinary object).
         const models = generateModels({ context });
         for (const file of models) {
             context.project.addSourceFiles(file);
@@ -169,9 +161,9 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             context.project.addSourceFiles(grpcClient.generate());
         }
 
-        const wellKnownProtoTypeFiles = this.generateWellKnownProtoTypeFiles({ context });
-        if (wellKnownProtoTypeFiles != null) {
-            for (const file of wellKnownProtoTypeFiles) {
+        const wellKnownProtobufFiles = generateWellKnownProtobufFiles(context);
+        if (wellKnownProtobufFiles != null) {
+            for (const file of wellKnownProtobufFiles) {
                 context.project.addSourceFiles(file);
             }
         }
@@ -181,45 +173,5 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         context.project.addTestFiles(test);
 
         await context.project.persist();
-    }
-
-    private generateWellKnownProtoTypeFiles({ context }: { context: SdkGeneratorContext }): CSharpFile[] | undefined {
-        const wellKnownProtoStruct = context.resolveWellKnownProtobufType(WellKnownProtobufType.struct());
-        const wellKnownProtoValue = context.resolveWellKnownProtobufType(WellKnownProtobufType.value());
-
-        if (wellKnownProtoStruct != null && wellKnownProtoValue == null) {
-            const typeName = wellKnownProtoStruct.typeDeclaration.name.name.originalName;
-            context.logger.debug(
-                `Skipping well-known type generation; type "${typeName}" declares itself as a google.protobuf.Struct, but a google.protobuf.Value was not found.`
-            );
-            return undefined;
-        }
-
-        if (wellKnownProtoStruct == null && wellKnownProtoValue != null) {
-            const typeName = wellKnownProtoValue.typeDeclaration.name.name.originalName;
-            context.logger.debug(
-                `Skipping well-known type generation; type "${typeName}" declares itself as a google.protobuf.Value, but a google.protobuf.Struct was not found.`
-            );
-            return undefined;
-        }
-
-        const files: CSharpFile[] = [];
-        if (wellKnownProtoStruct != null && wellKnownProtoValue != null) {
-            const protoValueGenerator = new WellKnownProtoValueGenerator({
-                context,
-                wellKnownProtoValue,
-                wellKnownProtoStruct
-            });
-            files.push(protoValueGenerator.generate());
-
-            const protoConverterGenerator = new ProtoConverterGenerator({
-                context,
-                wellKnownProtoValue,
-                wellKnownProtoStruct
-            });
-            files.push(protoConverterGenerator.generate());
-        }
-
-        return files;
     }
 }

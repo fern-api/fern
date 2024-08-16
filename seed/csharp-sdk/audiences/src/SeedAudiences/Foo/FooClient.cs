@@ -17,7 +17,7 @@ public partial class FooClient
 
     public async Task<ImportingType> FindAsync(FindRequest request, RequestOptions? options = null)
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.OptionalString != null)
         {
             _query["optionalString"] = request.OptionalString;
