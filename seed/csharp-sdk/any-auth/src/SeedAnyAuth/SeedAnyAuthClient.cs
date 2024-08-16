@@ -30,7 +30,7 @@ public partial class SeedAnyAuthClient
                 { "X-API-Key", apiKey },
                 { "X-Fern-Language", "C#" },
             },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         Auth = new AuthClient(_client);
