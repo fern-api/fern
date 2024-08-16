@@ -20,7 +20,7 @@ public partial class QueryClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["prompt"] = request.Prompt.ToString();
         _query["query"] = request.Query;
         _query["stream"] = request.Stream.ToString();

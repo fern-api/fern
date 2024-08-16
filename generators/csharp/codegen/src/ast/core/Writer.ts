@@ -31,7 +31,7 @@ export class Writer {
     private hasWrittenAnything = false;
     /* Whether the last character written was a newline */
     private lastCharacterIsNewline = false;
-    /* The current line number */
+    /* Import statements */
     private references: Record<Namespace, ClassReference[]> = {};
     /* The namespace that is being written to */
     private namespace: string;
@@ -208,7 +208,7 @@ ${this.buffer}`;
     private stringifyImports(): string {
         return (
             Object.keys(this.references)
-                // filter out the current namespace
+                // Filter out the current namespace.
                 .filter((referenceNamespace) => referenceNamespace !== this.namespace)
                 .map((ref) => `using ${ref};`)
                 .join("\n")

@@ -18,7 +18,7 @@ public partial class QueryParamClient
 
     public async Task SendAsync(SendEnumAsQueryParamRequest request, RequestOptions? options = null)
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["operand"] = JsonSerializer.Serialize(request.Operand);
         _query["operandOrColor"] = request.OperandOrColor.ToString();
         if (request.MaybeOperand != null)
@@ -56,7 +56,7 @@ public partial class QueryParamClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["operand"] = request
             .Operand.Select(_value => JsonSerializer.Serialize(_value))
             .ToList();

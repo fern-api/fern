@@ -24,7 +24,7 @@ public partial class SeedBearerTokenEnvironmentVariableClient
                 { "Authorization", $"Bearer {apiKey}" },
                 { "X-Fern-Language", "C#" },
             },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);

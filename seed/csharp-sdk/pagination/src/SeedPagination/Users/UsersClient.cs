@@ -20,7 +20,7 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Page != null)
         {
             _query["page"] = request.Page.ToString();
@@ -107,7 +107,7 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Page != null)
         {
             _query["page"] = request.Page.ToString();
@@ -194,7 +194,7 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Page != null)
         {
             _query["page"] = request.Page.ToString();
@@ -242,7 +242,7 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Page != null)
         {
             _query["page"] = request.Page.ToString();
@@ -290,7 +290,7 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor.ToString();
@@ -330,7 +330,7 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.StartingAfter != null)
         {
             _query["starting_after"] = request.StartingAfter;
@@ -370,7 +370,7 @@ public partial class UsersClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Offset != null)
         {
             _query["offset"] = request.Offset.ToString();

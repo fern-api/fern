@@ -83,7 +83,7 @@ public partial class ServiceClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["tag"] = request.Tag;
         if (request.Shallow != null)
         {
