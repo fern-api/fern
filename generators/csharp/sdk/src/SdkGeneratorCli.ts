@@ -30,7 +30,6 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         generatorConfig: FernGeneratorExec.GeneratorConfig;
         generatorNotificationService: GeneratorNotificationService;
     }): SdkGeneratorContext {
-        // TODO: Consider adding the well-known types here so they can be accessed everywhere.
         return new SdkGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService);
     }
 
