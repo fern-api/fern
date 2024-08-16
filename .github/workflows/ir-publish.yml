@@ -6,7 +6,7 @@ on:
     branches:
       - main
     paths:
-      - "fern/apis/ir-types-latest/VERSION"
+      - "packages/ir-sdk/fern/apis/ir-types-latest/VERSION"
 
 jobs:
   node:
