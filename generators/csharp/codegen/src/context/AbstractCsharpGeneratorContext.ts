@@ -305,12 +305,12 @@ export abstract class AbstractCsharpGeneratorContext<
             float: () => csharp.codeblock("0.0f"),
             double: () => csharp.codeblock("0.0d"),
             boolean: () => csharp.codeblock("false"),
-            string: () => csharp.codeblock(`""`),
+            string: () => csharp.codeblock('""'),
             date: () => csharp.codeblock("DateOnly.MinValue"),
             dateTime: () => csharp.codeblock("DateTime.MinValue"),
-            uuid: () => csharp.codeblock(`""`),
-            base64: () => csharp.codeblock(`""`),
-            bigInteger: () => csharp.codeblock(`""`),
+            uuid: () => csharp.codeblock('""'),
+            base64: () => csharp.codeblock('""'),
+            bigInteger: () => csharp.codeblock('""'),
             _other: () => csharp.codeblock("null")
         });
     }
