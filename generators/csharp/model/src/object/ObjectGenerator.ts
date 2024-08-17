@@ -7,14 +7,16 @@ import { ExampleGenerator } from "../snippets/ExampleGenerator";
 import { getUndiscriminatedUnionSerializerAnnotation } from "../undiscriminated-union/getUndiscriminatedUnionSerializerAnnotation";
 
 export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSchema, ModelGeneratorContext> {
+    private readonly typeDeclaration: TypeDeclaration;
     private readonly classReference: csharp.ClassReference;
     private readonly exampleGenerator: ExampleGenerator;
     constructor(
         context: ModelGeneratorContext,
-        private readonly typeDeclaration: TypeDeclaration,
+        typeDeclaration: TypeDeclaration,
         private readonly objectDeclaration: ObjectTypeDeclaration
     ) {
         super(context);
+        this.typeDeclaration = typeDeclaration;
         this.classReference = this.context.csharpTypeMapper.convertToClassReference(this.typeDeclaration.name);
         this.exampleGenerator = new ExampleGenerator(context);
     }
@@ -57,6 +59,26 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                 })
             );
         });
+
+        if (this.shouldGenerateProtobufMappers(this.typeDeclaration)) {
+            const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(
+                this.typeDeclaration.name.typeId
+            );
+            class_.addMethod(
+                this.context.csharpProtobufTypeMapper.toProtoMethod({
+                    protobufClassReference,
+                    properties: flattenedProperties.map((property) => {
+                        return {
+                            propertyName: this.getPropertyName({
+                                className: this.classReference.name,
+                                objectProperty: property.name
+                            }),
+                            typeReference: property.valueType
+                        };
+                    })
+                })
+            );
+        }
 
         return new CSharpFile({
             clazz: class_,
@@ -101,6 +123,10 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             return `${propertyName}_`;
         }
         return propertyName;
+    }
+
+    private shouldGenerateProtobufMappers(typeDeclaration: TypeDeclaration): boolean {
+        return typeDeclaration.encoding?.proto != null;
     }
 
     protected getFilepath(): RelativeFilePath {

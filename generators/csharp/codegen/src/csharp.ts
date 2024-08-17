@@ -1,4 +1,5 @@
 import {
+    And,
     Annotation,
     Class,
     ClassInstantiation,
@@ -13,6 +14,7 @@ import {
     List,
     Method,
     MethodInvocation,
+    Or,
     Parameter,
     Set,
     Switch,
@@ -91,6 +93,14 @@ export function switch_(args: Switch.Args): Switch {
 
 export function ternary(args: Ternary.Args): Ternary {
     return new Ternary(args);
+}
+
+export function and(args: And.Args): And {
+    return new And(args);
+}
+
+export function or(args: Or.Args): Or {
+    return new Or(args);
 }
 
 export function enumInstantiation(args: EnumInstantiation.Args): EnumInstantiation {

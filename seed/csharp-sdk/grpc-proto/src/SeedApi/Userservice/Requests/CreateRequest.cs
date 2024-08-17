@@ -1,4 +1,6 @@
 using System.Text.Json.Serialization;
+using SeedApi.Core;
+using Proto = User.V1;
 
 #nullable enable
 
@@ -20,4 +22,30 @@ public record CreateRequest
 
     [JsonPropertyName("metadata")]
     public Dictionary<string, MetadataValue?>? Metadata { get; set; }
+
+    internal Proto.CreateRequest ToProto()
+    {
+        var result = new Proto.CreateRequest();
+        if (Username != null)
+        {
+            result.Username = Username ?? "";
+        }
+        if (Email != null)
+        {
+            result.Email = Email ?? "";
+        }
+        if (Age != null)
+        {
+            result.Age = Age ?? 0U;
+        }
+        if (Weight != null)
+        {
+            result.Weight = Weight ?? 0.0f;
+        }
+        if (Metadata != null)
+        {
+            result.Metadata = ProtoConverter.ToProtoStruct(Metadata);
+        }
+        return result;
+    }
 }

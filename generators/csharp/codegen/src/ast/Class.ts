@@ -266,6 +266,10 @@ export class Class extends AstNode {
         writer.dedent();
 
         writer.indent();
+        this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Internal) });
+        writer.dedent();
+
+        writer.indent();
         this.writeMethods({ writer, methods: this.getMethodsByAccess(Access.Private) });
         writer.dedent();
 
