@@ -10,6 +10,9 @@ public record Pagination
     [JsonPropertyName("next")]
     public string? Next { get; set; }
 
+    /// <summary>
+    /// Maps the Pagination type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.Pagination ToProto()
     {
         var result = new Proto.Pagination();

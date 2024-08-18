@@ -23,6 +23,9 @@ public record CreateRequest
     [JsonPropertyName("metadata")]
     public Dictionary<string, MetadataValue?>? Metadata { get; set; }
 
+    /// <summary>
+    /// Maps the CreateRequest type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.CreateRequest ToProto()
     {
         var result = new Proto.CreateRequest();

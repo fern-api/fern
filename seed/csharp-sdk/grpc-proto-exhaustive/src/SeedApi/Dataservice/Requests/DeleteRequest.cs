@@ -20,6 +20,9 @@ public record DeleteRequest
     [JsonPropertyName("filter")]
     public Dictionary<string, MetadataValue?>? Filter { get; set; }
 
+    /// <summary>
+    /// Maps the DeleteRequest type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.DeleteRequest ToProto()
     {
         var result = new Proto.DeleteRequest();

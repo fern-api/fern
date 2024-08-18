@@ -10,6 +10,9 @@ public record ListElement
     [JsonPropertyName("id")]
     public string? Id { get; set; }
 
+    /// <summary>
+    /// Maps the ListElement type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.ListElement ToProto()
     {
         var result = new Proto.ListElement();

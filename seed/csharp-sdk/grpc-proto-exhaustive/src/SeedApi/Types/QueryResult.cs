@@ -13,6 +13,9 @@ public record QueryResult
     [JsonPropertyName("namespace")]
     public string? Namespace { get; set; }
 
+    /// <summary>
+    /// Maps the QueryResult type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.QueryResult ToProto()
     {
         var result = new Proto.QueryResult();

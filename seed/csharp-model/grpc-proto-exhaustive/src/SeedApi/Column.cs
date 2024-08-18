@@ -20,6 +20,9 @@ public record Column
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
+    /// <summary>
+    /// Maps the Column type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.Column ToProto()
     {
         var result = new Proto.Column();

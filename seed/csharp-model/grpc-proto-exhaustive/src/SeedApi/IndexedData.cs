@@ -13,6 +13,9 @@ public record IndexedData
     [JsonPropertyName("values")]
     public IEnumerable<float> Values { get; set; } = new List<float>();
 
+    /// <summary>
+    /// Maps the IndexedData type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.IndexedData ToProto()
     {
         var result = new Proto.IndexedData();

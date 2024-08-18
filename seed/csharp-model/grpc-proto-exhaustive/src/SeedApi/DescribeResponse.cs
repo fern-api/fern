@@ -19,6 +19,9 @@ public record DescribeResponse
     [JsonPropertyName("totalCount")]
     public uint? TotalCount { get; set; }
 
+    /// <summary>
+    /// Maps the DescribeResponse type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.DescribeResponse ToProto()
     {
         var result = new Proto.DescribeResponse();

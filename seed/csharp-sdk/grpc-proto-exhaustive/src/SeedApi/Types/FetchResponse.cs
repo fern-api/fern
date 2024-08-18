@@ -16,6 +16,9 @@ public record FetchResponse
     [JsonPropertyName("usage")]
     public Usage? Usage { get; set; }
 
+    /// <summary>
+    /// Maps the FetchResponse type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.FetchResponse ToProto()
     {
         var result = new Proto.FetchResponse();

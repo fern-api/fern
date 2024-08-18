@@ -19,6 +19,9 @@ public record QueryResponse
     [JsonPropertyName("usage")]
     public Usage? Usage { get; set; }
 
+    /// <summary>
+    /// Maps the QueryResponse type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.QueryResponse ToProto()
     {
         var result = new Proto.QueryResponse();

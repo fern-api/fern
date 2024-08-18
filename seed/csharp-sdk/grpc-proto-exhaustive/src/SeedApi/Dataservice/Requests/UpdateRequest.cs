@@ -23,6 +23,9 @@ public record UpdateRequest
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
+    /// <summary>
+    /// Maps the UpdateRequest type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.UpdateRequest ToProto()
     {
         var result = new Proto.UpdateRequest();

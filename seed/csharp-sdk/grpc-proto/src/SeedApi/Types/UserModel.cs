@@ -23,6 +23,9 @@ public record UserModel
     [JsonPropertyName("metadata")]
     public Dictionary<string, MetadataValue?>? Metadata { get; set; }
 
+    /// <summary>
+    /// Maps the UserModel type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.UserModel ToProto()
     {
         var result = new Proto.UserModel();

@@ -23,6 +23,9 @@ public record ScoredColumn
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
+    /// <summary>
+    /// Maps the ScoredColumn type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.ScoredColumn ToProto()
     {
         var result = new Proto.ScoredColumn();

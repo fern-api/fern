@@ -10,6 +10,9 @@ public record UploadResponse
     [JsonPropertyName("count")]
     public uint? Count { get; set; }
 
+    /// <summary>
+    /// Maps the UploadResponse type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.UploadResponse ToProto()
     {
         var result = new Proto.UploadResponse();

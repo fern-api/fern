@@ -19,6 +19,9 @@ public record ListResponse
     [JsonPropertyName("usage")]
     public Usage? Usage { get; set; }
 
+    /// <summary>
+    /// Maps the ListResponse type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.ListResponse ToProto()
     {
         var result = new Proto.ListResponse();

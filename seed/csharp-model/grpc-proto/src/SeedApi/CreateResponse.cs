@@ -10,6 +10,9 @@ public record CreateResponse
     [JsonPropertyName("user")]
     public UserModel? User { get; set; }
 
+    /// <summary>
+    /// Maps the CreateResponse type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.CreateResponse ToProto()
     {
         var result = new Proto.CreateResponse();

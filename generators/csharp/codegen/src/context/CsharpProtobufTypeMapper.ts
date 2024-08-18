@@ -37,8 +37,9 @@ export class CsharpProtobufTypeMapper {
             name: "ToProto",
             access: "internal",
             isAsync: false,
-            return_: csharp.Type.reference(protobufClassReference),
+            summary: `Maps the ${protobufClassReference.name} type into its Protobuf-equivalent representation.`,
             parameters: [],
+            return_: csharp.Type.reference(protobufClassReference),
             body: csharp.codeblock((writer) => {
                 if (properties.length === 0) {
                     writer.write("return ");

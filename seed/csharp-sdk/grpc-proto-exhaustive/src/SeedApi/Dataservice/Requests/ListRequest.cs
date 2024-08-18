@@ -14,6 +14,9 @@ public record ListRequest
 
     public string? Namespace { get; set; }
 
+    /// <summary>
+    /// Maps the ListRequest type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.ListRequest ToProto()
     {
         var result = new Proto.ListRequest();

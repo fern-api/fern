@@ -23,6 +23,9 @@ public record QueryColumn
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
+    /// <summary>
+    /// Maps the QueryColumn type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.QueryColumn ToProto()
     {
         var result = new Proto.QueryColumn();

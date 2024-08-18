@@ -35,6 +35,9 @@ public record QueryRequest
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
+    /// <summary>
+    /// Maps the QueryRequest type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.QueryRequest ToProto()
     {
         var result = new Proto.QueryRequest();

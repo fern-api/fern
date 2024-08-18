@@ -10,6 +10,9 @@ public record FetchRequest
 
     public string? Namespace { get; set; }
 
+    /// <summary>
+    /// Maps the FetchRequest type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.FetchRequest ToProto()
     {
         var result = new Proto.FetchRequest();

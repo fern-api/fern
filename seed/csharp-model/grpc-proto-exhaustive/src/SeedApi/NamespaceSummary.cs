@@ -10,6 +10,9 @@ public record NamespaceSummary
     [JsonPropertyName("count")]
     public uint? Count { get; set; }
 
+    /// <summary>
+    /// Maps the NamespaceSummary type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.NamespaceSummary ToProto()
     {
         var result = new Proto.NamespaceSummary();

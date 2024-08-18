@@ -13,6 +13,9 @@ public record UploadRequest
     [JsonPropertyName("namespace")]
     public string? Namespace { get; set; }
 
+    /// <summary>
+    /// Maps the UploadRequest type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.UploadRequest ToProto()
     {
         var result = new Proto.UploadRequest();

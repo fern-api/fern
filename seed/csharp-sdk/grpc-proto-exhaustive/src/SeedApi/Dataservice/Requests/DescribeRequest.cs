@@ -11,6 +11,9 @@ public record DescribeRequest
     [JsonPropertyName("filter")]
     public Dictionary<string, MetadataValue?>? Filter { get; set; }
 
+    /// <summary>
+    /// Maps the DescribeRequest type into its Protobuf-equivalent representation.
+    /// </summary>
     internal Proto.DescribeRequest ToProto()
     {
         var result = new Proto.DescribeRequest();
