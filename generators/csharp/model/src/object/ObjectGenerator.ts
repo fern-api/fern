@@ -1,6 +1,12 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ExampleObjectType, NameAndWireValue, ObjectTypeDeclaration, TypeDeclaration } from "@fern-fern/ir-sdk/api";
+import {
+    ExampleObjectType,
+    NameAndWireValue,
+    ObjectProperty,
+    ObjectTypeDeclaration,
+    TypeDeclaration
+} from "@fern-fern/ir-sdk/api";
 import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { ExampleGenerator } from "../snippets/ExampleGenerator";
@@ -60,24 +66,11 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             );
         });
 
-        if (this.shouldGenerateProtobufMappers(this.typeDeclaration)) {
-            const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(
-                this.typeDeclaration.name.typeId
-            );
-            class_.addMethod(
-                this.context.csharpProtobufTypeMapper.toProtoMethod({
-                    protobufClassReference,
-                    properties: flattenedProperties.map((property) => {
-                        return {
-                            propertyName: this.getPropertyName({
-                                className: this.classReference.name,
-                                objectProperty: property.name
-                            }),
-                            typeReference: property.valueType
-                        };
-                    })
-                })
-            );
+        if (this.shouldAddProtobufMappers(this.typeDeclaration)) {
+            this.addProtobufMappers({
+                class_,
+                properties: flattenedProperties
+            });
         }
 
         return new CSharpFile({
@@ -108,6 +101,26 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
 
+    private addProtobufMappers({ class_, properties }: { class_: csharp.Class; properties: ObjectProperty[] }): void {
+        const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(
+            this.typeDeclaration.name.typeId
+        );
+        class_.addMethod(
+            this.context.csharpProtobufTypeMapper.toProtoMethod({
+                protobufClassReference,
+                properties: properties.map((property) => {
+                    return {
+                        propertyName: this.getPropertyName({
+                            className: this.classReference.name,
+                            objectProperty: property.name
+                        }),
+                        typeReference: property.valueType
+                    };
+                })
+            })
+        );
+    }
+
     /**
      * Class Names and Property Names cannot overlap in C# otherwise there are compilation errors.
      */
@@ -125,7 +138,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         return propertyName;
     }
 
-    private shouldGenerateProtobufMappers(typeDeclaration: TypeDeclaration): boolean {
+    private shouldAddProtobufMappers(typeDeclaration: TypeDeclaration): boolean {
         return typeDeclaration.encoding?.proto != null;
     }
 
