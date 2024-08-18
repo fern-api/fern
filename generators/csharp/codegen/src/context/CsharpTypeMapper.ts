@@ -3,8 +3,10 @@ import {
     ContainerType,
     DeclaredTypeName,
     Literal,
+    Name,
     PrimitiveType,
     PrimitiveTypeV1,
+    TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { csharp } from "../";
@@ -45,7 +47,7 @@ export class CsharpTypeMapper {
         }
     }
 
-    public convertToClassReference(declaredTypeName: DeclaredTypeName): ClassReference {
+    public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
         const objectNamespace = this.context.getNamespaceForTypeId(declaredTypeName.typeId);
         return new csharp.ClassReference({
             name: this.context.getPascalCaseSafeName(declaredTypeName.name),

@@ -241,7 +241,7 @@ associated with this client (which are sent on _every_ request).`,
                     })
                 );
 
-                writer.controlFlow("foreach", "var header in _headers");
+                writer.controlFlow("foreach", csharp.codeblock("var header in _headers"));
                 writer.writeNodeStatement(
                     csharp.invokeMethod({
                         method: "Add",
@@ -251,7 +251,7 @@ associated with this client (which are sent on _every_ request).`,
                 );
                 writer.endControlFlow();
 
-                writer.controlFlow("foreach", "var header in _headerSuppliers");
+                writer.controlFlow("foreach", csharp.codeblock("var header in _headerSuppliers"));
                 writer.writeNodeStatement(
                     csharp.invokeMethod({
                         method: "Add",
@@ -261,7 +261,7 @@ associated with this client (which are sent on _every_ request).`,
                 );
                 writer.endControlFlow();
 
-                writer.controlFlow("foreach", "var header in options.Headers");
+                writer.controlFlow("foreach", csharp.codeblock("var header in options.Headers"));
                 writer.writeNodeStatement(
                     csharp.invokeMethod({
                         method: "Add",
@@ -308,7 +308,7 @@ associated with this client (which are sent on _every_ request).`,
                 writer.writeLine(
                     `var grpcChannelOptions = _clientOptions.${this.context.getGrpcChannelOptionsFieldName()};`
                 );
-                writer.controlFlow("if", "grpcChannelOptions == null");
+                writer.controlFlow("if", csharp.codeblock("grpcChannelOptions == null"));
                 writer.writeLine("return null;");
                 writer.endControlFlow();
                 writer.writeLine("grpcChannelOptions.HttpClient ??= _clientOptions.HttpClient;");

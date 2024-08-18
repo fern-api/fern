@@ -20,10 +20,10 @@ export declare namespace Method {
         access: Access;
         /* Whether the method is sync or async. Defaults to false. */
         isAsync: boolean;
-        /* Whether the method overrides a method in it's base class */
-        override?: boolean;
         /* The parameters of the method */
         parameters: Parameter[];
+        /* Whether the method overrides a method in it's base class */
+        override?: boolean;
         /* The return type of the method */
         return_?: Type;
         /* The body of the method */
