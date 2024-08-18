@@ -3177,6 +3177,8 @@ importers:
         specifier: 4.6.4
         version: 4.6.4
 
+  packages/cli/cli/dist/dev: {}
+
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
