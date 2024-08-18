@@ -29,4 +29,16 @@ public record IndexedData
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new IndexedData type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static IndexedData FromProto(Proto.IndexedData value)
+    {
+        return new IndexedData
+        {
+            Indices = value.Indices?.ToList() ?? new List<uint>(),
+            Values = value.Values?.ToList() ?? new List<float>()
+        };
+    }
 }

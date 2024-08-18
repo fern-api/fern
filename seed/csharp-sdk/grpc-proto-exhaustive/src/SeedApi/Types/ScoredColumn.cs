@@ -48,4 +48,20 @@ public record ScoredColumn
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new ScoredColumn type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static ScoredColumn FromProto(Proto.ScoredColumn value)
+    {
+        return new ScoredColumn
+        {
+            Id = value.Id,
+            Score = value.Score,
+            Values = value.Values?.ToList(),
+            Metadata = ProtoConverter.FromProtoStruct(value.Metadata),
+            IndexedData =
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null
+        };
+    }
 }

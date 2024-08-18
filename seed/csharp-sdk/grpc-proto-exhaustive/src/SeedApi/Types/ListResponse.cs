@@ -43,4 +43,18 @@ public record ListResponse
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new ListResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static ListResponse FromProto(Proto.ListResponse value)
+    {
+        return new ListResponse
+        {
+            Columns = value.Columns?.Select(ListElement.FromProto),
+            Pagination = value.Pagination != null ? Pagination.FromProto(value.Pagination) : null,
+            Namespace = value.Namespace,
+            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null
+        };
+    }
 }

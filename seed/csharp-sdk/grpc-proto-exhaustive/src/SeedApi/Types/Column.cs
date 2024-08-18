@@ -41,4 +41,19 @@ public record Column
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new Column type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static Column FromProto(Proto.Column value)
+    {
+        return new Column
+        {
+            Id = value.Id,
+            Values = value.Values?.ToList() ?? new List<float>(),
+            Metadata = ProtoConverter.FromProtoStruct(value.Metadata),
+            IndexedData =
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null
+        };
+    }
 }

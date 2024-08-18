@@ -22,4 +22,15 @@ public record CreateResponse
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new CreateResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static CreateResponse FromProto(Proto.CreateResponse value)
+    {
+        return new CreateResponse
+        {
+            User = value.User != null ? UserModel.FromProto(value.User) : null
+        };
+    }
 }

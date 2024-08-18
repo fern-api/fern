@@ -7,10 +7,10 @@ import {
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 import { csharp } from "..";
+import { AbstractCsharpGeneratorContext } from "../context/AbstractCsharpGeneratorContext";
+import { CsharpTypeMapper } from "../context/CsharpTypeMapper";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
-import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
-import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
 export class ProtobufResolver {
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;

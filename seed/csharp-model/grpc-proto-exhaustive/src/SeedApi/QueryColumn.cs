@@ -51,4 +51,20 @@ public record QueryColumn
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new QueryColumn type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static QueryColumn FromProto(Proto.QueryColumn value)
+    {
+        return new QueryColumn
+        {
+            Values = value.Values?.ToList() ?? new List<float>(),
+            TopK = value.TopK,
+            Namespace = value.Namespace,
+            Filter = ProtoConverter.FromProtoStruct(value.Filter),
+            IndexedData =
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null
+        };
+    }
 }

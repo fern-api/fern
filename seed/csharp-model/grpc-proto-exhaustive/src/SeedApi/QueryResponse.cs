@@ -43,4 +43,18 @@ public record QueryResponse
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new QueryResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static QueryResponse FromProto(Proto.QueryResponse value)
+    {
+        return new QueryResponse
+        {
+            Results = value.Results?.Select(QueryResult.FromProto),
+            Matches = value.Matches?.Select(ScoredColumn.FromProto),
+            Namespace = value.Namespace,
+            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null
+        };
+    }
 }

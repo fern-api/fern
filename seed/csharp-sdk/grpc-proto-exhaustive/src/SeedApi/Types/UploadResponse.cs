@@ -22,4 +22,12 @@ public record UploadResponse
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new UploadResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static UploadResponse FromProto(Proto.UploadResponse value)
+    {
+        return new UploadResponse { Count = value.Count };
+    }
 }

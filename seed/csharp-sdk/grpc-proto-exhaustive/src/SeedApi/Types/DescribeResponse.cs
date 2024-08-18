@@ -47,4 +47,21 @@ public record DescribeResponse
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new DescribeResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static DescribeResponse FromProto(Proto.DescribeResponse value)
+    {
+        return new DescribeResponse
+        {
+            Namespaces = value.Namespaces?.ToDictionary(
+                kvp => kvp.Key,
+                kvp => NamespaceSummary.FromProto(kvp.Value)
+            ),
+            Dimension = value.Dimension,
+            Fullness = value.Fullness,
+            TotalCount = value.TotalCount
+        };
+    }
 }

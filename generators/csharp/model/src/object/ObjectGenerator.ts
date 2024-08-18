@@ -69,7 +69,7 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         if (this.shouldAddProtobufMappers(this.typeDeclaration)) {
             this.addProtobufMappers({
                 class_,
-                properties: flattenedProperties
+                flattenedProperties
             });
         }
 
@@ -101,22 +101,37 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         return csharp.codeblock((writer) => writer.writeNode(instantiateClass));
     }
 
-    private addProtobufMappers({ class_, properties }: { class_: csharp.Class; properties: ObjectProperty[] }): void {
+    private addProtobufMappers({
+        class_,
+        flattenedProperties
+    }: {
+        class_: csharp.Class;
+        flattenedProperties: ObjectProperty[];
+    }): void {
         const protobufClassReference = this.context.protobufResolver.getProtobufClassReferenceOrThrow(
             this.typeDeclaration.name.typeId
         );
+        const properties = flattenedProperties.map((property) => {
+            return {
+                propertyName: this.getPropertyName({
+                    className: this.classReference.name,
+                    objectProperty: property.name
+                }),
+                typeReference: property.valueType
+            };
+        });
         class_.addMethod(
             this.context.csharpProtobufTypeMapper.toProtoMethod({
+                classReference: this.classReference,
                 protobufClassReference,
-                properties: properties.map((property) => {
-                    return {
-                        propertyName: this.getPropertyName({
-                            className: this.classReference.name,
-                            objectProperty: property.name
-                        }),
-                        typeReference: property.valueType
-                    };
-                })
+                properties
+            })
+        );
+        class_.addMethod(
+            this.context.csharpProtobufTypeMapper.fromProtoMethod({
+                classReference: this.classReference,
+                protobufClassReference,
+                properties
             })
         );
     }
