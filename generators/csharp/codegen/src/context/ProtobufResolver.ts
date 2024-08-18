@@ -1,21 +1,56 @@
 import {
-    IntermediateRepresentation,
     ProtobufFile,
+    ProtobufService,
     ProtobufType,
+    ServiceId,
     TypeId,
     WellKnownProtobufType
 } from "@fern-fern/ir-sdk/api";
 import { csharp } from "..";
+import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { ResolvedWellKnownProtobufType } from "../ResolvedWellKnownProtobufType";
+import { AbstractCsharpGeneratorContext } from "./AbstractCsharpGeneratorContext";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
 export class ProtobufResolver {
-    private ir: IntermediateRepresentation;
+    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private csharpTypeMapper: CsharpTypeMapper;
 
-    public constructor(ir: IntermediateRepresentation, csharpTypeMapper: CsharpTypeMapper) {
-        this.ir = ir;
+    public constructor(
+        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>,
+        csharpTypeMapper: CsharpTypeMapper
+    ) {
+        this.context = context;
         this.csharpTypeMapper = csharpTypeMapper;
+    }
+
+    public getProtobufClassReferenceOrThrow(typeId: TypeId): csharp.ClassReference {
+        const protobufType = this.getProtobufTypeForTypeIdOrThrow(typeId);
+        switch (protobufType.type) {
+            case "wellKnown": {
+                return this.getWellKnownProtobufTypeClassReferenceOrThrow(protobufType.value);
+            }
+            case "userDefined": {
+                return new csharp.ClassReference({
+                    name: this.context.getPascalCaseSafeName(protobufType.name),
+                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufType.file),
+                    namespaceAlias: "Proto"
+                });
+            }
+        }
+    }
+
+    public getProtobufServiceForServiceId(serviceId: ServiceId): ProtobufService | undefined {
+        const transport = this.context.ir.services[serviceId]?.transport;
+        if (transport == null) {
+            return undefined;
+        }
+        switch (transport.type) {
+            case "grpc":
+                return transport.service;
+            case "http":
+                return undefined;
+        }
     }
 
     public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
@@ -95,6 +130,16 @@ export class ProtobufResolver {
         });
     }
 
+    private getWellKnownProtobufTypeClassReferenceOrThrow(
+        wellKnownProtobufType: WellKnownProtobufType
+    ): csharp.ClassReference {
+        const classReference = this.getWellKnownProtobufTypeClassReference(wellKnownProtobufType);
+        if (classReference == null) {
+            throw new Error(`Well-known Protobuf type "${wellKnownProtobufType.type}" could not be found.`);
+        }
+        return classReference;
+    }
+
     private getWellKnownProtobufTypeClassReference(
         wellKnownProtobufType: WellKnownProtobufType
     ): csharp.ClassReference | undefined {
@@ -108,7 +153,7 @@ export class ProtobufResolver {
     private resolveWellKnownProtobufType(
         wellKnownProtobufType: WellKnownProtobufType
     ): ResolvedWellKnownProtobufType | undefined {
-        for (const [typeId, typeDeclaration] of Object.entries(this.ir.types)) {
+        for (const [typeId, typeDeclaration] of Object.entries(this.context.ir.types)) {
             if (this.isWellKnownProtobufType({ typeId, wellKnownProtobufType })) {
                 return {
                     typeDeclaration,
@@ -133,8 +178,16 @@ export class ProtobufResolver {
         return protobufType.type === "wellKnown" && protobufType.value.type === wellKnownProtobufType.type;
     }
 
+    private getProtobufTypeForTypeIdOrThrow(typeId: TypeId): ProtobufType {
+        const protobufType = this.getProtobufTypeForTypeId(typeId);
+        if (protobufType == null) {
+            throw new Error(`The type identified by ${typeId} is not a Protobuf type`);
+        }
+        return protobufType;
+    }
+
     private getProtobufTypeForTypeId(typeId: TypeId): ProtobufType | undefined {
-        const typeDeclaration = this.ir.types[typeId];
+        const typeDeclaration = this.context.ir.types[typeId];
         if (typeDeclaration?.source == null) {
             return undefined;
         }
