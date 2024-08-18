@@ -67,7 +67,7 @@ async function tryRunDocker({
         }),
         {
             HostConfig: {
-                Binds: binds,
+                Binds: binds
             },
             User: "root"
         }
