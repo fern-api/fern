@@ -217,6 +217,8 @@ navigation:
         contents: 
           - page: Navigation
             path: ./pages/docs/building-your-docs/navigation.mdx
+          - page: Links and Redirects
+            path: ./pages/docs/building-your-docs/links-and-redirects.mdx
           - page: Customize Styling 
             path: ./pages/docs/building-your-docs/styling.mdx
           - page: Custom CSS & Global JS
