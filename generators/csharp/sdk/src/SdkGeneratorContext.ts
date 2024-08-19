@@ -75,7 +75,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [
+        const files = [
             AsIsFiles.RawClient,
             AsIsFiles.StringEnumSerializer,
             AsIsFiles.OneOfSerializer,
@@ -85,6 +85,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.DateTimeSerializer,
             AsIsFiles.JsonConfiguration
         ];
+        if (this.hasGrpcEndpoints()) {
+            files.push(AsIsFiles.RawGrpcClient);
+        }
+        return files;
     }
 
     public getPublicCoreAsIsFiles(): string[] {

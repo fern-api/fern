@@ -16,6 +16,7 @@ export enum AsIsFiles {
     JsonConfiguration = "JsonConfiguration.cs",
     OneOfSerializer = "OneOfSerializer.cs",
     RawClient = "RawClient.Template.cs",
+    RawGrpcClient = "RawGrpcClient.Template.cs",
     StringEnum = "StringEnum.Template.cs",
     StringEnumSerializer = "StringEnumSerializer.cs",
     TemplateCsProj = "Template.csproj",

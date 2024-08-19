@@ -24,11 +24,6 @@ public partial class GrpcRequestOptions
     public Dictionary<string, string> Headers { get; init; } = new Dictionary<string, string>();
 
     /// <summary>
-    /// The cancellation token used with this particular request.
-    /// </summary>
-    public CancellationToken CancellationToken { get; init; } = default(CancellationToken);
-
-    /// <summary>
     /// Options for write operations.
     /// </summary>
     public WriteOptions? WriteOptions { get; init; }
