@@ -61,7 +61,7 @@ export async function generateIntermediateRepresentation({
     readme,
     packageName,
     version,
-    taskContext
+    context
 }: {
     fdrApiDefinitionId?: string;
     workspace: FernWorkspace;
@@ -73,7 +73,7 @@ export async function generateIntermediateRepresentation({
     readme: generatorsYml.ReadmeSchema | undefined;
     packageName: string | undefined;
     version: string | undefined;
-    taskContext: TaskContext;
+    context: TaskContext;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
@@ -99,7 +99,7 @@ export async function generateIntermediateRepresentation({
     const errorResolver = new ErrorResolverImpl(workspace);
     const exampleResolver = new ExampleResolverImpl(typeResolver);
     const variableResolver = new VariableResolverImpl();
-    const sourceResolver = new SourceResolverImpl(taskContext, workspace);
+    const sourceResolver = new SourceResolverImpl(context, workspace);
 
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         fdrApiDefinitionId,

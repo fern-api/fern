@@ -53,7 +53,7 @@ export async function testOutput({
             readme: undefined,
             version: undefined,
             packageName: undefined,
-            taskContext: context
+            context
         });
 
         const mockServer = new MockServer({

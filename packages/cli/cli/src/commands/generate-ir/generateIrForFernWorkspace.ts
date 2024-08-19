@@ -35,6 +35,6 @@ export async function generateIrForFernWorkspace({
         readme,
         version: undefined,
         packageName: undefined,
-        taskContext: context
+        context
     });
 }

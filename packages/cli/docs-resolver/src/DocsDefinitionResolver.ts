@@ -373,7 +373,7 @@ export class DocsDefinitionResolver {
                     readme: undefined,
                     version: undefined,
                     packageName: undefined,
-                    taskContext: this.taskContext
+                    context: this.taskContext
                 });
                 const apiDefinitionId = await this.registerApi({ ir, snippetsConfig });
                 const api = convertIrToApiDefinition(ir, apiDefinitionId);

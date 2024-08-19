@@ -37,7 +37,7 @@ export async function getIntermediateRepresentation({
         readme: generatorInvocation.readme,
         version,
         packageName,
-        taskContext: context
+        context
     });
     if (sourceConfig != null) {
         intermediateRepresentation.sourceConfig = sourceConfig;

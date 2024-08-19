@@ -150,19 +150,23 @@ async function createJob({
             );
             await writeFile(absolutePathToFernConfigJson, JSON.stringify(projectConfig.rawConfig, undefined, 2));
             // write sources
-            const sources = workspace.getSources();
-            for (const source of sources) {
-                context.logger.debug(`[TEST] Writing source ${source.absoluteFilePath}`);
-                const sourceContents = await readFile(source.absoluteFilePath);
-                const relativeLocation = relative(workspace.absoluteFilepath, source.absoluteFilePath);
-                const absolutePathToSourceFile = join(
-                    absolutePathToTmpFernDirectory,
-                    RelativeFilePath.of(relativeLocation)
-                );
-                // Make sure the directory exists
-                await mkdir(dirname(absolutePathToSourceFile), { recursive: true });
+            // TODO: We need handle what happens with source files outside of the fern directory
+            try {
+                const sources = workspace.getSources();
+                for (const source of sources) {
+                    const sourceContents = await readFile(source.absoluteFilePath);
+                    const relativeLocation = relative(workspace.absoluteFilepath, source.absoluteFilePath);
+                    const absolutePathToSourceFile = join(
+                        absolutePathToTmpFernDirectory,
+                        RelativeFilePath.of(relativeLocation)
+                    );
+                    // Make sure the directory exists
+                    await mkdir(dirname(absolutePathToSourceFile), { recursive: true });
 
-                await writeFile(absolutePathToSourceFile, sourceContents);
+                    await writeFile(absolutePathToSourceFile, sourceContents);
+                }
+            } catch (error) {
+                context.logger.debug(`Failed to write source files to disk, continuing: ${error}`);
             }
 
             const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of("definition.tgz"));

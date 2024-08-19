@@ -18,12 +18,12 @@ export interface SourceResolver {
 }
 
 export class SourceResolverImpl implements SourceResolver {
-    private readonly taskContext: TaskContext;
+    private readonly context: TaskContext;
     private readonly workspace: FernWorkspace;
     private readonly sourceCache: Map<AbsoluteFilePath, ResolvedSource>;
 
-    constructor(taskContext: TaskContext, workspace: FernWorkspace) {
-        this.taskContext = taskContext;
+    constructor(context: TaskContext, workspace: FernWorkspace) {
+        this.context = context;
         this.workspace = workspace;
         this.sourceCache = new Map();
     }
@@ -41,7 +41,7 @@ export class SourceResolverImpl implements SourceResolver {
                 throw new Error(`Cannot resolve source ${source.proto} from file ${file.relativeFilepath}`);
             }
             // Do not throw if OpenAPI since the source is not actually required.
-            this.taskContext.logger.warn(`Cannot resolve source ${source.openapi} from file ${file.relativeFilepath}`);
+            this.context.logger.warn(`Cannot resolve source ${source.openapi} from file ${file.relativeFilepath}`);
         }
         return resolvedType;
     }
