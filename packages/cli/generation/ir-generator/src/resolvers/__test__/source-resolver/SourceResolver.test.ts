@@ -42,7 +42,7 @@ describe("SourceResolver", () => {
         });
 
         const sourceResolver = new SourceResolverImpl(context, workspace);
-        expect(async () => {
+        await expect(async () => {
             await sourceResolver.resolveSourceOrThrow({
                 source: {
                     proto: "proto/cool-spec.proto"
