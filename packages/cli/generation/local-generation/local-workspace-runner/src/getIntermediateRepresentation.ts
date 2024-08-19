@@ -36,7 +36,8 @@ export async function getIntermediateRepresentation({
         disableExamples: generatorInvocation.disableExamples,
         readme: generatorInvocation.readme,
         version,
-        packageName
+        packageName,
+        taskContext: context
     });
     if (sourceConfig != null) {
         intermediateRepresentation.sourceConfig = sourceConfig;

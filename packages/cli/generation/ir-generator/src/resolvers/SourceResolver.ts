@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
@@ -14,10 +15,12 @@ export interface SourceResolver {
 }
 
 export class SourceResolverImpl implements SourceResolver {
+    private readonly taskContext: TaskContext;
     private readonly workspace: FernWorkspace;
     private readonly sourceCache: Map<AbsoluteFilePath, ResolvedSource>;
 
-    constructor(workspace: FernWorkspace) {
+    constructor(taskContext: TaskContext, workspace: FernWorkspace) {
+        this.taskContext = taskContext;
         this.workspace = workspace;
         this.sourceCache = new Map();
     }
@@ -44,10 +47,19 @@ export class SourceResolverImpl implements SourceResolver {
         source: RawSchemas.SourceSchema;
         file: FernFileContext;
     }): Promise<ResolvedSource | undefined> {
+        let resolvedSource: ResolvedSource | undefined;
         if (isRawProtobufSourceSchema(source)) {
-            return await this.resolveProtobufSource({ source, file });
+            resolvedSource = await this.resolveProtobufSource({ source, file });
+        } else {
+            resolvedSource = await this.resolveOpenAPISource({ source, file });
         }
-        return await this.resolveOpenAPISource({ source, file });
+
+        if (resolvedSource == null) {
+            const filename = isRawProtobufSourceSchema(source) ? source.proto : source.openapi;
+            this.taskContext.logger.warn(`Cannot resolve source ${filename} from file ${file.relativeFilepath}`);
+        }
+
+        return resolvedSource;
     }
 
     private async resolveProtobufSource({

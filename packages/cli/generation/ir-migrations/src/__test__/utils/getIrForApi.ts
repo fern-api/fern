@@ -25,6 +25,7 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
         disableExamples: false,
         readme: undefined,
         version: undefined,
-        packageName: undefined
+        packageName: undefined,
+        taskContext: context
     });
 }
