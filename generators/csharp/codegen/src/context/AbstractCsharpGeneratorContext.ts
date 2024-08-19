@@ -301,6 +301,10 @@ export abstract class AbstractCsharpGeneratorContext<
             case "container":
                 return typeReference.container.type === "optional";
             case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isPrimitive(typeDeclaration.shape.aliasOf);
+                }
                 return false;
             }
             case "unknown":
