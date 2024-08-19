@@ -16,11 +16,11 @@ export async function convertTransport({
     if (serviceDeclaration.source == null) {
         return Transport.http();
     }
-    const resolvedSource = await sourceResolver.resolveSourceOrThrow({
+    const resolvedSource = await sourceResolver.resolveSource({
         source: serviceDeclaration.source,
         file
     });
-    if (resolvedSource.type !== "protobuf") {
+    if (resolvedSource == null || resolvedSource.type !== "protobuf") {
         return Transport.http();
     }
     const protobufService = convertProtobufService({

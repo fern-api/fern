@@ -10,7 +10,7 @@ export interface SourceResolver {
         source: RawSchemas.SourceSchema;
         file: FernFileContext;
     }) => Promise<ResolvedSource | undefined>;
-    resolveSourceOrThrow: (args: { source: RawSchemas.SourceSchema; file: FernFileContext }) => Promise<ResolvedSource>;
+    // resolveSourceOrThrow: (args: { source: RawSchemas.SourceSchema; file: FernFileContext }) => Promise<ResolvedSource>;
 }
 
 export class SourceResolverImpl implements SourceResolver {
@@ -22,20 +22,20 @@ export class SourceResolverImpl implements SourceResolver {
         this.sourceCache = new Map();
     }
 
-    public async resolveSourceOrThrow({
-        source,
-        file
-    }: {
-        source: RawSchemas.SourceSchema;
-        file: FernFileContext;
-    }): Promise<ResolvedSource> {
-        const resolvedType = await this.resolveSource({ source, file });
-        if (resolvedType == null) {
-            const filename = isRawProtobufSourceSchema(source) ? source.proto : source.openapi;
-            throw new Error(`Cannot resolve source ${filename} from file ${file.relativeFilepath}`);
-        }
-        return resolvedType;
-    }
+    // public async resolveSourceOrThrow({
+    //     source,
+    //     file
+    // }: {
+    //     source: RawSchemas.SourceSchema;
+    //     file: FernFileContext;
+    // }): Promise<ResolvedSource> {
+    //     const resolvedType = await this.resolveSource({ source, file });
+    //     if (resolvedType == null) {
+    //         const filename = isRawProtobufSourceSchema(source) ? source.proto : source.openapi;
+    //         throw new Error(`Cannot resolve source ${filename} from file ${file.relativeFilepath}`);
+    //     }
+    //     return resolvedType;
+    // }
 
     public async resolveSource({
         source,

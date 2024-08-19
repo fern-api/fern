@@ -141,11 +141,11 @@ async function convertTypeDeclarationSource({
     if (typeDeclaration.source == null) {
         return undefined;
     }
-    const resolvedSource = await sourceResolver.resolveSourceOrThrow({
+    const resolvedSource = await sourceResolver.resolveSource({
         source: typeDeclaration.source,
         file
     });
-    if (resolvedSource.type !== "protobuf") {
+    if (resolvedSource == null || resolvedSource.type !== "protobuf") {
         return undefined;
     }
     return Source.proto(
