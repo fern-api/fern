@@ -18,7 +18,14 @@ jobs:
     steps:
       - uses: amannn/action-semantic-pull-request@v5
         with: 
+          types: |
+            fix
+            feat
+            revert
+            break
+            chore
           scopes: |
+            docs
             internal
             cli
             typescript
