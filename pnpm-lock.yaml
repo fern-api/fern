@@ -5590,9 +5590,6 @@ importers:
       '@fern-api/workspace-loader':
         specifier: workspace:*
         version: link:../cli/workspace-loader
-      '@fern-fern/fdr-cjs-sdk':
-        specifier: 0.0.5597
-        version: 0.0.5597
       '@fern-fern/fiddle-sdk':
         specifier: 0.0.584
         version: 0.0.584

@@ -45,7 +45,6 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-api/login": "workspace:*",
     "@fern-fern/generators-sdk": "0.0.5596",
-    "@fern-fern/fdr-cjs-sdk": "0.0.5597",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "@types/pretty-ms": "^5.0.1",
