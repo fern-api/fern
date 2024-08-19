@@ -23,6 +23,7 @@ import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import { relative } from "path";
 import tar from "tar";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
@@ -148,6 +149,21 @@ async function createJob({
                 RelativeFilePath.of(PROJECT_CONFIG_FILENAME)
             );
             await writeFile(absolutePathToFernConfigJson, JSON.stringify(projectConfig.rawConfig, undefined, 2));
+            // write sources
+            const sources = workspace.getSources();
+            for (const source of sources) {
+                context.logger.debug(`[TEST] Writing source ${source.absoluteFilePath}`);
+                const sourceContents = await readFile(source.absoluteFilePath);
+                const relativeLocation = relative(workspace.absoluteFilepath, source.absoluteFilePath);
+                const absolutePathToSourceFile = join(
+                    absolutePathToTmpFernDirectory,
+                    RelativeFilePath.of(relativeLocation)
+                );
+                // Make sure the directory exists
+                await mkdir(dirname(absolutePathToSourceFile), { recursive: true });
+
+                await writeFile(absolutePathToSourceFile, sourceContents);
+            }
 
             const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of("definition.tgz"));
             await tar.create({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."]);
