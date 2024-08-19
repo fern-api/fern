@@ -14,13 +14,15 @@ export async function loadAndUpdateGenerators({
     context,
     generatorFilter,
     groupFilter,
-    includeMajor
+    includeMajor,
+    includeRc
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
     generatorFilter: string | undefined;
     groupFilter: string | undefined;
     includeMajor: boolean;
+    includeRc: boolean;
 }): Promise<string | undefined> {
     const filepath = generatorsYml.getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (!(await doesPathExist(filepath))) {
@@ -83,7 +85,13 @@ export async function loadAndUpdateGenerators({
 
             const currentVersion = generator.get("version") as string;
 
-            const latestVersion = await generatorsYml.getLatestGeneratorVersion(normalizedGeneratorName, context);
+            const latestVersion = await generatorsYml.getLatestGeneratorVersion({
+                generatorName: normalizedGeneratorName,
+                currentVersion,
+                includeRc,
+                includeMajor,
+                context
+            });
             context.logger.debug(`${generatorName}, ${currentVersion}, ${latestVersion}`);
 
             if (latestVersion == null) {
@@ -108,13 +116,15 @@ export async function upgradeGenerator({
     generator,
     group,
     project: { apiWorkspaces },
-    includeMajor
+    includeMajor,
+    includeRc
 }: {
     cliContext: CliContext;
     generator: string | undefined;
     group: string | undefined;
     project: Project;
     includeMajor: boolean;
+    includeRc: boolean;
 }): Promise<void> {
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -139,7 +149,8 @@ export async function upgradeGenerator({
                     context,
                     generatorFilter: generator,
                     groupFilter: group,
-                    includeMajor
+                    includeMajor,
+                    includeRc
                 });
 
                 if (updatedConfiguration != null) {

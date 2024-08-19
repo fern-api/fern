@@ -690,6 +690,11 @@ function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                     default: false,
                     description:
                         "Whether or not to include major versions within the upgrade. Defaults to false, meaning major versions will be skipped."
+                })
+                .option("rc", {
+                    boolean: true,
+                    hidden: true,
+                    default: false
                 }),
         async (argv) => {
             cliContext.instrumentPostHogEvent({
@@ -710,7 +715,8 @@ function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
                 }),
-                includeMajor: argv.includeMajor
+                includeMajor: argv.includeMajor,
+                includeRc: argv.rc
             });
         }
     );
