@@ -263,9 +263,19 @@ async function writeFernDefinition({
 }): Promise<void> {
     // write *.yml
     for (const [relativePath, definitionFile] of Object.entries(definition.namedDefinitionFiles)) {
+        const definitionFileWoSource = {
+            ...definitionFile.contents,
+            types: Object.entries(definitionFile.contents.types ?? {}).map(([key, type]) => {
+                return [key, typeof type === "object" ? { ...type, source: undefined } : type];
+            }),
+            service:
+                definitionFile.contents.service != null
+                    ? { ...definitionFile.contents.service, source: undefined }
+                    : undefined
+        };
         const absolutePathToDefinitionFile = join(absolutePathToDefinitionDirectory, RelativeFilePath.of(relativePath));
         await mkdir(dirname(absolutePathToDefinitionFile), { recursive: true });
-        await writeFile(absolutePathToDefinitionFile, yaml.dump(definitionFile.contents));
+        await writeFile(absolutePathToDefinitionFile, yaml.dump(definitionFileWoSource));
     }
     // write __package__.yml
     for (const [relativePath, packageMarker] of Object.entries(definition.packageMarkers)) {
