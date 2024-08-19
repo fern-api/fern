@@ -5563,9 +5563,6 @@ importers:
       '@fern-api/configuration':
         specifier: workspace:*
         version: link:../cli/configuration
-      '@fern-api/core':
-        specifier: workspace:*
-        version: link:../core
       '@fern-api/core-utils':
         specifier: workspace:*
         version: link:../commons/core-utils
