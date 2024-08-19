@@ -138,10 +138,11 @@ parameter.
 
 <CodeBlock title="user.yml">
 ```yaml
-query-parameters:
-  filter:
-    type: string
-    allow-multiple: true # <---
+  ...
+  query-parameters:
+    filter:
+      type: string
+      allow-multiple: true # <---
 ```
 </CodeBlock>
 
@@ -178,10 +179,10 @@ Each endpoint can specify request headers:
         path: /all
         method: GET 
         request: 
-        # this name is required for idiomatic SDKs name:
-        name: GetAllUsersRequest 
-        headers: 
-          X-Endpoint-Header: string
+          # this name is required for idiomatic SDKs name:
+          name: GetAllUsersRequest 
+          headers: 
+            X-Endpoint-Header: string
   ```
 </CodeBlock>
 
@@ -239,11 +240,12 @@ makes the generated SDKs a bit more idiomatic.
       createUser: 
         path: /create 
         method: POST 
-        request: # this name is required for idiomatic SDKs 
-        name: CreateUserRequest 
-        body: 
-          properties: 
-            userName: string
+        request: 
+          # this name is required for idiomatic SDKs 
+          name: CreateUserRequest 
+          body: 
+            properties: 
+              userName: string
   ```
 </CodeBlock>
 

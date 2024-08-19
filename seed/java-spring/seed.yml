@@ -25,3 +25,4 @@ allowedFailures:
   - streaming
   - server-sent-events
   - alias-extends
+  - any-auth

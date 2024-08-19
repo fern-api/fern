@@ -66,7 +66,7 @@ client.userservice.create()
 <dl>
 <dd>
 
-**metadata:** `typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]` 
+**metadata:** `typing.Optional[Metadata]` 
     
 </dd>
 </dl>

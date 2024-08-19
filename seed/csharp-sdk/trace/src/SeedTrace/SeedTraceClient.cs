@@ -22,7 +22,7 @@ public partial class SeedTraceClient
                 { "X-Random-Header", xRandomHeader },
                 { "X-Fern-Language", "C#" },
             },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         V2 = new V2Client(_client);

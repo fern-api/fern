@@ -36,7 +36,7 @@ groups:
   python: 
     generators:
       - name: fernapi/fern-pydantic-model
-        version: 1.3.1
+        version: 1.4.2
         output:
           location: pypi
           url: pypi.buildwithfern.com
@@ -46,7 +46,7 @@ groups:
           include_union_utils: true
           frozen: true
           version: v2
-          use_str_enums: false
+          enum_type: python_enums
   go: 
     generators:
       - name: fernapi/fern-go-model

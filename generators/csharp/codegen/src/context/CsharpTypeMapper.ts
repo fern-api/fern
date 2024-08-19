@@ -3,8 +3,10 @@ import {
     ContainerType,
     DeclaredTypeName,
     Literal,
+    Name,
     PrimitiveType,
     PrimitiveTypeV1,
+    TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { csharp } from "../";
@@ -45,7 +47,7 @@ export class CsharpTypeMapper {
         }
     }
 
-    public convertToClassReference(declaredTypeName: DeclaredTypeName): ClassReference {
+    public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
         const objectNamespace = this.context.getNamespaceForTypeId(declaredTypeName.typeId);
         return new csharp.ClassReference({
             name: this.context.getPascalCaseSafeName(declaredTypeName.name),
@@ -117,6 +119,15 @@ export class CsharpTypeMapper {
     private convertNamed({ named }: { named: DeclaredTypeName }): Type {
         const objectClassReference = this.convertToClassReference(named);
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
+
+        if (this.context.protobufResolver.isProtobufStruct(typeDeclaration.name.typeId)) {
+            return this.context.protobufResolver.getProtobufStructTypeOrThrow();
+        }
+
+        if (this.context.protobufResolver.isProtobufValue(typeDeclaration.name.typeId)) {
+            return this.context.protobufResolver.getProtobufValueTypeOrThrow();
+        }
+
         switch (typeDeclaration.shape.type) {
             case "alias":
                 return this.convert({ reference: typeDeclaration.shape.aliasOf });

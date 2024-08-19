@@ -20,7 +20,7 @@ public partial class SeedSingleUrlEnvironmentDefaultClient
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
             },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         Dummy = new DummyClient(_client);

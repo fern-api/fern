@@ -1,4 +1,4 @@
-import { Arguments, NamedArgument, UnnamedArgument, isNamedArgument } from "./Argument";
+import { Arguments, isNamedArgument, NamedArgument, UnnamedArgument } from "./Argument";
 import { ClassReference } from "./ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
@@ -22,11 +22,14 @@ export class ClassInstantiation extends AstNode {
     }
 
     public write(writer: Writer): void {
+        const name =
+            this.classReference.namespaceAlias != null
+                ? `${this.classReference.namespaceAlias}.${this.classReference.name}`
+                : this.classReference.name;
+        writer.write(`new ${name}`);
+
         const hasNamedArguments =
             this.arguments_.length > 0 && this.arguments_[0] != null && isNamedArgument(this.arguments_[0]);
-
-        writer.write(`new ${this.classReference.name}`);
-
         if (hasNamedArguments) {
             writer.write("{ ");
         } else {

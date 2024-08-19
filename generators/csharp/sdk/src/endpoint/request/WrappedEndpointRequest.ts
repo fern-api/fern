@@ -74,7 +74,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 }
                 for (const query of optionalQueryParameters) {
                     const queryParameterReference = `${this.getParameterName()}.${query.name.name.pascalCase.safeName}`;
-                    writer.controlFlow("if", `${queryParameterReference} != null`);
+                    writer.controlFlow("if", csharp.codeblock(`${queryParameterReference} != null`));
                     this.writeQueryParameter(writer, query);
                     writer.endControlFlow();
                 }
@@ -140,7 +140,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 );
                 for (const header of optionalHeaders) {
                     const headerReference = `${this.getParameterName()}.${header.name.name.pascalCase.safeName}`;
-                    writer.controlFlow("if", `${headerReference} != null`);
+                    writer.controlFlow("if", csharp.codeblock(`${headerReference} != null`));
                     writer.write(`${HEADER_BAG_NAME}["${header.name.wireValue}"] = `);
                     writer.writeNodeStatement(this.stringify({ reference: header.valueType, name: header.name.name }));
                     writer.endControlFlow();

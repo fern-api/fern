@@ -25,7 +25,7 @@ paths:
                       age: 1
                       weight: 1.1
                       metadata:
-                        key: value
+                        key: 1.1
       requestBody:
         required: true
         content:
@@ -47,8 +47,7 @@ paths:
                   format: double
                   nullable: true
                 metadata:
-                  type: object
-                  additionalProperties: true
+                  $ref: '#/components/schemas/Metadata'
                   nullable: true
             examples:
               Example1:
@@ -80,7 +79,21 @@ components:
           format: double
           nullable: true
         metadata:
-          type: object
-          additionalProperties: true
+          $ref: '#/components/schemas/Metadata'
           nullable: true
+    Metadata:
+      title: Metadata
+      oneOf:
+        - type: object
+          additionalProperties:
+            $ref: '#/components/schemas/MetadataValue'
+        - type: object
+          additionalProperties: true
+    MetadataValue:
+      title: MetadataValue
+      oneOf:
+        - type: number
+          format: double
+        - type: string
+        - type: boolean
   securitySchemes: {}

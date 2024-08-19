@@ -51,7 +51,7 @@ public partial class ServiceClient
         RequestOptions? options = null
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["page_limit"] = request.PageLimit.ToString();
         _query["beforeDate"] = request.BeforeDate.ToString();
         var response = await _client.MakeRequestAsync(

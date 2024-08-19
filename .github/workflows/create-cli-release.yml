@@ -1,0 +1,58 @@
+name: Release CLI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/cli/cli/VERSION"
+
+# Add this permissions block
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  release-cli:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Get version from file
+      id: get_version
+      run: echo "VERSION=$(cat packages/cli/cli/VERSION)" >> $GITHUB_OUTPUT
+
+    - name: Determine if prerelease
+      id: check_prerelease
+      run: |
+        if [[ "${{ steps.get_version.outputs.VERSION }}" == *"rc"* ]]; then
+          echo "IS_PRERELEASE=true" >> $GITHUB_OUTPUT
+        else
+          echo "IS_PRERELEASE=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create Release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ steps.get_version.outputs.VERSION }}
+        release_name: ${{ steps.get_version.outputs.VERSION }}
+        draft: false
+        prerelease: ${{ steps.check_prerelease.outputs.IS_PRERELEASE }}
+    
+    - name: Display Release URL
+      run: echo "Release created at ${{ steps.create_release.outputs.html_url }}"
+
+  publish-cli:
+    needs: release-cli
+    uses: ./.github/workflows/publish-cli.yml
+    with: 
+      version: ${{ needs.release-cli.outputs.version }}
+    secrets: inherit

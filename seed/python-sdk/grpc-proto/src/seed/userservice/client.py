@@ -2,6 +2,7 @@
 
 import typing
 from ..core.client_wrapper import SyncClientWrapper
+from ..types.metadata import Metadata
 from ..core.request_options import RequestOptions
 from ..types.create_response import CreateResponse
 from ..core.pydantic_utilities import parse_obj_as
@@ -24,7 +25,7 @@ class UserserviceClient:
         email: typing.Optional[str] = OMIT,
         age: typing.Optional[int] = OMIT,
         weight: typing.Optional[float] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateResponse:
         """
@@ -38,7 +39,7 @@ class UserserviceClient:
 
         weight : typing.Optional[float]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[Metadata]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -96,7 +97,7 @@ class AsyncUserserviceClient:
         email: typing.Optional[str] = OMIT,
         age: typing.Optional[int] = OMIT,
         weight: typing.Optional[float] = OMIT,
-        metadata: typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]] = OMIT,
+        metadata: typing.Optional[Metadata] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> CreateResponse:
         """
@@ -110,7 +111,7 @@ class AsyncUserserviceClient:
 
         weight : typing.Optional[float]
 
-        metadata : typing.Optional[typing.Dict[str, typing.Optional[typing.Any]]]
+        metadata : typing.Optional[Metadata]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.

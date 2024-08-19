@@ -63,6 +63,12 @@ class UnionWithoutKey(UniversalRootModel):
         ) -> typing.Union[_UnionWithoutKey.Foo, _UnionWithoutKey.Bar]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         foo: typing.Callable[[resources_types_types_foo_Foo], T_Result],

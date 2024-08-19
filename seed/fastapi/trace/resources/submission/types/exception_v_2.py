@@ -59,6 +59,12 @@ class ExceptionV2(UniversalRootModel):
         ) -> typing.Union[_ExceptionV2.Generic, _ExceptionV2.Timeout]:
             return self.__root__
 
+    def dict(self, **kwargs: typing.Any) -> typing.Dict[str, typing.Any]:
+        if IS_PYDANTIC_V2:
+            return self.root.dict(**kwargs)
+        else:
+            return self.__root__.dict(**kwargs)
+
     def visit(
         self,
         generic: typing.Callable[[ExceptionInfo], T_Result],

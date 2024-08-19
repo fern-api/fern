@@ -5,6 +5,7 @@
 import * as serializers from "../index";
 import * as SeedApi from "../../api/index";
 import * as core from "../../core";
+import { Metadata } from "./Metadata";
 
 export const UserModel: core.serialization.ObjectSchema<serializers.UserModel.Raw, SeedApi.UserModel> =
     core.serialization.object({
@@ -12,7 +13,7 @@ export const UserModel: core.serialization.ObjectSchema<serializers.UserModel.Ra
         email: core.serialization.string().optional(),
         age: core.serialization.number().optional(),
         weight: core.serialization.number().optional(),
-        metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
+        metadata: Metadata.optional(),
     });
 
 export declare namespace UserModel {
@@ -21,6 +22,6 @@ export declare namespace UserModel {
         email?: string | null;
         age?: number | null;
         weight?: number | null;
-        metadata?: Record<string, unknown> | null;
+        metadata?: Metadata.Raw | null;
     }
 }

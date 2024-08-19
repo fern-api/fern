@@ -8,6 +8,7 @@ import {
     ROOT_API_FILENAME
 } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import {
     migrateIntermediateRepresentationForGenerator,
@@ -25,7 +26,6 @@ import yaml from "js-yaml";
 import tar from "tar";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
-import { substituteEnvVariables } from "./substituteEnvVariables";
 
 export async function createAndStartJob({
     projectConfig,
@@ -101,11 +101,17 @@ async function createJob({
         customConfig: generatorInvocation.config,
         publishMetadata: generatorInvocation.publishMetadata
     };
-    const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context, {
-        substituteAsEmpty: isPreview
-    });
-    const whitelabelWithEnvVarSubstiutions =
-        whitelabel != null ? substituteEnvVariables(whitelabel, context, { substituteAsEmpty: isPreview }) : undefined;
+
+    /** Sugar to substitute templated env vars in a standard way */
+    const substituteEnvVars = <T>(stringOrObject: T) =>
+        replaceEnvVariables(
+            stringOrObject,
+            { onError: (e) => context.failAndThrow(e) },
+            { substituteAsEmpty: isPreview }
+        );
+
+    const generatorConfigsWithEnvVarSubstitutions = substituteEnvVars(generatorConfig);
+    const whitelabelWithEnvVarSubstiutions = whitelabel != null ? substituteEnvVars(whitelabel) : undefined;
 
     const remoteGenerationService = createFiddleService({ token: token.value });
 
