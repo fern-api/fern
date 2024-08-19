@@ -103,7 +103,7 @@ class UsersClient:
                 _get_next = None
                 if _parsed_response.page is not None and _parsed_response.page.next is not None:
                     _parsed_next = _parsed_response.page.next.starting_after
-                    _has_next = _parsed_next is not None
+                    _has_next = _parsed_next is not None and _parsed_next != ""
                     _get_next = lambda: self.list_with_cursor_pagination(
                         page=page,
                         per_page=per_page,
@@ -178,7 +178,7 @@ class UsersClient:
                 _get_next = None
                 if _parsed_response.page is not None and _parsed_response.page.next is not None:
                     _parsed_next = _parsed_response.page.next.starting_after
-                    _has_next = _parsed_next is not None
+                    _has_next = _parsed_next is not None and _parsed_next != ""
                     _get_next = lambda: self.list_with_body_cursor_pagination(
                         pagination=pagination,
                         request_options=request_options,
@@ -562,7 +562,7 @@ class UsersClient:
                     ),
                 )
                 _parsed_next = _parsed_response.next
-                _has_next = _parsed_next is not None
+                _has_next = _parsed_next is not None and _parsed_next != ""
                 _get_next = lambda: self.list_with_extended_results(
                     cursor=_parsed_next,
                     request_options=request_options,
@@ -631,7 +631,7 @@ class UsersClient:
                 _get_next = None
                 if _parsed_response.cursor is not None:
                     _parsed_next = _parsed_response.cursor.after
-                    _has_next = _parsed_next is not None
+                    _has_next = _parsed_next is not None and _parsed_next != ""
                     _get_next = lambda: self.list_usernames(
                         starting_after=_parsed_next,
                         request_options=request_options,
@@ -795,7 +795,7 @@ class AsyncUsersClient:
                 _get_next = None
                 if _parsed_response.page is not None and _parsed_response.page.next is not None:
                     _parsed_next = _parsed_response.page.next.starting_after
-                    _has_next = _parsed_next is not None
+                    _has_next = _parsed_next is not None and _parsed_next != ""
                     _get_next = lambda: self.list_with_cursor_pagination(
                         page=page,
                         per_page=per_page,
@@ -878,7 +878,7 @@ class AsyncUsersClient:
                 _get_next = None
                 if _parsed_response.page is not None and _parsed_response.page.next is not None:
                     _parsed_next = _parsed_response.page.next.starting_after
-                    _has_next = _parsed_next is not None
+                    _has_next = _parsed_next is not None and _parsed_next != ""
                     _get_next = lambda: self.list_with_body_cursor_pagination(
                         pagination=pagination,
                         request_options=request_options,
@@ -1301,7 +1301,7 @@ class AsyncUsersClient:
                     ),
                 )
                 _parsed_next = _parsed_response.next
-                _has_next = _parsed_next is not None
+                _has_next = _parsed_next is not None and _parsed_next != ""
                 _get_next = lambda: self.list_with_extended_results(
                     cursor=_parsed_next,
                     request_options=request_options,
@@ -1378,7 +1378,7 @@ class AsyncUsersClient:
                 _get_next = None
                 if _parsed_response.cursor is not None:
                     _parsed_next = _parsed_response.cursor.after
-                    _has_next = _parsed_next is not None
+                    _has_next = _parsed_next is not None and _parsed_next != ""
                     _get_next = lambda: self.list_usernames(
                         starting_after=_parsed_next,
                         request_options=request_options,
