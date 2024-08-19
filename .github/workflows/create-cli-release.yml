@@ -16,8 +16,10 @@ env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  create-release:
+  release-cli:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.VERSION }}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -48,7 +50,9 @@ jobs:
     - name: Display Release URL
       run: echo "Release created at ${{ steps.create_release.outputs.html_url }}"
 
-  publish:
-    needs: create-release
+  publish-cli:
+    needs: release-cli
     uses: ./.github/workflows/publish-cli.yml
+    with: 
+      version: ${{ needs.release-cli.outputs.version }}
     secrets: inherit
