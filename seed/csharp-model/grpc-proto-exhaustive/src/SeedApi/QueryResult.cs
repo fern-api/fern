@@ -29,4 +29,16 @@ public record QueryResult
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new QueryResult type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static QueryResult FromProto(Proto.QueryResult value)
+    {
+        return new QueryResult
+        {
+            Matches = value.Matches?.Select(ScoredColumn.FromProto),
+            Namespace = value.Namespace,
+        };
+    }
 }

@@ -27,7 +27,7 @@ public partial class S3Client
                 Method = HttpMethod.Post,
                 Path = "/s3/presigned-url",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

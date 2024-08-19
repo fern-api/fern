@@ -14,7 +14,7 @@ public partial class SeedValidationClient
     public SeedValidationClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
             new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
@@ -29,7 +29,7 @@ public partial class SeedValidationClient
                 Method = HttpMethod.Post,
                 Path = "/create",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -65,7 +65,7 @@ public partial class SeedValidationClient
                 Method = HttpMethod.Get,
                 Path = "",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

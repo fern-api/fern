@@ -26,7 +26,7 @@ public partial class PackageClient
                 Method = HttpMethod.Post,
                 Path = "",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

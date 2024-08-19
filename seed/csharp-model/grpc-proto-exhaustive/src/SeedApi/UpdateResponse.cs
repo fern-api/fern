@@ -13,4 +13,12 @@ public record UpdateResponse
     {
         return new Proto.UpdateResponse();
     }
+
+    /// <summary>
+    /// Returns a new UpdateResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static UpdateResponse FromProto(Proto.UpdateResponse value)
+    {
+        return new UpdateResponse();
+    }
 }

@@ -28,7 +28,7 @@ public partial class SyspropClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
                 Path = $"/sysprop/num-warm-instances/{language}/{numWarmInstances}",
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -53,7 +53,7 @@ public partial class SyspropClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/sysprop/num-warm-instances",
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

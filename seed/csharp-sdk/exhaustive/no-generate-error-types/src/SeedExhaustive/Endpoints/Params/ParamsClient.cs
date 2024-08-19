@@ -28,7 +28,7 @@ public partial class ParamsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/params/path/{param}",
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -66,7 +66,7 @@ public partial class ParamsClient
                 Method = HttpMethod.Get,
                 Path = "/params",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -99,7 +99,7 @@ public partial class ParamsClient
                 Method = HttpMethod.Get,
                 Path = "/params",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -132,7 +132,7 @@ public partial class ParamsClient
                 Method = HttpMethod.Get,
                 Path = $"/params/path-query/{param}",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -163,7 +163,7 @@ public partial class ParamsClient
                 Method = HttpMethod.Put,
                 Path = $"/params/path/{param}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

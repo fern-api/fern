@@ -23,7 +23,7 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -46,7 +46,7 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/just-file",
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -85,7 +85,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "/just-file-with-query-params",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

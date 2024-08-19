@@ -26,7 +26,7 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "apiKey",
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -71,7 +71,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Get,
                 Path = "apiKeyInHeader",
                 Headers = _headers,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

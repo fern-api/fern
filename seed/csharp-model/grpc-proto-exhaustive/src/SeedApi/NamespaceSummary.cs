@@ -22,4 +22,12 @@ public record NamespaceSummary
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new NamespaceSummary type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static NamespaceSummary FromProto(Proto.NamespaceSummary value)
+    {
+        return new NamespaceSummary { Count = value.Count };
+    }
 }

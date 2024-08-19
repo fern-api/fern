@@ -16,5 +16,5 @@ public enum Operand
     EqualTo,
 
     [EnumMember(Value = "less_than")]
-    LessThan
+    LessThan,
 }

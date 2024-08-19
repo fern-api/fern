@@ -19,5 +19,5 @@ public enum WeatherReport
     Raining,
 
     [EnumMember(Value = "SNOWING")]
-    Snowing
+    Snowing,
 }

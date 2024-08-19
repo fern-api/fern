@@ -13,4 +13,12 @@ public record DeleteResponse
     {
         return new Proto.DeleteResponse();
     }
+
+    /// <summary>
+    /// Returns a new DeleteResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static DeleteResponse FromProto(Proto.DeleteResponse value)
+    {
+        return new DeleteResponse();
+    }
 }

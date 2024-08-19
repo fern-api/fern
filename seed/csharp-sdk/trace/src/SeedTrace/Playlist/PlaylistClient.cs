@@ -41,7 +41,7 @@ public partial class PlaylistClient
                 Path = $"/v2/playlist/{serviceParam}/create",
                 Body = request.Body,
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -89,7 +89,7 @@ public partial class PlaylistClient
                 Method = HttpMethod.Get,
                 Path = $"/v2/playlist/{serviceParam}/all",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -127,7 +127,7 @@ public partial class PlaylistClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}",
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -167,7 +167,7 @@ public partial class PlaylistClient
                 Method = HttpMethod.Put,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -205,7 +205,7 @@ public partial class PlaylistClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}",
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

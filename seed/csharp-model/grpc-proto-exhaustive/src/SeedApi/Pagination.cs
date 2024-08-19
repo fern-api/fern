@@ -22,4 +22,12 @@ public record Pagination
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new Pagination type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static Pagination FromProto(Proto.Pagination value)
+    {
+        return new Pagination { Next = value.Next };
+    }
 }

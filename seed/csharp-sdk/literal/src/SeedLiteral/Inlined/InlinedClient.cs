@@ -27,7 +27,7 @@ public partial class InlinedClient
                 Method = HttpMethod.Post,
                 Path = "inlined",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

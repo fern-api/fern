@@ -51,4 +51,19 @@ public record UserModel
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new UserModel type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static UserModel FromProto(Proto.UserModel value)
+    {
+        return new UserModel
+        {
+            Username = value.Username,
+            Email = value.Email,
+            Age = value.Age,
+            Weight = value.Weight,
+            Metadata = ProtoConverter.FromProtoStruct(value.Metadata),
+        };
+    }
 }

@@ -22,4 +22,12 @@ public record Usage
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new Usage type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static Usage FromProto(Proto.Usage value)
+    {
+        return new Usage { Units = value.Units };
+    }
 }

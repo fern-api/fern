@@ -14,7 +14,7 @@ public partial class SeedAliasExtendsClient
     public SeedAliasExtendsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
             new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
@@ -32,7 +32,7 @@ public partial class SeedAliasExtendsClient
                 Method = HttpMethod.Post,
                 Path = "/extends/extended-inline-request-body",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

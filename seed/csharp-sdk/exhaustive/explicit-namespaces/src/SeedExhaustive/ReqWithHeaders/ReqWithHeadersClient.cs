@@ -33,7 +33,7 @@ public partial class ReqWithHeadersClient
                 Path = "/test-headers/custom-header",
                 Body = request.Body,
                 Headers = _headers,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

@@ -13,5 +13,5 @@ public enum ResourceStatus
     Active,
 
     [EnumMember(Value = "INACTIVE")]
-    Inactive
+    Inactive,
 }
