@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - main
-      - dsnghvi/introduce-cli-changelog
-    # paths:
-    #   - "packages/cli/cli/VERSION"
+    paths:
+      - "packages/cli/cli/VERSION"
 
 # Add this permissions block
 permissions:
