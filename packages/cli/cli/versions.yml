@@ -1,3 +1,10 @@
+- version: 0.40.0
+  ir_version: v53
+  changelog_entry:
+    type: chore
+    internal:
+      - Update the `fern generator upgrade` command to leverage the FDR API as opposed to Docker and dockerode.
+
 - version: 0.39.10
   ir_version: v53
   changelog_entry:
