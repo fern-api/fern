@@ -14,7 +14,7 @@ public partial class SeedCsharpNamespaceConflictClient
     public SeedCsharpNamespaceConflictClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
             new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );

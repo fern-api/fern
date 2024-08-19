@@ -24,7 +24,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -56,7 +56,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -91,7 +91,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -126,7 +126,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -161,7 +161,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -196,7 +196,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -231,7 +231,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

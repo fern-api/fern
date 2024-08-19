@@ -25,5 +25,5 @@ public enum ExecutionSessionStatus
     LiveContainer,
 
     [EnumMember(Value = "FAILED_TO_LAUNCH")]
-    FailedToLaunch
+    FailedToLaunch,
 }

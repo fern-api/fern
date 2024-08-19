@@ -30,7 +30,7 @@ public record CreateResponse
     {
         return new CreateResponse
         {
-            User = value.User != null ? UserModel.FromProto(value.User) : null
+            User = value.User != null ? UserModel.FromProto(value.User) : null,
         };
     }
 }

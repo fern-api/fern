@@ -13,5 +13,5 @@ public enum Order
     Asc,
 
     [EnumMember(Value = "desc")]
-    Desc
+    Desc,
 }

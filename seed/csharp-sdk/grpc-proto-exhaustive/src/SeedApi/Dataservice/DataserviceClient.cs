@@ -27,7 +27,7 @@ public partial class DataserviceClient
                 Method = HttpMethod.Post,
                 Path = "data",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -62,7 +62,7 @@ public partial class DataserviceClient
                 Method = HttpMethod.Post,
                 Path = "data/delete",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -97,7 +97,7 @@ public partial class DataserviceClient
                 Method = HttpMethod.Post,
                 Path = "data/describe",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -138,7 +138,7 @@ public partial class DataserviceClient
                 Method = HttpMethod.Get,
                 Path = "data/fetch",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -187,7 +187,7 @@ public partial class DataserviceClient
                 Method = HttpMethod.Get,
                 Path = "data/list",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -222,7 +222,7 @@ public partial class DataserviceClient
                 Method = HttpMethod.Post,
                 Path = "data/query",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -257,7 +257,7 @@ public partial class DataserviceClient
                 Method = HttpMethod.Post,
                 Path = "data/update",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

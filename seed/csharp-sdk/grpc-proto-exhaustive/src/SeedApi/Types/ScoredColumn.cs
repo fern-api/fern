@@ -61,7 +61,7 @@ public record ScoredColumn
             Values = value.Values?.ToList(),
             Metadata = ProtoConverter.FromProtoStruct(value.Metadata),
             IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
         };
     }
 }

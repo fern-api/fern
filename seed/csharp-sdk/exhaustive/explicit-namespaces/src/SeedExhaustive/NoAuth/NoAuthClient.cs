@@ -29,7 +29,7 @@ public partial class NoAuthClient
                 Method = HttpMethod.Post,
                 Path = "/no-auth",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

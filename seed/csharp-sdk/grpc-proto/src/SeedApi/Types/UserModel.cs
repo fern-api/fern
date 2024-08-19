@@ -63,7 +63,7 @@ public record UserModel
             Email = value.Email,
             Age = value.Age,
             Weight = value.Weight,
-            Metadata = ProtoConverter.FromProtoStruct(value.Metadata)
+            Metadata = ProtoConverter.FromProtoStruct(value.Metadata),
         };
     }
 }

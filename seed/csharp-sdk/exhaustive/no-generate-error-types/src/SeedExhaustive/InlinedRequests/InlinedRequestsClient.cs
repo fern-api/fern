@@ -31,7 +31,7 @@ public partial class InlinedRequestsClient
                 Method = HttpMethod.Post,
                 Path = "/req-bodies/object",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -31,7 +31,7 @@ public partial class QueryClient
                 Method = HttpMethod.Post,
                 Path = "query",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

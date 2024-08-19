@@ -38,7 +38,7 @@ public record QueryResult
         return new QueryResult
         {
             Matches = value.Matches?.Select(ScoredColumn.FromProto),
-            Namespace = value.Namespace
+            Namespace = value.Namespace,
         };
     }
 }

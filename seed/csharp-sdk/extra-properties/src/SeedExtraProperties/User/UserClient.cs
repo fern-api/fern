@@ -27,7 +27,7 @@ public partial class UserClient
                 Method = HttpMethod.Post,
                 Path = "/user",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

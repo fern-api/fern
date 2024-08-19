@@ -13,5 +13,5 @@ public enum KeyType
     Name,
 
     [EnumMember(Value = "value")]
-    Value
+    Value,
 }

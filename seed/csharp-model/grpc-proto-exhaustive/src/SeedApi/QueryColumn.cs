@@ -64,7 +64,7 @@ public record QueryColumn
             Namespace = value.Namespace,
             Filter = ProtoConverter.FromProtoStruct(value.Filter),
             IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
         };
     }
 }

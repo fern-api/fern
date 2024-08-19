@@ -24,7 +24,7 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "upload-content",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

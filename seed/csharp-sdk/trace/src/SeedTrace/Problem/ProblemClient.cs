@@ -31,7 +31,7 @@ public partial class ProblemClient
                 Method = HttpMethod.Post,
                 Path = "/problem-crud/create",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -70,7 +70,7 @@ public partial class ProblemClient
                 Method = HttpMethod.Post,
                 Path = $"/problem-crud/update/{problemId}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -104,7 +104,7 @@ public partial class ProblemClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
                 Path = $"/problem-crud/delete/{problemId}",
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -134,7 +134,7 @@ public partial class ProblemClient
                 Method = HttpMethod.Post,
                 Path = "/problem-crud/default-starter-files",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

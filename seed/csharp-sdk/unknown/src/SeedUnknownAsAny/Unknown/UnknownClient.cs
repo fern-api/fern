@@ -24,7 +24,7 @@ public partial class UnknownClient
                 Method = HttpMethod.Post,
                 Path = "",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -59,7 +59,7 @@ public partial class UnknownClient
                 Method = HttpMethod.Post,
                 Path = "/with-object",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -27,7 +27,7 @@ public partial class OptionalClient
                 Method = HttpMethod.Post,
                 Path = "send-optional-body",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
