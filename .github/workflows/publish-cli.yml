@@ -43,6 +43,7 @@ jobs:
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
 
   publish-rc:
+    if: contains(inputs.version, '-rc')
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -86,6 +87,7 @@ jobs:
         run: pnpm --filter @fern-api/cli publish:cli:prod --tag prerelease
 
   publish:
+    if: "!contains(inputs.version, '-rc')"
     needs: live-test
     runs-on: ubuntu-latest
     env:
