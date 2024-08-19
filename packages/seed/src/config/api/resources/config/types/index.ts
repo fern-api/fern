@@ -1,3 +1,4 @@
+export * from "./MinimalSeedWorkspaceConfiguration";
 export * from "./SeedWorkspaceConfiguration";
 export * from "./LocalBuildInfo";
 export * from "./DockerCommand";

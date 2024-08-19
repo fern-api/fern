@@ -1,7 +1,11 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
+import { askToLogin } from "@fern-api/login";
+import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import { registerCliRelease } from "./commands/register/registerCliRelease";
+import { registerGenerator } from "./commands/register/registerGenerator";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
 import { ScriptRunner } from "./commands/test/ScriptRunner";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
@@ -26,6 +30,7 @@ export async function tryRunCli(): Promise<void> {
 
     addTestCommand(cli);
     addRunCommand(cli);
+    addRegisterCommand(cli);
 
     await cli.parse();
 
@@ -192,6 +197,56 @@ function addRunCommand(cli: Argv) {
     );
 }
 
+function addRegisterCommand(cli: Argv) {
+    cli.command(
+        "register",
+        "Registers all of the generators, as well as the CLI to FDR unless otherwise specified. To filter to certain generators or to not include the CLI, use the --generator, and --skip-cli flags respectively.",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    description: "Generator(s) to register"
+                })
+                .option("skip-cli", {
+                    boolean: true,
+                    description: "Initialize a docs website."
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            if (argv.generator != null) {
+                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
+            }
+            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+            const context = taskContextFactory.create("Register");
+            const token = await askToLogin(context);
+
+            const fdrClient = createFdrService({ token: token.value });
+
+            await registerCliRelease({
+                fdrClient,
+                context: taskContextFactory.create("Register")
+            });
+            for (const generator of generators) {
+                if (argv.generator != null && !argv.generator.includes(generator.workspaceName)) {
+                    continue;
+                }
+                // Register the generator and it's versions
+                await registerGenerator({
+                    generator,
+                    fdrClient,
+                    context
+                });
+            }
+        }
+    );
+}
+
 function throwIfGeneratorDoesNotExist({
     seedWorkspaces,
     generators
@@ -217,4 +272,19 @@ function throwIfGeneratorDoesNotExist({
             )} not found. Please make sure that there is a folder with those names in the seed directory.`
         );
     }
+}
+
+// Dummy clone of the function from @fern-api/core
+// because we're using different SDKs for these packages
+function createFdrService({
+    environment = process.env.DEFAULT_FDR_ORIGIN ?? "https://registry.buildwithfern.com",
+    token
+}: {
+    environment?: string;
+    token: (() => string) | string;
+}): FdrClient {
+    return new FdrClient({
+        environment,
+        token
+    });
 }

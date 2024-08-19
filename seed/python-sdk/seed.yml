@@ -1,4 +1,5 @@
 irVersion: v53
+changelogLocation: ../../generators/python/sdk/versions.yml
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python

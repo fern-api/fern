@@ -10,8 +10,15 @@ export interface GeneratorWorkspace {
     workspaceConfig: FernSeedConfig.SeedWorkspaceConfiguration;
 }
 
+export interface CliWorkspace {
+    workspaceName: string;
+    absolutePathToWorkspace: AbsoluteFilePath;
+    workspaceConfig: FernSeedConfig.MinimalSeedWorkspaceConfiguration;
+}
+
 export const SEED_DIRECTORY = "seed";
 export const SEED_CONFIG_FILENAME = "seed.yml";
+export const CLI_SEED_DIRECTORY = "fern-cli";
 
 export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
     const seedDirectory = await getSeedDirectory();
@@ -23,7 +30,7 @@ export async function loadGeneratorWorkspaces(): Promise<GeneratorWorkspace[]> {
     const seedDirectoryContents = await readdir(seedDirectory, { withFileTypes: true });
 
     const workspaceDirectoryNames = seedDirectoryContents.reduce<string[]>((all, item) => {
-        if (item.isDirectory()) {
+        if (item.isDirectory() && item.name !== CLI_SEED_DIRECTORY) {
             all.push(item.name);
         }
         return all;
@@ -51,4 +58,30 @@ async function getSeedDirectory(): Promise<AbsoluteFilePath | undefined> {
         return undefined;
     }
     return AbsoluteFilePath.of(seedDirectoryStr);
+}
+
+export async function getFernCliSeedDirectory(): Promise<AbsoluteFilePath | undefined> {
+    const seedDirectoryStr = await findUp(SEED_DIRECTORY, { type: "directory" });
+    if (seedDirectoryStr == null) {
+        return undefined;
+    }
+    return join(AbsoluteFilePath.of(seedDirectoryStr), RelativeFilePath.of(CLI_SEED_DIRECTORY));
+}
+
+export async function loadCliWorkspace(): Promise<CliWorkspace> {
+    const seedDirectory = await getSeedDirectory();
+
+    if (seedDirectory == null) {
+        throw new Error("Failed to find seed folder");
+    }
+
+    const absolutePathToWorkspace = join(seedDirectory, RelativeFilePath.of(CLI_SEED_DIRECTORY));
+    const seedConfig = await readFile(join(absolutePathToWorkspace, RelativeFilePath.of(SEED_CONFIG_FILENAME)));
+    const workspaceConfig = yaml.load(seedConfig.toString()) as any as FernSeedConfig.MinimalSeedWorkspaceConfiguration;
+
+    return {
+        workspaceName: CLI_SEED_DIRECTORY,
+        absolutePathToWorkspace,
+        workspaceConfig
+    };
 }
