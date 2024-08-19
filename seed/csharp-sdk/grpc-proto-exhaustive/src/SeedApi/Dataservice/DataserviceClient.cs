@@ -1,5 +1,6 @@
-using System.Net.Http;
-using System.Text.Json;
+using System.Threading;
+using Data.V1.Grpc;
+using Grpc.Core;
 using SeedApi.Core;
 
 #nullable enable
@@ -10,273 +11,238 @@ public partial class DataserviceClient
 {
     private RawClient _client;
 
+    private RawGrpcClient _grpc;
+
+    private DataService.DataServiceClient _dataService;
+
     internal DataserviceClient(RawClient client)
     {
         _client = client;
+        _grpc = _client.Grpc;
+        _dataService = new DataService.DataServiceClient(_grpc.Channel);
     }
 
     public async Task<UploadResponse> UploadAsync(
         UploadRequest request,
-        RequestOptions? options = null
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "data",
-                Body = request,
-                Options = options,
-            }
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
+        try
         {
-            try
-            {
-                return JsonUtils.Deserialize<UploadResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedApiException("Failed to deserialize response", e);
-            }
+            var callOptions = _grpc.CreateCallOptions(
+                options ?? new GrpcRequestOptions(),
+                cancellationToken
+            );
+            ;
+            var call = _dataService.UploadAsync(request.ToProto(), callOptions);
+            var response = await call.ConfigureAwait(false);
+            return UploadResponse.FromProto(response);
         }
-
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        catch (RpcException rpc)
+        {
+            var statusCode = (int)rpc.StatusCode;
+            throw new SeedApiApiException(
+                $"Error with gRPC status code {statusCode}",
+                statusCode,
+                rpc.Message
+            );
+        }
+        catch (Exception e)
+        {
+            throw new SeedApiException("Error", e);
+        }
     }
 
     public async Task<DeleteResponse> DeleteAsync(
         DeleteRequest request,
-        RequestOptions? options = null
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "data/delete",
-                Body = request,
-                Options = options,
-            }
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
+        try
         {
-            try
-            {
-                return JsonUtils.Deserialize<DeleteResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedApiException("Failed to deserialize response", e);
-            }
+            var callOptions = _grpc.CreateCallOptions(
+                options ?? new GrpcRequestOptions(),
+                cancellationToken
+            );
+            ;
+            var call = _dataService.DeleteAsync(request.ToProto(), callOptions);
+            var response = await call.ConfigureAwait(false);
+            return DeleteResponse.FromProto(response);
         }
-
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        catch (RpcException rpc)
+        {
+            var statusCode = (int)rpc.StatusCode;
+            throw new SeedApiApiException(
+                $"Error with gRPC status code {statusCode}",
+                statusCode,
+                rpc.Message
+            );
+        }
+        catch (Exception e)
+        {
+            throw new SeedApiException("Error", e);
+        }
     }
 
     public async Task<DescribeResponse> DescribeAsync(
         DescribeRequest request,
-        RequestOptions? options = null
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "data/describe",
-                Body = request,
-                Options = options,
-            }
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
+        try
         {
-            try
-            {
-                return JsonUtils.Deserialize<DescribeResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedApiException("Failed to deserialize response", e);
-            }
+            var callOptions = _grpc.CreateCallOptions(
+                options ?? new GrpcRequestOptions(),
+                cancellationToken
+            );
+            ;
+            var call = _dataService.DescribeAsync(request.ToProto(), callOptions);
+            var response = await call.ConfigureAwait(false);
+            return DescribeResponse.FromProto(response);
         }
-
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        catch (RpcException rpc)
+        {
+            var statusCode = (int)rpc.StatusCode;
+            throw new SeedApiApiException(
+                $"Error with gRPC status code {statusCode}",
+                statusCode,
+                rpc.Message
+            );
+        }
+        catch (Exception e)
+        {
+            throw new SeedApiException("Error", e);
+        }
     }
 
     public async Task<FetchResponse> FetchAsync(
         FetchRequest request,
-        RequestOptions? options = null
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>();
-        _query["ids"] = request.Ids;
-        if (request.Namespace != null)
+        try
         {
-            _query["namespace"] = request.Namespace;
+            var callOptions = _grpc.CreateCallOptions(
+                options ?? new GrpcRequestOptions(),
+                cancellationToken
+            );
+            ;
+            var call = _dataService.FetchAsync(request.ToProto(), callOptions);
+            var response = await call.ConfigureAwait(false);
+            return FetchResponse.FromProto(response);
         }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "data/fetch",
-                Query = _query,
-                Options = options,
-            }
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
+        catch (RpcException rpc)
         {
-            try
-            {
-                return JsonUtils.Deserialize<FetchResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedApiException("Failed to deserialize response", e);
-            }
+            var statusCode = (int)rpc.StatusCode;
+            throw new SeedApiApiException(
+                $"Error with gRPC status code {statusCode}",
+                statusCode,
+                rpc.Message
+            );
         }
-
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        catch (Exception e)
+        {
+            throw new SeedApiException("Error", e);
+        }
     }
 
-    public async Task<ListResponse> ListAsync(ListRequest request, RequestOptions? options = null)
+    public async Task<ListResponse> ListAsync(
+        ListRequest request,
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>();
-        if (request.Prefix != null)
+        try
         {
-            _query["prefix"] = request.Prefix;
+            var callOptions = _grpc.CreateCallOptions(
+                options ?? new GrpcRequestOptions(),
+                cancellationToken
+            );
+            ;
+            var call = _dataService.ListAsync(request.ToProto(), callOptions);
+            var response = await call.ConfigureAwait(false);
+            return ListResponse.FromProto(response);
         }
-        if (request.Limit != null)
+        catch (RpcException rpc)
         {
-            _query["limit"] = request.Limit.ToString();
+            var statusCode = (int)rpc.StatusCode;
+            throw new SeedApiApiException(
+                $"Error with gRPC status code {statusCode}",
+                statusCode,
+                rpc.Message
+            );
         }
-        if (request.PaginationToken != null)
+        catch (Exception e)
         {
-            _query["paginationToken"] = request.PaginationToken;
+            throw new SeedApiException("Error", e);
         }
-        if (request.Namespace != null)
-        {
-            _query["namespace"] = request.Namespace;
-        }
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Get,
-                Path = "data/list",
-                Query = _query,
-                Options = options,
-            }
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            try
-            {
-                return JsonUtils.Deserialize<ListResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedApiException("Failed to deserialize response", e);
-            }
-        }
-
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
     }
 
     public async Task<QueryResponse> QueryAsync(
         QueryRequest request,
-        RequestOptions? options = null
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "data/query",
-                Body = request,
-                Options = options,
-            }
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
+        try
         {
-            try
-            {
-                return JsonUtils.Deserialize<QueryResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedApiException("Failed to deserialize response", e);
-            }
+            var callOptions = _grpc.CreateCallOptions(
+                options ?? new GrpcRequestOptions(),
+                cancellationToken
+            );
+            ;
+            var call = _dataService.QueryAsync(request.ToProto(), callOptions);
+            var response = await call.ConfigureAwait(false);
+            return QueryResponse.FromProto(response);
         }
-
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        catch (RpcException rpc)
+        {
+            var statusCode = (int)rpc.StatusCode;
+            throw new SeedApiApiException(
+                $"Error with gRPC status code {statusCode}",
+                statusCode,
+                rpc.Message
+            );
+        }
+        catch (Exception e)
+        {
+            throw new SeedApiException("Error", e);
+        }
     }
 
     public async Task<UpdateResponse> UpdateAsync(
         UpdateRequest request,
-        RequestOptions? options = null
+        GrpcRequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.JsonApiRequest
-            {
-                BaseUrl = _client.Options.BaseUrl,
-                Method = HttpMethod.Post,
-                Path = "data/update",
-                Body = request,
-                Options = options,
-            }
-        );
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode is >= 200 and < 400)
+        try
         {
-            try
-            {
-                return JsonUtils.Deserialize<UpdateResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedApiException("Failed to deserialize response", e);
-            }
+            var callOptions = _grpc.CreateCallOptions(
+                options ?? new GrpcRequestOptions(),
+                cancellationToken
+            );
+            ;
+            var call = _dataService.UpdateAsync(request.ToProto(), callOptions);
+            var response = await call.ConfigureAwait(false);
+            return UpdateResponse.FromProto(response);
         }
-
-        throw new SeedApiApiException(
-            $"Error with status code {response.StatusCode}",
-            response.StatusCode,
-            responseBody
-        );
+        catch (RpcException rpc)
+        {
+            var statusCode = (int)rpc.StatusCode;
+            throw new SeedApiApiException(
+                $"Error with gRPC status code {statusCode}",
+                statusCode,
+                rpc.Message
+            );
+        }
+        catch (Exception e)
+        {
+            throw new SeedApiException("Error", e);
+        }
     }
 }
