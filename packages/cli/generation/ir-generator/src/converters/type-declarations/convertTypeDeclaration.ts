@@ -141,7 +141,7 @@ async function convertTypeDeclarationSource({
     if (typeDeclaration.source == null) {
         return undefined;
     }
-    const resolvedSource = await sourceResolver.resolveSource({
+    const resolvedSource = await sourceResolver.resolveSourceOrThrow({
         source: typeDeclaration.source,
         file
     });

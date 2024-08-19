@@ -11,7 +11,10 @@ export interface SourceResolver {
         source: RawSchemas.SourceSchema;
         file: FernFileContext;
     }) => Promise<ResolvedSource | undefined>;
-    // resolveSourceOrThrow: (args: { source: RawSchemas.SourceSchema; file: FernFileContext }) => Promise<ResolvedSource>;
+    resolveSourceOrThrow: (args: {
+        source: RawSchemas.SourceSchema;
+        file: FernFileContext;
+    }) => Promise<ResolvedSource | undefined>;
 }
 
 export class SourceResolverImpl implements SourceResolver {
@@ -25,20 +28,23 @@ export class SourceResolverImpl implements SourceResolver {
         this.sourceCache = new Map();
     }
 
-    // public async resolveSourceOrThrow({
-    //     source,
-    //     file
-    // }: {
-    //     source: RawSchemas.SourceSchema;
-    //     file: FernFileContext;
-    // }): Promise<ResolvedSource> {
-    //     const resolvedType = await this.resolveSource({ source, file });
-    //     if (resolvedType == null) {
-    //         const filename = isRawProtobufSourceSchema(source) ? source.proto : source.openapi;
-    //         throw new Error(`Cannot resolve source ${filename} from file ${file.relativeFilepath}`);
-    //     }
-    //     return resolvedType;
-    // }
+    public async resolveSourceOrThrow({
+        source,
+        file
+    }: {
+        source: RawSchemas.SourceSchema;
+        file: FernFileContext;
+    }): Promise<ResolvedSource | undefined> {
+        const resolvedType = await this.resolveSource({ source, file });
+        if (resolvedType == null) {
+            if (isRawProtobufSourceSchema(source)) {
+                throw new Error(`Cannot resolve source ${source.proto} from file ${file.relativeFilepath}`);
+            }
+            // Do not throw if OpenAPI since the source is not actually required.
+            this.taskContext.logger.warn(`Cannot resolve source ${source.openapi} from file ${file.relativeFilepath}`);
+        }
+        return resolvedType;
+    }
 
     public async resolveSource({
         source,
@@ -47,19 +53,10 @@ export class SourceResolverImpl implements SourceResolver {
         source: RawSchemas.SourceSchema;
         file: FernFileContext;
     }): Promise<ResolvedSource | undefined> {
-        let resolvedSource: ResolvedSource | undefined;
         if (isRawProtobufSourceSchema(source)) {
-            resolvedSource = await this.resolveProtobufSource({ source, file });
-        } else {
-            resolvedSource = await this.resolveOpenAPISource({ source, file });
+            return await this.resolveProtobufSource({ source, file });
         }
-
-        if (resolvedSource == null) {
-            const filename = isRawProtobufSourceSchema(source) ? source.proto : source.openapi;
-            this.taskContext.logger.warn(`Cannot resolve source ${filename} from file ${file.relativeFilepath}`);
-        }
-
-        return resolvedSource;
+        return await this.resolveOpenAPISource({ source, file });
     }
 
     private async resolveProtobufSource({

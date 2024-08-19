@@ -16,7 +16,7 @@ export async function convertTransport({
     if (serviceDeclaration.source == null) {
         return Transport.http();
     }
-    const resolvedSource = await sourceResolver.resolveSource({
+    const resolvedSource = await sourceResolver.resolveSourceOrThrow({
         source: serviceDeclaration.source,
         file
     });
