@@ -209,8 +209,9 @@ function addRegisterCommand(cli: Argv) {
                     demandOption: false,
                     description: "Generator(s) to register"
                 })
-                .option("skip-cli", {
+                .option("cli", {
                     boolean: true,
+                    default: false,
                     description: "Initialize a docs website."
                 })
                 .option("log-level", {
@@ -233,7 +234,10 @@ function addRegisterCommand(cli: Argv) {
                 context: taskContextFactory.create("Register")
             });
             for (const generator of generators) {
-                if (argv.generator != null && !argv.generator.includes(generator.workspaceName)) {
+                if (
+                    (argv.cli && argv.generator == null) ||
+                    (argv.generator != null && !argv.generator.includes(generator.workspaceName))
+                ) {
                     continue;
                 }
                 // Register the generator and it's versions
