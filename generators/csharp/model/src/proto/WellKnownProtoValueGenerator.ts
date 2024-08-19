@@ -180,8 +180,8 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
     private wrapTernary(node: csharp.AstNode): csharp.AstNode {
         return csharp.ternary({
             condition: csharp.codeblock("v != null"),
-            trueStatement: node,
-            falseStatement: csharp.codeblock("null")
+            true_: node,
+            false_: csharp.codeblock("null")
         });
     }
 

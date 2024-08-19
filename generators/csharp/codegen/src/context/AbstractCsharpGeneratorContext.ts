@@ -25,9 +25,9 @@ import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomC
 import { CsharpProject } from "../project";
 import { Namespace } from "../project/CSharpFile";
 import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
-import { CsharpProtobufTypeMapper } from "./CsharpProtobufTypeMapper";
+import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
+import { ProtobufResolver } from "../proto/ProtobufResolver";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
-import { ProtobufResolver } from "./ProtobufResolver";
 
 export abstract class AbstractCsharpGeneratorContext<
     CustomConfig extends BaseCsharpCustomConfigSchema
@@ -293,6 +293,24 @@ export abstract class AbstractCsharpGeneratorContext<
                 return false;
             case "primitive":
                 return false;
+        }
+    }
+
+    public isPrimitive(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "optional";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isPrimitive(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return true;
         }
     }
 

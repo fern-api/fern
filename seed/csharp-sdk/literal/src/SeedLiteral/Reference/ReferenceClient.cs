@@ -24,7 +24,7 @@ public partial class ReferenceClient
                 Method = HttpMethod.Post,
                 Path = "reference",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

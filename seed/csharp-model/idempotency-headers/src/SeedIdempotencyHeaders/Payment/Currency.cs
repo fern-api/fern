@@ -13,5 +13,5 @@ public enum Currency
     Usd,
 
     [EnumMember(Value = "YEN")]
-    Yen
+    Yen,
 }

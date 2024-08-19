@@ -41,7 +41,7 @@ internal class ProtoConverter
             Value.ForBool,
             list => new Value
             {
-                ListValue = new ListValue { Values = { list.Select(ToProtoValue) } }
+                ListValue = new ListValue { Values = { list.Select(ToProtoValue) } },
             },
             nested => new Value { StructValue = ToProtoStruct(nested) }
         );

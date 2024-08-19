@@ -13,5 +13,5 @@ public enum ReservedKeywordEnum
     Is,
 
     [EnumMember(Value = "as")]
-    As
+    As,
 }

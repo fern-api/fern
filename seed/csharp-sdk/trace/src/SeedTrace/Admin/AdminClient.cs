@@ -28,7 +28,7 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-submission-status/{submissionId}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -56,7 +56,7 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-submission-status-v2/{submissionId}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -84,7 +84,7 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-submission-status/{submissionId}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -112,7 +112,7 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-submission-status-v2/{submissionId}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -141,7 +141,7 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -171,7 +171,7 @@ public partial class AdminClient
                 Path =
                     $"/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -199,7 +199,7 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-trace/submission/{submissionId}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -227,7 +227,7 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-trace-v2/submission/{submissionId}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

@@ -17,7 +17,7 @@ public partial class SeedExamplesClient
     public SeedExamplesClient(string token, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
             new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
@@ -47,7 +47,7 @@ public partial class SeedExamplesClient
                 Method = HttpMethod.Post,
                 Path = "",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

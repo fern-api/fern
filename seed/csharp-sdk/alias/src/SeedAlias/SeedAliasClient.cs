@@ -14,7 +14,7 @@ public partial class SeedAliasClient
     public SeedAliasClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
             new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
@@ -28,7 +28,7 @@ public partial class SeedAliasClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/{typeId}",
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

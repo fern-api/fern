@@ -40,4 +40,20 @@ public record FetchResponse
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new FetchResponse type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static FetchResponse FromProto(Proto.FetchResponse value)
+    {
+        return new FetchResponse
+        {
+            Columns = value.Columns?.ToDictionary(
+                kvp => kvp.Key,
+                kvp => Column.FromProto(kvp.Value)
+            ),
+            Namespace = value.Namespace,
+            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
+        };
+    }
 }

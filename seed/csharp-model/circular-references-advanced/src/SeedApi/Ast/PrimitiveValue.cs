@@ -13,5 +13,5 @@ public enum PrimitiveValue
     String,
 
     [EnumMember(Value = "NUMBER")]
-    Number
+    Number,
 }

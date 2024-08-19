@@ -29,7 +29,7 @@ public partial class FooClient
                 Method = HttpMethod.Post,
                 Path = "",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

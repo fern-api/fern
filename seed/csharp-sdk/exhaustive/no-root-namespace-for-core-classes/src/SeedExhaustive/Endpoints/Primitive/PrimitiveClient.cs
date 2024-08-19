@@ -27,7 +27,7 @@ public partial class PrimitiveClient
                 Method = HttpMethod.Post,
                 Path = "/primitive/string",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -59,7 +59,7 @@ public partial class PrimitiveClient
                 Method = HttpMethod.Post,
                 Path = "/primitive/integer",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -91,7 +91,7 @@ public partial class PrimitiveClient
                 Method = HttpMethod.Post,
                 Path = "/primitive/long",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -126,7 +126,7 @@ public partial class PrimitiveClient
                 Method = HttpMethod.Post,
                 Path = "/primitive/double",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -158,7 +158,7 @@ public partial class PrimitiveClient
                 Method = HttpMethod.Post,
                 Path = "/primitive/boolean",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -193,7 +193,7 @@ public partial class PrimitiveClient
                 Method = HttpMethod.Post,
                 Path = "/primitive/datetime",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -228,7 +228,7 @@ public partial class PrimitiveClient
                 Method = HttpMethod.Post,
                 Path = "/primitive/date",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -260,7 +260,7 @@ public partial class PrimitiveClient
                 Method = HttpMethod.Post,
                 Path = "/primitive/uuid",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -295,7 +295,7 @@ public partial class PrimitiveClient
                 Method = HttpMethod.Post,
                 Path = "/primitive/base64",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

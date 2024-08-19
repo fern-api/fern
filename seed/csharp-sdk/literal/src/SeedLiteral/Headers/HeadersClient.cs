@@ -32,7 +32,7 @@ public partial class HeadersClient
                 Method = HttpMethod.Post,
                 Path = "headers",
                 Headers = _headers,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

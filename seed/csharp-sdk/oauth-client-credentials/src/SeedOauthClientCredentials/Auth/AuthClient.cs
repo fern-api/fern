@@ -27,7 +27,7 @@ public partial class AuthClient
                 Method = HttpMethod.Post,
                 Path = "/token",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -62,7 +62,7 @@ public partial class AuthClient
                 Method = HttpMethod.Post,
                 Path = "/token",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

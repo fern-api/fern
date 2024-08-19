@@ -16,5 +16,5 @@ public enum Language
     Javascript,
 
     [EnumMember(Value = "PYTHON")]
-    Python
+    Python,
 }

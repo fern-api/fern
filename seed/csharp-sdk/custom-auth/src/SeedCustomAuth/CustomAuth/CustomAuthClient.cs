@@ -26,7 +26,7 @@ public partial class CustomAuthClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "custom-auth",
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -75,7 +75,7 @@ public partial class CustomAuthClient
                 Method = HttpMethod.Post,
                 Path = "custom-auth",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

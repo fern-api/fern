@@ -13,5 +13,5 @@ public enum BasicType
     Primitive,
 
     [EnumMember(Value = "literal")]
-    Literal
+    Literal,
 }

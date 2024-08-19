@@ -24,7 +24,7 @@ public partial class Ec2Client
                 Method = HttpMethod.Post,
                 Path = "/ec2/boot",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

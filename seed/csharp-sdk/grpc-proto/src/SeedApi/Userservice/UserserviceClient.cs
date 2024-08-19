@@ -27,7 +27,7 @@ public partial class UserserviceClient
                 Method = HttpMethod.Post,
                 Path = "users",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

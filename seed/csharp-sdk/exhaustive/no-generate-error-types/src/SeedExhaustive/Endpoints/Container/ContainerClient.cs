@@ -29,7 +29,7 @@ public partial class ContainerClient
                 Method = HttpMethod.Post,
                 Path = "/container/list-of-primitives",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -64,7 +64,7 @@ public partial class ContainerClient
                 Method = HttpMethod.Post,
                 Path = "/container/list-of-objects",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -99,7 +99,7 @@ public partial class ContainerClient
                 Method = HttpMethod.Post,
                 Path = "/container/set-of-primitives",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -134,7 +134,7 @@ public partial class ContainerClient
                 Method = HttpMethod.Post,
                 Path = "/container/set-of-objects",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -169,7 +169,7 @@ public partial class ContainerClient
                 Method = HttpMethod.Post,
                 Path = "/container/map-prim-to-prim",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -206,7 +206,7 @@ public partial class ContainerClient
                 Method = HttpMethod.Post,
                 Path = "/container/map-prim-to-object",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -243,7 +243,7 @@ public partial class ContainerClient
                 Method = HttpMethod.Post,
                 Path = "/container/opt-objects",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

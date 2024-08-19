@@ -185,12 +185,12 @@ export class RawGrpcClientGenerator extends FileGenerator<CSharpFile, SdkCustomC
                 writer.writeNodeStatement(
                     csharp.ternary({
                         condition: csharp.codeblock("grpcOptions != null"),
-                        trueStatement: csharp.invokeMethod({
+                        true_: csharp.invokeMethod({
                             method: "ForAddress",
                             on: grpcChannelClassReference,
                             arguments_: [csharp.codeblock("_clientOptions.BaseUrl"), csharp.codeblock("grpcOptions")]
                         }),
-                        falseStatement: csharp.invokeMethod({
+                        false_: csharp.invokeMethod({
                             method: "ForAddress",
                             on: grpcChannelClassReference,
                             arguments_: [csharp.codeblock("_clientOptions.BaseUrl")]

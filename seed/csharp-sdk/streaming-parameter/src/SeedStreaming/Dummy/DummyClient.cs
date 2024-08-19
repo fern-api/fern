@@ -24,7 +24,7 @@ public partial class DummyClient
                 Method = HttpMethod.Post,
                 Path = "generate",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
