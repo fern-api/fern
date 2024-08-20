@@ -18,7 +18,7 @@ environments:
 ```
 </CodeBlock>
 
-### Multiple URLs per environment
+## Multiple URLs per environment
 
 You can specify multiple URLs per environment. This is helpful if you have a
 microservice architecture, and you want a single SDK to interact with multiple
@@ -64,6 +64,17 @@ environments:
 default-environment: Production
 ```
 </CodeBlock>
+
+<Note> By providing a default environment, the generated SDK will be setup to hit the default.</Note>
+
+## Base Path
+If you would like all of your endpoints to be prefixed with a path, use `base-path`. 
+
+In the example below, every endpoint is prefixed with a `/v1`: 
+```yaml api.yml
+name: api
+base-url: /v1
+```
 
 ## Audiences
 

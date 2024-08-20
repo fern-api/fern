@@ -379,7 +379,7 @@ colors:
     light: "#1DA32B"
   background:
     dark: "#081008"
-    light: "#FBFFFA"
+    light: "#FFFFFF"
 favicon: ./images/favicon.ico
 
 layout:
