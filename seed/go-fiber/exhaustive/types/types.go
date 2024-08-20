@@ -303,6 +303,9 @@ func (a *Animal) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.Animal = unmarshaler.Animal
+	if unmarshaler.Animal == "" {
+		return fmt.Errorf("%T did not include discriminant animal", a)
+	}
 	switch unmarshaler.Animal {
 	case "dog":
 		value := new(Dog)
