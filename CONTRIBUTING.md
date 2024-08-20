@@ -32,7 +32,7 @@ To run unit tests for a single package: `pnpm --filter @fern-api/openapi-parser 
 
 To run the integration tests: `pnpm test:ete`.
 
-Many of our tests rely on [snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `-u`: `pnpm test -- -u` and `pnpm test:ete -- -u`.
+Many of our tests rely on [snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `pnpm test:update` or pass `-u` directly `pnpm test:ete -- -u`.
 
 <br>
 
