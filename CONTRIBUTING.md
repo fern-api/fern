@@ -3,7 +3,6 @@
 Thanks for being here! This monorepo contains Fern's documentation, the Fern CLI, the Fern Definition, the OpenAPI importer, as well as all of our generators.
 
 <br>
-<br>
 
 ## Setup
 
@@ -36,11 +35,12 @@ To run the integration tests: `pnpm test:ete`.
 Many of our tests rely on [snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `-u`: `pnpm test -- -u` and `pnpm test:ete -- -u`.
 
 <br>
-<br>
 
 ## Repository Architecture
 
 Below we talk through the large components of this monorepo and how to contribute to each one.
+
+<br>
 
 ## Documentation
 
@@ -95,6 +95,8 @@ Once the CLI has been built, you can navigate to any `fern` folder and invoke it
 ```sh
 FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/dist/dev/cli.cjsn <args>
 ```
+
+<br>
 
 ## Generators
 
@@ -151,6 +153,8 @@ Below are some examples of using the command.
 - Pointed at a fern folder: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern --audience external`
 - Pointed at a fern folder with an audience: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern`
 - Pointed at a fern folder with multiple apis: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern/apis/<name-of-api>`
+
+<br>
 
 ## Feedback
 
