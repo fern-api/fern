@@ -3,8 +3,10 @@ publish:
   preBuildCommands:
     - chmod +x setup-python.sh && ./setup-python.sh
     - poetry install
-  dockerFile: ./generators/python/fastapi/Dockerfile
-  publishedImageName: fernapi/fern-fastapi-server
+  docker:
+    file: ./generators/python/fastapi/Dockerfile
+    image: fernapi/fern-fastapi-server
+    context: ./generators/python
 test:
   dockerImage: fernapi/fern-fastapi-server:latest
   dockerBuildCommand: docker build -f ./generators/python/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest ./generators/python

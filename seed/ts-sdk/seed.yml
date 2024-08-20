@@ -1,17 +1,29 @@
 irVersion: v53
-docker: fernapi/fern-typescript-node-sdk:local
-dockerCommand: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
+publish:
+  versionSubstitution: "$VERSION"
+  # TODO: Add build here
+  command: 
+    - ./.github/actions/install
+    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
+    - docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
+    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
+    - docker push fernapi/fern-typescript-node-sdk:"$VERSION"
+test:
+  docker: 
+    image: fernapi/fern-typescript-node-sdk:local
+    command: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
+  local:
+    workingDirectory: generators/typescript
+    buildCommand:
+      - pnpm --filter @fern-typescript/sdk-generator-cli compile
+      - pnpm --filter @fern-typescript/sdk-generator-cli build:node
+    runCommand: node sdk/cli/dist/nodeCli.cjs
+    env:
+      NODE_ENV: test
+
 language: typescript
 generatorType: SDK
 defaultOutputMode: github
-local:
-  workingDirectory: generators/typescript
-  buildCommand:
-    - pnpm --filter @fern-typescript/sdk-generator-cli compile
-    - pnpm --filter @fern-typescript/sdk-generator-cli build:node
-  runCommand: node sdk/cli/dist/nodeCli.cjs
-  env:
-    NODE_ENV: test
 fixtures:
   imdb:
     - customConfig: null

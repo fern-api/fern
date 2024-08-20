@@ -1,6 +1,22 @@
 irVersion: v53
-docker: fernapi/fern-csharp-model:latest
-dockerCommand: pnpm --filter @fern-api/fern-csharp-model dockerTagLatest
+publish:
+  preBuildCommands:
+    - ./.github/actions/install
+    - pnpm --filter @fern-api/fern-csharp-model dist:cli
+  docker: 
+    file: ./generators/csharp/model/Dockerfile
+    image: fernapi/fern-csharp-model
+    context: .
+test:
+  docker:
+    image: fernapi/fern-csharp-model:latest
+    command: pnpm --filter @fern-api/fern-csharp-model dockerTagLatest
+  local:
+    workingDirectory: generators/csharp
+    buildCommand:
+      - pnpm --filter @fern-api/fern-csharp-model dist:cli
+    runCommand: node model/dist/bundle.cjs
+
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
@@ -9,11 +25,6 @@ scripts:
   - docker: bitnami/dotnet-sdk:8
     commands:
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
-local:
-  workingDirectory: generators/csharp
-  buildCommand:
-    - pnpm --filter @fern-api/fern-csharp-model dist:cli
-  runCommand: node model/dist/bundle.cjs
 allowedFailures:
   - objects-with-imports
   # TODO: Add support for recursive undiscriminated unions.

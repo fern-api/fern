@@ -1,19 +1,29 @@
 irVersion: v53
-docker: fernapi/fern-typescript-express:local
-dockerCommand: pnpm --filter @fern-typescript/express-generator-cli dockerTagLocal
+publish:
+  versionSubstitution: "$VERSION"
+  # TODO: Add build here
+  command: 
+    - ./.github/actions/install
+    - pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
+    - docker push fernapi/fern-typescript-express:"$VERSION"
+test:
+  docker:
+    image: fernapi/fern-typescript-express:local
+    command: pnpm --filter @fern-typescript/express-generator-cli dockerTagLocal
+  local: 
+    workingDirectory: generators/typescript
+    buildCommand: 
+      - pnpm --filter @fern-typescript/express-generator-cli compile 
+      - pnpm --filter @fern-typescript/express-generator-cli build
+    runCommand: node express/cli/dist/cli.cjs
+    env: 
+      NODE_ENV: test
+
 language: typescript
 generatorType: Server
 defaultOutputMode: local_files
 defaultCustomConfig: 
   outputSourceFiles: true
-local: 
-  workingDirectory: generators/typescript
-  buildCommand: 
-    - pnpm --filter @fern-typescript/express-generator-cli compile 
-    - pnpm --filter @fern-typescript/express-generator-cli build
-  runCommand: node express/cli/dist/cli.cjs
-  env: 
-    NODE_ENV: test
 fixtures:
   trace:
     - customConfig: null

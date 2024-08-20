@@ -1,21 +1,32 @@
 irVersion: v46
-docker: fernapi/fern-java-sdk:latest
-dockerCommand: 
-  - cd generators/java
-  - ./gradlew :sdk:distTar
-  - docker build -f sdk/Dockerfile -t fernapi/fern-java-sdk:latest sdk/
+publish:
+  preBuildCommands:
+    - cd generators/java
+    - ./gradlew :sdk:distTar
+  docker: 
+    file: ./generators/java/sdk/Dockerfile
+    image: fernapi/fern-java-sdk
+    context: ./generators/java/sdk
+test:
+  docker:
+    image: fernapi/fern-java-sdk:latest
+    command: 
+      - cd generators/java
+      - ./gradlew :sdk:distTar
+      - docker build -f sdk/Dockerfile -t fernapi/fern-java-sdk:latest sdk/
+  local:
+    workingDirectory: generators/java
+    buildCommand:
+      - ./gradlew :sdk:distTar
+      - chmod +x install-gradle.sh && ./install-gradle.sh
+      - cd sdk
+      - tar -xvf build/distributions/sdk.tar -C .
+    runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli
+    env: {}
+
 language: java
 generatorType: SDK
 defaultOutputMode: github
-local:
-  workingDirectory: generators/java
-  buildCommand:
-    - ./gradlew :sdk:distTar
-    - chmod +x install-gradle.sh && ./install-gradle.sh
-    - cd sdk
-    - tar -xvf build/distributions/sdk.tar -C .
-  runCommand: cd sdk/sdk && java -cp sdk.jar:lib/* com.fern.java.client.Cli
-  env: {}
 fixtures:
   exhaustive:
     - customConfig: null
