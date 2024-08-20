@@ -180,7 +180,7 @@ export class GrpcEndpointGenerator {
                 csharp.instantiateClass({
                     classReference: this.context.getBaseApiExceptionClassReference(),
                     arguments_: [
-                        csharp.codeblock(`$"Error with gRPC status code {statusCode}"`),
+                        csharp.codeblock('$"Error with gRPC status code {statusCode}"'),
                         csharp.codeblock("statusCode"),
                         csharp.codeblock("rpc.Message")
                     ]
