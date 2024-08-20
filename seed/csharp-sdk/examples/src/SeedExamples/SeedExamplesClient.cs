@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExamples.Commons;
 using SeedExamples.Core;
 using SeedExamples.File;
@@ -38,7 +39,11 @@ public partial class SeedExamplesClient
 
     public TypesClient Types { get; init; }
 
-    public async Task<string> EchoAsync(string request, RequestOptions? options = null)
+    public async Task<string> EchoAsync(
+        string request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -48,7 +53,8 @@ public partial class SeedExamplesClient
                 Path = "",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

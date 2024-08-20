@@ -236,7 +236,7 @@ class ToProtoPropertyMapper {
                     wrapperType
                 });
             case "named":
-                return this.getValueForNamed({ propertyName, named: typeReference, wrapperType });
+                return this.getValueForNamed({ propertyName, wrapperType });
             case "primitive":
                 return this.getValueForPrimitive({ propertyName, primitive: typeReference.primitive, wrapperType });
             case "unknown":
@@ -246,16 +246,11 @@ class ToProtoPropertyMapper {
 
     private getValueForNamed({
         propertyName,
-        named,
         wrapperType
     }: {
         propertyName: string;
-        named: NamedType;
         wrapperType?: WrapperType;
     }): CodeBlock {
-        if (this.context.protobufResolver.isProtobufStruct(named.typeId)) {
-            return this.getValueForProtobufStruct({ propertyName });
-        }
         if (wrapperType === WrapperType.List) {
             return csharp.codeblock(`${propertyName}.Select(elem => elem.ToProto())`);
         }
@@ -265,18 +260,6 @@ class ToProtoPropertyMapper {
                     on: csharp.codeblock(propertyName),
                     method: "ToProto",
                     arguments_: []
-                })
-            );
-        });
-    }
-
-    private getValueForProtobufStruct({ propertyName }: { propertyName: string }): CodeBlock {
-        return csharp.codeblock((writer) => {
-            writer.writeNode(
-                csharp.invokeMethod({
-                    on: this.context.getProtoConverterClassReference(),
-                    method: "ToProtoStruct",
-                    arguments_: [csharp.codeblock(propertyName)]
                 })
             );
         });
@@ -442,9 +425,6 @@ class FromProtoPropertyMapper {
         named: NamedType;
         wrapperType?: WrapperType;
     }): CodeBlock {
-        if (this.context.protobufResolver.isProtobufStruct(named.typeId)) {
-            return this.getValueForProtobufStruct({ propertyName });
-        }
         const propertyClassReference = this.context.csharpTypeMapper.convertToClassReference(named);
         if (wrapperType === WrapperType.List) {
             // The static function is mapped within a LINQ expression.
@@ -474,18 +454,6 @@ class FromProtoPropertyMapper {
             });
         }
         return fromProtoExpression;
-    }
-
-    private getValueForProtobufStruct({ propertyName }: { propertyName: string }): CodeBlock {
-        return csharp.codeblock((writer) => {
-            writer.writeNode(
-                csharp.invokeMethod({
-                    on: this.context.getProtoConverterClassReference(),
-                    method: "FromProtoStruct",
-                    arguments_: [csharp.codeblock(propertyName)]
-                })
-            );
-        });
     }
 
     private getValueForContainer({

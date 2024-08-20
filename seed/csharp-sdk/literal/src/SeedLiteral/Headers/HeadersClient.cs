@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedLiteral.Core;
 
 #nullable enable
@@ -17,7 +18,8 @@ public partial class HeadersClient
 
     public async Task<SendResponse> SendAsync(
         SendLiteralsInHeadersRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _headers = new Dictionary<string, string>()
@@ -33,7 +35,8 @@ public partial class HeadersClient
                 Path = "headers",
                 Headers = _headers,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

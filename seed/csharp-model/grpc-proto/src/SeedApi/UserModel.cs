@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedApi.Core;
 using Proto = User.V1;
 
 #nullable enable
@@ -21,7 +20,7 @@ public record UserModel
     public float? Weight { get; set; }
 
     [JsonPropertyName("metadata")]
-    public Dictionary<string, MetadataValue?>? Metadata { get; set; }
+    public Metadata? Metadata { get; set; }
 
     /// <summary>
     /// Maps the UserModel type into its Protobuf-equivalent representation.
@@ -47,7 +46,7 @@ public record UserModel
         }
         if (Metadata != null)
         {
-            result.Metadata = ProtoConverter.ToProtoStruct(Metadata);
+            result.Metadata = Metadata.ToProto();
         }
         return result;
     }
@@ -63,7 +62,7 @@ public record UserModel
             Email = value.Email,
             Age = value.Age,
             Weight = value.Weight,
-            Metadata = ProtoConverter.FromProtoStruct(value.Metadata),
+            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
         };
     }
 }

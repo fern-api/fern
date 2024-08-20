@@ -1,7 +1,15 @@
 imports:
   features: features.yml
 types:
+  CliSeedWorkspaceConfiguration:
+    properties:
+      changelogLocation: 
+        type: optional<string>
+        docs: | 
+          The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
+
   SeedWorkspaceConfiguration:
+    extends: CliSeedWorkspaceConfiguration
     properties:
       irVersion: string
       language: optional<Language>
@@ -111,4 +119,3 @@ types:
       - github
       - local_files
       - publish
-

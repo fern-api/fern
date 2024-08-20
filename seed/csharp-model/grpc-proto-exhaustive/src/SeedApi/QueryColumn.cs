@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -18,7 +17,7 @@ public record QueryColumn
     public string? Namespace { get; set; }
 
     [JsonPropertyName("filter")]
-    public Dictionary<string, MetadataValue?>? Filter { get; set; }
+    public Metadata? Filter { get; set; }
 
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
@@ -43,7 +42,7 @@ public record QueryColumn
         }
         if (Filter != null)
         {
-            result.Filter = ProtoConverter.ToProtoStruct(Filter);
+            result.Filter = Filter.ToProto();
         }
         if (IndexedData != null)
         {
@@ -62,7 +61,7 @@ public record QueryColumn
             Values = value.Values?.ToList() ?? new List<float>(),
             TopK = value.TopK,
             Namespace = value.Namespace,
-            Filter = ProtoConverter.FromProtoStruct(value.Filter),
+            Filter = value.Filter != null ? Metadata.FromProto(value.Filter) : null,
             IndexedData =
                 value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
         };

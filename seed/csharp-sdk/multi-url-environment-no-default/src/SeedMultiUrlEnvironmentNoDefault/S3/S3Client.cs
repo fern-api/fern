@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedMultiUrlEnvironmentNoDefault.Core;
 
 #nullable enable
@@ -17,7 +18,8 @@ public partial class S3Client
 
     public async Task<string> GetPresignedUrlAsync(
         GetPresignedUrlRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -28,7 +30,8 @@ public partial class S3Client
                 Path = "/s3/presigned-url",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
