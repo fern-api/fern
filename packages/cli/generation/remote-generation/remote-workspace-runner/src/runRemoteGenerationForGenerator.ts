@@ -55,7 +55,8 @@ export async function runRemoteGenerationForGenerator({
         audiences,
         readme,
         packageName,
-        version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation }))
+        version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
+        context: interactiveTaskContext
     });
 
     const sources = workspace.getSources();
