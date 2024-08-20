@@ -22,5 +22,5 @@ public enum RunningSubmissionState
     CompilingSubmission,
 
     [EnumMember(Value = "RUNNING_SUBMISSION")]
-    RunningSubmission
+    RunningSubmission,
 }

@@ -28,7 +28,7 @@ public partial class PaymentClient
                 Method = HttpMethod.Post,
                 Path = "/payment",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -59,7 +59,7 @@ public partial class PaymentClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
                 Path = $"/payment/{paymentId}",
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

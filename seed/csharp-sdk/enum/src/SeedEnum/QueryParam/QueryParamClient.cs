@@ -36,7 +36,7 @@ public partial class QueryParamClient
                 Method = HttpMethod.Post,
                 Path = "query",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)
@@ -74,7 +74,7 @@ public partial class QueryParamClient
                 Method = HttpMethod.Post,
                 Path = "query-list",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

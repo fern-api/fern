@@ -16,5 +16,5 @@ public enum ComplexType
     Union,
 
     [EnumMember(Value = "unknown")]
-    Unknown
+    Unknown,
 }

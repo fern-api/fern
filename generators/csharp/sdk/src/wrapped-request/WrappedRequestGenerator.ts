@@ -157,6 +157,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             });
             class_.addMethod(
                 this.context.csharpProtobufTypeMapper.toProtoMethod({
+                    classReference: this.classReference,
                     protobufClassReference,
                     properties: protobufProperties
                 })

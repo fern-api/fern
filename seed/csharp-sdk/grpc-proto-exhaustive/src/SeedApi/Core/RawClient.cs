@@ -15,6 +15,11 @@ internal class RawClient(
 )
 {
     /// <summary>
+    /// The gRPC client used to make requests.
+    /// </summary>
+    public readonly RawGrpcClient Grpc = new RawGrpcClient(headers, headerSuppliers, clientOptions);
+
+    /// <summary>
     /// The http client used to make requests.
     /// </summary>
     public readonly ClientOptions Options = clientOptions;
@@ -29,14 +34,6 @@ internal class RawClient(
     /// precedence over the others.
     /// </summary>
     private readonly Dictionary<string, Func<string>> _headerSuppliers = headerSuppliers;
-
-    /// <summary>
-    /// Return the equivalent gRPC client.
-    /// </summary>
-    public RawGrpcClient Grpc()
-    {
-        return new RawGrpcClient(_headers, _headerSuppliers, Options);
-    }
 
     public async Task<ApiResponse> MakeRequestAsync(BaseApiRequest request)
     {

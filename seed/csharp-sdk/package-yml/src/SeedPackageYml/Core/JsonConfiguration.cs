@@ -11,7 +11,7 @@ internal static class JsonOptions
         JsonSerializerOptions = new JsonSerializerOptions
         {
             Converters = { new DateTimeSerializer() },
-            WriteIndented = true
+            WriteIndented = true,
         };
     }
 }

@@ -26,7 +26,7 @@ public partial class BasicAuthClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "basic-auth",
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -78,7 +78,7 @@ public partial class BasicAuthClient
                 Method = HttpMethod.Post,
                 Path = "basic-auth",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

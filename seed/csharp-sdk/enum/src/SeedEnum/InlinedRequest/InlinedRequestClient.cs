@@ -24,7 +24,7 @@ public partial class InlinedRequestClient
                 Method = HttpMethod.Post,
                 Path = "inlined",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

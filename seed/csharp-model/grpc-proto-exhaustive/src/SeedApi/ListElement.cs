@@ -22,4 +22,12 @@ public record ListElement
         }
         return result;
     }
+
+    /// <summary>
+    /// Returns a new ListElement type from its Protobuf-equivalent representation.
+    /// </summary>
+    internal static ListElement FromProto(Proto.ListElement value)
+    {
+        return new ListElement { Id = value.Id };
+    }
 }

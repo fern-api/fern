@@ -28,7 +28,7 @@ public partial class EnumClient
                 Method = HttpMethod.Post,
                 Path = "/enum",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

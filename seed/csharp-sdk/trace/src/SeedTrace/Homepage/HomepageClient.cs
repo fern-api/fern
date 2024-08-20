@@ -24,7 +24,7 @@ public partial class HomepageClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/homepage-problems",
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -59,7 +59,7 @@ public partial class HomepageClient
                 Method = HttpMethod.Post,
                 Path = "/homepage-problems",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

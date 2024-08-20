@@ -30,7 +30,7 @@ public partial class ImdbClient
                 Method = HttpMethod.Post,
                 Path = "/movies/create-movie",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -61,7 +61,7 @@ public partial class ImdbClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/movies/{movieId}",
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

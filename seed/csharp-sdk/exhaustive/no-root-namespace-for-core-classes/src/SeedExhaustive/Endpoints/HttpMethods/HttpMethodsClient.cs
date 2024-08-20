@@ -24,7 +24,7 @@ public partial class HttpMethodsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/http-methods/{id}",
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -59,7 +59,7 @@ public partial class HttpMethodsClient
                 Method = HttpMethod.Post,
                 Path = "/http-methods",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -95,7 +95,7 @@ public partial class HttpMethodsClient
                 Method = HttpMethod.Put,
                 Path = $"/http-methods/{id}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -131,7 +131,7 @@ public partial class HttpMethodsClient
                 Method = HttpMethodExtensions.Patch,
                 Path = $"/http-methods/{id}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -162,7 +162,7 @@ public partial class HttpMethodsClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Delete,
                 Path = $"/http-methods/{id}",
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -31,7 +31,7 @@ public partial class MigrationClient
                 Method = HttpMethod.Get,
                 Path = "/migration-info/all",
                 Headers = _headers,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

@@ -29,7 +29,7 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-optional-field",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -64,7 +64,7 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-required-field",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -99,7 +99,7 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-with-map-of-map",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -134,7 +134,7 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-nested-with-optional-field",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -170,7 +170,7 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = $"/object/get-and-return-nested-with-required-field/{string_}",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
@@ -205,7 +205,7 @@ public partial class ObjectClient
                 Method = HttpMethod.Post,
                 Path = "/object/get-and-return-nested-with-required-field-list",
                 Body = request,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

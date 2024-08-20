@@ -30,7 +30,7 @@ public partial class PathParamClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
-                Options = options
+                Options = options,
             }
         );
         if (response.StatusCode is >= 200 and < 400)

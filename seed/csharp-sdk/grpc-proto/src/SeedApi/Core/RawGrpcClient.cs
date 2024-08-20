@@ -1,7 +1,6 @@
 using System;
 using Grpc.Core;
 using Grpc.Net.Client;
-using User.V1;
 
 #nullable enable
 
@@ -12,11 +11,14 @@ namespace SeedApi;
 /// </summary>
 internal class RawGrpcClient
 {
-    private ClientOptions _clientOptions;
+    /// <summary>
+    /// The gRPC channel used to make requests.
+    /// </summary>
+    public readonly GrpcChannel Channel;
 
-    private Dictionary<string, string> _headers;
-
-    private Dictionary<string, Func<string>> _headerSuppliers;
+    private readonly ClientOptions _clientOptions;
+    private readonly Dictionary<string, string> _headers;
+    private readonly Dictionary<string, Func<string>> _headerSuppliers;
 
     public RawGrpcClient(
         Dictionary<string, string> headers,
@@ -29,21 +31,21 @@ internal class RawGrpcClient
         _headerSuppliers = new Dictionary<string, Func<string>>(headerSuppliers);
 
         var grpcOptions = PrepareGrpcChannelOptions();
-        var channel =
+        Channel =
             grpcOptions != null
                 ? GrpcChannel.ForAddress(_clientOptions.BaseUrl, grpcOptions)
                 : GrpcChannel.ForAddress(_clientOptions.BaseUrl);
-        UserServiceClient = new UserService.UserServiceClient(channel);
     }
-
-    public UserService.UserServiceClient UserServiceClient;
 
     /// <summary>
     /// Prepares the gRPC metadata associated with the given request.
     /// The provided request headers take precedence over the headers
     /// associated with this client (which are sent on _every_ request).
     /// </summary>
-    public CallOptions CreateCallOptions(GrpcRequestOptions options)
+    public CallOptions CreateCallOptions(
+        GrpcRequestOptions options,
+        CancellationToken cancellationToken = default
+    )
     {
         var metadata = new Metadata();
         foreach (var header in _headers)
@@ -63,7 +65,7 @@ internal class RawGrpcClient
         return new CallOptions(
             metadata,
             deadline,
-            options.CancellationToken,
+            cancellationToken,
             options.WriteOptions,
             null,
             options.CallCredentials

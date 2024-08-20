@@ -8,7 +8,6 @@ import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmen
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
-import { RawGrpcClientGenerator } from "./grpc/RawGrpcClientGenerator";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
 import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
@@ -154,11 +153,6 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             },
             _other: () => undefined
         });
-
-        if (context.hasGrpcEndpoints()) {
-            const grpcClient = new RawGrpcClientGenerator({ context });
-            context.project.addSourceFiles(grpcClient.generate());
-        }
 
         const wellKnownProtobufFiles = generateWellKnownProtobufFiles(context);
         if (wellKnownProtobufFiles != null) {

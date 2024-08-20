@@ -53,7 +53,7 @@ public partial class UserClient
                 Method = HttpMethod.Get,
                 Path = "/user",
                 Query = _query,
-                Options = options
+                Options = options,
             }
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();

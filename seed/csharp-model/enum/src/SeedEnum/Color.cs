@@ -13,5 +13,5 @@ public enum Color
     Red,
 
     [EnumMember(Value = "blue")]
-    Blue
+    Blue,
 }

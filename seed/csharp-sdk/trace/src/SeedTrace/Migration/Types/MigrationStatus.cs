@@ -16,5 +16,5 @@ public enum MigrationStatus
     Failed,
 
     [EnumMember(Value = "FINISHED")]
-    Finished
+    Finished,
 }
