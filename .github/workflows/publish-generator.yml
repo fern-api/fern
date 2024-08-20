@@ -1,4 +1,4 @@
-name: publish-dev-generators
+name: publish-generators
 
 on:
   workflow_dispatch:
@@ -32,7 +32,7 @@ env:
 jobs:
   openapi:
     runs-on: ubuntu-latest
-    if: ${{ inputs.generator == 'openapi' }}
+    if: ${{ needs.versions-changed.outputs.openapi == 'true' || inputs.generator == 'openapi' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
