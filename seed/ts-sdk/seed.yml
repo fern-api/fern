@@ -31,6 +31,13 @@ fixtures:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
+  audiences:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: null
+      audiences:
+        - unspecifiedaudience
+      outputFolder: with-unspecified-audience
   exhaustive:
     - customConfig: null
       audiences:

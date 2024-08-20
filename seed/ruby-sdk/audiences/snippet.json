@@ -47,6 +47,50 @@
         {
             "id": {
                 "path": "/",
+                "method": "GET",
+                "identifierOverride": "endpoint_folder-d/service.getDirectThread"
+            },
+            "snippet": {
+                "client": "require \"fern_audiences\"\n\naudiences = SeedAudiencesClient::Client.new(base_url: \"https://api.example.com\")\naudiences.folder_d.service.get_direct_thread",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifierOverride": "endpoint_folder-d/service.getDirectThread"
+            },
+            "snippet": {
+                "client": "require \"fern_audiences\"\n\naudiences = SeedAudiencesClient::Client.new(base_url: \"https://api.example.com\")\naudiences.folder_d.service.get_direct_thread",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifierOverride": "endpoint_folder-d/service.getDirectThread"
+            },
+            "snippet": {
+                "client": "require \"fern_audiences\"\n\naudiences = SeedAudiencesClient::Client.new(base_url: \"https://api.example.com\")\naudiences.folder_d.service.get_direct_thread",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifierOverride": "endpoint_folder-d/service.getDirectThread"
+            },
+            "snippet": {
+                "client": "require \"fern_audiences\"\n\naudiences = SeedAudiencesClient::Client.new(base_url: \"https://api.example.com\")\naudiences.folder_d.service.get_direct_thread",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/",
                 "method": "POST",
                 "identifierOverride": "endpoint_foo.find"
             },

@@ -7,7 +7,7 @@
   "variable": [
     {
       "key": "baseUrl",
-      "value": "",
+      "value": "https://api.example.a.com",
       "type": "string"
     }
   ],
@@ -17,6 +17,41 @@
       "_type": "container",
       "description": null,
       "name": "Folder A",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Service",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get Direct Thread",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Folder D",
       "item": [
         {
           "_type": "container",

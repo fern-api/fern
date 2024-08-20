@@ -4,6 +4,9 @@ import fastapi
 from .resources.folder_a.resources.service.service.service import (
     AbstractFolderAServiceService,
 )
+from .resources.folder_d.resources.service.service.service import (
+    AbstractFolderDServiceService,
+)
 from .resources.foo.service.service import AbstractFooService
 import typing
 from fastapi import params
@@ -23,10 +26,12 @@ def register(
     _app: fastapi.FastAPI,
     *,
     folder_a_service: AbstractFolderAServiceService,
+    folder_d_service: AbstractFolderDServiceService,
     foo: AbstractFooService,
     dependencies: typing.Optional[typing.Sequence[params.Depends]] = None,
 ) -> None:
     _app.include_router(__register_service(folder_a_service), dependencies=dependencies)
+    _app.include_router(__register_service(folder_d_service), dependencies=dependencies)
     _app.include_router(__register_service(foo), dependencies=dependencies)
 
     _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)  # type: ignore
