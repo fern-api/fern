@@ -31,6 +31,13 @@ types:
       - value: true
       - value: 100
       - value: false
+  DateAlias:
+    type: date
+    examples:
+      - value: 01-1-2024
+      - value: 34-01-2024
+      - value: '2024-01-01T00:00:00Z'
+      - value: 1.1.2024
   DateTimeAlias:
     type: datetime
     examples:
