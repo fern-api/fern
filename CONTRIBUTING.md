@@ -6,7 +6,7 @@ Thanks for being here! This monorepo contains Fern's documentation, the Fern CLI
 
 ## Setup
 
-The Fern repo is primarily written in TypeScript and relies on [pnPm](https://pnpm.io/) for package management.
+The Fern repo is primarily written in TypeScript and relies on [PnPm](https://pnpm.io/) for package management.
 
 Once you have cloned or forked the repository, run through the steps below.
 
