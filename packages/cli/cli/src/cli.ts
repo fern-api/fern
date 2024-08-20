@@ -9,7 +9,6 @@ import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-util
 import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
-import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
@@ -18,6 +17,8 @@ import yargs from "yargs/yargs";
 import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
+import { addGeneratorListCommand, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
@@ -27,9 +28,7 @@ import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/g
 import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
 import { generateAPIWorkspaces, GenerationMode } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
-import { getGeneratorList } from "./commands/generator-list/getGeneratorList";
 import { mockServer } from "./commands/mock/mockServer";
-import { getOrganziation } from "./commands/organization/getOrganization";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
 import { testOutput } from "./commands/test/testOutput";
@@ -42,10 +41,6 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
-
-interface GlobalCliOptions {
-    "log-level": LogLevel;
-}
 
 void runCli();
 
@@ -154,8 +149,6 @@ async function tryRunCli(cliContext: CliContext) {
     addTestCommand(cli, cliContext);
     addUpdateApiSpecCommand(cli, cliContext);
     addUpgradeGeneratorCommand(cli, cliContext);
-    addGetOrganizationCommand(cli, cliContext);
-    addGeneratorListCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
         cliContext,
@@ -163,6 +156,10 @@ async function tryRunCli(cliContext: CliContext) {
             cliContext.suppressUpgradeMessage();
         }
     });
+
+    // CLI V2 Sanctioned Commands
+    addGetOrganizationCommand(cli, cliContext);
+    addGeneratorListCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -720,96 +717,6 @@ function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: Cli
     );
 }
 
-function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "organization",
-        // Hides the command from the help message
-        false,
-        (yargs) =>
-            yargs.option("output", {
-                string: true,
-                alias: "o",
-                description: "The location to output the organization name as a text file, defaults to standard out."
-            }),
-        async (argv) => {
-            cliContext.instrumentPostHogEvent({
-                command: "fern organization",
-                properties: {
-                    outputLocation: argv.output
-                }
-            });
-            await getOrganziation({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: undefined,
-                    defaultToAllApiWorkspaces: true
-                }),
-                context: cliContext,
-                outputLocation: argv.output
-            });
-        }
-    );
-}
-
-function addGeneratorListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "generator list",
-        // Hides the command from the help message
-        false,
-        (yargs) =>
-            yargs
-                .option("output", {
-                    string: true,
-                    alias: "o",
-                    description: "The location to output the list as a text file, defaults to standard out."
-                })
-                .option("generators", {
-                    string: true,
-                    type: "array",
-                    description:
-                        "The type of generator to include in the list, ex: `fern-typescript-node-sdk`. If omitted, all generators will be listed."
-                })
-                .option("groups", {
-                    type: "array",
-                    string: true,
-                    description:
-                        "The groups to include generators from, if group is not specified, the all generators of the specified type will be listed."
-                })
-                .option("apis", {
-                    type: "array",
-                    string: true,
-                    description:
-                        "The APIs to list the generators for. If not specified, the generator will be upgraded for all APIs."
-                })
-                .option("api-fallback", {
-                    string: true,
-                    // Don't love this, but also don't know how else to maintain this structure without assuming some sentinel,
-                    // which this feels better than.
-                    description:
-                        "The APIs to list the generators for. If not specified, the generator will be upgraded for all APIs."
-                }),
-        async (argv) => {
-            cliContext.instrumentPostHogEvent({
-                command: "fern generator list",
-                properties: {
-                    outputLocation: argv.output
-                }
-            });
-            await getGeneratorList({
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: undefined,
-                    defaultToAllApiWorkspaces: true
-                }),
-                generatorFilter: argv.generators ? new Set(argv.generators) : undefined,
-                groupFilter: argv.groups ? new Set(argv.groups) : undefined,
-                apiFilter: argv.apis ? new Set(argv.apis) : undefined,
-                apiKeyFallback: argv.apiFallback,
-                cliContext: cliContext,
-                outputLocation: argv.output
-            });
-        }
-    );
-}
-
 function addUpdateApiSpecCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "api update",
@@ -1044,27 +951,4 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             });
         }
     );
-}
-
-async function loadProjectAndRegisterWorkspacesWithContext(
-    cliContext: CliContext,
-    args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">,
-    registerDocsWorkspace = false
-): Promise<Project> {
-    const context = cliContext.addTask().start();
-    const project = await loadProject({
-        ...args,
-        cliName: cliContext.environment.cliName,
-        cliVersion: cliContext.environment.packageVersion,
-        context
-    });
-    context.finish();
-
-    if (registerDocsWorkspace && project.docsWorkspaces != null) {
-        cliContext.registerWorkspaces([...project.apiWorkspaces, project.docsWorkspaces]);
-    } else {
-        cliContext.registerWorkspaces(project.apiWorkspaces);
-    }
-
-    return project;
 }
