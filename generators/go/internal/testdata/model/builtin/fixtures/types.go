@@ -51,6 +51,7 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 		Seven    *core.Date     `json:"seven"`
 		Nineteen *core.DateTime `json:"nineteen,omitempty"`
 		Twenty   *core.Date     `json:"twenty,omitempty"`
+		Eighteen string         `json:"eighteen"`
 	}{
 		embed: embed(*t),
 	}
@@ -62,7 +63,10 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	t.Seven = unmarshaler.Seven.Time()
 	t.Nineteen = unmarshaler.Nineteen.TimePtr()
 	t.Twenty = unmarshaler.Twenty.TimePtr()
-	t.eighteen = "fern"
+	if unmarshaler.Eighteen != "fern" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", t, "fern", unmarshaler.Eighteen)
+	}
+	t.eighteen = unmarshaler.Eighteen
 
 	extraProperties, err := core.ExtractExtraProperties(data, *t, "eighteen")
 	if err != nil {
