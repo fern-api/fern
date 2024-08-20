@@ -1,24 +1,24 @@
 # Contributing
 
-Thanks for being here! This monorepo contains Fern's documentation, the Fern CLI, the Fern Definition, the OpenAPI importer, as well as all of our generators. 
+Thanks for being here! This monorepo contains Fern's documentation, the Fern CLI, the Fern Definition, the OpenAPI importer, as well as all of our generators.
 
-## Setup 
+## Setup
 
-The Fern repo is primarily written in TypeScript and relies on [pnPm](https://pnpm.io/) for package management. 
+The Fern repo is primarily written in TypeScript and relies on [pnPm](https://pnpm.io/) for package management.
 
-Once you have cloned or forked the repository: 
+Once you have cloned or forked the repository, run through the steps below.
 
-### Step 1: Install dependencie
+### Step 1: Install dependencies
 
 ```sh
-pnpm install 
+pnpm install
 ```
 
 ### Step 2: Compile
 
 To compile all the packages in this monorepo, run `pnpm compile`.
 
-To compile a single package, filter to the relevant package: `pnpm --filter @fern-api/openapi-parser compile`. 
+To compile a single package, filter to the relevant package: `pnpm --filter @fern-api/openapi-parser compile`.
 
 ### Step 3: Testing
 
@@ -26,7 +26,7 @@ This repo contains both unit tests and integration (end-to-end) tests.
 
 To run all the unit tests: `pnpm test`.
 
-To run unit tests for a single package: `pnpm --filter @fern-api/openapi-parser test` 
+To run unit tests for a single package: `pnpm --filter @fern-api/openapi-parser test`
 
 To run the integration tests: `pnpm test:ete`.
 
@@ -34,7 +34,7 @@ Many of our tests rely on [snapshot testing](https://jestjs.io/docs/snapshot-tes
 
 ## Repository Architecture
 
-Below we talk through the large components of this monorepo and how to contribute to each one. 
+Below we talk through the large components of this monorepo and how to contribute to each one.
 
 ## Documentation
 
@@ -44,7 +44,7 @@ If you find gaps within our documentation, please open an [issue](https://github
 
 ### Editing Documentation
 
-Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in [docs.yml](./fern/docs.yml). 
+Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in [docs.yml](./fern/docs.yml).
 
 To edit the docs, you can modify `docs.yml` or any of the markdown that it references.
 
@@ -54,61 +54,61 @@ To validate that the docs, run:
 fern check
 ```
 
-To preview the documentation, run:  
-```sh 
+To preview the documentation, run:
+
+```sh
 fern docs dev
 ```
-This command will run a local server that will hot-reload as you make changes to `docs.yml` or any referenced MDX files. 
 
 Finally, when you make a PR to update the docs, a PR preview link will be generated which will allow you
-to test if your changes came out as intended. [Here](https://github.com/fern-api/fern/pull/4330) is a sample PR with a preview link. 
+to test if your changes came out as intended. [Here](https://github.com/fern-api/fern/pull/4330) is a sample PR with a preview link.
 
-## Fern CLI 
+## Fern CLI
 
-The Fern CLI lives in a directory called [cli](./packages/cli/cli/) and the entrypoint is [cli.ts](./packages/cli/cli/src/cli.ts). 
+The Fern CLI lives in a directory called [cli](./packages/cli/cli/) and the entrypoint is [cli.ts](./packages/cli/cli/src/cli.ts).
 
 ### Building the CLI from source
 
-For testing purposes, you can build a local version of the CLI by running `pnpm fern:build`. This compiles and builds a CLI 
-that communicates with our production cloud environment. 
+For testing purposes, you can build a local version of the CLI by running `pnpm fern:build`. This compiles and builds a CLI
+that communicates with our production cloud environment.
 
 The CLI is outputted to `packages/cli/cli/dist/prod/cli.cjs`.
 
-Once the CLI has been built, you can navigate to any `fern` folder and invoke it by running 
+Once the CLI has been built, you can navigate to any `fern` folder and invoke it by running
 
 ```sh
 FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/dist/prod/cli.cjs <args>
 ```
 
-### Development CLI 
+### Development CLI
 
-To build a CLI that communicates with Fern's development cloud environment, run the command `pnpm fern-dev:build`. 
+To build a CLI that communicates with Fern's development cloud environment, run the command `pnpm fern-dev:build`.
 
-Once the CLI has been built, you can navigate to any `fern` folder and invoke it by running 
+Once the CLI has been built, you can navigate to any `fern` folder and invoke it by running
 
 ```sh
 FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/dist/dev/cli.cjsn <args>
 ```
 
-## Generators 
+## Generators
 
-All of Fern's generators live in a directory called [generators](./generators/). This directory contains generators for several languages such as 
-[typescript](./generators/typescript/), [python](./generators/python/), [go](./generators/go). 
+All of Fern's generators live in a directory called [generators](./generators/). This directory contains generators for several languages such as
+[typescript](./generators/typescript/), [python](./generators/python/), [go](./generators/go).
 
-Some of the generators are written in the language they generate (i.e. Python is written in python, Go is written in Go, and Java is written in Java). 
+Some of the generators are written in the language they generate (i.e. Python is written in python, Go is written in Go, and Java is written in Java).
 
 ### Generator Testing
 
 To test our generators we have built a CLI called seed.
 
 Seed handles building the generators from source and running them against all of the
-[test definitions](./test-definitions/fern/) that are present in the repository. Generated code is then stored in a directory named 
-[seed](./seed/). 
+[test definitions](./test-definitions/fern/) that are present in the repository. Generated code is then stored in a directory named
+[seed](./seed/).
 
-Each generator configures a `seed.yml`. For example, the TypeScript generator's configuration lives [here](./seed/ts-sdk/seed.yml). 
+Each generator configures a `seed.yml`. For example, the TypeScript generator's configuration lives [here](./seed/ts-sdk/seed.yml).
 
-Seed also handles running scripts against the generated code to make sure that the generated code compiles and works 
-as intended. For example, in the TypeScript generator seed runs `yarn install` and `yarn build` to compile the source code. 
+Seed also handles running scripts against the generated code to make sure that the generated code compiles and works
+as intended. For example, in the TypeScript generator seed runs `yarn install` and `yarn build` to compile the source code.
 
 To build seed, simply run
 
@@ -116,9 +116,9 @@ To build seed, simply run
 pnpm seed:build
 ```
 
-**Note**: If you make any changes to the seed [source code](./packages/seed/src/) then you will need to rebuild ssed. 
+**Note**: If you make any changes to the seed [source code](./packages/seed/src/) then you will need to rebuild ssed.
 
-To run seed, you can use the command: 
+To run seed, you can use the command:
 
 ```
 pnpm seed test [--generator <generator-id>] [--fixture <fixture-name>] [--skip-scripts] [--local]
@@ -142,12 +142,10 @@ pnpm seed run [--generator <generator-id>] [--path /path/to/fern/folder] [--audi
 
 Below are some examples of using the command.
 
-- Pointed at a fern folder: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern  --audience external`
+- Pointed at a fern folder: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern --audience external`
 - Pointed at a fern folder with an audience: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern`
 - Pointed at a fern folder with multiple apis: `pnpm seed run --generator ts-sdk --path /Users/jdoe/fern/apis/<name-of-api>`
 
-
-## Feedback 
+## Feedback
 
 If you have any feedback on what we could improve, please [open an issue](https://github.com/fern-api/fern/issues/new) to discuss it!
-
