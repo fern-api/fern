@@ -106,6 +106,9 @@ All of Fern's generators live in a directory called [generators](./generators/).
 [typescript](./generators/typescript/), [python](./generators/python/), [go](./generators/go).
 
 Some of the generators are written in the language they generate (i.e. Python is written in python, Go is written in Go, and Java is written in Java).
+We are moving to a world where each generator will be written in TypeScript so that we can share more utilities and enforce a consistent structure 
+in the generator. 
+
 
 ### Generator Testing
 
