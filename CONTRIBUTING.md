@@ -116,7 +116,7 @@ To build seed, simply run
 pnpm seed:build
 ```
 
-**Note**: If you make any changes to the seed [source code](./packages/seed/src/) then you will need to rebuild ssed.
+**Note**: If you make any changes to the seed [source code](./packages/seed/src/) then you will need to rerun `pnpm seed:build`.
 
 To run seed, you can use the command:
 
