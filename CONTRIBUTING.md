@@ -42,13 +42,13 @@ Below we talk through the large components of this monorepo and how to contribut
 
 <br>
 
-## Documentation
+### Documentation
 
 Fern's documentation is hosted live at the URL https://buildwithfern.com/learn. We appreciate any help we can get that makes our documentation more digestible.
 
 If you find gaps within our documentation, please open an [issue](https://github.com/fern-api/fern/issues/new?assignees=&labels=documentation&projects=&template=documentation-suggestion.md&title=%5BFern%27s+Documentation%5D+)
 
-### Editing Documentation
+#### Editing Documentation
 
 Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in [docs.yml](./fern/docs.yml).
 
@@ -69,11 +69,11 @@ fern docs dev
 Finally, when you make a PR to update the docs, a PR preview link will be generated which will allow you
 to test if your changes came out as intended. [Here](https://github.com/fern-api/fern/pull/4330) is a sample PR with a preview link.
 
-## Fern CLI
+### Fern CLI
 
 The Fern CLI lives in a directory called [cli](./packages/cli/cli/) and the entrypoint is [cli.ts](./packages/cli/cli/src/cli.ts).
 
-### Building the CLI from source
+#### Building the CLI from source
 
 For testing purposes, you can build a local version of the CLI by running `pnpm fern:build`. This compiles and builds a CLI
 that communicates with our production cloud environment.
@@ -86,7 +86,7 @@ Once the CLI has been built, you can navigate to any `fern` folder and invoke it
 FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/dist/prod/cli.cjs <args>
 ```
 
-### Development CLI
+#### Development CLI
 
 To build a CLI that communicates with Fern's development cloud environment, run the command `pnpm fern-dev:build`.
 
@@ -98,14 +98,14 @@ FERN_NO_VERSION_REDIRECTION=true node /<path to fern git repo>/packages/cli/cli/
 
 <br>
 
-## Generators
+### Generators
 
 All of Fern's generators live in a directory called [generators](./generators/). This directory contains generators for several languages such as
 [typescript](./generators/typescript/), [python](./generators/python/), [go](./generators/go).
 
 Some of the generators are written in the language they generate (i.e. Python is written in python, Go is written in Go, and Java is written in Java).
 
-### Generator Testing
+#### Generator Testing
 
 To test our generators we have built a CLI called seed.
 
@@ -139,7 +139,7 @@ For a single generator and test definition: `pnpm seed test --generator python-s
 For a single generator, test definition, and skipping scripts: `pnpm seed test --generator python-sdk --fixture file-download --skip-scripts`
 For running the generator locally (not on docker): `pnpm seed test --generator python-sdk`
 
-## Running seed against a custom fern definition
+#### Running seed against a custom fern definition
 
 It may be valuable to run seed on a particular Fern definition or OpenAPI spec. To do this,
 you can use the `seed run` command and point it at the fern folder:
