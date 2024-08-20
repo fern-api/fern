@@ -99,6 +99,7 @@ exports[`open api parser > assembly > parse open api 1`] = `
             "availability": null,
             "description": "The ID of the user.",
             "name": "userId",
+            "parameterNameOverride": null,
             "schema": {
               "availability": null,
               "description": null,
@@ -2458,6 +2459,7 @@ The parameter should map to a JSON encoded list of strings.
           "pathParameters": [
             {
               "name": "transcript_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3350,6 +3352,7 @@ The parameter should map to a JSON encoded list of strings.
           "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3575,6 +3578,7 @@ The parameter should map to a JSON encoded list of strings.
           "pathParameters": [
             {
               "name": "transcript_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4467,6 +4471,7 @@ The parameter should map to a JSON encoded list of strings.
           "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4697,6 +4702,7 @@ The parameter should map to a JSON encoded list of strings.
           "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4723,6 +4729,7 @@ The parameter should map to a JSON encoded list of strings.
           "availability": null,
           "description": "The format of the captions.",
           "name": "subtitle_format",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4967,6 +4974,7 @@ The parameter should map to a JSON encoded list of strings.
           "pathParameters": [
             {
               "name": "transcript_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5096,6 +5104,7 @@ The parameter should map to a JSON encoded list of strings.
           "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5321,6 +5330,7 @@ The parameter should map to a JSON encoded list of strings.
           "pathParameters": [
             {
               "name": "transcript_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5450,6 +5460,7 @@ The parameter should map to a JSON encoded list of strings.
           "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5680,6 +5691,7 @@ The parameter should map to a JSON encoded list of strings.
           "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5940,6 +5952,7 @@ The parameter should map to a JSON encoded list of strings.
           "pathParameters": [
             {
               "name": "transcript_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5986,6 +5999,7 @@ The parameter should map to a JSON encoded list of strings.
           "availability": null,
           "description": "ID of the transcript",
           "name": "transcript_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -7597,6 +7611,7 @@ The LLM response data, as well as any context provided in the original request w
           "pathParameters": [
             {
               "name": "request_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -7650,6 +7665,7 @@ The LLM response data, as well as any context provided in the original request w
           "availability": null,
           "description": "The ID of the LeMUR request whose data you want to delete. This would be found in the response of the original request.",
           "name": "request_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,

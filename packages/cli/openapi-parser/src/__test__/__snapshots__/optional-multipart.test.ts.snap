@@ -63,6 +63,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "voice_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -238,6 +239,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "voice_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -305,6 +307,7 @@ exports[`optional-multipart > optional-multipart > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "voice_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,

@@ -27,6 +27,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "userId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -152,6 +153,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "userId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -209,6 +211,7 @@ exports[`x-fern-header > x-fern-header > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "userId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,

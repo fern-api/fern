@@ -11,12 +11,14 @@ export const PathParameterExample: core.serialization.ObjectSchema<
     FernOpenapiIr.PathParameterExample
 > = core.serialization.objectWithoutOptionalProperties({
     name: core.serialization.string(),
+    parameterNameOverride: core.serialization.string().optional(),
     value: core.serialization.lazy(() => serializers.FullExample),
 });
 
 export declare namespace PathParameterExample {
     interface Raw {
         name: string;
+        parameterNameOverride?: string | null;
         value: serializers.FullExample.Raw;
     }
 }

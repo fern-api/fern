@@ -27,6 +27,7 @@ exports[`open api parser > default-content > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "model",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,

@@ -16,6 +16,9 @@ exports[`x-fern-parameter-name > x-fern-parameter-name > docs 1`] = `
               "headers": {
                 "X-API-Version": "X-API-Version",
               },
+              "path-parameters": {
+                "id": "userId",
+              },
               "query-parameters": {
                 "foo": "foo",
               },
@@ -26,7 +29,10 @@ exports[`x-fern-parameter-name > x-fern-parameter-name > docs 1`] = `
           ],
           "method": "GET",
           "pagination": undefined,
-          "path": "/user",
+          "path": "/user/{id}",
+          "path-parameters": {
+            "id": "string",
+          },
           "request": {
             "headers": {
               "X-API-Version": {
@@ -77,6 +83,9 @@ exports[`x-fern-parameter-name > x-fern-parameter-name > simple 1`] = `
           "examples": [
             {
               "headers": {},
+              "path-parameters": {
+                "id": "userId",
+              },
               "query-parameters": {
                 "foo": "foo",
               },
@@ -87,7 +96,10 @@ exports[`x-fern-parameter-name > x-fern-parameter-name > simple 1`] = `
           ],
           "method": "GET",
           "pagination": undefined,
-          "path": "/user",
+          "path": "/user/{id}",
+          "path-parameters": {
+            "id": "string",
+          },
           "request": {
             "name": "GetUserRequest",
             "query-parameters": {
