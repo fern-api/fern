@@ -3,7 +3,7 @@ info:
   title: Test extension `x-fern-parameter-name` for parameters.
   version: 1.0.0
 paths:
-  "/user":
+  "/user/{userId}":
     get:
       operationId: get_user
       parameters:
@@ -19,6 +19,12 @@ paths:
           schema:
             type: string
           required: true
+        - in: path
+          name: userId
+          x-fern-parameter-name: id
+          schema:
+            type: string
+          required: true          
       responses:
         "200":
           description: "Success!"
