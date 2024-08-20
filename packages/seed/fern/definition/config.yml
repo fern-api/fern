@@ -1,7 +1,7 @@
 imports:
   features: features.yml
 types:
-  MinimalSeedWorkspaceConfiguration:
+  CliSeedWorkspaceConfiguration:
     properties:
       changelogLocation: 
         type: optional<string>
@@ -9,7 +9,7 @@ types:
           The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
 
   SeedWorkspaceConfiguration:
-    extends: MinimalSeedWorkspaceConfiguration
+    extends: CliSeedWorkspaceConfiguration
     properties:
       irVersion: string
       language: optional<Language>
