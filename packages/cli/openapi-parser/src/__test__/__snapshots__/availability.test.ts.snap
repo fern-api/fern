@@ -22,6 +22,7 @@ exports[`open api parser > availability > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -32,6 +33,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             },
             {
               "name": "active_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -42,6 +44,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             },
             {
               "name": "deprecated_ref_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -52,6 +55,7 @@ exports[`open api parser > availability > parse open api 1`] = `
             },
             {
               "name": "x-fern-availability_path_param",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -229,6 +233,7 @@ exports[`open api parser > availability > parse open api 1`] = `
           "availability": "Deprecated",
           "description": "collection id",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -255,6 +260,7 @@ exports[`open api parser > availability > parse open api 1`] = `
           "availability": null,
           "description": "active header",
           "name": "active_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -281,6 +287,7 @@ exports[`open api parser > availability > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "deprecated_ref_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -304,6 +311,7 @@ exports[`open api parser > availability > parse open api 1`] = `
           "availability": "Beta",
           "description": "active beta header",
           "name": "x-fern-availability_path_param",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
