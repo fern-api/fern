@@ -1,6 +1,13 @@
 irVersion: v53
-docker: fernapi/fern-fastapi-server:latest
-dockerCommand: docker build -f ./generators/python/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest ./generators/python
+publish:
+  preBuildCommands:
+    - chmod +x setup-python.sh && ./setup-python.sh
+    - poetry install
+  dockerFile: ./generators/python/fastapi/Dockerfile
+  publishedImageName: fernapi/fern-fastapi-server
+test:
+  dockerImage: fernapi/fern-fastapi-server:latest
+  dockerBuildCommand: docker build -f ./generators/python/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest ./generators/python
 language: python
 generatorType: Server
 defaultOutputMode: local_files

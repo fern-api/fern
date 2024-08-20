@@ -12,13 +12,15 @@ types:
     extends: CliSeedWorkspaceConfiguration
     properties:
       irVersion: string
+      publish: PublishConfiguration
+      test: TestConfiguration
+      local: optional<LocalBuildInfo>
+
       language: optional<Language>
       defaultCustomConfig: optional<map<string, unknown>>
       defaultOutputMode: OutputMode
       generatorType: GeneratorType
-      docker: string
-      dockerCommand: optional<DockerCommand>
-      local: optional<LocalBuildInfo>
+
       customFixtureConfig: 
         type: optional<FixtureConfigurations>
         docs: |
@@ -33,6 +35,36 @@ types:
           just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
       features: optional<features.GeneratorFeatures>
   
+  PublishDocker:
+    docs: |
+      Configuration for publishing from a docker image, assuming a vanilla docker deployment.
+    properties:
+      preBuildCommands: optional<DockerCommand>
+      dockerfile: string
+
+  PublishCommand:
+    docs: |
+      Configuration for publishing from a command, assuming something packaged up, like with the TypeScript generator.
+      ex. `pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"`
+      Commands can be multi-line, we'll run them all!
+    properties:
+      versionSubstitution: 
+        type: optional<string>
+        docs: | 
+          The string to substitute for the version in the command. ex. `"$VERSION"`
+      command: string
+
+  PublishConfiguration:
+    discriminated: false
+    union: 
+      - PublishDocker
+      - PublishCommand
+
+  TestConfiguration:
+    properties:
+      dockerImage: string
+      dockerBuildCommand: optional<DockerCommand>
+
   LocalBuildInfo: 
     properties: 
       workingDirectory: 
