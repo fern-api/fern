@@ -136,10 +136,10 @@ pnpm seed test [--generator <generator-id>] [--fixture <fixture-name>] [--skip-s
 
 Below are some examples of using the command.
 
-For a single generator: `pnpm seed test --generator python-sdk`
-For a single generator and test definition: `pnpm seed test --generator python-sdk --fixture file-download`
-For a single generator, test definition, and skipping scripts: `pnpm seed test --generator python-sdk --fixture file-download --skip-scripts`
-For running the generator locally (not on docker): `pnpm seed test --generator python-sdk`
+- For a single generator: `pnpm seed test --generator python-sdk`
+- For a single generator and test definition: `pnpm seed test --generator python-sdk --fixture file-download`
+- For a single generator, test definition, and skipping scripts: `pnpm seed test --generator python-sdk --fixture file-download --skip-scripts`
+- For running the generator locally (not on docker): `pnpm seed test --generator python-sdk`
 
 ### Running seed against a custom fern definition
 
