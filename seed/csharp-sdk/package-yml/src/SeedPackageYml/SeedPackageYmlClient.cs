@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedPackageYml.Core;
 
 #nullable enable
@@ -26,7 +27,8 @@ public partial class SeedPackageYmlClient
     public async Task<string> EchoAsync(
         string id,
         EchoRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -37,7 +39,8 @@ public partial class SeedPackageYmlClient
                 Path = $"/{id}/",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

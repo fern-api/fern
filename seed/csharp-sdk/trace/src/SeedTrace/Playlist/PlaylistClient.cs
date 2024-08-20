@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedTrace.Core;
 
@@ -22,7 +23,8 @@ public partial class PlaylistClient
     public async Task<Playlist> CreatePlaylistAsync(
         int serviceParam,
         CreatePlaylistRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -42,7 +44,8 @@ public partial class PlaylistClient
                 Body = request.Body,
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -70,7 +73,8 @@ public partial class PlaylistClient
     public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(
         int serviceParam,
         GetPlaylistsRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -90,7 +94,8 @@ public partial class PlaylistClient
                 Path = $"/v2/playlist/{serviceParam}/all",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -118,7 +123,8 @@ public partial class PlaylistClient
     public async Task<Playlist> GetPlaylistAsync(
         int serviceParam,
         string playlistId,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -128,7 +134,8 @@ public partial class PlaylistClient
                 Method = HttpMethod.Get,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -157,7 +164,8 @@ public partial class PlaylistClient
         int serviceParam,
         string playlistId,
         UpdatePlaylistRequest? request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -168,7 +176,8 @@ public partial class PlaylistClient
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -196,7 +205,8 @@ public partial class PlaylistClient
     public async Task DeletePlaylistAsync(
         int serviceParam,
         string playlistId,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -206,7 +216,8 @@ public partial class PlaylistClient
                 Method = HttpMethod.Delete,
                 Path = $"/v2/playlist/{serviceParam}/{playlistId}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

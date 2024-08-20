@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedAudiences;
 using SeedAudiences.Core;
 
@@ -16,7 +17,10 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task<Response> GetDirectThreadAsync(RequestOptions? options = null)
+    public async Task<Response> GetDirectThreadAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -25,7 +29,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Get,
                 Path = "",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

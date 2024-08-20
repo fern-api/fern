@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedFileUpload.Core;
 
@@ -15,7 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task PostAsync(MyRequest request, RequestOptions? options = null)
+    public async Task PostAsync(
+        MyRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,7 +29,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -38,7 +44,11 @@ public partial class ServiceClient
         );
     }
 
-    public async Task JustFileAsync(JustFileRequet request, RequestOptions? options = null)
+    public async Task JustFileAsync(
+        JustFileRequet request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -47,7 +57,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "/just-file",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -63,7 +74,8 @@ public partial class ServiceClient
 
     public async Task JustFileWithQueryParamsAsync(
         JustFileWithQueryParamsRequet request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -86,7 +98,8 @@ public partial class ServiceClient
                 Path = "/just-file-with-query-params",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
