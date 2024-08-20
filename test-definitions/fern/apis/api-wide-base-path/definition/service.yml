@@ -1,8 +1,8 @@
 service:
   auth: false
-  base-path: "/{serviceParam}"
+  base-path: "/{serviceParasdfm}"
   path-parameters:
-    serviceParam: string
+    serviceParasdfm: string
   endpoints:
     post:
       path: "/{endpointParam}/{resourceParam}"

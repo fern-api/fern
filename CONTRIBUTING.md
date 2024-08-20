@@ -32,7 +32,7 @@ To run unit tests for a single package: `pnpm --filter @fern-api/openapi-parser 
 
 To run the integration tests: `pnpm test:ete`.
 
-Many of our tests rely on [snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `pnpm test:update` or pass `-u` directly `pnpm test:ete -- -u`.
+Many of our tests rely on [snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `pnpm test:update` or `pnpm test:ete:update`.
 
 <br>
 
@@ -106,9 +106,8 @@ All of Fern's generators live in a directory called [generators](./generators/).
 [typescript](./generators/typescript/), [python](./generators/python/), [go](./generators/go).
 
 Some of the generators are written in the language they generate (i.e. Python is written in python, Go is written in Go, and Java is written in Java).
-We are moving to a world where each generator will be written in TypeScript so that we can share more utilities and enforce a consistent structure 
-in the generator. 
-
+We are moving to a world where each generator will be written in TypeScript so that we can share more utilities and enforce a consistent structure
+in the generator.
 
 ### Generator Testing
 
