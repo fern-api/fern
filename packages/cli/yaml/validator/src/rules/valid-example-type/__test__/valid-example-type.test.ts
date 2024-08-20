@@ -55,7 +55,7 @@ describe("valid-example-type", () => {
             {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("alias.yml"),
-                message: 'Expected example to be a date. Example is: "34-01-2024"',
+                message: 'Expected example to be a date. Example is: "2024-01-35"',
                 nodePath: ["types", "DateAlias", { key: "examples", arrayIndex: 1 }]
             },
             {
@@ -63,6 +63,12 @@ describe("valid-example-type", () => {
                 relativeFilepath: RelativeFilePath.of("alias.yml"),
                 message: 'Expected example to be a date. Example is: "2024-01-01T00:00:00Z"',
                 nodePath: ["types", "DateAlias", { key: "examples", arrayIndex: 2 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be a date. Example is: "2024-1-1"',
+                nodePath: ["types", "DateAlias", { key: "examples", arrayIndex: 3 }]
             },
             {
                 severity: "error",
