@@ -11,4 +11,6 @@ export interface PathParameterWithExample
     name: string;
     schema: FernOpenapiIr.SchemaWithExample;
     variableReference: string | undefined;
+    /** Populated by `x-fern-parameter-name` on a parameter object. */
+    parameterNameOverride: string | undefined;
 }

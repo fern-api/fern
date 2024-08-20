@@ -55,9 +55,18 @@ navigation:
         contents:
           - page: Overview
             path: ./pages/api-definition/openapi/openapi-overview.mdx
-          - page: OpenAPI Extensions
-            path: ./pages/api-definition/openapi/extensions.mdx
+          - section: Extensions
             slug: extensions
+            contents: 
+              - page: SDK Method Names
+                path: ./pages/api-definition/openapi/extensions/method-names.mdx
+                slug: method-names
+              - page: Parameter Names
+                path: ./pages/api-definition/openapi/extensions/parameter-names.mdx
+                slug: parameter-names
+              - page: Other
+                path: ./pages/api-definition/openapi/extensions/others.mdx
+                slug: others              
           - page: OpenAPI Examples
             path: ./pages/api-definition/openapi/examples.mdx
           - page: OpenAPI Overrides
