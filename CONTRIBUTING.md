@@ -32,6 +32,9 @@ To run the integration tests: `pnpm test:ete`.
 
 Many of our tests rely on [snapshot testing](https://jestjs.io/docs/snapshot-testing). To rewrite snapshots, use `-u`: `pnpm test -- -u` and `pnpm test:ete -- -u`.
 
+<br>
+<br>
+
 ## Repository Architecture
 
 Below we talk through the large components of this monorepo and how to contribute to each one.
