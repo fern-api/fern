@@ -1,10 +1,10 @@
-import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     APIS_DIRECTORY,
     DEFAULT_API_WORSPACE_FOLDER_NAME,
     DEFINITION_DIRECTORY,
     GENERATORS_CONFIGURATION_FILENAME
 } from "@fern-api/configuration";
+import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import chalk from "chalk";
 import fs from "fs-extra";
@@ -35,9 +35,9 @@ export async function initializeAPI({
         taskContext: context
     });
     if (openApiPath != null) {
-        await createOpenAPIWorkspace({ directoryOfWorkspace, openAPIFilePath: openApiPath });
+        await createOpenAPIWorkspace({ directoryOfWorkspace, openAPIFilePath: openApiPath, cliVersion: versionOfCli });
     } else {
-        await createFernWorkspace({ directoryOfWorkspace });
+        await createFernWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli });
     }
     context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
 }

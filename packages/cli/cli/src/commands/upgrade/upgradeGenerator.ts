@@ -15,7 +15,8 @@ export async function loadAndUpdateGenerators({
     generatorFilter,
     groupFilter,
     includeMajor,
-    includeRc
+    includeRc,
+    cliVersion
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
     context: TaskContext;
@@ -23,6 +24,7 @@ export async function loadAndUpdateGenerators({
     groupFilter: string | undefined;
     includeMajor: boolean;
     includeRc: boolean;
+    cliVersion: string;
 }): Promise<string | undefined> {
     const filepath = generatorsYml.getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (!(await doesPathExist(filepath))) {
@@ -83,23 +85,24 @@ export async function loadAndUpdateGenerators({
             const generatorName = generator.get("name") as string;
             const normalizedGeneratorName = generatorsYml.getGeneratorNameOrThrow(generatorName, context);
 
-            const currentVersion = generator.get("version") as string;
+            const currentGeneratorVersion = generator.get("version") as string;
 
             const latestVersion = await generatorsYml.getLatestGeneratorVersion({
                 generatorName: normalizedGeneratorName,
-                currentVersion,
+                cliVersion,
+                currentGeneratorVersion,
                 includeRc,
                 includeMajor,
                 context
             });
-            context.logger.debug(`${generatorName}, ${currentVersion}, ${latestVersion}`);
+            context.logger.debug(`${generatorName}, ${currentGeneratorVersion}, ${latestVersion}`);
 
             if (latestVersion == null) {
                 continue;
             }
 
             // check if the versions have the same major version, if not fail, if yes do the upgrade
-            const currentMajor = semver.major(currentVersion);
+            const currentMajor = semver.major(currentGeneratorVersion);
             const latestMajor = semver.major(latestVersion);
             if (currentMajor === latestMajor || includeMajor) {
                 generator.set("version", latestVersion);
@@ -150,7 +153,8 @@ export async function upgradeGenerator({
                     generatorFilter: generator,
                     groupFilter: group,
                     includeMajor,
-                    includeRc
+                    includeRc,
+                    cliVersion: cliContext.environment.packageVersion
                 });
 
                 if (updatedConfiguration != null) {

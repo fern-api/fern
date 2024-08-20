@@ -4,24 +4,27 @@ import semver from "semver";
 
 export async function getLatestGeneratorVersion({
     generatorName,
-    currentVersion,
+    cliVersion,
     includeRc,
+    currentGeneratorVersion,
     includeMajor,
     context
 }: {
     generatorName: string;
-    currentVersion: string;
+    cliVersion: string;
     includeRc: boolean;
+    currentGeneratorVersion?: string;
     includeMajor?: boolean;
     context?: TaskContext;
 }): Promise<string | undefined> {
-    const parsedVersion = semver.parse(currentVersion);
+    const parsedVersion = semver.parse(currentGeneratorVersion);
     // We're just using unauthed endpoints, so we don't need to pass in a token
     const client = new GeneratorsClient({});
     const latestReleaseResponse = await client.generators.versions.getLatestGeneratorRelease({
         generator: getGeneratorMetadataFromName(generatorName, context),
         releaseType: includeRc ? FernRegistry.generators.ReleaseType.Rc : FernRegistry.generators.ReleaseType.Ga,
-        retainMajorVersion: includeMajor && parsedVersion != null ? parsedVersion.major : undefined
+        retainMajorVersion: !includeMajor && parsedVersion != null ? parsedVersion.major : undefined,
+        cliVersion
     });
 
     if (latestReleaseResponse.ok) {

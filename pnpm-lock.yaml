@@ -3199,8 +3199,8 @@ importers:
         specifier: 0.0.584
         version: 0.0.584
       '@fern-fern/generators-sdk':
-        specifier: 0.0.5596
-        version: 0.0.5596
+        specifier: 0.0.5606
+        version: 0.0.5606
       dockerode:
         specifier: ^4.0.2
         version: 4.0.2
@@ -6730,6 +6730,9 @@ packages:
 
   '@fern-fern/generators-sdk@0.0.5596':
     resolution: {integrity: sha512-fALUrEDTlwTiNVipcxNuqdMp9vheVbjNEP7owMg5neoZEByazHOyarQUY7+K1X/zo0PFXdm1bYTtX36BxUT+ww==}
+
+  '@fern-fern/generators-sdk@0.0.5606':
+    resolution: {integrity: sha512-fdnwCrPkXfBlxFirzvS3YO3uVW0sq7VkzgRzxRkYDOFXstLE0Q+NvwTmOLKM9ZgEldRjg5rk52tt1L+rv/dUFQ==}
 
   '@fern-fern/ir-sdk@0.0.2828':
     resolution: {integrity: sha512-qFZZHyw0cuHtoR9v7KsrPpz0PFH0V6/ORSMHdTKU/82KcaNCMjk0BbzicK8jjrMD0mYS4JxNUzEjcUOvgeuqaA==}
@@ -13804,6 +13807,17 @@ snapshots:
       - encoding
 
   '@fern-fern/generators-sdk@0.0.5596':
+    dependencies:
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      js-base64: 3.7.2
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/generators-sdk@0.0.5606':
     dependencies:
       form-data: 4.0.0
       formdata-node: 6.0.3
