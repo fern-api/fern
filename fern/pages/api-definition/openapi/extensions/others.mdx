@@ -1,53 +1,9 @@
 ---
-title: OpenAPI extensions for SDKs
-description: Learn about Fern's OpenAPI extensions for SDK method names, authentication overrides, global headers, enum descriptions and names, audiences, and more.
+title: Other extensions
+description: Learn about Fern's OpenAPI extensions for authentication overrides, global headers, enum descriptions and names, audiences, and more.
 ---
 
 Fern supports different OpenAPI extensions so that you can generate higher-quality SDKs.
-
-## SDK method names
-
-By default, Fern uses the `tag` and `operationId` fields to generate the SDK method. So an endpoint with a
-tag `users` and operationId `users_create` will generate an SDK that reads `client.users.create()`.
-
-To explicitly set the SDK method you can leverage the extensions:
-
-- `x-fern-sdk-group-name` which groups SDK methods together
-- `x-fern-sdk-method-name` which is used as the method name in the SDK
-
-The OpenAPI below will generate `client.users.create()`:
-
-```yaml title="openapi.yaml"
-paths:
-  /users:
-    post:
-      x-fern-sdk-group-name: users
-      x-fern-sdk-method-name: create
-```
-
-If you omit the `x-fern-sdk-group-name` extension, then the generated SDK method will live at the root.
-For example, the following OpenAPI will generate `client.create_user()`:
-
-```yaml title="openapi.yaml"
-paths:
-  /users:
-    post:
-      x-fern-sdk-method-name: create_user
-```
-
-If you add more than one `x-fern-sdk-group-name` extension, then the generated SDK will nested group names. The order of the group names is preserved in the generated SDK method.
-
-For example, the following OpenAPI will generate `client.admin.users.create()`:
-
-```yaml title="openapi.yaml"
-paths:
-  /users:
-    post:
-      x-fern-sdk-group-name: 
-        - admin
-        - users
-      x-fern-sdk-method-name: create
-```
 
 ## API version
 
@@ -62,13 +18,13 @@ x-fern-version:
       - "1.0.0"
       - "2.0.0"
       - "latest"
-paths:
-  ...
+paths: ...
 ```
 
 ## Authentication overrides
 
 For authentication within your SDK, you may want to customize the:
+
 - Names of the parameters a user will populate to provide their credentials
 - Any environment variable the SDK can scan for to automatically provide the user's credentials automatically
 
@@ -127,7 +83,7 @@ components:
       x-fern-header:
         name: header
         env: MY_HEADER_ENVVAR
-        prefix: "Token "  # Optional
+        prefix: "Token " # Optional
 ```
 
 This adds a header of the form `X-API-Key: Token <value>` to the request.
@@ -216,7 +172,7 @@ would generate
 ```typescript title="operand.ts"
 export enum Operand {
   GreaterThan = ">",
-  LessThan = "<",
+  LessThan = "<"
 }
 ```
 
@@ -250,14 +206,14 @@ Fern would generate the name `CastItem` for the inlined array item schema.
 
 ```typescript title="Auto-generated name" {6}
 export interface Movie {
-    name?: string;
-    cast?: CastItem[]
+  name?: string;
+  cast?: CastItem[];
 }
 
-export interface CastItem  {
-    firstName?: string;
-    lastName?: string;
-    age?: integer;
+export interface CastItem {
+  firstName?: string;
+  lastName?: string;
+  age?: integer;
 }
 ```
 
@@ -289,53 +245,30 @@ This would replace `CastItem` with `Person` and the generated code would read mo
 
 ```typescript title="Overridden name" {6}
 export interface Movie {
-    name?: string;
-    cast?: Person[]
+  name?: string;
+  cast?: Person[];
 }
 
-export interface Person  {
-    firstName?: string;
-    lastName?: string;
-    age?: integer;
+export interface Person {
+  firstName?: string;
+  lastName?: string;
+  age?: integer;
 }
-```
-
-## Parameter names
-
-The `x-fern-parameter-name` extension allows you to customize the variable name of OpenAPI
-parameters.
-
-For example, if you have a header `X-API-Version`, you may want the parameter
-in code to be called `version`.
-
-```yaml title="Specify the parameter name in openapi.yml" {8}
-paths:
-  "/user":
-    get:
-      operationId: get_user
-      parameters:
-        - in: header
-          name: X-API-Version
-          x-fern-parameter-name: version
-          schema:
-            type: string
-          required: true
-      ...
 ```
 
 ## Property Names
 
-The `x-fern-property-name` extension allows you to customize the variable name for object 
-properties. 
+The `x-fern-property-name` extension allows you to customize the variable name for object
+properties.
 
-For example, if you had a property called `_metadata` in your schema but you wanted the 
-variable to be called `data` in your SDK you would do the following: 
+For example, if you had a property called `_metadata` in your schema but you wanted the
+variable to be called `data` in your SDK you would do the following:
 
 ```yaml {6}
-components: 
-  schemas: 
-    MyUser: 
-      _metadata: 
+components:
+  schemas:
+    MyUser:
+      _metadata:
         type: object
         x-fern-property-name: data
 ```
@@ -346,17 +279,17 @@ The `x-fern-server-name` extension is used to name your servers.
 
 ```yaml title="openapi.yml"
 servers:
-- url: https://api.example.com
-  x-fern-server-name: Production
-- url: https://sandbox.example.com
-  x-fern-server-name: Sandbox
+  - url: https://api.example.com
+    x-fern-server-name: Production
+  - url: https://sandbox.example.com
+    x-fern-server-name: Sandbox
 ```
 
 In a generated TypeScript SDK, you'd see:
 
 ```typescript title="environment.ts"
 export const ExampleEnvironment = {
-    Production: "https://api.example.com",
+  Production: "https://api.example.com"
 } as const;
 
 export type ExampleEnvironment = typeof ExampleEnvironment.Production;
@@ -372,15 +305,14 @@ In the example below, we have configured the `/v1` base path so the full endpoin
 ```yaml title="Set the base path in openapi.yml" {1}
 x-fern-base-path: /v1
 servers:
-- url: https://api.example.com
+  - url: https://api.example.com
 paths:
-  /users:
-    ...
+  /users: ...
 ```
 
 ## Audiences
 
-Audiences are a useful tool for segmenting your API for different consumers. You can configure your Fern Docs to publish documentation specific to an `Audience`. You can use [audiences in your Fern Definition](/learn/api-definition/fern/audiences), too. 
+Audiences are a useful tool for segmenting your API for different consumers. You can configure your Fern Docs to publish documentation specific to an `Audience`. You can use [audiences in your Fern Definition](/learn/api-definition/fern/audiences), too.
 
 Common examples of audiences include:
 
@@ -388,7 +320,7 @@ Common examples of audiences include:
 - Beta testers
 - Customers
 
-By default, if no audience is specified, it will be accessible to all consumers. 
+By default, if no audience is specified, it will be accessible to all consumers.
 
 ### Audiences for Endpoints
 
@@ -406,23 +338,24 @@ paths:
       ...
 ```
 
-### Audiences for Components 
+### Audiences for Components
 
-Components can be marked for different audiences, as well. 
+Components can be marked for different audiences, as well.
 
-In this example, the `Email` type is available to both internal and beta customers, while the `to` property is available to beta customers only: 
+In this example, the `Email` type is available to both internal and beta customers, while the `to` property is available to beta customers only:
+
 ```yaml title="openapi.yml" {13-17}
-components: 
-  schemas: 
-    Email: 
+components:
+  schemas:
+    Email:
       title: Email
       type: object
-      properties: 
+      properties:
         subject:
           type: string
-        body: 
+        body:
           type: string
-        to: 
+        to:
           type: string
           x-fern-audiences: <-- property audience
             - beta
@@ -434,9 +367,10 @@ components:
 ### Audiences for SDKs
 
 In `generators.yml`, you can apply audience filters so that only certain
-endpoints are passed to the generators. 
+endpoints are passed to the generators.
 
 The following example configures the SDKs to filter for the `customers` audience:
+
 ```yaml title="generators.yml" {3-4}
 groups:
   sdks:
@@ -450,7 +384,7 @@ groups:
 
 ### Audiences for Docs
 
-If generating Fern Docs, update your `docs.yml` configuration to include your audiences. 
+If generating Fern Docs, update your `docs.yml` configuration to include your audiences.
 
 The following example shows how to configure your `docs.yml` to publish documentation for the `customers` audience:
 
@@ -569,7 +503,7 @@ To skip a schema, add `x-fern-ignore: true` at the schema level.
 components:
   schemas:
     SchemaToSkip:
-      x-fern-ignore: true 
+      x-fern-ignore: true
       ...
 ```
 
@@ -618,6 +552,7 @@ shown in the third tab.
             '500':
               description: Internal Server Error
     ```
+
 </CodeBlocks>
 
 ## Embedding extensions
@@ -649,7 +584,7 @@ paths:
             body:
               name: Foo
               ssn: 1234
-        - path-parameters: 
+        - path-parameters:
             userId: user-4567
           response:
             body:
@@ -696,6 +631,7 @@ If you're on the Fern Starter plan or higher for SDKs you won't have to worry ab
 The `x-fern-availability` extension is used to mark the availability of an endpoint. The availability information propagates into the generated Fern Docs website as visual tags.
 
 The options are:
+
 - `beta`
 - `generally-available`
 - `deprecated`
