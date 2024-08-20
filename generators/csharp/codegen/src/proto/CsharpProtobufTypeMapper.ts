@@ -177,14 +177,20 @@ class ToProtoPropertyMapper {
 
     private getConditions({
         propertyName,
-        typeReference
+        typeReference,
+        wrapperType
     }: {
         propertyName: string;
         typeReference: TypeReference;
+        wrapperType?: WrapperType;
     }): CodeBlock[] {
         switch (typeReference.type) {
             case "container":
-                return this.getConditionsForContainer({ propertyName, container: typeReference.container });
+                return this.getConditionsForContainer({
+                    propertyName,
+                    container: typeReference.container,
+                    wrapperType
+                });
             case "named":
                 return [];
             case "primitive":
@@ -198,19 +204,32 @@ class ToProtoPropertyMapper {
 
     private getConditionsForContainer({
         propertyName,
-        container
+        container,
+        wrapperType
     }: {
         propertyName: string;
         container: ContainerType;
+        wrapperType?: WrapperType;
     }): CodeBlock[] {
         const property = csharp.codeblock(propertyName);
         switch (container.type) {
             case "optional":
                 return [
                     this.isNotNull(property),
-                    ...this.getConditions({ propertyName, typeReference: container.optional })
+                    ...this.getConditions({
+                        propertyName,
+                        typeReference: container.optional,
+                        wrapperType: WrapperType.Optional
+                    })
                 ];
             case "list":
+                if (this.context.isReadOnlyMemoryType(container.list)) {
+                    if (wrapperType === WrapperType.Optional) {
+                        return [this.isNotEmpty(csharp.codeblock(`${propertyName}.Value`))];
+                    }
+                    return [this.isNotEmpty(property)];
+                }
+                return [this.invokeAny(property)];
             case "map":
             case "set":
                 return [this.invokeAny(property)];
@@ -282,9 +301,9 @@ class ToProtoPropertyMapper {
                     wrapperType: wrapperType ?? WrapperType.Optional
                 });
             case "list":
-                return this.getValueForList({ propertyName, listType: container.list });
+                return this.getValueForList({ propertyName, listType: container.list, wrapperType });
             case "set":
-                return this.getValueForList({ propertyName, listType: container.set });
+                return this.getValueForList({ propertyName, listType: container.set, wrapperType });
             case "map":
                 return this.getValueForMap({ propertyName, map: container });
             case "literal":
@@ -292,7 +311,19 @@ class ToProtoPropertyMapper {
         }
     }
 
-    private getValueForList({ propertyName, listType }: { propertyName: string; listType: TypeReference }): CodeBlock {
+    private getValueForList({
+        propertyName,
+        listType,
+        wrapperType
+    }: {
+        propertyName: string;
+        listType: TypeReference;
+        wrapperType?: WrapperType;
+    }): CodeBlock {
+        const valuePropertyName =
+            this.context.isReadOnlyMemoryType(listType) && wrapperType === WrapperType.Optional
+                ? `${propertyName}.Value`
+                : propertyName;
         return csharp.codeblock((writer) => {
             writer.writeNode(
                 csharp.invokeMethod({
@@ -300,7 +331,7 @@ class ToProtoPropertyMapper {
                     method: "AddRange",
                     arguments_: [
                         this.getValue({
-                            propertyName,
+                            propertyName: valuePropertyName,
                             typeReference: listType,
                             wrapperType: WrapperType.List
                         })
@@ -347,6 +378,17 @@ class ToProtoPropertyMapper {
                 writer.writeNode(this.context.getDefaultValueForPrimitive({ primitive }));
             });
         }
+        if (wrapperType === WrapperType.List && this.context.isReadOnlyMemoryType(TypeReference.primitive(primitive))) {
+            return csharp.codeblock((writer) => {
+                writer.writeNode(
+                    csharp.invokeMethod({
+                        on: csharp.codeblock(propertyName),
+                        method: "ToArray",
+                        arguments_: []
+                    })
+                );
+            });
+        }
         return csharp.codeblock(propertyName);
     }
 
@@ -380,6 +422,14 @@ class ToProtoPropertyMapper {
         return csharp.codeblock((writer) => {
             writer.writeNode(value);
             writer.write(" != null");
+        });
+    }
+
+    private isNotEmpty(on: csharp.AstNode): csharp.CodeBlock {
+        return csharp.codeblock((writer) => {
+            writer.write(`!`);
+            writer.writeNode(on);
+            writer.write(".IsEmpty");
         });
     }
 }
@@ -503,11 +553,12 @@ class FromProtoPropertyMapper {
         const on = csharp.codeblock(`${propertyName}?`);
         if (this.context.isPrimitive(listType)) {
             // Lists of primtiive types can be directly mapped.
+            const method = this.context.isReadOnlyMemoryType(listType) ? "ToArray" : "ToList";
             return csharp.codeblock((writer) => {
                 writer.writeNode(
                     csharp.invokeMethod({
                         on,
-                        method: "ToList",
+                        method,
                         arguments_: []
                     })
                 );
