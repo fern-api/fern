@@ -20,7 +20,7 @@ export async function convertTransport({
         source: serviceDeclaration.source,
         file
     });
-    if (resolvedSource.type !== "protobuf") {
+    if (resolvedSource == null || resolvedSource.type !== "protobuf") {
         return Transport.http();
     }
     const protobufService = convertProtobufService({

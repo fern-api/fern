@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isRawProtobufSourceSchema, RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../FernFileContext";
@@ -10,14 +11,19 @@ export interface SourceResolver {
         source: RawSchemas.SourceSchema;
         file: FernFileContext;
     }) => Promise<ResolvedSource | undefined>;
-    resolveSourceOrThrow: (args: { source: RawSchemas.SourceSchema; file: FernFileContext }) => Promise<ResolvedSource>;
+    resolveSourceOrThrow: (args: {
+        source: RawSchemas.SourceSchema;
+        file: FernFileContext;
+    }) => Promise<ResolvedSource | undefined>;
 }
 
 export class SourceResolverImpl implements SourceResolver {
+    private readonly context: TaskContext;
     private readonly workspace: FernWorkspace;
     private readonly sourceCache: Map<AbsoluteFilePath, ResolvedSource>;
 
-    constructor(workspace: FernWorkspace) {
+    constructor(context: TaskContext, workspace: FernWorkspace) {
+        this.context = context;
         this.workspace = workspace;
         this.sourceCache = new Map();
     }
@@ -28,11 +34,14 @@ export class SourceResolverImpl implements SourceResolver {
     }: {
         source: RawSchemas.SourceSchema;
         file: FernFileContext;
-    }): Promise<ResolvedSource> {
+    }): Promise<ResolvedSource | undefined> {
         const resolvedType = await this.resolveSource({ source, file });
         if (resolvedType == null) {
-            const filename = isRawProtobufSourceSchema(source) ? source.proto : source.openapi;
-            throw new Error(`Cannot resolve source ${filename} from file ${file.relativeFilepath}`);
+            if (isRawProtobufSourceSchema(source)) {
+                throw new Error(`Cannot resolve source ${source.proto} from file ${file.relativeFilepath}`);
+            }
+            // Do not throw if OpenAPI since the source is not actually required.
+            this.context.logger.warn(`Cannot resolve source ${source.openapi} from file ${file.relativeFilepath}`);
         }
         return resolvedType;
     }
