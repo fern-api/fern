@@ -33,6 +33,9 @@ func (s *Shape) UnmarshalJSON(data []byte) error {
 	}
 	s.Type = unmarshaler.Type
 	s.Id = unmarshaler.Id
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", s)
+	}
 	switch unmarshaler.Type {
 	case "circle":
 		value := new(Circle)

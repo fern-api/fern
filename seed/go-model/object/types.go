@@ -86,8 +86,9 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	type embed Type
 	var unmarshaler = struct {
 		embed
-		Six   *core.DateTime `json:"six"`
-		Seven *core.Date     `json:"seven"`
+		Six      *core.DateTime `json:"six"`
+		Seven    *core.Date     `json:"seven"`
+		Eighteen string         `json:"eighteen"`
 	}{
 		embed: embed(*t),
 	}
@@ -97,7 +98,10 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	*t = Type(unmarshaler.embed)
 	t.Six = unmarshaler.Six.Time()
 	t.Seven = unmarshaler.Seven.Time()
-	t.eighteen = "eighteen"
+	if unmarshaler.Eighteen != "eighteen" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", t, "eighteen", unmarshaler.Eighteen)
+	}
+	t.eighteen = unmarshaler.Eighteen
 
 	extraProperties, err := core.ExtractExtraProperties(data, *t, "eighteen")
 	if err != nil {
