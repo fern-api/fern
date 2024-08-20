@@ -19,6 +19,8 @@ export async function registerGenerator({
 }): Promise<void> {
     const generatorId = generator.workspaceName;
     const generatorConfig = generator.workspaceConfig;
+    context.logger.info(`Registering generator ${generatorId}...`);
+
     // Register generator itself
     fdrClient.generators.upsertGenerator({
         id: generatorId,
@@ -42,6 +44,7 @@ export async function registerGenerator({
 
         // We've found a versions file, let's read it and register all the versions
         const changelogs = YAML.parseDocument((await readFile(absolutePathToChangelogLocation)).toString());
+        context.logger.info(`Registering generator ${generatorId} releases...`);
         if (YAML.isSeq(changelogs)) {
             for (const entry of changelogs.items) {
                 if (!YAML.isMap(entry)) {
@@ -52,6 +55,7 @@ export async function registerGenerator({
                         generator_id: generatorId,
                         ...entry
                     });
+                    context.logger.debug(`Registering generator  ${generatorId} release: ${release.version}`);
                     fdrClient.generators.versions.upsertGeneratorRelease(release);
                 } catch (e) {
                     context.logger.error(`Error parsing release: ${e}`);
