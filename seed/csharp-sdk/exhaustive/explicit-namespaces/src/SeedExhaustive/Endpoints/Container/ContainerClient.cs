@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.Types.Object;
@@ -19,7 +20,8 @@ public partial class ContainerClient
 
     public async Task<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
         IEnumerable<string> request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -30,7 +32,8 @@ public partial class ContainerClient
                 Path = "/container/list-of-primitives",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -54,7 +57,8 @@ public partial class ContainerClient
 
     public async Task<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
         IEnumerable<ObjectWithRequiredField> request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -65,7 +69,8 @@ public partial class ContainerClient
                 Path = "/container/list-of-objects",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -89,7 +94,8 @@ public partial class ContainerClient
 
     public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
         HashSet<string> request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -100,7 +106,8 @@ public partial class ContainerClient
                 Path = "/container/set-of-primitives",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -124,7 +131,8 @@ public partial class ContainerClient
 
     public async Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
         HashSet<ObjectWithRequiredField> request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -135,7 +143,8 @@ public partial class ContainerClient
                 Path = "/container/set-of-objects",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -159,7 +168,8 @@ public partial class ContainerClient
 
     public async Task<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
         Dictionary<string, string> request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -170,7 +180,8 @@ public partial class ContainerClient
                 Path = "/container/map-prim-to-prim",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -196,7 +207,8 @@ public partial class ContainerClient
         Dictionary<string, ObjectWithRequiredField>
     > GetAndReturnMapOfPrimToObjectAsync(
         Dictionary<string, ObjectWithRequiredField> request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -207,7 +219,8 @@ public partial class ContainerClient
                 Path = "/container/map-prim-to-object",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -233,7 +246,8 @@ public partial class ContainerClient
 
     public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
         ObjectWithRequiredField? request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -244,7 +258,8 @@ public partial class ContainerClient
                 Path = "/container/opt-objects",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

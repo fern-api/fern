@@ -47,6 +47,13 @@ export class HttpEndpointGenerator {
                 initializer: "null"
             })
         );
+        parameters.push(
+            csharp.parameter({
+                type: csharp.Type.reference(this.context.getCancellationTokenClassReference()),
+                name: this.context.getCancellationTokenParameterName(),
+                initializer: "default"
+            })
+        );
         const return_ = getEndpointReturnType({ context: this.context, endpoint });
         return csharp.method({
             name: this.context.getEndpointMethodName(endpoint),

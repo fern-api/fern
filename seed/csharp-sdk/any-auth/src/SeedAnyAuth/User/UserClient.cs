@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedAnyAuth.Core;
 
 #nullable enable
@@ -15,7 +16,10 @@ public partial class UserClient
         _client = client;
     }
 
-    public async Task<IEnumerable<User>> GetAsync(RequestOptions? options = null)
+    public async Task<IEnumerable<User>> GetAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,7 +28,8 @@ public partial class UserClient
                 Method = HttpMethod.Post,
                 Path = "users",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

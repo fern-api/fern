@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedAlias.Core;
 
@@ -20,7 +21,11 @@ public partial class SeedAliasClient
         );
     }
 
-    public async Task GetAsync(string typeId, RequestOptions? options = null)
+    public async Task GetAsync(
+        string typeId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -29,7 +34,8 @@ public partial class SeedAliasClient
                 Method = HttpMethod.Get,
                 Path = $"/{typeId}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
