@@ -395,6 +395,7 @@ exports[`open api parser > hume > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -426,6 +427,7 @@ exports[`open api parser > hume > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -513,6 +515,7 @@ exports[`open api parser > hume > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -578,6 +581,7 @@ exports[`open api parser > hume > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,

@@ -1674,6 +1674,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -1792,6 +1793,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Issue trigger ID",
@@ -1913,6 +1915,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2034,6 +2037,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Issue trigger ID",
@@ -2327,6 +2331,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2366,6 +2371,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Issue trigger ID",
@@ -2464,6 +2470,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2582,6 +2589,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Issue trigger ID",
@@ -2680,6 +2688,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2798,6 +2807,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Issue trigger ID",
@@ -3550,6 +3560,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3710,6 +3721,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Attempt ID",
@@ -5333,6 +5345,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5475,6 +5488,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Bookmark ID",
@@ -5619,6 +5633,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5764,6 +5779,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Bookmark ID",
@@ -6016,6 +6032,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6055,6 +6072,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Bookmark ID",
@@ -6199,6 +6217,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6409,6 +6428,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Bookmark ID",
@@ -8852,6 +8872,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -8958,6 +8979,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Destination ID",
@@ -9102,6 +9124,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9219,6 +9242,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Destination ID",
@@ -9621,6 +9645,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9727,6 +9752,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Destination ID",
@@ -9825,6 +9851,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9931,6 +9958,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Destination ID",
@@ -12974,6 +13002,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -13176,6 +13205,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Event ID",
@@ -13274,6 +13304,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -13313,6 +13344,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Event ID",
@@ -13411,6 +13443,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -13751,6 +13784,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Event ID",
@@ -13849,6 +13883,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14051,6 +14086,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Event ID",
@@ -23233,6 +23269,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -23384,6 +23421,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Bulk retry ID",
@@ -23482,6 +23520,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -23633,6 +23672,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Bulk retry ID",
@@ -26199,6 +26239,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -26350,6 +26391,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Bulk retry ID",
@@ -26448,6 +26490,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -26599,6 +26642,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Bulk retry ID",
@@ -27463,6 +27507,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -27582,6 +27627,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Integration ID",
@@ -27726,6 +27772,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -27848,6 +27895,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Integration ID",
@@ -28169,6 +28217,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -28208,6 +28257,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Integration ID",
@@ -28329,6 +28379,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -28339,6 +28390,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
             },
             {
               "name": "source_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -28378,6 +28430,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Integration ID",
@@ -28404,6 +28457,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "source_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Source ID",
@@ -28525,6 +28579,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -28535,6 +28590,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
             },
             {
               "name": "source_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -28566,6 +28622,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Integration ID",
@@ -28592,6 +28649,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "source_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Source ID",
@@ -33253,6 +33311,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Issue ID",
@@ -33379,6 +33438,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Issue ID",
@@ -33583,6 +33643,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Issue ID",
@@ -36111,6 +36172,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -36296,6 +36358,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Request ID",
@@ -36394,6 +36457,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -36433,6 +36497,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Request ID",
@@ -36577,6 +36642,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -36928,6 +36994,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Request ID",
@@ -37130,6 +37197,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -37351,6 +37419,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Request ID",
@@ -40136,6 +40205,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -40272,6 +40342,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Request ID",
@@ -48307,6 +48378,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -48458,6 +48530,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Bulk retry ID",
@@ -48556,6 +48629,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -48707,6 +48781,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Bulk retry ID",
@@ -50847,6 +50922,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -50932,6 +51008,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Ruleset ID",
@@ -51076,6 +51153,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -51164,6 +51242,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Ruleset ID",
@@ -51420,6 +51499,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -51505,6 +51585,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Ruleset ID",
@@ -51603,6 +51684,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -51688,6 +51770,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Ruleset ID",
@@ -53560,6 +53643,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -53680,6 +53764,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Source ID",
@@ -53824,6 +53909,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -53947,6 +54033,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Source ID",
@@ -54138,6 +54225,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -54258,6 +54346,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Source ID",
@@ -54356,6 +54445,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -54476,6 +54566,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Source ID",
@@ -56197,6 +56288,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -56303,6 +56395,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Transformation ID",
@@ -56447,6 +56540,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -56556,6 +56650,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Transformation ID",
@@ -57494,6 +57589,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -57692,6 +57788,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Transformation ID",
@@ -58615,6 +58712,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -58625,6 +58723,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
             },
             {
               "name": "execution_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -58839,6 +58938,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Transformation ID",
@@ -58865,6 +58965,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "execution_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Execution ID",
@@ -62763,6 +62864,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -63074,6 +63176,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Connection ID",
@@ -63218,6 +63321,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -63532,6 +63636,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Connection ID",
@@ -63887,6 +63992,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -64198,6 +64304,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Connection ID",
@@ -64296,6 +64403,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -64607,6 +64715,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Connection ID",
@@ -64705,6 +64814,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -65016,6 +65126,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Connection ID",
@@ -65114,6 +65225,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -65425,6 +65537,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": "Connection ID",
