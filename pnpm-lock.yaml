@@ -5572,6 +5572,9 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../commons/logging-execa
+      '@fern-api/login':
+        specifier: workspace:*
+        version: link:../cli/login
       '@fern-api/task-context':
         specifier: workspace:*
         version: link:../cli/task-context
@@ -5584,6 +5587,9 @@ importers:
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
+      '@fern-fern/generators-sdk':
+        specifier: 0.0.5596
+        version: 0.0.5596
       '@types/pretty-ms':
         specifier: ^5.0.1
         version: 5.0.1
@@ -5608,6 +5614,9 @@ importers:
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
+      yaml:
+        specifier: 2.3.3
+        version: 2.3.3
       yargs:
         specifier: ^17.4.1
         version: 17.7.2
@@ -6700,6 +6709,9 @@ packages:
 
   '@fern-fern/generator-exec-sdk@0.0.898':
     resolution: {integrity: sha512-VQYn32CkAd437deesaGk4LKikbVptxrWINAwUwiAUWOy77LelX1zWNKihjU2XDgIPv3VXK07aJwoPR5BDYD46Q==}
+
+  '@fern-fern/generators-sdk@0.0.5596':
+    resolution: {integrity: sha512-fALUrEDTlwTiNVipcxNuqdMp9vheVbjNEP7owMg5neoZEByazHOyarQUY7+K1X/zo0PFXdm1bYTtX36BxUT+ww==}
 
   '@fern-fern/ir-sdk@0.0.2828':
     resolution: {integrity: sha512-qFZZHyw0cuHtoR9v7KsrPpz0PFH0V6/ORSMHdTKU/82KcaNCMjk0BbzicK8jjrMD0mYS4JxNUzEjcUOvgeuqaA==}
@@ -13767,6 +13779,17 @@ snapshots:
   '@fern-fern/generator-exec-sdk@0.0.898':
     dependencies:
       form-data: 4.0.0
+      node-fetch: 2.7.0
+      qs: 6.11.2
+      url-join: 4.0.1
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/generators-sdk@0.0.5596':
+    dependencies:
+      form-data: 4.0.0
+      formdata-node: 6.0.3
+      js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.11.2
       url-join: 4.0.1
