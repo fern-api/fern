@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
@@ -20,7 +21,11 @@ public partial class ParamsClient
     /// <summary>
     /// GET with path param
     /// </summary>
-    public async Task<string> GetWithPathAsync(string param, RequestOptions? options = null)
+    public async Task<string> GetWithPathAsync(
+        string param,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -29,7 +34,8 @@ public partial class ParamsClient
                 Method = HttpMethod.Get,
                 Path = $"/params/path/{param}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -54,7 +60,11 @@ public partial class ParamsClient
     /// <summary>
     /// GET with query param
     /// </summary>
-    public async Task GetWithQueryAsync(GetWithQuery request, RequestOptions? options = null)
+    public async Task GetWithQueryAsync(
+        GetWithQuery request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var _query = new Dictionary<string, object>();
         _query["query"] = request.Query;
@@ -67,7 +77,8 @@ public partial class ParamsClient
                 Path = "/params",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -86,7 +97,8 @@ public partial class ParamsClient
     /// </summary>
     public async Task GetWithAllowMultipleQueryAsync(
         GetWithMultipleQuery request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -100,7 +112,8 @@ public partial class ParamsClient
                 Path = "/params",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -120,7 +133,8 @@ public partial class ParamsClient
     public async Task GetWithPathAndQueryAsync(
         string param,
         GetWithPathAndQuery request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -133,7 +147,8 @@ public partial class ParamsClient
                 Path = $"/params/path-query/{param}",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -153,7 +168,8 @@ public partial class ParamsClient
     public async Task<string> ModifyWithPathAsync(
         string param,
         string request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -164,7 +180,8 @@ public partial class ParamsClient
                 Path = $"/params/path/{param}",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
