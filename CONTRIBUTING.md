@@ -69,6 +69,8 @@ fern docs dev
 Finally, when you make a PR to update the docs, a PR preview link will be generated which will allow you
 to test if your changes came out as intended. [Here](https://github.com/fern-api/fern/pull/4330) is a sample PR with a preview link.
 
+<br>
+
 ### Fern CLI
 
 The Fern CLI lives in a directory called [cli](./packages/cli/cli/) and the entrypoint is [cli.ts](./packages/cli/cli/src/cli.ts).
