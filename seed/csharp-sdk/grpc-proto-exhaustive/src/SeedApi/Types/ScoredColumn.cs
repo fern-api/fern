@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -18,7 +17,7 @@ public record ScoredColumn
     public IEnumerable<float>? Values { get; set; }
 
     [JsonPropertyName("metadata")]
-    public Dictionary<string, MetadataValue?>? Metadata { get; set; }
+    public Metadata? Metadata { get; set; }
 
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
@@ -40,7 +39,7 @@ public record ScoredColumn
         }
         if (Metadata != null)
         {
-            result.Metadata = ProtoConverter.ToProtoStruct(Metadata);
+            result.Metadata = Metadata.ToProto();
         }
         if (IndexedData != null)
         {
@@ -59,7 +58,7 @@ public record ScoredColumn
             Id = value.Id,
             Score = value.Score,
             Values = value.Values?.ToList(),
-            Metadata = ProtoConverter.FromProtoStruct(value.Metadata),
+            Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
             IndexedData =
                 value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
         };

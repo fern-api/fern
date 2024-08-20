@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -15,7 +14,7 @@ public record QueryRequest
     public required uint TopK { get; set; }
 
     [JsonPropertyName("filter")]
-    public Dictionary<string, MetadataValue?>? Filter { get; set; }
+    public Metadata? Filter { get; set; }
 
     [JsonPropertyName("includeValues")]
     public bool? IncludeValues { get; set; }
@@ -48,7 +47,7 @@ public record QueryRequest
         result.TopK = TopK;
         if (Filter != null)
         {
-            result.Filter = ProtoConverter.ToProtoStruct(Filter);
+            result.Filter = Filter.ToProto();
         }
         if (IncludeValues != null)
         {
