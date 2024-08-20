@@ -30,6 +30,9 @@ func (d *Data) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	d.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", d)
+	}
 	switch unmarshaler.Type {
 	case "string":
 		var valueUnmarshaler struct {
@@ -114,6 +117,9 @@ func (e *EventInfo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "metadata":
 		value := new(Metadata)

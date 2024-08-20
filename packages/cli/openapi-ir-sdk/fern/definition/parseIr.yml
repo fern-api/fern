@@ -116,6 +116,10 @@ types:
       name: string
       schema: SchemaWithExample
       variableReference: optional<string>
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   QueryParameterWithExample:
     extends: 

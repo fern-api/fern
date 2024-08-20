@@ -100,6 +100,9 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		var valueUnmarshaler struct {
@@ -192,6 +195,9 @@ func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 	}
 	u.Type = unmarshaler.Type
 	u.Id = unmarshaler.Id
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "integer":
 		var valueUnmarshaler struct {
@@ -292,6 +298,9 @@ func (u *UnionWithDiscriminant) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant _type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		var valueUnmarshaler struct {
@@ -375,15 +384,31 @@ func (u *UnionWithLiteral) Fern() string {
 func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
+		Base string `json:"base,omitempty"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
 	u.Type = unmarshaler.Type
-	u.base = "base"
+	if unmarshaler.Base != "base" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "base", unmarshaler.Base)
+	}
+	u.base = unmarshaler.Base
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "fern":
-		u.fern = "fern"
+		var valueUnmarshaler struct {
+			Fern string `json:"value,omitempty"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		if valueUnmarshaler.Fern != "fern" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "fern", valueUnmarshaler.Fern)
+		}
+		u.fern = valueUnmarshaler.Fern
 	}
 	return nil
 }
@@ -441,6 +466,9 @@ func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "date":
 		var valueUnmarshaler struct {
@@ -525,6 +553,9 @@ func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "integer":
 		var valueUnmarshaler struct {
@@ -604,6 +635,9 @@ func (u *UnionWithSingleElement) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		value := new(Foo)
@@ -664,6 +698,9 @@ func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "value":
 		var valueUnmarshaler struct {
@@ -768,6 +805,9 @@ func (u *UnionWithUnknown) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		value := new(Foo)
@@ -842,6 +882,9 @@ func (u *UnionWithoutKey) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		value := new(Foo)

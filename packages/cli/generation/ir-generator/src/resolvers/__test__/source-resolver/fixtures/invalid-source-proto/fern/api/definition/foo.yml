@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+types:
+  Foo: 
+    type: Bar
+    source:
+      proto: proto/cool-spec.proto
+
+  Bar: Foo
+  Baz: string

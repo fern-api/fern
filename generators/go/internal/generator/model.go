@@ -141,6 +141,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		true,  // includeJSONTags
 		true,  // includeURLTags
 		false, // includeOptionals
+		false, // includeLiterals
 	)
 
 	// If the object has a literal, it needs custom [de]serialization logic,
@@ -207,6 +208,9 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		for _, date := range objectProperties.dates {
 			t.writer.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
 		}
+		for _, literal := range objectProperties.literals {
+			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
+		}
 		t.writer.P("}{")
 		t.writer.P("embed: embed(*", receiver, "),")
 		t.writer.P("}")
@@ -218,7 +222,12 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 			t.writer.P(receiver, ".", date.Name.Name.PascalCase.UnsafeName, " = unmarshaler.", date.Name.Name.PascalCase.UnsafeName, ".", date.TimeMethod)
 		}
 		for _, literal := range objectProperties.literals {
-			t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+			// Literals must match exactly, otherwise we return an error.
+			literalValue := literalToValue(literal.Value)
+			t.writer.P("if unmarshaler.", literal.Name.Name.PascalCase.UnsafeName, "!= ", literalValue, " {")
+			t.writer.P(`return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", `, receiver, ", ", literalValue, ", unmarshaler.", literal.Name.Name.PascalCase.UnsafeName, ")")
+			t.writer.P("}")
+			t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = unmarshaler.", literal.Name.Name.PascalCase.UnsafeName)
 		}
 		t.writer.P()
 		writeExtractExtraProperties(t.writer, objectProperties.literals, receiver, extraPropertiesFieldName)
@@ -293,6 +302,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			false, // includeJSONTags
 			false, // includeURLTags
 			false, // includeOptionals
+			false, // includeLiterals
 		)
 		literals = append(literals, extendedObjectProperties.literals...)
 	}
@@ -379,15 +389,15 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			true,  // includeJSONTags
 			true,  // includeURLTags
 			false, // includeOptionals
+			true,  // includeLiterals
 		)
 		propertyNames = append(propertyNames, extendedObjectProperties.names...)
 	}
 	for _, property := range union.BaseProperties {
-		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
-			continue
-		}
-		propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
+		if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
+			propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+		}
 	}
 	t.writer.P("}")
 	t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
@@ -401,18 +411,35 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.P(receiver, ".", propertyName, " = unmarshaler.", propertyName)
 	}
 	for _, literal := range literals {
-		t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+		literalValue := literalToValue(literal.Value)
+		t.writer.P("if unmarshaler.", literal.Name.Name.PascalCase.UnsafeName, "!= ", literalValue, " {")
+		t.writer.P(`return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", `, receiver, ", ", literalValue, ", unmarshaler.", literal.Name.Name.PascalCase.UnsafeName, ")")
+		t.writer.P("}")
+		t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = unmarshaler.", literal.Name.Name.PascalCase.UnsafeName)
 	}
 
 	// Generate the switch to unmarshal the appropriate type.
+	t.writer.P("if unmarshaler.", discriminantName, ` == "" {`)
+	t.writer.P(`return fmt.Errorf("%T did not include discriminant `, union.Discriminant.WireValue, `", `, receiver, ")")
+	t.writer.P("}")
 	t.writer.P("switch unmarshaler.", discriminantName, " {")
 	for _, unionType := range union.Types {
 		t.writer.P("case \"", unionType.DiscriminantValue.WireValue, "\":")
 		if unionType.Shape.PropertiesType == "singleProperty" {
 			if unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
 				// We have a literal, so we need to set its value explicitly.
-				literal := unionType.Shape.SingleProperty.Type.Container.Literal
-				t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.CamelCase.SafeName, " = ", literalToValue(literal))
+				literalValue := literalToValue(unionType.Shape.SingleProperty.Type.Container.Literal)
+				literalGoType := literalToGoType(unionType.Shape.SingleProperty.Type.Container.Literal)
+				t.writer.P("var valueUnmarshaler struct {")
+				t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", literalGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types, t.alwaysSendRequiredProperties))
+				t.writer.P("}")
+				t.writer.P("if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {")
+				t.writer.P("return err")
+				t.writer.P("}")
+				t.writer.P("if valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "!= ", literalValue, " {")
+				t.writer.P(`return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", `, receiver, ", ", literalValue, ", valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ")")
+				t.writer.P("}")
+				t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.CamelCase.SafeName, " = valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
 				continue
 			}
 			// If the union is a single property, we need a separate unmarshaler.
@@ -505,7 +532,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 				t.writer.types[extend.TypeId].Shape.Object,
 				true,  // includeJSONTags
 				true,  // includeURLTags
-				false, // includeOptionals,
+				false, // includeOptionals
+				false, // includeLiterals
 			)
 		}
 		for _, property := range union.BaseProperties {
@@ -763,10 +791,11 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		if member.isLiteral {
 			// If the undiscriminated union specifies a literal, it will only
 			// succeed if the literal matches exactly.
-			t.writer.P("if ", member.variable, "== ", member.literal, " {")
 			t.writer.P(receiver, ".", member.field, " = ", member.variable)
-			t.writer.P("return nil")
+			t.writer.P("if ", receiver, ".", member.field, " != ", member.literal, " {")
+			t.writer.P(`return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", `, receiver, ", ", member.literal, ", ", member.variable, ")")
 			t.writer.P("}")
+			t.writer.P("return nil")
 			t.writer.P("}")
 			continue
 		}
@@ -939,6 +968,7 @@ func (t *typeVisitor) visitObjectProperties(
 	includeJSONTags bool,
 	includeURLTags bool,
 	includeOptionals bool,
+	includeLiterals bool,
 ) *objectProperties {
 	var (
 		names    []string
@@ -947,7 +977,7 @@ func (t *typeVisitor) visitObjectProperties(
 	)
 	for _, extend := range object.Extends {
 		// You can only extend other objects.
-		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeJSONTags, includeURLTags, includeOptionals)
+		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeJSONTags, includeURLTags, includeOptionals, includeLiterals)
 		names = append(names, extendedObjectProperties.names...)
 		literals = append(literals, extendedObjectProperties.literals...)
 		dates = append(dates, extendedObjectProperties.dates...)
@@ -956,12 +986,15 @@ func (t *typeVisitor) visitObjectProperties(
 		t.writer.WriteDocs(property.Docs)
 		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 			literals = append(literals, &literal{Name: property.Name, Value: property.ValueType.Container.Literal})
-			continue
+			if !includeLiterals {
+				continue
+			}
+		} else {
+			names = append(names, property.Name.Name.PascalCase.UnsafeName)
 		}
 		if date := maybeDateProperty(property.ValueType, property.Name, false); date != nil {
 			dates = append(dates, date)
 		}
-		names = append(names, property.Name.Name.PascalCase.UnsafeName)
 		goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, includeOptionals)
 		if includeJSONTags {
 			var structTag string

@@ -28,10 +28,11 @@ func (k *Key) UnmarshalJSON(data []byte) error {
 	}
 	var valueDefaultStringLiteral string
 	if err := json.Unmarshal(data, &valueDefaultStringLiteral); err == nil {
-		if valueDefaultStringLiteral == "default" {
-			k.defaultStringLiteral = valueDefaultStringLiteral
-			return nil
+		k.defaultStringLiteral = valueDefaultStringLiteral
+		if k.defaultStringLiteral != "default" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", k, "default", valueDefaultStringLiteral)
 		}
+		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, k)
 }

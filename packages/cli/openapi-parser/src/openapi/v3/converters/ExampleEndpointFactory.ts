@@ -158,6 +158,7 @@ export class ExampleEndpointFactory {
             } else if (example != null) {
                 pathParameters.push({
                     name: pathParameter.name,
+                    parameterNameOverride: pathParameter.parameterNameOverride,
                     value: example
                 });
             }

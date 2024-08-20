@@ -199,7 +199,7 @@ allowedFailures:
   # default enum value support, the latest primitive types, and gRPC
   # configuration. This otherwise causes a 'fern check' issue when
   # 'fern test' is run.
-  - grpc-exhaustive
+  - grpc-proto-exhaustive
   - grpc-proto
   - object
   - validation:no-custom-config

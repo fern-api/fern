@@ -171,6 +171,9 @@ func (n *NestedUnion) UnmarshalJSON(data []byte) error {
 	n.Type = unmarshaler.Type
 	n.Docs = unmarshaler.Docs
 	n.Raw = unmarshaler.Raw
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", n)
+	}
 	switch unmarshaler.Type {
 	case "one":
 		value := new(ExampleType)
@@ -224,6 +227,9 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 	}
 	u.Type = unmarshaler.Type
 	u.Docs = unmarshaler.Docs
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "one":
 		value := new(ExampleType)

@@ -1,5 +1,4 @@
 using System.Text.Json.Serialization;
-using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -15,7 +14,7 @@ public record UpdateRequest
     public IEnumerable<float>? Values { get; set; }
 
     [JsonPropertyName("setMetadata")]
-    public Dictionary<string, MetadataValue?>? SetMetadata { get; set; }
+    public Metadata? SetMetadata { get; set; }
 
     [JsonPropertyName("namespace")]
     public string? Namespace { get; set; }
@@ -36,7 +35,7 @@ public record UpdateRequest
         }
         if (SetMetadata != null)
         {
-            result.SetMetadata = ProtoConverter.ToProtoStruct(SetMetadata);
+            result.SetMetadata = SetMetadata.ToProto();
         }
         if (Namespace != null)
         {

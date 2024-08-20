@@ -6,5 +6,6 @@ import * as FernOpenapiIr from "../../../index";
 
 export interface PathParameterExample {
     name: string;
+    parameterNameOverride: string | undefined;
     value: FernOpenapiIr.FullExample;
 }
