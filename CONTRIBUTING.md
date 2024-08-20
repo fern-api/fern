@@ -2,6 +2,9 @@
 
 Thanks for being here! This monorepo contains Fern's documentation, the Fern CLI, the Fern Definition, the OpenAPI importer, as well as all of our generators.
 
+<br>
+<br>
+
 ## Setup
 
 The Fern repo is primarily written in TypeScript and relies on [pnPm](https://pnpm.io/) for package management.
