@@ -5,8 +5,11 @@ import { ObjectSerializationTestGenerator } from "./object/ObjectSerializationTe
 
 export function generateTests({ context }: { context: ModelGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = [];
-    for (const [_, typeDeclaration] of Object.entries(context.ir.types)) {
+    for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
         if (typeDeclaration.shape.type !== "object") {
+            continue;
+        }
+        if (context.protobufResolver.isAnyWellKnownProtobufType(typeId)) {
             continue;
         }
         const objectGenerator = new ObjectGenerator(context, typeDeclaration, typeDeclaration.shape);
