@@ -1,38 +1,138 @@
 ---
-title: Reorder your API reference
-description: Reorder your API reference section and customize the structure of your documentation. 
+title: Customize API Reference layout
+description: Customize your API Reference's naming, ordering, and structure.  
 ---
 
-This configuration allows you to reorder sections and endpoints in the sidebar navigation menu.
+When you include an API (either the Fern or an OpenAPI definition) in your `docs.yml` file, you can customize how the endpoints and sub-packages are displayed in the sidebar navigation. By default, the reference will generate a navigation hierarchy based on the structure of the API spec, but several customizations can be configured.
 
-## Configuration
+## Ordering the API Reference
 
-To reorder sections, add the `layout` field to the `api` field in the `docs.yml` file. The `layout` field is an array of the sections you want to display in the order you want them to appear.
+### Flattening sections
+To remove the API Reference title and display the section contents, set `flattened` to `true`.
 
 ```yaml title="docs.yml"
-navigation:
+navigation: 
   - api: API Reference
-    layout:
-      - pet
-      - store
-      - user
+    flattened: true
 ```
 
-To reorder endpoints, add a `:` (colon) to the end of the section name, followed by an array of the endpoints you want to display in the order you want them to appear.
+<Frame>
+<img src="flattened.png" alt="Flattened API Reference" />
+</Frame>
+
+### Alphabetizing endpoints and sections
+To sort all sections and endpoints alphabetically, unless explicitly ordered in `layout`, set `alphabetized` to `true`.
+
 
 ```yaml title="docs.yml"
-navigation:
+navigation: 
   - api: API Reference
-    layout:
-      - pet:
-        - addPet
-        - updatePet
-        - deletePet
-      - store:
-        - getInventory
-        - placeOrder
-      - user:
-        - createUser
-        - createUsersWithArrayInput
-        - createUsersWithListInput
+    alphabetized: true
+```
+
+### Ordering top-level sections
+The `layout` option allows you to specify the order of subpackages and endpoints at the top level of your API Reference.
+
+<Tabs>
+<Tab title="Ordering sections">
+```yaml title="docs.yml"
+navigation: 
+  - api: API Reference
+    layout: 
+      - user
+      - store
+      - plant
+```
+</Tab>
+
+<Tab title="Ordering sections and endpoints">
+```yaml title="docs.yml"
+navigation: 
+  - api: API Reference
+    layout: 
+      - user.create
+      - user
+      - store
+      - plant
+```
+
+<Frame>
+<img src="ordered.png" alt="Ordered API Reference" />
+</Frame>
+</Tab>
+</Tabs>
+
+### Ordering section contents
+Adding a `:` after the section name allows you to specify the order of its nested subpackages and endpoints. 
+
+<Note title="Referencing Endpoints">
+To reference an endpoint, you can use 
+</Note>
+
+```yaml title="docs.yml"
+navigation: 
+  - api: API Reference
+    layout: 
+      - user: 
+          - user.create
+          - user.update
+          - user.delete        
+```
+
+<Frame>
+<img src="content-ordered.png" alt="Content ordered in the API Reference" />
+</Frame>
+
+## Customizing the API Reference
+
+### Renaming the API Reference 
+To customize the name of your API Reference, edit the value following `api` (`- api: Title Here`). 
+
+### Adding custom sections
+You can add arbitrary folders in the sidebar by adding a `section` to your API Reference layout. Sections can be customized by adding properties like a `icon`, `summary`, `slug` (or `skip-slug`), and `contents`. 
+
+```yaml title="docs.yml"
+navigation: 
+  - api: API Reference
+    layout: 
+      - section: Updates
+        icon: pen
+        contents: 
+          - user.update
+          - plant.update
+```
+
+<Frame>
+<img src="custom-section.png" alt="Custom section in the API Reference" />
+</Frame>
+
+### Adding a section overview
+The `summary` property allows you to add an `.md` or `.mdx` page as an overview of the API Reference or a custom section. 
+
+```yaml title="docs.yml"
+navigation: 
+  - api: API Reference
+    summary: pages/api-overview.mdx
+    layout: 
+      - user: 
+          summary: pages/user-overview.mdx
+```
+
+<Frame>
+<img src="summary.png" alt="API Reference with a summary page" />
+</Frame>
+
+### Adding pages and links
+You can add regular pages and external links within your API Reference. 
+
+```yaml title="docs.yml"
+navigation: 
+  - api: API Reference
+    layout: 
+      - user: 
+          contents: 
+            - page: User Guide
+              path: ./docs/pages/user-guide.mdx
+            - link: Link Title
+              href: http://google.com
 ```

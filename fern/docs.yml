@@ -267,7 +267,7 @@ navigation:
             path: ./pages/fern-docs/config/sdk-snippets.mdx
           - page: Endpoint errors
             path: ./pages/fern-docs/config/endpoint-errors.mdx
-          - page: Reorder API Reference pages
+          - page: Customize API Reference layout
             path: ./pages/fern-docs/content/reorder-api-ref.mdx
           - page: Write markdown in API Reference
             path: ./pages/fern-docs/content/api-ref-content.mdx
