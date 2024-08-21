@@ -4,7 +4,7 @@
 
 import * as FernSeedConfig from "../../..";
 
-export interface SeedWorkspaceConfiguration extends FernSeedConfig.MinimalSeedWorkspaceConfiguration {
+export interface SeedWorkspaceConfiguration extends FernSeedConfig.CliSeedWorkspaceConfiguration {
     irVersion: string;
     language?: FernSeedConfig.Language;
     defaultCustomConfig?: Record<string, unknown>;

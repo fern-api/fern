@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedExhaustive;
 using SeedExhaustive.Core;
@@ -18,7 +19,8 @@ public partial class ReqWithHeadersClient
 
     public async Task GetWithCustomHeaderAsync(
         ReqWithHeaders request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _headers = new Dictionary<string, string>()
@@ -34,7 +36,8 @@ public partial class ReqWithHeadersClient
                 Body = request.Body,
                 Headers = _headers,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

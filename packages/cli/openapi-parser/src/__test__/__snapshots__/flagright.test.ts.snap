@@ -652,6 +652,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "pathParameters": [
             {
               "name": "transactionId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -1016,6 +1017,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "availability": null,
           "description": "Unique Transaction Identifier",
           "name": "transactionId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2316,6 +2318,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "pathParameters": [
             {
               "name": "userId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2846,6 +2849,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "availability": null,
           "description": "",
           "name": "userId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3319,6 +3323,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "pathParameters": [
             {
               "name": "userId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4540,6 +4545,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "availability": null,
           "description": "",
           "name": "userId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,

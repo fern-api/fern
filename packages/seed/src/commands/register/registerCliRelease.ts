@@ -36,7 +36,8 @@ export async function registerCliRelease({
     }
 
     // We've found a versions file, let's read it and register all the versions
-    const changelogs = YAML.parseDocument((await readFile(cliWorkspace.workspaceConfig.changelogLocation)).toString());
+    const changelogs = YAML.parseDocument((await readFile(absolutePathToChangelogLocation)).toString());
+    context.logger.info("Registering CLI releases...");
     if (YAML.isSeq(changelogs)) {
         for (const entry of changelogs.items) {
             if (!YAML.isMap(entry)) {
@@ -44,6 +45,7 @@ export async function registerCliRelease({
             }
             try {
                 const release = serializers.generators.CliReleaseRequest.parseOrThrow(entry);
+                context.logger.debug(`Registering CLI release: ${release.version}`);
                 fdrClient.generators.cli.upsertCliRelease(release);
             } catch (e) {
                 context.logger.error(`Error parsing release: ${e}`);

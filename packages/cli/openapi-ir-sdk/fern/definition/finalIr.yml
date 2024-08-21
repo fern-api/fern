@@ -274,6 +274,7 @@ types:
   PathParameterExample:
     properties:
       name: string
+      parameterNameOverride: optional<string>
       value: example.FullExample
 
   QueryParameterExample:
@@ -321,6 +322,10 @@ types:
       name: string
       schema: Schema
       variableReference: optional<string>
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   QueryParameter:
     extends: 

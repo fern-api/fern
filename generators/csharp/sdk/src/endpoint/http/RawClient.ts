@@ -1,6 +1,6 @@
 import { csharp } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 
 export declare namespace RawClient {
     export type RequestBodyType = "json" | "bytes";
@@ -25,7 +25,7 @@ export declare namespace RawClient {
 }
 
 /**
- * Utility class that helps make calls to the raw client
+ * Utility class that helps make calls to the raw client.
  */
 export class RawClient {
     private context: SdkGeneratorContext;
@@ -35,7 +35,7 @@ export class RawClient {
     }
 
     /**
-     * Constructs a request to the RawClient
+     * Constructs a request to the RawClient.
      */
     public makeRequest({
         baseUrl,
@@ -105,9 +105,9 @@ export class RawClient {
             });
         }
         return csharp.invokeMethod({
-            arguments_: [apiRequest],
-            method: "MakeRequestAsync",
             on: csharp.codeblock(clientReference),
+            method: "MakeRequestAsync",
+            arguments_: [apiRequest, csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
         });
     }

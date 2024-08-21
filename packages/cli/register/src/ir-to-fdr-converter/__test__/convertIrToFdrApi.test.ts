@@ -36,7 +36,8 @@ describe("fdr test definitions", async () => {
                 disableExamples: false,
                 readme: undefined,
                 version: undefined,
-                packageName: undefined
+                packageName: undefined,
+                context
             });
 
             const fdr = convertIrToFdrApi({ ir, snippetsConfig: {} });

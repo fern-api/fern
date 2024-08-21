@@ -196,6 +196,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "public_token",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -312,6 +313,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "public_token",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -1523,6 +1525,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -1747,6 +1750,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2602,6 +2606,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2836,6 +2841,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3558,6 +3564,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3783,6 +3790,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5005,6 +5013,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5803,6 +5812,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -11807,6 +11817,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -12200,6 +12211,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16150,6 +16162,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "model_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16214,6 +16227,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "model_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -17694,6 +17708,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -17934,6 +17949,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -19341,6 +19357,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -19544,6 +19561,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -20332,6 +20350,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -20443,6 +20462,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -22136,6 +22156,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -22378,6 +22399,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -23342,6 +23364,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -23534,6 +23557,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -24579,6 +24603,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -24793,6 +24818,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -26896,6 +26922,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -27095,6 +27122,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -29762,6 +29790,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -29972,6 +30001,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -30178,6 +30208,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -30417,6 +30448,7 @@ exports[`open api parser > merge > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,

@@ -199,7 +199,7 @@ exports[`migrateFromV30ToV29 > snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "//check/id-2sdx82h",
+              "url": "/check/id-2sdx82h",
             },
           ],
           "fullPath": {

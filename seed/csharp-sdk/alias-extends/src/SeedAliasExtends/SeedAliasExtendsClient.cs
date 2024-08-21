@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedAliasExtends.Core;
 
@@ -22,7 +23,8 @@ public partial class SeedAliasExtendsClient
 
     public async Task ExtendedInlineRequestBodyAsync(
         InlinedChildRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -33,7 +35,8 @@ public partial class SeedAliasExtendsClient
                 Path = "/extends/extended-inline-request-body",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

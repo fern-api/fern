@@ -1,7 +1,7 @@
 import { csharp } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RawClient } from "../RawClient";
+import { RawClient } from "../http/RawClient";
 
 export interface QueryParameterCodeBlock {
     code: csharp.CodeBlock;

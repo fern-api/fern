@@ -30,7 +30,7 @@ export async function tryRunCli(): Promise<void> {
 
     addTestCommand(cli);
     addRunCommand(cli);
-    addRegisterCommand(cli);
+    addRegisterCommands(cli);
 
     await cli.parse();
 
@@ -197,58 +197,71 @@ function addRunCommand(cli: Argv) {
     );
 }
 
-function addRegisterCommand(cli: Argv) {
-    cli.command(
-        "register",
-        "Registers all of the generators, as well as the CLI to FDR unless otherwise specified. To filter to certain generators or to not include the CLI, use the --generator, and --skip-cli flags respectively.",
-        (yargs) =>
-            yargs
-                .option("generator", {
-                    type: "array",
-                    string: true,
-                    demandOption: false,
-                    description: "Generator(s) to register"
-                })
-                .option("cli", {
-                    boolean: true,
-                    default: false,
-                    description: "Initialize a docs website."
-                })
-                .option("log-level", {
-                    default: LogLevel.Info,
-                    choices: LOG_LEVELS
-                }),
-        async (argv) => {
-            const generators = await loadGeneratorWorkspaces();
-            if (argv.generator != null) {
-                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
-            }
-            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
-            const context = taskContextFactory.create("Register");
-            const token = await askToLogin(context);
+function addRegisterCommands(cli: Argv) {
+    cli.command("register", "Register releases within FDR's database", (yargs) => {
+        yargs
+            .command(
+                "cli",
+                "Registers CLI releases",
+                (addtlYargs) =>
+                    addtlYargs.option("log-level", {
+                        default: LogLevel.Info,
+                        choices: LOG_LEVELS
+                    }),
+                async (argv) => {
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Register");
+                    const token = await askToLogin(context);
 
-            const fdrClient = createFdrService({ token: token.value });
+                    const fdrClient = createFdrService({ token: token.value });
 
-            await registerCliRelease({
-                fdrClient,
-                context: taskContextFactory.create("Register")
-            });
-            for (const generator of generators) {
-                if (
-                    (argv.cli && argv.generator == null) ||
-                    (argv.generator != null && !argv.generator.includes(generator.workspaceName))
-                ) {
-                    continue;
+                    await registerCliRelease({
+                        fdrClient,
+                        context: taskContextFactory.create("Register")
+                    });
                 }
-                // Register the generator and it's versions
-                await registerGenerator({
-                    generator,
-                    fdrClient,
-                    context
-                });
-            }
-        }
-    );
+            )
+            .command(
+                "generator <generators>",
+                "Registers all of the generators to FDR unless otherwise specified. To filter to certain generators pass in the generator IDs as a positional, space delimited list.",
+                (yargs) =>
+                    yargs
+                        .positional("generators", {
+                            array: true,
+                            type: "string",
+                            demandOption: false,
+                            description: "Generator(s) to register"
+                        })
+                        .option("log-level", {
+                            default: LogLevel.Info,
+                            choices: LOG_LEVELS
+                        }),
+                async (argv) => {
+                    const generators = await loadGeneratorWorkspaces();
+                    if (argv.generators != null) {
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators });
+                    }
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Register");
+                    const token = await askToLogin(context);
+
+                    const fdrClient = createFdrService({ token: token.value });
+
+                    for (const generator of generators) {
+                        // If you've specified a list of generators, and the current generator is not in that list, skip it
+                        if (argv.generators != null && !argv.generators.includes(generator.workspaceName)) {
+                            continue;
+                        }
+                        // Register the generator and it's versions
+                        await registerGenerator({
+                            generator,
+                            fdrClient,
+                            context
+                        });
+                    }
+                }
+            );
+    });
 }
 
 function throwIfGeneratorDoesNotExist({

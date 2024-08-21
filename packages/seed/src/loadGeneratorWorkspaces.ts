@@ -13,7 +13,7 @@ export interface GeneratorWorkspace {
 export interface CliWorkspace {
     workspaceName: string;
     absolutePathToWorkspace: AbsoluteFilePath;
-    workspaceConfig: FernSeedConfig.MinimalSeedWorkspaceConfiguration;
+    workspaceConfig: FernSeedConfig.CliSeedWorkspaceConfiguration;
 }
 
 export const SEED_DIRECTORY = "seed";
@@ -77,7 +77,7 @@ export async function loadCliWorkspace(): Promise<CliWorkspace> {
 
     const absolutePathToWorkspace = join(seedDirectory, RelativeFilePath.of(CLI_SEED_DIRECTORY));
     const seedConfig = await readFile(join(absolutePathToWorkspace, RelativeFilePath.of(SEED_CONFIG_FILENAME)));
-    const workspaceConfig = yaml.load(seedConfig.toString()) as any as FernSeedConfig.MinimalSeedWorkspaceConfiguration;
+    const workspaceConfig = yaml.load(seedConfig.toString()) as any as FernSeedConfig.CliSeedWorkspaceConfiguration;
 
     return {
         workspaceName: CLI_SEED_DIRECTORY,
