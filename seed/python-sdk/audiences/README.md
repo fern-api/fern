@@ -17,9 +17,10 @@ Instantiate and use the client with the following:
 
 ```python
 from seed import SeedAudiences
+from seed.environment import SeedAudiencesEnvironment
 
 client = SeedAudiences(
-    base_url="https://yourhost.com/path/to/api",
+    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
 client.foo.find(
     optional_string="string",
@@ -36,9 +37,10 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 import asyncio
 
 from seed import AsyncSeedAudiences
+from seed.environment import SeedAudiencesEnvironment
 
 client = AsyncSeedAudiences(
-    base_url="https://yourhost.com/path/to/api",
+    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
 
 

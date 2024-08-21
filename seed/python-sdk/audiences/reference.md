@@ -14,11 +14,60 @@
 
 ```python
 from seed import SeedAudiences
+from seed.environment import SeedAudiencesEnvironment
 
 client = SeedAudiences(
-    base_url="https://yourhost.com/path/to/api",
+    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
 client.folder_a.service.get_direct_thread()
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## FolderD Service
+<details><summary><code>client.folder_d.service.<a href="src/seed/folder_d/service/client.py">get_direct_thread</a>()</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from seed import SeedAudiences
+from seed.environment import SeedAudiencesEnvironment
+
+client = SeedAudiences(
+    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
+)
+client.folder_d.service.get_direct_thread()
 
 ```
 </dd>
@@ -61,9 +110,10 @@ client.folder_a.service.get_direct_thread()
 
 ```python
 from seed import SeedAudiences
+from seed.environment import SeedAudiencesEnvironment
 
 client = SeedAudiences(
-    base_url="https://yourhost.com/path/to/api",
+    environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
 )
 client.foo.find(
     optional_string="string",

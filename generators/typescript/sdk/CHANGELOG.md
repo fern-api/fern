@@ -5,9 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.39.4] - 2024-08-20
+
+- Fix: Ensure that environment files don't generate, unless there is a valid environment available.
+
 ## [0.39.3] - 2024-08-16
 
-- Fix: Multipart form data unit tests only get generated if the SDK has multipart form uploads. 
+- Fix: Multipart form data unit tests only get generated if the SDK has multipart form uploads.
 
 ## [0.39.2] - 2024-08-16
 

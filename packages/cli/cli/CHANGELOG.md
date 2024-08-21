@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.39.15] - 2024-08-21
+
+- Internal: Introduce `generator list` and `organization` commands to faciliate actions taken by `fern-bot`
+
+## [0.39.14] - 2024-08-21
+
+- Fix: Format validation is enforced on `date` fields that are specified in examples specified in an api defintion.
+
 ## [0.39.13] - 2024-08-19
 
 - Fix: Generated examples in the Intermediate Representation not respect root level path parameter examples. Previously, when ignored,

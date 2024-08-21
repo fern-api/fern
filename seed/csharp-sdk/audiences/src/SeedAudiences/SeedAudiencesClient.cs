@@ -2,6 +2,7 @@ using SeedAudiences.Core;
 using SeedAudiences.FolderA;
 using SeedAudiences.FolderB;
 using SeedAudiences.FolderC;
+using SeedAudiences.FolderD;
 
 #nullable enable
 
@@ -33,6 +34,7 @@ public partial class SeedAudiencesClient
         FolderA = new FolderAClient(_client);
         FolderB = new FolderBClient(_client);
         FolderC = new FolderCClient(_client);
+        FolderD = new FolderDClient(_client);
         Foo = new FooClient(_client);
     }
 
@@ -43,6 +45,8 @@ public partial class SeedAudiencesClient
     public FolderBClient FolderB { get; init; }
 
     public FolderCClient FolderC { get; init; }
+
+    public FolderDClient FolderD { get; init; }
 
     public FooClient Foo { get; init; }
 }
