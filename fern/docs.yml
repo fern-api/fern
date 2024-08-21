@@ -223,6 +223,10 @@ navigation:
             slug: development
             path: ./pages/docs/getting-started/development.mdx
             icon: fa-regular fa-terminal
+          - page: Global Configuration 
+            slug: global-configuration
+            path: ./pages/docs/getting-started/global-configuration.mdx   
+            icon: fa-regular fa-wrench               
           - page: Project Structure 
             slug: project-structure
             path: ./pages/docs/getting-started/project-structure.mdx   
