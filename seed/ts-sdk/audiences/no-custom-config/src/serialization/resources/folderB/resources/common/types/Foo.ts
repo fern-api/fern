@@ -5,15 +5,15 @@
 import * as serializers from "../../../../../index";
 import * as SeedAudiences from "../../../../../../api/index";
 import * as core from "../../../../../../core";
-import { Foo } from "../../../../folderC/resources/common/types/Foo";
+import { FolderCFoo } from "../../../../folderC/resources/common/types/FolderCFoo";
 
 export const Foo: core.serialization.ObjectSchema<serializers.folderB.Foo.Raw, SeedAudiences.folderB.Foo> =
     core.serialization.object({
-        foo: Foo.optional(),
+        foo: FolderCFoo.optional(),
     });
 
 export declare namespace Foo {
     interface Raw {
-        foo?: Foo.Raw | null;
+        foo?: FolderCFoo.Raw | null;
     }
 }

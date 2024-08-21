@@ -226,4 +226,4 @@ allowedFailures:
 
   - any-auth
 
-  - failing-audiences
+  - cross-package-type-names

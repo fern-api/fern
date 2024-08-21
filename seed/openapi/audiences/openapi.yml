@@ -76,10 +76,10 @@ components:
       type: object
       properties:
         foo:
-          $ref: '#/components/schemas/folder-cFoo'
+          $ref: '#/components/schemas/folder-cFolderCFoo'
           nullable: true
-    folder-cFoo:
-      title: folder-cFoo
+    folder-cFolderCFoo:
+      title: folder-cFolderCFoo
       type: object
       properties:
         bar_property:

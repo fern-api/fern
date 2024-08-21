@@ -1,5 +1,0 @@
-imports:
-  commons: commons.yml
-
-types:
-  Imported: string

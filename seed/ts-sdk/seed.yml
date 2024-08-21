@@ -199,8 +199,7 @@ allowedFailures:
   - plain-text
   - alias
   - api-wide-base-path
-  - failing-audiences:no-custom-config
-  - failing-audiences:with-partner-audience
+  - cross-package-type-names
   - auth-environment-variables
   - basic-auth-environment-variables
   - exhaustive:bundle
