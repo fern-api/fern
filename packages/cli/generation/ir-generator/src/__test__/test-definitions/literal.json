@@ -1203,7 +1203,7 @@
                             "example": {
                                 "id": "6d0a9c5737aa902875d5d924a905ece8994557d4e0d3566ae27b49e98ddec95b",
                                 "name": null,
-                                "url": "/headers",
+                                "url": "headers",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -2571,7 +2571,7 @@
                             "example": {
                                 "id": "9f3971bb6ec43b6e5c733eb3690907ef68af0d8d6d3958e92233e5c602cfc7a4",
                                 "name": null,
-                                "url": "/inlined",
+                                "url": "inlined",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -4401,7 +4401,7 @@
                             "example": {
                                 "id": "dd252617730e8943b3c64efe59a54461bf566c68339330ad2b2c820e103934cb",
                                 "name": null,
-                                "url": "/path/123",
+                                "url": "path/123",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {
@@ -5306,7 +5306,7 @@
                             "example": {
                                 "id": "34175d6b3be4f97692eff1ea38b28c122c71047a88c84f3635b650b9b1f70c80",
                                 "name": null,
-                                "url": "/query",
+                                "url": "query",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -6375,7 +6375,7 @@
                             "example": {
                                 "id": "0b21117fd3b45836fd5a4194efa1114bce6bb4ec40c8f92856c06f20a67303c2",
                                 "name": null,
-                                "url": "/reference",
+                                "url": "reference",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],

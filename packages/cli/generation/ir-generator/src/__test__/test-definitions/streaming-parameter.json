@@ -836,7 +836,7 @@
                                         "safeName": "Default"
                                     }
                                 },
-                                "url": "/generate",
+                                "url": "generate",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],

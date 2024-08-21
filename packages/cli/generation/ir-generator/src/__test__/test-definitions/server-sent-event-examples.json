@@ -528,7 +528,7 @@
                                         "safeName": "StreamCompletions"
                                     }
                                 },
-                                "url": "/stream",
+                                "url": "stream",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],

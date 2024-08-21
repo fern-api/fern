@@ -32,6 +32,7 @@ import {
 import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
 import { getQueryParameterName } from "./convertQueryParameter";
+import urlJoin from "url-join";
 
 function hashJSON(obj: unknown): string {
     const jsonString = JSON.stringify(obj);
@@ -572,10 +573,7 @@ function buildUrl({
     example: RawSchemas.ExampleEndpointCallSchema;
     pathParams: Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">;
 }): string {
-    let url = service["base-path"] + endpoint.path;
-    if (file.rootApiFile["base-path"] != null) {
-        url = `${file.rootApiFile["base-path"]}${url}`;
-    }
+    let url = urlJoin(file.rootApiFile["base-path"] ?? "", service["base-path"], endpoint.path);
     if (example["path-parameters"] != null) {
         for (const parameter of [
             ...pathParams.endpointPathParameters,

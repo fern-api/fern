@@ -628,7 +628,7 @@
                             "example": {
                                 "id": "cac3b9bdbb00fd2646e858928e97c9da4d1534711bdfd188ace396470014a02b",
                                 "name": null,
-                                "url": "/telemetry",
+                                "url": "telemetry",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],

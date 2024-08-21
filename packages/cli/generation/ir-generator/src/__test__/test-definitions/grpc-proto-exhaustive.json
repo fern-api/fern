@@ -3872,7 +3872,7 @@
                             "example": {
                                 "id": "e86e562096070c8391794a0e71b5a997edee015f7c2fed9ce955ab36cc14df3d",
                                 "name": null,
-                                "url": "/data",
+                                "url": "data",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -5064,7 +5064,7 @@
                             "example": {
                                 "id": "1ad45f4885c23156a886a05b3f8322b0771f825d688aca4279afa1125fbd190d",
                                 "name": null,
-                                "url": "/data/delete",
+                                "url": "data/delete",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -5428,7 +5428,7 @@
                             "example": {
                                 "id": "f4fc880cf2279479ac90097ade3ddc327575519d7e8ce9d7a218e40339ad1b45",
                                 "name": null,
-                                "url": "/data/describe",
+                                "url": "data/describe",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -6871,7 +6871,7 @@
                             "example": {
                                 "id": "44a627940477817fb2cc64c55008bd26a521e40437f96d4d3288df5b33e383b2",
                                 "name": null,
-                                "url": "/data/fetch",
+                                "url": "data/fetch",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -9979,7 +9979,7 @@
                             "example": {
                                 "id": "9543af1bddccf29c8614c606158a275ab88f7a7cbecf8a71dfc4177c3fbbc388",
                                 "name": null,
-                                "url": "/data/list",
+                                "url": "data/list",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -12508,7 +12508,7 @@
                             "example": {
                                 "id": "f77373ecb6330a27ee2400df3faa815d5e9e5e202b2b3155cf86e1082c1a0416",
                                 "name": null,
-                                "url": "/data/query",
+                                "url": "data/query",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -16899,7 +16899,7 @@
                             "example": {
                                 "id": "8cd2e2a6167841ed1c2ad642e8f73dce3bae391787af26bd0ad57a15a1b23f23",
                                 "name": null,
-                                "url": "/data/update",
+                                "url": "data/update",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],

@@ -1031,7 +1031,7 @@
                             "example": {
                                 "id": "02b080f8bb218384f1790c480339df5c3016381505d6fcfd65cbf71845cb5255",
                                 "name": null,
-                                "url": "/inlined",
+                                "url": "inlined",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
@@ -2107,7 +2107,7 @@
                             "example": {
                                 "id": "8bd0cc2d491bc2532b8eaa5a1d28f4cf40f9fdb334d002b09fcdf3028c0176f0",
                                 "name": null,
-                                "url": "/path/>/less_than/red/red",
+                                "url": "path/>/less_than/red/red",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {
@@ -3510,7 +3510,7 @@
                             "example": {
                                 "id": "ed39485557124634e66adc5d4345386634392549b0be3651f45fa1d7b053725d",
                                 "name": null,
-                                "url": "/query",
+                                "url": "query",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],
