@@ -427,7 +427,7 @@ class ToProtoPropertyMapper {
 
     private isNotEmpty(on: csharp.AstNode): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
-            writer.write(`!`);
+            writer.write("!");
             writer.writeNode(on);
             writer.write(".IsEmpty");
         });
