@@ -1,10 +1,10 @@
+using NUnit.Framework;
+using SeedExhaustive.Test.Wire;
 using System.Threading.Tasks;
+using SeedExhaustive.Types;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
-using NUnit.Framework;
 using SeedExhaustive.Core;
-using SeedExhaustive.Test.Wire;
-using SeedExhaustive.Types;
 
 #nullable enable
 
@@ -14,61 +14,47 @@ namespace SeedExhaustive.Test;
 public class TestPutTest : BaseWireTest
 {
     [Test]
-    public async Task WireTest()
-    {
+    public async Task WireTest() {
         const string requestJson = """
-            {
-              "string": "string"
-            }
-            """;
+        {
+          "string": "string"
+        }
+        """;
 
         const string mockResponse = """
-            {
-              "string": "string",
-              "integer": 1,
-              "long": 1000000,
-              "double": 1.1,
-              "bool": true,
-              "datetime": "2024-01-15T09:30:00Z",
-              "date": "2023-01-15",
-              "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-              "base64": "SGVsbG8gd29ybGQh",
-              "list": [
-                "string"
-              ],
-              "set": [
-                "string"
-              ],
-              "map": {
-                "1": "string"
-              },
-              "bigint": "123456789123456789"
-            }
-            """;
+        {
+          "string": "string",
+          "integer": 1,
+          "long": 1000000,
+          "double": 1.1,
+          "bool": true,
+          "datetime": "2024-01-15T09:30:00Z",
+          "date": "2023-01-15",
+          "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+          "base64": "SGVsbG8gd29ybGQh",
+          "list": [
+            "string"
+          ],
+          "set": [
+            "string"
+          ],
+          "map": {
+            "1": "string"
+          },
+          "bigint": "123456789123456789"
+        }
+        """;
 
-        Server
-            .Given(
-                WireMock
-                    .RequestBuilders.Request.Create()
-                    .WithPath("/http-methods/string")
-                    .UsingPut()
-                    .WithBodyAsJson(requestJson)
-            )
-            .RespondWith(
-                WireMock
-                    .ResponseBuilders.Response.Create()
-                    .WithStatusCode(200)
-                    .WithBody(mockResponse)
-            );
+        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/http-methods/string").UsingPut().WithBodyAsJson(requestJson))
 
-        var response = await Client.Endpoints.HttpMethods.TestPutAsync(
-            "string",
-            new ObjectWithRequiredField { String = "string" },
-            RequestOptions
-        );
-        JToken
-            .Parse(mockResponse)
-            .Should()
-            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        .RespondWith(WireMock.ResponseBuilders.Response.Create()
+        .WithStatusCode(200)
+        .WithBody(mockResponse));
+
+        var response = await Client.Endpoints.HttpMethods.TestPutAsync("string", new ObjectWithRequiredFieldnew ObjectWithRequiredField{ 
+                String = "string"
+            }, RequestOptions);
+        JToken.Parse(mockResponse).Should().BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
+
 }

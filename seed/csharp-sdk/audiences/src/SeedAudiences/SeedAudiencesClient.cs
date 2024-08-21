@@ -15,8 +15,8 @@ public partial class SeedAudiencesClient
     public SeedAudiencesClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         Commons = new CommonsClient(_client);

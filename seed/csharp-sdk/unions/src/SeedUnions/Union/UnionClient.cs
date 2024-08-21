@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedUnions.Core;
 
 #nullable enable
@@ -15,7 +16,11 @@ public partial class UnionClient
         _client = client;
     }
 
-    public async Task<object> GetAsync(string id, RequestOptions? options = null)
+    public async Task<object> GetAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,8 +28,9 @@ public partial class UnionClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/{id}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -46,7 +52,11 @@ public partial class UnionClient
         );
     }
 
-    public async Task<bool> UpdateAsync(object request, RequestOptions? options = null)
+    public async Task<bool> UpdateAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -55,8 +65,9 @@ public partial class UnionClient
                 Method = HttpMethodExtensions.Patch,
                 Path = "",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

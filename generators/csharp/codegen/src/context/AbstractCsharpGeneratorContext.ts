@@ -4,7 +4,8 @@ import {
     FernFilepath,
     IntermediateRepresentation,
     Name,
-    ProtobufFile,
+    PrimitiveType,
+    PrimitiveTypeV1,
     TypeDeclaration,
     TypeId,
     TypeReference,
@@ -24,6 +25,8 @@ import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomC
 import { CsharpProject } from "../project";
 import { Namespace } from "../project/CSharpFile";
 import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
+import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
+import { ProtobufResolver } from "../proto/ProtobufResolver";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
 export abstract class AbstractCsharpGeneratorContext<
@@ -32,6 +35,8 @@ export abstract class AbstractCsharpGeneratorContext<
     private namespace: string;
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
+    public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
+    public readonly protobufResolver: ProtobufResolver;
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
@@ -48,6 +53,8 @@ export abstract class AbstractCsharpGeneratorContext<
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
         this.project = new CsharpProject(this, this.namespace);
         this.csharpTypeMapper = new CsharpTypeMapper(this);
+        this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
+        this.protobufResolver = new ProtobufResolver(this, this.csharpTypeMapper);
         config.output.mode._visit<void>({
             github: (github) => {
                 if (github.publishInfo?.type === "nuget") {
@@ -132,16 +139,6 @@ export abstract class AbstractCsharpGeneratorContext<
         return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
     }
 
-    public getNamespaceFromProtobufFileOrThrow(protobufFile: ProtobufFile): string {
-        const namespace = protobufFile.options?.csharp?.namespace;
-        if (namespace == null) {
-            throw new Error(
-                `The 'csharp_namespace' file option must be declared in Protobuf file ${protobufFile.filepath}`
-            );
-        }
-        return namespace;
-    }
-
     public getStringEnumSerializerClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
@@ -211,16 +208,27 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getProtoConverterClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "ProtoConverter",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public getPascalCaseSafeName(name: Name): string {
         return name.pascalCase.safeName;
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
-        const typeDeclaration = this.ir.types[typeId];
+        const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
             throw new Error(`Type declaration with id ${typeId} not found`);
         }
         return typeDeclaration;
+    }
+
+    public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
+        return this.ir.types[typeId];
     }
 
     public getCoreDirectory(): RelativeFilePath {
@@ -252,6 +260,10 @@ export abstract class AbstractCsharpGeneratorContext<
         }
 
         let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+        if (this.protobufResolver.isAnyWellKnownProtobufType(declaration.name.typeId)) {
+            return undefined;
+        }
+
         if (declaration.shape.type === "undiscriminatedUnion") {
             return { declaration: declaration.shape, isList: false };
         }
@@ -272,6 +284,61 @@ export abstract class AbstractCsharpGeneratorContext<
         }
 
         return undefined;
+    }
+
+    public isOptional(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "optional";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isOptional(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return false;
+        }
+    }
+
+    public isPrimitive(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "optional";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isPrimitive(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return true;
+        }
+    }
+
+    public getDefaultValueForPrimitive({ primitive }: { primitive: PrimitiveType }): csharp.CodeBlock {
+        return PrimitiveTypeV1._visit<csharp.CodeBlock>(primitive.v1, {
+            integer: () => csharp.codeblock("0"),
+            long: () => csharp.codeblock("0L"),
+            uint: () => csharp.codeblock("0U"),
+            uint64: () => csharp.codeblock("0UL"),
+            float: () => csharp.codeblock("0.0f"),
+            double: () => csharp.codeblock("0.0d"),
+            boolean: () => csharp.codeblock("false"),
+            string: () => csharp.codeblock('""'),
+            date: () => csharp.codeblock("DateOnly.MinValue"),
+            dateTime: () => csharp.codeblock("DateTime.MinValue"),
+            uuid: () => csharp.codeblock('""'),
+            base64: () => csharp.codeblock('""'),
+            bigInteger: () => csharp.codeblock('""'),
+            _other: () => csharp.codeblock("null")
+        });
     }
 
     public abstract getCoreAsIsFiles(): string[];

@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedApi.Core;
 
 #nullable enable
@@ -14,13 +15,17 @@ public partial class SeedApiClient
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
     }
 
-    public async Task<Account> GetAccountAsync(string accountId, RequestOptions? options = null)
+    public async Task<Account> GetAccountAsync(
+        string accountId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -28,8 +33,9 @@ public partial class SeedApiClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"account/{accountId}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using OneOf;
 using SeedEnum.Core;
@@ -21,7 +22,8 @@ public partial class PathParamClient
         Operand? maybeOperand,
         OneOf<Color, Operand> operandOrColor,
         OneOf<Color, Operand>? maybeOperandOrColor,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -30,8 +32,9 @@ public partial class PathParamClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = $"path/{operand}/{maybeOperand}/{operandOrColor}/{maybeOperandOrColor}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

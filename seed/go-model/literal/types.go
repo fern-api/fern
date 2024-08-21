@@ -28,6 +28,7 @@ func (s *SendResponse) UnmarshalJSON(data []byte) error {
 	type embed SendResponse
 	var unmarshaler = struct {
 		embed
+		Success bool `json:"success"`
 	}{
 		embed: embed(*s),
 	}
@@ -35,7 +36,10 @@ func (s *SendResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = SendResponse(unmarshaler.embed)
-	s.success = true
+	if unmarshaler.Success != true {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, true, unmarshaler.Success)
+	}
+	s.success = unmarshaler.Success
 
 	extraProperties, err := core.ExtractExtraProperties(data, *s, "success")
 	if err != nil {

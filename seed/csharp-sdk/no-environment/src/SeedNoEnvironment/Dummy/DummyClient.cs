@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedNoEnvironment.Core;
 
 #nullable enable
@@ -15,7 +16,10 @@ public partial class DummyClient
         _client = client;
     }
 
-    public async Task<string> GetDummyAsync(RequestOptions? options = null)
+    public async Task<string> GetDummyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,8 +27,9 @@ public partial class DummyClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "dummy",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

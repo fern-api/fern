@@ -10,10 +10,10 @@ import {
     ServiceId,
     Subpackage,
     SubpackageId,
-    TypeId,
-    TypeReference
+    TypeId
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
+import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
 import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -21,6 +21,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
 export const WIRE_TEST_FOLDER = RelativeFilePath.of("Wire");
+const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
     /**
@@ -77,7 +78,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     }
 
     public getCoreAsIsFiles(): string[] {
-        return [
+        const files = [
             AsIsFiles.RawClient,
             AsIsFiles.StringEnumSerializer,
             AsIsFiles.OneOfSerializer,
@@ -88,6 +89,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.JsonConfiguration,
             AsIsFiles.Extensions
         ];
+        if (this.hasGrpcEndpoints()) {
+            files.push(AsIsFiles.RawGrpcClient);
+        }
+        return files;
     }
 
     public getAsIsTestUtils(): string[] {
@@ -233,9 +238,31 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         });
     }
 
-    public getGrpcClientClassName(protobufService: ProtobufService): string {
-        const serviceName = protobufService.name.pascalCase.unsafeName;
-        return `${serviceName}Client`;
+    public getCancellationTokenClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "CancellationToken",
+            namespace: "System.Threading"
+        });
+    }
+
+    public getCancellationTokenParameterName(): string {
+        return CANCELLATION_TOKEN_PARAMETER_NAME;
+    }
+
+    public getGrpcClientInfoForServiceId(serviceId: ServiceId): GrpcClientInfo | undefined {
+        const protobufService = this.protobufResolver.getProtobufServiceForServiceId(serviceId);
+        if (protobufService == null) {
+            return undefined;
+        }
+        const serviceName = this.getGrpcClientServiceName(protobufService);
+        return {
+            privatePropertyName: this.getGrpcClientPrivatePropertyName(protobufService),
+            classReference: csharp.classReference({
+                name: `${serviceName}.${serviceName}Client`,
+                namespace: this.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file)
+            }),
+            protobufService
+        };
     }
 
     public getEnvironmentsClassReference(): csharp.ClassReference {
@@ -299,27 +326,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["extra-dependencies"] ?? {};
     }
 
+    private getGrpcClientPrivatePropertyName(protobufService: ProtobufService): string {
+        return `_${protobufService.name.camelCase.safeName}`;
+    }
+
+    private getGrpcClientServiceName(protobufService: ProtobufService): string {
+        return protobufService.name.pascalCase.safeName;
+    }
+
     override getChildNamespaceSegments(fernFilepath: FernFilepath): string[] {
         const segmentNames =
             this.customConfig["explicit-namespaces"] === true ? fernFilepath.allParts : fernFilepath.packagePath;
         return segmentNames.map((segmentName) => segmentName.pascalCase.safeName);
-    }
-
-    public isOptional(typeReference: TypeReference): boolean {
-        switch (typeReference.type) {
-            case "container":
-                return typeReference.container.type === "optional";
-            case "named": {
-                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
-                if (typeDeclaration.shape.type === "alias") {
-                    return this.isOptional(typeDeclaration.shape.aliasOf);
-                }
-                return false;
-            }
-            case "unknown":
-                return true;
-            case "primitive":
-                return false;
-        }
     }
 }

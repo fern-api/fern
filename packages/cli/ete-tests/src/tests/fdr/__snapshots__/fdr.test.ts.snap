@@ -390,8 +390,10 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     ],
                     "examples": [
                         {
-                            "path": "/movies",
-                            "pathParameters": {},
+                            "path": "/test/root/movies",
+                            "pathParameters": {
+                                "rootPathParam": "root"
+                            },
                             "queryParameters": {},
                             "headers": {},
                             "requestBody": {
@@ -423,8 +425,10 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         },
                         {
-                            "path": "/movies",
-                            "pathParameters": {},
+                            "path": "/test/root/movies",
+                            "pathParameters": {
+                                "rootPathParam": "root"
+                            },
                             "queryParameters": {},
                             "headers": {},
                             "requestBody": {
@@ -569,8 +573,9 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                     ],
                     "examples": [
                         {
-                            "path": "/movies/id-123",
+                            "path": "/test/root/movies/id-123",
                             "pathParameters": {
+                                "rootPathParam": "root",
                                 "movieId": "id-123"
                             },
                             "queryParameters": {
@@ -593,8 +598,9 @@ exports[`fdr > {"name":"changelog"} 1`] = `
                             }
                         },
                         {
-                            "path": "/movies/id-123",
+                            "path": "/test/root/movies/id-123",
                             "pathParameters": {
+                                "rootPathParam": "root",
                                 "movieId": "id-123"
                             },
                             "queryParameters": {
@@ -1183,8 +1189,10 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     ],
                     "examples": [
                         {
-                            "path": "/movies",
-                            "pathParameters": {},
+                            "path": "/test/root/movies",
+                            "pathParameters": {
+                                "rootPathParam": "root"
+                            },
                             "queryParameters": {},
                             "headers": {},
                             "requestBody": {
@@ -1216,8 +1224,10 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         },
                         {
-                            "path": "/movies",
-                            "pathParameters": {},
+                            "path": "/test/root/movies",
+                            "pathParameters": {
+                                "rootPathParam": "root"
+                            },
                             "queryParameters": {},
                             "headers": {},
                             "requestBody": {
@@ -1362,8 +1372,9 @@ exports[`fdr > {"name":"simple"} 1`] = `
                     ],
                     "examples": [
                         {
-                            "path": "/movies/id-123",
+                            "path": "/test/root/movies/id-123",
                             "pathParameters": {
+                                "rootPathParam": "root",
                                 "movieId": "id-123"
                             },
                             "queryParameters": {
@@ -1386,8 +1397,9 @@ exports[`fdr > {"name":"simple"} 1`] = `
                             }
                         },
                         {
-                            "path": "/movies/id-123",
+                            "path": "/test/root/movies/id-123",
                             "pathParameters": {
+                                "rootPathParam": "root",
                                 "movieId": "id-123"
                             },
                             "queryParameters": {

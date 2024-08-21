@@ -3231,6 +3231,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3376,6 +3377,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "availability": null,
           "description": "The unique id for the booking line item to be retrieved",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -8513,6 +8515,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9969,6 +9972,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "availability": null,
           "description": "The unique id for the booking to be retrieved",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14182,6 +14186,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14819,6 +14824,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "availability": null,
           "description": "The unique id for the requested commercial invoice",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16020,6 +16026,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16143,6 +16150,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "availability": null,
           "description": "The unique id for the requested customs entry",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -18150,6 +18158,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -18316,6 +18325,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "availability": null,
           "description": "The unique id for the requested document",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -18724,6 +18734,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "availability": null,
           "description": "The unique id for the requested document",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -19912,6 +19923,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -20459,6 +20471,7 @@ we still recommend setting the Content-Type header to the value \`application/js
           "availability": null,
           "description": "The unique id for the event object to be retrieved",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -23352,6 +23365,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -24538,6 +24552,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the invoice to be retrieved",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -26549,6 +26564,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -26866,6 +26882,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the requested company",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -27269,6 +27286,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -27615,6 +27633,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the requested company",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -29623,6 +29642,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -29822,6 +29842,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the requested company entity",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -30225,6 +30246,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -30427,6 +30449,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the requested company entity",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -32351,6 +32374,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -32503,6 +32527,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the requested contact",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -32906,6 +32931,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -33061,6 +33087,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the requested contact",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -35256,6 +35283,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -35518,6 +35546,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the requested location",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -35921,6 +35950,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -36186,6 +36216,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the requested location",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -38221,6 +38252,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -38378,6 +38410,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the ContainerLeg to be retrieved",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -39943,6 +39976,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -40367,6 +40401,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the shipment to be retrieved.",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -43447,6 +43482,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -43666,6 +43702,7 @@ Other details about this invoice",
           "availability": null,
           "description": "Unique id for the product to be retrieved",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -44069,6 +44106,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -44291,6 +44329,7 @@ Other details about this invoice",
           "availability": null,
           "description": "Unique id for the product to be updated",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -46169,6 +46208,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -47032,6 +47072,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the PO line item to be retrieved",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -51544,6 +51585,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -52162,6 +52204,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the purchase order to be retrieved",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -52602,6 +52645,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -53637,6 +53681,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the purchase order to be updated",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -55411,6 +55456,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -56322,6 +56368,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the ShipmentLeg object to be retrieved",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -59983,6 +60030,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -61632,6 +61680,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the shipment to be retrieved.",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -62035,6 +62084,7 @@ Other details about this invoice",
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -63692,6 +63742,7 @@ Other details about this invoice",
           "availability": null,
           "description": "The unique id for the shipment to be updated",
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,

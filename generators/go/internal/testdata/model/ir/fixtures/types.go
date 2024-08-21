@@ -73,6 +73,9 @@ func (a *AuthScheme) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant _type", a)
+	}
 	switch unmarshaler.Type {
 	case "bearer":
 		value := new(BearerAuthScheme)
@@ -675,6 +678,9 @@ func (e *Environments) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "singleBaseUrl":
 		value := new(SingleBaseUrlEnvironments)
@@ -993,6 +999,9 @@ func (e *ErrorDeclarationDiscriminantValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "property":
 		value := new(NameAndWireValue)
@@ -1393,6 +1402,9 @@ func (e *ExampleRequestBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "inlinedRequestBody":
 		value := new(ExampleInlinedRequestBody)
@@ -1459,6 +1471,9 @@ func (e *ExampleResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "ok":
 		value := new(ExampleEndpointSuccessResponse)
@@ -1629,6 +1644,9 @@ func (f *FileUploadRequestProperty) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	f.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", f)
+	}
 	switch unmarshaler.Type {
 	case "file":
 		value := new(FileProperty)
@@ -1891,6 +1909,9 @@ func (h *HttpRequestBody) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	h.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", h)
+	}
 	switch unmarshaler.Type {
 	case "inlinedRequestBody":
 		value := new(InlinedRequestBody)
@@ -2003,6 +2024,9 @@ func (h *HttpResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	h.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", h)
+	}
 	switch unmarshaler.Type {
 	case "json":
 		value := new(JsonResponse)
@@ -2425,6 +2449,9 @@ func (s *SdkRequestShape) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", s)
+	}
 	switch unmarshaler.Type {
 	case "justRequestBody":
 		value := new(HttpRequestBodyReference)
@@ -2536,6 +2563,9 @@ func (s *SdkResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", s)
+	}
 	switch unmarshaler.Type {
 	case "json":
 		value := new(JsonResponse)
@@ -2628,6 +2658,9 @@ func (s *StreamCondition) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", s)
+	}
 	switch unmarshaler.Type {
 	case "queryParameterKey":
 		var valueUnmarshaler struct {
@@ -2782,6 +2815,9 @@ func (e *ErrorDiscriminationStrategy) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "statusCode":
 		value := make(map[string]interface{})
@@ -3113,6 +3149,9 @@ func (c *ContainerType) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant _type", c)
+	}
 	switch unmarshaler.Type {
 	case "list":
 		var valueUnmarshaler struct {
@@ -3398,6 +3437,9 @@ func (e *ExampleContainer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "list":
 		var valueUnmarshaler struct {
@@ -3728,6 +3770,9 @@ func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "integer":
 		var valueUnmarshaler struct {
@@ -3972,6 +4017,9 @@ func (e *ExampleSingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "samePropertiesAsObject":
 		value := new(ExampleNamedType)
@@ -4138,6 +4186,9 @@ func (e *ExampleTypeReferenceShape) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "primitive":
 		var valueUnmarshaler struct {
@@ -4263,6 +4314,9 @@ func (e *ExampleTypeShape) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", e)
+	}
 	switch unmarshaler.Type {
 	case "alias":
 		value := new(ExampleAliasType)
@@ -4346,6 +4400,9 @@ func (l *Literal) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	l.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", l)
+	}
 	switch unmarshaler.Type {
 	case "string":
 		var valueUnmarshaler struct {
@@ -4607,6 +4664,9 @@ func (r *ResolvedTypeReference) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	r.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant _type", r)
+	}
 	switch unmarshaler.Type {
 	case "container":
 		var valueUnmarshaler struct {
@@ -4789,6 +4849,9 @@ func (s *SingleUnionTypeProperties) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.PropertiesType = unmarshaler.PropertiesType
+	if unmarshaler.PropertiesType == "" {
+		return fmt.Errorf("%T did not include discriminant _type", s)
+	}
 	switch unmarshaler.PropertiesType {
 	case "samePropertiesAsObject":
 		value := new(DeclaredTypeName)
@@ -4923,6 +4986,9 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	t.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant _type", t)
+	}
 	switch unmarshaler.Type {
 	case "alias":
 		value := new(AliasTypeDeclaration)
@@ -5073,6 +5139,9 @@ func (t *TypeReference) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	t.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant _type", t)
+	}
 	switch unmarshaler.Type {
 	case "container":
 		var valueUnmarshaler struct {

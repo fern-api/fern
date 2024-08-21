@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedQueryParameters.Core;
 
 #nullable enable
@@ -17,10 +18,11 @@ public partial class UserClient
 
     public async Task<User> GetUsernameAsync(
         GetUsersRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["limit"] = request.Limit.ToString();
         _query["id"] = request.Id.ToString();
         _query["date"] = request.Date.ToString(Constants.DateFormat);
@@ -53,8 +55,9 @@ public partial class UserClient
                 Method = HttpMethod.Get,
                 Path = "/user",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

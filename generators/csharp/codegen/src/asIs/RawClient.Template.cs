@@ -1,4 +1,5 @@
 using System.Text;
+using System.Threading;
 using System.Net.Http;
 
 namespace <%= namespace%>;
@@ -14,6 +15,13 @@ internal class RawClient(
     ClientOptions clientOptions
 )
 {
+<% if (grpc) { %>
+    /// <summary>
+    /// The gRPC client used to make requests.
+    /// </summary>
+    public readonly RawGrpcClient Grpc = new RawGrpcClient(headers, headerSuppliers, clientOptions);
+<% } %>
+
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
@@ -30,17 +38,10 @@ internal class RawClient(
     /// </summary>
     private readonly Dictionary<string, Func<string>> _headerSuppliers = headerSuppliers;
 
-<% if (grpc) { %>
-    /// <summary>
-    /// Return the equivalent gRPC client.
-    /// </summary>
-    public RawGrpcClient Grpc()
-    {
-        return new RawGrpcClient(_headers, _headerSuppliers, Options);
-    }
-<% } %>
-
-    public async Task<ApiResponse> MakeRequestAsync(BaseApiRequest request)
+    public async Task<ApiResponse> MakeRequestAsync(
+        BaseApiRequest request,
+        CancellationToken cancellationToken = default
+    )
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -81,7 +82,7 @@ internal class RawClient(
         }
         // Send the request
         var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
-        var response = await httpClient.SendAsync(httpRequest);
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 

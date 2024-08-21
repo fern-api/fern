@@ -1,5 +1,9 @@
 import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-codegen";
-import { generateModels, generateTests as generateModelTests } from "@fern-api/fern-csharp-model";
+import {
+    generateModels,
+    generateTests as generateModelTests,
+    generateWellKnownProtobufFiles
+} from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -9,7 +13,6 @@ import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { generateSdkTests } from "./generateSdkTests";
-import { RawGrpcClientGenerator } from "./grpc/RawGrpcClientGenerator";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
 import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
@@ -161,9 +164,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
             _other: () => undefined
         });
 
-        if (context.hasGrpcEndpoints()) {
-            const grpcClient = new RawGrpcClientGenerator({ context });
-            context.project.addSourceFiles(grpcClient.generate());
+        const wellKnownProtobufFiles = generateWellKnownProtobufFiles(context);
+        if (wellKnownProtobufFiles != null) {
+            for (const file of wellKnownProtobufFiles) {
+                context.project.addSourceFiles(file);
+            }
         }
 
         const testGenerator = new TestFileGenerator(context);

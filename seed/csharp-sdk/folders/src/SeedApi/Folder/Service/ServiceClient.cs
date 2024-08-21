@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedApi;
 using SeedApi.Core;
@@ -17,7 +18,10 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task EndpointAsync(RequestOptions? options = null)
+    public async Task EndpointAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -25,8 +29,9 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "/service",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -40,7 +45,11 @@ public partial class ServiceClient
         );
     }
 
-    public async Task UnknownRequestAsync(object request, RequestOptions? options = null)
+    public async Task UnknownRequestAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -49,8 +58,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "/service",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

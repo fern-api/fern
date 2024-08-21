@@ -6,14 +6,14 @@ public class SeedMultiUrlEnvironmentNoDefaultEnvironment
         new SeedMultiUrlEnvironmentNoDefaultEnvironment
         {
             Ec2 = "https://ec2.aws.com",
-            S3 = "https://s3.aws.com"
+            S3 = "https://s3.aws.com",
         };
 
     public static SeedMultiUrlEnvironmentNoDefaultEnvironment Staging =
         new SeedMultiUrlEnvironmentNoDefaultEnvironment
         {
             Ec2 = "https://staging.ec2.aws.com",
-            S3 = "https://staging.s3.aws.com"
+            S3 = "https://staging.s3.aws.com",
         };
 
     /// <summary>

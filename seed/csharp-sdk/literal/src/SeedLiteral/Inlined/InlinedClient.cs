@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedLiteral.Core;
 
 #nullable enable
@@ -17,7 +18,8 @@ public partial class InlinedClient
 
     public async Task<SendResponse> SendAsync(
         SendLiteralsInlinedRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -27,8 +29,9 @@ public partial class InlinedClient
                 Method = HttpMethod.Post,
                 Path = "inlined",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

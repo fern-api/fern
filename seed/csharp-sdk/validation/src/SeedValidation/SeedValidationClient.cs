@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedValidation.Core;
 
 #nullable enable
@@ -14,13 +15,17 @@ public partial class SeedValidationClient
     public SeedValidationClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
     }
 
-    public async Task<Type> CreateAsync(CreateRequest request, RequestOptions? options = null)
+    public async Task<Type> CreateAsync(
+        CreateRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -29,8 +34,9 @@ public partial class SeedValidationClient
                 Method = HttpMethod.Post,
                 Path = "/create",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -52,9 +58,13 @@ public partial class SeedValidationClient
         );
     }
 
-    public async Task<Type> GetAsync(GetRequest request, RequestOptions? options = null)
+    public async Task<Type> GetAsync(
+        GetRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["decimal"] = request.Decimal.ToString();
         _query["even"] = request.Even.ToString();
         _query["name"] = request.Name;
@@ -65,8 +75,9 @@ public partial class SeedValidationClient
                 Method = HttpMethod.Get,
                 Path = "",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -13,5 +13,5 @@ public enum FileInfo
     Regular,
 
     [EnumMember(Value = "DIRECTORY")]
-    Directory
+    Directory,
 }

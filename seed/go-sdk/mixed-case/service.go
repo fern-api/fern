@@ -39,6 +39,9 @@ func (r *Resource) UnmarshalJSON(data []byte) error {
 	}
 	r.ResourceType = unmarshaler.ResourceType
 	r.Status = unmarshaler.Status
+	if unmarshaler.ResourceType == "" {
+		return fmt.Errorf("%T did not include discriminant resource_type", r)
+	}
 	switch unmarshaler.ResourceType {
 	case "user":
 		value := new(User)

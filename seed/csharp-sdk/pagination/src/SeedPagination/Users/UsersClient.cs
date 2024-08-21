@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedPagination.Core;
 
 #nullable enable
@@ -17,10 +18,11 @@ public partial class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithCursorPaginationAsync(
         ListUsersCursorPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Page != null)
         {
             _query["page"] = request.Page.ToString();
@@ -44,8 +46,9 @@ public partial class UsersClient
                 Method = HttpMethod.Get,
                 Path = "/users",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -69,7 +72,8 @@ public partial class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithBodyCursorPaginationAsync(
         ListUsersBodyCursorPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -79,8 +83,9 @@ public partial class UsersClient
                 Method = HttpMethod.Post,
                 Path = "/users",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -104,10 +109,11 @@ public partial class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithOffsetPaginationAsync(
         ListUsersOffsetPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Page != null)
         {
             _query["page"] = request.Page.ToString();
@@ -131,8 +137,9 @@ public partial class UsersClient
                 Method = HttpMethod.Get,
                 Path = "/users",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -156,7 +163,8 @@ public partial class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithBodyOffsetPaginationAsync(
         ListUsersBodyOffsetPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -166,8 +174,9 @@ public partial class UsersClient
                 Method = HttpMethod.Post,
                 Path = "/users",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -191,10 +200,11 @@ public partial class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithOffsetStepPaginationAsync(
         ListUsersOffsetStepPaginationRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Page != null)
         {
             _query["page"] = request.Page.ToString();
@@ -214,8 +224,9 @@ public partial class UsersClient
                 Method = HttpMethod.Get,
                 Path = "/users",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -239,10 +250,11 @@ public partial class UsersClient
 
     public async Task<ListUsersPaginationResponse> ListWithOffsetPaginationHasNextPageAsync(
         ListWithOffsetPaginationHasNextPageRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Page != null)
         {
             _query["page"] = request.Page.ToString();
@@ -262,8 +274,9 @@ public partial class UsersClient
                 Method = HttpMethod.Get,
                 Path = "/users",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -287,10 +300,11 @@ public partial class UsersClient
 
     public async Task<ListUsersExtendedResponse> ListWithExtendedResultsAsync(
         ListUsersExtendedRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Cursor != null)
         {
             _query["cursor"] = request.Cursor.ToString();
@@ -302,8 +316,9 @@ public partial class UsersClient
                 Method = HttpMethod.Get,
                 Path = "/users",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -327,10 +342,11 @@ public partial class UsersClient
 
     public async Task<UsernameCursor> ListUsernamesAsync(
         ListUsernamesRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.StartingAfter != null)
         {
             _query["starting_after"] = request.StartingAfter;
@@ -342,8 +358,9 @@ public partial class UsersClient
                 Method = HttpMethod.Get,
                 Path = "/users",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -367,10 +384,11 @@ public partial class UsersClient
 
     public async Task<UsernameContainer> ListWithGlobalConfigAsync(
         ListWithGlobalConfigRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.Offset != null)
         {
             _query["offset"] = request.Offset.ToString();
@@ -382,8 +400,9 @@ public partial class UsersClient
                 Method = HttpMethod.Get,
                 Path = "/users",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

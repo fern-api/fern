@@ -12,7 +12,7 @@ export const CreateRequest: core.serialization.Schema<serializers.CreateRequest.
         email: core.serialization.string().optional(),
         age: core.serialization.number().optional(),
         weight: core.serialization.number().optional(),
-        metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()).optional(),
+        metadata: core.serialization.lazy(() => serializers.Metadata).optional(),
     });
 
 export declare namespace CreateRequest {
@@ -21,6 +21,6 @@ export declare namespace CreateRequest {
         email?: string | null;
         age?: number | null;
         weight?: number | null;
-        metadata?: Record<string, unknown> | null;
+        metadata?: serializers.Metadata.Raw | null;
     }
 }

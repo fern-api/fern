@@ -1,4 +1,9 @@
 using System.Net.Http;
+<<<<<<< HEAD
+=======
+using System.Text.Json;
+using System.Threading;
+>>>>>>> main
 using System.Threading.Tasks;
 using SeedEnum.Core;
 
@@ -15,10 +20,19 @@ public partial class QueryParamClient
         _client = client;
     }
 
-    public async Task SendAsync(SendEnumAsQueryParamRequest request, RequestOptions? options = null)
+    public async Task SendAsync(
+        SendEnumAsQueryParamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
+<<<<<<< HEAD
         var _query = new Dictionary<string, object>() { };
         _query["operand"] = request.Operand.Stringify();
+=======
+        var _query = new Dictionary<string, object>();
+        _query["operand"] = JsonSerializer.Serialize(request.Operand);
+>>>>>>> main
         _query["operandOrColor"] = request.OperandOrColor.ToString();
         if (request.MaybeOperand != null)
         {
@@ -35,8 +49,9 @@ public partial class QueryParamClient
                 Method = HttpMethod.Post,
                 Path = "query",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -52,12 +67,21 @@ public partial class QueryParamClient
 
     public async Task SendListAsync(
         SendEnumListAsQueryParamRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
+<<<<<<< HEAD
         var _query = new Dictionary<string, object>() { };
         _query["operand"] = request.Operand.Select(_value => _value.Stringify()).ToList();
         _query["maybeOperand"] = request.MaybeOperand.Select(_value => _value.Stringify()).ToList();
+=======
+        var _query = new Dictionary<string, object>();
+        _query["operand"] = request
+            .Operand.Select(_value => JsonSerializer.Serialize(_value))
+            .ToList();
+        _query["maybeOperand"] = request.MaybeOperand.Select(_value => _value.ToString()).ToList();
+>>>>>>> main
         _query["operandOrColor"] = request
             .OperandOrColor.Select(_value => _value.ToString())
             .ToList();
@@ -71,8 +95,9 @@ public partial class QueryParamClient
                 Method = HttpMethod.Post,
                 Path = "query-list",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

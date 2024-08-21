@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedAudiences.Core;
 
 #nullable enable
@@ -15,9 +16,13 @@ public partial class FooClient
         _client = client;
     }
 
-    public async Task<ImportingType> FindAsync(FindRequest request, RequestOptions? options = null)
+    public async Task<ImportingType> FindAsync(
+        FindRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.OptionalString != null)
         {
             _query["optionalString"] = request.OptionalString;
@@ -35,8 +40,9 @@ public partial class FooClient
                 Path = "",
                 Body = requestBody,
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

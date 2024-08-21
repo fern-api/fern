@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
+require_relative "../types/metadata"
 require_relative "../types/create_response"
 require "async"
 
@@ -19,7 +20,7 @@ module SeedApiClient
     # @param email [String]
     # @param age [Integer]
     # @param weight [Float]
-    # @param metadata [Hash{String => Object}]
+    # @param metadata [Hash{String => SeedApiClient::MetadataValue}, Hash{String => Object}]
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::CreateResponse]
     # @example
@@ -64,7 +65,7 @@ module SeedApiClient
     # @param email [String]
     # @param age [Integer]
     # @param weight [Float]
-    # @param metadata [Hash{String => Object}]
+    # @param metadata [Hash{String => SeedApiClient::MetadataValue}, Hash{String => Object}]
     # @param request_options [SeedApiClient::RequestOptions]
     # @return [SeedApiClient::CreateResponse]
     # @example

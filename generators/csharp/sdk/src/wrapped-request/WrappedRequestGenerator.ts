@@ -1,7 +1,9 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, getUndiscriminatedUnionSerializerAnnotation } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { ExampleEndpointCall, HttpEndpoint, Name, SdkRequestWrapper, ServiceId } from "@fern-fern/ir-sdk/api";
+import {ContainerType, ExampleEndpointCall, HttpEndpoint, Name, SdkRequestWrapper, ServiceId ,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -38,15 +40,18 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             record: true
         });
 
+        const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
         for (const query of this.endpoint.queryParameters) {
+            const propertyName = query.name.name.pascalCase.safeName;
             const type = query.allowMultiple
                 ? csharp.Type.list(
                       this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
+
             class_.addField(
                 csharp.field({
-                    name: query.name.name.pascalCase.safeName,
+                    name: propertyName,
                     type,
                     access: "public",
                     get: true,
@@ -55,6 +60,13 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     useRequired: true
                 })
             );
+
+            protobufProperties.push({
+                propertyName,
+                typeReference: query.allowMultiple
+                    ? TypeReference.container(ContainerType.list(query.valueType))
+                    : query.valueType
+            });
         }
 
         for (const header of this.endpoint.headers) {
@@ -103,9 +115,10 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                         );
                     }
 
+                    const propertyName = property.name.name.pascalCase.safeName;
                     class_.addField(
                         csharp.field({
-                            name: property.name.name.pascalCase.safeName,
+                            name: propertyName,
                             type: this.context.csharpTypeMapper.convert({ reference: property.valueType }),
                             access: "public",
                             get: true,
@@ -116,12 +129,34 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             useRequired: true
                         })
                     );
+
+                    protobufProperties.push({
+                        propertyName,
+                        typeReference: property.valueType
+                    });
                 }
             },
             fileUpload: () => undefined,
             bytes: () => undefined,
             _other: () => undefined
         });
+
+        const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
+        if (protobufService != null) {
+            const protobufClassReference = new csharp.ClassReference({
+                name: this.classReference.name,
+                namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
+                namespaceAlias: "Proto"
+            });
+            class_.addMethod(
+                this.context.csharpProtobufTypeMapper.toProtoMethod({
+                    classReference: this.classReference,
+                    protobufClassReference,
+                    properties: protobufProperties
+                })
+            );
+        }
+
         return new CSharpFile({
             clazz: class_,
             directory: this.getDirectory(),

@@ -1,4 +1,5 @@
 irVersion: v53
+changelogLocation: ../../generators/python/sdk/versions.yml
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python
@@ -198,7 +199,7 @@ allowedFailures:
   # default enum value support, the latest primitive types, and gRPC
   # configuration. This otherwise causes a 'fern check' issue when
   # 'fern test' is run.
-  - grpc
+  - grpc-proto-exhaustive
   - grpc-proto
   - object
   - validation:no-custom-config

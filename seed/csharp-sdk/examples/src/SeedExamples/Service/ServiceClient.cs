@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExamples.Core;
 
 #nullable enable
@@ -15,7 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options = null)
+    public async Task<Movie> GetMovieAsync(
+        string movieId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,8 +28,9 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/movie/{movieId}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -46,7 +52,11 @@ public partial class ServiceClient
         );
     }
 
-    public async Task<string> CreateMovieAsync(Movie request, RequestOptions? options = null)
+    public async Task<string> CreateMovieAsync(
+        Movie request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -55,8 +65,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "/movie",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -80,10 +91,11 @@ public partial class ServiceClient
 
     public async Task<object> GetMetadataAsync(
         GetMetadataRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["tag"] = request.Tag;
         if (request.Shallow != null)
         {
@@ -101,8 +113,9 @@ public partial class ServiceClient
                 Path = "/metadata",
                 Query = _query,
                 Headers = _headers,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -124,7 +137,10 @@ public partial class ServiceClient
         );
     }
 
-    public async Task<Response> GetResponseAsync(RequestOptions? options = null)
+    public async Task<Response> GetResponseAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -132,8 +148,9 @@ public partial class ServiceClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/response",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

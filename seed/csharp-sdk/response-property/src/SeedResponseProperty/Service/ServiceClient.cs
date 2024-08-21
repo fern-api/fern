@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedResponseProperty.Core;
 
 #nullable enable
@@ -15,7 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task<Response> GetMovieAsync(string request, RequestOptions? options = null)
+    public async Task<Response> GetMovieAsync(
+        string request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,8 +29,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -47,7 +53,11 @@ public partial class ServiceClient
         );
     }
 
-    public async Task<Response> GetMovieDocsAsync(string request, RequestOptions? options = null)
+    public async Task<Response> GetMovieDocsAsync(
+        string request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -56,8 +66,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -81,7 +92,8 @@ public partial class ServiceClient
 
     public async Task<StringResponse> GetMovieNameAsync(
         string request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -91,8 +103,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -116,7 +129,8 @@ public partial class ServiceClient
 
     public async Task<Response> GetMovieMetadataAsync(
         string request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -126,8 +140,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -151,7 +166,8 @@ public partial class ServiceClient
 
     public async Task<Response?> GetOptionalMovieAsync(
         string request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -161,8 +177,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -186,7 +203,8 @@ public partial class ServiceClient
 
     public async Task<WithDocs?> GetOptionalMovieDocsAsync(
         string request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -196,8 +214,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -221,7 +240,8 @@ public partial class ServiceClient
 
     public async Task<StringResponse?> GetOptionalMovieNameAsync(
         string request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -231,8 +251,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "movie",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

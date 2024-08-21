@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 
 namespace SeedAnyAuth.Core;
 
@@ -24,7 +25,16 @@ internal class RawClient(
     /// </summary>
     private readonly Dictionary<string, string> _headers = headers;
 
-    public async Task<ApiResponse> MakeRequestAsync(BaseApiRequest request)
+    /// <summary>
+    /// Global headers to be sent with every request. These headers take
+    /// precedence over the others.
+    /// </summary>
+    private readonly Dictionary<string, Func<string>> _headerSuppliers = headerSuppliers;
+
+    public async Task<ApiResponse> MakeRequestAsync(
+        BaseApiRequest request,
+        CancellationToken cancellationToken = default
+    )
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -38,7 +48,7 @@ internal class RawClient(
             httpRequest.Headers.Add(header.Key, header.Value);
         }
         // Add global headers to the request from supplier
-        foreach (var header in headerSuppliers)
+        foreach (var header in _headerSuppliers)
         {
             httpRequest.Headers.Add(header.Key, header.Value.Invoke());
         }
@@ -65,7 +75,7 @@ internal class RawClient(
         }
         // Send the request
         var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
-        var response = await httpClient.SendAsync(httpRequest);
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 

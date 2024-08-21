@@ -1,5 +1,6 @@
 using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedApi.A;
 using SeedApi.Core;
@@ -16,8 +17,8 @@ public partial class SeedApiClient
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         A = new AClient(_client);
@@ -28,7 +29,10 @@ public partial class SeedApiClient
 
     public FolderClient Folder { get; init; }
 
-    public async Task FooAsync(RequestOptions? options = null)
+    public async Task FooAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -36,8 +40,9 @@ public partial class SeedApiClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

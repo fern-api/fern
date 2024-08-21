@@ -89,6 +89,7 @@ export function parseAsyncAPI({
                 pathParameters.push({
                     name,
                     description: parameter.description,
+                    parameterNameOverride: undefined,
                     schema:
                         parameter.schema != null
                             ? convertSchema(parameter.schema, false, context, breadcrumbs, source, namespace)
@@ -239,6 +240,7 @@ export function parseAsyncAPI({
                     pathParameters: pathParameters.map((param) => {
                         return {
                             ...param,
+                            parameterNameOverride: undefined, // come back
                             schema: convertSchemaWithExampleToSchema(param.schema)
                         };
                     })

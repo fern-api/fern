@@ -1,4 +1,4 @@
-import { CodeBlock } from "./CodeBlock";
+import { AstNode } from "./core/AstNode";
 
 export type Argument = NamedArgument | UnnamedArgument;
 
@@ -6,10 +6,10 @@ export type Arguments = NamedArgument[] | UnnamedArgument[];
 
 export interface NamedArgument {
     name: string;
-    assignment: CodeBlock;
+    assignment: AstNode;
 }
 
-export type UnnamedArgument = CodeBlock;
+export type UnnamedArgument = AstNode;
 
 export function isNamedArgument(argument: NamedArgument | UnnamedArgument): argument is NamedArgument {
     return (argument as NamedArgument)?.name != null;

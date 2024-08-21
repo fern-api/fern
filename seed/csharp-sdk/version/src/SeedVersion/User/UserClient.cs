@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedVersion.Core;
 
 #nullable enable
@@ -15,7 +16,11 @@ public partial class UserClient
         _client = client;
     }
 
-    public async Task<User> GetUserAsync(string userId, RequestOptions? options = null)
+    public async Task<User> GetUserAsync(
+        string userId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -23,8 +28,9 @@ public partial class UserClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/users/{userId}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

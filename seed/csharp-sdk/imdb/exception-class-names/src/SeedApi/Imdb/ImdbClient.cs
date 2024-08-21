@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedApi.Core;
 
 #nullable enable
@@ -20,7 +21,8 @@ public partial class ImdbClient
     /// </summary>
     public async Task<string> CreateMovieAsync(
         CreateMovieRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -30,8 +32,9 @@ public partial class ImdbClient
                 Method = HttpMethod.Post,
                 Path = "/movies/create-movie",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -53,7 +56,11 @@ public partial class ImdbClient
         );
     }
 
-    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options = null)
+    public async Task<Movie> GetMovieAsync(
+        string movieId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -61,8 +68,9 @@ public partial class ImdbClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/movies/{movieId}",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

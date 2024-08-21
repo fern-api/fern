@@ -3,6 +3,7 @@ import { csharp } from "../..";
 import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { AstNode } from "./AstNode";
 
+type Alias = string;
 type Namespace = string;
 
 const TAB_SIZE = 4;
@@ -31,10 +32,12 @@ export class Writer {
     private hasWrittenAnything = false;
     /* Whether the last character written was a newline */
     private lastCharacterIsNewline = false;
-    /* The current line number */
+    /* Import statements */
     private references: Record<Namespace, ClassReference[]> = {};
     /* The namespace that is being written to */
     private namespace: string;
+    /* The set of namespace aliases */
+    private namespaceAliases: Record<Alias, Namespace> = {};
     /* All base namespaces in the project */
     private allNamespaceSegments: Set<string>;
     /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
@@ -97,11 +100,11 @@ export class Writer {
      * Writes text but then suffixes with a `;`
      * @param node
      */
-    public controlFlow(prefix: string, statement: string): void {
+    public controlFlow(prefix: string, statement: AstNode): void {
         const codeBlock = csharp.codeblock(prefix);
         codeBlock.write(this);
         this.write(" (");
-        this.write(statement);
+        this.writeNode(statement);
         this.write(") {");
         this.writeNewLineIfLastLineNot();
         this.indent();
@@ -160,6 +163,10 @@ export class Writer {
         }
     }
 
+    public addNamespaceAlias(alias: string, namespace: string): void {
+        this.namespaceAliases[alias] = namespace;
+    }
+
     public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
         return this.allTypeClassReferences;
     }
@@ -184,7 +191,6 @@ export class Writer {
         const imports = this.stringifyImports();
         if (imports.length > 0) {
             return `${imports}
-
 #nullable enable
 
 ${this.buffer}`;
@@ -213,12 +219,26 @@ ${this.buffer}`;
     }
 
     private stringifyImports(): string {
-        return (
-            Object.keys(this.references)
-                // filter out the current namespace
-                .filter((referenceNamespace) => referenceNamespace !== this.namespace)
-                .map((ref) => `using ${ref};`)
-                .join("\n")
-        );
+        const referenceKeys = Object.keys(this.references);
+        const namespaceAliasEntries = Object.entries(this.namespaceAliases);
+        if (referenceKeys.length === 0 && namespaceAliasEntries.length === 0) {
+            return "";
+        }
+
+        let result = referenceKeys
+            // Filter out the current namespace.
+            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+            .map((ref) => `using ${ref};`)
+            .join("\n");
+
+        if (result.length > 0) {
+            result += "\n";
+        }
+
+        for (const [alias, namespace] of namespaceAliasEntries) {
+            result += `using ${alias} = ${namespace};\n`;
+        }
+
+        return result;
     }
 }

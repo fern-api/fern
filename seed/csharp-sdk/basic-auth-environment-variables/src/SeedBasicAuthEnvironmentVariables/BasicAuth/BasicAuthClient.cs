@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedBasicAuthEnvironmentVariables.Core;
 
 #nullable enable
@@ -18,7 +19,10 @@ public partial class BasicAuthClient
     /// <summary>
     /// GET request with basic auth scheme
     /// </summary>
-    public async Task<bool> GetWithBasicAuthAsync(RequestOptions? options = null)
+    public async Task<bool> GetWithBasicAuthAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -26,8 +30,9 @@ public partial class BasicAuthClient
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = "basic-auth",
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -69,7 +74,11 @@ public partial class BasicAuthClient
     /// <summary>
     /// POST request with basic auth scheme
     /// </summary>
-    public async Task<bool> PostWithBasicAuthAsync(object request, RequestOptions? options = null)
+    public async Task<bool> PostWithBasicAuthAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -78,8 +87,9 @@ public partial class BasicAuthClient
                 Method = HttpMethod.Post,
                 Path = "basic-auth",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedLiteral.Core;
 
 #nullable enable
@@ -17,10 +18,11 @@ public partial class QueryClient
 
     public async Task<SendResponse> SendAsync(
         SendLiteralsInQueryRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         _query["prompt"] = request.Prompt.ToString();
         _query["query"] = request.Query;
         _query["stream"] = request.Stream.ToString();
@@ -31,8 +33,9 @@ public partial class QueryClient
                 Method = HttpMethod.Post,
                 Path = "query",
                 Query = _query,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 
 namespace SeedNurseryApi.Core;
 
@@ -30,7 +31,10 @@ internal class RawClient(
     /// </summary>
     private readonly Dictionary<string, Func<string>> _headerSuppliers = headerSuppliers;
 
-    public async Task<ApiResponse> MakeRequestAsync(BaseApiRequest request)
+    public async Task<ApiResponse> MakeRequestAsync(
+        BaseApiRequest request,
+        CancellationToken cancellationToken = default
+    )
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -71,7 +75,7 @@ internal class RawClient(
         }
         // Send the request
         var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
-        var response = await httpClient.SendAsync(httpRequest);
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 

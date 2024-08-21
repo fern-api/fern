@@ -9,6 +9,10 @@ export function generateSdkTests({ context }: { context: SdkGeneratorContext }):
     // wire tests
     files.push(new BaseWireTestGenerator(context).generate());
     for (const [serviceId, service] of Object.entries(context.ir.services)) {
+        // skip grpc clients for now
+        if (context.getGrpcClientInfoForServiceId(serviceId) != null) {
+            continue;
+        }
         for (const endpoint of service.endpoints) {
             // TODO: support other request body
             if (endpoint.requestBody?.type === "bytes" || endpoint.requestBody?.type === "fileUpload") {

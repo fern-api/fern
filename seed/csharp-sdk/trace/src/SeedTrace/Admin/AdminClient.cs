@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedTrace.Core;
 
@@ -18,7 +19,8 @@ public partial class AdminClient
     public async Task UpdateTestSubmissionStatusAsync(
         string submissionId,
         object request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -28,8 +30,9 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-submission-status/{submissionId}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -46,7 +49,8 @@ public partial class AdminClient
     public async Task SendTestSubmissionUpdateAsync(
         string submissionId,
         TestSubmissionUpdate request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -56,8 +60,9 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-submission-status-v2/{submissionId}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -74,7 +79,8 @@ public partial class AdminClient
     public async Task UpdateWorkspaceSubmissionStatusAsync(
         string submissionId,
         object request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -84,8 +90,9 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-submission-status/{submissionId}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -102,7 +109,8 @@ public partial class AdminClient
     public async Task SendWorkspaceSubmissionUpdateAsync(
         string submissionId,
         WorkspaceSubmissionUpdate request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -112,8 +120,9 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-submission-status-v2/{submissionId}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -131,7 +140,8 @@ public partial class AdminClient
         string submissionId,
         string testCaseId,
         StoreTracedTestCaseRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -141,8 +151,9 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -160,7 +171,8 @@ public partial class AdminClient
         string submissionId,
         string testCaseId,
         IEnumerable<TraceResponseV2> request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -171,8 +183,9 @@ public partial class AdminClient
                 Path =
                     $"/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -189,7 +202,8 @@ public partial class AdminClient
     public async Task StoreTracedWorkspaceAsync(
         string submissionId,
         StoreTracedWorkspaceRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -199,8 +213,9 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-trace/submission/{submissionId}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -217,7 +232,8 @@ public partial class AdminClient
     public async Task StoreTracedWorkspaceV2Async(
         string submissionId,
         IEnumerable<TraceResponseV2> request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -227,8 +243,9 @@ public partial class AdminClient
                 Method = HttpMethod.Post,
                 Path = $"/admin/store-workspace-trace-v2/submission/{submissionId}",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -6,8 +6,10 @@ export declare namespace ClassReference {
     interface Args {
         /* The name of the C# class */
         name: string;
-        /* The namespace of the C# class*/
+        /* The namespace of the C# class */
         namespace: string;
+        /* The namespace alias for C# class */
+        namespaceAlias?: string;
         /* Any generics used in the class reference */
         generics?: csharp.Type[];
     }
@@ -16,18 +18,26 @@ export declare namespace ClassReference {
 export class ClassReference extends AstNode {
     public readonly name: string;
     public readonly namespace: string;
+    public readonly namespaceAlias: string | undefined;
     public readonly generics: csharp.Type[];
 
-    constructor({ name, namespace, generics }: ClassReference.Args) {
+    constructor({ name, namespace, namespaceAlias, generics }: ClassReference.Args) {
         super();
         this.name = name;
         this.namespace = namespace;
+        this.namespaceAlias = namespaceAlias;
         this.generics = generics ?? [];
     }
 
     public write(writer: Writer): void {
-        if (this.qualifiedTypeNameRequired(writer)) {
-            const typeQualification = this.getTypeQualification(this.namespace, writer.getNamespace());
+        if (this.namespaceAlias != null) {
+            writer.addNamespaceAlias(this.namespaceAlias, this.namespace);
+            writer.write(`${this.namespaceAlias}.${this.name}`);
+        } else if (this.qualifiedTypeNameRequired(writer)) {
+            const typeQualification = this.getTypeQualification({
+                classReferenceNamespace: this.namespace,
+                namespaceToBeWrittenTo: writer.getNamespace()
+            });
             writer.write(`${typeQualification}${this.name}`);
         } else {
             writer.addReference(this);
@@ -55,7 +65,13 @@ export class ClassReference extends AstNode {
      *
      * Result: Engineer.Backend.
      */
-    private getTypeQualification(classReferenceNamespace: string, namespaceToBeWrittenTo: string): string {
+    private getTypeQualification({
+        classReferenceNamespace,
+        namespaceToBeWrittenTo
+    }: {
+        classReferenceNamespace: string;
+        namespaceToBeWrittenTo: string;
+    }): string {
         const classReferenceSegments = classReferenceNamespace.split(".");
         const namespaceToBeWrittenSegments = namespaceToBeWrittenTo.split(".");
 
@@ -118,6 +134,11 @@ export class ClassReference extends AstNode {
 
 export const OneOfClassReference = new ClassReference({
     name: "OneOf",
+    namespace: "OneOf"
+});
+
+export const OneOfBaseClassReference = new ClassReference({
+    name: "OneOfBase",
     namespace: "OneOf"
 });
 

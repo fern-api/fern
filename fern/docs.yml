@@ -55,9 +55,18 @@ navigation:
         contents:
           - page: Overview
             path: ./pages/api-definition/openapi/openapi-overview.mdx
-          - page: OpenAPI Extensions
-            path: ./pages/api-definition/openapi/extensions.mdx
+          - section: Extensions
             slug: extensions
+            contents: 
+              - page: SDK Method Names
+                path: ./pages/api-definition/openapi/extensions/method-names.mdx
+                slug: method-names
+              - page: Parameter Names
+                path: ./pages/api-definition/openapi/extensions/parameter-names.mdx
+                slug: parameter-names
+              - page: Other
+                path: ./pages/api-definition/openapi/extensions/others.mdx
+                slug: others              
           - page: OpenAPI Examples
             path: ./pages/api-definition/openapi/examples.mdx
           - page: OpenAPI Overrides
@@ -193,6 +202,9 @@ navigation:
           - page: NuGet
             slug: nuget
             path: ./pages/sdks/integration/nuget.mdx
+          - page: Maven Central
+            slug: maven-central
+            path: ./pages/sdks/integration/maven-central.mdx
       
       - section: Alternatives
         hidden: true
@@ -252,7 +264,32 @@ navigation:
             path: ./pages/fern-docs/content/reorder-api-ref.mdx
           - page: Write markdown in API Reference
             path: ./pages/fern-docs/content/api-ref-content.mdx
-
+      
+      - section: Integrations
+        slug: integrations
+        contents: 
+          - page: Overview
+            slug: overview
+            path: ./pages/docs/integrations/overview.mdx         
+          - section: Analytics
+            slug: analytics
+            contents: 
+              - page: PostHog
+                path: ./pages/docs/integrations/analytics/posthog.mdx            
+              - page: Fullstory
+                path: ./pages/docs/integrations/analytics/fullstory.mdx
+              - page: Segment
+                path: ./pages/docs/integrations/analytics/segment.mdx                
+          - section: Support
+            slug: support
+            contents: 
+              - page: Intercom
+                path: ./pages/docs/integrations/support/intercom.mdx            
+          - page: Postman
+            slug: postman
+            path: ./pages/docs/integrations/postman.mdx            
+              
+    
       - section: Developer Tools
         contents: 
           - page: GitLab
@@ -314,22 +351,14 @@ navigation:
             path: ./pages/docs/components/endpoint-response-snippet.mdx
             icon: "turn-down"
             slug: response-snippet
+
       - section: Alternatives
         hidden: true
         contents: 
           - page: ReadMe
             slug: readme
             path: ./pages/docs/comparison/readme.mdx
-      - section: Analytics
-        contents:
-          - page: PostHog
-            path: ./pages/docs/analytics/posthog.mdx
-          - page: Intercom
-            path: ./pages/docs/analytics/intercom.mdx
-          - page: Fullstory
-            path: ./pages/docs/analytics/fullstory.mdx
-          - page: Segment
-            path: ./pages/docs/analytics/segment.mdx
+
   - tab: cli-api
     layout:
       - section: CLI Reference

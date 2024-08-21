@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedPackageYml.Core;
 
 #nullable enable
@@ -14,8 +15,8 @@ public partial class SeedPackageYmlClient
     public SeedPackageYmlClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         Service = new ServiceClient(_client);
@@ -26,7 +27,8 @@ public partial class SeedPackageYmlClient
     public async Task<string> EchoAsync(
         string id,
         EchoRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -36,8 +38,9 @@ public partial class SeedPackageYmlClient
                 Method = HttpMethod.Post,
                 Path = $"/{id}/",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -8,7 +8,7 @@ from .utilities import validate_response
 
 async def test_create(client: SeedApi, async_client: AsyncSeedApi) -> None:
     expected_response: typing.Any = {
-        "user": {"username": "username", "email": "email", "age": 1, "weight": 1.1, "metadata": {"key": "value"}}
+        "user": {"username": "username", "email": "email", "age": 1, "weight": 1.1, "metadata": {"key": 1.1}}
     }
     expected_types: typing.Any = {
         "user": {"username": None, "email": None, "age": None, "weight": None, "metadata": ("dict", {0: (None, None)})}

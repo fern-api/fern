@@ -1,5 +1,4 @@
 import { csharp, CSharpFile, FileGenerator } from "@fern-api/csharp-codegen";
-import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import {
     ExampleEndpointCall,
     ExampleTypeReference,
@@ -7,9 +6,10 @@ import {
     HttpEndpoint,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
-import { EndpointGenerator } from "../../endpoint/EndpointGenerator";
 import { SdkCustomConfigSchema } from "../../SdkCustomConfig";
 import { SdkGeneratorContext, WIRE_TEST_FOLDER } from "../../SdkGeneratorContext";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
+import { HttpEndpointGenerator } from "../../endpoint/http/HttpEndpointGenerator";
 
 export declare namespace TestClass {
     interface TestInput {
@@ -20,7 +20,7 @@ export declare namespace TestClass {
 
 export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private classReference: csharp.ClassReference;
-    private readonly endpointGenerator: EndpointGenerator;
+    private readonly endpointGenerator: HttpEndpointGenerator;
 
     constructor(
         context: SdkGeneratorContext,
@@ -34,7 +34,7 @@ export class WireTestGenerator extends FileGenerator<CSharpFile, SdkCustomConfig
             name: this.endpoint.name.pascalCase.safeName,
             namespace: this.context.getWireTestNamespace()
         });
-        this.endpointGenerator = new EndpointGenerator(context);
+        this.endpointGenerator = new HttpEndpointGenerator({ context });
     }
 
     protected doGenerate(): CSharpFile {

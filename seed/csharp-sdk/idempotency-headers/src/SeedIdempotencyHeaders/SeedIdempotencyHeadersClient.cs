@@ -17,7 +17,7 @@ public partial class SeedIdempotencyHeadersClient
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
             },
-            new Dictionary<string, Func<string>>() { },
+            new Dictionary<string, Func<string>>(),
             clientOptions ?? new ClientOptions()
         );
         Payment = new PaymentClient(_client);

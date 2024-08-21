@@ -320,6 +320,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "country_code",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -595,6 +596,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Country code.",
           "name": "country_code",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -6421,6 +6423,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6975,6 +6978,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -7211,6 +7215,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -7271,6 +7276,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -7529,6 +7535,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -7583,6 +7590,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -7838,6 +7846,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -7892,6 +7901,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -8147,6 +8157,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -8175,6 +8186,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -8425,6 +8437,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -8521,6 +8534,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -8757,6 +8771,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -8824,6 +8839,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -9036,6 +9052,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9087,6 +9104,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -9323,6 +9341,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9451,6 +9470,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -9709,6 +9729,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9719,6 +9740,7 @@ exports[`open api parser > deel > parse open api 1`] = `
             },
             {
               "name": "task_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9828,6 +9850,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -9854,6 +9877,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of task entity.",
           "name": "task_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10112,6 +10136,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10122,6 +10147,7 @@ exports[`open api parser > deel > parse open api 1`] = `
             },
             {
               "name": "task_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10166,6 +10192,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10192,6 +10219,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of task entity.",
           "name": "task_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10463,6 +10491,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10515,6 +10544,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -10773,6 +10803,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10832,6 +10863,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -11090,6 +11122,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -11150,6 +11183,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -11362,6 +11396,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -11406,6 +11441,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -11642,6 +11678,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -11709,6 +11746,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -11967,6 +12005,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -12011,6 +12050,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -12247,6 +12287,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -12512,6 +12553,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -12968,6 +13010,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -13097,6 +13140,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -13333,6 +13377,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -13407,6 +13452,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -13665,6 +13711,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -13675,6 +13722,7 @@ exports[`open api parser > deel > parse open api 1`] = `
             },
             {
               "name": "milestone_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -13799,6 +13847,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -13825,6 +13874,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of milestone to return",
           "name": "milestone_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14061,6 +14111,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14071,6 +14122,7 @@ exports[`open api parser > deel > parse open api 1`] = `
             },
             {
               "name": "milestone_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14115,6 +14167,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14141,6 +14194,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of milestone to return",
           "name": "milestone_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14377,6 +14431,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14387,6 +14442,7 @@ exports[`open api parser > deel > parse open api 1`] = `
             },
             {
               "name": "milestone_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14444,6 +14500,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14470,6 +14527,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of milestone to return",
           "name": "milestone_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -14728,6 +14786,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -14797,6 +14856,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -15055,6 +15115,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -15205,6 +15266,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -15441,6 +15503,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -15508,6 +15571,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -15766,6 +15830,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -15776,6 +15841,7 @@ exports[`open api parser > deel > parse open api 1`] = `
             },
             {
               "name": "offcycle_payment_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -15921,6 +15987,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -15947,6 +16014,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of off-cycle payment to return",
           "name": "offcycle_payment_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16114,6 +16182,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16245,6 +16314,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16503,6 +16573,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16547,6 +16618,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16749,6 +16821,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16851,6 +16924,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -17498,6 +17572,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -17837,6 +17912,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -18004,6 +18080,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -18504,6 +18581,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -18693,6 +18771,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -18703,6 +18782,7 @@ exports[`open api parser > deel > parse open api 1`] = `
             },
             {
               "name": "timeoff_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -19203,6 +19283,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -19229,6 +19310,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Time off Id",
           "name": "timeoff_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -19418,6 +19500,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -19428,6 +19511,7 @@ exports[`open api parser > deel > parse open api 1`] = `
             },
             {
               "name": "timeoff_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -19472,6 +19556,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -19498,6 +19583,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Time off Id",
           "name": "timeoff_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -20780,6 +20866,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "timesheet_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -21078,6 +21165,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of an existing timesheet",
           "name": "timesheet_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -21310,6 +21398,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "timesheet_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -21354,6 +21443,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of an existing timesheet",
           "name": "timesheet_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -21621,6 +21711,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "timesheet_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -21688,6 +21779,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of an existing timesheet",
           "name": "timesheet_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -21942,6 +22034,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "timesheet_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -21999,6 +22092,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of an existing timesheet",
           "name": "timesheet_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -22542,6 +22636,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -22837,6 +22932,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -24498,6 +24594,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "invoice_adjustment_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -24542,6 +24639,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of an existing invoice adjustment",
           "name": "invoice_adjustment_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -24814,6 +24912,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "invoice_adjustment_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -24874,6 +24973,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of an existing invoice adjustment",
           "name": "invoice_adjustment_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -25133,6 +25233,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "invoice_adjustment_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -25190,6 +25291,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of an existing invoice adjustment",
           "name": "invoice_adjustment_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -28782,6 +28884,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "contract_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -28941,6 +29044,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Deel contract id.",
           "name": "contract_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -29647,6 +29751,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "timeoff_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -29707,6 +29812,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "Time off Id",
           "name": "timeoff_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -30374,6 +30480,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "invoice_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -30432,6 +30539,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of an existing invoice",
           "name": "invoice_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -30664,6 +30772,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "invoice_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -30722,6 +30831,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": "ID of an existing invoice",
           "name": "invoice_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -33021,6 +33131,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -33137,6 +33248,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -33373,6 +33485,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -33401,6 +33514,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -33616,6 +33730,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -33759,6 +33874,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -34017,6 +34133,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "payment_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -34255,6 +34372,7 @@ exports[`open api parser > deel > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "payment_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,

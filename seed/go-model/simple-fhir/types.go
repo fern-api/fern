@@ -32,6 +32,7 @@ func (a *Account) UnmarshalJSON(data []byte) error {
 	type embed Account
 	var unmarshaler = struct {
 		embed
+		ResourceType string `json:"resource_type"`
 	}{
 		embed: embed(*a),
 	}
@@ -39,7 +40,10 @@ func (a *Account) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*a = Account(unmarshaler.embed)
-	a.resourceType = "Account"
+	if unmarshaler.ResourceType != "Account" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "Account", unmarshaler.ResourceType)
+	}
+	a.resourceType = unmarshaler.ResourceType
 
 	extraProperties, err := core.ExtractExtraProperties(data, *a, "resource_type")
 	if err != nil {
@@ -163,6 +167,7 @@ func (p *Patient) UnmarshalJSON(data []byte) error {
 	type embed Patient
 	var unmarshaler = struct {
 		embed
+		ResourceType string `json:"resource_type"`
 	}{
 		embed: embed(*p),
 	}
@@ -170,7 +175,10 @@ func (p *Patient) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = Patient(unmarshaler.embed)
-	p.resourceType = "Patient"
+	if unmarshaler.ResourceType != "Patient" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Patient", unmarshaler.ResourceType)
+	}
+	p.resourceType = unmarshaler.ResourceType
 
 	extraProperties, err := core.ExtractExtraProperties(data, *p, "resource_type")
 	if err != nil {
@@ -222,6 +230,7 @@ func (p *Practitioner) UnmarshalJSON(data []byte) error {
 	type embed Practitioner
 	var unmarshaler = struct {
 		embed
+		ResourceType string `json:"resource_type"`
 	}{
 		embed: embed(*p),
 	}
@@ -229,7 +238,10 @@ func (p *Practitioner) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*p = Practitioner(unmarshaler.embed)
-	p.resourceType = "Practitioner"
+	if unmarshaler.ResourceType != "Practitioner" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", p, "Practitioner", unmarshaler.ResourceType)
+	}
+	p.resourceType = unmarshaler.ResourceType
 
 	extraProperties, err := core.ExtractExtraProperties(data, *p, "resource_type")
 	if err != nil {
@@ -367,6 +379,7 @@ func (s *Script) UnmarshalJSON(data []byte) error {
 	type embed Script
 	var unmarshaler = struct {
 		embed
+		ResourceType string `json:"resource_type"`
 	}{
 		embed: embed(*s),
 	}
@@ -374,7 +387,10 @@ func (s *Script) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*s = Script(unmarshaler.embed)
-	s.resourceType = "Script"
+	if unmarshaler.ResourceType != "Script" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", s, "Script", unmarshaler.ResourceType)
+	}
+	s.resourceType = unmarshaler.ResourceType
 
 	extraProperties, err := core.ExtractExtraProperties(data, *s, "resource_type")
 	if err != nil {

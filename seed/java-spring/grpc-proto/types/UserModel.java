@@ -15,7 +15,6 @@ import java.lang.Double;
 import java.lang.Integer;
 import java.lang.Object;
 import java.lang.String;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -32,10 +31,10 @@ public final class UserModel {
 
   private final Optional<Double> weight;
 
-  private final Optional<Map<String, Object>> metadata;
+  private final Optional<Metadata> metadata;
 
   private UserModel(Optional<String> username, Optional<String> email, Optional<Integer> age,
-      Optional<Double> weight, Optional<Map<String, Object>> metadata) {
+      Optional<Double> weight, Optional<Metadata> metadata) {
     this.username = username;
     this.email = email;
     this.age = age;
@@ -64,7 +63,7 @@ public final class UserModel {
   }
 
   @JsonProperty("metadata")
-  public Optional<Map<String, Object>> getMetadata() {
+  public Optional<Metadata> getMetadata() {
     return metadata;
   }
 
@@ -104,7 +103,7 @@ public final class UserModel {
 
     private Optional<Double> weight = Optional.empty();
 
-    private Optional<Map<String, Object>> metadata = Optional.empty();
+    private Optional<Metadata> metadata = Optional.empty();
 
     private Builder() {
     }
@@ -178,12 +177,12 @@ public final class UserModel {
         value = "metadata",
         nulls = Nulls.SKIP
     )
-    public Builder metadata(Optional<Map<String, Object>> metadata) {
+    public Builder metadata(Optional<Metadata> metadata) {
       this.metadata = metadata;
       return this;
     }
 
-    public Builder metadata(Map<String, Object> metadata) {
+    public Builder metadata(Metadata metadata) {
       this.metadata = Optional.ofNullable(metadata);
       return this;
     }

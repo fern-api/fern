@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "metadata"
 require "ostruct"
 require "json"
 
@@ -13,7 +14,7 @@ module SeedApiClient
     attr_reader :age
     # @return [Float]
     attr_reader :weight
-    # @return [Hash{String => Object}]
+    # @return [SeedApiClient::Metadata]
     attr_reader :metadata
     # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
@@ -27,7 +28,7 @@ module SeedApiClient
     # @param email [String]
     # @param age [Integer]
     # @param weight [Float]
-    # @param metadata [Hash{String => Object}]
+    # @param metadata [SeedApiClient::Metadata]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [SeedApiClient::UserModel]
     def initialize(username: OMIT, email: OMIT, age: OMIT, weight: OMIT, metadata: OMIT, additional_properties: nil)
@@ -59,7 +60,12 @@ module SeedApiClient
       email = parsed_json["email"]
       age = parsed_json["age"]
       weight = parsed_json["weight"]
-      metadata = parsed_json["metadata"]
+      if parsed_json["metadata"].nil?
+        metadata = nil
+      else
+        metadata = parsed_json["metadata"].to_json
+        metadata = SeedApiClient::Metadata.from_json(json_object: metadata)
+      end
       new(
         username: username,
         email: email,
@@ -88,7 +94,7 @@ module SeedApiClient
       obj.email&.is_a?(String) != false || raise("Passed value for field obj.email is not the expected type, validation failed.")
       obj.age&.is_a?(Integer) != false || raise("Passed value for field obj.age is not the expected type, validation failed.")
       obj.weight&.is_a?(Float) != false || raise("Passed value for field obj.weight is not the expected type, validation failed.")
-      obj.metadata&.is_a?(Hash) != false || raise("Passed value for field obj.metadata is not the expected type, validation failed.")
+      obj.metadata.nil? || SeedApiClient::Metadata.validate_raw(obj: obj.metadata)
     end
   end
 end
