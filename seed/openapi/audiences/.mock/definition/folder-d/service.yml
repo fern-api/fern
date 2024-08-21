@@ -6,7 +6,7 @@ imports:
 service:
   auth: false
   audiences:
-    - unspecifiedaudience
+    - partner
   base-path: /
   endpoints:
     getDirectThread:

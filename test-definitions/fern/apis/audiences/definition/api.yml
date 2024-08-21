@@ -13,3 +13,4 @@ environments:
     url: https://api.example.b.com
     audiences:
       - private
+default-environment: null
