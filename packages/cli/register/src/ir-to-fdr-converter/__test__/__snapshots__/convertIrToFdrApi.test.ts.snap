@@ -767,6 +767,7 @@ exports[`fdr test definitions > audiences 1`] = `
       "subpackage_folder-a",
       "subpackage_folder-b",
       "subpackage_folder-c",
+      "subpackage_folder-d",
       "subpackage_foo",
     ],
     "types": [],
@@ -812,7 +813,16 @@ exports[`fdr test definitions > audiences 1`] = `
           "availability": undefined,
           "defaultEnvironment": undefined,
           "description": undefined,
-          "environments": undefined,
+          "environments": [
+            {
+              "baseUrl": "https://api.example.a.com",
+              "id": "environment-a",
+            },
+            {
+              "baseUrl": "https://api.example.b.com",
+              "id": "environment-b",
+            },
+          ],
           "errors": undefined,
           "errorsV2": [],
           "examples": [],
@@ -914,6 +924,84 @@ exports[`fdr test definitions > audiences 1`] = `
       "webhooks": [],
       "websockets": [],
     },
+    "subpackage_folder-d": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "folder-d",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-d",
+      "subpackages": [
+        "subpackage_folder-d/service",
+      ],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-d/service": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": [
+            {
+              "baseUrl": "https://api.example.a.com",
+              "id": "environment-a",
+            },
+            {
+              "baseUrl": "https://api.example.b.com",
+              "id": "environment-b",
+            },
+          ],
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "getDirectThread",
+          "method": "GET",
+          "name": "Get Direct Thread",
+          "originalEndpointId": "endpoint_folder-d/service.getDirectThread",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_folder-d/service:Response",
+              },
+            },
+          },
+        },
+      ],
+      "name": "service",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-d/service",
+      "subpackages": [],
+      "types": [
+        "type_folder-d/service:Response",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
     "subpackage_foo": {
       "description": undefined,
       "displayName": undefined,
@@ -923,7 +1011,16 @@ exports[`fdr test definitions > audiences 1`] = `
           "availability": undefined,
           "defaultEnvironment": undefined,
           "description": undefined,
-          "environments": undefined,
+          "environments": [
+            {
+              "baseUrl": "https://api.example.a.com",
+              "id": "environment-a",
+            },
+            {
+              "baseUrl": "https://api.example.b.com",
+              "id": "environment-b",
+            },
+          ],
           "errors": undefined,
           "errorsV2": [],
           "examples": [],
@@ -1107,6 +1204,29 @@ exports[`fdr test definitions > audiences 1`] = `
               "value": {
                 "type": "uuid",
               },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_folder-d/service:Response": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Response",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "foo",
+            "valueType": {
+              "itemType": {
+                "type": "id",
+                "value": "type_folder-b/common:Foo",
+              },
+              "type": "optional",
             },
           },
         ],
