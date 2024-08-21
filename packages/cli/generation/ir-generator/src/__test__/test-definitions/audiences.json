@@ -386,7 +386,7 @@
             },
             "referencedTypes": [
                 "type_folder-b/common:Foo",
-                "type_folder-c/common:Foo"
+                "type_folder-c/common:FolderCFoo"
             ],
             "encoding": {
                 "json": {},
@@ -537,22 +537,22 @@
                                 "optional": {
                                     "_type": "named",
                                     "name": {
-                                        "originalName": "Foo",
+                                        "originalName": "FolderCFoo",
                                         "camelCase": {
-                                            "unsafeName": "foo",
-                                            "safeName": "foo"
+                                            "unsafeName": "folderCFoo",
+                                            "safeName": "folderCFoo"
                                         },
                                         "snakeCase": {
-                                            "unsafeName": "foo",
-                                            "safeName": "foo"
+                                            "unsafeName": "folder_c_foo",
+                                            "safeName": "folder_c_foo"
                                         },
                                         "screamingSnakeCase": {
-                                            "unsafeName": "FOO",
-                                            "safeName": "FOO"
+                                            "unsafeName": "FOLDER_C_FOO",
+                                            "safeName": "FOLDER_C_FOO"
                                         },
                                         "pascalCase": {
-                                            "unsafeName": "Foo",
-                                            "safeName": "Foo"
+                                            "unsafeName": "FolderCFoo",
+                                            "safeName": "FolderCFoo"
                                         }
                                     },
                                     "fernFilepath": {
@@ -637,7 +637,7 @@
                                             }
                                         }
                                     },
-                                    "typeId": "type_folder-c/common:Foo",
+                                    "typeId": "type_folder-c/common:FolderCFoo",
                                     "default": null,
                                     "inline": null
                                 }
@@ -651,7 +651,7 @@
                 "extendedProperties": []
             },
             "referencedTypes": [
-                "type_folder-c/common:Foo"
+                "type_folder-c/common:FolderCFoo"
             ],
             "encoding": {
                 "json": {},
@@ -663,25 +663,25 @@
             "availability": null,
             "docs": null
         },
-        "type_folder-c/common:Foo": {
+        "type_folder-c/common:FolderCFoo": {
             "name": {
                 "name": {
-                    "originalName": "Foo",
+                    "originalName": "FolderCFoo",
                     "camelCase": {
-                        "unsafeName": "foo",
-                        "safeName": "foo"
+                        "unsafeName": "folderCFoo",
+                        "safeName": "folderCFoo"
                     },
                     "snakeCase": {
-                        "unsafeName": "foo",
-                        "safeName": "foo"
+                        "unsafeName": "folder_c_foo",
+                        "safeName": "folder_c_foo"
                     },
                     "screamingSnakeCase": {
-                        "unsafeName": "FOO",
-                        "safeName": "FOO"
+                        "unsafeName": "FOLDER_C_FOO",
+                        "safeName": "FOLDER_C_FOO"
                     },
                     "pascalCase": {
-                        "unsafeName": "Foo",
-                        "safeName": "Foo"
+                        "unsafeName": "FolderCFoo",
+                        "safeName": "FolderCFoo"
                     }
                 },
                 "fernFilepath": {
@@ -766,7 +766,7 @@
                         }
                     }
                 },
-                "typeId": "type_folder-c/common:Foo"
+                "typeId": "type_folder-c/common:FolderCFoo"
             },
             "shape": {
                 "_type": "object",
@@ -3844,7 +3844,7 @@
         "sharedTypes": [
             "type_commons:Imported",
             "type_folder-b/common:Foo",
-            "type_folder-c/common:Foo",
+            "type_folder-c/common:FolderCFoo",
             "type_foo:FilteredType"
         ]
     },
@@ -4491,7 +4491,7 @@
             },
             "service": null,
             "types": [
-                "type_folder-c/common:Foo"
+                "type_folder-c/common:FolderCFoo"
             ],
             "errors": [],
             "subpackages": [],
