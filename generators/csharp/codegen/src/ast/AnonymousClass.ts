@@ -12,7 +12,7 @@ export declare namespace AnonymousClass {
         name: string;
         assignment: CodeBlock;
     }
-    // If you a property of antother object and want to retain that property name, you don't need to provide
+    // If you a property of another object and want to retain that property name, you don't need to provide
     // the property name
     type UnnamedProperty = CodeBlock;
 }
