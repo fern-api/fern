@@ -4700,7 +4700,7 @@
                                         "safeName": "One"
                                     }
                                 },
-                                "url": "resource",
+                                "url": "/resource",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],

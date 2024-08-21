@@ -20177,7 +20177,7 @@
                             "example": {
                                 "id": "c293c869a577775dcee38fb71fc91be9a51fa4eb8b998d34de4f40c44f315c8f",
                                 "name": null,
-                                "url": "",
+                                "url": "/",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],

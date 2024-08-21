@@ -9705,7 +9705,7 @@ exports[`ir > {"name":"nested-example-reference"} 1`] = `
                             "example": {
                                 "id": "5a6f08f1a5b7c467c617c891b9b6e1f85c3cdaa17c9bc1a56012234eeb809937",
                                 "name": null,
-                                "url": "nested",
+                                "url": "/nested",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],

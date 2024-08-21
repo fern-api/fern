@@ -1193,7 +1193,7 @@
                             "example": {
                                 "id": "55d86fecae28100aa2552944eb8f0a02074a17fedc942c648d9e7067d385c8b3",
                                 "name": null,
-                                "url": "users",
+                                "url": "/users",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [],

@@ -581,13 +581,14 @@ function buildUrl({
             ...pathParams.rootPathParameters
         ]) {
             // TODO: should we URL encode the value?
-            url = url
-                .replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`)
-                .replace("//", "/");
-            if (!url.startsWith("/")) {
-                url = `/${url}`;
-            }
+            url = url.replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`);
         }
+    }
+    // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42
+    url = url.replaceAll("//", "/");
+    // for backwards compatiblity we always make sure that the url stats with a slash
+    if (!url.startsWith("/")) {
+        url = `/${url}`;
     }
     return url;
 }
