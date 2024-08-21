@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedTrace.Core;
 
 #nullable enable
@@ -17,7 +18,8 @@ public partial class MigrationClient
 
     public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
         GetAttemptedMigrationsRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _headers = new Dictionary<string, string>()
@@ -32,7 +34,8 @@ public partial class MigrationClient
                 Path = "/migration-info/all",
                 Headers = _headers,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedTrace.Core;
 
@@ -21,7 +22,8 @@ public partial class SubmissionClient
     /// </summary>
     public async Task<ExecutionSessionResponse> CreateExecutionSessionAsync(
         Language language,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -31,7 +33,8 @@ public partial class SubmissionClient
                 Method = HttpMethod.Post,
                 Path = $"/sessions/create-session/{language}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -58,7 +61,8 @@ public partial class SubmissionClient
     /// </summary>
     public async Task<ExecutionSessionResponse?> GetExecutionSessionAsync(
         string sessionId,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -68,7 +72,8 @@ public partial class SubmissionClient
                 Method = HttpMethod.Get,
                 Path = $"/sessions/{sessionId}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -93,7 +98,11 @@ public partial class SubmissionClient
     /// <summary>
     /// Stops execution session.
     /// </summary>
-    public async Task StopExecutionSessionAsync(string sessionId, RequestOptions? options = null)
+    public async Task StopExecutionSessionAsync(
+        string sessionId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -102,7 +111,8 @@ public partial class SubmissionClient
                 Method = HttpMethod.Delete,
                 Path = $"/sessions/stop/{sessionId}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -117,7 +127,8 @@ public partial class SubmissionClient
     }
 
     public async Task<GetExecutionSessionStateResponse> GetExecutionSessionsStateAsync(
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -127,7 +138,8 @@ public partial class SubmissionClient
                 Method = HttpMethod.Get,
                 Path = "/sessions/execution-sessions-state",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

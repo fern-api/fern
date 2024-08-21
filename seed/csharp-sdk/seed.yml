@@ -56,8 +56,13 @@ fixtures:
     - customConfig:
         simplify-object-dictionaries: false
       outputFolder: no-simplify-object-dictionaries
+  grpc-proto-exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        read-only-memory-types:
+          - float
+      outputFolder: read-only-memory
 allowedFailures:
   - objects-with-imports
   - examples
-  # TODO: Add support for recursive undiscriminated unions.
-  - grpc

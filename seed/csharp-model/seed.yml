@@ -20,7 +20,14 @@ test:
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
-fixtures: []
+fixtures:
+  grpc-proto-exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        read-only-memory-types:
+          - float
+      outputFolder: read-only-memory
 scripts:
   - docker: bitnami/dotnet-sdk:8
     commands:

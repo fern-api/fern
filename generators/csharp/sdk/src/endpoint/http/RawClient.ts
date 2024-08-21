@@ -105,9 +105,9 @@ export class RawClient {
             });
         }
         return csharp.invokeMethod({
-            arguments_: [apiRequest],
-            method: "MakeRequestAsync",
             on: csharp.codeblock(clientReference),
+            method: "MakeRequestAsync",
+            arguments_: [apiRequest, csharp.codeblock(this.context.getCancellationTokenParameterName())],
             async: true
         });
     }

@@ -191,6 +191,10 @@ ${this.buffer}`;
         return this.buffer;
     }
 
+    public isReadOnlyMemoryType(type: string): boolean {
+        return this.customConfig["read-only-memory-types"]?.includes(type) ?? false;
+    }
+
     /*******************************
      * Helper Methods
      *******************************/

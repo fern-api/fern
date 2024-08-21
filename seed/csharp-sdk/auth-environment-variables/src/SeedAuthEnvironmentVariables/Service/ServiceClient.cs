@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedAuthEnvironmentVariables.Core;
 
 #nullable enable
@@ -18,7 +19,10 @@ public partial class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async Task<string> GetWithApiKeyAsync(RequestOptions? options = null)
+    public async Task<string> GetWithApiKeyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -27,7 +31,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Get,
                 Path = "apiKey",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -57,7 +62,8 @@ public partial class ServiceClient
     /// </summary>
     public async Task<string> GetWithHeaderAsync(
         HeaderAuthRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _headers = new Dictionary<string, string>()
@@ -72,7 +78,8 @@ public partial class ServiceClient
                 Path = "apiKeyInHeader",
                 Headers = _headers,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedMultiUrlEnvironmentNoDefault.Core;
 
@@ -15,7 +16,11 @@ public partial class Ec2Client
         _client = client;
     }
 
-    public async Task BootInstanceAsync(BootInstanceRequest request, RequestOptions? options = null)
+    public async Task BootInstanceAsync(
+        BootInstanceRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -25,7 +30,8 @@ public partial class Ec2Client
                 Path = "/ec2/boot",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

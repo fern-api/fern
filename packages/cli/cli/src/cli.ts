@@ -9,7 +9,6 @@ import { AbsoluteFilePath, cwd, doesPathExist, resolve } from "@fern-api/fs-util
 import { initializeAPI, initializeDocs } from "@fern-api/init";
 import { LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin, login } from "@fern-api/login";
-import { loadProject, Project } from "@fern-api/project-loader";
 import { FernCliError, LoggableFernCliError } from "@fern-api/task-context";
 import getPort from "get-port";
 import { Argv } from "yargs";
@@ -18,6 +17,8 @@ import yargs from "yargs/yargs";
 import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/loadOpenApiFromUrl";
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
+import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
+import { addGeneratorListCommand, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
@@ -40,10 +41,6 @@ import { writeDefinitionForWorkspaces } from "./commands/write-definition/writeD
 import { FERN_CWD_ENV_VAR } from "./cwd";
 import { rerunFernCliAtVersion } from "./rerunFernCliAtVersion";
 import { isURL } from "./utils/isUrl";
-
-interface GlobalCliOptions {
-    "log-level": LogLevel;
-}
 
 void runCli();
 
@@ -159,6 +156,10 @@ async function tryRunCli(cliContext: CliContext) {
             cliContext.suppressUpgradeMessage();
         }
     });
+
+    // CLI V2 Sanctioned Commands
+    addGetOrganizationCommand(cli, cliContext);
+    addGeneratorListCommand(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -950,27 +951,4 @@ function addDocsPreviewCommand(cli: Argv<GlobalCliOptions>, cliContext: CliConte
             });
         }
     );
-}
-
-async function loadProjectAndRegisterWorkspacesWithContext(
-    cliContext: CliContext,
-    args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">,
-    registerDocsWorkspace = false
-): Promise<Project> {
-    const context = cliContext.addTask().start();
-    const project = await loadProject({
-        ...args,
-        cliName: cliContext.environment.cliName,
-        cliVersion: cliContext.environment.packageVersion,
-        context
-    });
-    context.finish();
-
-    if (registerDocsWorkspace && project.docsWorkspaces != null) {
-        cliContext.registerWorkspaces([...project.apiWorkspaces, project.docsWorkspaces]);
-    } else {
-        cliContext.registerWorkspaces(project.apiWorkspaces);
-    }
-
-    return project;
 }
