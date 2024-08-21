@@ -12,7 +12,7 @@ import {
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { csharp } from "..";
+import { convertReadOnlyPrimitiveTypes, csharp } from "..";
 import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
     CONSTANTS_CLASS_NAME,
@@ -40,6 +40,7 @@ export abstract class AbstractCsharpGeneratorContext<
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
+    private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -55,6 +56,9 @@ export abstract class AbstractCsharpGeneratorContext<
         this.csharpTypeMapper = new CsharpTypeMapper(this);
         this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
         this.protobufResolver = new ProtobufResolver(this, this.csharpTypeMapper);
+        this.readOnlyMemoryTypes = new Set<PrimitiveTypeV1>(
+            convertReadOnlyPrimitiveTypes(this.customConfig["read-only-memory-types"] ?? [])
+        );
         config.output.mode._visit<void>({
             github: (github) => {
                 if (github.publishInfo?.type === "nuget") {
@@ -319,6 +323,24 @@ export abstract class AbstractCsharpGeneratorContext<
                 return false;
             case "primitive":
                 return true;
+        }
+    }
+
+    public isReadOnlyMemoryType(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return false;
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isReadOnlyMemoryType(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return this.readOnlyMemoryTypes.has(typeReference.primitive.v1) ?? false;
         }
     }
 

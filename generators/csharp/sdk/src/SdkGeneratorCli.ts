@@ -1,4 +1,4 @@
-import { AbstractCsharpGeneratorCli, TestFileGenerator } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorCli, TestFileGenerator, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
 import {
     generateModels,
     generateTests as generateModelTests,
@@ -46,6 +46,12 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
     }
 
     private validateCustomConfig(customConfig: SdkCustomConfigSchema): SdkCustomConfigSchema {
+        this.validateExceptionClassNames(customConfig);
+        validateReadOnlyMemoryTypes(customConfig);
+        return customConfig;
+    }
+
+    private validateExceptionClassNames(customConfig: SdkCustomConfigSchema): void {
         const baseExceptionClassName = customConfig["base-exception-class-name"];
         const baseApiExceptionClassName = customConfig["base-api-exception-class-name"];
 
@@ -56,8 +62,6 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         ) {
             throw new Error("The 'base-api-exception-class-name' and 'base-exception-class-name' cannot be the same.");
         }
-
-        return customConfig;
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {

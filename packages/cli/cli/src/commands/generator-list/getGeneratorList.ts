@@ -49,6 +49,7 @@ export async function getGeneratorList({
                     }
 
                     // If the current generator is not in the specified generators, skip it
+                    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                     generators[apiName]![group.groupName] = group.generators
                         .filter((generator) => generatorFilter == null || generatorFilter.has(generator.name))
                         .map((generator) => generator.name);

@@ -46,15 +46,20 @@ fixtures:
     - customConfig:
         simplify-object-dictionaries: false
       outputFolder: no-simplify-object-dictionaries
+  grpc-proto-exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        read-only-memory-types:
+          - float
+      outputFolder: read-only-memory
 allowedFailures:
-  # compile failures
+  ## COMPILE FAILURES
   - objects-with-imports
   - examples
-  # TODO: Add support for recursive undiscriminated unions.
-  - grpc
-  # wire testing failures
+  ## WIRE TEST FAILURES
   - unknown # issue with example object
-  - package-yml # user-provided example path not coming in properly 
+  - package-yml # user-provided example path not coming in properly
   - simple-fhir # nested generated examples are wonky
   - enum # complicated oneofs
   - trace # failing because we don't call stringify on enums path params
@@ -62,5 +67,3 @@ allowedFailures:
   - exhaustive:explicit-namespaces # mostly passing, request / response of direct union type failing because we don't specify jsonconverter
   - exhaustive:no-root-namespace-for-core-classes
   - exhaustive:no-generate-error-types
-
-

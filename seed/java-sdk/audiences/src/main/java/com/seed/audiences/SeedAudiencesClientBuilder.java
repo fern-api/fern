@@ -11,6 +11,11 @@ public final class SeedAudiencesClientBuilder {
 
     private Environment environment;
 
+    public SeedAudiencesClientBuilder environment(Environment environment) {
+        this.environment = environment;
+        return this;
+    }
+
     public SeedAudiencesClientBuilder url(String url) {
         this.environment = Environment.custom(url);
         return this;

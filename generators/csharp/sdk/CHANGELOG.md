@@ -7,6 +7,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Feature: Add support for the `read-only-memory-types` configuration, which is used to
+  control how specific types are represented as arrays and lists.
+
+  For example, consider the following configuration:
+
+  ```yml
+  generators:
+    - name: fernapi/fern-csharp-sdk
+      config:
+        read-only-memory-types:
+          - float
+  ```
+
+  This will generate types that look like the following:
+
+  ```csharp
+  public record Vector
+  {
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
+
+    [JsonPropertyName("values")]
+    public ReadOnlyMemory<float> Values { get; set; }
+  }
+  ```
+
 - Feature: Add the `CancellationToken` parameter as the last parameter to every endpoint method.
   For example,
 

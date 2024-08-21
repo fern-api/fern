@@ -10,7 +10,7 @@ import (
 )
 
 type Foo struct {
-	Foo *folderc.Foo `json:"foo,omitempty" url:"foo,omitempty"`
+	Foo *folderc.FolderCFoo `json:"foo,omitempty" url:"foo,omitempty"`
 
 	extraProperties map[string]interface{}
 	_rawJSON        json.RawMessage
