@@ -1,9 +1,8 @@
 using NUnit.Framework;
-using SeedAlias.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedAlias.Test;
+namespace SeedAlias.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetTest : BaseMockServerTest

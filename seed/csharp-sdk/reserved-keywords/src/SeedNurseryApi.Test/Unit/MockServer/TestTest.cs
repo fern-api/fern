@@ -1,10 +1,9 @@
 using NUnit.Framework;
 using SeedNurseryApi;
-using SeedNurseryApi.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedNurseryApi.Test;
+namespace SeedNurseryApi.Test.Unit.MockServer;
 
 [TestFixture]
 public class TestTest : BaseMockServerTest

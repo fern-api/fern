@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedErrorProperty.Core;
-using SeedErrorProperty.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedErrorProperty.Test;
+namespace SeedErrorProperty.Test.Unit.MockServer;
 
 [TestFixture]
 public class ThrowErrorTest : BaseMockServerTest

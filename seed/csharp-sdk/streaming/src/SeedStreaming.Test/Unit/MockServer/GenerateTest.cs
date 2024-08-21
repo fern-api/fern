@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedStreaming;
 using SeedStreaming.Core;
-using SeedStreaming.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedStreaming.Test;
+namespace SeedStreaming.Test.Unit.MockServer;
 
 [TestFixture]
 public class GenerateTest : BaseMockServerTest

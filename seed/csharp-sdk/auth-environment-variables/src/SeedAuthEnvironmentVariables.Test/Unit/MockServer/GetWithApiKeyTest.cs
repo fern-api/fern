@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAuthEnvironmentVariables.Core;
-using SeedAuthEnvironmentVariables.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedAuthEnvironmentVariables.Test;
+namespace SeedAuthEnvironmentVariables.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetWithApiKeyTest : BaseMockServerTest

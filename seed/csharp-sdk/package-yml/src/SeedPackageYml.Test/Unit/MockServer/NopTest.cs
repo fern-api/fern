@@ -1,9 +1,8 @@
 using NUnit.Framework;
-using SeedPackageYml.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedPackageYml.Test;
+namespace SeedPackageYml.Test.Unit.MockServer;
 
 [TestFixture]
 public class NopTest : BaseMockServerTest

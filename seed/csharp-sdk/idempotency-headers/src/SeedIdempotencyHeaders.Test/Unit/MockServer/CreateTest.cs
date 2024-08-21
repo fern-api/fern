@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedIdempotencyHeaders;
 using SeedIdempotencyHeaders.Core;
-using SeedIdempotencyHeaders.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedIdempotencyHeaders.Test;
+namespace SeedIdempotencyHeaders.Test.Unit.MockServer;
 
 [TestFixture]
 public class CreateTest : BaseMockServerTest

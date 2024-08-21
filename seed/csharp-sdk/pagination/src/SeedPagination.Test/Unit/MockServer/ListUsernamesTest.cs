@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPagination;
 using SeedPagination.Core;
-using SeedPagination.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedPagination.Test;
+namespace SeedPagination.Test.Unit.MockServer;
 
 [TestFixture]
 public class ListUsernamesTest : BaseMockServerTest

@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedTrace;
 using SeedTrace.Core;
-using SeedTrace.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedTrace.Test;
+namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetDefaultStarterFilesTest : BaseMockServerTest

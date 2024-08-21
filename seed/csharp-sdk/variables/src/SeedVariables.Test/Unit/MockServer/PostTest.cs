@@ -1,9 +1,8 @@
 using NUnit.Framework;
-using SeedVariables.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedVariables.Test;
+namespace SeedVariables.Test.Unit.MockServer;
 
 [TestFixture]
 public class PostTest : BaseMockServerTest

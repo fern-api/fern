@@ -10,7 +10,7 @@ export class EndpointGenerator {
     private http: HttpEndpointGenerator;
     private grpc: GrpcEndpointGenerator;
 
-    public constructor({ context}: { context: SdkGeneratorContext }) {
+    public constructor({ context }: { context: SdkGeneratorContext }) {
         this.http = new HttpEndpointGenerator({ context });
         this.grpc = new GrpcEndpointGenerator({ context });
     }

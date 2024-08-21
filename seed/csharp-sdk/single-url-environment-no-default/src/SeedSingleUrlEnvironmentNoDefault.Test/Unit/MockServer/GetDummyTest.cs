@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedSingleUrlEnvironmentNoDefault.Core;
-using SeedSingleUrlEnvironmentNoDefault.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedSingleUrlEnvironmentNoDefault.Test;
+namespace SeedSingleUrlEnvironmentNoDefault.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetDummyTest : BaseMockServerTest

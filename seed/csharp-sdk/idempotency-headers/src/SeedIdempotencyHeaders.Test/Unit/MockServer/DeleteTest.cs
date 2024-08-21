@@ -1,9 +1,8 @@
 using NUnit.Framework;
-using SeedIdempotencyHeaders.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedIdempotencyHeaders.Test;
+namespace SeedIdempotencyHeaders.Test.Unit.MockServer;
 
 [TestFixture]
 public class DeleteTest : BaseMockServerTest

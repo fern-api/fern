@@ -40,7 +40,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
     protected doGenerate(): CSharpFile {
         const testClass = csharp.testClass({
             name: this.getTestClassName(),
-            namespace: this.context.getTestNamespace(),
+            namespace: this.context.getMockServerTestNamespace(),
             parentClassReference: this.context.getBaseMockServerTestClassReference()
         });
         this.exampleEndpointCalls.forEach((example, index) => {
@@ -60,10 +60,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
             const methodBody = csharp.codeblock((writer) => {
                 if (example.request != null) {
                     writer.writeLine('const string requestJson = """');
-                    writer.writeLine(
-                        JSON.stringify(this.normalizeDatetimes(example.request.jsonExample), null, 2),
-                        true
-                    );
+                    writer.writeLine(JSON.stringify(this.normalizeDatetimes(example.request.jsonExample), null, 2));
                     writer.writeTextStatement('"""');
                 }
                 writer.newLine();

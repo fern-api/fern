@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAudiences;
 using SeedAudiences.Core;
-using SeedAudiences.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedAudiences.Test;
+namespace SeedAudiences.Test.Unit.MockServer;
 
 [TestFixture]
 public class FindTest : BaseMockServerTest

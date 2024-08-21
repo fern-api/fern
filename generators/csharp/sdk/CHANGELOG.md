@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Feature: Generate mock server tests for all endpoints. This can be disabled via the following configuration:
+
+  ```yml
+  generators:
+    - name: fernapi/fern-csharp-sdk
+      config:
+        disable-mock-server-tests: true
+  ```
+
+- Improvement: Rather than sending null properties, omit properties themselves.
+
+- Fix: Fix a bug where request bodies are not sent for wrapped requests that include headres or query params.
+
+- Fix: Fix a bug where enums, dates, and datetimes are sometimes not serialized properly as query parameters and headers.
+
 - Feature: Add support for the `read-only-memory-types` configuration, which is used to
   control how specific types are represented as arrays and lists.
 

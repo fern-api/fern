@@ -1,10 +1,9 @@
 using NUnit.Framework;
 using SeedEnum;
-using SeedEnum.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedEnum.Test;
+namespace SeedEnum.Test.Unit.MockServer;
 
 [TestFixture]
 public class SendTest : BaseMockServerTest

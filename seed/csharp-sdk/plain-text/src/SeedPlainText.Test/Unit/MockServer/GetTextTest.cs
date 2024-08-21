@@ -1,10 +1,9 @@
 using System.Threading.Tasks;
 using NUnit.Framework;
-using SeedPlainText.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedPlainText.Test;
+namespace SeedPlainText.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetTextTest : BaseMockServerTest

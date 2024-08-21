@@ -1,10 +1,9 @@
 using NUnit.Framework;
 using SeedExtends;
-using SeedExtends.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedExtends.Test;
+namespace SeedExtends.Test.Unit.MockServer;
 
 [TestFixture]
 public class ExtendedInlineRequestBodyTest : BaseMockServerTest

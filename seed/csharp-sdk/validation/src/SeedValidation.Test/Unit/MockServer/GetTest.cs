@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedValidation;
 using SeedValidation.Core;
-using SeedValidation.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedValidation.Test;
+namespace SeedValidation.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetTest : BaseMockServerTest

@@ -1,9 +1,8 @@
 using NUnit.Framework;
-using SeedMultiLineDocs.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedMultiLineDocs.Test;
+namespace SeedMultiLineDocs.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetUserTest : BaseMockServerTest

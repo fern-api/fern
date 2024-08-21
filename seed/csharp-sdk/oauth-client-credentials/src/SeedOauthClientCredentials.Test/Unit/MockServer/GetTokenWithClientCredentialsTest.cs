@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedOauthClientCredentials;
 using SeedOauthClientCredentials.Core;
-using SeedOauthClientCredentials.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedOauthClientCredentials.Test;
+namespace SeedOauthClientCredentials.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetTokenWithClientCredentialsTest : BaseMockServerTest

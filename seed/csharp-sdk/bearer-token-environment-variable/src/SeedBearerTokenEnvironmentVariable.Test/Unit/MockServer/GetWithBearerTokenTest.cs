@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedBearerTokenEnvironmentVariable.Core;
-using SeedBearerTokenEnvironmentVariable.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedBearerTokenEnvironmentVariable.Test;
+namespace SeedBearerTokenEnvironmentVariable.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetWithBearerTokenTest : BaseMockServerTest

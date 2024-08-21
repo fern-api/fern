@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExhaustive.Core;
-using SeedExhaustive.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedExhaustive.Test;
+namespace SeedExhaustive.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetAndReturnUuidTest : BaseMockServerTest

@@ -1,9 +1,8 @@
 using NUnit.Framework;
-using SeedTrace.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedTrace.Test;
+namespace SeedTrace.Test.Unit.MockServer;
 
 [TestFixture]
 public class DeleteProblemTest : BaseMockServerTest

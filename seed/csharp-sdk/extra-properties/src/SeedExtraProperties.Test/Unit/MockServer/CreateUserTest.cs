@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedExtraProperties;
 using SeedExtraProperties.Core;
-using SeedExtraProperties.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedExtraProperties.Test;
+namespace SeedExtraProperties.Test.Unit.MockServer;
 
 [TestFixture]
 public class CreateUserTest : BaseMockServerTest

@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedUnknownAsAny;
 using SeedUnknownAsAny.Core;
-using SeedUnknownAsAny.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedUnknownAsAny.Test;
+namespace SeedUnknownAsAny.Test.Unit.MockServer;
 
 [TestFixture]
 public class PostObjectTest : BaseMockServerTest

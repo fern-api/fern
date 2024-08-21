@@ -1,9 +1,8 @@
 using NUnit.Framework;
-using SeedApiWideBasePath.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedApiWideBasePath.Test;
+namespace SeedApiWideBasePath.Test.Unit.MockServer;
 
 [TestFixture]
 public class PostTest : BaseMockServerTest

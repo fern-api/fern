@@ -12,6 +12,9 @@ export function generateSdkTests({ context }: { context: SdkGeneratorContext }):
 }
 
 function generateMockServerTests({ context, files }: { context: SdkGeneratorContext; files: CSharpFile[] }) {
+    if (context.customConfig["disable-mock-server-tests"] === true) {
+        return;
+    }
     files.push(new BaseMockServerTestGenerator(context).generate());
     for (const [serviceId, service] of Object.entries(context.ir.services)) {
         if (shouldSkipMockServerTestsForService({ context, serviceId })) {

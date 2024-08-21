@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedUndiscriminatedUnions.Core;
-using SeedUndiscriminatedUnions.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedUndiscriminatedUnions.Test;
+namespace SeedUndiscriminatedUnions.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetMetadataTest : BaseMockServerTest

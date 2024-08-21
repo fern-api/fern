@@ -55,7 +55,7 @@ export class Writer {
         this.customConfig = customConfig;
     }
 
-    public write(text: string, isYeah = false): void {
+    public write(text: string): void {
         const textEndsInNewline = text.length > 0 && text.endsWith("\n");
         // temporarily remove the trailing newline, since we don't want to add the indent prefix after it
         const textWithoutNewline = textEndsInNewline ? text.substring(0, text.length - 1) : text;
@@ -120,8 +120,8 @@ export class Writer {
     }
 
     /* Only writes a newline if last line in the buffer is not a newline */
-    public writeLine(text = "", isYeah = false): void {
-        this.write(text, isYeah);
+    public writeLine(text = ""): void {
+        this.write(text);
         this.writeNewLineIfLastLineNot();
     }
 

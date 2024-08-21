@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAudiences.Core;
-using SeedAudiences.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedAudiences.Test;
+namespace SeedAudiences.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetDirectThreadTest : BaseMockServerTest
@@ -17,16 +16,12 @@ public class GetDirectThreadTest : BaseMockServerTest
     {
         const string mockResponse = """
             {
-              "foo": {
-                "foo": {
-                  "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
-                }
-              }
+              "foo": "string"
             }
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/partner-path").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()
@@ -34,7 +29,7 @@ public class GetDirectThreadTest : BaseMockServerTest
                     .WithBody(mockResponse)
             );
 
-        var response = await Client.FolderA.Service.GetDirectThreadAsync(RequestOptions);
+        var response = await Client.FolderD.Service.GetDirectThreadAsync(RequestOptions);
         JToken
             .Parse(mockResponse)
             .Should()

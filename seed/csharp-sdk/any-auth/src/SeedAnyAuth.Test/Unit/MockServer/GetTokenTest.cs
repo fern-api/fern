@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedAnyAuth;
 using SeedAnyAuth.Core;
-using SeedAnyAuth.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedAnyAuth.Test;
+namespace SeedAnyAuth.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetTokenTest : BaseMockServerTest

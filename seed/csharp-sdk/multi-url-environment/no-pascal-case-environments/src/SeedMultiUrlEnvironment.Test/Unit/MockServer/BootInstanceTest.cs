@@ -1,10 +1,9 @@
 using NUnit.Framework;
 using SeedMultiUrlEnvironment;
-using SeedMultiUrlEnvironment.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedMultiUrlEnvironment.Test;
+namespace SeedMultiUrlEnvironment.Test.Unit.MockServer;
 
 [TestFixture]
 public class BootInstanceTest : BaseMockServerTest

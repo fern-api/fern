@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedPackageYml;
 using SeedPackageYml.Core;
-using SeedPackageYml.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedPackageYml.Test;
+namespace SeedPackageYml.Test.Unit.MockServer;
 
 [TestFixture]
 public class EchoTest : BaseMockServerTest

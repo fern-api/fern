@@ -1,9 +1,8 @@
 using NUnit.Framework;
-using SeedCsharpNamespaceConflict.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedCsharpNamespaceConflict.Test;
+namespace SeedCsharpNamespaceConflict.Test.Unit.MockServer;
 
 [TestFixture]
 public class HelloTest : BaseMockServerTest

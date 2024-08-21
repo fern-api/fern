@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedOauthClientCredentialsEnvironmentVariables;
 using SeedOauthClientCredentialsEnvironmentVariables.Core;
-using SeedOauthClientCredentialsEnvironmentVariables.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedOauthClientCredentialsEnvironmentVariables.Test;
+namespace SeedOauthClientCredentialsEnvironmentVariables.Test.Unit.MockServer;
 
 [TestFixture]
 public class RefreshTokenTest : BaseMockServerTest

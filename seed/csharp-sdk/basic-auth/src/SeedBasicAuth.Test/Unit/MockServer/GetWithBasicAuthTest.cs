@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedBasicAuth.Core;
-using SeedBasicAuth.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedBasicAuth.Test;
+namespace SeedBasicAuth.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetWithBasicAuthTest : BaseMockServerTest

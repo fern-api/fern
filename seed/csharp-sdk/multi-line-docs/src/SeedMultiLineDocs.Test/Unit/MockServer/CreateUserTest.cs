@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMultiLineDocs;
 using SeedMultiLineDocs.Core;
-using SeedMultiLineDocs.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedMultiLineDocs.Test;
+namespace SeedMultiLineDocs.Test.Unit.MockServer;
 
 [TestFixture]
 public class CreateUserTest : BaseMockServerTest

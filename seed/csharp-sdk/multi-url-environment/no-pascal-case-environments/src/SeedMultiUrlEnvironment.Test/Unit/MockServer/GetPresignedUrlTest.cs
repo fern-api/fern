@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedMultiUrlEnvironment;
 using SeedMultiUrlEnvironment.Core;
-using SeedMultiUrlEnvironment.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedMultiUrlEnvironment.Test;
+namespace SeedMultiUrlEnvironment.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetPresignedUrlTest : BaseMockServerTest

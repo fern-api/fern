@@ -5,11 +5,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedQueryParameters;
 using SeedQueryParameters.Core;
-using SeedQueryParameters.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedQueryParameters.Test;
+namespace SeedQueryParameters.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetUsernameTest : BaseMockServerTest

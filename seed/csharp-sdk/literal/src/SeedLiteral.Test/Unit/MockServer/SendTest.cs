@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedLiteral;
 using SeedLiteral.Core;
-using SeedLiteral.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedLiteral.Test;
+namespace SeedLiteral.Test.Unit.MockServer;
 
 [TestFixture]
 public class SendTest : BaseMockServerTest

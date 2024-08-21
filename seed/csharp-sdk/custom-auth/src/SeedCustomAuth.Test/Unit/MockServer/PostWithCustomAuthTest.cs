@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedCustomAuth.Core;
-using SeedCustomAuth.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedCustomAuth.Test;
+namespace SeedCustomAuth.Test.Unit.MockServer;
 
 [TestFixture]
 public class PostWithCustomAuthTest : BaseMockServerTest

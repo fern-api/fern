@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedVersion.Core;
-using SeedVersion.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedVersion.Test;
+namespace SeedVersion.Test.Unit.MockServer;
 
 [TestFixture]
 public class GetUserTest : BaseMockServerTest

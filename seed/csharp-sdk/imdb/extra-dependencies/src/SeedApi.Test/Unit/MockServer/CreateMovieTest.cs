@@ -4,11 +4,10 @@ using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedApi;
 using SeedApi.Core;
-using SeedApi.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedApi.Test;
+namespace SeedApi.Test.Unit.MockServer;
 
 [TestFixture]
 public class CreateMovieTest : BaseMockServerTest

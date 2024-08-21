@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedObjectsWithImports.Core;
-using SeedObjectsWithImports.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedObjectsWithImports.Test;
+namespace SeedObjectsWithImports.Test.Unit.MockServer;
 
 [TestFixture]
 public class SendOptionalBodyTest : BaseMockServerTest

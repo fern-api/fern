@@ -3,11 +3,10 @@ using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using SeedBasicAuthEnvironmentVariables.Core;
-using SeedBasicAuthEnvironmentVariables.Test.Unit.MockServer;
 
 #nullable enable
 
-namespace SeedBasicAuthEnvironmentVariables.Test;
+namespace SeedBasicAuthEnvironmentVariables.Test.Unit.MockServer;
 
 [TestFixture]
 public class PostWithBasicAuthTest : BaseMockServerTest
