@@ -1,5 +1,5 @@
-using SeedExhaustive.Core;
 using System;
+using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints;
 using SeedExhaustive.GeneralErrors;
 using SeedExhaustive.InlinedRequests;
@@ -16,41 +16,20 @@ public partial class SeedExhaustiveClient
 {
     private RawClient _client;
 
-    public SeedExhaustiveClient (string token, ClientOptions? clientOptions = null) {
-        _client = 
-        new RawClientnew RawClient(
-            new Dictionary<string, string>() {
-                { "X-Fern-Language", "C#" }, 
-            }, new Dictionary<string, Func<string>>(), clientOptions ?? new ClientOptions()
+    public SeedExhaustiveClient(string token, ClientOptions? clientOptions = null)
+    {
+        _client = new RawClient(
+            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
+            new Dictionary<string, Func<string>>(),
+            clientOptions ?? new ClientOptions()
         );
-        Endpoints = 
-        new EndpointsClientnew EndpointsClient(
-            _client
-        );
-        GeneralErrors = 
-        new GeneralErrorsClientnew GeneralErrorsClient(
-            _client
-        );
-        InlinedRequests = 
-        new InlinedRequestsClientnew InlinedRequestsClient(
-            _client
-        );
-        NoAuth = 
-        new NoAuthClientnew NoAuthClient(
-            _client
-        );
-        NoReqBody = 
-        new NoReqBodyClientnew NoReqBodyClient(
-            _client
-        );
-        ReqWithHeaders = 
-        new ReqWithHeadersClientnew ReqWithHeadersClient(
-            _client
-        );
-        Types = 
-        new TypesClientnew TypesClient(
-            _client
-        );
+        Endpoints = new EndpointsClient(_client);
+        GeneralErrors = new GeneralErrorsClient(_client);
+        InlinedRequests = new InlinedRequestsClient(_client);
+        NoAuth = new NoAuthClient(_client);
+        NoReqBody = new NoReqBodyClient(_client);
+        ReqWithHeaders = new ReqWithHeadersClient(_client);
+        Types = new TypesClient(_client);
     }
 
     public EndpointsClient Endpoints { get; init; }
@@ -66,5 +45,4 @@ public partial class SeedExhaustiveClient
     public ReqWithHeadersClient ReqWithHeaders { get; init; }
 
     public TypesClient Types { get; init; }
-
 }

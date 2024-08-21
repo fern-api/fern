@@ -50,7 +50,7 @@ public class FindTest : BaseWireTest
             {
                 OptionalString = "string",
                 PublicProperty = "string",
-                PrivateProperty = 1
+                PrivateProperty = 1,
             },
             RequestOptions
         );

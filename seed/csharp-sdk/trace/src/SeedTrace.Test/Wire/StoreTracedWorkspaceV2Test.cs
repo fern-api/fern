@@ -94,13 +94,13 @@ public class StoreTracedWorkspaceV2Test : BaseWireTest
                                                         { "key", "value" },
                                                     }
                                                 },
-                                            }
-                                        }
-                                    }
-                                }
+                                            },
+                                        },
+                                    },
+                                },
                             },
-                            Stdout = "string"
-                        }
+                            Stdout = "string",
+                        },
                     },
                     RequestOptions
                 )

@@ -58,7 +58,7 @@ public class RefreshTokenTest : BaseWireTest
                 RefreshToken = "string",
                 Audience = "https://api.example.com",
                 GrantType = "refresh_token",
-                Scope = "string"
+                Scope = "string",
             },
             RequestOptions
         );

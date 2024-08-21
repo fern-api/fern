@@ -71,7 +71,7 @@ public class EchoTest : BaseWireTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("/")
+                    .WithPath("/id-ksfd9c1/")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )

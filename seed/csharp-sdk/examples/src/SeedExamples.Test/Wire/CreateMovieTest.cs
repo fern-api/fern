@@ -84,7 +84,7 @@ public class CreateMovieTest : BaseWireTest
                             { "rottenTomatoes", 97 },
                         }
                     },
-                }
+                },
             },
             RequestOptions
         );
@@ -129,7 +129,7 @@ public class CreateMovieTest : BaseWireTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("//movie")
+                    .WithPath("/movie")
                     .UsingPost()
                     .WithBodyAsJson(requestJson)
             )
@@ -165,7 +165,7 @@ public class CreateMovieTest : BaseWireTest
                             { "rottenTomatoes", 97 },
                         }
                     },
-                }
+                },
             },
             RequestOptions
         );

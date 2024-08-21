@@ -6,7 +6,6 @@ import {
     FernFilepath,
     HttpEndpoint,
     ResponseError,
-    SdkRequestShape,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "./RawClient";
@@ -68,6 +67,13 @@ export class HttpEndpointGenerator {
                 type: csharp.Type.optional(csharp.Type.reference(this.context.getRequestOptionsClassReference())),
                 name: this.context.getRequestOptionsParameterName(),
                 initializer: "null"
+            })
+        );
+        parameters.push(
+            csharp.parameter({
+                type: csharp.Type.reference(this.context.getCancellationTokenClassReference()),
+                name: this.context.getCancellationTokenParameterName(),
+                initializer: "default"
             })
         );
         const return_ = this.getEndpointReturnType({ endpoint });

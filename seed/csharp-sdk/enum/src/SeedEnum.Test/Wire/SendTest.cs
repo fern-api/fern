@@ -33,7 +33,7 @@ public class SendTest : BaseWireTest
                         Operand = Operand.GreaterThan,
                         MaybeOperand = Operand.GreaterThan,
                         OperandOrColor = Color.Red,
-                        MaybeOperandOrColor = Color.Red
+                        MaybeOperandOrColor = Color.Red,
                     },
                     RequestOptions
                 )
@@ -60,7 +60,7 @@ public class SendTest : BaseWireTest
                     new SendEnumAsQueryParamRequest
                     {
                         Operand = Operand.GreaterThan,
-                        OperandOrColor = Color.Red
+                        OperandOrColor = Color.Red,
                     },
                     RequestOptions
                 )

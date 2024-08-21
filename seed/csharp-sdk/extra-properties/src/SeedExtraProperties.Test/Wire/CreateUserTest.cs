@@ -50,7 +50,7 @@ public class CreateUserTest : BaseWireTest
             {
                 Type = "CreateUserRequest",
                 Version = "v1",
-                Name = "string"
+                Name = "string",
             },
             RequestOptions
         );

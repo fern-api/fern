@@ -26,7 +26,7 @@ public class BaseWireTest
         );
 
         // Initialize the Client
-        Client = new SeedLiteralClient();
+        Client = new SeedLiteralClient("VERSION", "AUDIT_LOGGING");
 
         RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }

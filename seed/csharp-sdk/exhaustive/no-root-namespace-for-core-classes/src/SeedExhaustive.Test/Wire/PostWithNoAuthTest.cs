@@ -41,7 +41,7 @@ public class PostWithNoAuthTest : BaseWireTest
             );
 
         var response = await Client.NoAuth.PostWithNoAuthAsync(
-            new Dictionary<object, object?>() { { "key", "value" }, },
+            new Dictionary<object, object?>() { { "key", "value" } },
             RequestOptions
         );
         JToken

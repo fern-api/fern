@@ -64,7 +64,7 @@ public class SendWorkspaceSubmissionUpdateTest : BaseWireTest
                             null,
                             DateTimeStyles.AdjustToUniversal
                         ),
-                        UpdateInfo = RunningSubmissionState.QueueingSubmission
+                        UpdateInfo = RunningSubmissionState.QueueingSubmission,
                     },
                     RequestOptions
                 )

@@ -55,7 +55,7 @@ public class CreateTest : BaseWireTest
                 Decimal = 1.1,
                 Even = 1,
                 Name = "string",
-                Shape = Shape.Square
+                Shape = Shape.Square,
             },
             RequestOptions
         );

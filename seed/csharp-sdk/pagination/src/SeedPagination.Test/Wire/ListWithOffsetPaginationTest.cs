@@ -62,7 +62,7 @@ public class ListWithOffsetPaginationTest : BaseWireTest
                 Page = 1,
                 PerPage = 1,
                 Order = Order.Asc,
-                StartingAfter = "string"
+                StartingAfter = "string",
             },
             RequestOptions
         );

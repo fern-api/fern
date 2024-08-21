@@ -60,7 +60,7 @@ public class ListWithOffsetPaginationHasNextPageTest : BaseWireTest
             {
                 Page = 1,
                 Limit = 1,
-                Order = Order.Asc
+                Order = Order.Asc,
             },
             RequestOptions
         );

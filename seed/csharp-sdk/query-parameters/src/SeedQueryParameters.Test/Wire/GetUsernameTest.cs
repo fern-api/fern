@@ -63,22 +63,22 @@ public class GetUsernameTest : BaseWireTest
                 User = new User
                 {
                     Name = "string",
-                    Tags = new List<string>() { "string" }
+                    Tags = new List<string>() { "string" },
                 },
                 UserList = new List<User>()
                 {
                     new User
                     {
                         Name = "string",
-                        Tags = new List<string>() { "string" }
-                    }
+                        Tags = new List<string>() { "string" },
+                    },
                 },
                 OptionalDeadline = DateTime.Parse(
                     "2024-01-15T09:30:00.000Z",
                     null,
                     DateTimeStyles.AdjustToUniversal
                 ),
-                KeyValue = new Dictionary<string, string>() { { "string", "string" }, },
+                KeyValue = new Dictionary<string, string>() { { "string", "string" } },
                 OptionalString = "string",
                 NestedUser = new NestedUser
                 {
@@ -86,23 +86,23 @@ public class GetUsernameTest : BaseWireTest
                     User = new User
                     {
                         Name = "string",
-                        Tags = new List<string>() { "string" }
-                    }
+                        Tags = new List<string>() { "string" },
+                    },
                 },
                 OptionalUser = new User
                 {
                     Name = "string",
-                    Tags = new List<string>() { "string" }
+                    Tags = new List<string>() { "string" },
                 },
                 ExcludeUser =
                 [
                     new User
                     {
                         Name = "string",
-                        Tags = new List<string>() { "string" }
-                    }
+                        Tags = new List<string>() { "string" },
+                    },
                 ],
-                Filter = ["string"]
+                Filter = ["string"],
             },
             RequestOptions
         );

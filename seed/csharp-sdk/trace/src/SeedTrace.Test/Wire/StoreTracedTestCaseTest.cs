@@ -88,9 +88,9 @@ public class StoreTracedTestCaseTest : BaseWireTest
                                 {
                                     { "key", "value" },
                                 },
-                                Passed = true
+                                Passed = true,
                             },
-                            Stdout = "string"
+                            Stdout = "string",
                         },
                         TraceResponses = new List<TraceResponse>()
                         {
@@ -102,7 +102,7 @@ public class StoreTracedTestCaseTest : BaseWireTest
                                 ExpressionLocation = new ExpressionLocation
                                 {
                                     Start = 1,
-                                    Offset = 1
+                                    Offset = 1,
                                 },
                                 Stack = new StackInformation
                                 {
@@ -124,14 +124,14 @@ public class StoreTracedTestCaseTest : BaseWireTest
                                                             { "key", "value" },
                                                         }
                                                     },
-                                                }
-                                            }
-                                        }
-                                    }
+                                                },
+                                            },
+                                        },
+                                    },
                                 },
-                                Stdout = "string"
-                            }
-                        }
+                                Stdout = "string",
+                            },
+                        },
                     },
                     RequestOptions
                 )

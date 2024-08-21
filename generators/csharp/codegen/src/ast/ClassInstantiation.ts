@@ -26,17 +26,15 @@ export class ClassInstantiation extends AstNode {
     }
 
     public write(writer: Writer): void {
-        const name =
-            this.classReference.namespaceAlias != null
-                ? `${this.classReference.namespaceAlias}.${this.classReference.name}`
-                : this.classReference.name;
-        writer.write(`new ${name}`);
+        if (this.classReference.namespaceAlias != null) {
+            writer.write(`new ${this.classReference.namespaceAlias}.${this.classReference.name}`);
+        } else {
+            writer.write("new ");
+            writer.writeNode(this.classReference);
+        }
 
         const hasNamedArguments =
             this.arguments_.length > 0 && this.arguments_[0] != null && isNamedArgument(this.arguments_[0]);
-
-        writer.write("new ");
-        writer.writeNode(this.classReference);
 
         if (hasNamedArguments && !this.forceUseConstructor) {
             writer.write("{ ");

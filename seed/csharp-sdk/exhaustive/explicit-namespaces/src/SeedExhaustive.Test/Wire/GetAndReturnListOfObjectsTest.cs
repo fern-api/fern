@@ -1,10 +1,10 @@
-using NUnit.Framework;
-using SeedExhaustive.Test.Wire;
 using System.Threading.Tasks;
-using SeedExhaustive.Types.Object;
 using FluentAssertions.Json;
 using Newtonsoft.Json.Linq;
+using NUnit.Framework;
 using SeedExhaustive.Core;
+using SeedExhaustive.Test.Wire;
+using SeedExhaustive.Types.Object;
 
 #nullable enable
 
@@ -14,34 +14,49 @@ namespace SeedExhaustive.Test;
 public class GetAndReturnListOfObjectsTest : BaseWireTest
 {
     [Test]
-    public async Task WireTest() {
+    public async Task WireTest()
+    {
         const string requestJson = """
-        [
-          {
-            "string": "string"
-          }
-        ]
-        """;
+            [
+              {
+                "string": "string"
+              }
+            ]
+            """;
 
         const string mockResponse = """
-        [
-          {
-            "string": "string"
-          }
-        ]
-        """;
+            [
+              {
+                "string": "string"
+              }
+            ]
+            """;
 
-        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/container/list-of-objects").UsingPost().WithBodyAsJson(requestJson))
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/container/list-of-objects")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson)
+            )
+            .RespondWith(
+                WireMock
+                    .ResponseBuilders.Response.Create()
+                    .WithStatusCode(200)
+                    .WithBody(mockResponse)
+            );
 
-        .RespondWith(WireMock.ResponseBuilders.Response.Create()
-        .WithStatusCode(200)
-        .WithBody(mockResponse));
-
-        var response = await Client.Endpoints.Container.GetAndReturnListOfObjectsAsync(new List<ObjectWithRequiredField>() {
-                new ObjectWithRequiredFieldnew ObjectWithRequiredField{ 
-                    String = "string"
-                }}, RequestOptions);
-        JToken.Parse(mockResponse).Should().BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
+        var response = await Client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
+            new List<ObjectWithRequiredField>()
+            {
+                new ObjectWithRequiredField { String = "string" },
+            },
+            RequestOptions
+        );
+        JToken
+            .Parse(mockResponse)
+            .Should()
+            .BeEquivalentTo(JToken.Parse(JsonUtils.Serialize(response)));
     }
-
 }

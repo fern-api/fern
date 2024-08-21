@@ -51,7 +51,7 @@ public class GetMetadataTest : BaseWireTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("//metadata").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/metadata").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

@@ -51,7 +51,7 @@ public class GetTokenTest : BaseWireTest
             {
                 ClientId = "string",
                 ClientSecret = "string",
-                GrantType = "client_credentials"
+                GrantType = "client_credentials",
             },
             RequestOptions
         );

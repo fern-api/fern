@@ -47,7 +47,7 @@ public class GetTest : BaseWireTest
             {
                 Decimal = 1.1,
                 Even = 1,
-                Name = "string"
+                Name = "string",
             },
             RequestOptions
         );

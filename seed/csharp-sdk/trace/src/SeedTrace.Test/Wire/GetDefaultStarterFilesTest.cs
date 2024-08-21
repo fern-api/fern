@@ -75,11 +75,11 @@ public class GetDefaultStarterFilesTest : BaseWireTest
                     new VariableTypeAndName
                     {
                         VariableType = "no-properties-union",
-                        Name = "string"
-                    }
+                        Name = "string",
+                    },
                 },
                 OutputType = "no-properties-union",
-                MethodName = "string"
+                MethodName = "string",
             },
             RequestOptions
         );

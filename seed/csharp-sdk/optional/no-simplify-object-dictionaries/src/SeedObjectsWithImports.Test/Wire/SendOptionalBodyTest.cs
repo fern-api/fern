@@ -47,7 +47,7 @@ public class SendOptionalBodyTest : BaseWireTest
             {
                 {
                     "string",
-                    new Dictionary<object, object?>() { { "key", "value" }, }
+                    new Dictionary<object, object?>() { { "key", "value" } }
                 },
             },
             RequestOptions

@@ -85,15 +85,15 @@ public class StoreTracedWorkspaceTest : BaseWireTest
                             {
                                 ExceptionType = "string",
                                 ExceptionMessage = "string",
-                                ExceptionStacktrace = "string"
+                                ExceptionStacktrace = "string",
                             },
                             Exception = new ExceptionInfo
                             {
                                 ExceptionType = "string",
                                 ExceptionMessage = "string",
-                                ExceptionStacktrace = "string"
+                                ExceptionStacktrace = "string",
                             },
-                            Stdout = "string"
+                            Stdout = "string",
                         },
                         TraceResponses = new List<TraceResponse>()
                         {
@@ -105,7 +105,7 @@ public class StoreTracedWorkspaceTest : BaseWireTest
                                 ExpressionLocation = new ExpressionLocation
                                 {
                                     Start = 1,
-                                    Offset = 1
+                                    Offset = 1,
                                 },
                                 Stack = new StackInformation
                                 {
@@ -127,14 +127,14 @@ public class StoreTracedWorkspaceTest : BaseWireTest
                                                             { "key", "value" },
                                                         }
                                                     },
-                                                }
-                                            }
-                                        }
-                                    }
+                                                },
+                                            },
+                                        },
+                                    },
                                 },
-                                Stdout = "string"
-                            }
-                        }
+                                Stdout = "string",
+                            },
+                        },
                     },
                     RequestOptions
                 )

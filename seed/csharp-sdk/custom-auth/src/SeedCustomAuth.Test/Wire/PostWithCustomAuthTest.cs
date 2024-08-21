@@ -41,7 +41,7 @@ public class PostWithCustomAuthTest : BaseWireTest
             );
 
         var response = await Client.CustomAuth.PostWithCustomAuthAsync(
-            new Dictionary<object, object?>() { { "key", "value" }, },
+            new Dictionary<object, object?>() { { "key", "value" } },
             RequestOptions
         );
         JToken

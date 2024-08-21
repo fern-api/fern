@@ -56,7 +56,7 @@ public class GetTokenWithClientCredentialsTest : BaseWireTest
                 ClientSecret = "string",
                 Audience = "https://api.example.com",
                 GrantType = "client_credentials",
-                Scope = "string"
+                Scope = "string",
             },
             RequestOptions
         );

@@ -33,7 +33,7 @@ public class SendListTest : BaseWireTest
                         Operand = [Operand.GreaterThan],
                         MaybeOperand = [Operand.GreaterThan],
                         OperandOrColor = [Color.Red],
-                        MaybeOperandOrColor = [Color.Red]
+                        MaybeOperandOrColor = [Color.Red],
                     },
                     RequestOptions
                 )

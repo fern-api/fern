@@ -1,8 +1,8 @@
 using NUnit.Framework;
-using WireMock.Server;
 using SeedExhaustive;
-using WireMock.Settings;
 using WireMock.Logging;
+using WireMock.Server;
+using WireMock.Settings;
 
 #nullable enable
 
@@ -16,26 +16,24 @@ public class BaseWireTest
     protected static SeedExhaustiveClient Client { get; set; } = null!;
 
     protected static RequestOptions RequestOptions { get; set; } = null!;
-    [OneTimeSetUp]
-    public void GlobalSetup() {
-        // Start the WireMock server
-        Server = WireMockServer.Start(new WireMockServerSettings { Logger = new WireMockConsoleLogger() });
 
-        // Initialize the Client
-        Client = 
-        new SeedExhaustiveClientnew SeedExhaustiveClient(
-            "TOKEN"
+    [OneTimeSetUp]
+    public void GlobalSetup()
+    {
+        // Start the WireMock server
+        Server = WireMockServer.Start(
+            new WireMockServerSettings { Logger = new WireMockConsoleLogger() }
         );
 
-        RequestOptions = 
-        new RequestOptionsnew RequestOptions{ 
-            BaseUrl = Server.Urls[0]
-        };
+        // Initialize the Client
+        Client = new SeedExhaustiveClient("TOKEN");
+
+        RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }
 
     [OneTimeTearDown]
-    public void GlobalTeardown() {
+    public void GlobalTeardown()
+    {
         Server.Stop();
     }
-
 }

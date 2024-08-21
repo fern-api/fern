@@ -52,7 +52,7 @@ public class GetMetadataTest : BaseWireTest
             {
                 Shallow = true,
                 Tag = ["string"],
-                XApiVersion = "string"
+                XApiVersion = "string",
             },
             RequestOptions
         );
@@ -84,7 +84,7 @@ public class GetMetadataTest : BaseWireTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("//metadata")
+                    .WithPath("/metadata")
                     .WithParam("tag", "development")
                     .WithHeader("X-API-Version", "0.0.1")
                     .UsingGet()
@@ -101,7 +101,7 @@ public class GetMetadataTest : BaseWireTest
             {
                 Shallow = false,
                 Tag = ["development"],
-                XApiVersion = "0.0.1"
+                XApiVersion = "0.0.1",
             },
             RequestOptions
         );

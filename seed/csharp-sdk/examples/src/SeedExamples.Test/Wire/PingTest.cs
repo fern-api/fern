@@ -43,7 +43,7 @@ public class PingTest : BaseWireTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("//ping").UsingGet())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/ping").UsingGet())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

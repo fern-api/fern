@@ -43,7 +43,7 @@ public class GetAndReturnMapPrimToPrimTest : BaseWireTest
             );
 
         var response = await Client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
-            new Dictionary<string, string>() { { "string", "string" }, },
+            new Dictionary<string, string>() { { "string", "string" } },
             RequestOptions
         );
         JToken

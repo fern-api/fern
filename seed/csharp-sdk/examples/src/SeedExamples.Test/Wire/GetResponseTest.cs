@@ -71,7 +71,7 @@ public class GetResponseTest : BaseWireTest
             """;
 
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("//response").UsingPost())
+            .Given(WireMock.RequestBuilders.Request.Create().WithPath("/response").UsingPost())
             .RespondWith(
                 WireMock
                     .ResponseBuilders.Response.Create()

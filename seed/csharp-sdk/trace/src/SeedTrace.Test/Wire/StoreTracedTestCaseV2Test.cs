@@ -95,13 +95,13 @@ public class StoreTracedTestCaseV2Test : BaseWireTest
                                                         { "key", "value" },
                                                     }
                                                 },
-                                            }
-                                        }
-                                    }
-                                }
+                                            },
+                                        },
+                                    },
+                                },
                             },
-                            Stdout = "string"
-                        }
+                            Stdout = "string",
+                        },
                     },
                     RequestOptions
                 )

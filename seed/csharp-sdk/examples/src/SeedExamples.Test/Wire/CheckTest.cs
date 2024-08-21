@@ -37,7 +37,7 @@ public class CheckTest : BaseWireTest
     {
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("//check/id-2sdx82h").UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/check/id-2sdx82h").UsingGet()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
@@ -51,7 +51,7 @@ public class CheckTest : BaseWireTest
     {
         Server
             .Given(
-                WireMock.RequestBuilders.Request.Create().WithPath("//check/id-3tey93i").UsingGet()
+                WireMock.RequestBuilders.Request.Create().WithPath("/check/id-3tey93i").UsingGet()
             )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 

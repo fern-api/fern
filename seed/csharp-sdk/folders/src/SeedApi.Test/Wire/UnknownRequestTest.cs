@@ -30,7 +30,7 @@ public class UnknownRequestTest : BaseWireTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.Folder.Service.UnknownRequestAsync(
-                    new Dictionary<object, object?>() { { "key", "value" }, },
+                    new Dictionary<object, object?>() { { "key", "value" } },
                     RequestOptions
                 )
         );

@@ -37,7 +37,7 @@ public class ExtendedInlineRequestBodyTest : BaseWireTest
                     {
                         Unique = "string",
                         Name = "string",
-                        Docs = "string"
+                        Docs = "string",
                     },
                     RequestOptions
                 )

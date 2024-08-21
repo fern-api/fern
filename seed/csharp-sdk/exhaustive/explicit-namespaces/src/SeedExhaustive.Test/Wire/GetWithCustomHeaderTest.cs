@@ -9,20 +9,34 @@ namespace SeedExhaustive.Test;
 public class GetWithCustomHeaderTest : BaseWireTest
 {
     [Test]
-    public void WireTest() {
+    public void WireTest()
+    {
         const string requestJson = """
-        "string"
-        """;
+            "string"
+            """;
 
+        Server
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/test-headers/custom-header")
+                    .WithHeader("X-TEST-SERVICE-HEADER", "string")
+                    .WithHeader("X-TEST-ENDPOINT-HEADER", "string")
+                    .UsingPost()
+                    .WithBodyAsJson(requestJson)
+            )
+            .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
-        Server.Given(WireMock.RequestBuilders.Request.Create().WithPath("/test-headers/custom-header").WithHeader("X-TEST-SERVICE-HEADER", "string").WithHeader("X-TEST-ENDPOINT-HEADER", "string").UsingPost().WithBodyAsJson(requestJson))
-
-        .RespondWith(WireMock.ResponseBuilders.Response.Create()
-        .WithStatusCode(200)
+        Assert.DoesNotThrowAsync(
+            async () =>
+                await Client.ReqWithHeaders.GetWithCustomHeaderAsync(
+                    new ReqWithHeaders.ReqWithHeaders
+                    {
+                        XTestEndpointHeader = "string",
+                        Body = "string",
+                    },
+                    RequestOptions
+                )
         );
-
-        Assert.DoesNotThrowAsync(async () => await Client.ReqWithHeaders.GetWithCustomHeaderAsync(new ReqWithHeadersnew ReqWithHeaders.ReqWithHeaders{ 
-                XTestEndpointHeader = "string", Body = "string"
-            }, RequestOptions));}
-
+    }
 }

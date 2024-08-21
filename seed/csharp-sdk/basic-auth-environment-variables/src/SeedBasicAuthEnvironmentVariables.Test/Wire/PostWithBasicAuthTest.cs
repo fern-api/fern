@@ -41,7 +41,7 @@ public class PostWithBasicAuthTest : BaseWireTest
             );
 
         var response = await Client.BasicAuth.PostWithBasicAuthAsync(
-            new Dictionary<object, object?>() { { "key", "value" }, },
+            new Dictionary<object, object?>() { { "key", "value" } },
             RequestOptions
         );
         JToken

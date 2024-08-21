@@ -57,7 +57,7 @@ public class UpdatePlaylistTest : BaseWireTest
             new UpdatePlaylistRequest
             {
                 Name = "string",
-                Problems = new List<string>() { "string" }
+                Problems = new List<string>() { "string" },
             },
             RequestOptions
         );

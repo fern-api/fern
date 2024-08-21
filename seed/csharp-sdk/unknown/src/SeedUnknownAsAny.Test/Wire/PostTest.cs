@@ -45,7 +45,7 @@ public class PostTest : BaseWireTest
             );
 
         var response = await Client.Unknown.PostAsync(
-            new Dictionary<object, object?>() { { "key", "value" }, },
+            new Dictionary<object, object?>() { { "key", "value" } },
             RequestOptions
         );
         JToken

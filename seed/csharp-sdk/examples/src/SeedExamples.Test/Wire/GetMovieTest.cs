@@ -91,7 +91,7 @@ public class GetMovieTest : BaseWireTest
             .Given(
                 WireMock
                     .RequestBuilders.Request.Create()
-                    .WithPath("//movie/movie-c06a4ad7")
+                    .WithPath("/movie/movie-c06a4ad7")
                     .UsingGet()
             )
             .RespondWith(

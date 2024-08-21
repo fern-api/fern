@@ -56,7 +56,7 @@ public class GetPlaylistsTest : BaseWireTest
                 OtherField = "string",
                 MultiLineDocs = "string",
                 OptionalMultipleField = ["string"],
-                MultipleField = ["string"]
+                MultipleField = ["string"],
             },
             RequestOptions
         );

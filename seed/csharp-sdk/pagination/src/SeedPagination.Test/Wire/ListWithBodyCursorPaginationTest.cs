@@ -64,7 +64,7 @@ public class ListWithBodyCursorPaginationTest : BaseWireTest
         var response = await Client.Users.ListWithBodyCursorPaginationAsync(
             new ListUsersBodyCursorPaginationRequest
             {
-                Pagination = new WithCursor { Cursor = "string" }
+                Pagination = new WithCursor { Cursor = "string" },
             },
             RequestOptions
         );

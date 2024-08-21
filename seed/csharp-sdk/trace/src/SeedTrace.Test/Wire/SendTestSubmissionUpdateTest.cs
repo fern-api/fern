@@ -64,7 +64,7 @@ public class SendTestSubmissionUpdateTest : BaseWireTest
                             null,
                             DateTimeStyles.AdjustToUniversal
                         ),
-                        UpdateInfo = RunningSubmissionState.QueueingSubmission
+                        UpdateInfo = RunningSubmissionState.QueueingSubmission,
                     },
                     RequestOptions
                 )

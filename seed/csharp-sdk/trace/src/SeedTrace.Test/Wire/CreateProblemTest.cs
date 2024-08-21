@@ -109,7 +109,7 @@ public class CreateProblemTest : BaseWireTest
                 ProblemName = "string",
                 ProblemDescription = new ProblemDescription
                 {
-                    Boards = new List<object>() { "string" }
+                    Boards = new List<object>() { "string" },
                 },
                 Files = new Dictionary<Language, ProblemFiles>()
                 {
@@ -120,12 +120,12 @@ public class CreateProblemTest : BaseWireTest
                             SolutionFile = new FileInfo
                             {
                                 Filename = "string",
-                                Contents = "string"
+                                Contents = "string",
                             },
                             ReadOnlyFiles = new List<FileInfo>()
                             {
-                                new FileInfo { Filename = "string", Contents = "string" }
-                            }
+                                new FileInfo { Filename = "string", Contents = "string" },
+                            },
                         }
                     },
                 },
@@ -134,8 +134,8 @@ public class CreateProblemTest : BaseWireTest
                     new VariableTypeAndName
                     {
                         VariableType = "no-properties-union",
-                        Name = "string"
-                    }
+                        Name = "string",
+                    },
                 },
                 OutputType = "no-properties-union",
                 Testcases = new List<TestCaseWithExpectedResult>()
@@ -145,12 +145,12 @@ public class CreateProblemTest : BaseWireTest
                         TestCase = new TestCase
                         {
                             Id = "string",
-                            Params = new List<object>() { 1 }
+                            Params = new List<object>() { 1 },
                         },
-                        ExpectedResult = 1
-                    }
+                        ExpectedResult = 1,
+                    },
                 },
-                MethodName = "string"
+                MethodName = "string",
             },
             RequestOptions
         );

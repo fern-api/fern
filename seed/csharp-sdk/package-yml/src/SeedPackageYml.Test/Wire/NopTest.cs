@@ -24,7 +24,12 @@ public class NopTest : BaseWireTest
     public void WireTest_2()
     {
         Server
-            .Given(WireMock.RequestBuilders.Request.Create().WithPath("//id-219xca8").UsingGet())
+            .Given(
+                WireMock
+                    .RequestBuilders.Request.Create()
+                    .WithPath("/id-a2ijs82/id-219xca8")
+                    .UsingGet()
+            )
             .RespondWith(WireMock.ResponseBuilders.Response.Create().WithStatusCode(200));
 
         Assert.DoesNotThrowAsync(

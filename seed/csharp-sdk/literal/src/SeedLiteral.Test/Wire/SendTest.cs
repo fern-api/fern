@@ -54,7 +54,7 @@ public class SendTest : BaseWireTest
                 Prompt = "You are a helpful assistant",
                 Stream = false,
                 Context = "You're super wise",
-                Query = "What is the weather today"
+                Query = "What is the weather today",
             },
             RequestOptions
         );
@@ -105,7 +105,7 @@ public class SendTest : BaseWireTest
                 Prompt = "You are a helpful assistant",
                 Stream = false,
                 Context = "You're super wise",
-                Query = "What is the weather today"
+                Query = "What is the weather today",
             },
             RequestOptions
         );

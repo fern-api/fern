@@ -71,8 +71,8 @@ public class CreatePlaylistTest : BaseWireTest
                 Body = new PlaylistCreateRequest
                 {
                     Name = "string",
-                    Problems = new List<string>() { "string" }
-                }
+                    Problems = new List<string>() { "string" },
+                },
             },
             RequestOptions
         );
