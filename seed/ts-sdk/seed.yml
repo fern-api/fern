@@ -31,6 +31,13 @@ fixtures:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
+  audiences:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: null
+      audiences:
+        - partner
+      outputFolder: with-partner-audience
   failing-audiences:
     - customConfig: null
       outputFolder: no-custom-config
@@ -205,7 +212,7 @@ allowedFailures:
   - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
-  - audiences
+  - audiences:no-custom-config
   - enum # throws b/c of undiscriminated union examples
   - streaming-parameter
   - imdb:noScripts
