@@ -62,7 +62,7 @@
             "type": "python"
         },
         "endpointId": {
-            "path": "/",
+            "path": "/partner-path",
             "method": "GET",
             "identifierOverride": "endpoint_folder-d/service.getDirectThread"
         },

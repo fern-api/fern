@@ -7,7 +7,7 @@ service:
   auth: false
   audiences:
     - partner
-  base-path: /
+  base-path: /partner-path
   endpoints:
     getDirectThread:
       path: ""
@@ -17,4 +17,4 @@ service:
 types:
   Response:
     properties:
-      foo: optional<folderBCommons.Foo>
+      foo: string

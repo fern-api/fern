@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../../folder_b/common/types/foo"
 require "ostruct"
 require "json"
 
@@ -8,7 +7,7 @@ module SeedAudiencesClient
   module FolderD
     class Service
       class Response
-        # @return [SeedAudiencesClient::FolderB::Common::Foo]
+        # @return [String]
         attr_reader :foo
         # @return [OpenStruct] Additional properties unmapped to the current class definition
         attr_reader :additional_properties
@@ -18,15 +17,13 @@ module SeedAudiencesClient
 
         OMIT = Object.new
 
-        # @param foo [SeedAudiencesClient::FolderB::Common::Foo]
+        # @param foo [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [SeedAudiencesClient::FolderD::Service::Response]
-        def initialize(foo: OMIT, additional_properties: nil)
-          @foo = foo if foo != OMIT
+        def initialize(foo:, additional_properties: nil)
+          @foo = foo
           @additional_properties = additional_properties
-          @_field_set = { "foo": foo }.reject do |_k, v|
-            v == OMIT
-          end
+          @_field_set = { "foo": foo }
         end
 
         # Deserialize a JSON object to an instance of Response
@@ -36,12 +33,7 @@ module SeedAudiencesClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          if parsed_json["foo"].nil?
-            foo = nil
-          else
-            foo = parsed_json["foo"].to_json
-            foo = SeedAudiencesClient::FolderB::Common::Foo.from_json(json_object: foo)
-          end
+          foo = parsed_json["foo"]
           new(foo: foo, additional_properties: struct)
         end
 
@@ -59,7 +51,7 @@ module SeedAudiencesClient
         # @param obj [Object]
         # @return [Void]
         def self.validate_raw(obj:)
-          obj.foo.nil? || SeedAudiencesClient::FolderB::Common::Foo.validate_raw(obj: obj.foo)
+          obj.foo.is_a?(String) != false || raise("Passed value for field obj.foo is not the expected type, validation failed.")
         end
       end
     end

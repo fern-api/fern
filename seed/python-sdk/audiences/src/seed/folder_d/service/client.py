@@ -36,6 +36,7 @@ class ServiceClient:
         client.folder_d.service.get_direct_thread()
         """
         _response = self._client_wrapper.httpx_client.request(
+            "partner-path",
             method="GET",
             request_options=request_options,
         )
@@ -88,6 +89,7 @@ class AsyncServiceClient:
         asyncio.run(main())
         """
         _response = await self._client_wrapper.httpx_client.request(
+            "partner-path",
             method="GET",
             request_options=request_options,
         )

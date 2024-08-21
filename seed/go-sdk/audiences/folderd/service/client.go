@@ -43,7 +43,7 @@ func (c *Client) GetDirectThread(
 	if options.BaseURL != "" {
 		baseURL = options.BaseURL
 	}
-	endpointURL := baseURL
+	endpointURL := baseURL + "/partner-path"
 
 	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 

@@ -30,6 +30,7 @@ public class ServiceClient {
     public Response getDirectThread(RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
+                .addPathSegments("partner-path")
                 .build();
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)

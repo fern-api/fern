@@ -9,29 +9,26 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.audiences.core.ObjectMappers;
-import com.seed.audiences.resources.folderb.common.types.Foo;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Response.Builder.class)
 public final class Response {
-    private final Optional<Foo> foo;
+    private final String foo;
 
     private final Map<String, Object> additionalProperties;
 
-    private Response(Optional<Foo> foo, Map<String, Object> additionalProperties) {
+    private Response(String foo, Map<String, Object> additionalProperties) {
         this.foo = foo;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("foo")
-    public Optional<Foo> getFoo() {
+    public String getFoo() {
         return foo;
     }
 
@@ -60,35 +57,43 @@ public final class Response {
         return ObjectMappers.stringify(this);
     }
 
-    public static Builder builder() {
+    public static FooStage builder() {
         return new Builder();
     }
 
+    public interface FooStage {
+        _FinalStage foo(String foo);
+
+        Builder from(Response other);
+    }
+
+    public interface _FinalStage {
+        Response build();
+    }
+
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder {
-        private Optional<Foo> foo = Optional.empty();
+    public static final class Builder implements FooStage, _FinalStage {
+        private String foo;
 
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
         private Builder() {}
 
+        @java.lang.Override
         public Builder from(Response other) {
             foo(other.getFoo());
             return this;
         }
 
-        @JsonSetter(value = "foo", nulls = Nulls.SKIP)
-        public Builder foo(Optional<Foo> foo) {
+        @java.lang.Override
+        @JsonSetter("foo")
+        public _FinalStage foo(String foo) {
             this.foo = foo;
             return this;
         }
 
-        public Builder foo(Foo foo) {
-            this.foo = Optional.ofNullable(foo);
-            return this;
-        }
-
+        @java.lang.Override
         public Response build() {
             return new Response(foo, additionalProperties);
         }

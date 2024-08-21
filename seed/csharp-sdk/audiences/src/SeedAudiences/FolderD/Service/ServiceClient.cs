@@ -27,7 +27,7 @@ public partial class ServiceClient
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/partner-path",
                 Options = options,
             },
             cancellationToken

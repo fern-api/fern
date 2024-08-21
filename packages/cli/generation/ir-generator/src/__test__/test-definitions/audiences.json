@@ -820,6 +820,167 @@
             "availability": null,
             "docs": null
         },
+        "type_folder-d/service:Response": {
+            "name": {
+                "name": {
+                    "originalName": "Response",
+                    "camelCase": {
+                        "unsafeName": "response",
+                        "safeName": "response"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "response",
+                        "safeName": "response"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "RESPONSE",
+                        "safeName": "RESPONSE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Response",
+                        "safeName": "Response"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "folder-d",
+                            "camelCase": {
+                                "unsafeName": "folderD",
+                                "safeName": "folderD"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "folder_d",
+                                "safeName": "folder_d"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FOLDER_D",
+                                "safeName": "FOLDER_D"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "FolderD",
+                                "safeName": "FolderD"
+                            }
+                        },
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "folder-d",
+                            "camelCase": {
+                                "unsafeName": "folderD",
+                                "safeName": "folderD"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "folder_d",
+                                "safeName": "folder_d"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FOLDER_D",
+                                "safeName": "FOLDER_D"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "FolderD",
+                                "safeName": "FolderD"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                },
+                "typeId": "type_folder-d/service:Response"
+            },
+            "shape": {
+                "_type": "object",
+                "extends": [],
+                "properties": [
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "foo",
+                                "camelCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "foo",
+                                    "safeName": "foo"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "FOO",
+                                    "safeName": "FOO"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Foo",
+                                    "safeName": "Foo"
+                                }
+                            },
+                            "wireValue": "foo"
+                        },
+                        "valueType": {
+                            "_type": "primitive",
+                            "primitive": {
+                                "v1": "STRING",
+                                "v2": {
+                                    "type": "string",
+                                    "default": null,
+                                    "validation": null
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    }
+                ],
+                "extra-properties": false,
+                "extendedProperties": []
+            },
+            "referencedTypes": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "source": null,
+            "userProvidedExamples": [],
+            "autogeneratedExamples": [],
+            "availability": null,
+            "docs": null
+        },
         "type_foo:ImportingType": {
             "name": {
                 "name": {
@@ -2047,6 +2208,552 @@
                 }
             ]
         },
+        "service_folder-d/service": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "folder-d",
+                            "camelCase": {
+                                "unsafeName": "folderD",
+                                "safeName": "folderD"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "folder_d",
+                                "safeName": "folder_d"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FOLDER_D",
+                                "safeName": "FOLDER_D"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "FolderD",
+                                "safeName": "FolderD"
+                            }
+                        },
+                        {
+                            "originalName": "service",
+                            "camelCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "service",
+                                "safeName": "service"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "SERVICE",
+                                "safeName": "SERVICE"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Service",
+                                "safeName": "Service"
+                            }
+                        }
+                    ],
+                    "packagePath": [
+                        {
+                            "originalName": "folder-d",
+                            "camelCase": {
+                                "unsafeName": "folderD",
+                                "safeName": "folderD"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "folder_d",
+                                "safeName": "folder_d"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "FOLDER_D",
+                                "safeName": "FOLDER_D"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "FolderD",
+                                "safeName": "FolderD"
+                            }
+                        }
+                    ],
+                    "file": {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/partner-path",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_folder-d/service.getDirectThread",
+                    "name": {
+                        "originalName": "getDirectThread",
+                        "camelCase": {
+                            "unsafeName": "getDirectThread",
+                            "safeName": "getDirectThread"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get_direct_thread",
+                            "safeName": "get_direct_thread"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET_DIRECT_THREAD",
+                            "safeName": "GET_DIRECT_THREAD"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "GetDirectThread",
+                            "safeName": "GetDirectThread"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "method": "GET",
+                    "path": {
+                        "head": "",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/partner-path",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "Response",
+                                        "camelCase": {
+                                            "unsafeName": "response",
+                                            "safeName": "response"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "response",
+                                            "safeName": "response"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "RESPONSE",
+                                            "safeName": "RESPONSE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Response",
+                                            "safeName": "Response"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "folder-d",
+                                                "camelCase": {
+                                                    "unsafeName": "folderD",
+                                                    "safeName": "folderD"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "folder_d",
+                                                    "safeName": "folder_d"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "FOLDER_D",
+                                                    "safeName": "FOLDER_D"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "FolderD",
+                                                    "safeName": "FolderD"
+                                                }
+                                            },
+                                            {
+                                                "originalName": "service",
+                                                "camelCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "service",
+                                                    "safeName": "service"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "SERVICE",
+                                                    "safeName": "SERVICE"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Service",
+                                                    "safeName": "Service"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [
+                                            {
+                                                "originalName": "folder-d",
+                                                "camelCase": {
+                                                    "unsafeName": "folderD",
+                                                    "safeName": "folderD"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "folder_d",
+                                                    "safeName": "folder_d"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "FOLDER_D",
+                                                    "safeName": "FOLDER_D"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "FolderD",
+                                                    "safeName": "FolderD"
+                                                }
+                                            }
+                                        ],
+                                        "file": {
+                                            "originalName": "service",
+                                            "camelCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "service",
+                                                "safeName": "service"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "SERVICE",
+                                                "safeName": "SERVICE"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Service",
+                                                "safeName": "Service"
+                                            }
+                                        }
+                                    },
+                                    "typeId": "type_folder-d/service:Response",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "errors": [],
+                    "userSpecifiedExamples": [],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "url": "/partner-path",
+                                "rootPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointPathParameters": [],
+                                "serviceHeaders": [],
+                                "endpointHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "name": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "name": {
+                                                        "originalName": "Response",
+                                                        "camelCase": {
+                                                            "unsafeName": "response",
+                                                            "safeName": "response"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "response",
+                                                            "safeName": "response"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "RESPONSE",
+                                                            "safeName": "RESPONSE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Response",
+                                                            "safeName": "Response"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "folder-d",
+                                                                "camelCase": {
+                                                                    "unsafeName": "folderD",
+                                                                    "safeName": "folderD"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "folder_d",
+                                                                    "safeName": "folder_d"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "FOLDER_D",
+                                                                    "safeName": "FOLDER_D"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "FolderD",
+                                                                    "safeName": "FolderD"
+                                                                }
+                                                            },
+                                                            {
+                                                                "originalName": "service",
+                                                                "camelCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "service",
+                                                                    "safeName": "service"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "SERVICE",
+                                                                    "safeName": "SERVICE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Service",
+                                                                    "safeName": "Service"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [
+                                                            {
+                                                                "originalName": "folder-d",
+                                                                "camelCase": {
+                                                                    "unsafeName": "folderD",
+                                                                    "safeName": "folderD"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "folder_d",
+                                                                    "safeName": "folder_d"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "FOLDER_D",
+                                                                    "safeName": "FOLDER_D"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "FolderD",
+                                                                    "safeName": "FolderD"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "file": {
+                                                            "originalName": "service",
+                                                            "camelCase": {
+                                                                "unsafeName": "service",
+                                                                "safeName": "service"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "service",
+                                                                "safeName": "service"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "SERVICE",
+                                                                "safeName": "SERVICE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Service",
+                                                                "safeName": "Service"
+                                                            }
+                                                        }
+                                                    },
+                                                    "typeId": "type_folder-d/service:Response"
+                                                },
+                                                "shape": {
+                                                    "type": "object",
+                                                    "properties": [
+                                                        {
+                                                            "name": {
+                                                                "name": {
+                                                                    "originalName": "foo",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "foo",
+                                                                        "safeName": "foo"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "foo",
+                                                                        "safeName": "foo"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "FOO",
+                                                                        "safeName": "FOO"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Foo",
+                                                                        "safeName": "Foo"
+                                                                    }
+                                                                },
+                                                                "wireValue": "foo"
+                                                            },
+                                                            "value": {
+                                                                "shape": {
+                                                                    "type": "primitive",
+                                                                    "primitive": {
+                                                                        "type": "string",
+                                                                        "string": {
+                                                                            "original": "string"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "jsonExample": "string"
+                                                            },
+                                                            "originalTypeDeclaration": {
+                                                                "name": {
+                                                                    "originalName": "Response",
+                                                                    "camelCase": {
+                                                                        "unsafeName": "response",
+                                                                        "safeName": "response"
+                                                                    },
+                                                                    "snakeCase": {
+                                                                        "unsafeName": "response",
+                                                                        "safeName": "response"
+                                                                    },
+                                                                    "screamingSnakeCase": {
+                                                                        "unsafeName": "RESPONSE",
+                                                                        "safeName": "RESPONSE"
+                                                                    },
+                                                                    "pascalCase": {
+                                                                        "unsafeName": "Response",
+                                                                        "safeName": "Response"
+                                                                    }
+                                                                },
+                                                                "fernFilepath": {
+                                                                    "allParts": [
+                                                                        {
+                                                                            "originalName": "folder-d",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "folderD",
+                                                                                "safeName": "folderD"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "folder_d",
+                                                                                "safeName": "folder_d"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "FOLDER_D",
+                                                                                "safeName": "FOLDER_D"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "FolderD",
+                                                                                "safeName": "FolderD"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "originalName": "service",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "service",
+                                                                                "safeName": "service"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "SERVICE",
+                                                                                "safeName": "SERVICE"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "Service",
+                                                                                "safeName": "Service"
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "packagePath": [
+                                                                        {
+                                                                            "originalName": "folder-d",
+                                                                            "camelCase": {
+                                                                                "unsafeName": "folderD",
+                                                                                "safeName": "folderD"
+                                                                            },
+                                                                            "snakeCase": {
+                                                                                "unsafeName": "folder_d",
+                                                                                "safeName": "folder_d"
+                                                                            },
+                                                                            "screamingSnakeCase": {
+                                                                                "unsafeName": "FOLDER_D",
+                                                                                "safeName": "FOLDER_D"
+                                                                            },
+                                                                            "pascalCase": {
+                                                                                "unsafeName": "FolderD",
+                                                                                "safeName": "FolderD"
+                                                                            }
+                                                                        }
+                                                                    ],
+                                                                    "file": {
+                                                                        "originalName": "service",
+                                                                        "camelCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "snakeCase": {
+                                                                            "unsafeName": "service",
+                                                                            "safeName": "service"
+                                                                        },
+                                                                        "screamingSnakeCase": {
+                                                                            "unsafeName": "SERVICE",
+                                                                            "safeName": "SERVICE"
+                                                                        },
+                                                                        "pascalCase": {
+                                                                            "unsafeName": "Service",
+                                                                            "safeName": "Service"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "typeId": "type_folder-d/service:Response"
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "foo": "string"
+                                            }
+                                        }
+                                    }
+                                },
+                                "id": "782f248650cfedd66be3ee1f6188dac4fde30961",
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ]
+        },
         "service_foo": {
             "availability": null,
             "name": {
@@ -3059,7 +3766,62 @@
             "wireValue": "errorInstanceId"
         }
     },
-    "environments": null,
+    "environments": {
+        "defaultEnvironment": null,
+        "environments": {
+            "type": "singleBaseUrl",
+            "environments": [
+                {
+                    "id": "environment-a",
+                    "name": {
+                        "originalName": "environment-a",
+                        "camelCase": {
+                            "unsafeName": "environmentA",
+                            "safeName": "environmentA"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "environment_a",
+                            "safeName": "environment_a"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ENVIRONMENT_A",
+                            "safeName": "ENVIRONMENT_A"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "EnvironmentA",
+                            "safeName": "EnvironmentA"
+                        }
+                    },
+                    "url": "https://api.example.a.com",
+                    "docs": null
+                },
+                {
+                    "id": "environment-b",
+                    "name": {
+                        "originalName": "environment-b",
+                        "camelCase": {
+                            "unsafeName": "environmentB",
+                            "safeName": "environmentB"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "environment_b",
+                            "safeName": "environment_b"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "ENVIRONMENT_B",
+                            "safeName": "ENVIRONMENT_B"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "EnvironmentB",
+                            "safeName": "EnvironmentB"
+                        }
+                    },
+                    "url": "https://api.example.b.com",
+                    "docs": null
+                }
+            ]
+        }
+    },
     "errorDiscriminationStrategy": {
         "type": "statusCode"
     },
@@ -3070,6 +3832,9 @@
         "typesReferencedOnlyByService": {
             "service_folder-a/service": [
                 "type_folder-a/service:Response"
+            ],
+            "service_folder-d/service": [
+                "type_folder-d/service:Response"
             ],
             "service_foo": [
                 "type_foo:ImportingType",
@@ -3736,6 +4501,197 @@
             "hasEndpointsInTree": false,
             "docs": null
         },
+        "subpackage_folder-d": {
+            "name": {
+                "originalName": "folder-d",
+                "camelCase": {
+                    "unsafeName": "folderD",
+                    "safeName": "folderD"
+                },
+                "snakeCase": {
+                    "unsafeName": "folder_d",
+                    "safeName": "folder_d"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "FOLDER_D",
+                    "safeName": "FOLDER_D"
+                },
+                "pascalCase": {
+                    "unsafeName": "FolderD",
+                    "safeName": "FolderD"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "folder-d",
+                        "camelCase": {
+                            "unsafeName": "folderD",
+                            "safeName": "folderD"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "folder_d",
+                            "safeName": "folder_d"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FOLDER_D",
+                            "safeName": "FOLDER_D"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "FolderD",
+                            "safeName": "FolderD"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "folder-d",
+                        "camelCase": {
+                            "unsafeName": "folderD",
+                            "safeName": "folderD"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "folder_d",
+                            "safeName": "folder_d"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FOLDER_D",
+                            "safeName": "FOLDER_D"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "FolderD",
+                            "safeName": "FolderD"
+                        }
+                    }
+                ],
+                "file": null
+            },
+            "service": null,
+            "types": [],
+            "errors": [],
+            "subpackages": [
+                "subpackage_folder-d/service"
+            ],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
+        "subpackage_folder-d/service": {
+            "name": {
+                "originalName": "service",
+                "camelCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "snakeCase": {
+                    "unsafeName": "service",
+                    "safeName": "service"
+                },
+                "screamingSnakeCase": {
+                    "unsafeName": "SERVICE",
+                    "safeName": "SERVICE"
+                },
+                "pascalCase": {
+                    "unsafeName": "Service",
+                    "safeName": "Service"
+                }
+            },
+            "fernFilepath": {
+                "allParts": [
+                    {
+                        "originalName": "folder-d",
+                        "camelCase": {
+                            "unsafeName": "folderD",
+                            "safeName": "folderD"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "folder_d",
+                            "safeName": "folder_d"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FOLDER_D",
+                            "safeName": "FOLDER_D"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "FolderD",
+                            "safeName": "FolderD"
+                        }
+                    },
+                    {
+                        "originalName": "service",
+                        "camelCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "service",
+                            "safeName": "service"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "SERVICE",
+                            "safeName": "SERVICE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Service",
+                            "safeName": "Service"
+                        }
+                    }
+                ],
+                "packagePath": [
+                    {
+                        "originalName": "folder-d",
+                        "camelCase": {
+                            "unsafeName": "folderD",
+                            "safeName": "folderD"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "folder_d",
+                            "safeName": "folder_d"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "FOLDER_D",
+                            "safeName": "FOLDER_D"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "FolderD",
+                            "safeName": "FolderD"
+                        }
+                    }
+                ],
+                "file": {
+                    "originalName": "service",
+                    "camelCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "service",
+                        "safeName": "service"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "SERVICE",
+                        "safeName": "SERVICE"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "Service",
+                        "safeName": "Service"
+                    }
+                }
+            },
+            "service": "service_folder-d/service",
+            "types": [
+                "type_folder-d/service:Response"
+            ],
+            "errors": [],
+            "subpackages": [],
+            "navigationConfig": null,
+            "webhooks": null,
+            "websocket": null,
+            "hasEndpointsInTree": true,
+            "docs": null
+        },
         "subpackage_foo": {
             "name": {
                 "originalName": "foo",
@@ -3829,6 +4785,7 @@
             "subpackage_folder-a",
             "subpackage_folder-b",
             "subpackage_folder-c",
+            "subpackage_folder-d",
             "subpackage_foo"
         ],
         "webhooks": null,

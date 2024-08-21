@@ -6,11 +6,10 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	core "github.com/audiences/fern/core"
-	folderb "github.com/audiences/fern/folderb"
 )
 
 type Response struct {
-	Foo *folderb.Foo `json:"foo,omitempty" url:"foo,omitempty"`
+	Foo string `json:"foo" url:"foo"`
 
 	extraProperties map[string]interface{}
 }

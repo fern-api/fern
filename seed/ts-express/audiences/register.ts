@@ -20,6 +20,6 @@ export function register(
     }
 ): void {
     (expressApp as any).use("/", services.folderA.service.toRouter());
-    (expressApp as any).use("/", services.folderD.service.toRouter());
+    (expressApp as any).use("/partner-path", services.folderD.service.toRouter());
     (expressApp as any).use("/", services.foo.toRouter());
 }

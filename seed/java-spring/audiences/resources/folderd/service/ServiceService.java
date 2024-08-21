@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import resources.folderd.service.types.Response;
 
 @RequestMapping(
-    path = "/"
+    path = "/partner-path"
 )
 public interface ServiceService {
   @GetMapping(

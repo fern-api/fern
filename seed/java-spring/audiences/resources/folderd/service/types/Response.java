@@ -8,28 +8,25 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.annotation.Nulls;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
-import java.util.Optional;
-import resources.folderb.common.types.Foo;
 
 @JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Response.Builder.class
 )
 public final class Response {
-  private final Optional<Foo> foo;
+  private final String foo;
 
-  private Response(Optional<Foo> foo) {
+  private Response(String foo) {
     this.foo = foo;
   }
 
   @JsonProperty("foo")
-  public Optional<Foo> getFoo() {
+  public String getFoo() {
     return foo;
   }
 
@@ -53,38 +50,43 @@ public final class Response {
     return ObjectMappers.stringify(this);
   }
 
-  public static Builder builder() {
+  public static FooStage builder() {
     return new Builder();
+  }
+
+  public interface FooStage {
+    _FinalStage foo(String foo);
+
+    Builder from(Response other);
+  }
+
+  public interface _FinalStage {
+    Response build();
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder {
-    private Optional<Foo> foo = Optional.empty();
+  public static final class Builder implements FooStage, _FinalStage {
+    private String foo;
 
     private Builder() {
     }
 
+    @java.lang.Override
     public Builder from(Response other) {
       foo(other.getFoo());
       return this;
     }
 
-    @JsonSetter(
-        value = "foo",
-        nulls = Nulls.SKIP
-    )
-    public Builder foo(Optional<Foo> foo) {
+    @java.lang.Override
+    @JsonSetter("foo")
+    public _FinalStage foo(String foo) {
       this.foo = foo;
       return this;
     }
 
-    public Builder foo(Foo foo) {
-      this.foo = Optional.ofNullable(foo);
-      return this;
-    }
-
+    @java.lang.Override
     public Response build() {
       return new Response(foo);
     }

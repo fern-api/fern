@@ -64,11 +64,13 @@
               "request": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}",
+                  "raw": "{{baseUrl}}/partner-path",
                   "host": [
                     "{{baseUrl}}"
                   ],
-                  "path": [],
+                  "path": [
+                    "partner-path"
+                  ],
                   "query": [],
                   "variable": []
                 },

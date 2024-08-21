@@ -17,7 +17,7 @@
         {
             "example_identifier": "default",
             "id": {
-                "path": "/",
+                "path": "/partner-path",
                 "method": "GET",
                 "identifier_override": "endpoint_folder-d/service.getDirectThread"
             },
