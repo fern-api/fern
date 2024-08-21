@@ -24,11 +24,10 @@ This will create the following folder structure in your project:
 ```yaml
 fern/
 ├─ fern.config.json # root-level configuration
-└─ api/ # your API
-  ├─ generators.yml # generators you're using
-  └─ definition/
-    ├─ api.yml  # API-level configuration
-    └─ imdb.yml # endpoints, types, and errors
+├─ generators.yml # generators you're using
+└─ definition/
+  ├─ api.yml  # API-level configuration
+  └─ imdb.yml # endpoints, types, and errors
 ```
 
 ## Definition File
@@ -38,7 +37,7 @@ Each **Fern Definition** file may define:
 - **[Custom types](/learn/api-definition/fern/types)**. Use **custom types** to build your data model.
 - **[Services](/learn/api-definition/fern/services)**. A **service** is a set of related REST endpoints.
 - **[Errors](/learn/api-definition/fern/errors)**. An **error** represents a failed (non-200) response from an endpoint.
-- **[Imports](/learn/api-definition/fern/imports)**. Use **imports** to import types across files.
+- **[Imports](/learn/api-definition/fern/imports)**. Use **imports** to share types across files.
 
 ```yml imdb.yml maxLines=0
 service:
