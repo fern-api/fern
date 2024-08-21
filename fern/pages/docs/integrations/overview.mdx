@@ -67,6 +67,27 @@ analytics:
     org-id: ${FULLSTORY_ORG_ID}
 ```
 
+### Environment Variables
+
+If your docs configuration is public, then we do not advise adding secret values directly to `docs.yml`.
+Instead, you can reference an environment variable by using the syntax `${VARIABLE_NAME}`.
+
+<Note> 
+If you are using GitHub Workflows to trigger docs generation, you must make sure that the environment variables 
+are avilable in the environment.
+
+```yaml {4}
+- name: Publish Docs
+  env:
+    FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+    POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+  run: |
+    npm install -g fern-api
+    fern generate --docs
+```
+
+</Note>
+
 ## Postman
 
 <Info>
