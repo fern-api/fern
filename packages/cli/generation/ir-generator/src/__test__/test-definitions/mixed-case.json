@@ -3193,7 +3193,7 @@
                             "example": {
                                 "id": "625e8d23ceadb5d4efb47ccef83f3feebb7acd8051c753945c49f3c20f3dc769",
                                 "name": null,
-                                "url": "resource/rsc-xyz",
+                                "url": "/resource/rsc-xyz",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {

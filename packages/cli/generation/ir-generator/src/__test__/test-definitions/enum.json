@@ -2107,7 +2107,7 @@
                             "example": {
                                 "id": "8bd0cc2d491bc2532b8eaa5a1d28f4cf40f9fdb334d002b09fcdf3028c0176f0",
                                 "name": null,
-                                "url": "path/>/less_than/red/red",
+                                "url": "/path/>/less_than/red/red",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {

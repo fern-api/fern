@@ -4401,7 +4401,7 @@
                             "example": {
                                 "id": "dd252617730e8943b3c64efe59a54461bf566c68339330ad2b2c820e103934cb",
                                 "name": null,
-                                "url": "path/123",
+                                "url": "/path/123",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {

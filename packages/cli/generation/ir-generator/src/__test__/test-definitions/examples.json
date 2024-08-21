@@ -20618,7 +20618,7 @@
                             "example": {
                                 "id": "c350dcf828e0a94b5486f95f50d1c03e945db08bff95ded6227a5c8a87b22115",
                                 "name": null,
-                                "url": "file/notification/notification-hsy129x",
+                                "url": "/file/notification/notification-hsy129x",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [],
                                 "servicePathParameters": [
@@ -22083,7 +22083,7 @@
                             "example": {
                                 "id": "eecea8b883858a43d2af237faf86f4756c61c396737760502aab20cc30eedcc0",
                                 "name": null,
-                                "url": "file/file.txt",
+                                "url": "/file/file.txt",
                                 "rootPathParameters": [],
                                 "endpointPathParameters": [
                                     {
