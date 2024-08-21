@@ -73,7 +73,7 @@ export function convertExampleEndpointCall({
         id: example.name ?? hashJSON(example),
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
-        url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
+        url: buildUrl({ file, service, endpoint, example, pathParams: convertedPathParameters }),
         ...convertedPathParameters,
         ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file, workspace }),
         queryParameters:
@@ -560,17 +560,22 @@ function convertExampleResponseBody({
 }
 
 function buildUrl({
+    file,
     service,
     endpoint,
     example,
     pathParams
 }: {
+    file: FernFileContext;
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
     pathParams: Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">;
 }): string {
     let url = service["base-path"] + endpoint.path;
+    if (file.rootApiFile["base-path"] != null) {
+        url = `${file.rootApiFile["base-path"]}${url}`;
+    }
     if (example["path-parameters"] != null) {
         for (const parameter of [
             ...pathParams.endpointPathParameters,

@@ -17595,7 +17595,7 @@ exports[`fdr test definitions > package-yml 1`] = `
             "description": undefined,
             "headers": {},
             "name": undefined,
-            "path": "/",
+            "path": "/id-ksfd9c1/",
             "pathParameters": {
               "id": "id-ksfd9c1",
             },
@@ -17726,7 +17726,7 @@ exports[`fdr test definitions > package-yml 1`] = `
               "description": undefined,
               "headers": {},
               "name": undefined,
-              "path": "//id-219xca8",
+              "path": "/id-a2ijs82//id-219xca8",
               "pathParameters": {
                 "id": "id-a2ijs82",
                 "nestedId": "id-219xca8",
