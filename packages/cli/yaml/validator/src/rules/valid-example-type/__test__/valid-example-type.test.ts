@@ -55,6 +55,24 @@ describe("valid-example-type", () => {
             {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be a date. Example is: "2024-01-35"',
+                nodePath: ["types", "DateAlias", { key: "examples", arrayIndex: 1 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be a date. Example is: "2024-01-01T00:00:00Z"',
+                nodePath: ["types", "DateAlias", { key: "examples", arrayIndex: 2 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be a date. Example is: "2024-1-1"',
+                nodePath: ["types", "DateAlias", { key: "examples", arrayIndex: 3 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
                 message: 'Expected example to be an ISO 8601 timestamp. Example is: "4/13/2002"',
                 nodePath: ["types", "DateTimeAlias", { key: "examples", arrayIndex: 0 }]
             },
