@@ -9,7 +9,7 @@ publish:
     context: .
 test:
   docker:
-    file: fernapi/fern-ruby-model:latest
+    image: fernapi/fern-ruby-model:latest
     command: pnpm --filter @fern-api/fern-ruby-model dockerTagLatest
 language: ruby
 generatorType: model
