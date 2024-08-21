@@ -25,6 +25,8 @@ const ISO_8601_REGEX =
 // https://ihateregex.io/expr/uuid/
 const UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
 
+const RFC_3339_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+
 export function validateTypeReferenceExample({
     rawTypeReference,
     example,
@@ -422,7 +424,7 @@ const validateDateTime = createValidator(
     "an ISO 8601 timestamp"
 );
 const validateDate = createValidator(
-    (example) => typeof example === "string" && example.length === 10 && ISO_8601_REGEX.test(example),
+    (example) => typeof example === "string" && RFC_3339_DATE_REGEX.test(example) && ISO_8601_REGEX.test(example),
     "a date"
 );
 
