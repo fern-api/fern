@@ -9,9 +9,16 @@ import * as SeedTrace from "../../../../index";
  *     {
  *         workspaceRunDetails: {
  *             exceptionV2: {
- *                 type: "generic"
+ *                 type: "generic",
+ *                 exceptionType: "string",
+ *                 exceptionMessage: "string",
+ *                 exceptionStacktrace: "string"
  *             },
- *             exception: {},
+ *             exception: {
+ *                 exceptionType: "string",
+ *                 exceptionMessage: "string",
+ *                 exceptionStacktrace: "string"
+ *             },
  *             stdout: "string"
  *         },
  *         traceResponses: [{
@@ -21,8 +28,24 @@ import * as SeedTrace from "../../../../index";
  *                     type: "integerValue",
  *                     value: 1
  *                 },
- *                 expressionLocation: {},
- *                 stack: {},
+ *                 expressionLocation: {
+ *                     start: 1,
+ *                     offset: 1
+ *                 },
+ *                 stack: {
+ *                     numStackFrames: 1,
+ *                     topStackFrame: {
+ *                         methodName: "string",
+ *                         lineNumber: 1,
+ *                         scopes: [{
+ *                                 variables: {
+ *                                     "string": {
+ *                                         "key": "value"
+ *                                     }
+ *                                 }
+ *                             }]
+ *                     }
+ *                 },
  *                 stdout: "string"
  *             }]
  *     }
