@@ -31,6 +31,13 @@ types:
       - value: true
       - value: 100
       - value: false
+  DateAlias:
+    type: date
+    examples:
+      - value: "2024-01-01"
+      - value: "2024-01-35"
+      - value: "2024-01-01T00:00:00Z"
+      - value: "2024-1-1"
   DateTimeAlias:
     type: datetime
     examples:
@@ -38,6 +45,7 @@ types:
       - value: "2022-12-06T23:13:15+00:00"
       - value: "2022-12-06T23:13:15Z"
       - value: "20221206T231315Z"
+      - value: "2024-01-01"
   UnknownAlias:
     type: unknown
     examples:
