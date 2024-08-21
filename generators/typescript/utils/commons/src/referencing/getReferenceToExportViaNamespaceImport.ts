@@ -31,7 +31,9 @@ export function getReferenceToExportViaNamespaceImport({
         importsManager.addImport(
             getRelativePathAsModuleSpecifierTo({
                 from: referencedIn,
-                to: convertExportedFilePathToFilePath(filepathToNamespaceImport)
+                to: convertExportedFilePathToFilePath(filepathToNamespaceImport),
+                appendBarrelFileToImport: importsManager.useJsExtensions && filepathToNamespaceImport.file == null,
+                useJsExtension: importsManager.useJsExtensions
             }),
             { namespaceImport }
         );

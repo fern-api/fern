@@ -22,6 +22,11 @@ type PathToDirectory = string;
 
 export class ExportsManager {
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
+    private useJsExtensions: boolean;
+
+    constructor({ useJsExtensions = false }: { useJsExtensions?: boolean } = {}) {
+        this.useJsExtensions = useJsExtensions;
+    }
 
     public addExport(
         from: SourceFile | string,
@@ -39,7 +44,9 @@ export class ExportsManager {
             directory: pathToDirectory,
             moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                 from: pathToDirectory,
-                to: fromPath
+                to: fromPath,
+                appendBarrelFileToImport: false,
+                useJsExtension: this.useJsExtensions
             }),
             exportDeclaration,
             addExportTypeModifier
@@ -63,7 +70,9 @@ export class ExportsManager {
                 directory: directoryFilepath,
                 moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                     from: directoryFilepath,
-                    to: nextDirectoryPath
+                    to: nextDirectoryPath,
+                    appendBarrelFileToImport: this.useJsExtensions,
+                    useJsExtension: this.useJsExtensions
                 }),
                 exportDeclaration: part.exportDeclaration,
                 addExportTypeModifier
@@ -75,7 +84,9 @@ export class ExportsManager {
                         directory: directoryFilepath,
                         moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                             from: directoryFilepath,
-                            to: path.join(nextDirectoryPath, relativeFilePath)
+                            to: path.join(nextDirectoryPath, relativeFilePath),
+                            appendBarrelFileToImport: this.useJsExtensions,
+                            useJsExtension: this.useJsExtensions
                         }),
                         exportDeclaration,
                         addExportTypeModifier

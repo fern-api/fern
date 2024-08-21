@@ -4,15 +4,15 @@ dockerCommand: pnpm --filter @fern-typescript/express-generator-cli dockerTagLoc
 language: typescript
 generatorType: Server
 defaultOutputMode: local_files
-defaultCustomConfig: 
+defaultCustomConfig:
   outputSourceFiles: true
-local: 
+local:
   workingDirectory: generators/typescript
-  buildCommand: 
-    - pnpm --filter @fern-typescript/express-generator-cli compile 
+  buildCommand:
+    - pnpm --filter @fern-typescript/express-generator-cli compile
     - pnpm --filter @fern-typescript/express-generator-cli build
   runCommand: node express/cli/dist/cli.cjs
-  env: 
+  env:
     NODE_ENV: test
 fixtures:
   trace:
@@ -27,13 +27,13 @@ fixtures:
     - customConfig:
         outputSourceFiles: false
       outputFolder: output-compiled
-    - customConfig: 
+    - customConfig:
         skipRequestValidation: true
       outputFolder: skip-request-validation
-    - customConfig: 
+    - customConfig:
         skipResponseValidation: true
       outputFolder: skip-response-validation
-    - customConfig: 
+    - customConfig:
         requestValidationStatusCode: 400
       outputFolder: validation-status-code
   exhaustive:
@@ -50,6 +50,9 @@ fixtures:
         includeUtilsOnUnionMembers: true
         includeOtherInUnionTypes: true
       outputFolder: union-utils
+    - customConfig:
+        useJsFileExtensionsOnImports: true
+      outputFolder: js-file-extensions
   mixed-case:
     - customConfig: null
       outputFolder: no-custom-config
@@ -65,5 +68,3 @@ allowedFailures:
   - streaming
   - streaming-parameter
   - server-sent-events
-
-

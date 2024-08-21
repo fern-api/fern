@@ -45,13 +45,15 @@ export function getReferenceToExportFromRoot({
     if (firstDirectory?.exportDeclaration?.defaultExport != null) {
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
-            to: convertExportedDirectoryPathToFilePath([])
+            to: convertExportedDirectoryPathToFilePath([]),
+            appendBarrelFileToImport: true,
+            useJsExtension: importsManager.useJsExtensions
         });
 
         const { recommendedImportName } = firstDirectory.exportDeclaration.defaultExport;
 
         addImport = () => {
-            importsManager.addImport(`${moduleSpecifier}/index`, { defaultImport: recommendedImportName });
+            importsManager.addImport(moduleSpecifier, { defaultImport: recommendedImportName });
         };
 
         prefix = ts.factory.createIdentifier(recommendedImportName);
@@ -66,11 +68,13 @@ export function getReferenceToExportFromRoot({
             to:
                 firstDirectory != null
                     ? convertExportedDirectoryPathToFilePath([firstDirectory])
-                    : convertExportedFilePathToFilePath(exportedFromPath)
+                    : convertExportedFilePathToFilePath(exportedFromPath),
+            appendBarrelFileToImport: true,
+            useJsExtension: importsManager.useJsExtensions
         });
 
         addImport = () => {
-            importsManager.addImport(`${moduleSpecifier}/index`, { namespaceImport });
+            importsManager.addImport(moduleSpecifier, { namespaceImport });
         };
 
         prefix = ts.factory.createIdentifier(namespaceImport);
@@ -108,12 +112,14 @@ export function getReferenceToExportFromRoot({
 
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
-            to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom)
+            to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom),
+            appendBarrelFileToImport: true,
+            useJsExtension: importsManager.useJsExtensions
         });
 
         const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;
         addImport = () => {
-            importsManager.addImport(`${moduleSpecifier}/index`, {
+            importsManager.addImport(moduleSpecifier, {
                 namedImports: [namedImport]
             });
         };

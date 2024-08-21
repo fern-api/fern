@@ -3,10 +3,14 @@ import { Directory, SourceFile } from "ts-morph";
 
 export function getRelativePathAsModuleSpecifierTo({
     from,
-    to
+    to,
+    appendBarrelFileToImport,
+    useJsExtension
 }: {
     from: Directory | SourceFile | string;
     to: Directory | SourceFile | string;
+    appendBarrelFileToImport: boolean;
+    useJsExtension: boolean;
 }): string {
     const parsedToFilePath = path.parse(getPath(to));
     const toFilePathWithoutExtension = path.join(parsedToFilePath.dir, parsedToFilePath.name);
@@ -21,6 +25,12 @@ export function getRelativePathAsModuleSpecifierTo({
     }
     if (moduleSpecifier.endsWith("/")) {
         moduleSpecifier = moduleSpecifier.slice(0, -1);
+    }
+    if (appendBarrelFileToImport) {
+        moduleSpecifier += "/index";
+    }
+    if (useJsExtension) {
+        moduleSpecifier += ".js";
     }
     return moduleSpecifier;
 }

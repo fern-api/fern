@@ -64,6 +64,7 @@ export declare namespace ExpressGenerator {
         skipRequestValidation: boolean;
         skipResponseValidation: boolean;
         requestValidationStatusCode: number;
+        useJsFileExtensionsOnImports: boolean;
     }
 }
 
@@ -111,7 +112,7 @@ export class ExpressGenerator {
         this.npmPackage = npmPackage;
         this.config = config;
 
-        this.exportsManager = new ExportsManager();
+        this.exportsManager = new ExportsManager({ useJsExtensions: config.useJsFileExtensionsOnImports });
         this.coreUtilitiesManager = new CoreUtilitiesManager();
 
         this.project = new Project({
@@ -428,7 +429,7 @@ export class ExpressGenerator {
         this.context.logger.debug(`Generating ${filepathStr}`);
 
         const sourceFile = this.rootDirectory.createSourceFile(filepathStr);
-        const importsManager = new ImportsManager();
+        const importsManager = new ImportsManager({ useJsExtensions: this.config.useJsFileExtensionsOnImports });
 
         run({ sourceFile, importsManager });
 

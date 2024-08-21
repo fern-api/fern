@@ -21,7 +21,9 @@ export function getDirectReferenceToExport({
 }): Reference {
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
-        to: convertExportedFilePathToFilePath(exportedFromPath)
+        to: convertExportedFilePathToFilePath(exportedFromPath),
+        appendBarrelFileToImport: importsManager.useJsExtensions && exportedFromPath.file == null,
+        useJsExtension: importsManager.useJsExtensions
     });
 
     const addImport = () => {
