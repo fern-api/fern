@@ -148,50 +148,50 @@ navigation:
             path: ./pages/sdks/features/forward-compatibility.mdx
           - page: Registry publishing
             path: ./pages/sdks/features/publish-to-registries.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: Auto-Pagination
             path: ./pages/sdks/features/auto-pagination.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: OAuth token refresh
             path: ./pages/sdks/features/oauth.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: Retries with backoff
             path: ./pages/sdks/features/retries-with-backoff.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: Webhook signature verification
             path: ./pages/sdks/features/webhook-signature-verification.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: Idempotency headers
             path: ./pages/sdks/features/idempotency-headers.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: Server-Sent events
             path: ./pages/sdks/features/server-sent-events.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: Integration tests
             path: ./pages/sdks/features/integration-tests.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: Code Snippets
             path: ./pages/sdks/features/code-snippets.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: Augment with custom code
             path: ./pages/sdks/features/augment-with-custom-code.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: Merging multiple APIs
             path: ./pages/sdks/features/merging-multiple-apis.mdx
-            icon: pro
+            icon: fa-regular fa-pro
           - page: WebSockets
             path: ./pages/sdks/features/websockets.mdx
-            icon: pro
-          #   icon: pro
+            icon: fa-regular fa-pro
+          #   icon: fa-regular fa-pro
           # - page: Object oriented SDKs
           #   path: ./pages/sdks/features/dummy.mdx
-          #   icon: pro
+          #   icon: fa-regular fa-pro
           # - page: Polling
           #   path: ./pages/sdks/features/dummy.mdx
-          #   icon: pro
+          #   icon: fa-regular fa-pro
           # - page: GitHub integration
           #   path: ./pages/sdks/features/dummy.mdx
-          #   icon: pro
+          #   icon: fa-regular fa-pro
       - section: Package Managers
         contents:
           - page: NPM
@@ -217,13 +217,16 @@ navigation:
         contents:
           - page: Quickstart
             slug: quickstart
-            path: ./pages/docs/introduction/quickstart.mdx
-          - page: Showcase 
-            slug: showcase
-            path: ./pages/docs/introduction/showcase.mdx
+            path: ./pages/docs/getting-started/quickstart.mdx
+            icon: fa-regular fa-rocket
+          - page: Development
+            slug: development
+            path: ./pages/docs/getting-started/development.mdx
+            icon: fa-regular fa-terminal
           - page: Project Structure 
             slug: project-structure
-            path: ./pages/docs/introduction/project-structure.mdx
+            path: ./pages/docs/getting-started/project-structure.mdx   
+            icon: fa-regular fa-map      
 
       - section: Building Your Docs 
         contents: 
@@ -335,7 +338,7 @@ navigation:
             icon: "rectangle-code"
           - page: Steps
             path: ./pages/docs/components/steps.mdx
-            icon: "arrow-progress"
+            icon: "arrow-fa-regular fa-progress"
             slug: steps
           - page: Frames
             path: ./pages/docs/components/frames.mdx
