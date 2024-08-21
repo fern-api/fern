@@ -3,6 +3,7 @@ display-name: Audiences API
 audiences:
   - public
   - private
+  - partner
 environments:
   environment-a:
     url: https://api.example.a.com

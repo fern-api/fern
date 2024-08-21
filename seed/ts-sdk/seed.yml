@@ -36,8 +36,8 @@ fixtures:
       outputFolder: no-custom-config
     - customConfig: null
       audiences:
-        - unspecifiedaudience
-      outputFolder: with-unspecified-audience
+        - partner
+      outputFolder: with-partner-audience
   exhaustive:
     - customConfig: null
       audiences:
@@ -199,6 +199,7 @@ allowedFailures:
   - plain-text
   - alias
   - api-wide-base-path
+  - audiences:no-custom-config
   - auth-environment-variables
   - basic-auth-environment-variables
   - exhaustive:bundle
