@@ -16903,7 +16903,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                             "example": {
                                 "id": "0ec9625807680a71388bf490199238a7c22569a5bf7092901fcb77bdd393e496",
                                 "name": null,
-                                "url": "/movies",
+                                "url": "/test/root/movies",
                                 "rootPathParameters": [
                                     {
                                         "name": {
@@ -17386,7 +17386,7 @@ exports[`ir > {"name":"simple","audiences":["test"]} 1`] = `
                             "example": {
                                 "id": "624277beb517e6d1281e37e2781b35851d2d5de808ab821d6bad4c0917b014a5",
                                 "name": null,
-                                "url": "/movies",
+                                "url": "/test/root/movies",
                                 "rootPathParameters": [
                                     {
                                         "name": {
@@ -27829,7 +27829,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "example": {
                                 "id": "0ec9625807680a71388bf490199238a7c22569a5bf7092901fcb77bdd393e496",
                                 "name": null,
-                                "url": "/movies",
+                                "url": "/test/root/movies",
                                 "rootPathParameters": [
                                     {
                                         "name": {
@@ -28312,7 +28312,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "example": {
                                 "id": "624277beb517e6d1281e37e2781b35851d2d5de808ab821d6bad4c0917b014a5",
                                 "name": null,
-                                "url": "/movies",
+                                "url": "/test/root/movies",
                                 "rootPathParameters": [
                                     {
                                         "name": {
@@ -30806,7 +30806,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "example": {
                                 "id": "b631e6a0d36395e53918c8b8aa048cf1bfe8180757f41402426ec3c109737ddd",
                                 "name": null,
-                                "url": "/movies/id-123",
+                                "url": "/test/root/movies/id-123",
                                 "rootPathParameters": [
                                     {
                                         "name": {
@@ -31465,7 +31465,7 @@ exports[`ir > {"name":"simple"} 1`] = `
                             "example": {
                                 "id": "e0f04d26bcd1b030581f6d67cbd9d4be232fc0bc43bad08ffb1adb038ecbce8f",
                                 "name": null,
-                                "url": "/movies/id-123",
+                                "url": "/test/root/movies/id-123",
                                 "rootPathParameters": [
                                     {
                                         "name": {

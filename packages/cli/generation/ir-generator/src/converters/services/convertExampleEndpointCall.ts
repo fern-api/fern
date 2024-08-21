@@ -32,6 +32,7 @@ import {
 import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
 import { getQueryParameterName } from "./convertQueryParameter";
+import urlJoin from "url-join";
 
 function hashJSON(obj: unknown): string {
     const jsonString = JSON.stringify(obj);
@@ -73,7 +74,7 @@ export function convertExampleEndpointCall({
         id: example.name ?? hashJSON(example),
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
-        url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
+        url: buildUrl({ file, service, endpoint, example, pathParams: convertedPathParameters }),
         ...convertedPathParameters,
         ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file, workspace }),
         queryParameters:
@@ -560,17 +561,19 @@ function convertExampleResponseBody({
 }
 
 function buildUrl({
+    file,
     service,
     endpoint,
     example,
     pathParams
 }: {
+    file: FernFileContext;
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
     pathParams: Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">;
 }): string {
-    let url = service["base-path"] + endpoint.path;
+    let url = urlJoin(file.rootApiFile["base-path"] ?? "", service["base-path"], endpoint.path);
     if (example["path-parameters"] != null) {
         for (const parameter of [
             ...pathParams.endpointPathParameters,
@@ -580,6 +583,12 @@ function buildUrl({
             // TODO: should we URL encode the value?
             url = url.replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`);
         }
+    }
+    // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42
+    url = url.replaceAll("//", "/");
+    // for backwards compatiblity we always make sure that the url stats with a slash
+    if (!url.startsWith("/")) {
+        url = `/${url}`;
     }
     return url;
 }

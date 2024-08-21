@@ -23,4 +23,4 @@ export { Set } from "./Set";
 export { Switch } from "./Switch";
 export { Ternary } from "./Ternary";
 export { TestClass } from "./TestClass";
-export { Type } from "./Type";
+export { convertReadOnlyPrimitiveTypes, Type, VALID_READ_ONLY_MEMORY_TYPES } from "./Type";
