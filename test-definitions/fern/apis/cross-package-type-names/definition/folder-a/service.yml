@@ -5,8 +5,6 @@ imports:
 
 service:
   auth: false
-  audiences:
-    - public
   base-path: /
   endpoints:
     getDirectThread:

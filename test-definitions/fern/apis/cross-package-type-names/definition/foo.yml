@@ -8,9 +8,6 @@ service:
   base-path: /
   endpoints:
     find:
-      audiences:
-        - public
-        - private
       path: ""
       method: POST
       request:
@@ -18,14 +15,10 @@ service:
         query-parameters:
           optionalString:
             type: OptionalString
-            audiences:
-              - private
         body: 
           properties: 
             publicProperty: 
               type: optional<string>
-              audiences: 
-                - public
             privateProperty: optional<integer>
       response: ImportingType
 

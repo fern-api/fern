@@ -37,14 +37,7 @@ fixtures:
     - customConfig: null
       audiences:
         - partner
-      outputFolder: with-partner-audience
-  failing-audiences:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig: null
-      audiences:
-        - partner
-      outputFolder: with-partner-audience
+      outputFolder: with-partner-audience      
   exhaustive:
     - customConfig: null
       audiences:
