@@ -706,7 +706,7 @@ exports[`migrateFromV44ToV43 > snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "//list",
+              "url": "/list",
             },
             {
               "codeSamples": null,
@@ -1542,7 +1542,7 @@ exports[`migrateFromV44ToV43 > snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "//list/stream",
+              "url": "/list/stream",
             },
             {
               "codeSamples": null,
@@ -1830,7 +1830,7 @@ exports[`migrateFromV44ToV43 > snapshot 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "//list/sse",
+              "url": "/list/sse",
             },
             {
               "codeSamples": null,
