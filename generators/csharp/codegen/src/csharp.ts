@@ -127,6 +127,8 @@ export {
     type Argument,
     type Arguments,
     type NamedArgument,
-    type UnnamedArgument
+    type UnnamedArgument,
+    VALID_READ_ONLY_MEMORY_TYPES,
+    convertReadOnlyPrimitiveTypes
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";

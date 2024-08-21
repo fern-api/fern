@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`fern generator list > fern generator list 1`] = `
+"FERN_DEFAULT:
+  local:
+    - fernapi/fern-typescript-node-sdk"
+`;
