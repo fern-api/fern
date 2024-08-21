@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedMixedCase.Core;
 
 #nullable enable
@@ -15,7 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task<object> GetResourceAsync(string resourceId, RequestOptions? options = null)
+    public async Task<object> GetResourceAsync(
+        string resourceId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,7 +29,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Get,
                 Path = $"/resource/{resourceId}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -48,7 +54,8 @@ public partial class ServiceClient
 
     public async Task<IEnumerable<object>> ListResourcesAsync(
         ListResourcesRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -62,7 +69,8 @@ public partial class ServiceClient
                 Path = "/resource",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

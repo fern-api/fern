@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedIdempotencyHeaders.Core;
 
@@ -18,7 +19,8 @@ public partial class PaymentClient
 
     public async Task<string> CreateAsync(
         CreatePaymentRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -29,7 +31,8 @@ public partial class PaymentClient
                 Path = "/payment",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -51,7 +54,11 @@ public partial class PaymentClient
         );
     }
 
-    public async Task DeleteAsync(string paymentId, RequestOptions? options = null)
+    public async Task DeleteAsync(
+        string paymentId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -60,7 +67,8 @@ public partial class PaymentClient
                 Method = HttpMethod.Delete,
                 Path = $"/payment/{paymentId}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedErrorProperty.Core;
 
 #nullable enable
@@ -18,7 +19,10 @@ public partial class PropertyBasedErrorClient
     /// <summary>
     /// GET request that always throws an error
     /// </summary>
-    public async Task<string> ThrowErrorAsync(RequestOptions? options = null)
+    public async Task<string> ThrowErrorAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -27,7 +31,8 @@ public partial class PropertyBasedErrorClient
                 Method = HttpMethod.Get,
                 Path = "property-based-error",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

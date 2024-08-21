@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedNurseryApi.Core;
 
@@ -15,7 +16,11 @@ public partial class PackageClient
         _client = client;
     }
 
-    public async Task TestAsync(TestRequest request, RequestOptions? options = null)
+    public async Task TestAsync(
+        TestRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var _query = new Dictionary<string, object>();
         _query["for"] = request.For;
@@ -27,7 +32,8 @@ public partial class PackageClient
                 Path = "",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

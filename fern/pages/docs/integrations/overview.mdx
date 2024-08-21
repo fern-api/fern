@@ -1,0 +1,75 @@
+---
+title: "Integrations"
+description: "Integrate with third party platforms for analytics, support, etc."
+---
+
+<CardGroup cols={2}>
+
+<Card
+  title="PostHog"
+  href="/learn/docs/integrations/analytics/posthog"
+  horizontal
+  icon={<img src="https://cdn.brandfetch.io/id2veLU_gI/idG9S94wXO.svg" />}
+  iconSize={12}
+/>
+
+<Card
+  title="Segment"
+  href="/learn/docs/integrations/analytics/segment"
+  horizontal
+  icon={
+    <img src="https://cdn.brandfetch.io/idiousYjQz/theme/dark/symbol.svg?k=id64Mup7ac&t=1717151164256?t=1717151164256" />
+  }
+  iconSize={12}
+/>
+
+<Card
+  title="FullStory"
+  href="/learn/docs/integrations/analytics/fullstory"
+  horizontal
+  icon={<img src="https://cdn.brandfetch.io/idRtIBDum6/w/400/h/400/theme/dark/icon.jpeg" />}
+  iconSize={12}
+/>
+
+<Card
+  title="Intercom"
+  href="/learn/docs/integrations/support/intercom"
+  horizontal
+  icon={<img src="https://cdn.brandfetch.io/idYJNDWF1m/theme/dark/symbol.svg" />}
+  iconSize={12}
+/>
+
+<Card
+  title="Postman"
+  href="/learn/docs/integrations/postman"
+  horizontal
+  icon={<img src="https://seeklogo.com/images/P/postman-logo-0087CA0D15-seeklogo.com.png" />}
+  iconSize={12}
+/>
+
+</CardGroup>
+
+## Enabling Analytics
+
+You can define your analytics configuration in `docs.yml`. You only need to include entries for the platforms you want to connect.
+
+```yaml docs.yml
+analytics:
+  posthog:
+    api-key: ${POSTOHG_API_KEY}
+    endpoint: https://self.hosted.posthog.com/
+  segment:
+    write-key: ${SEGMENT_WRITE_KEY}
+  intercom:
+    app-id: ${INTERCOM_APP_ID}
+    endpoint: https://intercom.custom-instance.com/
+  fullstory:
+    org-id: ${FULLSTORY_ORG_ID}
+```
+
+## Postman
+
+<Info>
+  The Postman integration is not configured in `docs.yml`. Check out this [page](/learn/docs/integrations/postman) to
+  learn more.
+</Info>

@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedValidation.Core;
 
 #nullable enable
@@ -20,7 +21,11 @@ public partial class SeedValidationClient
         );
     }
 
-    public async Task<Type> CreateAsync(CreateRequest request, RequestOptions? options = null)
+    public async Task<Type> CreateAsync(
+        CreateRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -30,7 +35,8 @@ public partial class SeedValidationClient
                 Path = "/create",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -52,7 +58,11 @@ public partial class SeedValidationClient
         );
     }
 
-    public async Task<Type> GetAsync(GetRequest request, RequestOptions? options = null)
+    public async Task<Type> GetAsync(
+        GetRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var _query = new Dictionary<string, object>();
         _query["decimal"] = request.Decimal.ToString();
@@ -66,7 +76,8 @@ public partial class SeedValidationClient
                 Path = "",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
