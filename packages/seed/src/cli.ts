@@ -257,7 +257,7 @@ function addPublishCommands(cli: Argv) {
                         })
                         .check((argv) => {
                             return (
-                                // Either version or versionsFile and previousVersionsFile must be provided
+                                // Check: Either version or versionsFile and previousVersionsFile must be provided
                                 argv.version || (argv.versionsFile && argv.previousVersionsFile)
                             );
                         }),

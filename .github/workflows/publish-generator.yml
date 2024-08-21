@@ -1,0 +1,137 @@
+name: publish-generators
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "generators/openapi/versions.yml"
+      - "generators/python/sdk/versions.yml"
+      - "generators/python/fastapi/versions.yml"
+      - "generators/python/pydantic/versions.yml"
+      - "generators/postman/versions.yml"
+      - "generators/ruby/model/versions.yml"
+      - "generators/ruby/sdk/versions.yml"
+      - "generators/java/sdk/versions.yml"
+      - "generators/java/model/versions.yml"
+      - "generators/java/spring/versions.yml"
+      - "generators/typescript/sdk/versions.yml"
+      - "generators/typescript/express/versions.yml"
+      - "generators/go/versions.yml"
+      - "generators/csharp/sdk/versions.yml"
+      - "generators/csharp/model/versions.yml"
+
+env:
+  DOCKER_BUILDKIT: 1
+
+jobs:
+  versions-changed:
+    runs-on: ubuntu-latest
+    outputs:
+      generators: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          # Pass in the list of files that have changed
+          list-files: json
+          filters: |
+            openapi: 'generators/openapi/versions.yml'
+            python-sdk: 'generators/python/sdk/versions.yml'
+            fastapi: 'generators/python/fastapi/versions.yml'
+            pydantic: 'generators/python/pydantic/versions.yml'
+            postman: 'generators/postman/versions.yml'
+            ruby-model: 'generators/ruby/model/versions.yml'
+            ruby-sdk: 'generators/ruby/sdk/versions.yml'
+            java-sdk: 'generators/java/sdk/versions.yml'
+            java-model: 'generators/java/model/versions.yml'
+            spring: 'generators/java/spring/versions.yml'
+            ts-sdk: 'generators/typescript/sdk/versions.yml'
+            ts-express: 'generators/typescript/express/versions.yml'
+            go-sdk: 'generators/go/versions.yml'
+            go-model: 'generators/go/versions.yml'
+            go-fiber: 'generators/go/versions.yml'
+            csharp-sdk: 'generators/csharp/sdk/versions.yml'
+            csharp-model: 'generators/csharp/model/versions.yml'
+
+  publish-changed-generators:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    strategy:
+      matrix:
+        generator: ${{ fromJSON(needs.versions-changed.outputs.generators) }}
+    steps:
+      - name: Checkout repo at current ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout repo at main
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          path: "main-repo-clone"
+
+      - name: Run publish
+        env:
+          DOCKER_USERNAME: fernapi
+          DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+        run: |
+          # This is wack and redundant, but the path filter Github Action above does not let you easily see 
+          # the modified file once in the matrix, you have to access it at the filter (e.g. output.openapi_files)
+          # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
+
+          if [ ${{ matrix.generator }} = "openapi" ]; then
+              VERSIONS_FILE="generators/openapi/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "python-sdk" ]; then
+              VERSIONS_FILE="generators/python/sdk/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "fastapi" ]; then
+              VERSIONS_FILE="generators/python/fastapi/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "pydantic" ]; then
+              VERSIONS_FILE="generators/python/pydantic/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "postman" ]; then
+              VERSIONS_FILE="generators/postman/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "ruby-model" ]; then
+              VERSIONS_FILE="generators/ruby/model/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "ruby-sdk" ]; then
+              VERSIONS_FILE="generators/ruby/sdk/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "java-sdk" ]; then
+              VERSIONS_FILE="generators/java/sdk/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "java-model" ]; then
+              VERSIONS_FILE="generators/java/model/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "java-spring" ]; then
+              VERSIONS_FILE="generators/java/spring/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "ts-sdk" ]; then
+              VERSIONS_FILE="generators/typescript/sdk/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "ts-express" ]; then
+              VERSIONS_FILE="generators/typescript/express/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "go-sdk" ]; then
+              VERSIONS_FILE="generators/go/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "go-model" ]; then
+              VERSIONS_FILE="generators/go/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "go-fiber" ]; then
+              VERSIONS_FILE="generators/go/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "csharp-sdk" ]; then
+              VERSIONS_FILE="generators/csharp/sdk/versions.yml"
+
+          elif [ ${{ matrix.generator }} = "csharp-model" ]; then
+              VERSIONS_FILE="generators/csharp/model/versions.yml"
+          done
+
+          seed publish --generator ${{ matrix.generator }} --versions-file $VERSIONS_FILE --previous-versions-file main-repo-clone/$VERSIONS_FILE --log-level debug
