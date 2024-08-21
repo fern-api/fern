@@ -296,7 +296,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         });
         const arguments_ = [];
         for (const header of this.context.ir.headers) {
-            if (header.valueType.type === "container" && header.valueType.container.type === "optional") {
+            if (
+                header.valueType.type === "container" &&
+                (header.valueType.container.type === "optional" || header.valueType.container.type === "literal")
+            ) {
                 continue;
             }
             arguments_.push(csharp.codeblock(`"${header.name.name.screamingSnakeCase.safeName}"`));

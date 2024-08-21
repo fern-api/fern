@@ -10,9 +10,9 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { RawClient } from "./RawClient";
 import { WrappedRequestGenerator } from "../../wrapped-request/WrappedRequestGenerator";
-import { EndpointRequest } from "../request/EndpointRequest";
-import { createEndpointRequest } from "../request/EndpointRequestFactory";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType";
+import { getEndpointRequest } from "../utils/getEndpointRequest";
 
 export declare namespace EndpointGenerator {
     export interface Args {
@@ -53,7 +53,7 @@ export class HttpEndpointGenerator {
             serviceId
         });
         const parameters = [...nonEndpointParameters];
-        const request = this.getEndpointRequest({ endpoint, serviceId });
+        const request = getEndpointRequest({ context: this.context, endpoint, serviceId });
         if (request != null) {
             parameters.push(
                 csharp.parameter({
@@ -76,7 +76,7 @@ export class HttpEndpointGenerator {
                 initializer: "default"
             })
         );
-        const return_ = this.getEndpointReturnType({ endpoint });
+        const return_ = getEndpointReturnType({ context: this.context, endpoint });
         return csharp.method({
             name: this.context.getEndpointMethodName(endpoint),
             access: "public",
@@ -154,7 +154,7 @@ export class HttpEndpointGenerator {
         if (requestOptions != null) {
             args.push(requestOptions);
         }
-        this.getEndpointReturnType({ endpoint });
+        getEndpointReturnType({ context: this.context, endpoint });
         return new csharp.MethodInvocation({
             method: this.context.getEndpointMethodName(endpoint),
             arguments_: args,
@@ -206,24 +206,6 @@ export class HttpEndpointGenerator {
         return this.exampleGenerator.getSnippetForTypeReference(exampleRequestBody);
     }
 
-    private getEndpointRequest({
-        endpoint,
-        serviceId
-    }: {
-        endpoint: HttpEndpoint;
-        serviceId: ServiceId;
-    }): EndpointRequest | undefined {
-        if (endpoint.sdkRequest == null) {
-            return undefined;
-        }
-        return createEndpointRequest({
-            context: this.context,
-            endpoint,
-            serviceId,
-            sdkRequest: endpoint.sdkRequest
-        });
-    }
-
     private getNonEndpointArguments(example: ExampleEndpointCall): csharp.CodeBlock[] {
         const pathParameters = [
             ...example.rootPathParameters,
@@ -261,22 +243,6 @@ export class HttpEndpointGenerator {
             parameters,
             pathParameterReferences
         };
-    }
-
-    private getEndpointReturnType({ endpoint }: { endpoint: HttpEndpoint }): csharp.Type | undefined {
-        if (endpoint.response?.body == null) {
-            return undefined;
-        }
-        return endpoint.response.body._visit({
-            streamParameter: () => undefined,
-            fileDownload: () => undefined,
-            json: (reference) => {
-                return this.context.csharpTypeMapper.convert({ reference: reference.responseBodyType });
-            },
-            streaming: () => undefined,
-            text: () => csharp.Type.string(),
-            _other: () => undefined
-        });
     }
 
     private getEndpointErrorHandling({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock {

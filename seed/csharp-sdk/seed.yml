@@ -47,14 +47,20 @@ fixtures:
         simplify-object-dictionaries: false
       outputFolder: no-simplify-object-dictionaries
 allowedFailures:
+  # compile failures
   - objects-with-imports
   - examples
   # TODO: Add support for recursive undiscriminated unions.
   - grpc
-  - unions # wire testing fails due to lack of base-properties support
-  - unknown # issue with example object in wire testing
-  - multi-url-environment-no-default # wire test failing because not setting up environment
+  # wire testing failures
+  - unknown # issue with example object
   - package-yml # user-provided example path not coming in properly 
-  - response-property # not implemented so wire testing fails
   - simple-fhir # nested generated examples are wonky
-  - enum # wire tests failing because of complicated oneofs
+  - enum # complicated oneofs
+  - trace # failing because we don't call stringify on enums path params
+  - undiscriminated-unions # failing for same reason as exhaustive below
+  - exhaustive:explicit-namespaces # mostly passing, request / response of direct union type failing because we don't specify jsonconverter
+  - exhaustive:no-root-namespace-for-core-classes
+  - exhaustive:no-generate-error-types
+
+

@@ -83,8 +83,8 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.getTestNamespace()}.Utils`;
     }
 
-    public getWireTestNamespace(): string {
-        return `${this.getTestNamespace()}.Wire`;
+    public getMockServerTestNamespace(): string {
+        return `${this.getTestNamespace()}.Unit.MockServer`;
     }
 
     public hasGrpcEndpoints(): boolean {

@@ -20,7 +20,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
-export const WIRE_TEST_FOLDER = RelativeFilePath.of("Wire");
+export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
@@ -284,10 +284,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             : this.getCoreNamespace();
     }
 
-    public getBaseWireTestClassReference(): csharp.ClassReference {
+    public getBaseMockServerTestClassReference(): csharp.ClassReference {
         return csharp.classReference({
-            name: "BaseWireTest",
-            namespace: this.getWireTestNamespace()
+            name: "BaseMockServerTest",
+            namespace: this.getMockServerTestNamespace()
         });
     }
 

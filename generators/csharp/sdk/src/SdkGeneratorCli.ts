@@ -92,11 +92,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         for (const file of models) {
             context.project.addSourceFiles(file);
         }
-        const modelTests = generateModelTests({ context });
-        for (const file of modelTests) {
-            context.project.addTestFiles(file);
-        }
         if (context.config.writeUnitTests) {
+            const modelTests = generateModelTests({ context });
+            for (const file of modelTests) {
+                context.project.addTestFiles(file);
+            }
             const sdkTests = generateSdkTests({ context });
             for (const file of sdkTests) {
                 context.project.addTestFiles(file);
