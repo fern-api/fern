@@ -11,6 +11,7 @@
     { "path": "../commons/core-utils" },
     { "path": "../commons/fs-utils" },
     { "path": "../commons/logging-execa" },
-    { "path": "../ir-sdk" }
+    { "path": "../ir-sdk" },
+    { "path": "../cli/login" },
   ]
 }

@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedApiWideBasePath.Core;
 
@@ -20,7 +21,8 @@ public partial class ServiceClient
         string serviceParam,
         string resourceParam,
         int endpointParam,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -30,7 +32,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = $"/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedEnum.Core;
 
@@ -16,7 +17,11 @@ public partial class QueryParamClient
         _client = client;
     }
 
-    public async Task SendAsync(SendEnumAsQueryParamRequest request, RequestOptions? options = null)
+    public async Task SendAsync(
+        SendEnumAsQueryParamRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var _query = new Dictionary<string, object>();
         _query["operand"] = JsonSerializer.Serialize(request.Operand);
@@ -37,7 +42,8 @@ public partial class QueryParamClient
                 Path = "query",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -53,7 +59,8 @@ public partial class QueryParamClient
 
     public async Task SendListAsync(
         SendEnumListAsQueryParamRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -75,7 +82,8 @@ public partial class QueryParamClient
                 Path = "query-list",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

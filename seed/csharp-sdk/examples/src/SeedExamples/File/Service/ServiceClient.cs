@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExamples;
 using SeedExamples.Core;
 
@@ -22,7 +23,8 @@ public partial class ServiceClient
     public async Task<File> GetFileAsync(
         string filename,
         GetFileRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -32,7 +34,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Get,
                 Path = $"/file/{filename}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

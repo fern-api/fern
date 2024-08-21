@@ -8,6 +8,7 @@ import {
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 import { CoreClassReference } from "./CoreClassReference";
+import { PrimitiveTypeV1 } from "@fern-fern/ir-sdk/api";
 
 type InternalType =
     | Integer
@@ -27,6 +28,7 @@ type InternalType =
     | List
     | Set
     | Map
+    | KeyValuePair
     | Optional
     | Reference
     | OneOf
@@ -35,7 +37,7 @@ type InternalType =
     | CoreReference;
 
 interface Integer {
-    type: "integer";
+    type: "int";
 }
 
 interface Long {
@@ -55,7 +57,7 @@ interface String_ {
 }
 
 interface Boolean_ {
-    type: "boolean";
+    type: "bool";
 }
 
 interface Float {
@@ -108,6 +110,12 @@ interface Map {
     valueType: Type;
 }
 
+interface KeyValuePair {
+    type: "keyValuePair";
+    keyType: Type;
+    valueType: Type;
+}
+
 interface Optional {
     type: "optional";
     value: Type;
@@ -146,7 +154,7 @@ export class Type extends AstNode {
 
     public write(writer: Writer, parentType: Type | undefined = undefined): void {
         switch (this.internalType.type) {
-            case "integer":
+            case "int":
                 writer.write("int");
                 break;
             case "long":
@@ -161,7 +169,7 @@ export class Type extends AstNode {
             case "string":
                 writer.write("string");
                 break;
-            case "boolean":
+            case "bool":
                 writer.write("bool");
                 break;
             case "float":
@@ -183,15 +191,27 @@ export class Type extends AstNode {
                 writer.write("object");
                 break;
             case "array":
+                if (isReadOnlyMemoryType({ writer, value: this.internalType.value })) {
+                    this.writeReadOnlyMemoryType({ writer, value: this.internalType.value });
+                    break;
+                }
                 this.internalType.value.write(writer);
                 writer.write("[]");
                 break;
             case "listType":
+                if (isReadOnlyMemoryType({ writer, value: this.internalType.value })) {
+                    this.writeReadOnlyMemoryType({ writer, value: this.internalType.value });
+                    break;
+                }
                 writer.write("List<");
                 this.internalType.value.write(writer);
                 writer.write(">");
                 break;
             case "list":
+                if (isReadOnlyMemoryType({ writer, value: this.internalType.value })) {
+                    this.writeReadOnlyMemoryType({ writer, value: this.internalType.value });
+                    break;
+                }
                 writer.write("IEnumerable<");
                 this.internalType.value.write(writer);
                 writer.write(">");
@@ -214,6 +234,16 @@ export class Type extends AstNode {
                     break;
                 }
                 writer.write("Dictionary<");
+                keyType.write(writer);
+                writer.write(", ");
+                valueType.write(writer);
+                writer.write(">");
+                break;
+            }
+            case "keyValuePair": {
+                const keyType = this.internalType.keyType;
+                const valueType = this.internalType.valueType;
+                writer.write("KeyValuePair<");
                 keyType.write(writer);
                 writer.write(", ");
                 valueType.write(writer);
@@ -269,6 +299,9 @@ export class Type extends AstNode {
     public writeEmptyCollectionInitializer(writer: Writer): void {
         switch (this.internalType.type) {
             case "list":
+                if (isReadOnlyMemoryType({ writer, value: this.internalType.value })) {
+                    return;
+                }
                 writer.write(" = new List<");
                 this.internalType.value.write(writer);
                 writer.write(">();");
@@ -315,13 +348,13 @@ export class Type extends AstNode {
 
     public static boolean(): Type {
         return new this({
-            type: "boolean"
+            type: "bool"
         });
     }
 
     public static integer(): Type {
         return new this({
-            type: "integer"
+            type: "int"
         });
     }
 
@@ -415,6 +448,14 @@ export class Type extends AstNode {
         });
     }
 
+    public static keyValuePair(keyType: Type, valueType: Type): Type {
+        return new this({
+            type: "keyValuePair",
+            keyType,
+            valueType
+        });
+    }
+
     public static optional(value: Type): Type {
         return new this({
             type: "optional",
@@ -456,4 +497,64 @@ export class Type extends AstNode {
             value
         });
     }
+
+    private writeReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): void {
+        writer.write("ReadOnlyMemory<");
+        value.write(writer);
+        writer.write(">");
+    }
+}
+
+/**
+ * The set of valid types supported by the 'read-only-memory-types' custom config option.
+ *
+ * The types are expressed in their C# type representation so that users can more easily
+ * control the generated code.
+ *
+ * Also note that we use the InternalType's type property to determine the type of the Type
+ * so that the two always remain in sync.
+ */
+export const VALID_READ_ONLY_MEMORY_TYPES = new Set<string>([
+    Type.integer().internalType.type,
+    Type.long().internalType.type,
+    Type.uint().internalType.type,
+    Type.ulong().internalType.type,
+    Type.string().internalType.type,
+    Type.boolean().internalType.type,
+    Type.float().internalType.type,
+    Type.double().internalType.type
+]);
+
+export function convertReadOnlyPrimitiveTypes(readOnlyMemoryTypeNames: string[]): PrimitiveTypeV1[] {
+    return readOnlyMemoryTypeNames.map((typeName) => {
+        switch (typeName) {
+            case "int":
+                return PrimitiveTypeV1.Integer;
+            case "long":
+                return PrimitiveTypeV1.Long;
+            case "uint":
+                return PrimitiveTypeV1.Uint;
+            case "ulong":
+                return PrimitiveTypeV1.Uint64;
+            case "string":
+                return PrimitiveTypeV1.String;
+            case "bool":
+                return PrimitiveTypeV1.Boolean;
+            case "float":
+                return PrimitiveTypeV1.Float;
+            case "double":
+                return PrimitiveTypeV1.Double;
+            default:
+                // This should be unreachable; the ReadOnlyMemory types should have already
+                // been validated at this point.
+                throw new Error(`Internal error; unknown ReadOnlyMemory type: ${typeName}`);
+        }
+    });
+}
+
+function isReadOnlyMemoryType({ writer, value }: { writer: Writer; value: Type }): boolean {
+    if (value.internalType.type === "optional") {
+        return isReadOnlyMemoryType({ writer, value: value.internalType.value });
+    }
+    return writer.isReadOnlyMemoryType(value.internalType.type);
 }

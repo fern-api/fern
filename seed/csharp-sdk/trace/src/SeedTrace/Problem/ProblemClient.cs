@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedTrace.Core;
 
@@ -21,7 +22,8 @@ public partial class ProblemClient
     /// </summary>
     public async Task<object> CreateProblemAsync(
         CreateProblemRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -32,7 +34,8 @@ public partial class ProblemClient
                 Path = "/problem-crud/create",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -60,7 +63,8 @@ public partial class ProblemClient
     public async Task<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
         CreateProblemRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -71,7 +75,8 @@ public partial class ProblemClient
                 Path = $"/problem-crud/update/{problemId}",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -96,7 +101,11 @@ public partial class ProblemClient
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
-    public async Task DeleteProblemAsync(string problemId, RequestOptions? options = null)
+    public async Task DeleteProblemAsync(
+        string problemId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -105,7 +114,8 @@ public partial class ProblemClient
                 Method = HttpMethod.Delete,
                 Path = $"/problem-crud/delete/{problemId}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -124,7 +134,8 @@ public partial class ProblemClient
     /// </summary>
     public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
         GetDefaultStarterFilesRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -135,7 +146,8 @@ public partial class ProblemClient
                 Path = "/problem-crud/default-starter-files",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

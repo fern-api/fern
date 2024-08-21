@@ -7,7 +7,64 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-- Internal: The C# generator now includes gRPC core utilities.
+- Feature: Add support for the `read-only-memory-types` configuration, which is used to
+  control how specific types are represented as arrays and lists.
+
+  For example, consider the following configuration:
+
+  ```yml
+  generators:
+    - name: fernapi/fern-csharp-sdk
+      config:
+        read-only-memory-types:
+          - float
+  ```
+
+  This will generate types that look like the following:
+
+  ```csharp
+  public record Vector
+  {
+    [JsonPropertyName("id")]
+    public required string Id { get; set; }
+
+    [JsonPropertyName("values")]
+    public ReadOnlyMemory<float> Values { get; set; }
+  }
+  ```
+
+- Feature: Add the `CancellationToken` parameter as the last parameter to every endpoint method.
+  For example,
+
+  ```csharp
+  /// <summary>
+  /// Add a movie to the database
+  /// </summary>
+  public async Task<string> CreateMovieAsync(
+      CreateMovieRequest request,
+      RequestOptions? options = null,
+      CancellationToken cancellationToken = default
+  )
+  {
+      var response = await _client.MakeRequestAsync(
+          new RawClient.JsonApiRequest
+          {
+              BaseUrl = _client.Options.BaseUrl,
+              Method = HttpMethod.Post,
+              Path = "/movies/create-movie",
+              Body = request,
+              Options = options,
+          },
+          cancellationToken
+      );
+      ...
+  }
+  ```
+
+  This aligns with the code analysis quality rule `CA1068` outlined in the official .NET documentation.
+  For details, please see https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca1068
+
+- Feature: Add support for gRPC/Protobuf endpoints.
 
 ## [1.2.1 - 2024-08-12]
 
