@@ -114,8 +114,8 @@ navigation:
                 path: ./pages/api-definition/fern-definition/api-yml/errors.mdx
           - page: Packages
             path: ./pages/api-definition/fern-definition/packages.mdx
-          - page: Comparison with OpenAPI
-            path: ./pages/api-definition/fern-definition/comparison.mdx
+          - page: Depending on other APIs
+            path: ./pages/api-definition/fern-definition/depending-on-other-apis.mdx
           - page: Export to OpenAPI
             slug: export-openapi
             path: ./pages/api-definition/fern-definition/export-openapi.mdx
