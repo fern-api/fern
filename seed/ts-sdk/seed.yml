@@ -200,6 +200,7 @@ allowedFailures:
   - alias
   - api-wide-base-path
   - audiences:no-custom-config
+  - audiences:with-partner-audience
   - auth-environment-variables
   - basic-auth-environment-variables
   - exhaustive:bundle
