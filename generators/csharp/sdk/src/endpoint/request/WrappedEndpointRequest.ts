@@ -1,5 +1,4 @@
 import { csharp } from "@fern-api/csharp-codegen";
-import { classReference } from "@fern-api/csharp-codegen/src/csharp";
 import {
     HttpEndpoint,
     HttpHeader,

@@ -267,7 +267,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: this.context.getRawClientClassReference(),
-                        arguments_: [csharp.codeblock(`clientOptions`)]
+                        arguments_: [csharp.codeblock("clientOptions")]
                     })
                 );
                 if (this.grpcClientInfo != null) {
