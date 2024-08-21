@@ -203,30 +203,8 @@ function addPublishCommands(cli: Argv) {
     cli.command("publish", "Publish releases", (yargs) => {
         yargs
             // TODO: Implement CLI releasing (currently npm publishing)
-            // .command(
-            //     "cli",
-            //     "Publish latest CLI release",
-            //     (addtlYargs) =>
-            //         addtlYargs
-            //             .option("version", {
-            //                 type: "string",
-            //                 demandOption: true
-            //             })
-            //             .option("log-level", {
-            //                 default: LogLevel.Info,
-            //                 choices: LOG_LEVELS
-            //             }),
-            //     async (argv) => {
-            //         const taskContextFactory = new TaskContextFactory(argv["log-level"]);
-            //         const context = taskContextFactory.create("Publish");
-            //         await publishCliRelease({
-            //             fdrClient,
-            //             context
-            //         });
-            //     }
-            // )
             .command(
-                "generator",
+                "generator <generator>",
                 "Publishes all latest versions of the generators to DockerHub unless otherwise specified. To filter to certain generators pass in the generator IDs as a positional, space delimited list.",
                 (yargs) =>
                     yargs
@@ -235,7 +213,8 @@ function addPublishCommands(cli: Argv) {
                             demandOption: true,
                             description: "Generator(s) to register"
                         })
-                        .option("version", {
+                        // Version is a reserved option in yargs...
+                        .option("ver", {
                             type: "string",
                             demandOption: false
                         })
@@ -258,7 +237,7 @@ function addPublishCommands(cli: Argv) {
                         .check((argv) => {
                             return (
                                 // Check: Either version or versionsFile and previousVersionsFile must be provided
-                                argv.version || (argv.versionsFile && argv.previousVersionsFile)
+                                argv.ver || (argv.versionsFile && argv.previousVersionsFile)
                             );
                         }),
                 async (argv) => {
@@ -266,6 +245,7 @@ function addPublishCommands(cli: Argv) {
                     if (argv.generators != null) {
                         throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
                     }
+
                     const taskContextFactory = new TaskContextFactory(argv["log-level"]);
                     const context = taskContextFactory.create("Publish");
 
@@ -277,8 +257,8 @@ function addPublishCommands(cli: Argv) {
 
                     await publishGenerator({
                         generator: maybeGeneratorWorkspace,
-                        version: argv.version
-                            ? argv.version
+                        version: argv.ver
+                            ? argv.ver
                             : {
                                   // These assertions should be safe given the check with `yargs` above
                                   //
@@ -319,11 +299,12 @@ function addRegisterCommands(cli: Argv) {
                 }
             )
             .command(
-                "generator <generators>",
-                "Registers all of the generators to FDR unless otherwise specified. To filter to certain generators pass in the generator IDs as a positional, space delimited list.",
+                "generator",
+                "Registers all of the generators to FDR unless otherwise specified. To filter to certain generators pass in the generator ids to `--generators`, space delimited list.",
                 (yargs) =>
                     yargs
-                        .positional("generators", {
+                        // This would ideally be positional, but you can't have positional arguments that are arrays with yargs
+                        .option("generators", {
                             array: true,
                             type: "string",
                             demandOption: false,

@@ -8,6 +8,7 @@ import * as FernSeedConfig from "../../..";
  * Configuration for publishing from a docker image, assuming a vanilla docker deployment.
  */
 export interface PublishDocker {
+    workingDirectory?: string;
     preBuildCommands?: FernSeedConfig.DockerCommand;
     docker: FernSeedConfig.PublishDockerConfiguration;
 }

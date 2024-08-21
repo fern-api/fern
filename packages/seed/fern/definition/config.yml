@@ -44,6 +44,7 @@ types:
     docs: |
       Configuration for publishing from a docker image, assuming a vanilla docker deployment.
     properties:
+      workingDirectory: optional<string>
       preBuildCommands: optional<DockerCommand>
       docker: PublishDockerConfiguration
 

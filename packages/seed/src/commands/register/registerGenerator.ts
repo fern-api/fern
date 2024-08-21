@@ -41,8 +41,8 @@ export async function registerGenerator({
         }
 
         // We've found a versions file, let's read it and register all the versions
-        context.logger.info(`Registering generator ${generatorId} releases...`);
-        parseGeneratorReleasesFile({
+        context.logger.info(`Registering generator ${generatorId} releases from ${absolutePathToChangelogLocation}...`);
+        await parseGeneratorReleasesFile({
             generatorId,
             versionsFilePath: absolutePathToChangelogLocation,
             context,
@@ -51,6 +51,7 @@ export async function registerGenerator({
                 await fdrClient.generators.versions.upsertGeneratorRelease(release);
             }
         });
+        context.logger.info(`Registration complete.`);
     }
 }
 

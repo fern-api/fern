@@ -99,7 +99,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator ruby-model
+          pnpm seed:local test --generators ruby-model
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -108,7 +108,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator ruby-model
+          pnpm seed:local register --generators ruby-model
 
   ruby-sdk:
     runs-on: ubuntu-latest
@@ -136,7 +136,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator ruby-sdk
+          pnpm seed:local test --generators ruby-sdk
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -144,7 +144,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator ruby-sdk
+          pnpm seed:local register --generators ruby-sdk
 
   pydantic-model:
     runs-on: ubuntu-latest
@@ -179,7 +179,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator pydantic
+          pnpm seed:local test --generators pydantic
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -187,7 +187,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator pydantic
+          pnpm seed:local register --generators pydantic
 
   python-sdk:
     runs-on: Seed
@@ -222,7 +222,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator python-sdk --parallel 10
+          pnpm seed:local test --generators python-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -230,7 +230,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator python-sdk
+          pnpm seed:local register --generators python-sdk
 
   fastapi:
     runs-on: ubuntu-latest
@@ -265,7 +265,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator fastapi
+          pnpm seed:local test --generators fastapi
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -273,7 +273,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator fastapi
+          pnpm seed:local register --generators fastapi
 
   openapi:
     runs-on: ubuntu-latest
@@ -301,7 +301,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator openapi
+          pnpm seed:local test --generators openapi
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -309,7 +309,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator openapi
+          pnpm seed:local register --generators openapi
 
   postman:
     runs-on: ubuntu-latest
@@ -337,7 +337,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator postman
+          pnpm seed:local test --generators postman
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -345,7 +345,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator postman
+          pnpm seed:local register --generators postman
 
   java-sdk:
     runs-on: Seed
@@ -373,7 +373,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator java-sdk --parallel 10
+          pnpm seed:local test --generators java-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -381,7 +381,7 @@ jobs:
         - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator java-sdk
+          pnpm seed:local register --generators java-sdk
 
   java-model:
     runs-on: Seed
@@ -409,7 +409,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator java-model --parallel 10
+          pnpm seed:local test --generators java-model --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -417,7 +417,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator java-model
+          pnpm seed:local register --generators java-model
 
   java-spring:
     runs-on: ubuntu-latest
@@ -445,7 +445,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator java-spring
+          pnpm seed:local test --generators java-spring
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -453,7 +453,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator java-spring
+          pnpm seed:local register --generators java-spring
 
   typescript-sdk:
     runs-on: Seed
@@ -481,7 +481,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator ts-sdk --parallel 10
+          pnpm seed:local test --generators ts-sdk --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -489,7 +489,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator ts-sdk
+          pnpm seed:local register --generators ts-sdk
 
   typescript-express:
     runs-on: ubuntu-latest
@@ -517,7 +517,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator ts-express --parallel 10
+          pnpm seed:local test --generators ts-express --parallel 10
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -525,7 +525,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator ts-express
+          pnpm seed:local register --generators ts-express
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -553,7 +553,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator go-fiber --parallel 16
+          pnpm seed:local test --generators go-fiber --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -561,7 +561,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator go-fiber
+          pnpm seed:local register --generators go-fiber
 
   go-model:
     runs-on: ubuntu-latest
@@ -589,7 +589,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator go-model --parallel 16
+          pnpm seed:local test --generators go-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -597,7 +597,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator go-model
+          pnpm seed:local register --generators go-model
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -625,7 +625,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator go-sdk --parallel 16
+          pnpm seed:local test --generators go-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -633,7 +633,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator go-sdk
+          pnpm seed:local register --generators go-sdk
 
   csharp-model:
     runs-on: ubuntu-latest
@@ -661,7 +661,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator csharp-model --parallel 16
+          pnpm seed:local test --generators csharp-model --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -669,7 +669,7 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator csharp-model
+          pnpm seed:local register --generators csharp-model
 
   csharp-sdk:
     runs-on: ubuntu-latest
@@ -697,7 +697,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
         run: |
-          pnpm seed:local test --generator csharp-sdk --parallel 16
+          pnpm seed:local test --generators csharp-sdk --parallel 16
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
@@ -705,4 +705,4 @@ jobs:
       - name: Register on push to main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
-          pnpm seed:local register --generator csharp-sdk
+          pnpm seed:local register --generators csharp-sdk

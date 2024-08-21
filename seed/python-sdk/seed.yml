@@ -1,12 +1,14 @@
 irVersion: v53
 changelogLocation: ../../generators/python/sdk/versions.yml
 publish:
+  workingDirectory: generators/python
   preBuildCommands:
     - chmod +x setup-python.sh && ./setup-python.sh
+    - poetry config virtualenvs.in-project true
     - poetry install
   docker: 
     file: ./generators/python/sdk/Dockerfile
-    image: fernapi/fern-python-sdk
+    image: fernarmand/fern-python-sdk
     context: ./generators/python
 test:
   docker:

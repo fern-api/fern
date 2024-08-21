@@ -1,7 +1,6 @@
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
-import Docker from "dockerode";
 import semver from "semver";
 import { PublishDockerConfiguration } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
@@ -21,12 +20,15 @@ export async function publishGenerator({
     version: string | VersionFilePair;
     context: TaskContext;
 }): Promise<void> {
+    const generatorId = generator.workspaceName;
+    context.logger.info(`Publishing generator ${generatorId}@${version}...`);
+
     let publishVersion: string;
     if (typeof version !== "string") {
         // We were given two version files, so we need to compare them to find if any new
         // versions have been added since the last publish.
         const maybeNewVersion = await getNewVersion({
-            generatorId: generator.workspaceName,
+            generatorId,
             versionFilePair: version,
             context
         });
@@ -52,7 +54,7 @@ export async function publishGenerator({
             ? [unparsedCommands]
             : [];
 
-        await runCommands(preBuildCommands, context);
+        await runCommands(preBuildCommands, context, publishConfig.workingDirectory);
         await buildAndPushDockerImage(publishConfig.docker, publishVersion, context);
     } else {
         // Instance of PublishCommand configuration, leverage these commands outright
@@ -60,7 +62,7 @@ export async function publishGenerator({
         const commands = Array.isArray(unparsedCommands) ? unparsedCommands : [unparsedCommands];
         const versionSubsitution = publishConfig.versionSubstitution;
         const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubsitution));
-        await runCommands(subbedCommands, context);
+        await runCommands(subbedCommands, context, generator.absolutePathToWorkspace);
     }
 }
 
@@ -70,15 +72,9 @@ function subVersion(command: string, version: string, versionSubsitution?: strin
     return versionSubsitution ? command.replace(versionSubsitution, version) : command;
 }
 
-async function runCommands(commands: string[], context: TaskContext) {
+async function runCommands(commands: string[], context: TaskContext, cwd: string | undefined) {
     for (const command of commands) {
-        // Try to get the command into a form that execa can handle
-        const splitCommand = command.split(" ");
-        const executable = splitCommand[0];
-        const args = splitCommand.slice(1);
-        if (executable != null) {
-            await loggingExeca(context.logger, executable, args);
-        }
+        await loggingExeca(context.logger, "cd", [cwd ?? ".", "&&", command]);
     }
 }
 
@@ -87,51 +83,52 @@ async function buildAndPushDockerImage(
     version: string,
     context: TaskContext
 ) {
-    const docker = new Docker();
-
-    // Build the Docker image, now that you've run the pre-build commands
-    const imageTag = `${dockerConfig.image}:${version}`;
-    const stream = await docker.buildImage(
-        {
-            src: [dockerConfig.image],
-            context: dockerConfig.context
-        },
-        {
-            platform: "linux/amd64,linux/arm64",
-            t: imageTag
-        }
-    );
-    // For some reason Dockerode makes you follow progress manually
-    // not just awaiting the command above
-    await new Promise((resolve, reject) => {
-        docker.modem.followProgress(stream, (err, res) => (err ? reject(err) : resolve(res)));
-    });
-    // End of building the Docker image
-
     // Push the Docker image to the registry
-    const image = docker.getImage(imageTag);
-
     const dockerHubUsername = process?.env?.DOCKER_USERNAME;
     const dockerHubPassword = process?.env?.DOCKER_PASSWORD;
     if (!dockerHubUsername || !dockerHubPassword) {
         context.failAndThrow("Docker Hub credentials not found within your environment variables.");
     }
-    await image.push({
-        authconfig: {
-            username: dockerHubUsername,
-            password: dockerHubPassword,
-            // This is a required property, but only actually necessary if using a proxy
-            // or other non-standard Docker registry setup (e.g. not Docker Hub)
-            serveraddress: ""
-        }
+
+    context.logger.debug(`Logging into Docker Hub...`);
+    await loggingExeca(context.logger, "docker", ["login", "-u", dockerHubUsername, "--password-stdin"], {
+        doNotPipeOutput: true,
+        input: dockerHubPassword
     });
+
+    // Build and push the Docker image, now that you've run the pre-build commands
+    const imageTag = `${dockerConfig.image}:${version}`;
+    context.logger.debug(`Pushing Docker image ${imageTag} to Docker Hub...`);
+    const standardBuildOptions = [
+        "build",
+        "--push",
+        "--platform",
+        "linux/amd64,linux/arm64",
+        "-f",
+        dockerConfig.file,
+        "-t",
+        imageTag,
+        dockerConfig.context
+    ];
+    try {
+        await loggingExeca(context.logger, "docker", standardBuildOptions, { doNotPipeOutput: true });
+    } catch (e) {
+        if (e instanceof Error && e.message.includes("Multi-platform build is not supported for the docker driver")) {
+            context.logger.error(
+                "Docker cannot build multi-platform images with the current driver, trying `docker buildx`."
+            );
+            await loggingExeca(context.logger, "docker", ["buildx", ...standardBuildOptions], {
+                doNotPipeOutput: false
+            });
+        }
+    }
 }
 
 // Take two files, traditionally the latest version file (e.g. the file on the branch merging to main),
 // and the previous version file (e.g. the file on the main branch), and compare them to find the most recent version
 //
 // The most recent version is defined here as the most recent version in the latest version file that is not in the previous version file
-async function getNewVersion({
+export async function getNewVersion({
     generatorId,
     versionFilePair,
     context

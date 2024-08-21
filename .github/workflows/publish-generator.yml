@@ -135,4 +135,4 @@ jobs:
               VERSIONS_FILE="generators/csharp/model/versions.yml"
           done
 
-          seed publish --generator ${{ matrix.generator }} --versions-file $VERSIONS_FILE --previous-versions-file main-repo-clone/$VERSIONS_FILE --log-level debug
+          seed publish generator ${{ matrix.generator }} --versions-file $VERSIONS_FILE --previous-versions-file main-repo-clone/$VERSIONS_FILE --log-level debug

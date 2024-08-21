@@ -2,7 +2,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
 import * as serializers from "@fern-fern/generators-sdk/serialization";
 import { readFile } from "fs/promises";
-import YAML from "yaml";
+import yaml from "js-yaml";
 
 export async function parseGeneratorReleasesFile({
     generatorId,
@@ -15,12 +15,10 @@ export async function parseGeneratorReleasesFile({
     context: TaskContext;
     action: (release: GeneratorReleaseRequest) => Promise<void>;
 }): Promise<void> {
-    const changelogs = YAML.parseDocument((await readFile(versionsFilePath)).toString());
-    if (YAML.isSeq(changelogs)) {
-        for (const entry of changelogs.items) {
-            if (!YAML.isMap(entry)) {
-                continue;
-            }
+    context.logger.debug(`Parsing versions file ${versionsFilePath}`);
+    const changelogs = yaml.load((await readFile(versionsFilePath)).toString());
+    if (Array.isArray(changelogs)) {
+        for (const entry of changelogs) {
             try {
                 const release = serializers.generators.GeneratorReleaseRequest.parseOrThrow({
                     generator_id: generatorId,
