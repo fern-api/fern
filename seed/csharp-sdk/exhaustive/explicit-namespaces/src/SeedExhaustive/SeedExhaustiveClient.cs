@@ -1,4 +1,3 @@
-using System;
 using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints;
 using SeedExhaustive.GeneralErrors;
@@ -18,11 +17,22 @@ public partial class SeedExhaustiveClient
 
     public SeedExhaustiveClient(string token, ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
-            new Dictionary<string, Func<string>>(),
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "User-Agent", "Fernexhaustive/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         Endpoints = new EndpointsClient(_client);
         GeneralErrors = new GeneralErrorsClient(_client);
         InlinedRequests = new InlinedRequestsClient(_client);

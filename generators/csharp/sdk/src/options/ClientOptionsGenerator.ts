@@ -28,6 +28,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
         };
         class_.addField(this.getBaseUrlField());
         class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs));
+        class_.addField(this.baseOptionsGenerator.getHttpHeadersField());
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         if (this.context.hasGrpcEndpoints()) {

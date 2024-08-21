@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Feature: Add support for sending the `User-Agent` header.
+
+- Improvement: The `RawClient` now supports HTTP headers within the `ClientOptions` and
+  `RequestOptions` types. This is not a user-facing feature, but it simplifies the core
+  utilities.
+
 - Feature: Add support for the `read-only-memory-types` configuration, which is used to
   control how specific types are represented as arrays and lists.
 

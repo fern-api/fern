@@ -78,14 +78,16 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     public getCoreAsIsFiles(): string[] {
         const files = [
-            AsIsFiles.RawClient,
-            AsIsFiles.StringEnumSerializer,
-            AsIsFiles.OneOfSerializer,
             AsIsFiles.CollectionItemSerializer,
-            AsIsFiles.HttpMethodExtensions,
             AsIsFiles.Constants,
             AsIsFiles.DateTimeSerializer,
-            AsIsFiles.JsonConfiguration
+            AsIsFiles.Headers,
+            AsIsFiles.HeaderValue,
+            AsIsFiles.HttpMethodExtensions,
+            AsIsFiles.JsonConfiguration,
+            AsIsFiles.OneOfSerializer,
+            AsIsFiles.RawClient,
+            AsIsFiles.StringEnumSerializer
         ];
         if (this.hasGrpcEndpoints()) {
             files.push(AsIsFiles.RawGrpcClient);
@@ -168,6 +170,17 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
 
     private getExceptionPrefix() {
         return this.customConfig["client-class-name"] ?? this.getComputedClientName();
+    }
+
+    public getHeadersClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getHeadersClassName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getHeadersClassName(): string {
+        return "Headers";
     }
 
     public getRawClientClassName(): string {

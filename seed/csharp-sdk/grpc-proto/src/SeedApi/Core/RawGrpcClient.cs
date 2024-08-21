@@ -2,9 +2,7 @@ using System;
 using Grpc.Core;
 using Grpc.Net.Client;
 
-#nullable enable
-
-namespace SeedApi;
+namespace SeedApi.Core;
 
 /// <summary>
 /// Utility class for making gRPC requests to the API.
@@ -17,18 +15,10 @@ internal class RawGrpcClient
     public readonly GrpcChannel Channel;
 
     private readonly ClientOptions _clientOptions;
-    private readonly Dictionary<string, string> _headers;
-    private readonly Dictionary<string, Func<string>> _headerSuppliers;
 
-    public RawGrpcClient(
-        Dictionary<string, string> headers,
-        Dictionary<string, Func<string>> headerSuppliers,
-        ClientOptions clientOptions
-    )
+    public RawGrpcClient(ClientOptions clientOptions)
     {
         _clientOptions = clientOptions;
-        _headers = new Dictionary<string, string>(headers);
-        _headerSuppliers = new Dictionary<string, Func<string>>(headerSuppliers);
 
         var grpcOptions = PrepareGrpcChannelOptions();
         Channel =
@@ -48,18 +38,9 @@ internal class RawGrpcClient
     )
     {
         var metadata = new global::Grpc.Core.Metadata();
-        foreach (var header in _headers)
-        {
-            metadata.Add(header.Key, header.Value);
-        }
-        foreach (var header in _headerSuppliers)
-        {
-            metadata.Add(header.Key, header.Value.Invoke());
-        }
-        foreach (var header in options.Headers)
-        {
-            metadata.Add(header.Key, header.Value);
-        }
+        SetHeaders(metadata, _clientOptions.Headers);
+        SetHeaders(metadata, options.Headers);
+
         var timeout = options.Timeout ?? _clientOptions.Timeout;
         var deadline = DateTime.UtcNow.Add(timeout);
         return new CallOptions(
@@ -70,6 +51,18 @@ internal class RawGrpcClient
             null,
             options.CallCredentials
         );
+    }
+
+    private void SetHeaders(global::Grpc.Core.Metadata metadata, Headers headers)
+    {
+        foreach (var header in headers)
+        {
+            var value = header.Value?.Match(str => str, func => func.Invoke());
+            if (value != null)
+            {
+                metadata.Add(header.Key, value);
+            }
+        }
     }
 
     private GrpcChannelOptions? PrepareGrpcChannelOptions()

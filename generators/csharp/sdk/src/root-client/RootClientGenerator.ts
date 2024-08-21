@@ -211,7 +211,12 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 value: csharp.codeblock(`"${this.context.config.publish.version}"`)
             });
         }
-
+        if (platformHeaders.userAgent != null) {
+            headerEntries.push({
+                key: csharp.codeblock(`"${platformHeaders.userAgent.header}"`),
+                value: csharp.codeblock(`"${platformHeaders.userAgent.value}"`)
+            });
+        }
         const headerDictionary = csharp.dictionary({
             keyType: csharp.Types.string(),
             valueType: csharp.Types.string(),
@@ -219,18 +224,6 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                 type: "entries",
                 entries: headerEntries
             }
-        });
-
-        const headerSupplierDictionary = csharp.dictionary({
-            keyType: csharp.Types.string(),
-            valueType: csharp.Types.reference(
-                csharp.classReference({
-                    name: "Func",
-                    namespace: "System",
-                    generics: [csharp.Types.string()]
-                })
-            ),
-            values: undefined
         });
         return {
             access: "public",
@@ -248,19 +241,33 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
                         writer.writeLine(");");
                     }
                 }
+                writer.write("var defaultHeaders = ");
+                writer.writeNodeStatement(
+                    csharp.instantiateClass({
+                        classReference: this.context.getHeadersClassReference(),
+                        arguments_: [headerDictionary]
+                    })
+                );
+
+                writer.write("clientOptions ??= ");
+                writer.writeNodeStatement(
+                    csharp.instantiateClass({
+                        classReference: this.context.getClientOptionsClassReference(),
+                        arguments_: []
+                    })
+                );
+
+                writer.controlFlow("foreach", csharp.codeblock("var header in defaultHeaders"));
+                writer.controlFlow("if", csharp.codeblock("!clientOptions.Headers.ContainsKey(header.Key)"));
+                writer.writeLine("clientOptions.Headers[header.Key] = header.Value;");
+                writer.endControlFlow();
+                writer.endControlFlow();
+
                 writer.writeLine("_client = ");
                 writer.writeNodeStatement(
                     csharp.instantiateClass({
                         classReference: this.context.getRawClientClassReference(),
-                        arguments_: [
-                            csharp.codeblock((writer) => {
-                                writer.writeNode(headerDictionary);
-                            }),
-                            csharp.codeblock((writer) => {
-                                writer.writeNode(headerSupplierDictionary);
-                            }),
-                            csharp.codeblock(`clientOptions ?? new ${CLIENT_OPTIONS_CLASS_NAME}()`)
-                        ]
+                        arguments_: [csharp.codeblock(`clientOptions`)]
                     })
                 );
                 if (this.grpcClientInfo != null) {
