@@ -9,6 +9,3 @@ export interface ExampleQueryParameter {
     value: FernIr.ExampleTypeReference;
     shape: FernIr.ExampleQueryParameterShape | undefined;
 }
-// single
-// exploded
-// comma-separated
