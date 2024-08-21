@@ -111,6 +111,8 @@ in the generator.
 
 ### Generator Testing
 
+**Note**: Please make sure that the docker daemon is running before running commands below. 
+
 To test our generators we have built a CLI called seed.
 
 Seed handles building the generators from source and running them against all of the
