@@ -6,4 +6,3 @@ require_relative "seed_cross_package_type_names_client/folder_c/common/types/foo
 require_relative "seed_cross_package_type_names_client/folder_d/service/types/response"
 require_relative "seed_cross_package_type_names_client/foo/types/importing_type"
 require_relative "seed_cross_package_type_names_client/foo/types/optional_string"
-require_relative "seed_cross_package_type_names_client/foo/types/filtered_type"

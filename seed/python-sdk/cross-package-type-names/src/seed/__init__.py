@@ -3,12 +3,11 @@
 from . import commons, folder_a, folder_b, folder_c, folder_d, foo
 from .client import AsyncSeedCrossPackageTypeNames, SeedCrossPackageTypeNames
 from .commons import Imported
-from .foo import FilteredType, ImportingType, OptionalString
+from .foo import ImportingType, OptionalString
 from .version import __version__
 
 __all__ = [
     "AsyncSeedCrossPackageTypeNames",
-    "FilteredType",
     "Imported",
     "ImportingType",
     "OptionalString",

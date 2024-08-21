@@ -2,10 +2,9 @@
 
 from . import commons, folder_a, folder_b, folder_c, folder_d, foo
 from .commons import Imported
-from .foo import FilteredType, FindRequest, ImportingType, OptionalString
+from .foo import FindRequest, ImportingType, OptionalString
 
 __all__ = [
-    "FilteredType",
     "FindRequest",
     "Imported",
     "ImportingType",
