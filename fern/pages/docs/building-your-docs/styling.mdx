@@ -96,46 +96,6 @@ In `docs.yml`, you can set a single background image or specify different images
     </CodeBlock>
 </CodeBlocks>
 
-### Logo
-
-Specify a logo in `docs.yml` which gets displayed in the top left of your docs.
-
-<CodeBlocks>
-    <CodeBlock title="single color">
-    ```yaml
-    logo: ./images/logo.png
-    ```
-    </CodeBlock>
-    <CodeBlock title="light and dark mode">
-    ```yaml
-    logo: 
-        light: ./images/logo-light.png
-        dark: ./images/logo-dark.png
-    ```
-    </CodeBlock>
-</CodeBlocks>
-
-#### Logo properties
-`light` or `dark` specifies the image file location. The supported file types are `.png` or `.svg`.
-
-`height` is optional and sets the logo's height in pixels.
-
-`href` is optional and provides a link for the logo, often used to point to the website's homepage. When the logo is clicked, the user is directed to this link.
-
-<CodeBlock title="docs.yml">
-```yaml
-logo:
-    light: ./images/logo-light.png
-    dark: ./images/logo-dark.png
-    height: 60
-    href: https://example.com
-```
-</CodeBlock>
-
-### Favicon image
-
-Add a `favicon` image that displays in the browser tab. Supported file types are `.png` and `.ico`.
-
 ## Fonts
 
 You can specify custom fonts for your documentation website. The supported file types are `.woff` and `.woff2`.
