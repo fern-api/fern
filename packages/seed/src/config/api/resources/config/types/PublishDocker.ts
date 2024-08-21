@@ -9,5 +9,5 @@ import * as FernSeedConfig from "../../..";
  */
 export interface PublishDocker {
     preBuildCommands?: FernSeedConfig.DockerCommand;
-    dockerfile: string;
+    docker: FernSeedConfig.PublishDockerConfiguration;
 }

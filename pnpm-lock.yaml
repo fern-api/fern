@@ -5599,6 +5599,9 @@ importers:
       console-table-printer:
         specifier: ^2.12.0
         version: 2.12.0
+      dockerode:
+        specifier: ^4.0.2
+        version: 4.0.2
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
@@ -5611,6 +5614,9 @@ importers:
       pretty-ms:
         specifier: ^9.0.0
         version: 9.0.0
+      semver:
+        specifier: ^7.6.2
+        version: 7.6.2
       tmp-promise:
         specifier: ^3.0.3
         version: 3.0.3
@@ -5621,6 +5627,9 @@ importers:
         specifier: ^17.4.1
         version: 17.7.2
     devDependencies:
+      '@types/dockerode':
+        specifier: ^3.3.9
+        version: 3.3.9
       '@types/find-up':
         specifier: ^4.0.0
         version: 4.0.0
@@ -5636,6 +5645,9 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
+      '@types/semver':
+        specifier: ^7.5.8
+        version: 7.5.8
       '@types/yargs':
         specifier: ^17.0.28
         version: 17.0.28

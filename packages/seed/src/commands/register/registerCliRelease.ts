@@ -46,7 +46,7 @@ export async function registerCliRelease({
             try {
                 const release = serializers.generators.CliReleaseRequest.parseOrThrow(entry);
                 context.logger.debug(`Registering CLI release: ${release.version}`);
-                fdrClient.generators.cli.upsertCliRelease(release);
+                await fdrClient.generators.cli.upsertCliRelease(release);
             } catch (e) {
                 context.logger.error(`Error parsing release: ${e}`);
             }

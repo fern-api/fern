@@ -8,7 +8,6 @@ export interface SeedWorkspaceConfiguration extends FernSeedConfig.CliSeedWorksp
     irVersion: string;
     publish: FernSeedConfig.PublishConfiguration;
     test: FernSeedConfig.TestConfiguration;
-    local?: FernSeedConfig.LocalBuildInfo;
     language?: FernSeedConfig.Language;
     defaultCustomConfig?: Record<string, unknown>;
     defaultOutputMode: FernSeedConfig.OutputMode;

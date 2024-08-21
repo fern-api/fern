@@ -5,6 +5,6 @@
 import * as FernSeedConfig from "../../..";
 
 export interface TestConfiguration {
-    dockerImage: string;
-    dockerBuildCommand?: FernSeedConfig.DockerCommand;
+    docker: FernSeedConfig.TestDockerConfiguration;
+    local?: FernSeedConfig.LocalBuildInfo;
 }
