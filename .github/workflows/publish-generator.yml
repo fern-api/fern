@@ -1,3 +1,4 @@
+# Generators are registered within seed.yml, once their tests are passing
 name: publish-generators
 
 on:

@@ -5,7 +5,7 @@ on:
     branches:
       - main
 
-jobs: 
+jobs:
   publish-dev:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
@@ -32,7 +32,7 @@ jobs:
       - name: Add version to dev package.json's
         run: |
           git_version="$(./scripts/git-version.sh)"
-          
+
           cd packages/cli/cli
           mv package.json package.json.tmp
           version_replace="s/0.0.0/${git_version}/"
@@ -49,3 +49,11 @@ jobs:
 
       - name: Publish fern-api-dev CLI
         run: pnpm --filter @fern-api/cli publish:cli:dev --access restricted
+
+      # Unlike the generators, which are published and registered through `seed publish`
+      # the CLI is through this Github action, and only registered through the seed CLI
+      #
+      # We're registering here to always update FDR's entries on push to main
+      - name: Register CLI
+        run: |
+          pnpm seed:local register cli
