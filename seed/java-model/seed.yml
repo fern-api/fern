@@ -1,7 +1,7 @@
 irVersion: v46
 publish:
+  workingDirectory: generators/java
   preBuildCommands:
-    - cd generators/java
     - ./gradlew :model:distTar
   docker: 
     file: ./generators/java/model/Dockerfile

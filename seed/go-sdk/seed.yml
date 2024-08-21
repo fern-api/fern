@@ -1,7 +1,8 @@
 irVersion: v40
 publish:
+  workingDirectory: generators/go
   preBuildCommands:
-    - cd ./generators/go && go build ./...
+    - go build ./...
   docker:
     file: ./generators/go/docker/Dockerfile.sdk
     image: fernapi/fern-go-sdk

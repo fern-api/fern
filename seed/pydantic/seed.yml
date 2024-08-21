@@ -1,5 +1,6 @@
 irVersion: v53
 publish:
+  workingDirectory: generators/python
   preBuildCommands:
     - chmod +x setup-python.sh && ./setup-python.sh
     - poetry install

@@ -3,7 +3,6 @@ publish:
   versionSubstitution: "$VERSION"
   # TODO: Add build here
   command: 
-    - ./.github/actions/install
     - pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
     - docker push fernapi/fern-typescript-express:"$VERSION"
 test:

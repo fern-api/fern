@@ -1,5 +1,6 @@
 irVersion: v46
 publish:
+  workingDirectory: generators/java
   preBuildCommands:
     - cd generators/java
     - ./gradlew :spring:distTar

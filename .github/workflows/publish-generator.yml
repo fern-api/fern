@@ -74,6 +74,9 @@ jobs:
           fetch-depth: 0
           path: "main-repo-clone"
 
+      - name: Install
+        uses: ./.github/actions/install
+
       - name: Run publish
         env:
           DOCKER_USERNAME: fernapi

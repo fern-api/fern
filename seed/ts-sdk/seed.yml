@@ -1,9 +1,9 @@
 irVersion: v53
 publish:
+  workingDirectory: generators/typescript
   versionSubstitution: "$VERSION"
   # TODO: Add build here
   command: 
-    - ./.github/actions/install
     - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
     - docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
     - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"

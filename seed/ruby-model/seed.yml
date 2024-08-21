@@ -1,7 +1,6 @@
 irVersion: v39
 publish:
   preBuildCommands:
-    - ./.github/actions/install
     - pnpm --filter @fern-api/fern-ruby-model dist:cli
   docker: 
     file: ./generators/ruby/model/Dockerfile

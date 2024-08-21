@@ -2,7 +2,6 @@
 irVersion: v53
 publish:
   preBuildCommands:
-    - ./.github/actions/install
     - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
   docker: 
     file: ./generators/csharp/sdk/Dockerfile
