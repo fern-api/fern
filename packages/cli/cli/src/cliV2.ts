@@ -4,7 +4,7 @@ import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from ".
 import { getGeneratorList } from "./commands/generator-list/getGeneratorList";
 import { getOrganziation } from "./commands/organization/getOrganization";
 
-export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
         "organization",
         // Hides the command from the help message
@@ -34,7 +34,7 @@ export function addGetOrganizationCommand(cli: Argv<GlobalCliOptions>, cliContex
     );
 }
 
-export function addGeneratorListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+export function addGeneratorListCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext): void {
     cli.command(
         "generator list",
         // Hides the command from the help message
@@ -87,7 +87,7 @@ export function addGeneratorListCommand(cli: Argv<GlobalCliOptions>, cliContext:
                 groupFilter: argv.groups ? new Set(argv.groups) : undefined,
                 apiFilter: argv.apis ? new Set(argv.apis) : undefined,
                 apiKeyFallback: argv.apiFallback,
-                cliContext: cliContext,
+                cliContext,
                 outputLocation: argv.output
             });
         }
