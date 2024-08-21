@@ -1,0 +1,59 @@
+---
+title: "Global Configuration"
+subtitle: "Customize your documentation using the docs.yml file"
+---
+
+<Note>
+  Not all of the properties in `docs.yml` are documented here. If you'd like to see all properties, please check out the 
+  the  raw [schema](https://github.com/fern-api/fern/blob/69e74d9c27dc031ec2e84e70b878c40e9e9678a5/packages/cli/configuration/fern/definition/docs.yml#L110-L153)
+</Note>
+
+## Top-Level Properties
+
+Every Fern documentation website needs a `docs.yml` file with the core configuration settings. 
+
+```yaml docs.yml
+
+title: My Docs
+
+logo: 
+  href: mydomain.com
+  dark: path/to/logo.png
+  light: path/to/logo.png
+
+favicon: path/to/favicon.ico
+
+```
+<ParamField path="title" type="string" required={false}>
+  A string that is used as the tab bar title.
+</ParamField>
+
+<ParamField path="logo" type="object" required={false}>
+  Learn more about the logo configuration [here](/learn/docs/getting-started/global-configuration#logo-configuration). 
+</ParamField>
+
+<ParamField path="favicon" type="string" required={false}>
+  Relative filepath to the favicon.
+</ParamField>
+
+## Logo Configuration
+
+```yaml docs.yml
+logo: 
+  href: mydomain.com
+  dark: path/to/logo.png
+  light: path/to/logo.png
+```
+
+<ParamField path="logo.href" type="string" required={false}>
+  Where clicking on the logo links you to.
+</ParamField>
+
+<ParamField path="logo.dark" type="string" required={false}>
+  Path to the image for the dark mode logo. You can exclude this if you don't have dark mode enabled. SVG format is recommended.
+</ParamField>
+
+<ParamField path="logo.light" type="string" required={false}>
+  Path to the image for the light mode logo. You can exclude this if you don't have light mode enabled. SVG format is recommended.
+</ParamField>
+
