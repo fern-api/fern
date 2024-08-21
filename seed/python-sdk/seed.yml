@@ -8,7 +8,7 @@ publish:
     - poetry install
   docker: 
     file: ./generators/python/sdk/Dockerfile
-    image: fernarmand/fern-python-sdk
+    image: fernapi/fern-python-sdk
     context: ./generators/python
 test:
   docker:
