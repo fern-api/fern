@@ -10,6 +10,7 @@ from .resources import (
     folder_a,
     folder_b,
     folder_c,
+    folder_d,
     foo,
 )
 
@@ -23,5 +24,6 @@ __all__ = [
     "folder_a",
     "folder_b",
     "folder_c",
+    "folder_d",
     "foo",
 ]
