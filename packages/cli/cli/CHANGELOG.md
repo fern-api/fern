@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.39.14] - 2024-08-21
 
-- Fix: Format validation is enforced on `date` fields that are specified in examples in fern definitions.
+- Fix: Format validation is enforced on `date` fields that are specified in examples specified in an api defintion.
 
 ## [0.39.13] - 2024-08-19
 
