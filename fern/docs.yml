@@ -82,7 +82,7 @@ navigation:
         slug: fern
         contents:
           - page: Overview
-            path: ./pages/api-definition/fern-definition/ferndef-overview.mdx
+            path: ./pages/api-definition/fern-definition/overview.mdx
           - page: Types
             path: ./pages/api-definition/fern-definition/types.mdx
           - page: Endpoints
