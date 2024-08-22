@@ -82,6 +82,8 @@ groups:
 The Fern folder is capable of housing multiple API definitions. Instead of placing your API definition 
 at the top-level, you can nest them within an `apis` folder. 
 
+<Tabs>
+<Tab title="OpenAPI Definition">
 ```yaml
 fern/
   ├─ fern.config.json
@@ -96,3 +98,23 @@ fern/
         └─ openapi/
           ├─ openapi.yml
 ```
+</Tab>
+<Tab title="Fern Definition">
+```yaml
+fern/
+  ├─ fern.config.json
+  ├─ generators.yml
+  └─ apis/
+    └─ imdb/
+        ├─ generators.yml
+        └─ definition/
+          ├─ api.yml
+          └─ imdb.yml
+    └─ disney/
+        ├─ generators.yml
+        └─ definition/
+          ├─ api.yml
+          └─ disney.yml
+```
+</Tab>
+</Tabs>
