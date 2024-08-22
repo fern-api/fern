@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "Streaming",
+    "name": "Multi Url Environment No Default",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": null
   },
@@ -9,27 +9,42 @@
       "key": "baseUrl",
       "value": "",
       "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
     }
   ],
-  "auth": null,
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
   "item": [
     {
       "_type": "container",
       "description": null,
-      "name": "Dummy",
+      "name": "Ec 2",
       "item": [
         {
           "_type": "endpoint",
-          "name": "Generate Stream",
+          "name": "Boot Instance",
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/generate-stream",
+              "raw": "{{baseUrl}}/ec2/boot",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "generate-stream"
+                "ec2",
+                "boot"
               ],
               "query": [],
               "variable": []
@@ -45,7 +60,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"stream\": true,\n    \"num_events\": 1\n}",
+              "raw": "{\n    \"size\": \"string\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -61,12 +76,13 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/generate-stream",
+                  "raw": "{{baseUrl}}/ec2/boot",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "generate-stream"
+                    "ec2",
+                    "boot"
                   ],
                   "query": [],
                   "variable": []
@@ -82,7 +98,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"stream\": true,\n    \"num_events\": 1\n}",
+                  "raw": "{\n    \"size\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -91,23 +107,31 @@
                 }
               },
               "description": null,
-              "body": "[\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    },\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    }\n]",
+              "body": "",
               "_postman_previewlanguage": "json"
             }
           ]
-        },
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "S 3",
+      "item": [
         {
           "_type": "endpoint",
-          "name": "Generate",
+          "name": "Get Presigned Url",
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/generate",
+              "raw": "{{baseUrl}}/s3/presigned-url",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "generate"
+                "s3",
+                "presigned-url"
               ],
               "query": [],
               "variable": []
@@ -123,7 +147,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
+              "raw": "{\n    \"s3Key\": \"string\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -139,12 +163,13 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/generate",
+                  "raw": "{{baseUrl}}/s3/presigned-url",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "generate"
+                    "s3",
+                    "presigned-url"
                   ],
                   "query": [],
                   "variable": []
@@ -160,7 +185,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
+                  "raw": "{\n    \"s3Key\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -169,47 +194,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "Success",
-              "status": "OK",
-              "code": 200,
-              "originalRequest": {
-                "description": null,
-                "url": {
-                  "raw": "{{baseUrl}}/generate",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "generate"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "description": null,
-              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+              "body": "\"string\"",
               "_postman_previewlanguage": "json"
             }
           ]

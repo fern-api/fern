@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "Streaming",
+    "name": "Multi Line Docs",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": null
   },
@@ -16,23 +16,30 @@
     {
       "_type": "container",
       "description": null,
-      "name": "Dummy",
+      "name": "User",
       "item": [
         {
           "_type": "endpoint",
-          "name": "Generate Stream",
+          "name": "Get User",
           "request": {
-            "description": null,
+            "description": "Retrieve a user.\nThis endpoint is used to retrieve a user.",
             "url": {
-              "raw": "{{baseUrl}}/generate-stream",
+              "raw": "{{baseUrl}}/users/:userId",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "generate-stream"
+                "users",
+                ":userId"
               ],
               "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "userId",
+                  "description": "The ID of the user to retrieve.\nThis ID is unique to each user.",
+                  "value": "string"
+                }
+              ]
             },
             "header": [
               {
@@ -41,17 +48,9 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
+            "method": "GET",
             "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"stream\": true,\n    \"num_events\": 1\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
+            "body": null
           },
           "response": [
             {
@@ -59,17 +58,24 @@
               "status": "OK",
               "code": 200,
               "originalRequest": {
-                "description": null,
+                "description": "Retrieve a user.\nThis endpoint is used to retrieve a user.",
                 "url": {
-                  "raw": "{{baseUrl}}/generate-stream",
+                  "raw": "{{baseUrl}}/users/:userId",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "generate-stream"
+                    "users",
+                    ":userId"
                   ],
                   "query": [],
-                  "variable": []
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "description": "The ID of the user to retrieve.\nThis ID is unique to each user.",
+                      "value": "string"
+                    }
+                  ]
                 },
                 "header": [
                   {
@@ -78,36 +84,28 @@
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
+                "method": "GET",
                 "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"stream\": true,\n    \"num_events\": 1\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
+                "body": null
               },
               "description": null,
-              "body": "[\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    },\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    }\n]",
+              "body": "",
               "_postman_previewlanguage": "json"
             }
           ]
         },
         {
           "_type": "endpoint",
-          "name": "Generate",
+          "name": "Create User",
           "request": {
-            "description": null,
+            "description": "Create a new user.\nThis endpoint is used to create a new user.",
             "url": {
-              "raw": "{{baseUrl}}/generate",
+              "raw": "{{baseUrl}}/users",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "generate"
+                "users"
               ],
               "query": [],
               "variable": []
@@ -123,7 +121,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
+              "raw": "{\n    \"name\": \"string\",\n    \"age\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -137,14 +135,14 @@
               "status": "OK",
               "code": 200,
               "originalRequest": {
-                "description": null,
+                "description": "Create a new user.\nThis endpoint is used to create a new user.",
                 "url": {
-                  "raw": "{{baseUrl}}/generate",
+                  "raw": "{{baseUrl}}/users",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "generate"
+                    "users"
                   ],
                   "query": [],
                   "variable": []
@@ -160,7 +158,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
+                  "raw": "{\n    \"name\": \"string\",\n    \"age\": 1\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -169,47 +167,7 @@
                 }
               },
               "description": null,
-              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "Success",
-              "status": "OK",
-              "code": 200,
-              "originalRequest": {
-                "description": null,
-                "url": {
-                  "raw": "{{baseUrl}}/generate",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "generate"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "description": null,
-              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+              "body": "{\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"age\": 1\n}",
               "_postman_previewlanguage": "json"
             }
           ]

@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "Streaming",
+    "name": "Idempotency Headers",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "description": null
   },
@@ -9,27 +9,41 @@
       "key": "baseUrl",
       "value": "",
       "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
     }
   ],
-  "auth": null,
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
   "item": [
     {
       "_type": "container",
       "description": null,
-      "name": "Dummy",
+      "name": "Payment",
       "item": [
         {
           "_type": "endpoint",
-          "name": "Generate Stream",
+          "name": "Create",
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/generate-stream",
+              "raw": "{{baseUrl}}/payment",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "generate-stream"
+                "payment"
               ],
               "query": [],
               "variable": []
@@ -45,7 +59,7 @@
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"stream\": true,\n    \"num_events\": 1\n}",
+              "raw": "{\n    \"amount\": 1,\n    \"currency\": \"USD\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -61,12 +75,12 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/generate-stream",
+                  "raw": "{{baseUrl}}/payment",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "generate-stream"
+                    "payment"
                   ],
                   "query": [],
                   "variable": []
@@ -82,7 +96,7 @@
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"stream\": true,\n    \"num_events\": 1\n}",
+                  "raw": "{\n    \"amount\": 1,\n    \"currency\": \"USD\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -91,26 +105,33 @@
                 }
               },
               "description": null,
-              "body": "[\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    },\n    {\n        \"id\": \"string\",\n        \"name\": \"string\"\n    }\n]",
+              "body": "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"",
               "_postman_previewlanguage": "json"
             }
           ]
         },
         {
           "_type": "endpoint",
-          "name": "Generate",
+          "name": "Delete",
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/generate",
+              "raw": "{{baseUrl}}/payment/:paymentId",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
-                "generate"
+                "payment",
+                ":paymentId"
               ],
               "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "paymentId",
+                  "description": null,
+                  "value": "string"
+                }
+              ]
             },
             "header": [
               {
@@ -119,17 +140,9 @@
                 "value": "application/json"
               }
             ],
-            "method": "POST",
+            "method": "DELETE",
             "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
+            "body": null
           },
           "response": [
             {
@@ -139,15 +152,22 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/generate",
+                  "raw": "{{baseUrl}}/payment/:paymentId",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
-                    "generate"
+                    "payment",
+                    ":paymentId"
                   ],
                   "query": [],
-                  "variable": []
+                  "variable": [
+                    {
+                      "key": "paymentId",
+                      "description": null,
+                      "value": "string"
+                    }
+                  ]
                 },
                 "header": [
                   {
@@ -156,60 +176,12 @@
                     "value": "application/json"
                   }
                 ],
-                "method": "POST",
+                "method": "DELETE",
                 "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
+                "body": null
               },
               "description": null,
-              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
-              "_postman_previewlanguage": "json"
-            },
-            {
-              "name": "Success",
-              "status": "OK",
-              "code": 200,
-              "originalRequest": {
-                "description": null,
-                "url": {
-                  "raw": "{{baseUrl}}/generate",
-                  "host": [
-                    "{{baseUrl}}"
-                  ],
-                  "path": [
-                    "generate"
-                  ],
-                  "query": [],
-                  "variable": []
-                },
-                "header": [
-                  {
-                    "type": "text",
-                    "key": "Content-Type",
-                    "value": "application/json"
-                  }
-                ],
-                "method": "POST",
-                "auth": null,
-                "body": {
-                  "mode": "raw",
-                  "raw": "{\n    \"stream\": false,\n    \"num_events\": 5\n}",
-                  "options": {
-                    "raw": {
-                      "language": "json"
-                    }
-                  }
-                }
-              },
-              "description": null,
-              "body": "{\n    \"id\": \"id\",\n    \"name\": \"name\"\n}",
+              "body": "",
               "_postman_previewlanguage": "json"
             }
           ]
