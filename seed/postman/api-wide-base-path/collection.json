@@ -24,17 +24,24 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:serviceParam/:endpointParam/:resourceParam",
+              "raw": "{{baseUrl}}/test/:pathParam/:serviceParam/:endpointParam/:resourceParam",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                "test",
+                ":pathParam",
                 ":serviceParam",
                 ":endpointParam",
                 ":resourceParam"
               ],
               "query": [],
               "variable": [
+                {
+                  "key": "pathParam",
+                  "description": null,
+                  "value": "string"
+                },
                 {
                   "key": "serviceParam",
                   "description": null,
@@ -71,17 +78,24 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:serviceParam/:endpointParam/:resourceParam",
+                  "raw": "{{baseUrl}}/test/:pathParam/:serviceParam/:endpointParam/:resourceParam",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
+                    "test",
+                    ":pathParam",
                     ":serviceParam",
                     ":endpointParam",
                     ":resourceParam"
                   ],
                   "query": [],
                   "variable": [
+                    {
+                      "key": "pathParam",
+                      "description": null,
+                      "value": "string"
+                    },
                     {
                       "key": "serviceParam",
                       "description": null,
