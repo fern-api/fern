@@ -269,17 +269,17 @@ function addPublishCommands(cli: Argv) {
                             type: "string",
                             demandOption: false
                         })
-                        .option("versions-file", {
+                        .option("changelog", {
                             type: "string",
                             demandOption: false,
                             description:
-                                "Path to the latest versions file, used along side `previous-versions-file` to the most recent new version to publish."
+                                "Path to the latest changelog file, used along side `previous-changelog` to the most recent new version to publish."
                         })
-                        .option("previous-versions-file", {
+                        .option("previous-changelog", {
                             type: "string",
                             demandOption: false,
                             description:
-                                "Path to the previous versions file, used along side `versions-file` to the most recent new version to publish."
+                                "Path to the previous changelog file, used along side `changelog` to the most recent new version to publish."
                         })
                         .option("log-level", {
                             default: LogLevel.Info,
@@ -287,8 +287,8 @@ function addPublishCommands(cli: Argv) {
                         })
                         .check((argv) => {
                             return (
-                                // Check: Either version or versionsFile and previousVersionsFile must be provided
-                                argv.ver || (argv.versionsFile && argv.previousVersionsFile)
+                                // Check: Either version or changelog and previousChangelog must be provided
+                                argv.ver || (argv.changelog && argv.previousChangelog)
                             );
                         }),
                 async (argv) => {
@@ -314,9 +314,9 @@ function addPublishCommands(cli: Argv) {
                                   // These assertions should be safe given the check with `yargs` above
                                   //
                                   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                                  latestVersionFile: argv.versionsFile!,
+                                  latestChangelogPath: argv.changelog!,
                                   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                                  previousVersionFile: argv.previousVersionsFile!
+                                  previousChangelogPath: argv.previousChangelog!
                               },
                         context
                     });

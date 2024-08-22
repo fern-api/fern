@@ -44,10 +44,10 @@ export async function registerGenerator({
         context.logger.info(`Registering generator ${generatorId} releases from ${absolutePathToChangelogLocation}...`);
         await parseGeneratorReleasesFile({
             generatorId,
-            versionsFilePath: absolutePathToChangelogLocation,
+            changelogPath: absolutePathToChangelogLocation,
             context,
             action: async (release) => {
-                context.logger.debug(`Registering generator ${generatorId} release: ${release.version}`);
+                context.logger.info(`Registering generator ${generatorId} release: ${release.version}`);
                 await fdrClient.generators.versions.upsertGeneratorRelease(release);
             }
         });

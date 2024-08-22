@@ -8,8 +8,8 @@ import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToRel
 import { runCommands, subVersion } from "../../utils/publishUtilities";
 
 interface VersionFilePair {
-    latestVersionFile: string;
-    previousVersionFile: string;
+    latestChangelogPath: string;
+    previousChangelogPath: string;
 }
 
 export async function publishGenerator({
@@ -46,7 +46,7 @@ export async function publishGenerator({
     }
 
     const publishConfig = generator.workspaceConfig.publish;
-    // Instance of PublishDocker configuration, leverage Dockerode here
+    // Instance of PublishDocker configuration, leverage docker CLI here
     if ("docker" in publishConfig) {
         const unparsedCommands = publishConfig.preBuildCommands;
         const preBuildCommands = Array.isArray(unparsedCommands)
@@ -137,14 +137,14 @@ export async function getNewVersion({
     const latestVersionGeneratorReleasesVersions = new Set<string>();
     await parseGeneratorReleasesFile({
         generatorId,
-        versionsFilePath: versionFilePair.latestVersionFile,
+        changelogPath: versionFilePair.latestChangelogPath,
         context,
         action: collectVersions(latestVersionGeneratorReleasesVersions)
     });
     const previousVersionGeneratorReleaseVersions = new Set<string>();
     await parseGeneratorReleasesFile({
         generatorId,
-        versionsFilePath: versionFilePair.previousVersionFile,
+        changelogPath: versionFilePair.previousChangelogPath,
         context,
         action: collectVersions(previousVersionGeneratorReleaseVersions)
     });

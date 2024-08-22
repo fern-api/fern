@@ -7,8 +7,8 @@ describe("Test getNewVersion", () => {
         const version = await getNewVersion({
             generatorId: "test",
             versionFilePair: {
-                latestVersionFile: join(__dirname, "assets/simple-versions.yml"),
-                previousVersionFile: join(__dirname, "assets/no-versions.yml")
+                latestChangelogPath: join(__dirname, "assets/simple-versions.yml"),
+                previousChangelogPath: join(__dirname, "assets/no-versions.yml")
             },
             context: createMockTaskContext()
         });
@@ -20,8 +20,8 @@ describe("Test getNewVersion", () => {
         const version = await getNewVersion({
             generatorId: "test",
             versionFilePair: {
-                latestVersionFile: join(__dirname, "assets/add-multiple-versions.yml"),
-                previousVersionFile: join(__dirname, "assets/no-versions.yml")
+                latestChangelogPath: join(__dirname, "assets/add-multiple-versions.yml"),
+                previousChangelogPath: join(__dirname, "assets/no-versions.yml")
             },
             context: createMockTaskContext()
         });
@@ -33,8 +33,8 @@ describe("Test getNewVersion", () => {
         const version = await getNewVersion({
             generatorId: "test",
             versionFilePair: {
-                latestVersionFile: join(__dirname, "assets/add-multiple-versions.yml"),
-                previousVersionFile: join(__dirname, "assets/simple-versions.yml")
+                latestChangelogPath: join(__dirname, "assets/add-multiple-versions.yml"),
+                previousChangelogPath: join(__dirname, "assets/simple-versions.yml")
             },
             context: createMockTaskContext()
         });
@@ -46,8 +46,8 @@ describe("Test getNewVersion", () => {
             generatorId: "test",
             versionFilePair: {
                 // After this diff, there should be no versions coming from "latest" (e.g. ./assets/simple-versions.yml)
-                latestVersionFile: join(__dirname, "assets/simple-versions.yml"),
-                previousVersionFile: join(__dirname, "assets/add-multiple-versions.yml")
+                latestChangelogPath: join(__dirname, "assets/simple-versions.yml"),
+                previousChangelogPath: join(__dirname, "assets/add-multiple-versions.yml")
             },
             context: createMockTaskContext()
         });
@@ -59,8 +59,8 @@ describe("Test getNewVersion", () => {
         const version = await getNewVersion({
             generatorId: "test",
             versionFilePair: {
-                latestVersionFile: join(__dirname, "assets/latest-isnt-global-max-versions.yml"),
-                previousVersionFile: join(__dirname, "assets/add-multiple-versions.yml")
+                latestChangelogPath: join(__dirname, "assets/latest-isnt-global-max-versions.yml"),
+                previousChangelogPath: join(__dirname, "assets/add-multiple-versions.yml")
             },
             context: createMockTaskContext()
         });
