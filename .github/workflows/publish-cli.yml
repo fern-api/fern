@@ -1,25 +1,56 @@
-name: Publish CLI
+name: Publish Dev + Prod CLIs
 
 on:
-  workflow_call:
-    inputs:
-      version:
-        description: "The version of the CLI to release"
-        required: true
-        type: string
-  workflow_dispatch:
-    inputs:
-      version:
-        description: "The version of the CLI to release"
-        required: true
-        type: string
-
-# Add this permissions block
-permissions:
-  contents: write
-  pull-requests: write
+  push:
+    branches:
+      - main
 
 jobs:
+  publish-dev:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    env:
+      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+      POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Print version
+        run: |
+          git_version="$(./scripts/git-version.sh)"
+          echo Publishing version: "${git_version}"
+
+      - name: Add version to dev package.json's
+        run: |
+          git_version="$(./scripts/git-version.sh)"
+
+          cd packages/cli/cli
+          mv package.json package.json.tmp
+          version_replace="s/0.0.0/${git_version}/"
+          cat package.json.tmp| sed "${version_replace}" > package.json
+          rm -rf package.json.tmp
+
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+
+      - name: Update pnpm lock with new versions
+        run: pnpm install
+
+      - name: Compile
+        run: pnpm --filter @fern-api/cli compile
+
+      - name: Publish fern-api-dev CLI
+        run: pnpm --filter @fern-api/cli publish:cli:dev --access restricted
+
+  # Test prod and try to publish, the publish command will handle if there's no diff
   live-test:
     environment: Fern Prod
     runs-on: ubuntu-latest
@@ -42,53 +73,7 @@ jobs:
           cli_path="$(pwd)/packages/cli/cli/dist/prod/bundle.cjs" 
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
 
-  publish-rc:
-    if: contains(inputs.version, '-rc')
-    runs-on: ubuntu-latest
-    env:
-      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
-      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-      POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-          fetch-tags: true
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Print version
-        run: |
-          git_version=${{ inputs.version }} 
-          echo Publishing version: "${git_version}"
-
-      - name: Add version to dev package.json's
-        run: |
-          git_version=${{ inputs.version }} 
-          
-          cd packages/cli/cli
-          mv package.json package.json.tmp
-          version_replace="s/0.0.0/${git_version}/"
-          cat package.json.tmp| sed "${version_replace}" > package.json
-          rm -rf package.json.tmp
-
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-
-      - name: Update pnpm lock with new versions
-        run: pnpm install
-
-      - name: Compile
-        run: pnpm --filter @fern-api/cli compile
-
-      - name: Publish fern-api CLI
-        run: pnpm --filter @fern-api/cli publish:cli:prod --tag prerelease
-
   publish:
-    if: "!contains(inputs.version, '-rc')"
-    needs: live-test
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -105,28 +90,10 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Print version
+      - name: Publish CLI
         run: |
-          git_version=${{ inputs.version }} 
-          echo Publishing version: "${git_version}"
+          git show HEAD~1:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
+          pnpm seed:local publish generator cli --versions-file packages/cli/cli/versions.yml --previous-versions-file tmp_cli_previous_versions.yml --log-level debug
 
-      - name: Add version to package.json's
-        run: |
-          git_version=${{ inputs.version }} 
-
-          cd packages/cli/cli
-          mv package.json package.json.tmp
-          version_replace="s/0.0.0/${git_version}/"
-          cat package.json.tmp| sed "${version_replace}" > package.json
-          rm -rf package.json.tmp
-
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-
-      - name: Update pnpm lock with new versions
-        run: pnpm install
-
-      - name: Compile
-        run: pnpm --filter @fern-api/cli compile
-
-      - name: Publish fern-api CLI
-        run: pnpm --filter @fern-api/cli publish:cli:prod --tag latest
+      - name: Register CLI
+        run: pnpm seed:local register cli

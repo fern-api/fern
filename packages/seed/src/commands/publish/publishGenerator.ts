@@ -5,6 +5,7 @@ import semver from "semver";
 import { PublishDockerConfiguration } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
 import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
+import { runCommands, subVersion } from "../../utils/publishUtilities";
 
 interface VersionFilePair {
     latestVersionFile: string;
@@ -63,18 +64,6 @@ export async function publishGenerator({
         const versionSubsitution = publishConfig.versionSubstitution;
         const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubsitution));
         await runCommands(subbedCommands, context, generator.absolutePathToWorkspace);
-    }
-}
-
-// Replace the version string within the command, if one is specified
-// The idea here is to turn a command like "npm publish --tag $VERSION" into "npm publish --tag v1.0.0"
-function subVersion(command: string, version: string, versionSubsitution?: string): string {
-    return versionSubsitution ? command.replace(versionSubsitution, version) : command;
-}
-
-async function runCommands(commands: string[], context: TaskContext, cwd: string | undefined) {
-    for (const command of commands) {
-        await loggingExeca(context.logger, "cd", [cwd ?? ".", "&&", command]);
     }
 }
 

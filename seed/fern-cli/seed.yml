@@ -1,1 +1,25 @@
 changelogLocation: ../../packages/cli/cli/versions.yml
+publishGa:
+  versionSubstitution: $VERSION
+  command:
+    - cd packages/cli/cli
+    - mv package.json package.json.tmp
+    - version_replace="s/0.0.0/$VERSION/"
+    - cat package.json.tmp| sed "$VERSION" > package.json
+    - rm -rf package.json.tmp
+    - pnpm install
+    - pnpm --filter @fern-api/cli compile
+    # Should likely include this within the script itself
+    - pnpm --filter @fern-api/cli publish:cli:prod --tag latest
+publishRc:
+  versionSubstitution: $VERSION
+  command:
+    - cd packages/cli/cli
+    - mv package.json package.json.tmp
+    - version_replace="s/0.0.0/$VERSION/"
+    - cat package.json.tmp| sed "$VERSION" > package.json
+    - rm -rf package.json.tmp
+    - pnpm install
+    - pnpm --filter @fern-api/cli compile
+    # Should likely include this within the script itself
+    - pnpm --filter @fern-api/cli publish:cli:prod --tag prerelease

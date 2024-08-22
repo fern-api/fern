@@ -3,17 +3,22 @@ imports:
 types:
   CliSeedWorkspaceConfiguration:
     properties:
+      publishGa: PublishCommand
+      publishRc: PublishCommand
       changelogLocation: 
         type: optional<string>
         docs: | 
           The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
 
   SeedWorkspaceConfiguration:
-    extends: CliSeedWorkspaceConfiguration
     properties:
       irVersion: string
-      publish: PublishConfiguration
       test: TestConfiguration
+      publish: PublishConfiguration
+      changelogLocation: 
+        type: optional<string>
+        docs: | 
+          The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
 
       language: optional<Language>
       defaultCustomConfig: optional<map<string, unknown>>
