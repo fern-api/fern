@@ -1,9 +1,6 @@
 name: seed
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
@@ -104,12 +101,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
-      # Only register if seed is passing
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators ruby-model
-
   ruby-sdk:
     runs-on: ubuntu-latest
     needs: changes
@@ -140,11 +131,6 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
-
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators ruby-sdk
 
   pydantic-model:
     runs-on: ubuntu-latest
@@ -184,11 +170,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators pydantic
-
   python-sdk:
     runs-on: Seed
     needs: changes
@@ -226,11 +207,6 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
-
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators python-sdk
 
   fastapi:
     runs-on: ubuntu-latest
@@ -270,11 +246,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators fastapi
-
   openapi:
     runs-on: ubuntu-latest
     needs: changes
@@ -305,11 +276,6 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
-
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators openapi
 
   postman:
     runs-on: ubuntu-latest
@@ -342,11 +308,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators postman
-
   java-sdk:
     runs-on: Seed
     needs: changes
@@ -377,11 +338,6 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
-
-        - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators java-sdk
 
   java-model:
     runs-on: Seed
@@ -414,11 +370,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators java-model
-
   java-spring:
     runs-on: ubuntu-latest
     needs: changes
@@ -449,11 +400,6 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
-
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators java-spring
 
   typescript-sdk:
     runs-on: Seed
@@ -486,11 +432,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators ts-sdk
-
   typescript-express:
     runs-on: ubuntu-latest
     needs: changes
@@ -521,11 +462,6 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
-
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators ts-express
 
   go-fiber:
     runs-on: ubuntu-latest
@@ -558,11 +494,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators go-fiber
-
   go-model:
     runs-on: ubuntu-latest
     needs: changes
@@ -593,11 +524,6 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
-
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators go-model
 
   go-sdk:
     runs-on: ubuntu-latest
@@ -630,11 +556,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators go-sdk
-
   csharp-model:
     runs-on: ubuntu-latest
     needs: changes
@@ -666,11 +587,6 @@ jobs:
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
 
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators csharp-model
-
   csharp-sdk:
     runs-on: ubuntu-latest
     needs: changes
@@ -701,8 +617,3 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code  -- ":(exclude)seed/*/.mock/*"
-
-      - name: Register on push to main
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          pnpm seed:local register --generators csharp-sdk

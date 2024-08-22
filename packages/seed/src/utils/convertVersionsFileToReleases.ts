@@ -6,17 +6,17 @@ import yaml from "js-yaml";
 
 export async function parseGeneratorReleasesFile({
     generatorId,
-    versionsFilePath,
+    changelogPath,
     context,
     action
 }: {
     generatorId: string;
-    versionsFilePath: string;
+    changelogPath: string;
     context: TaskContext;
     action: (release: GeneratorReleaseRequest) => Promise<void>;
 }): Promise<void> {
-    context.logger.debug(`Parsing versions file ${versionsFilePath}`);
-    const changelogs = yaml.load((await readFile(versionsFilePath)).toString());
+    context.logger.debug(`Parsing versions file ${changelogPath}`);
+    const changelogs = yaml.load((await readFile(changelogPath)).toString());
     if (Array.isArray(changelogs)) {
         for (const entry of changelogs) {
             try {
@@ -24,10 +24,9 @@ export async function parseGeneratorReleasesFile({
                     generator_id: generatorId,
                     ...entry
                 });
-                context.logger.debug(`Encountered generator  ${generatorId} release: ${release.version}`);
                 await action(release);
             } catch (e) {
-                context.logger.error(`Error parsing release: ${e}`);
+                context.logger.error(`Failed to parse and run action on release: ${(e as Error)?.message}`);
             }
         }
     }
