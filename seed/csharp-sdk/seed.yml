@@ -8,8 +8,8 @@ defaultOutputMode: github
 scripts:
   - docker: bitnami/dotnet-sdk:8
     commands:
-      # - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
-      - dotnet test src
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+      # - dotnet test src
 local: 
   workingDirectory: generators/csharp
   buildCommand: 
@@ -59,11 +59,11 @@ allowedFailures:
   - examples
   ## WIRE TEST FAILURES
   - unknown # issue with example object
-  - package-yml # user-provided example path not coming in properly
-  - simple-fhir # nested generated examples are wonky
-  - enum # complicated oneofs
-  - trace # failing because we don't call stringify on enums path params
-  - undiscriminated-unions # failing for same reason as exhaustive below
-  - exhaustive:explicit-namespaces # mostly passing, request / response of direct union type failing because we don't specify jsonconverter
-  - exhaustive:no-root-namespace-for-core-classes
-  - exhaustive:no-generate-error-types
+  # - package-yml # user-provided example path not coming in properly
+  # - simple-fhir # nested generated examples are wonky
+  # - enum # complicated oneofs
+  # - trace # failing because we don't call stringify on enums path params
+  # - undiscriminated-unions # failing for same reason as exhaustive below
+  # - exhaustive:explicit-namespaces # mostly passing, request / response of direct union type failing because we don't specify jsonconverter
+  # - exhaustive:no-root-namespace-for-core-classes
+  # - exhaustive:no-generate-error-types
