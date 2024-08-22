@@ -52,6 +52,9 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        package-id: Seed.Client
+      outputFolder: package-id
+    - customConfig:
         read-only-memory-types:
           - float
       outputFolder: read-only-memory

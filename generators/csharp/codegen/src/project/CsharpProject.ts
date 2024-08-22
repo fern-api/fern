@@ -377,6 +377,7 @@ class CsProj {
     private version: string | undefined;
     private license: string | undefined;
     private githubUrl: string | undefined;
+    private packageId: string | undefined;
     private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
     private protobufSourceFilePaths: RelativeFilePath[];
 
@@ -386,23 +387,17 @@ class CsProj {
         this.githubUrl = githubUrl;
         this.context = context;
         this.protobufSourceFilePaths = protobufSourceFilePaths;
+        this.packageId = this.context.customConfig["package-id"];
     }
 
     public toString(): string {
-        const propertyGroups = this.getPropertyGroups();
+        const projectGroup = this.getProjectGroup();
         const dependencies = this.getDependencies();
         return ` 
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <NuGetAudit>false</NuGetAudit>
-        <LangVersion>12</LangVersion>
-        <Nullable>enable</Nullable>
-        ${propertyGroups.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
-    </PropertyGroup>
-    
+${projectGroup.join("\n")}
+
     <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
     </PropertyGroup>
@@ -482,6 +477,30 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
             result.push("    </Protobuf>");
         }
         result.push("</ItemGroup>\n");
+
+        return result;
+    }
+
+    private getProjectGroup(): string[] {
+        const result: string[] = [];
+
+        result.push(`${FOUR_SPACES}<PropertyGroup>`);
+        if (this.packageId != null) {
+            result.push(`${FOUR_SPACES}${FOUR_SPACES}<PackageId>${this.packageId}</PackageId>`);
+        }
+        result.push(
+            `${FOUR_SPACES}${FOUR_SPACES}<TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>`
+        );
+        result.push(`${FOUR_SPACES}${FOUR_SPACES}<ImplicitUsings>enable</ImplicitUsings>`);
+        result.push(`${FOUR_SPACES}${FOUR_SPACES}<NuGetAudit>false</NuGetAudit>`);
+        result.push(`${FOUR_SPACES}${FOUR_SPACES}<LangVersion>12</LangVersion>`);
+        result.push(`${FOUR_SPACES}${FOUR_SPACES}<Nullable>enable</Nullable>`);
+
+        const propertyGroups = this.getPropertyGroups();
+        for (const propertyGroup of propertyGroups) {
+            result.push(`${FOUR_SPACES}${FOUR_SPACES}${propertyGroup}`);
+        }
+        result.push(`${FOUR_SPACES}</PropertyGroup>`);
 
         return result;
     }
