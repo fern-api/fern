@@ -22,7 +22,6 @@ import {
     TestClass,
     Type
 } from "./ast";
-import { AnonymousClass } from "./ast/AnonymousClass";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
@@ -42,10 +41,6 @@ export function classReference(args: ClassReference.Args): ClassReference {
 
 export function instantiateClass(args: ClassInstantiation.Args): ClassInstantiation {
     return new ClassInstantiation(args);
-}
-
-export function anonymousClass(args: AnonymousClass.Args): AnonymousClass {
-    return new AnonymousClass(args);
 }
 
 export function invokeMethod(args: MethodInvocation.Args): MethodInvocation {
