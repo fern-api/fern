@@ -18,7 +18,7 @@ import { loadOpenAPIFromUrl, LoadOpenAPIStatus } from "../../init/src/utils/load
 import { CliContext } from "./cli-context/CliContext";
 import { getLatestVersionOfCli } from "./cli-context/upgrade-utils/getLatestVersionOfCli";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
-import { addGeneratorListCommand, addGetOrganizationCommand } from "./cliV2";
+import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
@@ -148,7 +148,6 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteOverridesCommand(cli, cliContext);
     addTestCommand(cli, cliContext);
     addUpdateApiSpecCommand(cli, cliContext);
-    addUpgradeGeneratorCommand(cli, cliContext);
     addUpgradeCommand({
         cli,
         cliContext,
@@ -159,7 +158,7 @@ async function tryRunCli(cliContext: CliContext) {
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
-    addGeneratorListCommand(cli, cliContext);
+    addGeneratorCommands(cli, cliContext);
 
     cli.middleware(async (argv) => {
         cliContext.setLogLevel(argv["log-level"]);
@@ -662,57 +661,6 @@ function addUpgradeCommand({
                 targetVersion: argv.version
             });
             onRun();
-        }
-    );
-}
-
-function addUpgradeGeneratorCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
-    cli.command(
-        "generator upgrade",
-        `Upgrades the specified generator in ${GENERATORS_CONFIGURATION_FILENAME} to the latest stable version.`,
-        (yargs) =>
-            yargs
-                .option("generator", {
-                    string: true,
-                    description: "The type of generator to upgrade, ex: `fern-typescript-node-sdk`."
-                })
-                .option("group", {
-                    string: true,
-                    description:
-                        "The group in which the generator is located, if group is not specified, the all generators of the specified type will be upgraded."
-                })
-                .option("api", {
-                    string: true,
-                    description:
-                        "The API to upgrade the generator for. If not specified, the generator will be upgraded for all APIs."
-                })
-                .option("include-major", {
-                    boolean: true,
-                    default: false,
-                    description:
-                        "Whether or not to include major versions within the upgrade. Defaults to false, meaning major versions will be skipped."
-                }),
-        async (argv) => {
-            cliContext.instrumentPostHogEvent({
-                command: "fern generator upgrade",
-                properties: {
-                    generator: argv.generator,
-                    version: argv.version,
-                    api: argv.api,
-                    group: argv.group,
-                    includeMajor: argv.includeMajor
-                }
-            });
-            await upgradeGenerator({
-                cliContext,
-                generator: argv.generator,
-                group: argv.group,
-                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                    commandLineApiWorkspace: argv.api,
-                    defaultToAllApiWorkspaces: true
-                }),
-                includeMajor: argv.includeMajor
-            });
         }
     );
 }
