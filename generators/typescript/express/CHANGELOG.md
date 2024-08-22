@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.17.4] - 2024-07-31
+
+- Feature: Add `useJsFileExtensionsOnImports` config to the express generator (defaults to false).
+
+  When `useJsFileExtensionsOnImports` is enabled, all import statements include `.js` extensions.
+  This may be necessary in projects where `moduleResolution` in tsconfig.json is `node16` or `nodenext`.
+
 ## [0.17.3] - 2024-07-31
 
 - Internal: Upgrade to IRv53.
