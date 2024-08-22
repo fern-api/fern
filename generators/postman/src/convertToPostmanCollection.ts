@@ -15,7 +15,7 @@ import {
     PostmanHeader
 } from "@fern-fern/postman-sdk/api";
 import { startCase } from "lodash";
-import { isNonNullish } from "../../commons/node_modules/@fern-api/core-utils/src";
+import { isNonNullish } from "@fern-api/core-utils";
 import { convertAuth, getAuthHeaders, getVariablesForAuthScheme } from "./auth";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";
