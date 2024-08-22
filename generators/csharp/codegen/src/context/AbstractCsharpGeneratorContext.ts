@@ -307,8 +307,8 @@ export abstract class AbstractCsharpGeneratorContext<
                         arguments_: [csharp.codeblock("this")]
                     })
                 );
-            }),
-        })
+            })
+        });
     }
 
     public isOptional(typeReference: TypeReference): boolean {
