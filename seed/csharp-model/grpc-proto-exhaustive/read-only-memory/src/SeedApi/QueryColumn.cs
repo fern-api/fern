@@ -40,7 +40,7 @@ public record QueryColumn
         }
         if (TopK != null)
         {
-            result.TopK = TopK ?? 0U;
+            result.TopK = TopK ?? 0;
         }
         if (Namespace != null)
         {

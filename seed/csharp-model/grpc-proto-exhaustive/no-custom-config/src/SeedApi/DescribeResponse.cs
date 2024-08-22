@@ -41,7 +41,7 @@ public record DescribeResponse
         }
         if (Dimension != null)
         {
-            result.Dimension = Dimension ?? 0U;
+            result.Dimension = Dimension ?? 0;
         }
         if (Fullness != null)
         {
@@ -49,7 +49,7 @@ public record DescribeResponse
         }
         if (TotalCount != null)
         {
-            result.TotalCount = TotalCount ?? 0U;
+            result.TotalCount = TotalCount ?? 0;
         }
         return result;
     }

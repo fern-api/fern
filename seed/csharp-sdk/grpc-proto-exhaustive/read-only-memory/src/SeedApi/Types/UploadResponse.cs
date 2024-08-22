@@ -24,7 +24,7 @@ public record UploadResponse
         var result = new Proto.UploadResponse();
         if (Count != null)
         {
-            result.Count = Count ?? 0U;
+            result.Count = Count ?? 0;
         }
         return result;
     }

@@ -32,7 +32,7 @@ public record ListRequest
         }
         if (Limit != null)
         {
-            result.Limit = Limit ?? 0U;
+            result.Limit = Limit ?? 0;
         }
         if (PaginationToken != null)
         {
