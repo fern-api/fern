@@ -46,6 +46,18 @@ dependencies:
 Next, you need create a folder in your Fern Definition to "house" the dependency. Inside the folder, create a special file
 `__package__.yml` which specifies the dependency and version you want to add.
 
+```yaml {7-8}
+fern/
+├─ fern.config.json
+├─ generators.yml
+├─ dependencies.yml
+└─ definition/
+  ├─ api.yml
+  ├─ imdb.yml
+  └─ my-folder
+    └─ __package__.yml  
+```
+
 ```yaml __package__.yml
 export:
   dependency: @fern/some-dependency
