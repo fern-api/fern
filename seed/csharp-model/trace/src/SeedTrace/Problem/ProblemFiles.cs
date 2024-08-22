@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record ProblemFiles
 
     [JsonPropertyName("readOnlyFiles")]
     public IEnumerable<FileInfo> ReadOnlyFiles { get; set; } = new List<FileInfo>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

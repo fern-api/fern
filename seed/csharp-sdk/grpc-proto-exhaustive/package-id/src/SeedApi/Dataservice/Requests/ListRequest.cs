@@ -1,3 +1,4 @@
+using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -13,6 +14,11 @@ public record ListRequest
     public string? PaginationToken { get; set; }
 
     public string? Namespace { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 
     /// <summary>
     /// Maps the ListRequest type into its Protobuf-equivalent representation.

@@ -1,3 +1,4 @@
+using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -9,6 +10,11 @@ public record FetchRequest
     public IEnumerable<string> Ids { get; set; } = new List<string>();
 
     public string? Namespace { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 
     /// <summary>
     /// Maps the FetchRequest type into its Protobuf-equivalent representation.

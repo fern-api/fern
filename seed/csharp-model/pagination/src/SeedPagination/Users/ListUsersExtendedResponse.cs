@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedPagination.Core;
 
 #nullable enable
 
@@ -17,4 +18,9 @@ public record ListUsersExtendedResponse
 
     [JsonPropertyName("next")]
     public string? Next { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

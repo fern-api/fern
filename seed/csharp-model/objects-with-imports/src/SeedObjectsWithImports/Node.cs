@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Commons;
+using SeedObjectsWithImports.Core;
 
 #nullable enable
 
@@ -15,4 +16,9 @@ public record Node
 
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

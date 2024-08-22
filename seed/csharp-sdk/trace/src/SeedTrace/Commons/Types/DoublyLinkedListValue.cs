@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -12,4 +13,9 @@ public record DoublyLinkedListValue
     [JsonPropertyName("nodes")]
     public Dictionary<string, DoublyLinkedListNodeValue> Nodes { get; set; } =
         new Dictionary<string, DoublyLinkedListNodeValue>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

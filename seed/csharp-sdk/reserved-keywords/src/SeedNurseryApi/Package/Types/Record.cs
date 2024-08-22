@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedNurseryApi.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record Record
 
     [JsonPropertyName("3d")]
     public required int _3D { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

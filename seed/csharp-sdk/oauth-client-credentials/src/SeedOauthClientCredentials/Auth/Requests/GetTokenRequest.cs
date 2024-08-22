@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedOauthClientCredentials.Core;
 
 #nullable enable
 
@@ -20,4 +21,9 @@ public record GetTokenRequest
 
     [JsonPropertyName("scope")]
     public string? Scope { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

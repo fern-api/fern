@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+- Feature: Generate the `ToString` method to write the JSON format of an object. This
+  makes it far easier to visualize response objects by simply printing the object, i.e.
+
+  ```csharp
+  var response = await client.GetUserAsync(...);
+  System.Console.WriteLine(response);
+  ```
+
 ## [1.3.0-rc0] - 2024-08-21
 
 - Feature: Add support for sending the `User-Agent` header.
