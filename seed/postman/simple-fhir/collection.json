@@ -84,7 +84,7 @@
             "body": null
           },
           "description": null,
-          "body": "{\n    \"resource_type\": \"Account\",\n    \"name\": \"string\",\n    \"patient\": {},\n    \"practitioner\": {},\n    \"id\": \"string\",\n    \"related_resources\": [\n        {}\n    ],\n    \"memo\": {\n        \"description\": \"string\",\n        \"account\": {}\n    }\n}",
+          "body": "{\n    \"resource_type\": \"Account\",\n    \"name\": \"string\",\n    \"patient\": {\n        \"resource_type\": \"Patient\",\n        \"name\": \"string\",\n        \"scripts\": [\n            {\n                \"key\": \"value\"\n            }\n        ],\n        \"id\": \"string\",\n        \"related_resources\": [\n            {\n                \"key\": \"value\"\n            }\n        ],\n        \"memo\": {\n            \"description\": \"string\",\n            \"account\": {\n                \"key\": \"value\"\n            }\n        }\n    },\n    \"practitioner\": {\n        \"resource_type\": \"Practitioner\",\n        \"name\": \"string\",\n        \"id\": \"string\",\n        \"related_resources\": [\n            {\n                \"key\": \"value\"\n            }\n        ],\n        \"memo\": {\n            \"description\": \"string\",\n            \"account\": {\n                \"key\": \"value\"\n            }\n        }\n    },\n    \"id\": \"string\",\n    \"related_resources\": [\n        {\n            \"key\": \"value\"\n        }\n    ],\n    \"memo\": {\n        \"description\": \"string\",\n        \"account\": {\n            \"key\": \"value\"\n        }\n    }\n}",
           "_postman_previewlanguage": "json"
         }
       ]
