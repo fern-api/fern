@@ -121,7 +121,8 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     clientVariableName: "Client",
                     serviceId: this.serviceId,
                     getResult: true,
-                    requestOptions: csharp.codeblock("RequestOptions")
+                    requestOptions: csharp.codeblock("RequestOptions"),
+                    parseDatetimes: true
                 });
                 if (endpointSnippet == null) {
                     throw new Error("Endpoint snippet is null");

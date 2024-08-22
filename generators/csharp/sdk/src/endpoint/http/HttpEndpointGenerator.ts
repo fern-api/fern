@@ -134,7 +134,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         serviceId: ServiceId;
         requestOptions?: csharp.CodeBlock;
         getResult?: boolean;
-        parseDatetimes?: boolean;
+        parseDatetimes: boolean;
     }): csharp.MethodInvocation | undefined {
         return this.generateEndpointSnippet({
             example,
