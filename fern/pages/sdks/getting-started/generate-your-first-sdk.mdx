@@ -61,13 +61,11 @@ to generate your first SDK.
       ```sh
       fern/
         ├─ fern.config.json # root-level configuration
-        └─ api/ # your API
-          ├─ generators.yml # generators you're using
-          └─ definition/
-            ├─ api.yml  # API-level configuration
-            └─ imdb.yml # endpoints, types, and errors
+        ├─ generators.yml # generators you're using
+        └─ definition/
+          ├─ api.yml  # API-level configuration
+          └─ imdb.yml # endpoints, types, and errors
       ```
-
     </Accordion>
   </AccordionGroup>
 
@@ -114,6 +112,11 @@ to generate your first SDK.
     <CodeBlock title="Ruby">
       ```sh
       fern add fern-ruby-sdk --group sdk
+      ```
+    </CodeBlock>
+    <CodeBlock title="C#">
+      ```sh
+      fern add fern-csharp-sdk --group sdk
       ```
     </CodeBlock>
   </CodeBlocks>
