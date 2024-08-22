@@ -18,17 +18,17 @@ export abstract class AbstractEndpointGenerator {
         example,
         endpoint,
         clientVariableName,
+        parseDatetimes,
         serviceId,
-        additionalEndParameters,
-        parseDatetimes
+        additionalEndParameters
     }: {
         example: ExampleEndpointCall;
         endpoint: HttpEndpoint;
         clientVariableName: string;
         serviceId: ServiceId;
+        parseDatetimes: boolean;
         additionalEndParameters?: csharp.CodeBlock[];
         getResult?: boolean;
-        parseDatetimes?: boolean;
     }): csharp.MethodInvocation | undefined {
         const service = this.context.ir.services[serviceId];
         if (service == null) {
@@ -40,13 +40,8 @@ export abstract class AbstractEndpointGenerator {
         if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
             return undefined;
         }
-        const args = this.getNonEndpointArguments(example, parseDatetimes ?? true);
-        const endpointRequestSnippet = this.getEndpointRequestSnippet(
-            example,
-            endpoint,
-            serviceId,
-            parseDatetimes ?? true
-        );
+        const args = this.getNonEndpointArguments(example, parseDatetimes);
+        const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
         }
