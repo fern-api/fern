@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0-rc2] - 2024-08-22
+
+- Improvement: Fix warnings in generated `RawClient`.
+
+- Improvement: Use simpler primitive instantiation for the various number types.
+
 ## [1.3.0-rc1] - 2024-08-22
 
 - Feature: Generate the `ToString` method to write the JSON format of an object. This
