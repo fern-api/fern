@@ -12,6 +12,8 @@ local:
   runCommand: node sdk/cli/dist/nodeCli.cjs
   env:
     NODE_ENV: test
+customFixtureConfig: 
+  generateWireTests: true    
 fixtures:
   imdb:
     - customConfig: null

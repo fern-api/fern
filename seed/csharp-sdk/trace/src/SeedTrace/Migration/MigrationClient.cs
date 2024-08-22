@@ -29,10 +29,9 @@ public partial class MigrationClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Dictionary<string, string>()
-        {
-            { "admin-key-header", request.AdminKeyHeader },
-        };
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "admin-key-header", request.AdminKeyHeader } }
+        );
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

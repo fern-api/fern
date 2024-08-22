@@ -117,6 +117,58 @@
               "description": null,
               "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/headers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "headers"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-Endpoint-Version",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"02-12-2024\""
+                  },
+                  {
+                    "key": "X-Async",
+                    "description": null,
+                    "type": "text",
+                    "value": "true"
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"query\": \"What is the weather today\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "_postman_previewlanguage": "json"
             }
           ]
         }
@@ -202,6 +254,46 @@
               "description": null,
               "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/inlined",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "inlined"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"temperature\": 10.1,\n    \"prompt\": \"You are a helpful assistant\",\n    \"context\": \"You're super wise\",\n    \"aliasedContext\": \"You're super wise\",\n    \"maybeContext\": \"You're super wise\",\n    \"stream\": false,\n    \"query\": \"What is the weather today\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "_postman_previewlanguage": "json"
             }
           ]
         }
@@ -247,6 +339,45 @@
             "body": null
           },
           "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/path/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "path",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "123"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "_postman_previewlanguage": "json"
+            },
             {
               "name": "Success",
               "status": "OK",
@@ -386,6 +517,54 @@
               "description": null,
               "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/query?prompt=You+are+a+helpful+assistant&query=string&stream=false",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "query"
+                  ],
+                  "query": [
+                    {
+                      "key": "prompt",
+                      "description": null,
+                      "value": "You are a helpful assistant"
+                    },
+                    {
+                      "key": "query",
+                      "description": null,
+                      "value": "string"
+                    },
+                    {
+                      "key": "stream",
+                      "description": null,
+                      "value": "false"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "_postman_previewlanguage": "json"
             }
           ]
         }
@@ -432,6 +611,46 @@
             }
           },
           "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/reference",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "reference"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"prompt\": \"You are a helpful assistant\",\n    \"stream\": false,\n    \"context\": \"You're super wise\",\n    \"query\": \"What is the weather today\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"message\": \"The weather is sunny\",\n    \"status\": 200,\n    \"success\": true\n}",
+              "_postman_previewlanguage": "json"
+            },
             {
               "name": "Success",
               "status": "OK",

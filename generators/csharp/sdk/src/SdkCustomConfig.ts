@@ -12,7 +12,8 @@ export const SdkCustomConfigSchema = z.strictObject({
     "generate-error-types": z.boolean().optional(),
     "extra-dependencies": z.record(z.string()).optional(),
     "read-only-memory-types": z.optional(z.array(z.string())),
-    "generate-mock-server-tests": z.boolean().optional()
+    "generate-mock-server-tests": z.boolean().optional(),
+    "package-id": z.string().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;
