@@ -445,6 +445,9 @@ importers:
 
   generators/postman:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../packages/commons/core-utils
       '@fern-api/generator-commons':
         specifier: workspace:*
         version: link:../commons
