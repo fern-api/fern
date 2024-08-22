@@ -134,7 +134,8 @@ export class Field extends AstNode {
         writer.writeNode(this.type);
         writer.write(` ${this.name}`);
 
-        if (this.get || this.init) {
+        const useExpressionBodiedPropertySyntax = this.get && !this.init && !this.set && this.initializer != null;
+        if ((this.get || this.init || this.set) && !useExpressionBodiedPropertySyntax) {
             writer.write(" { ");
             if (this.get) {
                 writer.write("get; ");
@@ -149,7 +150,11 @@ export class Field extends AstNode {
         }
 
         if (this.initializer != null) {
-            writer.write(" = ");
+            if (useExpressionBodiedPropertySyntax) {
+                writer.write(" => ");
+            } else {
+                writer.write(" = ");
+            }
             this.initializer.write(writer);
             writer.writeLine(";");
         } else if (!this.skipDefaultInitializer && !isOptional && isCollection) {

@@ -18,9 +18,9 @@ public class OrganizationTest
         var inputJson =
             @"
         {
-  ""name"": ""orgName""
-}
-";
+          ""name"": ""orgName""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

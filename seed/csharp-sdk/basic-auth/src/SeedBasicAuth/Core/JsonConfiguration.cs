@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SeedBasicAuth.Core;
 
@@ -12,6 +13,7 @@ internal static class JsonOptions
         {
             Converters = { new DateTimeSerializer() },
             WriteIndented = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
     }
 }

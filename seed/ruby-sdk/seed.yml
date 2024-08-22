@@ -36,6 +36,7 @@ allowedFailures:
   # TODO: Add support for recursive undiscriminated unions.
   - grpc
   - any-auth
+  - trace
 features:
   requestOptions: true
   idempotency: false

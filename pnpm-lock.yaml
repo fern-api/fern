@@ -330,8 +330,8 @@ importers:
         specifier: ^0.0.898
         version: 0.0.898
       '@fern-fern/ir-sdk':
-        specifier: ^53.6.0
-        version: 53.6.0
+        specifier: ^53.7.0
+        version: 53.7.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3176,8 +3176,6 @@ importers:
       typescript:
         specifier: 4.6.4
         version: 4.6.4
-
-  packages/cli/cli/dist/dev: {}
 
   packages/cli/configuration:
     dependencies:
@@ -6722,6 +6720,9 @@ packages:
 
   '@fern-fern/ir-sdk@53.6.0':
     resolution: {integrity: sha512-LN7rilQZdMlgrUgLSj/3Tf9gEBAj/4auGDyqOsz295ji0aI+iq3KKwS7W/xdeZJJdf7yf0iJpJommGVqTDSd6A==}
+
+  '@fern-fern/ir-sdk@53.7.0':
+    resolution: {integrity: sha512-PoCj8yOep3kFeDZYORAzqPwVtCSNmbT2SfR/AoxKCcikeZ5i+4Um4ZXx1e6UaAy7dIYF5kWeRc6lptFBRoj7Gw==}
 
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
@@ -13801,6 +13802,8 @@ snapshots:
   '@fern-fern/ir-sdk@53.5.0': {}
 
   '@fern-fern/ir-sdk@53.6.0': {}
+
+  '@fern-fern/ir-sdk@53.7.0': {}
 
   '@fern-fern/ir-v1-model@0.0.2': {}
 

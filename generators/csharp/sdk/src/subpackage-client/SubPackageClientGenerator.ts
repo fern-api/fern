@@ -38,8 +38,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
         this.grpcClientInfo =
             this.serviceId != null ? this.context.getGrpcClientInfoForServiceId(this.serviceId) : undefined;
         this.endpointGenerator = new EndpointGenerator({
-            context,
-            rawClient: this.rawClient
+            context
         });
     }
 
@@ -94,6 +93,7 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkCust
                     serviceId: this.serviceId,
                     endpoint,
                     rawClientReference: CLIENT_MEMBER_NAME,
+                    rawClient: this.rawClient,
                     rawGrpcClientReference: GRPC_CLIENT_MEMBER_NAME,
                     grpcClientInfo: this.grpcClientInfo
                 });

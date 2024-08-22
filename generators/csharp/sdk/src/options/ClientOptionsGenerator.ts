@@ -6,6 +6,7 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { BaseOptionsGenerator, BASE_URL_FIELD_NAME, BASE_URL_SUMMARY, OptionArgs } from "./BaseOptionsGenerator";
 
 export const CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
+export const GLOBAL_TEST_SETUP_NAME = "GlobalTestSetup";
 
 export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private baseOptionsGenerator: BaseOptionsGenerator;

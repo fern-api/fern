@@ -83,6 +83,14 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.namespace}.Test`;
     }
 
+    public getTestUtilsNamespace(): string {
+        return `${this.getTestNamespace()}.Utils`;
+    }
+
+    public getMockServerTestNamespace(): string {
+        return `${this.getTestNamespace()}.Unit.MockServer`;
+    }
+
     public hasGrpcEndpoints(): boolean {
         // TODO: Replace this with the this.ir.sdkConfig.hasGrpcEndpoints property (when available).
         return Object.values(this.ir.services).some((service) => service.transport?.type === "grpc");
@@ -358,6 +366,8 @@ export abstract class AbstractCsharpGeneratorContext<
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getPublicCoreAsIsFiles(): string[];
+
+    public abstract getAsIsTestUtils(): string[];
 
     public abstract getDirectoryForTypeId(typeId: TypeId): string;
 
