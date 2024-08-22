@@ -24,15 +24,21 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/:nestedId",
+              "raw": "{{baseUrl}}/:id/:nestedId",
               "host": [
                 "{{baseUrl}}"
               ],
               "path": [
+                ":id",
                 ":nestedId"
               ],
               "query": [],
               "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id-a2ijs82"
+                },
                 {
                   "key": "nestedId",
                   "description": null,
@@ -59,15 +65,21 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:nestedId",
+                  "raw": "{{baseUrl}}/:id/:nestedId",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
+                    ":id",
                     ":nestedId"
                   ],
                   "query": [],
                   "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id-a2ijs82"
+                    },
                     {
                       "key": "nestedId",
                       "description": null,
@@ -97,15 +109,21 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/:nestedId",
+                  "raw": "{{baseUrl}}/:id/:nestedId",
                   "host": [
                     "{{baseUrl}}"
                   ],
                   "path": [
+                    ":id",
                     ":nestedId"
                   ],
                   "query": [],
                   "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "string"
+                    },
                     {
                       "key": "nestedId",
                       "description": null,
@@ -138,13 +156,21 @@
       "request": {
         "description": null,
         "url": {
-          "raw": "{{baseUrl}}",
+          "raw": "{{baseUrl}}/:id",
           "host": [
             "{{baseUrl}}"
           ],
-          "path": [],
+          "path": [
+            ":id"
+          ],
           "query": [],
-          "variable": []
+          "variable": [
+            {
+              "key": "id",
+              "description": null,
+              "value": "id-ksfd9c1"
+            }
+          ]
         },
         "header": [
           {
@@ -173,13 +199,21 @@
           "originalRequest": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}",
+              "raw": "{{baseUrl}}/:id",
               "host": [
                 "{{baseUrl}}"
               ],
-              "path": [],
+              "path": [
+                ":id"
+              ],
               "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "id-ksfd9c1"
+                }
+              ]
             },
             "header": [
               {
@@ -211,13 +245,21 @@
           "originalRequest": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}",
+              "raw": "{{baseUrl}}/:id",
               "host": [
                 "{{baseUrl}}"
               ],
-              "path": [],
+              "path": [
+                ":id"
+              ],
               "query": [],
-              "variable": []
+              "variable": [
+                {
+                  "key": "id",
+                  "description": null,
+                  "value": "string"
+                }
+              ]
             },
             "header": [
               {
