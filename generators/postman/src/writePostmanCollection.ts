@@ -180,6 +180,6 @@ async function loadIntermediateRepresentation(pathToFile: string): Promise<Inter
     return IrSerialization.IntermediateRepresentation.parseOrThrow(irJson, {
         unrecognizedObjectKeys: "passthrough",
         allowUnrecognizedUnionMembers: true,
-        allowUnrecognizedEnumValues: true,
+        allowUnrecognizedEnumValues: true
     });
 }

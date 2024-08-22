@@ -72,7 +72,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
     }
 
     protected convertHeader({ header, value }: { header: HttpHeader; value?: unknown }): PostmanHeader {
-        const valueOrDefault = value ?? `YOUR_${header.name.name.screamingSnakeCase}`;
+        const valueOrDefault = value ?? `YOUR_${header.name.name.screamingSnakeCase.unsafeName}`;
         return {
             key: header.name.wireValue,
             description: header.docs ?? undefined,

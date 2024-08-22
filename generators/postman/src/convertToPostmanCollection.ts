@@ -191,7 +191,7 @@ function convertEndpoint({
                     httpEndpoint,
                     allTypes,
                     allErrors,
-                    example: example
+                    example
                 })
             )
     };
