@@ -10,8 +10,8 @@ export class EndpointGenerator {
     private http: HttpEndpointGenerator;
     private grpc: GrpcEndpointGenerator;
 
-    public constructor({ context, rawClient }: { context: SdkGeneratorContext; rawClient: RawClient }) {
-        this.http = new HttpEndpointGenerator({ context, rawClient });
+    public constructor({ context }: { context: SdkGeneratorContext }) {
+        this.http = new HttpEndpointGenerator({ context });
         this.grpc = new GrpcEndpointGenerator({ context });
     }
 
@@ -20,12 +20,14 @@ export class EndpointGenerator {
         endpoint,
         rawClientReference,
         rawGrpcClientReference,
+        rawClient,
         grpcClientInfo
     }: {
         serviceId: ServiceId;
         endpoint: HttpEndpoint;
         rawClientReference: string;
         rawGrpcClientReference: string;
+        rawClient: RawClient;
         grpcClientInfo: GrpcClientInfo | undefined;
     }): csharp.Method {
         if (grpcClientInfo != null) {
@@ -39,7 +41,8 @@ export class EndpointGenerator {
         return this.http.generate({
             serviceId,
             endpoint,
-            rawClientReference
+            rawClientReference,
+            rawClient
         });
     }
 }

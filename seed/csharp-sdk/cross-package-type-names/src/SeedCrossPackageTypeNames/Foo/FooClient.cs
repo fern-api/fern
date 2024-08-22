@@ -27,12 +27,18 @@ public partial class FooClient
         {
             _query["optionalString"] = request.OptionalString;
         }
+        var requestBody = new Dictionary<string, object>()
+        {
+            { "publicProperty", request.PublicProperty },
+            { "privateProperty", request.PrivateProperty },
+        };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
+                Body = requestBody,
                 Query = _query,
                 Options = options,
             },

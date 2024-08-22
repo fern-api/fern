@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedCodeSamples.Core;
 
 #nullable enable
@@ -15,7 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task<MyResponse> HelloAsync(MyRequest request, RequestOptions? options = null)
+    public async Task<MyResponse> HelloAsync(
+        MyRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,8 +29,9 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "hello",
                 Body = request,
-                Options = options
-            }
+                Options = options,
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

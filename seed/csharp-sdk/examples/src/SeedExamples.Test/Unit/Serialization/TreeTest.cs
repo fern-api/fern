@@ -18,16 +18,16 @@ public class TreeTest
         var inputJson =
             @"
         {
-  ""nodes"": [
-    {
-      ""name"": ""left""
-    },
-    {
-      ""name"": ""right""
-    }
-  ]
-}
-";
+          ""nodes"": [
+            {
+              ""name"": ""left""
+            },
+            {
+              ""name"": ""right""
+            }
+          ]
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

@@ -266,15 +266,37 @@ export class Admin {
      * @example
      *     await client.admin.storeTracedTestCase(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), "string", {
      *         result: {
-     *             result: {},
+     *             result: {
+     *                 expectedResult: SeedTrace.VariableValue.integerValue(1),
+     *                 actualResult: SeedTrace.ActualResult.value(SeedTrace.VariableValue.integerValue({
+     *                     "key": "value"
+     *                 })),
+     *                 passed: true
+     *             },
      *             stdout: "string"
      *         },
      *         traceResponses: [{
      *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *                 lineNumber: 1,
      *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *                 expressionLocation: {},
-     *                 stack: {},
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: {
+     *                         methodName: "string",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "string": {
+     *                                         "key": "value"
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
+     *                 },
      *                 stdout: "string"
      *             }]
      *     })
@@ -337,10 +359,29 @@ export class Admin {
      *     await client.admin.storeTracedTestCaseV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), SeedTrace.v2.TestCaseId("string"), [{
      *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *             lineNumber: 1,
-     *             file: {},
+     *             file: {
+     *                 filename: "string",
+     *                 directory: "string"
+     *             },
      *             returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *             expressionLocation: {},
-     *             stack: {},
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: {
+     *                     methodName: "string",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "string": {
+     *                                     "key": "value"
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
+     *             },
      *             stdout: "string"
      *         }])
      */
@@ -402,16 +443,40 @@ export class Admin {
      * @example
      *     await client.admin.storeTracedWorkspace(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), {
      *         workspaceRunDetails: {
-     *             exceptionV2: SeedTrace.ExceptionV2.generic({}),
-     *             exception: {},
+     *             exceptionV2: SeedTrace.ExceptionV2.generic({
+     *                 exceptionType: "string",
+     *                 exceptionMessage: "string",
+     *                 exceptionStacktrace: "string"
+     *             }),
+     *             exception: {
+     *                 exceptionType: "string",
+     *                 exceptionMessage: "string",
+     *                 exceptionStacktrace: "string"
+     *             },
      *             stdout: "string"
      *         },
      *         traceResponses: [{
      *                 submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *                 lineNumber: 1,
      *                 returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *                 expressionLocation: {},
-     *                 stack: {},
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: {
+     *                         methodName: "string",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "string": {
+     *                                         "key": "value"
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
+     *                 },
      *                 stdout: "string"
      *             }]
      *     })
@@ -472,10 +537,29 @@ export class Admin {
      *     await client.admin.storeTracedWorkspaceV2(SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"), [{
      *             submissionId: SeedTrace.SubmissionId("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
      *             lineNumber: 1,
-     *             file: {},
+     *             file: {
+     *                 filename: "string",
+     *                 directory: "string"
+     *             },
      *             returnValue: SeedTrace.DebugVariableValue.integerValue(1),
-     *             expressionLocation: {},
-     *             stack: {},
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: {
+     *                     methodName: "string",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "string": {
+     *                                     "key": "value"
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
+     *             },
      *             stdout: "string"
      *         }])
      */
