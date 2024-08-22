@@ -30,7 +30,7 @@ export const V53_TO_V52_MIGRATION: IrMigration<
         [GeneratorName.OPENAPI_PYTHON_CLIENT]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.OPENAPI]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.STOPLIGHT]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.POSTMAN]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.POSTMAN]: "0.2.0",
         [GeneratorName.PYTHON_SDK]: "3.3.0-rc0",
         [GeneratorName.GO_FIBER]: GeneratorWasNeverUpdatedToConsumeNewIR,
         [GeneratorName.GO_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,

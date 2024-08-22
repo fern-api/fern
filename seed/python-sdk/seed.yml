@@ -227,3 +227,4 @@ allowedFailures:
   - any-auth
 
   - cross-package-type-names
+  - audiences

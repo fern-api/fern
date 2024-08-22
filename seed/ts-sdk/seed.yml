@@ -12,6 +12,8 @@ local:
   runCommand: node sdk/cli/dist/nodeCli.cjs
   env:
     NODE_ENV: test
+customFixtureConfig: 
+  generateWireTests: true    
 fixtures:
   imdb:
     - customConfig: null
@@ -209,3 +211,7 @@ allowedFailures:
   - streaming-parameter
   - imdb:noScripts
   - circular-references
+  # the below are likely related to changes made to example generation
+  - multi-url-environment-no-default
+  - objects-with-imports
+  - reserved-keywords

@@ -185,7 +185,7 @@ export class Type extends AstNode {
                 writer.write("DateTime");
                 break;
             case "uuid":
-                writer.write("Guid");
+                writer.write("string");
                 break;
             case "object":
                 writer.write("object");

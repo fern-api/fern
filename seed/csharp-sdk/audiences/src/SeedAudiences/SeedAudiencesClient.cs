@@ -1,4 +1,3 @@
-using System;
 using SeedAudiences.Core;
 using SeedAudiences.FolderA;
 using SeedAudiences.FolderB;
@@ -15,11 +14,22 @@ public partial class SeedAudiencesClient
 
     public SeedAudiencesClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" } },
-            new Dictionary<string, Func<string>>(),
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "User-Agent", "Fernaudiences/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         Commons = new CommonsClient(_client);
         FolderA = new FolderAClient(_client);
         FolderB = new FolderBClient(_client);

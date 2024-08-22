@@ -61,7 +61,7 @@ export class Writer {
         const textWithoutNewline = textEndsInNewline ? text.substring(0, text.length - 1) : text;
 
         const indent = this.getIndentString();
-        let indentedText = textWithoutNewline.replace("\n", `\n${indent}`);
+        let indentedText = textWithoutNewline.replaceAll("\n", `\n${indent}`);
         if (this.isAtStartOfLine()) {
             indentedText = indent + indentedText;
         }
@@ -156,6 +156,13 @@ export class Writer {
         }
     }
 
+    public addNamespace(namespace: string): void {
+        const foundNamespace = this.references[namespace];
+        if (foundNamespace == null) {
+            this.references[namespace] = [];
+        }
+    }
+
     public addNamespaceAlias(alias: string, namespace: string): void {
         this.namespaceAliases[alias] = namespace;
     }
@@ -164,7 +171,7 @@ export class Writer {
         return this.allTypeClassReferences;
     }
 
-    public getAllNamespaceSegmentsAndTypes(): Set<string | ClassReference> {
+    public getAllNamespaceSegments(): Set<string> {
         return this.allNamespaceSegments;
     }
 
