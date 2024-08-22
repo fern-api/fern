@@ -21,6 +21,11 @@ public partial class NoAuthClient
     /// <summary>
     /// POST request with no auth
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.NoAuth.PostWithNoAuthAsync(new Dictionary<object, object?>() { { "key", "value" } });
+    /// </code>
+    /// </example>
     public async Task<bool> PostWithNoAuthAsync(
         object request,
         RequestOptions? options = null,

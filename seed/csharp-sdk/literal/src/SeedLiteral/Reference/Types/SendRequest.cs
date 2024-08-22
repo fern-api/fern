@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedLiteral.Core;
 
 #nullable enable
 
@@ -20,4 +21,9 @@ public record SendRequest
 
     [JsonPropertyName("maybeContext")]
     public string? MaybeContext { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

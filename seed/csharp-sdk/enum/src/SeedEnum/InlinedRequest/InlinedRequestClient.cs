@@ -16,6 +16,13 @@ public partial class InlinedRequestClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.InlinedRequest.SendAsync(
+    ///     new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+    /// );
+    /// </code>
+    /// </example>
     public async Task SendAsync(
         SendEnumInlinedRequest request,
         RequestOptions? options = null,

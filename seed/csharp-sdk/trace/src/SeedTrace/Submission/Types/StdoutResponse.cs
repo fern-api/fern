@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record StdoutResponse
 
     [JsonPropertyName("stdout")]
     public required string Stdout { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

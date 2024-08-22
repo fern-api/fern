@@ -1,5 +1,4 @@
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using SeedEnum.Core;
@@ -17,6 +16,13 @@ public partial class QueryParamClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.QueryParam.SendAsync(
+    ///     new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+    /// );
+    /// </code>
+    /// </example>
     public async Task SendAsync(
         SendEnumAsQueryParamRequest request,
         RequestOptions? options = null,
@@ -24,11 +30,11 @@ public partial class QueryParamClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["operand"] = JsonSerializer.Serialize(request.Operand);
+        _query["operand"] = request.Operand.Stringify();
         _query["operandOrColor"] = request.OperandOrColor.ToString();
         if (request.MaybeOperand != null)
         {
-            _query["maybeOperand"] = JsonSerializer.Serialize(request.MaybeOperand.Value);
+            _query["maybeOperand"] = request.MaybeOperand.Value.Stringify();
         }
         if (request.MaybeOperandOrColor != null)
         {
@@ -57,6 +63,19 @@ public partial class QueryParamClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.QueryParam.SendListAsync(
+    ///     new SendEnumListAsQueryParamRequest
+    ///     {
+    ///         Operand = [Operand.GreaterThan],
+    ///         MaybeOperand = [Operand.GreaterThan],
+    ///         OperandOrColor = [Color.Red],
+    ///         MaybeOperandOrColor = [Color.Red],
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task SendListAsync(
         SendEnumListAsQueryParamRequest request,
         RequestOptions? options = null,
@@ -64,10 +83,8 @@ public partial class QueryParamClient
     )
     {
         var _query = new Dictionary<string, object>();
-        _query["operand"] = request
-            .Operand.Select(_value => JsonSerializer.Serialize(_value))
-            .ToList();
-        _query["maybeOperand"] = request.MaybeOperand.Select(_value => _value.ToString()).ToList();
+        _query["operand"] = request.Operand.Select(_value => _value.Stringify()).ToList();
+        _query["maybeOperand"] = request.MaybeOperand.Select(_value => _value.Stringify()).ToList();
         _query["operandOrColor"] = request
             .OperandOrColor.Select(_value => _value.ToString())
             .ToList();

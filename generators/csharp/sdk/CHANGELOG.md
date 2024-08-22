@@ -5,7 +5,80 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [1.3.0-rc1] - 2024-08-22
+
+- Feature: Generate the `ToString` method to write the JSON format of an object. This
+  makes it far easier to visualize response objects by simply printing the object, i.e.
+
+  ```csharp
+  var response = await client.GetUserAsync(...);
+  System.Console.WriteLine(response);
+  ```
+
+- Feature: Generate snippets as example documentation, e.g.
+
+  ```csharp
+    /// <example>
+    /// <code>
+    /// await client.Data.UploadAsync(
+    ///     new UploadRequest
+    ///     {
+    ///         Columns = new List<Column>()
+    ///         {
+    ///             new Column
+    ///             {
+    ///                 Id = "id",
+    ///                 Values = new List<float>() { 1.1f },
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<UploadResponse> UploadAsync(
+        UploadRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        ...
+    }
+  ```
+
+## [1.3.0-rc0] - 2024-08-21
+
+- Feature: Add support for sending the `User-Agent` header.
+
+- Improvement: The `RawClient` now supports HTTP headers within the `ClientOptions` and
+  `RequestOptions` types. This is not a user-facing feature, but it simplifies the core
+  utilities.
+
+- Feature: Add support for the `package-id` configuration, which is used to control
+  the name of the package in NuGet.
+
+  For example, consider the following configuration:
+
+  ```yml
+  generators:
+    - name: fernapi/fern-csharp-sdk
+      config:
+        package-id: Acme.Client
+  ```
+
+- Feature: Mock server tests can be generated for all endpoints by setting the following configuration:
+
+  ```yml
+  generators:
+    - name: fernapi/fern-csharp-sdk
+      config:
+        generate-mock-server-tests: true
+  ```
+
+- Improvement: Rather than sending null property values in requests, omit the property entirely.
+
+- Fix: Fix a bug where request bodies are not sent for wrapped requests that include headers or query params.
+
+- Fix: Fix a bug where enums, dates, and datetimes are sometimes not serialized properly as query parameters and headers.
 
 - Feature: Add support for the `read-only-memory-types` configuration, which is used to
   control how specific types are represented as arrays and lists.

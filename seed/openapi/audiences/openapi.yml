@@ -46,6 +46,19 @@ paths:
                 privateProperty:
                   type: integer
                   nullable: true
+  /partner-path:
+    get:
+      operationId: folderD_service_getDirectThread
+      tags:
+        - FolderDService
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/folder-dResponse'
 components:
   schemas:
     Imported:
@@ -63,10 +76,10 @@ components:
       type: object
       properties:
         foo:
-          $ref: '#/components/schemas/folder-cFoo'
+          $ref: '#/components/schemas/folder-cFolderCFoo'
           nullable: true
-    folder-cFoo:
-      title: folder-cFoo
+    folder-cFolderCFoo:
+      title: folder-cFolderCFoo
       type: object
       properties:
         bar_property:
@@ -74,6 +87,14 @@ components:
           format: uuid
       required:
         - bar_property
+    folder-dResponse:
+      title: folder-dResponse
+      type: object
+      properties:
+        foo:
+          type: string
+      required:
+        - foo
     ImportingType:
       title: ImportingType
       type: object
@@ -98,3 +119,8 @@ components:
       required:
         - private_property
   securitySchemes: {}
+servers:
+  - url: https://api.example.a.com
+    description: environment-a
+  - url: https://api.example.b.com
+    description: environment-b

@@ -16,6 +16,18 @@ public partial class QueryClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Query.SendAsync(
+    ///     new SendLiteralsInQueryRequest
+    ///     {
+    ///         Prompt = "You are a helpful assistant",
+    ///         Stream = false,
+    ///         Query = "What is the weather today",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<SendResponse> SendAsync(
         SendLiteralsInQueryRequest request,
         RequestOptions? options = null,

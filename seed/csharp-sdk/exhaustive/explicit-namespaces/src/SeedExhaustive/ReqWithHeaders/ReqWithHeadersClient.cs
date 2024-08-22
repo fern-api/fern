@@ -17,16 +17,25 @@ public partial class ReqWithHeadersClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
+    ///     new ReqWithHeaders { XTestEndpointHeader = "string", Body = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task GetWithCustomHeaderAsync(
         ReqWithHeaders request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Dictionary<string, string>()
-        {
-            { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
-        };
+        var _headers = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
+            }
+        );
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

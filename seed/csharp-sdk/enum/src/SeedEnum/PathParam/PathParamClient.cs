@@ -17,6 +17,11 @@ public partial class PathParamClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.PathParam.SendAsync(Operand.GreaterThan, Operand.LessThan, Color.Red, Color.Red);
+    /// </code>
+    /// </example>
     public async Task SendAsync(
         Operand operand,
         Operand? maybeOperand,

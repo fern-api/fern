@@ -32,20 +32,49 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{\n    \"maybeString\": \"example\",\n    \"integer\": 0,\n    \"maybeInteger\": 0,\n    \"optionalListOfStrings\": [\n        \"example\"\n    ],\n    \"listOfObjects\": [\n        {\n            \"foo\": \"example\"\n        }\n    ]\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
+            "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "_type": "endpoint",
@@ -63,20 +92,51 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
+            "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/just-file",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "just-file"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "_type": "endpoint",
@@ -84,7 +144,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/just-file-with-query-params?maybeString=&integer=&maybeInteger=&listOfStrings=&optionalListOfStrings=",
+              "raw": "{{baseUrl}}/just-file-with-query-params?maybeString=string&integer=1&maybeInteger=1&listOfStrings=string&optionalListOfStrings=string",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -94,46 +154,103 @@
               "query": [
                 {
                   "key": "maybeString",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "string"
                 },
                 {
                   "key": "integer",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "1"
                 },
                 {
                   "key": "maybeInteger",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "1"
                 },
                 {
                   "key": "listOfStrings",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "string"
                 },
                 {
                   "key": "optionalListOfStrings",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "string"
                 }
               ],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
-            "body": {
-              "mode": "raw",
-              "raw": "{}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            }
+            "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/just-file-with-query-params?maybeString=string&integer=1&maybeInteger=1&listOfStrings=string&optionalListOfStrings=string",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "just-file-with-query-params"
+                  ],
+                  "query": [
+                    {
+                      "key": "maybeString",
+                      "description": null,
+                      "value": "string"
+                    },
+                    {
+                      "key": "integer",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "maybeInteger",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "listOfStrings",
+                      "description": null,
+                      "value": "string"
+                    },
+                    {
+                      "key": "optionalListOfStrings",
+                      "description": null,
+                      "value": "string"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

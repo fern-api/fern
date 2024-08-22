@@ -3,7 +3,7 @@ import { ModelGeneratorContext } from "./ModelGeneratorContext";
 import { ObjectGenerator } from "./object/ObjectGenerator";
 import { ObjectSerializationTestGenerator } from "./object/ObjectSerializationTestGenerator";
 
-export function generateTests({ context }: { context: ModelGeneratorContext }): CSharpFile[] {
+export function generateModelTests({ context }: { context: ModelGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = [];
     for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
         if (typeDeclaration.shape.type !== "object") {
@@ -21,7 +21,7 @@ export function generateTests({ context }: { context: ModelGeneratorContext }): 
             if (example.shape.type !== "object") {
                 throw new Error("Unexpected non object type example");
             }
-            const snippet = objectGenerator.doGenerateSnippet(example.shape);
+            const snippet = objectGenerator.doGenerateSnippet({ exampleObject: example.shape, parseDatetimes: true });
             return {
                 objectInstantiationSnippet: snippet,
                 json: example.jsonExample

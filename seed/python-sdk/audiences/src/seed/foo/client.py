@@ -45,9 +45,10 @@ class FooClient:
         Examples
         --------
         from seed import SeedAudiences
+        from seed.environment import SeedAudiencesEnvironment
 
         client = SeedAudiences(
-            base_url="https://yourhost.com/path/to/api",
+            environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
         )
         client.foo.find(
             optional_string="string",
@@ -115,9 +116,10 @@ class AsyncFooClient:
         import asyncio
 
         from seed import AsyncSeedAudiences
+        from seed.environment import SeedAudiencesEnvironment
 
         client = AsyncSeedAudiences(
-            base_url="https://yourhost.com/path/to/api",
+            environment=SeedAudiencesEnvironment.ENVIRONMENT_A,
         )
 
 

@@ -5,6 +5,7 @@
 import express from "express";
 import { FooService } from "./api/resources/foo/service/FooService";
 import { ServiceService as folderA_ServiceService } from "./api/resources/folderA/resources/service/service/ServiceService";
+import { ServiceService as folderD_ServiceService } from "./api/resources/folderD/resources/service/service/ServiceService";
 
 export function register(
     expressApp: express.Express | express.Router,
@@ -13,8 +14,12 @@ export function register(
         folderA: {
             service: folderA_ServiceService;
         };
+        folderD: {
+            service: folderD_ServiceService;
+        };
     }
 ): void {
     (expressApp as any).use("/", services.folderA.service.toRouter());
+    (expressApp as any).use("/partner-path", services.folderD.service.toRouter());
     (expressApp as any).use("/", services.foo.toRouter());
 }

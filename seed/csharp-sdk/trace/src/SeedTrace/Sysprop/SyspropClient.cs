@@ -17,6 +17,11 @@ public partial class SyspropClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
+    /// </code>
+    /// </example>
     public async Task SetNumWarmInstancesAsync(
         Language language,
         int numWarmInstances,
@@ -46,6 +51,11 @@ public partial class SyspropClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Sysprop.GetNumWarmInstancesAsync();
+    /// </code>
+    /// </example>
     public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

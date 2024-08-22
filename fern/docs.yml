@@ -64,6 +64,9 @@ navigation:
               - page: Parameter Names
                 path: ./pages/api-definition/openapi/extensions/parameter-names.mdx
                 slug: parameter-names
+              - page: Audiences
+                path: ./pages/api-definition/openapi/extensions/audiences.mdx
+                slug: audiences              
               - page: Other
                 path: ./pages/api-definition/openapi/extensions/others.mdx
                 slug: others              
@@ -223,6 +226,10 @@ navigation:
             slug: development
             path: ./pages/docs/getting-started/development.mdx
             icon: fa-regular fa-terminal
+          - page: Global Configuration 
+            slug: global-configuration
+            path: ./pages/docs/getting-started/global-configuration.mdx   
+            icon: fa-regular fa-wrench               
           - page: Project Structure 
             slug: project-structure
             path: ./pages/docs/getting-started/project-structure.mdx   

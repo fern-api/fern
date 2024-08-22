@@ -91,6 +91,45 @@
               "description": null,
               "body": "{\n    \"resource_type\": \"user\",\n    \"userName\": \"username\",\n    \"metadata_tags\": [\n        \"tag1\",\n        \"tag2\"\n    ],\n    \"EXTRA_PROPERTIES\": {\n        \"foo\": \"bar\",\n        \"baz\": \"qux\"\n    }\n}",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/resource/:ResourceID",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "resource",
+                    ":ResourceID"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "ResourceID",
+                      "description": null,
+                      "value": "string"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"resource_type\": \"user\",\n    \"userName\": \"username\",\n    \"metadata_tags\": [\n        \"tag1\",\n        \"tag2\"\n    ],\n    \"EXTRA_PROPERTIES\": {\n        \"foo\": \"bar\",\n        \"baz\": \"qux\"\n    }\n}",
+              "_postman_previewlanguage": "json"
             }
           ]
         },
@@ -157,6 +196,49 @@
                       "key": "beforeDate",
                       "description": null,
                       "value": "2023-01-01"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "[\n    {\n        \"resource_type\": \"user\",\n        \"userName\": \"username\",\n        \"metadata_tags\": [\n            \"tag1\",\n            \"tag2\"\n        ],\n        \"EXTRA_PROPERTIES\": {\n            \"foo\": \"bar\",\n            \"baz\": \"qux\"\n        }\n    }\n]",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/resource?page_limit=1&beforeDate=2023-01-15",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "resource"
+                  ],
+                  "query": [
+                    {
+                      "key": "page_limit",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "beforeDate",
+                      "description": null,
+                      "value": "2023-01-15"
                     }
                   ],
                   "variable": []

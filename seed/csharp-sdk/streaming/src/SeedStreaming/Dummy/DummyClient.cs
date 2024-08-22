@@ -17,6 +17,11 @@ public partial class DummyClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
+    /// </code>
+    /// </example>
     public async Task GenerateStreamAsync(
         GenerateStreamRequest request,
         RequestOptions? options = null,
@@ -42,6 +47,11 @@ public partial class DummyClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents = 5 });
+    /// </code>
+    /// </example>
     public async Task<StreamResponse> GenerateAsync(
         Generateequest request,
         RequestOptions? options = null,

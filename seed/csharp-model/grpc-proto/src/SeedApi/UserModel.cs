@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedApi.Core;
 using Proto = User.V1;
 
 #nullable enable
@@ -21,6 +22,11 @@ public record UserModel
 
     [JsonPropertyName("metadata")]
     public Metadata? Metadata { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 
     /// <summary>
     /// Maps the UserModel type into its Protobuf-equivalent representation.

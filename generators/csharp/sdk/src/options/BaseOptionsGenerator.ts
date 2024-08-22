@@ -34,6 +34,18 @@ export class BaseOptionsGenerator {
         });
     }
 
+    public getHttpHeadersField(): csharp.Field {
+        return csharp.field({
+            access: "internal",
+            name: "Headers",
+            get: true,
+            init: true,
+            type: csharp.Type.reference(this.context.getHeadersClassReference()),
+            initializer: csharp.codeblock("new()"),
+            summary: "The http headers sent with the request."
+        });
+    }
+
     public getMaxRetriesField({ optional, includeInitializer }: OptionArgs): csharp.Field {
         const type = csharp.Type.integer();
         return csharp.field({

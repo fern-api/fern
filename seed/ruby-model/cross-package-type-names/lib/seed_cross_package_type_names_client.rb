@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+require_relative "seed_cross_package_type_names_client/folder_a/service/types/response"
+require_relative "seed_cross_package_type_names_client/folder_b/common/types/foo"
+require_relative "seed_cross_package_type_names_client/folder_c/common/types/foo"
+require_relative "seed_cross_package_type_names_client/folder_d/service/types/response"
+require_relative "seed_cross_package_type_names_client/foo/types/importing_type"
+require_relative "seed_cross_package_type_names_client/foo/types/optional_string"

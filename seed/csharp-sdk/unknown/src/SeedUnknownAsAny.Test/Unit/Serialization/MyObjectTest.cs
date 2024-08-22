@@ -18,7 +18,7 @@ public class MyObjectTest
         var inputJson =
             @"
         {}
-";
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

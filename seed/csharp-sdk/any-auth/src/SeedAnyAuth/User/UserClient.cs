@@ -16,6 +16,11 @@ public partial class UserClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.User.GetAsync();
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<User>> GetAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

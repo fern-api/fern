@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -8,4 +9,9 @@ public record GetTraceResponsesPageRequest
 {
     [JsonPropertyName("offset")]
     public int? Offset { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

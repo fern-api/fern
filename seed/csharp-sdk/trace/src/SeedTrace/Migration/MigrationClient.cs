@@ -16,16 +16,22 @@ public partial class MigrationClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Migration.GetAttemptedMigrationsAsync(
+    ///     new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
         GetAttemptedMigrationsRequest request,
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Dictionary<string, string>()
-        {
-            { "admin-key-header", request.AdminKeyHeader },
-        };
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "admin-key-header", request.AdminKeyHeader } }
+        );
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

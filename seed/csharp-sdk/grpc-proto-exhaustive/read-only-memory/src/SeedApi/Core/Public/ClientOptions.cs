@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using Grpc.Net.Client;
+using SeedApi.Core;
 
 #nullable enable
 
@@ -32,4 +33,9 @@ public partial class ClientOptions
     /// The options used for gRPC client endpoints.
     /// </summary>
     public GrpcChannelOptions? GrpcOptions { get; init; }
+
+    /// <summary>
+    /// The http headers sent with the request.
+    /// </summary>
+    internal Headers Headers { get; init; } = new();
 }
