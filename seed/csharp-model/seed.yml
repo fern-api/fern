@@ -34,6 +34,3 @@ scripts:
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
 allowedFailures:
   - objects-with-imports
-  # TODO: Add support for recursive undiscriminated unions.
-  - grpc
-  - grpc-proto
