@@ -5,12 +5,19 @@ export function getRelativePathAsModuleSpecifierTo({
     from,
     to,
     isDesinationADirectory,
-    isOutputtingEsm
+    isOutputtingEsm,
+    forceAppendBarrelFile = false
 }: {
     from: Directory | SourceFile | string;
     to: Directory | SourceFile | string;
     isDesinationADirectory: boolean;
     isOutputtingEsm: boolean;
+    /**
+     * by default, we include the barrel file when the destination is a directory
+     * and we're outputting esm. you can force-append the barrel file by
+     * setting forceAppendBarrelFile=true
+     */
+    forceAppendBarrelFile?: boolean;
 }): string {
     const parsedToFilePath = path.parse(getPath(to));
     const toFilePathWithoutExtension = path.join(parsedToFilePath.dir, parsedToFilePath.name);
@@ -26,10 +33,12 @@ export function getRelativePathAsModuleSpecifierTo({
     if (moduleSpecifier.endsWith("/")) {
         moduleSpecifier = moduleSpecifier.slice(0, -1);
     }
+
+    const shouldAppendBarrelFile = forceAppendBarrelFile || (isOutputtingEsm && isDesinationADirectory);
+    if (shouldAppendBarrelFile) {
+        moduleSpecifier += "/index";
+    }
     if (isOutputtingEsm) {
-        if (isDesinationADirectory) {
-            moduleSpecifier += "/index";
-        }
         moduleSpecifier += ".js";
     }
     return moduleSpecifier;

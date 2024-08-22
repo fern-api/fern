@@ -49,7 +49,8 @@ export function getReferenceToExportFromRoot({
             from: referencedIn,
             to: convertExportedDirectoryPathToFilePath([]),
             isDesinationADirectory: true,
-            isOutputtingEsm
+            isOutputtingEsm,
+            forceAppendBarrelFile: true
         });
 
         const { recommendedImportName } = firstDirectory.exportDeclaration.defaultExport;
@@ -72,7 +73,8 @@ export function getReferenceToExportFromRoot({
                     ? convertExportedDirectoryPathToFilePath([firstDirectory])
                     : convertExportedFilePathToFilePath(exportedFromPath),
             isDesinationADirectory: true,
-            isOutputtingEsm
+            isOutputtingEsm,
+            forceAppendBarrelFile: true
         });
 
         addImport = () => {
@@ -117,7 +119,8 @@ export function getReferenceToExportFromRoot({
             from: referencedIn,
             to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom),
             isDesinationADirectory: true,
-            isOutputtingEsm
+            isOutputtingEsm,
+            forceAppendBarrelFile: true
         });
 
         const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;
