@@ -32,12 +32,49 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "\"SGVsbG8gd29ybGQh\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }
