@@ -31,7 +31,7 @@ For authentication within your SDK, you may want to customize the:
 By default, Fern uses names for authentication parameters like api_key, username and password, etc.
 Note that this configuration is optional, and even when provided `name` or `env` may be provided alone, both are not required.
 
-For bearer authentication:
+For bearer authentication:A
 
 ```yaml title="openapi.yaml"
 components:
@@ -308,91 +308,6 @@ servers:
   - url: https://api.example.com
 paths:
   /users: ...
-```
-
-## Audiences
-
-Audiences are a useful tool for segmenting your API for different consumers. You can configure your Fern Docs to publish documentation specific to an `Audience`. You can use [audiences in your Fern Definition](/learn/api-definition/fern/audiences), too.
-
-Common examples of audiences include:
-
-- Internal consumers (e.g., frontend developers who use the API)
-- Beta testers
-- Customers
-
-By default, if no audience is specified, it will be accessible to all consumers.
-
-### Audiences for Endpoints
-
-To mark an endpoint with a particular audience, add the `x-fern-audiences` extension to the relevant endpoint.
-
-In the example below, the `POST /users/sendEmail` endpoint is only available to internal consumers:
-
-```yaml title="openapi.yml" {4-5}
-paths:
-  /users/sendEmail:
-    post:
-      x-fern-audiences:
-        - internal
-      operationId: send_email
-      ...
-```
-
-### Audiences for Components
-
-Components can be marked for different audiences, as well.
-
-In this example, the `Email` type is available to both internal and beta customers, while the `to` property is available to beta customers only:
-
-```yaml title="openapi.yml" {13-17}
-components:
-  schemas:
-    Email:
-      title: Email
-      type: object
-      properties:
-        subject:
-          type: string
-        body:
-          type: string
-        to:
-          type: string
-          x-fern-audiences: <-- property audience
-            - beta
-      x-fern-audiences: <-- type audience
-        - internal
-        - beta
-```
-
-### Audiences for SDKs
-
-In `generators.yml`, you can apply audience filters so that only certain
-endpoints are passed to the generators.
-
-The following example configures the SDKs to filter for the `customers` audience:
-
-```yaml title="generators.yml" {3-4}
-groups:
-  sdks:
-    audiences:
-      - customers
-    generators:
-      - name: fernapi/fern-tyepscript-node-sdk
-        version: 0.8.8
-        ...
-```
-
-### Audiences for Docs
-
-If generating Fern Docs, update your `docs.yml` configuration to include your audiences.
-
-The following example shows how to configure your `docs.yml` to publish documentation for the `customers` audience:
-
-```yaml title="docs.yml" {3-4}
-navigation:
-  - api: API Reference
-    audiences:
-      - customers
 ```
 
 ## Streaming
