@@ -355,7 +355,7 @@ class CsProj {
         return ` 
 <Project Sdk="Microsoft.NET.Sdk">
 
-${projectGroup.join(`\n`)}
+${projectGroup.join("\n")}
 
     <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
