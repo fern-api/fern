@@ -87407,6 +87407,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "https://localhost:5001",

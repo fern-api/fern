@@ -30,34 +30,34 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
     const topLevelServersWithName: Record<string, RawSchemas.EnvironmentSchema> = {};
     const topLevelSkippedServers = [];
     for (const server of context.ir.servers) {
+        const environmentSchema = server.audiences
+            ? {
+                  url: server.url,
+                  audiences: server.audiences
+              }
+            : server.url;
         if (server.name == null) {
-            topLevelSkippedServers.push({
-                url: server.url,
-                audiences: server.audiences
-            });
+            topLevelSkippedServers.push(environmentSchema);
             continue;
         }
-        topLevelServersWithName[server.name] = {
-            url: server.url,
-            audiences: server.audiences
-        };
+        topLevelServersWithName[server.name] = environmentSchema;
     }
 
     const endpointLevelServersWithName: Record<string, RawSchemas.EnvironmentSchema> = {};
     const endpointLevelSkippedServers = [];
     for (const endpoint of context.ir.endpoints) {
         for (const server of endpoint.server) {
+            const environmentSchema = server.audiences
+                ? {
+                      url: server.url,
+                      audiences: server.audiences
+                  }
+                : server.url;
             if (server.name == null) {
-                endpointLevelSkippedServers.push({
-                    url: server.url,
-                    audiences: server.audiences
-                });
+                endpointLevelSkippedServers.push(environmentSchema);
                 continue;
             }
-            endpointLevelServersWithName[server.name] = {
-                url: server.url,
-                audiences: server.audiences
-            };
+            endpointLevelServersWithName[server.name] = environmentSchema;
         }
     }
 
@@ -84,7 +84,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         if (topLevelSkippedServers.length > 0) {
             context.logger.error(
                 `Skipping servers ${topLevelSkippedServers
-                    .map((server) => server.url)
+                    .map((server) => (typeof server === "string" ? server : server.url))
                     .join(", ")} because x-fern-server-name was not provided.`
             );
         }
@@ -102,7 +102,7 @@ export function buildEnvironments(context: OpenApiIrConverterContext): void {
         if (topLevelSkippedServers.length > 0 || endpointLevelSkippedServers.length > 0) {
             context.logger.error(
                 `Skipping servers ${[...topLevelSkippedServers, ...endpointLevelSkippedServers]
-                    .map((server) => server.url)
+                    .map((server) => (typeof server === "string" ? server : server.url))
                     .join(", ")} because x-fern-server-name was not provided.`
             );
         }

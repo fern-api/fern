@@ -2,6 +2,13 @@ openapi: 3.0.3
 info:
   title: Test extension `x-fern-audiences`
   version: 1.0.0
+servers:
+  - url: https://api.com
+    x-fern-server-name: production
+    x-fern-audiences: [ "public" ]
+  - url: https://private.api.com
+    x-fern-server-name: sandbox
+    x-fern-audiences: [ "private" ]
 paths: 
   /v1/users: 
     get: 

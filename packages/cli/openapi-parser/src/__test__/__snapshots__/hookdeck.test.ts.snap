@@ -81880,6 +81880,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
   },
   "servers": [
     {
+      "audiences": null,
       "description": "Production API",
       "name": null,
       "url": "https://api.hookdeck.com/2023-01-01",

@@ -14864,11 +14864,13 @@ exports[`open api parser > hathora > parse open api 1`] = `
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "https://api.hathora.dev",
     },
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "/",

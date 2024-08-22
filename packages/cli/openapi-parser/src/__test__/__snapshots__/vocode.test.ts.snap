@@ -12924,11 +12924,13 @@ exports[`open api parser > vocode > parse open api 1`] = `
   },
   "servers": [
     {
+      "audiences": null,
       "description": "Production environment",
       "name": null,
       "url": "https://api.vocode.dev",
     },
     {
+      "audiences": null,
       "description": "Staging environment",
       "name": null,
       "url": "https://staging.vocode.dev",
