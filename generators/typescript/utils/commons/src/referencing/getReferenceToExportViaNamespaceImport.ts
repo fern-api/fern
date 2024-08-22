@@ -34,7 +34,7 @@ export function getReferenceToExportViaNamespaceImport({
             getRelativePathAsModuleSpecifierTo({
                 from: referencedIn,
                 to: convertExportedFilePathToFilePath(filepathToNamespaceImport),
-                isDesinationADirectory: filepathToNamespaceImport.file == null,
+                isDestinationADirectory: filepathToNamespaceImport.file == null,
                 isOutputtingEsm
             }),
             { namespaceImport }

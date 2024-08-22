@@ -45,7 +45,7 @@ export class ExportsManager {
             moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                 from: pathToDirectory,
                 to: fromPath,
-                isDesinationADirectory: false,
+                isDestinationADirectory: false,
                 isOutputtingEsm: this.isOutputtingEsm
             }),
             exportDeclaration,
@@ -71,7 +71,7 @@ export class ExportsManager {
                 moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                     from: directoryFilepath,
                     to: nextDirectoryPath,
-                    isDesinationADirectory: true,
+                    isDestinationADirectory: true,
                     isOutputtingEsm: this.isOutputtingEsm
                 }),
                 exportDeclaration: part.exportDeclaration,
@@ -85,7 +85,7 @@ export class ExportsManager {
                         moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                             from: directoryFilepath,
                             to: path.join(nextDirectoryPath, relativeFilePath),
-                            isDesinationADirectory: true,
+                            isDestinationADirectory: true,
                             isOutputtingEsm: this.isOutputtingEsm
                         }),
                         exportDeclaration,

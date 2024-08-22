@@ -4,13 +4,13 @@ import { Directory, SourceFile } from "ts-morph";
 export function getRelativePathAsModuleSpecifierTo({
     from,
     to,
-    isDesinationADirectory,
+    isDestinationADirectory,
     isOutputtingEsm,
     forceAppendBarrelFile = false
 }: {
     from: Directory | SourceFile | string;
     to: Directory | SourceFile | string;
-    isDesinationADirectory: boolean;
+    isDestinationADirectory: boolean;
     isOutputtingEsm: boolean;
     /**
      * by default, we include the barrel file when the destination is a directory
@@ -34,7 +34,7 @@ export function getRelativePathAsModuleSpecifierTo({
         moduleSpecifier = moduleSpecifier.slice(0, -1);
     }
 
-    const shouldAppendBarrelFile = forceAppendBarrelFile || (isOutputtingEsm && isDesinationADirectory);
+    const shouldAppendBarrelFile = forceAppendBarrelFile || (isOutputtingEsm && isDestinationADirectory);
     if (shouldAppendBarrelFile) {
         moduleSpecifier += "/index";
     }

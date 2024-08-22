@@ -48,7 +48,7 @@ export function getReferenceToExportFromRoot({
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
             to: convertExportedDirectoryPathToFilePath([]),
-            isDesinationADirectory: true,
+            isDestinationADirectory: true,
             isOutputtingEsm,
             forceAppendBarrelFile: true
         });
@@ -72,7 +72,7 @@ export function getReferenceToExportFromRoot({
                 firstDirectory != null
                     ? convertExportedDirectoryPathToFilePath([firstDirectory])
                     : convertExportedFilePathToFilePath(exportedFromPath),
-            isDesinationADirectory: true,
+            isDestinationADirectory: true,
             isOutputtingEsm,
             forceAppendBarrelFile: true
         });
@@ -118,7 +118,7 @@ export function getReferenceToExportFromRoot({
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
             to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom),
-            isDesinationADirectory: true,
+            isDestinationADirectory: true,
             isOutputtingEsm,
             forceAppendBarrelFile: true
         });

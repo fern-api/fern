@@ -24,7 +24,7 @@ export function getDirectReferenceToExport({
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
         to: convertExportedFilePathToFilePath(exportedFromPath),
-        isDesinationADirectory: exportedFromPath.file == null,
+        isDestinationADirectory: exportedFromPath.file == null,
         isOutputtingEsm
     });
 
