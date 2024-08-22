@@ -18598,6 +18598,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "https://api.apiture.com/banking",

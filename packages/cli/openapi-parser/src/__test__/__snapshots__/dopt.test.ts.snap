@@ -4989,6 +4989,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "http://blocks-api:7071",

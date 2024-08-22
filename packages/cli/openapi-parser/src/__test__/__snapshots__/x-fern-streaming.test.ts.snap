@@ -3235,6 +3235,7 @@ exports[`open api parser > x-fern-streaming > parse open api 1`] = `
   "securitySchemes": {},
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "https://test-ai-api.com/api",
