@@ -1,4 +1,4 @@
-irVersion: v23
+irVersion: v53
 docker: fernapi/fern-postman:latest
 dockerCommand: pnpm --filter @fern-api/postman-generator dockerTagLatest
 generatorType: Documentation

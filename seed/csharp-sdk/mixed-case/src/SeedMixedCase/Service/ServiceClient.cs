@@ -60,7 +60,7 @@ public partial class ServiceClient
     {
         var _query = new Dictionary<string, object>();
         _query["page_limit"] = request.PageLimit.ToString();
-        _query["beforeDate"] = request.BeforeDate.ToString();
+        _query["beforeDate"] = request.BeforeDate.ToString(Constants.DateFormat);
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

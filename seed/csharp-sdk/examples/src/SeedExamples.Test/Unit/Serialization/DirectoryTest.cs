@@ -18,26 +18,26 @@ public class DirectoryTest
         var inputJson =
             @"
         {
-  ""name"": ""root"",
-  ""files"": [
-    {
-      ""name"": ""file.txt"",
-      ""contents"": ""...""
-    }
-  ],
-  ""directories"": [
-    {
-      ""name"": ""tmp"",
-      ""files"": [
-        {
-          ""name"": ""another_file.txt"",
-          ""contents"": ""...""
+          ""name"": ""root"",
+          ""files"": [
+            {
+              ""name"": ""file.txt"",
+              ""contents"": ""...""
+            }
+          ],
+          ""directories"": [
+            {
+              ""name"": ""tmp"",
+              ""files"": [
+                {
+                  ""name"": ""another_file.txt"",
+                  ""contents"": ""...""
+                }
+              ]
+            }
+          ]
         }
-      ]
-    }
-  ]
-}
-";
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

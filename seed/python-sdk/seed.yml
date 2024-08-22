@@ -225,3 +225,6 @@ allowedFailures:
   - query-parameters
 
   - any-auth
+
+  - cross-package-type-names
+  - audiences

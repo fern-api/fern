@@ -66,10 +66,9 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Dictionary<string, string>()
-        {
-            { "X-Endpoint-Header", request.XEndpointHeader },
-        };
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "X-Endpoint-Header", request.XEndpointHeader } }
+        );
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

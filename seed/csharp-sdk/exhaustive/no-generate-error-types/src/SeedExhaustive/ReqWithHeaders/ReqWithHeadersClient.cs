@@ -22,10 +22,12 @@ public partial class ReqWithHeadersClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Dictionary<string, string>()
-        {
-            { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
-        };
+        var _headers = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
+            }
+        );
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

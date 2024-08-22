@@ -54,12 +54,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n    \"example\"\n]",
+                  "raw": "[\n    \"string\"\n]",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -67,7 +73,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/container/list-of-primitives",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "container",
+                        "list-of-primitives"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n    \"string\"\n]",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "[\n    \"string\"\n]",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -86,12 +134,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n    {\n        \"string\": \"example\"\n    }\n]",
+                  "raw": "[\n    {\n        \"string\": \"string\"\n    }\n]",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -99,7 +153,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/container/list-of-objects",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "container",
+                        "list-of-objects"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n    {\n        \"string\": \"string\"\n    }\n]",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "[\n    {\n        \"string\": \"string\"\n    }\n]",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -118,12 +214,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n    \"example\"\n]",
+                  "raw": "[\n    \"string\"\n]",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -131,7 +233,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/container/set-of-primitives",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "container",
+                        "set-of-primitives"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n    \"string\"\n]",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "[\n    \"string\"\n]",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -150,12 +294,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n    {\n        \"string\": \"example\"\n    }\n]",
+                  "raw": "[\n    {\n        \"string\": \"string\"\n    }\n]",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -163,7 +313,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/container/set-of-objects",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "container",
+                        "set-of-objects"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n    {\n        \"string\": \"string\"\n    }\n]",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "[\n    {\n        \"string\": \"string\"\n    }\n]",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -182,12 +374,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"example\": \"example\"\n}",
+                  "raw": "{\n    \"string\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -195,7 +393,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/container/map-prim-to-prim",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "container",
+                        "map-prim-to-prim"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -214,12 +454,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"example\": {\n        \"string\": \"example\"\n    }\n}",
+                  "raw": "{\n    \"string\": {\n        \"string\": \"string\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -227,7 +473,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/container/map-prim-to-object",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "container",
+                        "map-prim-to-object"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": {\n        \"string\": \"string\"\n    }\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": {\n        \"string\": \"string\"\n    }\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -246,12 +534,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\"\n}",
+                  "raw": "{\n    \"string\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -259,7 +553,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/container/opt-objects",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "container",
+                        "opt-objects"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         },
@@ -284,7 +620,13 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
@@ -297,7 +639,48 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/enum",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "enum"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "\"SUNNY\"",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "\"SUNNY\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         },
@@ -324,17 +707,63 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     }
                   ]
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "GET",
                 "auth": null,
                 "body": null
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/http-methods/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "http-methods",
+                        ":id"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "description": null,
+                          "value": "string"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -352,12 +781,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\"\n}",
+                  "raw": "{\n    \"string\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -365,7 +800,48 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/http-methods",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "http-methods"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -385,17 +861,23 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     }
                   ]
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "PUT",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\"\n}",
+                  "raw": "{\n    \"string\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -403,7 +885,55 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/http-methods/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "http-methods",
+                        ":id"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "description": null,
+                          "value": "string"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "PUT",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -423,17 +953,23 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     }
                   ]
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "PATCH",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"long\": 10000000,\n    \"double\": 0,\n    \"bool\": true,\n    \"datetime\": \"1994-11-05T13:15:30Z\",\n    \"date\": \"1994-11-05\",\n    \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n    \"base64\": \"SGVsbG8gV29ybGQ=\",\n    \"list\": [\n        \"example\"\n    ],\n    \"set\": [\n        \"example\"\n    ],\n    \"map\": {\n        \"0\": \"example\"\n    },\n    \"bigint\": \"example\"\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -441,7 +977,55 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/http-methods/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "http-methods",
+                        ":id"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "description": null,
+                          "value": "string"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "PATCH",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -461,17 +1045,63 @@
                   "variable": [
                     {
                       "key": "id",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     }
                   ]
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "DELETE",
                 "auth": null,
                 "body": null
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/http-methods/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "http-methods",
+                        ":id"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "description": null,
+                          "value": "string"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "DELETE",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "true",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         },
@@ -497,12 +1127,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"long\": 10000000,\n    \"double\": 0,\n    \"bool\": true,\n    \"datetime\": \"1994-11-05T13:15:30Z\",\n    \"date\": \"1994-11-05\",\n    \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n    \"base64\": \"SGVsbG8gV29ybGQ=\",\n    \"list\": [\n        \"example\"\n    ],\n    \"set\": [\n        \"example\"\n    ],\n    \"map\": {\n        \"0\": \"example\"\n    },\n    \"bigint\": \"example\"\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -510,7 +1146,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-with-optional-field",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-with-optional-field"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -529,12 +1207,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\"\n}",
+                  "raw": "{\n    \"string\": \"string\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -542,7 +1226,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-with-required-field",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-with-required-field"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\"\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -561,12 +1287,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"map\": {\n        \"example\": {\n            \"example\": \"example\"\n        }\n    }\n}",
+                  "raw": "{\n    \"map\": {\n        \"string\": {\n            \"string\": \"string\"\n        }\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -574,7 +1306,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-with-map-of-map",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-with-map-of-map"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"map\": {\n        \"string\": {\n            \"string\": \"string\"\n        }\n    }\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"map\": {\n        \"string\": {\n            \"string\": \"string\"\n        }\n    }\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -593,12 +1367,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\",\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        },\n        \"bigint\": \"example\"\n    }\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -606,7 +1386,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-nested-with-optional-field",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-nested-with-optional-field"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -627,17 +1449,23 @@
                   "variable": [
                     {
                       "key": "string",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     }
                   ]
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"string\": \"example\",\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        },\n        \"bigint\": \"example\"\n    }\n}",
+                  "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -645,7 +1473,56 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-nested-with-required-field/:string",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-nested-with-required-field",
+                        ":string"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "string",
+                          "description": null,
+                          "value": "string"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -664,12 +1541,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "[\n    {\n        \"string\": \"example\",\n        \"NestedObject\": {\n            \"string\": \"example\",\n            \"integer\": 0,\n            \"long\": 10000000,\n            \"double\": 0,\n            \"bool\": true,\n            \"datetime\": \"1994-11-05T13:15:30Z\",\n            \"date\": \"1994-11-05\",\n            \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n            \"base64\": \"SGVsbG8gV29ybGQ=\",\n            \"list\": [\n                \"example\"\n            ],\n            \"set\": [\n                \"example\"\n            ],\n            \"map\": {\n                \"0\": \"example\"\n            },\n            \"bigint\": \"example\"\n        }\n    }\n]",
+                  "raw": "[\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"string\"\n            ],\n            \"set\": [\n                \"string\"\n            ],\n            \"map\": {\n                \"1\": \"string\"\n            },\n            \"bigint\": \"123456789123456789\"\n        }\n    }\n]",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -677,7 +1560,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/object/get-and-return-nested-with-required-field-list",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "object",
+                        "get-and-return-nested-with-required-field-list"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "[\n    {\n        \"string\": \"string\",\n        \"NestedObject\": {\n            \"string\": \"string\",\n            \"integer\": 1,\n            \"long\": 1000000,\n            \"double\": 1.1,\n            \"bool\": true,\n            \"datetime\": \"2024-01-15T09:30:00Z\",\n            \"date\": \"2023-01-15\",\n            \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            \"base64\": \"SGVsbG8gd29ybGQh\",\n            \"list\": [\n                \"string\"\n            ],\n            \"set\": [\n                \"string\"\n            ],\n            \"map\": {\n                \"1\": \"string\"\n            },\n            \"bigint\": \"123456789123456789\"\n        }\n    }\n]",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"string\": \"string\",\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         },
@@ -705,17 +1630,64 @@
                   "variable": [
                     {
                       "key": "param",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     }
                   ]
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "GET",
                 "auth": null,
                 "body": null
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "GET with path param",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path/:param",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path",
+                        ":param"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "string"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -723,7 +1695,7 @@
               "request": {
                 "description": "GET with query param",
                 "url": {
-                  "raw": "{{baseUrl}}/params?query=&number=",
+                  "raw": "{{baseUrl}}/params?query=string&number=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -733,23 +1705,73 @@
                   "query": [
                     {
                       "key": "query",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     },
                     {
                       "key": "number",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "1"
                     }
                   ],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "GET",
                 "auth": null,
                 "body": null
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "GET with query param",
+                    "url": {
+                      "raw": "{{baseUrl}}/params?query=string&number=1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params"
+                      ],
+                      "query": [
+                        {
+                          "key": "query",
+                          "description": null,
+                          "value": "string"
+                        },
+                        {
+                          "key": "number",
+                          "description": null,
+                          "value": "1"
+                        }
+                      ],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -757,7 +1779,7 @@
               "request": {
                 "description": "GET with multiple of same query param",
                 "url": {
-                  "raw": "{{baseUrl}}/params?query=&numer=",
+                  "raw": "{{baseUrl}}/params?query=string&numer=1",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -767,23 +1789,73 @@
                   "query": [
                     {
                       "key": "query",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     },
                     {
                       "key": "numer",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "1"
                     }
                   ],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "GET",
                 "auth": null,
                 "body": null
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "GET with multiple of same query param",
+                    "url": {
+                      "raw": "{{baseUrl}}/params?query=string&numer=1",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params"
+                      ],
+                      "query": [
+                        {
+                          "key": "query",
+                          "description": null,
+                          "value": "string"
+                        },
+                        {
+                          "key": "numer",
+                          "description": null,
+                          "value": "1"
+                        }
+                      ],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -791,7 +1863,7 @@
               "request": {
                 "description": "GET with path and query params",
                 "url": {
-                  "raw": "{{baseUrl}}/params/path-query/:param?query=",
+                  "raw": "{{baseUrl}}/params/path-query/:param?query=string",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -803,24 +1875,77 @@
                   "query": [
                     {
                       "key": "query",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     }
                   ],
                   "variable": [
                     {
                       "key": "param",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     }
                   ]
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "GET",
                 "auth": null,
                 "body": null
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "GET with path and query params",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path-query/:param?query=string",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path-query",
+                        ":param"
+                      ],
+                      "query": [
+                        {
+                          "key": "query",
+                          "description": null,
+                          "value": "string"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "string"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -841,17 +1966,23 @@
                   "variable": [
                     {
                       "key": "param",
-                      "value": "",
-                      "description": null
+                      "description": null,
+                      "value": "string"
                     }
                   ]
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "PUT",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "\"example\"",
+                  "raw": "\"string\"",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -859,7 +1990,56 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": "PUT to update with path param",
+                    "url": {
+                      "raw": "{{baseUrl}}/params/path/:param",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "params",
+                        "path",
+                        ":param"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "param",
+                          "description": null,
+                          "value": "string"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "PUT",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "\"string\"",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         },
@@ -885,12 +2065,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "\"example\"",
+                  "raw": "\"string\"",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -898,7 +2084,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/primitive/string",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "primitive",
+                        "string"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "\"string\"",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "\"string\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -917,12 +2145,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "0",
+                  "raw": "1",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -930,7 +2164,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/primitive/integer",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "primitive",
+                        "integer"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "1",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "1",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -949,12 +2225,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "10000000",
+                  "raw": "1000000",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -962,7 +2244,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/primitive/long",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "primitive",
+                        "long"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "1000000",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "1000000",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -981,12 +2305,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "0",
+                  "raw": "1.1",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -994,7 +2324,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/primitive/double",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "primitive",
+                        "double"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "1.1",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "1.1",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -1013,7 +2385,13 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
@@ -1026,7 +2404,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/primitive/boolean",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "primitive",
+                        "boolean"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "true",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "true",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -1045,12 +2465,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "\"1994-11-05T13:15:30Z\"",
+                  "raw": "\"2024-01-15T09:30:00Z\"",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1058,7 +2484,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/primitive/datetime",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "primitive",
+                        "datetime"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "\"2024-01-15T09:30:00Z\"",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "\"2024-01-15T09:30:00Z\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -1077,12 +2545,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "\"1994-11-05\"",
+                  "raw": "\"2023-01-15\"",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1090,7 +2564,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/primitive/date",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "primitive",
+                        "date"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "\"2023-01-15\"",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "\"2023-01-15\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -1109,12 +2625,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "\"3d20db99-b2d9-4643-8f04-13452707b8e8\"",
+                  "raw": "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1122,7 +2644,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/primitive/uuid",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "primitive",
+                        "uuid"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "\"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             },
             {
               "_type": "endpoint",
@@ -1141,12 +2705,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "\"SGVsbG8gV29ybGQ=\"",
+                  "raw": "\"SGVsbG8gd29ybGQh\"",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1154,7 +2724,49 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/primitive/base64",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "primitive",
+                        "base64"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "\"SGVsbG8gd29ybGQh\"",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "\"SGVsbG8gd29ybGQh\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         },
@@ -1179,12 +2791,18 @@
                   "query": [],
                   "variable": []
                 },
-                "header": [],
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
                 "method": "POST",
                 "auth": null,
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n    \"animal\": \"dog\",\n    \"name\": \"example\",\n    \"likesToWoof\": true\n}",
+                  "raw": "{\n    \"animal\": \"dog\",\n    \"name\": \"string\",\n    \"likesToWoof\": true\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -1192,7 +2810,48 @@
                   }
                 }
               },
-              "response": []
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/union",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "union"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"animal\": \"dog\",\n    \"name\": \"string\",\n    \"likesToWoof\": true\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "description": null,
+                  "body": "{\n    \"animal\": \"dog\",\n    \"name\": \"string\",\n    \"likesToWoof\": true\n}",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
             }
           ]
         }
@@ -1220,12 +2879,18 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"string\": \"example\",\n    \"integer\": 0,\n    \"NestedObject\": {\n        \"string\": \"example\",\n        \"integer\": 0,\n        \"long\": 10000000,\n        \"double\": 0,\n        \"bool\": true,\n        \"datetime\": \"1994-11-05T13:15:30Z\",\n        \"date\": \"1994-11-05\",\n        \"uuid\": \"3d20db99-b2d9-4643-8f04-13452707b8e8\",\n        \"base64\": \"SGVsbG8gV29ybGQ=\",\n        \"list\": [\n            \"example\"\n        ],\n        \"set\": [\n            \"example\"\n        ],\n        \"map\": {\n            \"0\": \"example\"\n        },\n        \"bigint\": \"example\"\n    }\n}",
+              "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1233,7 +2898,90 @@
               }
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "POST with custom object in request body, response is an object",
+                "url": {
+                  "raw": "{{baseUrl}}/req-bodies/object",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "req-bodies",
+                    "object"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Bad Request Body",
+              "status": "Bad Request Body",
+              "code": 400,
+              "originalRequest": {
+                "description": "POST with custom object in request body, response is an object",
+                "url": {
+                  "raw": "{{baseUrl}}/req-bodies/object",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "req-bodies",
+                    "object"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"NestedObject\": {\n        \"string\": \"string\",\n        \"integer\": 1,\n        \"long\": 1000000,\n        \"double\": 1.1,\n        \"bool\": true,\n        \"datetime\": \"2024-01-15T09:30:00Z\",\n        \"date\": \"2023-01-15\",\n        \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n        \"base64\": \"SGVsbG8gd29ybGQh\",\n        \"list\": [\n            \"string\"\n        ],\n        \"set\": [\n            \"string\"\n        ],\n        \"map\": {\n            \"1\": \"string\"\n        },\n        \"bigint\": \"123456789123456789\"\n    }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     },
@@ -1258,12 +3006,18 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "\"UNKNOWN\"",
+              "raw": "{\n    \"key\": \"value\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1271,7 +3025,88 @@
               }
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "POST request with no auth",
+                "url": {
+                  "raw": "{{baseUrl}}/no-auth",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "no-auth"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"key\": \"value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "true",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Bad Request Body",
+              "status": "Bad Request Body",
+              "code": 400,
+              "originalRequest": {
+                "description": "POST request with no auth",
+                "url": {
+                  "raw": "{{baseUrl}}/no-auth",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "no-auth"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"key\": \"value\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     },
@@ -1296,12 +3131,51 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "GET",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/no-req-body",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "no-req-body"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"string\": \"string\",\n    \"integer\": 1,\n    \"long\": 1000000,\n    \"double\": 1.1,\n    \"bool\": true,\n    \"datetime\": \"2024-01-15T09:30:00Z\",\n    \"date\": \"2023-01-15\",\n    \"uuid\": \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"base64\": \"SGVsbG8gd29ybGQh\",\n    \"list\": [\n        \"string\"\n    ],\n    \"set\": [\n        \"string\"\n    ],\n    \"map\": {\n        \"1\": \"string\"\n    },\n    \"bigint\": \"123456789123456789\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "_type": "endpoint",
@@ -1319,12 +3193,51 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/no-req-body",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "no-req-body"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "\"string\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     },
@@ -1355,20 +3268,25 @@
                 "key": "X-TEST-SERVICE-HEADER",
                 "description": null,
                 "type": "text",
-                "value": "\"example\""
+                "value": "\"string\""
               },
               {
                 "key": "X-TEST-ENDPOINT-HEADER",
                 "description": null,
                 "type": "text",
-                "value": "\"example\""
+                "value": "\"string\""
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
               }
             ],
             "method": "POST",
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "\"example\"",
+              "raw": "\"string\"",
               "options": {
                 "raw": {
                   "language": "json"
@@ -1376,7 +3294,61 @@
               }
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/test-headers/custom-header",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "test-headers",
+                    "custom-header"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-TEST-SERVICE-HEADER",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"string\""
+                  },
+                  {
+                    "key": "X-TEST-ENDPOINT-HEADER",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"string\""
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "\"string\"",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

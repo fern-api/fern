@@ -1,31 +1,53 @@
 import { csharp } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, ResponseError, ServiceId } from "@fern-fern/ir-sdk/api";
-import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { RESPONSE_VARIABLE_NAME } from "../utils/constants";
-import { getEndpointRequest } from "../utils/getEndpointRequest";
-import { getEndpointReturnType } from "../utils/getEndpointReturnType";
+import { ExampleGenerator } from "@fern-api/fern-csharp-model";
+import {
+    ExampleEndpointCall,
+    ExampleRequestBody,
+    FernFilepath,
+    HttpEndpoint,
+    ResponseError,
+    ServiceId
+} from "@fern-fern/ir-sdk/api";
 import { RawClient } from "./RawClient";
+import { WrappedRequestGenerator } from "../../wrapped-request/WrappedRequestGenerator";
+import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { getEndpointReturnType } from "../utils/getEndpointReturnType";
+import { getEndpointRequest } from "../utils/getEndpointRequest";
 
-export declare namespace HttpEndpointGenerator {
+export declare namespace EndpointGenerator {
     export interface Args {
-        serviceId: ServiceId;
+        /** the reference to the client */
+        clientReference: string;
+        /** the endpoint for the endpoint */
         endpoint: HttpEndpoint;
-        rawClientReference: string;
+        /** reference to a variable that is the body */
+        bodyReference?: string;
     }
 }
 
+const RESPONSE_VARIABLE_NAME = "response";
 const RESPONSE_BODY_VARIABLE_NAME = "responseBody";
 
 export class HttpEndpointGenerator {
-    private context: SdkGeneratorContext;
-    private rawClient: RawClient;
+    private exampleGenerator: ExampleGenerator;
+    private readonly context: SdkGeneratorContext;
 
-    public constructor({ context, rawClient }: { context: SdkGeneratorContext; rawClient: RawClient }) {
+    public constructor({ context }: { context: SdkGeneratorContext }) {
         this.context = context;
-        this.rawClient = rawClient;
+        this.exampleGenerator = new ExampleGenerator(context);
     }
 
-    public generate({ serviceId, endpoint, rawClientReference }: HttpEndpointGenerator.Args): csharp.Method {
+    public generate({
+        serviceId,
+        endpoint,
+        rawClientReference,
+        rawClient
+    }: {
+        serviceId: ServiceId;
+        endpoint: HttpEndpoint;
+        rawClientReference: string;
+        rawClient: RawClient;
+    }): csharp.Method {
         const { parameters: nonEndpointParameters, pathParameterReferences } = this.getNonEndpointParameters({
             endpoint,
             serviceId
@@ -72,9 +94,12 @@ export class HttpEndpointGenerator {
                     headerParameterCodeBlock.code.write(writer);
                 }
                 const requestBodyCodeBlock = request?.getRequestBodyCodeBlock();
+                if (requestBodyCodeBlock?.code != null) {
+                    writer.writeNode(requestBodyCodeBlock.code);
+                }
                 writer.write(`var ${RESPONSE_VARIABLE_NAME} = `);
                 writer.writeNodeStatement(
-                    this.rawClient.makeRequest({
+                    rawClient.makeRequest({
                         baseUrl: this.getBaseURLForEndpoint({ endpoint }),
                         requestType: request?.getRequestType(),
                         clientReference: rawClientReference,
@@ -94,6 +119,51 @@ export class HttpEndpointGenerator {
         });
     }
 
+    public generateEndpointSnippet({
+        example,
+        endpoint,
+        clientVariableName,
+        serviceId,
+        serviceFilePath,
+        requestOptions
+    }: {
+        example: ExampleEndpointCall;
+        endpoint: HttpEndpoint;
+        clientVariableName: string;
+        serviceId: ServiceId;
+        serviceFilePath: FernFilepath;
+        requestOptions?: csharp.CodeBlock;
+        getResult?: boolean;
+    }): csharp.MethodInvocation | undefined {
+        const requestBodyType = endpoint.requestBody?.type;
+        // TODO: implement these
+        if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
+            return undefined;
+        }
+        const args = this.getNonEndpointArguments(example);
+        const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId);
+        if (endpointRequestSnippet != null) {
+            args.push(endpointRequestSnippet);
+        }
+        const on = csharp.codeblock((writer) => {
+            writer.write(`${clientVariableName}`);
+            for (const path of serviceFilePath.allParts) {
+                writer.write(`.${path.pascalCase.safeName}`);
+            }
+        });
+        if (requestOptions != null) {
+            args.push(requestOptions);
+        }
+        getEndpointReturnType({ context: this.context, endpoint });
+        return new csharp.MethodInvocation({
+            method: this.context.getEndpointMethodName(endpoint),
+            arguments_: args,
+            on,
+            async: true,
+            generics: []
+        });
+    }
+
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): csharp.CodeBlock {
         if (endpoint.baseUrl != null && this.context.ir.environments?.environments.type === "multipleBaseUrls") {
             const baseUrl = this.context.ir.environments?.environments.baseUrls.find(
@@ -104,6 +174,47 @@ export class HttpEndpointGenerator {
             }
         }
         return csharp.codeblock("_client.Options.BaseUrl");
+    }
+
+    private getEndpointRequestSnippet(
+        exampleEndpointCall: ExampleEndpointCall,
+        endpoint: HttpEndpoint,
+        serviceId: ServiceId
+    ): csharp.CodeBlock | undefined {
+        switch (endpoint.sdkRequest?.shape.type) {
+            case "wrapper":
+                return new WrappedRequestGenerator({
+                    wrapper: endpoint.sdkRequest.shape,
+                    context: this.context,
+                    serviceId,
+                    endpoint
+                }).doGenerateSnippet(exampleEndpointCall);
+            case "justRequestBody": {
+                if (exampleEndpointCall.request == null) {
+                    throw new Error("Unexpected no example request for just request body");
+                }
+                return this.getJustRequestBodySnippet(exampleEndpointCall.request);
+            }
+        }
+        return undefined;
+    }
+
+    private getJustRequestBodySnippet(exampleRequestBody: ExampleRequestBody): csharp.CodeBlock {
+        if (exampleRequestBody.type === "inlinedRequestBody") {
+            throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
+        }
+        return this.exampleGenerator.getSnippetForTypeReference(exampleRequestBody);
+    }
+
+    private getNonEndpointArguments(example: ExampleEndpointCall): csharp.CodeBlock[] {
+        const pathParameters = [
+            ...example.rootPathParameters,
+            ...example.servicePathParameters,
+            ...example.endpointPathParameters
+        ];
+        return pathParameters.map((pathParameter) =>
+            this.exampleGenerator.getSnippetForTypeReference(pathParameter.value)
+        );
     }
 
     private getNonEndpointParameters({ endpoint, serviceId }: { endpoint: HttpEndpoint; serviceId: ServiceId }): {

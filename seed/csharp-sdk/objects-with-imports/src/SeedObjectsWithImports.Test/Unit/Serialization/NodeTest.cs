@@ -18,17 +18,17 @@ public class NodeTest
         var inputJson =
             @"
         {
-  ""id"": ""node-8dvgfja2"",
-  ""label"": ""left"",
-  ""metadata"": {
-    ""id"": ""metadata-kjasf923"",
-    ""data"": {
-      ""foo"": ""bar"",
-      ""baz"": ""qux""
-    }
-  }
-}
-";
+          ""id"": ""node-8dvgfja2"",
+          ""label"": ""left"",
+          ""metadata"": {
+            ""id"": ""metadata-kjasf923"",
+            ""data"": {
+              ""foo"": ""bar"",
+              ""baz"": ""qux""
+            }
+          }
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {
@@ -48,17 +48,17 @@ public class NodeTest
         var inputJson =
             @"
         {
-  ""id"": ""node-cwda9fi2x"",
-  ""label"": ""right"",
-  ""metadata"": {
-    ""id"": ""metadata-lkasdfv9j"",
-    ""data"": {
-      ""one"": ""two"",
-      ""three"": ""four""
-    }
-  }
-}
-";
+          ""id"": ""node-cwda9fi2x"",
+          ""label"": ""right"",
+          ""metadata"": {
+            ""id"": ""metadata-lkasdfv9j"",
+            ""data"": {
+              ""one"": ""two"",
+              ""three"": ""four""
+            }
+          }
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

@@ -37,6 +37,7 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
         };
         class_.addField(BASE_URL_FIELD);
         class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs));
+        class_.addField(this.baseOptionsGenerator.getHttpHeadersField());
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         return new CSharpFile({
