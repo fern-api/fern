@@ -30,6 +30,10 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
         return [AsIsFiles.StringEnumSerializer, AsIsFiles.OneOfSerializer, AsIsFiles.CollectionItemSerializer];
     }
 
+    public getAsIsTestUtils(): string[] {
+        return [];
+    }
+
     public getPublicCoreAsIsFiles(): string[] {
         return [];
     }

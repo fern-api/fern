@@ -18,9 +18,9 @@ public class DocsTest
         var inputJson =
             @"
         {
-  ""docs"": ""Types extend this type to include a docs property.""
-}
-";
+          ""docs"": ""Types extend this type to include a docs property.""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

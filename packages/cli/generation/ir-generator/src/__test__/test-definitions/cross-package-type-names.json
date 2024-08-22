@@ -1907,10 +1907,516 @@
                                                                                 },
                                                                                 "shape": {
                                                                                     "type": "object",
-                                                                                    "properties": []
+                                                                                    "properties": [
+                                                                                        {
+                                                                                            "name": {
+                                                                                                "name": {
+                                                                                                    "originalName": "foo",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "foo",
+                                                                                                        "safeName": "foo"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "foo",
+                                                                                                        "safeName": "foo"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "FOO",
+                                                                                                        "safeName": "FOO"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Foo",
+                                                                                                        "safeName": "Foo"
+                                                                                                    }
+                                                                                                },
+                                                                                                "wireValue": "foo"
+                                                                                            },
+                                                                                            "value": {
+                                                                                                "shape": {
+                                                                                                    "type": "container",
+                                                                                                    "container": {
+                                                                                                        "type": "optional",
+                                                                                                        "optional": {
+                                                                                                            "shape": {
+                                                                                                                "type": "named",
+                                                                                                                "typeName": {
+                                                                                                                    "name": {
+                                                                                                                        "originalName": "Foo",
+                                                                                                                        "camelCase": {
+                                                                                                                            "unsafeName": "foo",
+                                                                                                                            "safeName": "foo"
+                                                                                                                        },
+                                                                                                                        "snakeCase": {
+                                                                                                                            "unsafeName": "foo",
+                                                                                                                            "safeName": "foo"
+                                                                                                                        },
+                                                                                                                        "screamingSnakeCase": {
+                                                                                                                            "unsafeName": "FOO",
+                                                                                                                            "safeName": "FOO"
+                                                                                                                        },
+                                                                                                                        "pascalCase": {
+                                                                                                                            "unsafeName": "Foo",
+                                                                                                                            "safeName": "Foo"
+                                                                                                                        }
+                                                                                                                    },
+                                                                                                                    "fernFilepath": {
+                                                                                                                        "allParts": [
+                                                                                                                            {
+                                                                                                                                "originalName": "folder-c",
+                                                                                                                                "camelCase": {
+                                                                                                                                    "unsafeName": "folderC",
+                                                                                                                                    "safeName": "folderC"
+                                                                                                                                },
+                                                                                                                                "snakeCase": {
+                                                                                                                                    "unsafeName": "folder_c",
+                                                                                                                                    "safeName": "folder_c"
+                                                                                                                                },
+                                                                                                                                "screamingSnakeCase": {
+                                                                                                                                    "unsafeName": "FOLDER_C",
+                                                                                                                                    "safeName": "FOLDER_C"
+                                                                                                                                },
+                                                                                                                                "pascalCase": {
+                                                                                                                                    "unsafeName": "FolderC",
+                                                                                                                                    "safeName": "FolderC"
+                                                                                                                                }
+                                                                                                                            },
+                                                                                                                            {
+                                                                                                                                "originalName": "common",
+                                                                                                                                "camelCase": {
+                                                                                                                                    "unsafeName": "common",
+                                                                                                                                    "safeName": "common"
+                                                                                                                                },
+                                                                                                                                "snakeCase": {
+                                                                                                                                    "unsafeName": "common",
+                                                                                                                                    "safeName": "common"
+                                                                                                                                },
+                                                                                                                                "screamingSnakeCase": {
+                                                                                                                                    "unsafeName": "COMMON",
+                                                                                                                                    "safeName": "COMMON"
+                                                                                                                                },
+                                                                                                                                "pascalCase": {
+                                                                                                                                    "unsafeName": "Common",
+                                                                                                                                    "safeName": "Common"
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        ],
+                                                                                                                        "packagePath": [
+                                                                                                                            {
+                                                                                                                                "originalName": "folder-c",
+                                                                                                                                "camelCase": {
+                                                                                                                                    "unsafeName": "folderC",
+                                                                                                                                    "safeName": "folderC"
+                                                                                                                                },
+                                                                                                                                "snakeCase": {
+                                                                                                                                    "unsafeName": "folder_c",
+                                                                                                                                    "safeName": "folder_c"
+                                                                                                                                },
+                                                                                                                                "screamingSnakeCase": {
+                                                                                                                                    "unsafeName": "FOLDER_C",
+                                                                                                                                    "safeName": "FOLDER_C"
+                                                                                                                                },
+                                                                                                                                "pascalCase": {
+                                                                                                                                    "unsafeName": "FolderC",
+                                                                                                                                    "safeName": "FolderC"
+                                                                                                                                }
+                                                                                                                            }
+                                                                                                                        ],
+                                                                                                                        "file": {
+                                                                                                                            "originalName": "common",
+                                                                                                                            "camelCase": {
+                                                                                                                                "unsafeName": "common",
+                                                                                                                                "safeName": "common"
+                                                                                                                            },
+                                                                                                                            "snakeCase": {
+                                                                                                                                "unsafeName": "common",
+                                                                                                                                "safeName": "common"
+                                                                                                                            },
+                                                                                                                            "screamingSnakeCase": {
+                                                                                                                                "unsafeName": "COMMON",
+                                                                                                                                "safeName": "COMMON"
+                                                                                                                            },
+                                                                                                                            "pascalCase": {
+                                                                                                                                "unsafeName": "Common",
+                                                                                                                                "safeName": "Common"
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    },
+                                                                                                                    "typeId": "type_folder-c/common:Foo"
+                                                                                                                },
+                                                                                                                "shape": {
+                                                                                                                    "type": "object",
+                                                                                                                    "properties": [
+                                                                                                                        {
+                                                                                                                            "name": {
+                                                                                                                                "name": {
+                                                                                                                                    "originalName": "bar_property",
+                                                                                                                                    "camelCase": {
+                                                                                                                                        "unsafeName": "barProperty",
+                                                                                                                                        "safeName": "barProperty"
+                                                                                                                                    },
+                                                                                                                                    "snakeCase": {
+                                                                                                                                        "unsafeName": "bar_property",
+                                                                                                                                        "safeName": "bar_property"
+                                                                                                                                    },
+                                                                                                                                    "screamingSnakeCase": {
+                                                                                                                                        "unsafeName": "BAR_PROPERTY",
+                                                                                                                                        "safeName": "BAR_PROPERTY"
+                                                                                                                                    },
+                                                                                                                                    "pascalCase": {
+                                                                                                                                        "unsafeName": "BarProperty",
+                                                                                                                                        "safeName": "BarProperty"
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                "wireValue": "bar_property"
+                                                                                                                            },
+                                                                                                                            "value": {
+                                                                                                                                "shape": {
+                                                                                                                                    "type": "primitive",
+                                                                                                                                    "primitive": {
+                                                                                                                                        "type": "uuid",
+                                                                                                                                        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                                                                            },
+                                                                                                                            "originalTypeDeclaration": {
+                                                                                                                                "name": {
+                                                                                                                                    "originalName": "Foo",
+                                                                                                                                    "camelCase": {
+                                                                                                                                        "unsafeName": "foo",
+                                                                                                                                        "safeName": "foo"
+                                                                                                                                    },
+                                                                                                                                    "snakeCase": {
+                                                                                                                                        "unsafeName": "foo",
+                                                                                                                                        "safeName": "foo"
+                                                                                                                                    },
+                                                                                                                                    "screamingSnakeCase": {
+                                                                                                                                        "unsafeName": "FOO",
+                                                                                                                                        "safeName": "FOO"
+                                                                                                                                    },
+                                                                                                                                    "pascalCase": {
+                                                                                                                                        "unsafeName": "Foo",
+                                                                                                                                        "safeName": "Foo"
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                "fernFilepath": {
+                                                                                                                                    "allParts": [
+                                                                                                                                        {
+                                                                                                                                            "originalName": "folder-c",
+                                                                                                                                            "camelCase": {
+                                                                                                                                                "unsafeName": "folderC",
+                                                                                                                                                "safeName": "folderC"
+                                                                                                                                            },
+                                                                                                                                            "snakeCase": {
+                                                                                                                                                "unsafeName": "folder_c",
+                                                                                                                                                "safeName": "folder_c"
+                                                                                                                                            },
+                                                                                                                                            "screamingSnakeCase": {
+                                                                                                                                                "unsafeName": "FOLDER_C",
+                                                                                                                                                "safeName": "FOLDER_C"
+                                                                                                                                            },
+                                                                                                                                            "pascalCase": {
+                                                                                                                                                "unsafeName": "FolderC",
+                                                                                                                                                "safeName": "FolderC"
+                                                                                                                                            }
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "originalName": "common",
+                                                                                                                                            "camelCase": {
+                                                                                                                                                "unsafeName": "common",
+                                                                                                                                                "safeName": "common"
+                                                                                                                                            },
+                                                                                                                                            "snakeCase": {
+                                                                                                                                                "unsafeName": "common",
+                                                                                                                                                "safeName": "common"
+                                                                                                                                            },
+                                                                                                                                            "screamingSnakeCase": {
+                                                                                                                                                "unsafeName": "COMMON",
+                                                                                                                                                "safeName": "COMMON"
+                                                                                                                                            },
+                                                                                                                                            "pascalCase": {
+                                                                                                                                                "unsafeName": "Common",
+                                                                                                                                                "safeName": "Common"
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    ],
+                                                                                                                                    "packagePath": [
+                                                                                                                                        {
+                                                                                                                                            "originalName": "folder-c",
+                                                                                                                                            "camelCase": {
+                                                                                                                                                "unsafeName": "folderC",
+                                                                                                                                                "safeName": "folderC"
+                                                                                                                                            },
+                                                                                                                                            "snakeCase": {
+                                                                                                                                                "unsafeName": "folder_c",
+                                                                                                                                                "safeName": "folder_c"
+                                                                                                                                            },
+                                                                                                                                            "screamingSnakeCase": {
+                                                                                                                                                "unsafeName": "FOLDER_C",
+                                                                                                                                                "safeName": "FOLDER_C"
+                                                                                                                                            },
+                                                                                                                                            "pascalCase": {
+                                                                                                                                                "unsafeName": "FolderC",
+                                                                                                                                                "safeName": "FolderC"
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    ],
+                                                                                                                                    "file": {
+                                                                                                                                        "originalName": "common",
+                                                                                                                                        "camelCase": {
+                                                                                                                                            "unsafeName": "common",
+                                                                                                                                            "safeName": "common"
+                                                                                                                                        },
+                                                                                                                                        "snakeCase": {
+                                                                                                                                            "unsafeName": "common",
+                                                                                                                                            "safeName": "common"
+                                                                                                                                        },
+                                                                                                                                        "screamingSnakeCase": {
+                                                                                                                                            "unsafeName": "COMMON",
+                                                                                                                                            "safeName": "COMMON"
+                                                                                                                                        },
+                                                                                                                                        "pascalCase": {
+                                                                                                                                            "unsafeName": "Common",
+                                                                                                                                            "safeName": "Common"
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                "typeId": "type_folder-c/common:Foo"
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ]
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "jsonExample": {
+                                                                                                                "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                                                            }
+                                                                                                        },
+                                                                                                        "valueType": {
+                                                                                                            "_type": "named",
+                                                                                                            "name": {
+                                                                                                                "originalName": "Foo",
+                                                                                                                "camelCase": {
+                                                                                                                    "unsafeName": "foo",
+                                                                                                                    "safeName": "foo"
+                                                                                                                },
+                                                                                                                "snakeCase": {
+                                                                                                                    "unsafeName": "foo",
+                                                                                                                    "safeName": "foo"
+                                                                                                                },
+                                                                                                                "screamingSnakeCase": {
+                                                                                                                    "unsafeName": "FOO",
+                                                                                                                    "safeName": "FOO"
+                                                                                                                },
+                                                                                                                "pascalCase": {
+                                                                                                                    "unsafeName": "Foo",
+                                                                                                                    "safeName": "Foo"
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "fernFilepath": {
+                                                                                                                "allParts": [
+                                                                                                                    {
+                                                                                                                        "originalName": "folder-c",
+                                                                                                                        "camelCase": {
+                                                                                                                            "unsafeName": "folderC",
+                                                                                                                            "safeName": "folderC"
+                                                                                                                        },
+                                                                                                                        "snakeCase": {
+                                                                                                                            "unsafeName": "folder_c",
+                                                                                                                            "safeName": "folder_c"
+                                                                                                                        },
+                                                                                                                        "screamingSnakeCase": {
+                                                                                                                            "unsafeName": "FOLDER_C",
+                                                                                                                            "safeName": "FOLDER_C"
+                                                                                                                        },
+                                                                                                                        "pascalCase": {
+                                                                                                                            "unsafeName": "FolderC",
+                                                                                                                            "safeName": "FolderC"
+                                                                                                                        }
+                                                                                                                    },
+                                                                                                                    {
+                                                                                                                        "originalName": "common",
+                                                                                                                        "camelCase": {
+                                                                                                                            "unsafeName": "common",
+                                                                                                                            "safeName": "common"
+                                                                                                                        },
+                                                                                                                        "snakeCase": {
+                                                                                                                            "unsafeName": "common",
+                                                                                                                            "safeName": "common"
+                                                                                                                        },
+                                                                                                                        "screamingSnakeCase": {
+                                                                                                                            "unsafeName": "COMMON",
+                                                                                                                            "safeName": "COMMON"
+                                                                                                                        },
+                                                                                                                        "pascalCase": {
+                                                                                                                            "unsafeName": "Common",
+                                                                                                                            "safeName": "Common"
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                ],
+                                                                                                                "packagePath": [
+                                                                                                                    {
+                                                                                                                        "originalName": "folder-c",
+                                                                                                                        "camelCase": {
+                                                                                                                            "unsafeName": "folderC",
+                                                                                                                            "safeName": "folderC"
+                                                                                                                        },
+                                                                                                                        "snakeCase": {
+                                                                                                                            "unsafeName": "folder_c",
+                                                                                                                            "safeName": "folder_c"
+                                                                                                                        },
+                                                                                                                        "screamingSnakeCase": {
+                                                                                                                            "unsafeName": "FOLDER_C",
+                                                                                                                            "safeName": "FOLDER_C"
+                                                                                                                        },
+                                                                                                                        "pascalCase": {
+                                                                                                                            "unsafeName": "FolderC",
+                                                                                                                            "safeName": "FolderC"
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                ],
+                                                                                                                "file": {
+                                                                                                                    "originalName": "common",
+                                                                                                                    "camelCase": {
+                                                                                                                        "unsafeName": "common",
+                                                                                                                        "safeName": "common"
+                                                                                                                    },
+                                                                                                                    "snakeCase": {
+                                                                                                                        "unsafeName": "common",
+                                                                                                                        "safeName": "common"
+                                                                                                                    },
+                                                                                                                    "screamingSnakeCase": {
+                                                                                                                        "unsafeName": "COMMON",
+                                                                                                                        "safeName": "COMMON"
+                                                                                                                    },
+                                                                                                                    "pascalCase": {
+                                                                                                                        "unsafeName": "Common",
+                                                                                                                        "safeName": "Common"
+                                                                                                                    }
+                                                                                                                }
+                                                                                                            },
+                                                                                                            "typeId": "type_folder-c/common:Foo",
+                                                                                                            "default": null,
+                                                                                                            "inline": null
+                                                                                                        }
+                                                                                                    }
+                                                                                                },
+                                                                                                "jsonExample": {
+                                                                                                    "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                                                }
+                                                                                            },
+                                                                                            "originalTypeDeclaration": {
+                                                                                                "name": {
+                                                                                                    "originalName": "Foo",
+                                                                                                    "camelCase": {
+                                                                                                        "unsafeName": "foo",
+                                                                                                        "safeName": "foo"
+                                                                                                    },
+                                                                                                    "snakeCase": {
+                                                                                                        "unsafeName": "foo",
+                                                                                                        "safeName": "foo"
+                                                                                                    },
+                                                                                                    "screamingSnakeCase": {
+                                                                                                        "unsafeName": "FOO",
+                                                                                                        "safeName": "FOO"
+                                                                                                    },
+                                                                                                    "pascalCase": {
+                                                                                                        "unsafeName": "Foo",
+                                                                                                        "safeName": "Foo"
+                                                                                                    }
+                                                                                                },
+                                                                                                "fernFilepath": {
+                                                                                                    "allParts": [
+                                                                                                        {
+                                                                                                            "originalName": "folder-b",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "folderB",
+                                                                                                                "safeName": "folderB"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "folder_b",
+                                                                                                                "safeName": "folder_b"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "FOLDER_B",
+                                                                                                                "safeName": "FOLDER_B"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "FolderB",
+                                                                                                                "safeName": "FolderB"
+                                                                                                            }
+                                                                                                        },
+                                                                                                        {
+                                                                                                            "originalName": "common",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "common",
+                                                                                                                "safeName": "common"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "common",
+                                                                                                                "safeName": "common"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "COMMON",
+                                                                                                                "safeName": "COMMON"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "Common",
+                                                                                                                "safeName": "Common"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "packagePath": [
+                                                                                                        {
+                                                                                                            "originalName": "folder-b",
+                                                                                                            "camelCase": {
+                                                                                                                "unsafeName": "folderB",
+                                                                                                                "safeName": "folderB"
+                                                                                                            },
+                                                                                                            "snakeCase": {
+                                                                                                                "unsafeName": "folder_b",
+                                                                                                                "safeName": "folder_b"
+                                                                                                            },
+                                                                                                            "screamingSnakeCase": {
+                                                                                                                "unsafeName": "FOLDER_B",
+                                                                                                                "safeName": "FOLDER_B"
+                                                                                                            },
+                                                                                                            "pascalCase": {
+                                                                                                                "unsafeName": "FolderB",
+                                                                                                                "safeName": "FolderB"
+                                                                                                            }
+                                                                                                        }
+                                                                                                    ],
+                                                                                                    "file": {
+                                                                                                        "originalName": "common",
+                                                                                                        "camelCase": {
+                                                                                                            "unsafeName": "common",
+                                                                                                            "safeName": "common"
+                                                                                                        },
+                                                                                                        "snakeCase": {
+                                                                                                            "unsafeName": "common",
+                                                                                                            "safeName": "common"
+                                                                                                        },
+                                                                                                        "screamingSnakeCase": {
+                                                                                                            "unsafeName": "COMMON",
+                                                                                                            "safeName": "COMMON"
+                                                                                                        },
+                                                                                                        "pascalCase": {
+                                                                                                            "unsafeName": "Common",
+                                                                                                            "safeName": "Common"
+                                                                                                        }
+                                                                                                    }
+                                                                                                },
+                                                                                                "typeId": "type_folder-b/common:Foo"
+                                                                                            }
+                                                                                        }
+                                                                                    ]
                                                                                 }
                                                                             },
-                                                                            "jsonExample": {}
+                                                                            "jsonExample": {
+                                                                                "foo": {
+                                                                                    "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                                }
+                                                                            }
                                                                         },
                                                                         "valueType": {
                                                                             "_type": "named",
@@ -2021,7 +2527,11 @@
                                                                         }
                                                                     }
                                                                 },
-                                                                "jsonExample": {}
+                                                                "jsonExample": {
+                                                                    "foo": {
+                                                                        "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                    }
+                                                                }
                                                             },
                                                             "originalTypeDeclaration": {
                                                                 "name": {
@@ -2132,12 +2642,16 @@
                                                 }
                                             },
                                             "jsonExample": {
-                                                "foo": {}
+                                                "foo": {
+                                                    "foo": {
+                                                        "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                    }
+                                                }
                                             }
                                         }
                                     }
                                 },
-                                "id": "16347248f4f7fb0c428ded11e7232eff6ddf7470",
+                                "id": "5697febebae2a9e90e149dcaf1435902d66c4815",
                                 "docs": null
                             }
                         }
@@ -2809,10 +3323,151 @@
                                                                                                                 },
                                                                                                                 "shape": {
                                                                                                                     "type": "object",
-                                                                                                                    "properties": []
+                                                                                                                    "properties": [
+                                                                                                                        {
+                                                                                                                            "name": {
+                                                                                                                                "name": {
+                                                                                                                                    "originalName": "bar_property",
+                                                                                                                                    "camelCase": {
+                                                                                                                                        "unsafeName": "barProperty",
+                                                                                                                                        "safeName": "barProperty"
+                                                                                                                                    },
+                                                                                                                                    "snakeCase": {
+                                                                                                                                        "unsafeName": "bar_property",
+                                                                                                                                        "safeName": "bar_property"
+                                                                                                                                    },
+                                                                                                                                    "screamingSnakeCase": {
+                                                                                                                                        "unsafeName": "BAR_PROPERTY",
+                                                                                                                                        "safeName": "BAR_PROPERTY"
+                                                                                                                                    },
+                                                                                                                                    "pascalCase": {
+                                                                                                                                        "unsafeName": "BarProperty",
+                                                                                                                                        "safeName": "BarProperty"
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                "wireValue": "bar_property"
+                                                                                                                            },
+                                                                                                                            "value": {
+                                                                                                                                "shape": {
+                                                                                                                                    "type": "primitive",
+                                                                                                                                    "primitive": {
+                                                                                                                                        "type": "uuid",
+                                                                                                                                        "uuid": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                "jsonExample": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                                                                            },
+                                                                                                                            "originalTypeDeclaration": {
+                                                                                                                                "name": {
+                                                                                                                                    "originalName": "Foo",
+                                                                                                                                    "camelCase": {
+                                                                                                                                        "unsafeName": "foo",
+                                                                                                                                        "safeName": "foo"
+                                                                                                                                    },
+                                                                                                                                    "snakeCase": {
+                                                                                                                                        "unsafeName": "foo",
+                                                                                                                                        "safeName": "foo"
+                                                                                                                                    },
+                                                                                                                                    "screamingSnakeCase": {
+                                                                                                                                        "unsafeName": "FOO",
+                                                                                                                                        "safeName": "FOO"
+                                                                                                                                    },
+                                                                                                                                    "pascalCase": {
+                                                                                                                                        "unsafeName": "Foo",
+                                                                                                                                        "safeName": "Foo"
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                "fernFilepath": {
+                                                                                                                                    "allParts": [
+                                                                                                                                        {
+                                                                                                                                            "originalName": "folder-c",
+                                                                                                                                            "camelCase": {
+                                                                                                                                                "unsafeName": "folderC",
+                                                                                                                                                "safeName": "folderC"
+                                                                                                                                            },
+                                                                                                                                            "snakeCase": {
+                                                                                                                                                "unsafeName": "folder_c",
+                                                                                                                                                "safeName": "folder_c"
+                                                                                                                                            },
+                                                                                                                                            "screamingSnakeCase": {
+                                                                                                                                                "unsafeName": "FOLDER_C",
+                                                                                                                                                "safeName": "FOLDER_C"
+                                                                                                                                            },
+                                                                                                                                            "pascalCase": {
+                                                                                                                                                "unsafeName": "FolderC",
+                                                                                                                                                "safeName": "FolderC"
+                                                                                                                                            }
+                                                                                                                                        },
+                                                                                                                                        {
+                                                                                                                                            "originalName": "common",
+                                                                                                                                            "camelCase": {
+                                                                                                                                                "unsafeName": "common",
+                                                                                                                                                "safeName": "common"
+                                                                                                                                            },
+                                                                                                                                            "snakeCase": {
+                                                                                                                                                "unsafeName": "common",
+                                                                                                                                                "safeName": "common"
+                                                                                                                                            },
+                                                                                                                                            "screamingSnakeCase": {
+                                                                                                                                                "unsafeName": "COMMON",
+                                                                                                                                                "safeName": "COMMON"
+                                                                                                                                            },
+                                                                                                                                            "pascalCase": {
+                                                                                                                                                "unsafeName": "Common",
+                                                                                                                                                "safeName": "Common"
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    ],
+                                                                                                                                    "packagePath": [
+                                                                                                                                        {
+                                                                                                                                            "originalName": "folder-c",
+                                                                                                                                            "camelCase": {
+                                                                                                                                                "unsafeName": "folderC",
+                                                                                                                                                "safeName": "folderC"
+                                                                                                                                            },
+                                                                                                                                            "snakeCase": {
+                                                                                                                                                "unsafeName": "folder_c",
+                                                                                                                                                "safeName": "folder_c"
+                                                                                                                                            },
+                                                                                                                                            "screamingSnakeCase": {
+                                                                                                                                                "unsafeName": "FOLDER_C",
+                                                                                                                                                "safeName": "FOLDER_C"
+                                                                                                                                            },
+                                                                                                                                            "pascalCase": {
+                                                                                                                                                "unsafeName": "FolderC",
+                                                                                                                                                "safeName": "FolderC"
+                                                                                                                                            }
+                                                                                                                                        }
+                                                                                                                                    ],
+                                                                                                                                    "file": {
+                                                                                                                                        "originalName": "common",
+                                                                                                                                        "camelCase": {
+                                                                                                                                            "unsafeName": "common",
+                                                                                                                                            "safeName": "common"
+                                                                                                                                        },
+                                                                                                                                        "snakeCase": {
+                                                                                                                                            "unsafeName": "common",
+                                                                                                                                            "safeName": "common"
+                                                                                                                                        },
+                                                                                                                                        "screamingSnakeCase": {
+                                                                                                                                            "unsafeName": "COMMON",
+                                                                                                                                            "safeName": "COMMON"
+                                                                                                                                        },
+                                                                                                                                        "pascalCase": {
+                                                                                                                                            "unsafeName": "Common",
+                                                                                                                                            "safeName": "Common"
+                                                                                                                                        }
+                                                                                                                                    }
+                                                                                                                                },
+                                                                                                                                "typeId": "type_folder-c/common:Foo"
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    ]
                                                                                                                 }
                                                                                                             },
-                                                                                                            "jsonExample": {}
+                                                                                                            "jsonExample": {
+                                                                                                                "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                                                            }
                                                                                                         },
                                                                                                         "valueType": {
                                                                                                             "_type": "named",
@@ -2923,7 +3578,9 @@
                                                                                                         }
                                                                                                     }
                                                                                                 },
-                                                                                                "jsonExample": {}
+                                                                                                "jsonExample": {
+                                                                                                    "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                                                }
                                                                                             },
                                                                                             "originalTypeDeclaration": {
                                                                                                 "name": {
@@ -3034,7 +3691,9 @@
                                                                                 }
                                                                             },
                                                                             "jsonExample": {
-                                                                                "foo": {}
+                                                                                "foo": {
+                                                                                    "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                                }
                                                                             }
                                                                         },
                                                                         "valueType": {
@@ -3147,7 +3806,9 @@
                                                                     }
                                                                 },
                                                                 "jsonExample": {
-                                                                    "foo": {}
+                                                                    "foo": {
+                                                                        "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                                    }
                                                                 }
                                                             },
                                                             "originalTypeDeclaration": {
@@ -3260,13 +3921,15 @@
                                             },
                                             "jsonExample": {
                                                 "foo": {
-                                                    "foo": {}
+                                                    "foo": {
+                                                        "bar_property": "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 },
-                                "id": "916b3bf1c626b3483ca2420fdc2dbd809d1bda06",
+                                "id": "7fcbcf8a63966f2fb7a824885a07897405cfaa05",
                                 "docs": null
                             }
                         }

@@ -1,5 +1,5 @@
 export { generateModels } from "./generateModels";
-export { generateTests } from "./generateTests";
+export { generateModelTests as generateTests } from "./generateTests";
 export { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
 export * from "./ModelGeneratorCli";
 export { ExampleGenerator } from "./snippets/ExampleGenerator";

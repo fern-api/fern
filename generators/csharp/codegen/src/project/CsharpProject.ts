@@ -15,6 +15,7 @@ const PROTOBUF_DIRECTORY_NAME = "proto";
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 
 export const CORE_DIRECTORY_NAME = "Core";
+export const TEST_UTILS_DIRECTORY_NAME = "Utils";
 export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
 /**
  * In memory representation of a C# project.
@@ -23,6 +24,7 @@ export class CsharpProject {
     private testFiles: CSharpFile[] = [];
     private sourceFiles: CSharpFile[] = [];
     private coreFiles: File[] = [];
+    private testUtilFiles: File[] = [];
     private publicCoreFiles: File[] = [];
     private absolutePathToOutputDirectory: AbsoluteFilePath;
     private sourceFetcher: SourceFetcher;
@@ -96,6 +98,10 @@ export class CsharpProject {
                     namespace: this.context.getNamespace()
                 })
             );
+        }
+
+        for (const file of this.context.getAsIsTestUtils()) {
+            this.testUtilFiles.push(await this.createTestUtilsAsIsFile(file));
         }
 
         const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
@@ -235,6 +241,28 @@ export class CsharpProject {
         return absolutePathToCoreDirectory;
     }
 
+    /*
+     * Unused after removing unneccessary utils file.
+     */
+    private async createTestUtilsDirectory({
+        absolutePathToTestProjectDirectory
+    }: {
+        absolutePathToTestProjectDirectory: AbsoluteFilePath;
+    }): Promise<AbsoluteFilePath> {
+        const absolutePathToTestUtilsDirectory = join(
+            absolutePathToTestProjectDirectory,
+            RelativeFilePath.of(TEST_UTILS_DIRECTORY_NAME)
+        );
+        this.context.logger.debug(`mkdir ${absolutePathToTestUtilsDirectory}`);
+        await mkdir(absolutePathToTestUtilsDirectory, { recursive: true });
+
+        for (const file of this.testUtilFiles) {
+            await file.write(absolutePathToTestUtilsDirectory);
+        }
+
+        return absolutePathToTestUtilsDirectory;
+    }
+
     private async createPublicCoreDirectory({
         absolutePathToProjectDirectory
     }: {
@@ -264,6 +292,19 @@ export class CsharpProject {
                 contents,
                 grpc: this.context.hasGrpcEndpoints(),
                 namespace
+            })
+        );
+    }
+
+    private async createTestUtilsAsIsFile(filename: string): Promise<File> {
+        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        return new File(
+            filename.replace(".Template", ""),
+            RelativeFilePath.of(""),
+            replaceTemplate({
+                contents,
+                grpc: this.context.hasGrpcEndpoints(),
+                namespace: this.context.getTestUtilsNamespace()
             })
         );
     }
@@ -384,6 +425,11 @@ ${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${FOUR_SPAC
         <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
 ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>${this.context.project.filepaths.getTestProjectName()}</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
 
 </Project>
 `;
