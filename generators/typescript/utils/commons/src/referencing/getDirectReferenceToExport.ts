@@ -22,7 +22,7 @@ export function getDirectReferenceToExport({
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
         to: convertExportedFilePathToFilePath(exportedFromPath),
-        appendBarrelFileToImport: importsManager.useJsExtensions && exportedFromPath.file == null,
+        isDesinationADirectory: exportedFromPath.file == null,
         useJsExtension: importsManager.useJsExtensions
     });
 

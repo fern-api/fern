@@ -46,7 +46,8 @@ export function getReferenceToExportFromRoot({
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
             to: convertExportedDirectoryPathToFilePath([]),
-            appendBarrelFileToImport: true,
+            isDesinationADirectory: true,
+            appendBarrelFileForDirectoryImport: true,
             useJsExtension: importsManager.useJsExtensions
         });
 
@@ -69,7 +70,8 @@ export function getReferenceToExportFromRoot({
                 firstDirectory != null
                     ? convertExportedDirectoryPathToFilePath([firstDirectory])
                     : convertExportedFilePathToFilePath(exportedFromPath),
-            appendBarrelFileToImport: true,
+            isDesinationADirectory: true,
+            appendBarrelFileForDirectoryImport: true,
             useJsExtension: importsManager.useJsExtensions
         });
 
@@ -113,7 +115,8 @@ export function getReferenceToExportFromRoot({
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
             to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom),
-            appendBarrelFileToImport: true,
+            isDesinationADirectory: true,
+            appendBarrelFileForDirectoryImport: true,
             useJsExtension: importsManager.useJsExtensions
         });
 

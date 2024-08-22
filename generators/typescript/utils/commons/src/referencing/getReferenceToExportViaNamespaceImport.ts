@@ -32,7 +32,7 @@ export function getReferenceToExportViaNamespaceImport({
             getRelativePathAsModuleSpecifierTo({
                 from: referencedIn,
                 to: convertExportedFilePathToFilePath(filepathToNamespaceImport),
-                appendBarrelFileToImport: importsManager.useJsExtensions && filepathToNamespaceImport.file == null,
+                isDesinationADirectory: filepathToNamespaceImport.file == null,
                 useJsExtension: importsManager.useJsExtensions
             }),
             { namespaceImport }

@@ -4,13 +4,19 @@ import { Directory, SourceFile } from "ts-morph";
 export function getRelativePathAsModuleSpecifierTo({
     from,
     to,
-    appendBarrelFileToImport,
-    useJsExtension
+    isDesinationADirectory,
+    useJsExtension,
+    appendBarrelFileForDirectoryImport = useJsExtension
 }: {
     from: Directory | SourceFile | string;
     to: Directory | SourceFile | string;
-    appendBarrelFileToImport: boolean;
+    isDesinationADirectory: boolean;
     useJsExtension: boolean;
+    /**
+     * whether to add `index.js` to the relative path.
+     * defaults to the value of `useJsExtension`
+     */
+    appendBarrelFileForDirectoryImport?: boolean;
 }): string {
     const parsedToFilePath = path.parse(getPath(to));
     const toFilePathWithoutExtension = path.join(parsedToFilePath.dir, parsedToFilePath.name);
@@ -26,7 +32,7 @@ export function getRelativePathAsModuleSpecifierTo({
     if (moduleSpecifier.endsWith("/")) {
         moduleSpecifier = moduleSpecifier.slice(0, -1);
     }
-    if (appendBarrelFileToImport) {
+    if (isDesinationADirectory && appendBarrelFileForDirectoryImport) {
         moduleSpecifier += "/index";
     }
     if (useJsExtension) {

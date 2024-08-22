@@ -45,7 +45,7 @@ export class ExportsManager {
             moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                 from: pathToDirectory,
                 to: fromPath,
-                appendBarrelFileToImport: false,
+                isDesinationADirectory: false,
                 useJsExtension: this.useJsExtensions
             }),
             exportDeclaration,
@@ -71,7 +71,7 @@ export class ExportsManager {
                 moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                     from: directoryFilepath,
                     to: nextDirectoryPath,
-                    appendBarrelFileToImport: this.useJsExtensions,
+                    isDesinationADirectory: true,
                     useJsExtension: this.useJsExtensions
                 }),
                 exportDeclaration: part.exportDeclaration,
@@ -85,7 +85,7 @@ export class ExportsManager {
                         moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                             from: directoryFilepath,
                             to: path.join(nextDirectoryPath, relativeFilePath),
-                            appendBarrelFileToImport: this.useJsExtensions,
+                            isDesinationADirectory: true,
                             useJsExtension: this.useJsExtensions
                         }),
                         exportDeclaration,
