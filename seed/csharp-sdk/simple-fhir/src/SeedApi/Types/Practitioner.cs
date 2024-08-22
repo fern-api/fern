@@ -30,4 +30,9 @@ public record Practitioner
 
     [JsonPropertyName("memo")]
     public required Memo Memo { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

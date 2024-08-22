@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedExhaustive.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record Dog
 
     [JsonPropertyName("likesToWoof")]
     public required bool LikesToWoof { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

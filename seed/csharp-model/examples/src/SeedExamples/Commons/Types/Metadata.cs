@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record Metadata
 
     [JsonPropertyName("jsonString")]
     public string? JsonString { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

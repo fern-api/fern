@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record GenericCreateProblemError
 
     [JsonPropertyName("stacktrace")]
     public required string Stacktrace { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

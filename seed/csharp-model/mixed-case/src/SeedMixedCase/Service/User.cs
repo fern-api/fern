@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedMixedCase.Core;
 
 #nullable enable
 
@@ -15,4 +16,9 @@ public record User
     [JsonPropertyName("EXTRA_PROPERTIES")]
     public Dictionary<string, string> ExtraProperties { get; set; } =
         new Dictionary<string, string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

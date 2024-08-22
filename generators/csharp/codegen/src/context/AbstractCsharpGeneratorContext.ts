@@ -290,6 +290,27 @@ export abstract class AbstractCsharpGeneratorContext<
         return undefined;
     }
 
+    public getToStringMethod(): csharp.Method {
+        return csharp.method({
+            name: "ToString",
+            access: "public",
+            isAsync: false,
+            override: true,
+            parameters: [],
+            return_: csharp.Type.string(),
+            body: csharp.codeblock((writer) => {
+                writer.write("return ");
+                writer.writeNodeStatement(
+                    csharp.invokeMethod({
+                        on: this.getJsonUtilsClassReference(),
+                        method: "Serialize",
+                        arguments_: [csharp.codeblock("this")]
+                    })
+                );
+            }),
+        })
+    }
+
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":

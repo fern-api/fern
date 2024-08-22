@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedAudiences.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record FilteredType
 
     [JsonPropertyName("private_property")]
     public required int PrivateProperty { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

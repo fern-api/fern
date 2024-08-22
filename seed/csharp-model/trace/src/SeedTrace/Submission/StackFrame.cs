@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record StackFrame
 
     [JsonPropertyName("scopes")]
     public IEnumerable<Scope> Scopes { get; set; } = new List<Scope>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

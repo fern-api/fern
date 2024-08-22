@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedAnyAuth.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record User
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

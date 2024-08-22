@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record SinglyLinkedListNodeValue
 
     [JsonPropertyName("next")]
     public string? Next { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

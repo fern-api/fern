@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -17,4 +18,9 @@ public record BasicTestCaseTemplate
 
     [JsonPropertyName("expectedValueParameterId")]
     public required string ExpectedValueParameterId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }
