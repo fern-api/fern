@@ -3,6 +3,7 @@ import {
     ExampleEndpointCall,
     HttpEndpoint,
     HttpService,
+    IntermediateRepresentation,
     TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { PostmanExampleResponse, PostmanHeader } from "@fern-fern/postman-sdk/api";
@@ -10,6 +11,7 @@ import { isEqual, startCase, values } from "lodash";
 import { GeneratedExampleRequest } from "./request/GeneratedExampleRequest";
 
 export function convertExampleEndpointCall({
+    ir,
     authHeaders,
     httpEndpoint,
     httpService,
@@ -17,6 +19,7 @@ export function convertExampleEndpointCall({
     allErrors,
     allTypes
 }: {
+    ir: IntermediateRepresentation;
     authHeaders: PostmanHeader[];
     httpEndpoint: HttpEndpoint;
     httpService: HttpService;
@@ -25,6 +28,7 @@ export function convertExampleEndpointCall({
     allTypes: TypeDeclaration[];
 }): PostmanExampleResponse {
     const generatedRequest = new GeneratedExampleRequest({
+        ir,
         authHeaders,
         httpEndpoint,
         httpService,

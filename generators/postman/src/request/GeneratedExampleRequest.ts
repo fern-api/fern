@@ -44,6 +44,10 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
     protected getPathParams(): PostmanUrlVariable[] {
         return [
             ...this.getPathParamsFromExamples({
+                pathParameters: this.ir.pathParameters,
+                examples: this.example.rootPathParameters
+            }),
+            ...this.getPathParamsFromExamples({
                 pathParameters: this.httpService.pathParameters,
                 examples: this.example.servicePathParameters
             }),
