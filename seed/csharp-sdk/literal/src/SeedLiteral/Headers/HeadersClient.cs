@@ -23,10 +23,12 @@ public partial class HeadersClient
     )
     {
         var _headers = new Headers(
-        {
-            { "X-Endpoint-Version", request.EndpointVersion.ToString() },
-            { "X-Async", request.Async.ToString() },
-        };
+            new Dictionary<string, string>()
+            {
+                { "X-Endpoint-Version", request.EndpointVersion.ToString() },
+                { "X-Async", request.Async.ToString() },
+            }
+        );
         var requestBody = new Dictionary<string, object>() { { "query", request.Query } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
