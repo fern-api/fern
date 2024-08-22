@@ -31,20 +31,22 @@ describe("fern generator upgrade", () => {
 
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
-        await runFernCli(["generator", "upgrade", "--help"], {
-            cwd: directory
-        });
-
         expect(
-            await runFernCli(["generator", "--help"], {
-                cwd: directory
-            })
+            (
+                await runFernCli(["generator", "--help"], {
+                    cwd: directory,
+                    reject: false
+                })
+            ).stdout
         ).toMatchSnapshot();
 
         expect(
-            await runFernCli(["generator", "upgrade", "--help"], {
-                cwd: directory
-            })
+            (
+                await runFernCli(["generator", "upgrade", "--help"], {
+                    cwd: directory,
+                    reject: false
+                })
+            ).stdout
         ).toMatchSnapshot();
     }, 60_000);
 });

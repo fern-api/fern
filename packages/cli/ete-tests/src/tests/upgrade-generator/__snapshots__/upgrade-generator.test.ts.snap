@@ -1,16 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`fern generator upgrade > fern generator help commands 1`] = `
-{
-  "all": undefined,
-  "command": "node /Users/armandobelardo/git/fern/dupes/fern/packages/cli/cli/dist/dev/cli.cjs generator --help",
-  "escapedCommand": "node "/Users/armandobelardo/git/fern/dupes/fern/packages/cli/cli/dist/dev/cli.cjs" generator --help",
-  "exitCode": 0,
-  "failed": false,
-  "isCanceled": false,
-  "killed": false,
-  "stderr": "",
-  "stdout": "fern-dev generator
+"fern-dev generator
 
 Operate on the generators within your Fern configuration
 
@@ -20,22 +11,11 @@ Commands:
 
 Options:
   --help       Show help                                               [boolean]
-  --log-level      [choices: "debug", "info", "warn", "error"] [default: "info"]",
-  "timedOut": false,
-}
+  --log-level      [choices: "debug", "info", "warn", "error"] [default: "info"]"
 `;
 
 exports[`fern generator upgrade > fern generator help commands 2`] = `
-{
-  "all": undefined,
-  "command": "node /Users/armandobelardo/git/fern/dupes/fern/packages/cli/cli/dist/dev/cli.cjs generator upgrade --help",
-  "escapedCommand": "node "/Users/armandobelardo/git/fern/dupes/fern/packages/cli/cli/dist/dev/cli.cjs" generator upgrade --help",
-  "exitCode": 0,
-  "failed": false,
-  "isCanceled": false,
-  "killed": false,
-  "stderr": "",
-  "stdout": "fern-dev generator upgrade
+"fern-dev generator upgrade
 
 Upgrades the specified generator in generators.yml to the latest stable version.
 
@@ -51,7 +31,5 @@ Options:
                    generator will be upgraded for all APIs.             [string]
   --include-major  Whether or not to include major versions within the upgrade.
                    Defaults to false, meaning major versions will be skipped.
-                                                      [boolean] [default: false]",
-  "timedOut": false,
-}
+                                                      [boolean] [default: false]"
 `;
