@@ -18,9 +18,9 @@ public class RequestTest
         var inputJson =
             @"
         {
-  ""request"": {}
-}
-";
+          ""request"": {}
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

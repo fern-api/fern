@@ -20,6 +20,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 const TYPES_FOLDER_NAME = "Types";
 const EXCEPTIONS_FOLDER_NAME = "Exceptions";
+export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
@@ -81,6 +82,7 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             AsIsFiles.CollectionItemSerializer,
             AsIsFiles.Constants,
             AsIsFiles.DateTimeSerializer,
+            AsIsFiles.Extensions,
             AsIsFiles.Headers,
             AsIsFiles.HeaderValue,
             AsIsFiles.HttpMethodExtensions,
@@ -93,6 +95,10 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             files.push(AsIsFiles.RawGrpcClient);
         }
         return files;
+    }
+
+    public getAsIsTestUtils(): string[] {
+        return [];
     }
 
     public getPublicCoreAsIsFiles(): string[] {
@@ -143,6 +149,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
             return this.customConfig["client-class-name"];
         }
         return `${this.getComputedClientName()}Client`;
+    }
+
+    public getRootClientClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: this.getRootClientClassName(),
+            namespace: this.getNamespace()
+        });
     }
 
     public getBaseExceptionClassReference(): csharp.ClassReference {
@@ -201,6 +214,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
     public getRawGrpcClientClassReference(): csharp.ClassReference {
         return csharp.classReference({
             name: this.getRawGrpcClientClassName(),
+            namespace: this.getCoreNamespace()
+        });
+    }
+
+    public getExtensionsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Extensions",
             namespace: this.getCoreNamespace()
         });
     }
@@ -275,6 +295,13 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return this.customConfig["root-namespace-for-core-classes"] ?? true
             ? this.getNamespace()
             : this.getCoreNamespace();
+    }
+
+    public getBaseMockServerTestClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "BaseMockServerTest",
+            namespace: this.getMockServerTestNamespace()
+        });
     }
 
     public getClientOptionsClassReference(): csharp.ClassReference {

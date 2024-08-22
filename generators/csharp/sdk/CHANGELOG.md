@@ -13,6 +13,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `RequestOptions` types. This is not a user-facing feature, but it simplifies the core
   utilities.
 
+- Feature: Add support for the `package-id` configuration, which is used to control
+  the name of the package in NuGet.
+
+  For example, consider the following configuration:
+
+  ```yml
+  generators:
+    - name: fernapi/fern-csharp-sdk
+      config:
+        package-id: Acme.Client
+  ```
+
+- Feature: Mock server tests can be generated for all endpoints by setting the following configuration:
+
+  ```yml
+  generators:
+    - name: fernapi/fern-csharp-sdk
+      config:
+        generate-mock-server-tests: true
+  ```
+
+- Improvement: Rather than sending null property values in requests, omit the property entirely.
+
+- Fix: Fix a bug where request bodies are not sent for wrapped requests that include headers or query params.
+
+- Fix: Fix a bug where enums, dates, and datetimes are sometimes not serialized properly as query parameters and headers.
+
 - Feature: Add support for the `read-only-memory-types` configuration, which is used to
   control how specific types are represented as arrays and lists.
 
