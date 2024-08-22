@@ -31,17 +31,63 @@
           "variable": [
             {
               "key": "account_id",
-              "value": "",
-              "description": null
+              "description": null,
+              "value": "string"
             }
           ]
         },
-        "header": [],
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
         "method": "GET",
         "auth": null,
         "body": null
       },
-      "response": []
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/account/:account_id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "account",
+                ":account_id"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "account_id",
+                  "description": null,
+                  "value": "string"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "description": null,
+          "body": "{\n    \"resource_type\": \"Account\",\n    \"name\": \"string\",\n    \"patient\": {},\n    \"practitioner\": {},\n    \"id\": \"string\",\n    \"related_resources\": [\n        {}\n    ],\n    \"memo\": {\n        \"description\": \"string\",\n        \"account\": {}\n    }\n}",
+          "_postman_previewlanguage": "json"
+        }
+      ]
     }
   ]
 }

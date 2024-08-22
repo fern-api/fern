@@ -449,8 +449,8 @@ importers:
         specifier: workspace:*
         version: link:../commons
       '@fern-fern/ir-sdk':
-        specifier: 0.0.2828
-        version: 0.0.2828
+        specifier: ^53.6.0
+        version: 53.6.0
       '@fern-fern/postman-sdk':
         specifier: 0.0.46
         version: 0.0.46
@@ -3176,6 +3176,10 @@ importers:
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+
+  packages/cli/cli/dist/dev: {}
+
+  packages/cli/cli/dist/prod: {}
 
   packages/cli/configuration:
     dependencies:

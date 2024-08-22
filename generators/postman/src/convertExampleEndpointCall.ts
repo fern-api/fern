@@ -35,11 +35,31 @@ export function convertExampleEndpointCall({
     return {
         ...getNameAndStatus({ example, allErrors }),
         originalRequest: generatedRequest,
-        description: httpEndpoint.response?.docs ?? undefined,
-        body:
-            example.response.body?.jsonExample != null
-                ? JSON.stringify(example.response.body.jsonExample, undefined, 4)
-                : "",
+        description:
+            httpEndpoint.response?.body?._visit({
+                fileDownload: (value) => value.docs,
+                json: (value) => value.docs,
+                streamParameter: (value) => value.streamResponse.docs,
+                streaming: (value) => value.docs,
+                text: (value) => value.docs,
+                _other: () => undefined
+            }) ?? undefined,
+        body: example.response._visit({
+            ok: (value) => {
+                return value._visit({
+                    body: (value) => JSON.stringify(value?.jsonExample, undefined, 4),
+                    sse: (value) => JSON.stringify(value, undefined, 4),
+                    stream: (value) => JSON.stringify(value, undefined, 4), 
+                    _other: () => ""
+                })
+            },
+            error: (value) => {
+                return (value.body?.jsonExample) != null 
+                    ? JSON.stringify(value.body?.jsonExample, undefined, 4)
+                    : ""
+            },
+            _other: () => ""
+        }),
         postmanPreviewlanguage: "json"
     };
 }
