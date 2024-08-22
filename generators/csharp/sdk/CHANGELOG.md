@@ -5,7 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [1.3.0-rc0] - 2024-08-21
+
+- Feature: Add support for sending the `User-Agent` header.
+
+- Improvement: The `RawClient` now supports HTTP headers within the `ClientOptions` and
+  `RequestOptions` types. This is not a user-facing feature, but it simplifies the core
+  utilities.
 
 - Feature: Add support for the `package-id` configuration, which is used to control
   the name of the package in NuGet.

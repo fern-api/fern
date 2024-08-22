@@ -1,4 +1,3 @@
-using System;
 using SeedMultiUrlEnvironmentNoDefault.Core;
 
 #nullable enable
@@ -14,15 +13,23 @@ public partial class SeedMultiUrlEnvironmentNoDefaultClient
         ClientOptions? clientOptions = null
     )
     {
-        _client = new RawClient(
+        var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
-            },
-            new Dictionary<string, Func<string>>(),
-            clientOptions ?? new ClientOptions()
+                { "User-Agent", "Fernmulti-url-environment-no-default/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         Ec2 = new Ec2Client(_client);
         S3 = new S3Client(_client);
     }

@@ -124,18 +124,26 @@ export class WrappedEndpointRequest extends EndpointRequest {
             code: csharp.codeblock((writer) => {
                 writer.write(`var ${HEADER_BAG_NAME} = `);
                 writer.writeNodeStatement(
-                    csharp.dictionary({
-                        keyType: csharp.Type.string(),
-                        valueType: csharp.Type.string(),
-                        values: {
-                            type: "entries",
-                            entries: requiredHeaders.map((header) => {
-                                return {
-                                    key: csharp.codeblock(`"${header.name.wireValue}"`),
-                                    value: this.stringify({ reference: header.valueType, name: header.name.name })
-                                };
+                    csharp.instantiateClass({
+                        classReference: this.context.getHeadersClassReference(),
+                        arguments_: [
+                            csharp.dictionary({
+                                keyType: csharp.Type.string(),
+                                valueType: csharp.Type.string(),
+                                values: {
+                                    type: "entries",
+                                    entries: requiredHeaders.map((header) => {
+                                        return {
+                                            key: csharp.codeblock(`"${header.name.wireValue}"`),
+                                            value: this.stringify({
+                                                reference: header.valueType,
+                                                name: header.name.name
+                                            })
+                                        };
+                                    })
+                                }
                             })
-                        }
+                        ]
                     })
                 );
                 for (const header of optionalHeaders) {
