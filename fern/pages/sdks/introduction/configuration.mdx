@@ -1,0 +1,74 @@
+---
+title: 'SDK Configuration'
+subtitle: 'Configure your SDK generators in `generators.yml` and publish to registries'
+---
+
+<Note>
+  Before you can configure your generators, you must setup your API Definition. Learn more [**here**](learn/api-definition/introduction/what-is-the-fern-folder)
+</Note>
+
+## Top Level Configuration
+
+```yaml title="generators.yml" maxLines=10
+default-group: local
+
+readme: 
+  apiReferenceLink: https://plantstore.dev
+  defaultEndpoint: GET /v3/store/inventory
+
+groups: 
+  node: 
+    generators: 
+      - name: fernapi/fern-typescript-node-sdk
+        version: 0.x.x
+        output: 
+          location: npm
+          package-name: "@plantstore/sdk"
+          token: ${NPM_TOKEN}
+        config: 
+          outputSourceFiles: true
+        github: 
+          repository: "plantstore/plantstore-js"
+  python: 
+    generators: 
+      - name: fernapi/fern-python-sdk
+        version: 0.x.x
+        output: 
+          location: pypi
+          package-name: "plantstore"
+          token: ${PYPI_TOKEN}
+        config: 
+          outputSourceFiles: true
+        github: 
+          repository: "plantstore/plantstore-python"    
+```
+
+<ParamField path="default-group" type="string" required={false}>
+  The default group of generators to run when running `fern generate`. 
+</ParamField>
+
+<ParamField path="readme" type="object" required={false}>
+  Learn more about the ReadMe configuration [here](/learn/docs/getting-started/global-configuration#logo-configuration). 
+</ParamField>
+
+<ParamField path="groups" type="map<string, GroupConfiguration>" required={false}>
+  A set of key-value pairs from the group id to the group configuration.
+</ParamField>
+
+## ReadMe Configuration
+
+```yaml generators.yml
+readme: 
+  apiReferenceLink: https://plantstore.dev
+  defaultEndpoint: GET /v3/store/inventory
+```
+
+<ParamField path="readme.apiReferenceLink" type="string" required={false}>
+  A link to your hosted API Reference. Fern will embed this link into your generated READMEs so that SDK users know to navigate to your 
+  API Reference. 
+</ParamField>
+
+<ParamField path="readme.defaultEndpoint" type="ReadMe Configuration" required={false}>
+  The endpoint you want to use in README code samples. If unspecified, Fern will default to the first POST request.  
+</ParamField>
+
