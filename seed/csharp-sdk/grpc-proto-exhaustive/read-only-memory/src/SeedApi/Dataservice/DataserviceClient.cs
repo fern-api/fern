@@ -22,6 +22,19 @@ public partial class DataserviceClient
         _dataService = new DataService.DataServiceClient(_grpc.Channel);
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dataservice.UploadAsync(
+    ///     new UploadRequest
+    ///     {
+    ///         Columns = new List<Column>()
+    ///         {
+    ///             new Column { Id = "id", Values = new[] { 1.1f } },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<UploadResponse> UploadAsync(
         UploadRequest request,
         GrpcRequestOptions? options = null,
@@ -54,6 +67,11 @@ public partial class DataserviceClient
         }
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dataservice.DeleteAsync(new DeleteRequest());
+    /// </code>
+    /// </example>
     public async Task<DeleteResponse> DeleteAsync(
         DeleteRequest request,
         GrpcRequestOptions? options = null,
@@ -86,6 +104,11 @@ public partial class DataserviceClient
         }
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dataservice.DescribeAsync(new DescribeRequest());
+    /// </code>
+    /// </example>
     public async Task<DescribeResponse> DescribeAsync(
         DescribeRequest request,
         GrpcRequestOptions? options = null,
@@ -118,6 +141,11 @@ public partial class DataserviceClient
         }
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dataservice.FetchAsync(new FetchRequest());
+    /// </code>
+    /// </example>
     public async Task<FetchResponse> FetchAsync(
         FetchRequest request,
         GrpcRequestOptions? options = null,
@@ -150,6 +178,11 @@ public partial class DataserviceClient
         }
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dataservice.ListAsync(new ListRequest());
+    /// </code>
+    /// </example>
     public async Task<ListResponse> ListAsync(
         ListRequest request,
         GrpcRequestOptions? options = null,
@@ -182,6 +215,11 @@ public partial class DataserviceClient
         }
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1U });
+    /// </code>
+    /// </example>
     public async Task<QueryResponse> QueryAsync(
         QueryRequest request,
         GrpcRequestOptions? options = null,
@@ -214,6 +252,11 @@ public partial class DataserviceClient
         }
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dataservice.UpdateAsync(new UpdateRequest { Id = "id" });
+    /// </code>
+    /// </example>
     public async Task<UpdateResponse> UpdateAsync(
         UpdateRequest request,
         GrpcRequestOptions? options = null,

@@ -51,7 +51,7 @@ public class CreateTest : BaseMockServerTest
         var response = await Client.CreateAsync(
             new CreateRequest
             {
-                Decimal = 1.1,
+                Decimal = 1.1d,
                 Even = 1,
                 Name = "string",
                 Shape = Shape.Square,

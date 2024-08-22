@@ -38,7 +38,7 @@ public class GetAndReturnLongTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnLongAsync(
-            1000000,
+            1000000L,
             RequestOptions
         );
         JToken

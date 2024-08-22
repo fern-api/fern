@@ -16,6 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.GetResourceAsync("rsc-xyz");
+    /// </code>
+    /// </example>
     public async Task<object> GetResourceAsync(
         string resourceId,
         RequestOptions? options = null,
@@ -52,6 +57,13 @@ public partial class ServiceClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.ListResourcesAsync(
+    ///     new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<object>> ListResourcesAsync(
         ListResourcesRequest request,
         RequestOptions? options = null,

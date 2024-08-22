@@ -16,6 +16,20 @@ public partial class AuthClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Auth.GetTokenWithClientCredentialsAsync(
+    ///     new GetTokenRequest
+    ///     {
+    ///         ClientId = "string",
+    ///         ClientSecret = "string",
+    ///         Audience = "https://api.example.com",
+    ///         GrantType = "client_credentials",
+    ///         Scope = "string",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<TokenResponse> GetTokenWithClientCredentialsAsync(
         GetTokenRequest request,
         RequestOptions? options = null,
@@ -56,6 +70,21 @@ public partial class AuthClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Auth.RefreshTokenAsync(
+    ///     new RefreshTokenRequest
+    ///     {
+    ///         ClientId = "string",
+    ///         ClientSecret = "string",
+    ///         RefreshToken = "string",
+    ///         Audience = "https://api.example.com",
+    ///         GrantType = "refresh_token",
+    ///         Scope = "string",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<TokenResponse> RefreshTokenAsync(
         RefreshTokenRequest request,
         RequestOptions? options = null,

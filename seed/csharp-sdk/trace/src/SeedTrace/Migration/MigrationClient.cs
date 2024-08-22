@@ -16,6 +16,13 @@ public partial class MigrationClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Migration.GetAttemptedMigrationsAsync(
+    ///     new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
         GetAttemptedMigrationsRequest request,
         RequestOptions? options = null,

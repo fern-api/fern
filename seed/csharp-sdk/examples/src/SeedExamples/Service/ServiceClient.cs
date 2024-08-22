@@ -16,6 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.GetMovieAsync("movie-c06a4ad7");
+    /// </code>
+    /// </example>
     public async Task<Movie> GetMovieAsync(
         string movieId,
         RequestOptions? options = null,
@@ -52,6 +57,34 @@ public partial class ServiceClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.CreateMovieAsync(
+    ///     new Movie
+    ///     {
+    ///         Id = "movie-c06a4ad7",
+    ///         Prequel = "movie-cv9b914f",
+    ///         Title = "The Boy and the Heron",
+    ///         From = "Hayao Miyazaki",
+    ///         Rating = 8d,
+    ///         Type = "movie",
+    ///         Tag = "tag-wf9as23d",
+    ///         Metadata = new Dictionary<string, object>()
+    ///         {
+    ///             {
+    ///                 "actors",
+    ///                 new List<object?>() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
+    ///             },
+    ///             { "releaseDate", "2023-12-08" },
+    ///             {
+    ///                 "ratings",
+    ///                 new Dictionary<object, object?>() { { "imdb", 7.6d }, { "rottenTomatoes", 97d } }
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<string> CreateMovieAsync(
         Movie request,
         RequestOptions? options = null,
@@ -89,6 +122,18 @@ public partial class ServiceClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.GetMetadataAsync(
+    ///     new GetMetadataRequest
+    ///     {
+    ///         Shallow = false,
+    ///         Tag = ["development"],
+    ///         XApiVersion = "0.0.1",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<object> GetMetadataAsync(
         GetMetadataRequest request,
         RequestOptions? options = null,
@@ -136,6 +181,11 @@ public partial class ServiceClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.GetResponseAsync();
+    /// </code>
+    /// </example>
     public async Task<Response> GetResponseAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

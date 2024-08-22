@@ -16,6 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.DownloadFileAsync();
+    /// </code>
+    /// </example>
     public async Task DownloadFileAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

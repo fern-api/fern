@@ -13,6 +13,9 @@ components:
         - type: object
           additionalProperties:
             $ref: '#/components/schemas/MetadataValue'
+          examples:
+            genre:
+              value: comedy
         - type: object
       x-fern-encoding:
         proto:

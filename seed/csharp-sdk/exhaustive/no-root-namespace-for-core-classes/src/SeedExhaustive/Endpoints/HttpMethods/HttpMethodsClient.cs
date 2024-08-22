@@ -17,6 +17,11 @@ public partial class HttpMethodsClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.HttpMethods.TestGetAsync("string");
+    /// </code>
+    /// </example>
     public async Task<string> TestGetAsync(
         string id,
         RequestOptions? options = null,
@@ -53,6 +58,11 @@ public partial class HttpMethodsClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
+    /// </code>
+    /// </example>
     public async Task<ObjectWithOptionalField> TestPostAsync(
         ObjectWithRequiredField request,
         RequestOptions? options = null,
@@ -90,6 +100,14 @@ public partial class HttpMethodsClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.HttpMethods.TestPutAsync(
+    ///     "string",
+    ///     new ObjectWithRequiredField { String = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ObjectWithOptionalField> TestPutAsync(
         string id,
         ObjectWithRequiredField request,
@@ -128,6 +146,29 @@ public partial class HttpMethodsClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.HttpMethods.TestPatchAsync(
+    ///     "string",
+    ///     new ObjectWithOptionalField
+    ///     {
+    ///         String = "string",
+    ///         Integer = 1,
+    ///         Long = 1000000L,
+    ///         Double = 1.1d,
+    ///         Bool = true,
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Date = new DateOnly(2023, 1, 15),
+    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Base64 = "SGVsbG8gd29ybGQh",
+    ///         List = new List<string>() { "string" },
+    ///         Set = new HashSet<string>() { "string" },
+    ///         Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///         Bigint = "123456789123456789",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ObjectWithOptionalField> TestPatchAsync(
         string id,
         ObjectWithOptionalField request,
@@ -166,6 +207,11 @@ public partial class HttpMethodsClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.HttpMethods.TestDeleteAsync("string");
+    /// </code>
+    /// </example>
     public async Task<bool> TestDeleteAsync(
         string id,
         RequestOptions? options = null,

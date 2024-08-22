@@ -25,6 +25,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         package-id: Acme.Client
   ```
 
+- Improvement: Endpoint method now include docstrings with example usage.
+
 - Feature: Mock server tests can be generated for all endpoints by setting the following configuration:
 
   ```yml

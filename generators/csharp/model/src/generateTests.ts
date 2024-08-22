@@ -21,7 +21,7 @@ export function generateModelTests({ context }: { context: ModelGeneratorContext
             if (example.shape.type !== "object") {
                 throw new Error("Unexpected non object type example");
             }
-            const snippet = objectGenerator.doGenerateSnippet(example.shape);
+            const snippet = objectGenerator.doGenerateSnippet({ exampleObject: example.shape, parseDatetimes: true });
             return {
                 objectInstantiationSnippet: snippet,
                 json: example.jsonExample

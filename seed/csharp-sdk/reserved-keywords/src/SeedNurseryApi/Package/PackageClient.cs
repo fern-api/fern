@@ -16,6 +16,11 @@ public partial class PackageClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Package.TestAsync(new TestRequest { For = "string" });
+    /// </code>
+    /// </example>
     public async Task TestAsync(
         TestRequest request,
         RequestOptions? options = null,

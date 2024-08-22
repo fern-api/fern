@@ -38,7 +38,7 @@ public class GetAndReturnDoubleTest : BaseMockServerTest
             );
 
         var response = await Client.Endpoints.Primitive.GetAndReturnDoubleAsync(
-            1.1,
+            1.1d,
             RequestOptions
         );
         JToken
