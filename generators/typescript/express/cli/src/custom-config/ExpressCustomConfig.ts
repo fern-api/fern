@@ -15,5 +15,4 @@ export interface ExpressCustomConfig {
     outputSourceFiles: boolean;
     retainOriginalCasing: boolean;
     allowExtraFields: boolean;
-    useJsFileExtensionsOnImports: boolean;
 }

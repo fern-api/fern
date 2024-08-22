@@ -13,16 +13,19 @@ export declare namespace AbstractDeclarationReferencer {
     export interface Init {
         namespaceExport: string;
         containingDirectory: ExportedDirectory[];
+        isOutputtingEsm: boolean;
     }
 }
 
 export abstract class AbstractDeclarationReferencer<Name = never> implements DeclarationReferencer<Name> {
     public readonly namespaceExport: string;
     protected containingDirectory: ExportedDirectory[];
+    protected isOutputtingEsm: boolean;
 
-    constructor({ namespaceExport, containingDirectory }: AbstractDeclarationReferencer.Init) {
+    constructor({ namespaceExport, containingDirectory, isOutputtingEsm }: AbstractDeclarationReferencer.Init) {
         this.namespaceExport = namespaceExport;
         this.containingDirectory = containingDirectory;
+        this.isOutputtingEsm = isOutputtingEsm;
     }
 
     public abstract getExportedFilepath(name: Name): ExportedFilePath;
@@ -49,6 +52,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     exportedFromPath: this.getExportedFilepathForReference(name),
                     importAlias: importStrategy.alias,
                     importsManager,
+                    isOutputtingEsm: this.isOutputtingEsm,
                     referencedIn,
                     subImport
                 });
@@ -58,6 +62,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     exportedFromPath: this.getExportedFilepathForReference(name),
                     referencedIn,
                     importsManager,
+                    isOutputtingEsm: this.isOutputtingEsm,
                     namespaceImport: importStrategy.namespaceImport,
                     useDynamicImport: importStrategy.useDynamicImport,
                     subImport

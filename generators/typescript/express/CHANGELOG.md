@@ -7,9 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.17.4] - 2024-08-22
 
-- Feature: Add `useJsFileExtensionsOnImports` config to the express generator (defaults to false).
-
-  When `useJsFileExtensionsOnImports` is enabled, all import statements include `.js` extensions.
+- Feature: When `outputEsm` is enabled, all import statements include `.js` extensions.
   This may be necessary in projects where `moduleResolution` in tsconfig.json is `node16` or `nodenext`.
 
 ## [0.17.3] - 2024-07-31

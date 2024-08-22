@@ -40,6 +40,11 @@ export declare namespace CoreUtilitiesManager {
 export class CoreUtilitiesManager {
     private referencedCoreUtilities: Record<CoreUtilityName, CoreUtility.Manifest> = {};
     private authOverrides: Record<RelativeFilePath, string> = {};
+    private isOutputtingEsm: boolean;
+
+    constructor({ isOutputtingEsm }: { isOutputtingEsm: boolean }) {
+        this.isOutputtingEsm = isOutputtingEsm;
+    }
 
     public getCoreUtilities({ sourceFile, importsManager }: CoreUtilitiesManager.getCoreUtilities.Args): CoreUtilities {
         const getReferenceToExport = this.createGetReferenceToExport({ sourceFile, importsManager });
@@ -167,7 +172,8 @@ export class CoreUtilitiesManager {
                 filepathToNamespaceImport: { directories: this.getCoreUtilitiesFilepath(), file: undefined },
                 namespaceImport: "core",
                 referencedIn: sourceFile,
-                importsManager
+                importsManager,
+                isOutputtingEsm: this.isOutputtingEsm
             });
         };
     }

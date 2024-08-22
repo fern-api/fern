@@ -207,8 +207,8 @@ export class SdkGenerator {
             this.config.generateOAuthClients &&
             this.intermediateRepresentation.auth.schemes.some((scheme) => scheme.type === "oauth");
 
-        this.exportsManager = new ExportsManager();
-        this.coreUtilitiesManager = new CoreUtilitiesManager();
+        this.exportsManager = new ExportsManager({ isOutputtingEsm: this.config.outputEsm });
+        this.coreUtilitiesManager = new CoreUtilitiesManager({ isOutputtingEsm: this.config.outputEsm });
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -234,62 +234,75 @@ export class SdkGenerator {
         this.versionDeclarationReferencer = new VersionDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            apiVersion: this.intermediateRepresentation.apiVersion
+            apiVersion: this.intermediateRepresentation.apiVersion,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.errorDeclarationReferencer = new SdkErrorDeclarationReferencer({
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.sdkErrorSchemaDeclarationReferencer = new SdkErrorDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.sdkClientClassDeclarationReferencer = new SdkClientClassDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver
+            packageResolver: this.packageResolver,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.endpointErrorUnionDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver
+            packageResolver: this.packageResolver,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver
+            packageResolver: this.packageResolver,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = new SdkInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver
+            packageResolver: this.packageResolver,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.sdkEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver
+            packageResolver: this.packageResolver,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
             npmPackage: this.npmPackage,
-            environmentsConfig: intermediateRepresentation.environments ?? undefined
+            environmentsConfig: intermediateRepresentation.environments ?? undefined,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.timeoutSdkErrorDeclarationReferencer = new TimeoutSdkErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
 
         this.versionGenerator = new VersionGenerator();

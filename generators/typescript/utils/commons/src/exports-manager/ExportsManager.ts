@@ -22,10 +22,10 @@ type PathToDirectory = string;
 
 export class ExportsManager {
     private exports: Record<PathToDirectory, Record<ModuleSpecifier, CombinedExportDeclarations>> = {};
-    private useJsExtensions: boolean;
+    private isOutputtingEsm: boolean;
 
-    constructor({ useJsExtensions = false }: { useJsExtensions?: boolean } = {}) {
-        this.useJsExtensions = useJsExtensions;
+    constructor({ isOutputtingEsm }: { isOutputtingEsm: boolean }) {
+        this.isOutputtingEsm = isOutputtingEsm;
     }
 
     public addExport(
@@ -46,7 +46,7 @@ export class ExportsManager {
                 from: pathToDirectory,
                 to: fromPath,
                 isDesinationADirectory: false,
-                useJsExtension: this.useJsExtensions
+                isOutputtingEsm: this.isOutputtingEsm
             }),
             exportDeclaration,
             addExportTypeModifier
@@ -72,7 +72,7 @@ export class ExportsManager {
                     from: directoryFilepath,
                     to: nextDirectoryPath,
                     isDesinationADirectory: true,
-                    useJsExtension: this.useJsExtensions
+                    isOutputtingEsm: this.isOutputtingEsm
                 }),
                 exportDeclaration: part.exportDeclaration,
                 addExportTypeModifier
@@ -86,7 +86,7 @@ export class ExportsManager {
                             from: directoryFilepath,
                             to: path.join(nextDirectoryPath, relativeFilePath),
                             isDesinationADirectory: true,
-                            useJsExtension: this.useJsExtensions
+                            isOutputtingEsm: this.isOutputtingEsm
                         }),
                         exportDeclaration,
                         addExportTypeModifier

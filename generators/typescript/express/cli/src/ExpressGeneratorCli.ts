@@ -27,8 +27,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
             allowExtraFields: parsed?.allowExtraFields ?? false,
             skipRequestValidation: parsed?.skipRequestValidation ?? false,
-            skipResponseValidation: parsed?.skipResponseValidation ?? false,
-            useJsFileExtensionsOnImports: parsed?.useJsFileExtensionsOnImports ?? false
+            skipResponseValidation: parsed?.skipResponseValidation ?? false
         };
     }
 
@@ -65,8 +64,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 allowExtraFields: customConfig.allowExtraFields,
                 skipRequestValidation: customConfig.skipRequestValidation,
                 skipResponseValidation: customConfig.skipResponseValidation,
-                requestValidationStatusCode: customConfig.requestValidationStatusCode,
-                useJsFileExtensionsOnImports: customConfig.useJsFileExtensionsOnImports
+                requestValidationStatusCode: customConfig.requestValidationStatusCode
             }
         });
 

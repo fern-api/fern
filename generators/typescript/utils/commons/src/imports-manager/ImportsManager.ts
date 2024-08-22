@@ -20,11 +20,6 @@ interface CombinedImportDeclarations {
 
 export class ImportsManager {
     private imports: Record<ModuleSpecifier, CombinedImportDeclarations> = {};
-    public readonly useJsExtensions: boolean;
-
-    constructor({ useJsExtensions = false }: { useJsExtensions?: boolean } = {}) {
-        this.useJsExtensions = useJsExtensions;
-    }
 
     public addImport(moduleSpecifier: ModuleSpecifier, importDeclaration: ImportDeclaration): void {
         const importsForModuleSpecifier = (this.imports[moduleSpecifier] ??= {

@@ -94,6 +94,7 @@ export class VersionDeclarationReferencer extends AbstractDeclarationReferencer 
             filepathInsideNamespaceImport: undefined,
             namespaceImport: "version",
             importsManager,
+            isOutputtingEsm: this.isOutputtingEsm,
             referencedIn: sourceFile
         });
     }

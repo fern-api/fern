@@ -19,6 +19,7 @@ export declare namespace getReferenceToExportFromRoot {
         exportedName: string;
         exportedFromPath: ExportedFilePath;
         importsManager: ImportsManager;
+        isOutputtingEsm: boolean;
         namespaceImport?: string;
         useDynamicImport?: boolean;
         subImport?: string[];
@@ -29,6 +30,7 @@ export function getReferenceToExportFromRoot({
     exportedName,
     exportedFromPath,
     importsManager,
+    isOutputtingEsm,
     referencedIn,
     namespaceImport,
     useDynamicImport = false,
@@ -47,8 +49,7 @@ export function getReferenceToExportFromRoot({
             from: referencedIn,
             to: convertExportedDirectoryPathToFilePath([]),
             isDesinationADirectory: true,
-            appendBarrelFileForDirectoryImport: true,
-            useJsExtension: importsManager.useJsExtensions
+            isOutputtingEsm
         });
 
         const { recommendedImportName } = firstDirectory.exportDeclaration.defaultExport;
@@ -71,8 +72,7 @@ export function getReferenceToExportFromRoot({
                     ? convertExportedDirectoryPathToFilePath([firstDirectory])
                     : convertExportedFilePathToFilePath(exportedFromPath),
             isDesinationADirectory: true,
-            appendBarrelFileForDirectoryImport: true,
-            useJsExtension: importsManager.useJsExtensions
+            isOutputtingEsm
         });
 
         addImport = () => {
@@ -106,6 +106,7 @@ export function getReferenceToExportFromRoot({
                 exportedName,
                 exportedFromPath,
                 importsManager,
+                isOutputtingEsm,
                 referencedIn,
                 importAlias: undefined,
                 subImport
@@ -116,8 +117,7 @@ export function getReferenceToExportFromRoot({
             from: referencedIn,
             to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom),
             isDesinationADirectory: true,
-            appendBarrelFileForDirectoryImport: true,
-            useJsExtension: importsManager.useJsExtensions
+            isOutputtingEsm
         });
 
         const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;

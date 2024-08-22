@@ -109,6 +109,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             filepathInsideNamespaceImport: undefined,
             namespaceImport: "environments",
             importsManager,
+            isOutputtingEsm: this.isOutputtingEsm,
             referencedIn: sourceFile
         });
     }
@@ -161,6 +162,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             filepathInsideNamespaceImport: undefined,
             namespaceImport: "environments",
             importsManager,
+            isOutputtingEsm: this.isOutputtingEsm,
             referencedIn: sourceFile
         });
     }

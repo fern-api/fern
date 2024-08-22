@@ -16,6 +16,7 @@ export function getReferenceToExportViaNamespaceImport({
     filepathInsideNamespaceImport,
     namespaceImport,
     importsManager,
+    isOutputtingEsm,
     referencedIn,
     subImport = []
 }: {
@@ -24,6 +25,7 @@ export function getReferenceToExportViaNamespaceImport({
     filepathInsideNamespaceImport: ExportedDirectory[] | ExportedFilePath | undefined;
     namespaceImport: string;
     importsManager: ImportsManager;
+    isOutputtingEsm: boolean;
     referencedIn: SourceFile;
     subImport?: string[];
 }): Reference {
@@ -33,7 +35,7 @@ export function getReferenceToExportViaNamespaceImport({
                 from: referencedIn,
                 to: convertExportedFilePathToFilePath(filepathToNamespaceImport),
                 isDesinationADirectory: filepathToNamespaceImport.file == null,
-                useJsExtension: importsManager.useJsExtensions
+                isOutputtingEsm
             }),
             { namespaceImport }
         );

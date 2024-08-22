@@ -64,7 +64,6 @@ export declare namespace ExpressGenerator {
         skipRequestValidation: boolean;
         skipResponseValidation: boolean;
         requestValidationStatusCode: number;
-        useJsFileExtensionsOnImports: boolean;
     }
 }
 
@@ -112,8 +111,8 @@ export class ExpressGenerator {
         this.npmPackage = npmPackage;
         this.config = config;
 
-        this.exportsManager = new ExportsManager({ useJsExtensions: config.useJsFileExtensionsOnImports });
-        this.coreUtilitiesManager = new CoreUtilitiesManager();
+        this.exportsManager = new ExportsManager({ isOutputtingEsm: config.outputEsm });
+        this.coreUtilitiesManager = new CoreUtilitiesManager({ isOutputtingEsm: config.outputEsm });
 
         this.project = new Project({
             useInMemoryFileSystem: true
@@ -138,47 +137,57 @@ export class ExpressGenerator {
 
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.expressInlinedRequestBodyDeclarationReferencer = new ExpressInlinedRequestBodyDeclarationReferencer({
             packageResolver: this.packageResolver,
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.expressInlinedRequestBodySchemaDeclarationReferencer = new ExpressInlinedRequestBodyDeclarationReferencer({
             packageResolver: this.packageResolver,
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.expressEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             packageResolver: this.packageResolver,
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.expressServiceDeclarationReferencer = new ExpressServiceDeclarationReferencer({
             packageResolver: this.packageResolver,
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.expressRegisterDeclarationReferencer = new ExpressRegisterDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.genericApiExpressErrorDeclarationReferencer = new GenericAPIExpressErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.expressErrorDeclarationReferencer = new ExpressErrorDeclarationReferencer({
             containingDirectory: apiDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
         this.expressErrorSchemaDeclarationReferencer = new ExpressErrorDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            namespaceExport
+            namespaceExport,
+            isOutputtingEsm: this.config.outputEsm
         });
 
         this.typeGenerator = new TypeGenerator({
@@ -429,7 +438,7 @@ export class ExpressGenerator {
         this.context.logger.debug(`Generating ${filepathStr}`);
 
         const sourceFile = this.rootDirectory.createSourceFile(filepathStr);
-        const importsManager = new ImportsManager({ useJsExtensions: this.config.useJsFileExtensionsOnImports });
+        const importsManager = new ImportsManager();
 
         run({ sourceFile, importsManager });
 

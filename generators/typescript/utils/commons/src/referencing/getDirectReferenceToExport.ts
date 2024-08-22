@@ -8,6 +8,7 @@ export function getDirectReferenceToExport({
     exportedName,
     exportedFromPath,
     importsManager,
+    isOutputtingEsm,
     referencedIn,
     importAlias,
     subImport = []
@@ -15,6 +16,7 @@ export function getDirectReferenceToExport({
     exportedName: string;
     exportedFromPath: ExportedFilePath;
     importsManager: ImportsManager;
+    isOutputtingEsm: boolean;
     referencedIn: SourceFile;
     importAlias: string | undefined;
     subImport?: string[];
@@ -23,7 +25,7 @@ export function getDirectReferenceToExport({
         from: referencedIn,
         to: convertExportedFilePathToFilePath(exportedFromPath),
         isDesinationADirectory: exportedFromPath.file == null,
-        useJsExtension: importsManager.useJsExtensions
+        isOutputtingEsm
     });
 
     const addImport = () => {
