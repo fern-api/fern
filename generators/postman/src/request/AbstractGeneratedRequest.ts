@@ -7,7 +7,6 @@ import {
     PostmanRequestBodyMode,
     PostmanUrlVariable
 } from "@fern-fern/postman-sdk/api";
-import { getMockBodyFromTypeReference } from "../getMockBody";
 import { getReferenceToVariable, ORIGIN_VARIABLE_NAME } from "../utils";
 import { GeneratedRequest } from "./GeneratedRequest";
 
@@ -73,8 +72,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
     }
 
     protected convertHeader({ header, value }: { header: HttpHeader; value?: unknown }): PostmanHeader {
-        const valueOrDefault =
-            value ?? getMockBodyFromTypeReference({ typeReference: header.valueType, allTypes: this.allTypes });
+        const valueOrDefault = value ?? `YOUR_${header.name.name.screamingSnakeCase.unsafeName}`;
         return {
             key: header.name.wireValue,
             description: header.docs ?? undefined,

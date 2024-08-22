@@ -37,27 +37,84 @@
               "variable": [
                 {
                   "key": "serviceParam",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "string"
                 },
                 {
                   "key": "resourceParam",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "string"
                 },
                 {
                   "key": "endpointParam",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "1"
                 }
               ]
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:serviceParam/:endpointParam/:resourceParam",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":serviceParam",
+                    ":endpointParam",
+                    ":resourceParam"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "serviceParam",
+                      "description": null,
+                      "value": "string"
+                    },
+                    {
+                      "key": "resourceParam",
+                      "description": null,
+                      "value": "string"
+                    },
+                    {
+                      "key": "endpointParam",
+                      "description": null,
+                      "value": "1"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

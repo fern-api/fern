@@ -25,13 +25,13 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
     protected getQueryParams(): PostmanUrlVariable[] {
         return this.example.queryParameters.map((exampleQueryParameter) => {
             const queryParameterDeclaration = this.httpEndpoint.queryParameters.find(
-                (param) => param.name.wireValue === exampleQueryParameter.wireKey
+                (param) => param.name.wireValue === exampleQueryParameter.name.wireValue
             );
             if (queryParameterDeclaration == null) {
-                throw new Error(`Cannot find query parameter ${exampleQueryParameter.wireKey}`);
+                throw new Error(`Cannot find query parameter ${exampleQueryParameter.name.wireValue}`);
             }
             return {
-                key: exampleQueryParameter.wireKey,
+                key: exampleQueryParameter.name.wireValue,
                 description: queryParameterDeclaration.docs ?? undefined,
                 value:
                     typeof exampleQueryParameter.value.jsonExample !== "string"
@@ -63,13 +63,13 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
     }) {
         return examples.map((examplePathParameter) => {
             const pathParameterDeclaration = pathParameters.find(
-                (param) => param.name.originalName === examplePathParameter.key
+                (param) => param.name.originalName === examplePathParameter.name.originalName
             );
             if (pathParameterDeclaration == null) {
-                throw new Error(`Cannot find path parameter ${examplePathParameter.key}`);
+                throw new Error(`Cannot find path parameter ${examplePathParameter.name.originalName}`);
             }
             return {
-                key: examplePathParameter.key,
+                key: examplePathParameter.name.originalName,
                 description: pathParameterDeclaration.docs ?? undefined,
                 value:
                     typeof examplePathParameter.value.jsonExample !== "string"
@@ -107,9 +107,9 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
         examples: ExampleHeader[];
     }): PostmanHeader[] {
         return examples.map((exampleHeader) => {
-            const headerDeclaration = headers.find((header) => header.name.wireValue === exampleHeader.wireKey);
+            const headerDeclaration = headers.find((header) => header.name.wireValue === exampleHeader.name.wireValue);
             if (headerDeclaration == null) {
-                throw new Error(`Cannot find header ${exampleHeader.wireKey}`);
+                throw new Error(`Cannot find header ${exampleHeader.name.wireValue}`);
             }
             return this.convertHeader({
                 header: headerDeclaration,

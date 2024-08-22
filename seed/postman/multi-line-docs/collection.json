@@ -36,17 +36,63 @@
               "variable": [
                 {
                   "key": "userId",
-                  "value": "",
-                  "description": "The ID of the user to retrieve.\nThis ID is unique to each user."
+                  "description": "The ID of the user to retrieve.\nThis ID is unique to each user.",
+                  "value": "string"
                 }
               ]
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "GET",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Retrieve a user.\nThis endpoint is used to retrieve a user.",
+                "url": {
+                  "raw": "{{baseUrl}}/users/:userId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users",
+                    ":userId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "userId",
+                      "description": "The ID of the user to retrieve.\nThis ID is unique to each user.",
+                      "value": "string"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "_type": "endpoint",
@@ -64,12 +110,18 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"name\": \"example\",\n    \"age\": 0\n}",
+              "raw": "{\n    \"name\": \"string\",\n    \"age\": 1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -77,7 +129,48 @@
               }
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Create a new user.\nThis endpoint is used to create a new user.",
+                "url": {
+                  "raw": "{{baseUrl}}/users",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"string\",\n    \"age\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"age\": 1\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

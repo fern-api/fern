@@ -93,6 +93,46 @@
               "description": null,
               "body": "",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/inlined",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "inlined"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"operand\": \">\",\n    \"operandOrColor\": \"red\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
             }
           ]
         }
@@ -131,6 +171,11 @@
                   "key": "maybeOperand",
                   "description": null,
                   "value": "less_than"
+                },
+                {
+                  "key": "operandOrColor",
+                  "description": null,
+                  "value": "red"
                 },
                 {
                   "key": "maybeOperandOrColor",
@@ -182,6 +227,68 @@
                       "value": "less_than"
                     },
                     {
+                      "key": "operandOrColor",
+                      "description": null,
+                      "value": "red"
+                    },
+                    {
+                      "key": "maybeOperandOrColor",
+                      "description": null,
+                      "value": "red"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/path/:operand/:maybeOperand/:operandOrColor/:maybeOperandOrColor",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "path",
+                    ":operand",
+                    ":maybeOperand",
+                    ":operandOrColor",
+                    ":maybeOperandOrColor"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "maybeOperand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "operandOrColor",
+                      "description": null,
+                      "value": "red"
+                    },
+                    {
                       "key": "maybeOperandOrColor",
                       "description": null,
                       "value": "red"
@@ -218,7 +325,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/query?operand=%3E",
+              "raw": "{{baseUrl}}/query?operand=%3E&operandOrColor=red",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -230,6 +337,11 @@
                   "key": "operand",
                   "description": null,
                   "value": ">"
+                },
+                {
+                  "key": "operandOrColor",
+                  "description": null,
+                  "value": "red"
                 }
               ],
               "variable": []
@@ -253,7 +365,7 @@
               "originalRequest": {
                 "description": null,
                 "url": {
-                  "raw": "{{baseUrl}}/query?operand=%3E",
+                  "raw": "{{baseUrl}}/query?operand=%3E&operandOrColor=red",
                   "host": [
                     "{{baseUrl}}"
                   ],
@@ -265,6 +377,64 @@
                       "key": "operand",
                       "description": null,
                       "value": ">"
+                    },
+                    {
+                      "key": "operandOrColor",
+                      "description": null,
+                      "value": "red"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/query?operand=%3E&maybeOperand=%3E&operandOrColor=red&maybeOperandOrColor=red",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "query"
+                  ],
+                  "query": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "maybeOperand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "operandOrColor",
+                      "description": null,
+                      "value": "red"
+                    },
+                    {
+                      "key": "maybeOperandOrColor",
+                      "description": null,
+                      "value": "red"
                     }
                   ],
                   "variable": []
@@ -292,7 +462,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/query-list?operand=&maybeOperand=&operandOrColor=&maybeOperandOrColor=",
+              "raw": "{{baseUrl}}/query-list?operand=%3E&maybeOperand=%3E&operandOrColor=red&maybeOperandOrColor=red",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -302,33 +472,93 @@
               "query": [
                 {
                   "key": "operand",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": ">"
                 },
                 {
                   "key": "maybeOperand",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": ">"
                 },
                 {
                   "key": "operandOrColor",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "red"
                 },
                 {
                   "key": "maybeOperandOrColor",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "red"
                 }
               ],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/query-list?operand=%3E&maybeOperand=%3E&operandOrColor=red&maybeOperandOrColor=red",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "query-list"
+                  ],
+                  "query": [
+                    {
+                      "key": "operand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "maybeOperand",
+                      "description": null,
+                      "value": ">"
+                    },
+                    {
+                      "key": "operandOrColor",
+                      "description": null,
+                      "value": "red"
+                    },
+                    {
+                      "key": "maybeOperandOrColor",
+                      "description": null,
+                      "value": "red"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

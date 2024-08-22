@@ -49,12 +49,18 @@
               "query": [],
               "variable": []
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "POST",
             "auth": null,
             "body": {
               "mode": "raw",
-              "raw": "{\n    \"title\": \"example\",\n    \"rating\": 0\n}",
+              "raw": "{\n    \"title\": \"string\",\n    \"rating\": 1.1\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -62,7 +68,49 @@
               }
             }
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Add a movie to the database",
+                "url": {
+                  "raw": "{{baseUrl}}/movies/create-movie",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movies",
+                    "create-movie"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"string\",\n    \"rating\": 1.1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "\"string\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         },
         {
           "_type": "endpoint",
@@ -82,17 +130,102 @@
               "variable": [
                 {
                   "key": "movieId",
-                  "value": "",
-                  "description": null
+                  "description": null,
+                  "value": "string"
                 }
               ]
             },
-            "header": [],
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
             "method": "GET",
             "auth": null,
             "body": null
           },
-          "response": []
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/movies/:movieId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movies",
+                    ":movieId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "movieId",
+                      "description": null,
+                      "value": "string"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"string\",\n    \"title\": \"string\",\n    \"rating\": 1.1\n}",
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Movie Does Not Exist Error",
+              "status": "Movie Does Not Exist Error",
+              "code": 404,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/movies/:movieId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movies",
+                    ":movieId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "movieId",
+                      "description": null,
+                      "value": "string"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }
