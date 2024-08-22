@@ -70,7 +70,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
                           clientVariableName: "client",
                           serviceId,
                           getResult: true,
-                          parsedDatetimes: true
+                          parsedDatetimes: false
                       })
                     : undefined
         });
