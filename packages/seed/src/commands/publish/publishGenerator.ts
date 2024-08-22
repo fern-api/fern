@@ -34,8 +34,8 @@ export async function publishGenerator({
         });
 
         if (maybeNewVersion == null) {
-            context.failWithoutThrowing(
-                "No version to publish! There must not have been a new version since the last publish."
+            context.logger.error(
+                "No version to publish! There must not have been a new version since the last publish. Failing quietly"
             );
             return;
         }

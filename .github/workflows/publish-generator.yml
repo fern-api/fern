@@ -1,26 +1,43 @@
-# Generators are registered within seed.yml, once their tests are passing
-name: publish-and-register-generators
+name: publish-generators
 
 on:
   push:
     branches:
       - main
     paths:
-      - "generators/openapi/versions.yml"
-      - "generators/python/sdk/versions.yml"
-      - "generators/python/fastapi/versions.yml"
-      - "generators/python/pydantic/versions.yml"
-      - "generators/postman/versions.yml"
-      - "generators/ruby/model/versions.yml"
-      - "generators/ruby/sdk/versions.yml"
-      - "generators/java/sdk/versions.yml"
-      - "generators/java/model/versions.yml"
-      - "generators/java/spring/versions.yml"
-      - "generators/typescript/sdk/versions.yml"
-      - "generators/typescript/express/versions.yml"
-      - "generators/go/versions.yml"
-      - "generators/csharp/sdk/versions.yml"
-      - "generators/csharp/model/versions.yml"
+      - "generators/openapi/VERSION"
+      - "generators/postman/VERSION"
+      - "generators/ruby/model/VERSION"
+      - "generators/ruby/sdk/VERSION"
+      - "generators/java/sdk/VERSION"
+      - "generators/java/model/VERSION"
+      - "generators/java/spring/VERSION"
+      - "generators/typescript/sdk/VERSION"
+      - "generators/typescript/express/VERSION"
+      - "generators/go/VERSION"
+      - "generators/csharp/sdk/VERSION"
+      - "generators/csharp/model/VERSION"
+  workflow_dispatch:
+    inputs:
+      generator:
+        description: "The generator to publish a dev release for"
+        required: true
+        type: choice
+        options:
+          - openapi
+          - postman
+          - ruby-sdk
+          - ruby-model
+          - java-sdk
+          - java-model
+          - java-spring
+          - typescript-sdk
+          - typescript-express
+          - go-sdk
+          - go-model
+          - go-fiber
+          - csharp-sdk
+          - csharp-model
 
 env:
   DOCKER_BUILDKIT: 1
@@ -29,42 +46,47 @@ jobs:
   versions-changed:
     runs-on: ubuntu-latest
     outputs:
-      generators: ${{ steps.filter.outputs.changes }}
+      openapi: ${{ steps.filter.outputs.openapi }}
+      postman: ${{ steps.filter.outputs.postman }}
+      ruby-model: ${{ steps.filter.outputs.ruby-model }}
+      ruby-sdk: ${{ steps.filter.outputs.ruby-sdk }}
+      java-sdk: ${{ steps.filter.outputs.java-sdk }}
+      java-model: ${{ steps.filter.outputs.java-model }}
+      spring: ${{ steps.filter.outputs.spring }}
+      ts-sdk: ${{ steps.filter.outputs.ts-sdk }}
+      ts-express: ${{ steps.filter.outputs.ts-express }}
+      go-sdk: ${{ steps.filter.outputs.go-sdk }}
+      go-model: ${{ steps.filter.outputs.go-model }}
+      go-fiber: ${{ steps.filter.outputs.go-fiber }}
+      csharp-sdk: ${{ steps.filter.outputs.csharp-sdk }}
+      csharp-model: ${{ steps.filter.outputs.csharp-model }}
     steps:
       - uses: actions/checkout@v2
-      - uses: dorny/paths-filter@v3
+      - uses: dorny/paths-filter@v2
         id: filter
         with:
-          # Pass in the list of files that have changed
-          list-files: json
           filters: |
-            openapi: 'generators/openapi/versions.yml'
-            python-sdk: 'generators/python/sdk/versions.yml'
-            fastapi: 'generators/python/fastapi/versions.yml'
-            pydantic: 'generators/python/pydantic/versions.yml'
-            postman: 'generators/postman/versions.yml'
-            ruby-model: 'generators/ruby/model/versions.yml'
-            ruby-sdk: 'generators/ruby/sdk/versions.yml'
-            java-sdk: 'generators/java/sdk/versions.yml'
-            java-model: 'generators/java/model/versions.yml'
-            spring: 'generators/java/spring/versions.yml'
-            ts-sdk: 'generators/typescript/sdk/versions.yml'
-            ts-express: 'generators/typescript/express/versions.yml'
-            go-sdk: 'generators/go/versions.yml'
-            go-model: 'generators/go/versions.yml'
-            go-fiber: 'generators/go/versions.yml'
-            csharp-sdk: 'generators/csharp/sdk/versions.yml'
-            csharp-model: 'generators/csharp/model/versions.yml'
+            openapi: 'generators/openapi/VERSION'
+            postman: 'generators/postman/VERSION'
+            ruby-model: 'generators/ruby/model/VERSION'
+            ruby-sdk: 'generators/ruby/sdk/VERSION'
+            java-sdk: 'generators/java/sdk/VERSION'
+            java-model: 'generators/java/model/VERSION'
+            spring: 'generators/java/spring/VERSION'
+            ts-sdk: 'generators/typescript/sdk/VERSION'
+            ts-express: 'generators/typescript/express/VERSION'
+            go-sdk: 'generators/go/VERSION'
+            go-model: 'generators/go/VERSION'
+            go-fiber: 'generators/go/VERSION'
+            csharp-sdk: 'generators/csharp/sdk/VERSION'
+            csharp-model: 'generators/csharp/model/VERSION'
 
-  # Test, publish and register generators
-  publish-changed-generators:
+  openapi:
     runs-on: ubuntu-latest
     needs: versions-changed
-    strategy:
-      matrix:
-        generator: ${{ fromJSON(needs.versions-changed.outputs.generators) }}
+    if: ${{ needs.versions-changed.outputs.openapi == 'true' || inputs.generator == 'openapi' }}
     steps:
-      - name: Checkout repo at current ref
+      - name: Checkout repo
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -72,69 +94,742 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Run publish
-        env:
-          DOCKER_USERNAME: fernapi
-          DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build CLI
+        working-directory: ./generators/openapi
+        run: pnpm dist:cli
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'openapi' }}
         run: |
-          # This is wack and redundant, but the path filter Github Action above does not let you easily see 
-          # the modified file once in the matrix, you have to access it at the filter (e.g. output.openapi_files)
-          # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
+          projectVersion=$(cat generators/openapi/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
 
-          if [ ${{ matrix.generator }} = "openapi" ]; then
-              VERSIONS_FILE="generators/openapi/versions.yml"
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'openapi' }}
+        run: |
+          projectVersion=$(cat generators/openapi/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
-          elif [ ${{ matrix.generator }} = "python-sdk" ]; then
-              VERSIONS_FILE="generators/python/sdk/versions.yml"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-          elif [ ${{ matrix.generator }} = "fastapi" ]; then
-              VERSIONS_FILE="generators/python/fastapi/versions.yml"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/openapi
+          file: ./generators/openapi/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-openapi:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-openapi:latest') || '' }}
 
-          elif [ ${{ matrix.generator }} = "pydantic" ]; then
-              VERSIONS_FILE="generators/python/pydantic/versions.yml"
+  postman:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.postman == 'true' || inputs.generator == 'postman' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-          elif [ ${{ matrix.generator }} = "postman" ]; then
-              VERSIONS_FILE="generators/postman/versions.yml"
+      - name: Install
+        uses: ./.github/actions/install
 
-          elif [ ${{ matrix.generator }} = "ruby-model" ]; then
-              VERSIONS_FILE="generators/ruby/model/versions.yml"
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-          elif [ ${{ matrix.generator }} = "ruby-sdk" ]; then
-              VERSIONS_FILE="generators/ruby/sdk/versions.yml"
+      - name: Build CLI
+        working-directory: ./generators/postman
+        run: pnpm dist:cli
 
-          elif [ ${{ matrix.generator }} = "java-sdk" ]; then
-              VERSIONS_FILE="generators/java/sdk/versions.yml"
+      - name: Print Version
+        if: ${{ inputs.generator != 'postman' }}
+        run: |
+          projectVersion=$(cat generators/postman/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
 
-          elif [ ${{ matrix.generator }} = "java-model" ]; then
-              VERSIONS_FILE="generators/java/model/versions.yml"
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'postman' }}
+        run: |
+          projectVersion=$(cat generators/postman/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
-          elif [ ${{ matrix.generator }} = "java-spring" ]; then
-              VERSIONS_FILE="generators/java/spring/versions.yml"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-          elif [ ${{ matrix.generator }} = "ts-sdk" ]; then
-              VERSIONS_FILE="generators/typescript/sdk/versions.yml"
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/postman
+          file: ./generators/postman/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-postman:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-postman:latest') || '' }}
 
-          elif [ ${{ matrix.generator }} = "ts-express" ]; then
-              VERSIONS_FILE="generators/typescript/express/versions.yml"
+  ruby-model:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.ruby-model == 'true' || inputs.generator == 'ruby-model' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-          elif [ ${{ matrix.generator }} = "go-sdk" ]; then
-              VERSIONS_FILE="generators/go/versions.yml"
+      - name: Install
+        uses: ./.github/actions/install
 
-          elif [ ${{ matrix.generator }} = "go-model" ]; then
-              VERSIONS_FILE="generators/go/versions.yml"
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-          elif [ ${{ matrix.generator }} = "go-fiber" ]; then
-              VERSIONS_FILE="generators/go/versions.yml"
+      - name: Build CLI
+        working-directory: ./generators/ruby/model
+        run: pnpm dist:cli
 
-          elif [ ${{ matrix.generator }} = "csharp-sdk" ]; then
-              VERSIONS_FILE="generators/csharp/sdk/versions.yml"
+      - name: Print Version
+        if: ${{ inputs.generator != 'ruby-model' }}
+        run: |
+          projectVersion=$(cat generators/ruby/model/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
 
-          elif [ ${{ matrix.generator }} = "csharp-model" ]; then
-              VERSIONS_FILE="generators/csharp/model/versions.yml"
-          done
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'ruby-model' }}
+        run: |
+          projectVersion=$(cat generators/ruby/model/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
-          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
-          pnpm seed:local test --generators ${{ matrix.generator }}
-          pnpm seed:local publish generator ${{ matrix.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ matrix.generator }}_previous_versions.yml --log-level debug
-          pnpm seed:local register generator --generators ${{ matrix.generator }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./generators/ruby/model/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-ruby-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-ruby-model:latest') || '' }}
+
+  ruby-sdk:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.ruby-sdk == 'true' || inputs.generator == 'ruby-sdk' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build CLI
+        working-directory: ./generators/ruby/sdk
+        run: pnpm dist:cli
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'ruby-sdk' }}
+        run: |
+          projectVersion=$(cat generators/ruby/sdk/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'ruby-sdk' }}
+        run: |
+          projectVersion=$(cat generators/ruby/sdk/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./generators/ruby/sdk/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-ruby-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-ruby-sdk:latest') || '' }}
+
+  java-sdk:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.java-sdk == 'true' || inputs.generator == 'java-sdk' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build tar
+        working-directory: ./generators/java
+        run: ./gradlew :sdk:distTar
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'java-sdk' }}
+        run: |
+          projectVersion=$(cat generators/java/sdk/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'java-sdk' }}
+        run: |
+          projectVersion=$(cat generators/java/sdk/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/java/sdk
+          file: ./generators/java/sdk/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-java-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-java-sdk:latest') || '' }}
+
+  java-model:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.java-model == 'true' || inputs.generator == 'java-model' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build tar
+        working-directory: ./generators/java
+        run: ./gradlew :model:distTar
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'java-model' }}
+        run: |
+          projectVersion=$(cat generators/java/model/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'java-model' }}
+        run: |
+          projectVersion=$(cat generators/java/model/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/java/model
+          file: ./generators/java/model/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/java-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/java-model:latest') || '' }}
+
+  java-spring:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.java-model == 'true' || inputs.generator == 'java-spring' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build tar
+        working-directory: ./generators/java
+        run: ./gradlew :spring:distTar
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'java-spring' }}
+        run: |
+          projectVersion=$(cat generators/java/spring/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'java-spring' }}
+        run: |
+          projectVersion=$(cat generators/java/spring/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/java/spring
+          file: ./generators/java/spring/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-java-spring:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-java-spring:latest') || '' }}
+
+  ts-express:
+    runs-on: ubuntu-latest
+    if: ${{ needs.versions-changed.outputs.ts-express == 'true' || inputs.generator == 'typescript-express' }}
+    needs: versions-changed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'ts-sdk' }}
+        run: |
+          projectVersion=$(cat generators/typescript/express/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'ts-sdk' }}
+        run: |
+          projectVersion=$(cat generators/typescript/express/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Publish fernapi/fern-typescript-express-sdk docker
+        run: |
+          pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"
+          docker push fernapi/fern-typescript-express:"$VERSION"
+
+  ts-browser-sdk:
+    runs-on: ubuntu-latest
+    if: ${{ needs.versions-changed.outputs.ts-sdk == 'true' || inputs.generator == 'typescript-sdk' }}
+    needs: versions-changed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'ts-sdk' }}
+        run: |
+          projectVersion=$(cat generators/typescript/sdk/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'ts-sdk' }}
+        run: |
+          projectVersion=$(cat generators/typescript/sdk/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Publish fernapi/fern-typescript-node-sdk docker
+        run: |
+          pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
+          docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
+
+  ts-node-sdk:
+    runs-on: ubuntu-latest
+    if: ${{ needs.versions-changed.outputs.ts-sdk == 'true' || inputs.generator == 'typescript-sdk' }}
+    needs: versions-changed
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'ts-sdk' }}
+        run: |
+          projectVersion=$(cat generators/typescript/sdk/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'ts-sdk' }}
+        run: |
+          projectVersion=$(cat generators/typescript/sdk/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Publish fernapi/fern-typescript-node-sdk docker
+        run: |
+          pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
+          docker push fernapi/fern-typescript-node-sdk:"$VERSION"
+
+  go-sdk:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.go-sdk == 'true' || inputs.generator == 'go-sdk' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build CLI
+        working-directory: ./generators/go
+        run: go build ./...
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'go-sdk' }}
+        run: |
+          projectVersion=$(cat generators/go/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'go-sdk' }}
+        run: |
+          projectVersion=$(cat generators/go/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/go
+          file: ./generators/go/docker/Dockerfile.sdk
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-go-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-go-sdk:latest') || '' }}
+
+  go-model:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.go-model == 'true' || inputs.generator == 'go-model' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build CLI
+        working-directory: ./generators/go
+        run: go build ./...
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'go-model' }}
+        run: |
+          projectVersion=$(cat generators/go/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'go-model' }}
+        run: |
+          projectVersion=$(cat generators/go/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/go
+          file: ./generators/go/docker/Dockerfile.model
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-go-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-go-model:latest') || '' }}
+
+  go-fiber:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.go-fiber == 'true' || inputs.generator == 'go-fiber' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build CLI
+        working-directory: ./generators/go
+        run: go build ./...
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'go-fiber' }}
+        run: |
+          projectVersion=$(cat generators/go/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'go-fiber' }}
+        run: |
+          projectVersion=$(cat generators/go/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/go
+          file: ./generators/go/docker/Dockerfile.fiber
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-go-fiber:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-go-fiber:latest') || '' }}
+
+  csharp-model:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.csharp-model == 'true' || inputs.generator == 'csharp-model' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build CLI
+        working-directory: ./generators/csharp/model
+        run: pnpm dist:cli
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'csharp-model' }}
+        run: |
+          projectVersion=$(cat generators/csharp/model/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'ruby-model' }}
+        run: |
+          projectVersion=$(cat generators/csharp/model/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./generators/csharp/model/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-csharp-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-csharp-model:latest') || '' }}
+
+  csharp-sdk:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.csharp-sdk == 'true' || inputs.generator == 'csharp-sdk' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build CLI
+        working-directory: ./generators/csharp/sdk
+        run: pnpm dist:cli
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'csharp-sdk' }}
+        run: |
+          projectVersion=$(cat generators/csharp/sdk/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'csharp-sdk' }}
+        run: |
+          projectVersion=$(cat generators/csharp/sdk/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./generators/csharp/sdk/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          cache-from: type=gha
+          cache-to: type=gha,mode=min
+          push: true
+          labels: version=${{env.VERSION}}
+          tags: fernapi/fern-csharp-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-csharp-sdk:latest') || '' }}
