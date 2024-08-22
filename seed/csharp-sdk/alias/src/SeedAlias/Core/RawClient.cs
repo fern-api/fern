@@ -14,7 +14,7 @@ internal class RawClient(ClientOptions clientOptions)
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
-    private readonly ClientOptions _options = clientOptions;
+    public readonly ClientOptions Options = clientOptions;
 
     public async Task<ApiResponse> MakeRequestAsync(
         BaseApiRequest request,
@@ -27,7 +27,7 @@ internal class RawClient(ClientOptions clientOptions)
         {
             request.Headers.Add("Content-Type", request.ContentType);
         }
-        SetHeaders(httpRequest, _options.Headers);
+        SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new());
 
@@ -48,7 +48,7 @@ internal class RawClient(ClientOptions clientOptions)
             httpRequest.Content = new StreamContent(streamRequest.Body);
         }
         // Send the request
-        var httpClient = request.Options?.HttpClient ?? _options.HttpClient;
+        var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
         var response = await httpClient.SendAsync(httpRequest, cancellationToken);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
