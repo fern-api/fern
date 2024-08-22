@@ -92,6 +92,9 @@ importers:
       execa:
         specifier: ^5.1.1
         version: 5.1.1
+      husky:
+        specifier: ^9.1.5
+        version: 9.1.5
       immer:
         specifier: ^9.0.15
         version: 9.0.15
@@ -3181,8 +3184,6 @@ importers:
         version: 4.6.4
 
   packages/cli/cli/dist/dev: {}
-
-  packages/cli/cli/dist/prod: {}
 
   packages/cli/configuration:
     dependencies:
@@ -9508,6 +9509,11 @@ packages:
   human-signals@5.0.0:
     resolution: {integrity: sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==}
     engines: {node: '>=16.17.0'}
+
+  husky@9.1.5:
+    resolution: {integrity: sha512-rowAVRUBfI0b4+niA4SJMhfQwc107VLkBUgEYYAOQAbqDCnra1nYh83hF/MDmhYs9t9n1E3DuKOrs2LYNC+0Ag==}
+    engines: {node: '>=18'}
+    hasBin: true
 
   iconv-lite@0.4.24:
     resolution: {integrity: sha512-v3MXnZAcvnywkTUEZomIActle7RXXeedOR31wwl7VlyoXO4Qi9arvSenNQWne1TcRwhCL1HwLI21bEqdpj8/rA==}
@@ -17138,6 +17144,8 @@ snapshots:
   human-signals@3.0.1: {}
 
   human-signals@5.0.0: {}
+
+  husky@9.1.5: {}
 
   iconv-lite@0.4.24:
     dependencies:
