@@ -5,6 +5,8 @@ dockerCommand: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
+defaultCustomConfig:
+  generate-mock-server-tests: true
 scripts:
   - docker: bitnami/dotnet-sdk:8
     commands:

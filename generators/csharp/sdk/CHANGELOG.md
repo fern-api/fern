@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
         disable-mock-server-tests: true
   ```
 
-- Improvement: Rather than sending null properties, omit properties themselves.
+- Improvement: Rather than sending null property values in requests, omit the property entirely.
 
 - Fix: Fix a bug where request bodies are not sent for wrapped requests that include headers or query params.
 
