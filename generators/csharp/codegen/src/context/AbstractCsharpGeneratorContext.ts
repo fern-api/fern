@@ -368,11 +368,11 @@ export abstract class AbstractCsharpGeneratorContext<
     public getDefaultValueForPrimitive({ primitive }: { primitive: PrimitiveType }): csharp.CodeBlock {
         return PrimitiveTypeV1._visit<csharp.CodeBlock>(primitive.v1, {
             integer: () => csharp.codeblock("0"),
-            long: () => csharp.codeblock("0L"),
-            uint: () => csharp.codeblock("0U"),
-            uint64: () => csharp.codeblock("0UL"),
+            long: () => csharp.codeblock("0"),
+            uint: () => csharp.codeblock("0"),
+            uint64: () => csharp.codeblock("0"),
             float: () => csharp.codeblock("0.0f"),
-            double: () => csharp.codeblock("0.0d"),
+            double: () => csharp.codeblock("0.0"),
             boolean: () => csharp.codeblock("false"),
             string: () => csharp.codeblock('""'),
             date: () => csharp.codeblock("DateOnly.MinValue"),
