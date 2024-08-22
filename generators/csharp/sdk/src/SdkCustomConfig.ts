@@ -11,7 +11,8 @@ export const SdkCustomConfigSchema = z.strictObject({
     "pascal-case-environments": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
     "extra-dependencies": z.record(z.string()).optional(),
-    "read-only-memory-types": z.optional(z.array(z.string()))
+    "read-only-memory-types": z.optional(z.array(z.string())),
+    "package-id": z.string().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

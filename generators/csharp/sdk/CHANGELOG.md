@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Feature: Add support for the `package-id` configuration, which is used to control
+  the name of the package in NuGet.
+
+  For example, consider the following configuration:
+
+  ```yml
+  generators:
+    - name: fernapi/fern-csharp-sdk
+      config:
+        package-id: Acme.Client
+  ```
+
 - Feature: Add support for the `read-only-memory-types` configuration, which is used to
   control how specific types are represented as arrays and lists.
 

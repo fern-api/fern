@@ -11,7 +11,7 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageProjectUrl>https://github.com/basic-auth-environment-variables/fern</PackageProjectUrl>
     </PropertyGroup>
-    
+
     <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
         <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
     </PropertyGroup>
