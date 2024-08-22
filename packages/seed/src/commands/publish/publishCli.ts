@@ -7,8 +7,8 @@ import { parseCliReleasesFile } from "../../utils/convertVersionsFileToReleases"
 import { runCommands, subVersion } from "../../utils/publishUtilities";
 
 interface VersionFilePair {
-    latestVersionFile: string;
-    previousVersionFile: string;
+    latestChangelogPath: string;
+    previousChangelogPath: string;
 }
 
 export async function publishCli({
@@ -79,13 +79,13 @@ export async function getNewVersion({
 
     const latestVersionGeneratorReleasesVersions = new Set<string>();
     await parseCliReleasesFile({
-        versionsFilePath: versionFilePair.latestVersionFile,
+        changelogPath: versionFilePair.latestChangelogPath,
         context,
         action: collectVersions(latestVersionGeneratorReleasesVersions)
     });
     const previousVersionGeneratorReleaseVersions = new Set<string>();
     await parseCliReleasesFile({
-        versionsFilePath: versionFilePair.previousVersionFile,
+        changelogPath: versionFilePair.previousChangelogPath,
         context,
         action: collectVersions(previousVersionGeneratorReleaseVersions)
     });

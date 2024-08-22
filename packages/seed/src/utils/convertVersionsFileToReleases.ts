@@ -33,16 +33,16 @@ export async function parseGeneratorReleasesFile({
 }
 
 export async function parseCliReleasesFile({
-    versionsFilePath,
+    changelogPath,
     context,
     action
 }: {
-    versionsFilePath: string;
+    changelogPath: string;
     context: TaskContext;
     action: (release: CliReleaseRequest) => Promise<void>;
 }): Promise<void> {
-    context.logger.debug(`Parsing versions file ${versionsFilePath}`);
-    const changelogs = yaml.load((await readFile(versionsFilePath)).toString());
+    context.logger.debug(`Parsing versions file ${changelogPath}`);
+    const changelogs = yaml.load((await readFile(changelogPath)).toString());
     if (Array.isArray(changelogs)) {
         for (const entry of changelogs) {
             try {
