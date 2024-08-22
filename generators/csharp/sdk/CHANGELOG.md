@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Improvement: Rather than sending null properties, omit properties themselves.
 
-- Fix: Fix a bug where request bodies are not sent for wrapped requests that include headres or query params.
+- Fix: Fix a bug where request bodies are not sent for wrapped requests that include headers or query params.
 
 - Fix: Fix a bug where enums, dates, and datetimes are sometimes not serialized properly as query parameters and headers.
 
