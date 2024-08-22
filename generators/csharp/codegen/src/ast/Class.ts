@@ -252,6 +252,10 @@ export class Class extends AstNode {
         writer.dedent();
 
         writer.indent();
+        this.writeFields({ writer, fields: this.getFieldsByAccess(Access.Internal) });
+        writer.dedent();
+
+        writer.indent();
         this.nestedClasses.forEach((nestedClass, index) => {
             nestedClass.write(writer);
             writer.writeNewLineIfLastLineNot();
