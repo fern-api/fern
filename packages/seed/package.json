@@ -45,6 +45,7 @@
     "@fern-api/login": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
+    "@fern-api/ir-migrations": "workspace:*",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "@fern-fern/generators-sdk": "0.0.5607",

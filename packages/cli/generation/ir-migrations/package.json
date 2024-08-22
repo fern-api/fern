@@ -89,10 +89,12 @@
     "@fern-fern/ir-v7-model": "0.0.2",
     "@fern-fern/ir-v8-model": "0.0.1",
     "@fern-fern/ir-v9-model": "0.0.1",
+    "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
     "@types/jest": "^29.5.12",
+    "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",

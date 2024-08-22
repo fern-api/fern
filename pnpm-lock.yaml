@@ -3179,6 +3179,8 @@ importers:
 
   packages/cli/cli/dist/dev: {}
 
+  packages/cli/cli/dist/prod: {}
+
   packages/cli/configuration:
     dependencies:
       '@fern-api/core-utils':
@@ -3814,6 +3816,9 @@ importers:
       '@fern-fern/ir-v9-model':
         specifier: 0.0.1
         version: 0.0.1
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -3821,6 +3826,9 @@ importers:
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
+      '@types/js-yaml':
+        specifier: ^4.0.8
+        version: 4.0.8
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -5558,6 +5566,9 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../commons/fs-utils
+      '@fern-api/ir-migrations':
+        specifier: workspace:*
+        version: link:../cli/generation/ir-migrations
       '@fern-api/ir-sdk':
         specifier: workspace:*
         version: link:../ir-sdk

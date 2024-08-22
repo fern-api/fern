@@ -14,22 +14,26 @@ export async function parseGeneratorReleasesFile({
     changelogPath: string;
     context: TaskContext;
     action: (release: GeneratorReleaseRequest) => Promise<void>;
-}): Promise<void> {
+}): Promise<GeneratorReleaseRequest[]> {
     context.logger.debug(`Parsing versions file ${changelogPath}`);
     const changelogs = yaml.load((await readFile(changelogPath)).toString());
+    const releases: GeneratorReleaseRequest[] = [];
     if (Array.isArray(changelogs)) {
         for (const entry of changelogs) {
             try {
                 const release = serializers.generators.GeneratorReleaseRequest.parseOrThrow({
                     generator_id: generatorId,
+                    ir_version: 0,
                     ...entry
                 });
+                releases.push(release);
                 await action(release);
             } catch (e) {
                 context.logger.error(`Failed to parse and run action on release: ${(e as Error)?.message}`);
             }
         }
     }
+    return releases;
 }
 
 export async function parseCliReleasesFile({
