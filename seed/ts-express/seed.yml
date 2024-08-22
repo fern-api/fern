@@ -51,8 +51,9 @@ fixtures:
         includeOtherInUnionTypes: true
       outputFolder: union-utils
     - customConfig:
-        useJsFileExtensionsOnImports: true
-      outputFolder: js-file-extensions
+        outputEsm: true
+        outputSourceFiles: true
+      outputFolder: esm-source
   mixed-case:
     - customConfig: null
       outputFolder: no-custom-config

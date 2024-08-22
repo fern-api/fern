@@ -12,8 +12,8 @@ local:
   runCommand: node sdk/cli/dist/nodeCli.cjs
   env:
     NODE_ENV: test
-customFixtureConfig: 
-  generateWireTests: true    
+customFixtureConfig:
+  generateWireTests: true
 fixtures:
   imdb:
     - customConfig: null
@@ -39,7 +39,7 @@ fixtures:
     - customConfig: null
       audiences:
         - partner
-      outputFolder: with-partner-audience      
+      outputFolder: with-partner-audience
   exhaustive:
     - customConfig: null
       audiences:
@@ -105,6 +105,10 @@ fixtures:
     - outputFolder: jsr
       customConfig:
         publishToJsr: true
+    - outputFolder: esm-source
+      customConfig:
+        outputEsm: true
+        outputSourceFiles: true
   error-property:
     - customConfig:
         private: true
