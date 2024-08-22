@@ -229,10 +229,8 @@ public partial class PrimitiveClient
 
     /// <example>
     /// <code>
-    /// using System.Globalization;
-    /// #nullable enable
     /// await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
-    ///     DateTime.Parse("2024-01-15T09:30:00.000Z", null, DateTimeStyles.AdjustToUniversal)
+    ///     new DateTime(2024, 01, 15, 09, 30, 00, 000)
     /// );
     /// </code>
     /// </example>

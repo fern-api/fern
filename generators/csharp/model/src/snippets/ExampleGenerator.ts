@@ -18,12 +18,15 @@ export class ExampleGenerator {
         this.context = context;
     }
 
-    public getSnippetForTypeReference(exampleTypeReference: ExampleTypeReference): csharp.CodeBlock {
+    public getSnippetForTypeReference(
+        exampleTypeReference: ExampleTypeReference,
+        parsedDatetimes: boolean
+    ): csharp.CodeBlock {
         const astNode = exampleTypeReference.shape._visit<csharp.AstNode>({
-            primitive: (primitive) => this.getSnippetForPrimitive(primitive),
-            container: (container) => this.getSnippetForContainer(container),
+            primitive: (primitive) => this.getSnippetForPrimitive(primitive, parsedDatetimes),
+            container: (container) => this.getSnippetForContainer(container, parsedDatetimes),
             unknown: (value) => this.getSnippetForUnknown(value),
-            named: (named) => this.getSnippetForNamed(named),
+            named: (named) => this.getSnippetForNamed(named, parsedDatetimes),
             _other: () => {
                 throw new Error("Unknown example type reference: " + exampleTypeReference.shape.type);
             }
@@ -62,45 +65,51 @@ export class ExampleGenerator {
         }
         return csharp.InstantiatedPrimitive.null();
     }
-    private getSnippetForNamed(exampleNamedType: ExampleNamedType): csharp.AstNode {
+    private getSnippetForNamed(exampleNamedType: ExampleNamedType, parsedDatetimes: boolean): csharp.AstNode {
         return exampleNamedType.shape._visit<csharp.AstNode>({
-            alias: (exampleAliasType) => this.getSnippetForTypeReference(exampleAliasType.value),
+            alias: (exampleAliasType) => this.getSnippetForTypeReference(exampleAliasType.value, parsedDatetimes),
             enum: (exampleEnumType) =>
                 csharp.enumInstantiation({
                     reference: this.context.csharpTypeMapper.convertToClassReference(exampleNamedType.typeName),
                     value: exampleEnumType.value.name.pascalCase.safeName
                 }),
             object: (exampleObjectType) =>
-                this.getSnippetForTypeId(exampleNamedType.typeName.typeId, exampleObjectType),
-            union: (exampleUnionType) => this.getSnippetForUnion(exampleUnionType),
+                this.getSnippetForTypeId(exampleNamedType.typeName.typeId, exampleObjectType, parsedDatetimes),
+            union: (exampleUnionType) => this.getSnippetForUnion(exampleUnionType, parsedDatetimes),
             undiscriminatedUnion: (exampleUndiscriminatedUnionType) =>
-                this.getSnippetForUndiscriminatedUnion(exampleUndiscriminatedUnionType),
+                this.getSnippetForUndiscriminatedUnion(exampleUndiscriminatedUnionType, parsedDatetimes),
             _other: () => {
                 throw new Error("Unknown example type: " + exampleNamedType.shape.type);
             }
         });
     }
 
-    private getSnippetForTypeId(typeId: string, exampleObjectType: ExampleObjectType): csharp.AstNode {
+    private getSnippetForTypeId(
+        typeId: string,
+        exampleObjectType: ExampleObjectType,
+        parsedDatetimes: boolean
+    ): csharp.AstNode {
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(typeId);
         if (typeDeclaration.shape.type !== "object") {
             throw new Error("Unexpected non object in Example Generator");
         }
         return new ObjectGenerator(this.context, typeDeclaration, typeDeclaration.shape).doGenerateSnippet(
-            exampleObjectType
+            exampleObjectType,
+            parsedDatetimes
         );
     }
 
     private getSnippetForUndiscriminatedUnion(
-        exampleUndiscriminatedUnionType: ExampleUndiscriminatedUnionType
+        exampleUndiscriminatedUnionType: ExampleUndiscriminatedUnionType,
+        parsedDatetimes: boolean
     ): csharp.AstNode {
-        return this.getSnippetForTypeReference(exampleUndiscriminatedUnionType.singleUnionType);
+        return this.getSnippetForTypeReference(exampleUndiscriminatedUnionType.singleUnionType, parsedDatetimes);
     }
 
-    private getSnippetForUnion(p: ExampleUnionType): csharp.AstNode {
+    private getSnippetForUnion(p: ExampleUnionType, parsedDatetimes: boolean): csharp.AstNode {
         return p.singleUnionType.shape._visit<csharp.AstNode>({
-            samePropertiesAsObject: (p) => this.getSnippetForTypeId(p.typeId, p.object),
-            singleProperty: (p) => this.getSnippetForTypeReference(p),
+            samePropertiesAsObject: (p) => this.getSnippetForTypeId(p.typeId, p.object, parsedDatetimes),
+            singleProperty: (p) => this.getSnippetForTypeReference(p, parsedDatetimes),
             // todo: figure out what to put here
             noProperties: () => csharp.codeblock('"no-properties-union"'),
             _other: (value) => {
@@ -109,12 +118,13 @@ export class ExampleGenerator {
         });
     }
 
-    private getSnippetForContainer(c: ExampleContainer): csharp.AstNode {
+    private getSnippetForContainer(c: ExampleContainer, parsedDatetimes: boolean): csharp.AstNode {
         return c._visit<csharp.AstNode>({
-            literal: (p) => csharp.codeblock((writer) => writer.writeNode(this.getSnippetForPrimitive(p.literal))),
+            literal: (p) =>
+                csharp.codeblock((writer) => writer.writeNode(this.getSnippetForPrimitive(p.literal, parsedDatetimes))),
             list: (p) => {
                 const entries = p.list.map((exampleTypeReference) =>
-                    this.getSnippetForTypeReference(exampleTypeReference)
+                    this.getSnippetForTypeReference(exampleTypeReference, parsedDatetimes)
                 );
                 return csharp.list({
                     itemType: this.context.csharpTypeMapper.convert({
@@ -126,7 +136,7 @@ export class ExampleGenerator {
             },
             set: (p) => {
                 const entries = p.set.map((exampleTypeReference) =>
-                    this.getSnippetForTypeReference(exampleTypeReference)
+                    this.getSnippetForTypeReference(exampleTypeReference, parsedDatetimes)
                 );
                 return csharp.set({
                     itemType: this.context.csharpTypeMapper.convert({
@@ -137,12 +147,14 @@ export class ExampleGenerator {
                 });
             },
             optional: (p) =>
-                p.optional == null ? csharp.InstantiatedPrimitive.null() : this.getSnippetForTypeReference(p.optional),
+                p.optional == null
+                    ? csharp.InstantiatedPrimitive.null()
+                    : this.getSnippetForTypeReference(p.optional, parsedDatetimes),
             map: (p) => {
                 const entries = p.map.map((exampleKeyValuePair) => {
                     return {
-                        key: this.getSnippetForTypeReference(exampleKeyValuePair.key),
-                        value: this.getSnippetForTypeReference(exampleKeyValuePair.value)
+                        key: this.getSnippetForTypeReference(exampleKeyValuePair.key, parsedDatetimes),
+                        value: this.getSnippetForTypeReference(exampleKeyValuePair.value, parsedDatetimes)
                     };
                 });
                 return csharp.dictionary({
@@ -160,7 +172,7 @@ export class ExampleGenerator {
         });
     }
 
-    private getSnippetForPrimitive(examplePrimitive: ExamplePrimitive): csharp.AstNode {
+    private getSnippetForPrimitive(examplePrimitive: ExamplePrimitive, parsedDatetimes: boolean): csharp.AstNode {
         const instantiatedPrimitive = examplePrimitive._visit<csharp.InstantiatedPrimitive>({
             integer: (p) => csharp.InstantiatedPrimitive.integer(p),
             long: (p) => csharp.InstantiatedPrimitive.long(p),
@@ -170,7 +182,7 @@ export class ExampleGenerator {
             double: (p) => csharp.InstantiatedPrimitive.double(p),
             boolean: (p) => csharp.InstantiatedPrimitive.boolean(p),
             string: (p) => csharp.InstantiatedPrimitive.string(p.original),
-            datetime: (datetime) => csharp.InstantiatedPrimitive.dateTime(datetime),
+            datetime: (datetime) => csharp.InstantiatedPrimitive.dateTime(datetime, parsedDatetimes),
             date: (dateString) => csharp.InstantiatedPrimitive.date(dateString),
             uuid: (p) => csharp.InstantiatedPrimitive.uuid(p),
             base64: (p) => csharp.InstantiatedPrimitive.string(p),

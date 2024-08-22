@@ -107,6 +107,7 @@ export class Method extends AstNode {
                     writer.getAllTypeClassReferences(),
                     writer.getRootNamespace(),
                     writer.getCustomConfig(),
+                    true,
                     true
                 )
                 .split("\n")

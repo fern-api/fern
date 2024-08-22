@@ -64,6 +64,7 @@ interface DateInstantiation {
 interface DateTimeInstantiation {
     type: "dateTime";
     value: Date;
+    parsed: boolean;
 }
 
 interface GuidInstantiation {
@@ -115,14 +116,18 @@ export class PrimitiveInstantiation extends AstNode {
                 break;
             }
             case "dateTime": {
-                writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, DateTimeStyles.`);
-                writer.writeNode(
-                    csharp.classReference({
-                        name: "AdjustToUniversal",
-                        namespace: "System.Globalization"
-                    })
-                );
-                writer.write(")");
+                if (this.internalType.parsed) {
+                    writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, DateTimeStyles.`);
+                    writer.writeNode(
+                        csharp.classReference({
+                            name: "AdjustToUniversal",
+                            namespace: "System.Globalization"
+                        })
+                    );
+                    writer.write(")");
+                } else {
+                    writer.write(this.constructDatetimeWithoutParse(this.internalType.value));
+                }
                 break;
             }
             case "uuid":
@@ -197,10 +202,11 @@ export class PrimitiveInstantiation extends AstNode {
         });
     }
 
-    public static dateTime(value: Date): PrimitiveInstantiation {
+    public static dateTime(value: Date, parsed = true): PrimitiveInstantiation {
         return new this({
             type: "dateTime",
-            value
+            value,
+            parsed
         });
     }
 

@@ -173,12 +173,15 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         });
     }
 
-    public doGenerateSnippet(example: ExampleEndpointCall): csharp.CodeBlock {
+    public doGenerateSnippet(example: ExampleEndpointCall, parsedDatetimes: boolean): csharp.CodeBlock {
         const orderedFields: { name: Name; value: csharp.CodeBlock }[] = [];
         for (const exampleQueryParameter of example.queryParameters) {
             const isSingleQueryParameter =
                 exampleQueryParameter.shape == null || exampleQueryParameter.shape.type === "single";
-            const singleValueSnippet = this.exampleGenerator.getSnippetForTypeReference(exampleQueryParameter.value);
+            const singleValueSnippet = this.exampleGenerator.getSnippetForTypeReference(
+                exampleQueryParameter.value,
+                parsedDatetimes
+            );
             const value = isSingleQueryParameter
                 ? singleValueSnippet
                 : csharp.codeblock((writer) =>
@@ -197,7 +200,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
         for (const header of example.endpointHeaders) {
             orderedFields.push({
                 name: header.name.name,
-                value: this.exampleGenerator.getSnippetForTypeReference(header.value)
+                value: this.exampleGenerator.getSnippetForTypeReference(header.value, parsedDatetimes)
             });
         }
 
@@ -205,14 +208,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             reference: (reference) => {
                 orderedFields.push({
                     name: this.wrapper.bodyKey,
-                    value: this.exampleGenerator.getSnippetForTypeReference(reference)
+                    value: this.exampleGenerator.getSnippetForTypeReference(reference, parsedDatetimes)
                 });
             },
             inlinedRequestBody: (inlinedRequestBody) => {
                 for (const property of inlinedRequestBody.properties) {
                     orderedFields.push({
                         name: property.name.name,
-                        value: this.exampleGenerator.getSnippetForTypeReference(property.value)
+                        value: this.exampleGenerator.getSnippetForTypeReference(property.value, parsedDatetimes)
                     });
                 }
             },

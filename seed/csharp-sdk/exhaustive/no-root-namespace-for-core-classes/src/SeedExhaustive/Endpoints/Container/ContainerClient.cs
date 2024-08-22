@@ -61,8 +61,6 @@ public partial class ContainerClient
 
     /// <example>
     /// <code>
-    /// using SeedExhaustive.Types;
-    /// #nullable enable
     /// await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
     ///     new List<ObjectWithRequiredField>() { new ObjectWithRequiredField { String = "string" } }
     /// );
@@ -151,8 +149,6 @@ public partial class ContainerClient
 
     /// <example>
     /// <code>
-    /// using SeedExhaustive.Types;
-    /// #nullable enable
     /// await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
     ///     new HashSet<ObjectWithRequiredField>() { new ObjectWithRequiredField { String = "string" } }
     /// );
@@ -241,8 +237,6 @@ public partial class ContainerClient
 
     /// <example>
     /// <code>
-    /// using SeedExhaustive.Types;
-    /// #nullable enable
     /// await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
     ///     new Dictionary<string, ObjectWithRequiredField>()
     ///     {
@@ -297,8 +291,6 @@ public partial class ContainerClient
 
     /// <example>
     /// <code>
-    /// using SeedExhaustive.Types;
-    /// #nullable enable
     /// await client.Endpoints.Container.GetAndReturnOptionalAsync(
     ///     new ObjectWithRequiredField { String = "string" }
     /// );

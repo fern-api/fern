@@ -83,13 +83,13 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
         });
     }
 
-    public doGenerateSnippet(exampleObject: ExampleObjectType): csharp.CodeBlock {
+    public doGenerateSnippet(exampleObject: ExampleObjectType, parsedDatetimes: boolean): csharp.CodeBlock {
         const args = exampleObject.properties.map((exampleProperty) => {
             const propertyName = this.getPropertyName({
                 className: this.classReference.name,
                 objectProperty: exampleProperty.name
             });
-            const assignment = this.exampleGenerator.getSnippetForTypeReference(exampleProperty.value);
+            const assignment = this.exampleGenerator.getSnippetForTypeReference(exampleProperty.value, parsedDatetimes);
             // todo: considering filtering out "assignments" are are actually just null so that null properties
             // are completely excluded from object initializers
             return { name: propertyName, assignment };

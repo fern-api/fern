@@ -20,9 +20,6 @@ public partial class ObjectClient
 
     /// <example>
     /// <code>
-    /// using System.Globalization;
-    /// using SeedExhaustive.Types.Object;
-    /// #nullable enable
     /// await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
     ///     new ObjectWithOptionalField
     ///     {
@@ -31,11 +28,7 @@ public partial class ObjectClient
     ///         Long = 1000000,
     ///         Double = 1.1,
     ///         Bool = true,
-    ///         Datetime = DateTime.Parse(
-    ///             "2024-01-15T09:30:00.000Z",
-    ///             null,
-    ///             DateTimeStyles.AdjustToUniversal
-    ///         ),
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Date = new DateOnly(2023, 1, 15),
     ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         Base64 = "SGVsbG8gd29ybGQh",
@@ -86,8 +79,6 @@ public partial class ObjectClient
 
     /// <example>
     /// <code>
-    /// using SeedExhaustive.Types.Object;
-    /// #nullable enable
     /// await client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
     ///     new ObjectWithRequiredField { String = "string" }
     /// );
@@ -132,8 +123,6 @@ public partial class ObjectClient
 
     /// <example>
     /// <code>
-    /// using SeedExhaustive.Types.Object;
-    /// #nullable enable
     /// await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
     ///     new ObjectWithMapOfMap
     ///     {
@@ -187,9 +176,6 @@ public partial class ObjectClient
 
     /// <example>
     /// <code>
-    /// using System.Globalization;
-    /// using SeedExhaustive.Types.Object;
-    /// #nullable enable
     /// await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
     ///     new NestedObjectWithOptionalField
     ///     {
@@ -201,11 +187,7 @@ public partial class ObjectClient
     ///             Long = 1000000,
     ///             Double = 1.1,
     ///             Bool = true,
-    ///             Datetime = DateTime.Parse(
-    ///                 "2024-01-15T09:30:00.000Z",
-    ///                 null,
-    ///                 DateTimeStyles.AdjustToUniversal
-    ///             ),
+    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///             Date = new DateOnly(2023, 1, 15),
     ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             Base64 = "SGVsbG8gd29ybGQh",
@@ -257,9 +239,6 @@ public partial class ObjectClient
 
     /// <example>
     /// <code>
-    /// using System.Globalization;
-    /// using SeedExhaustive.Types.Object;
-    /// #nullable enable
     /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
     ///     "string",
     ///     new NestedObjectWithRequiredField
@@ -272,11 +251,7 @@ public partial class ObjectClient
     ///             Long = 1000000,
     ///             Double = 1.1,
     ///             Bool = true,
-    ///             Datetime = DateTime.Parse(
-    ///                 "2024-01-15T09:30:00.000Z",
-    ///                 null,
-    ///                 DateTimeStyles.AdjustToUniversal
-    ///             ),
+    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///             Date = new DateOnly(2023, 1, 15),
     ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             Base64 = "SGVsbG8gd29ybGQh",
@@ -329,9 +304,6 @@ public partial class ObjectClient
 
     /// <example>
     /// <code>
-    /// using System.Globalization;
-    /// using SeedExhaustive.Types.Object;
-    /// #nullable enable
     /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
     ///     new List<NestedObjectWithRequiredField>()
     ///     {
@@ -345,11 +317,7 @@ public partial class ObjectClient
     ///                 Long = 1000000,
     ///                 Double = 1.1,
     ///                 Bool = true,
-    ///                 Datetime = DateTime.Parse(
-    ///                     "2024-01-15T09:30:00.000Z",
-    ///                     null,
-    ///                     DateTimeStyles.AdjustToUniversal
-    ///                 ),
+    ///                 Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///                 Date = new DateOnly(2023, 1, 15),
     ///                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///                 Base64 = "SGVsbG8gd29ybGQh",

@@ -61,8 +61,6 @@ public partial class HttpMethodsClient
 
     /// <example>
     /// <code>
-    /// using SeedExhaustive.Types;
-    /// #nullable enable
     /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
     /// </code>
     /// </example>
@@ -105,8 +103,6 @@ public partial class HttpMethodsClient
 
     /// <example>
     /// <code>
-    /// using SeedExhaustive.Types;
-    /// #nullable enable
     /// await client.Endpoints.HttpMethods.TestPutAsync(
     ///     "string",
     ///     new ObjectWithRequiredField { String = "string" }
@@ -153,9 +149,6 @@ public partial class HttpMethodsClient
 
     /// <example>
     /// <code>
-    /// using System.Globalization;
-    /// using SeedExhaustive.Types;
-    /// #nullable enable
     /// await client.Endpoints.HttpMethods.TestPatchAsync(
     ///     "string",
     ///     new ObjectWithOptionalField
@@ -165,11 +158,7 @@ public partial class HttpMethodsClient
     ///         Long = 1000000,
     ///         Double = 1.1,
     ///         Bool = true,
-    ///         Datetime = DateTime.Parse(
-    ///             "2024-01-15T09:30:00.000Z",
-    ///             null,
-    ///             DateTimeStyles.AdjustToUniversal
-    ///         ),
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Date = new DateOnly(2023, 1, 15),
     ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///         Base64 = "SGVsbG8gd29ybGQh",

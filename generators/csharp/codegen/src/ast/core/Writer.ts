@@ -191,13 +191,15 @@ export class Writer {
         return this.customConfig["simplify-object-dictionaries"] ?? true;
     }
 
-    public toString(): string {
-        const imports = this.stringifyImports();
-        if (imports.length > 0) {
-            return `${imports}
-#nullable enable
-
-${this.buffer}`;
+    public toString(skipImports = false): string {
+        if (!skipImports) {
+            const imports = this.stringifyImports();
+            if (imports.length > 0) {
+                return `${imports}
+    #nullable enable
+    
+    ${this.buffer}`;
+            }
         }
         return this.buffer;
     }

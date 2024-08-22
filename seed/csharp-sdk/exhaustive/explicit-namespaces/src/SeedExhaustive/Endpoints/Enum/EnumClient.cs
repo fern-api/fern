@@ -20,8 +20,6 @@ public partial class EnumClient
 
     /// <example>
     /// <code>
-    /// using SeedExhaustive.Types.Enum;
-    /// #nullable enable
     /// await client.Endpoints.Enum.GetAndReturnEnumAsync(WeatherReport.Sunny);
     /// </code>
     /// </example>

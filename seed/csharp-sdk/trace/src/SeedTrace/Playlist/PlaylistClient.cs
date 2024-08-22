@@ -22,22 +22,12 @@ public partial class PlaylistClient
     /// </summary>
     /// <example>
     /// <code>
-    /// using System.Globalization;
-    /// #nullable enable
     /// await client.Playlist.CreatePlaylistAsync(
     ///     1,
     ///     new CreatePlaylistRequest
     ///     {
-    ///         Datetime = DateTime.Parse(
-    ///             "2024-01-15T09:30:00.000Z",
-    ///             null,
-    ///             DateTimeStyles.AdjustToUniversal
-    ///         ),
-    ///         OptionalDatetime = DateTime.Parse(
-    ///             "2024-01-15T09:30:00.000Z",
-    ///             null,
-    ///             DateTimeStyles.AdjustToUniversal
-    ///         ),
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Body = new PlaylistCreateRequest
     ///         {
     ///             Name = "string",

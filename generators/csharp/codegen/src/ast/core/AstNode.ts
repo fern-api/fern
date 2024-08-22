@@ -19,7 +19,8 @@ export abstract class AstNode {
         allTypeClassReferences: Map<string, Set<Namespace>>,
         rootNamespace: string,
         customConfig: BaseCsharpCustomConfigSchema,
-        format = false
+        format = false,
+        skipImports = false
     ): string {
         const writer = new Writer({
             namespace,
@@ -29,7 +30,7 @@ export abstract class AstNode {
             customConfig
         });
         this.write(writer);
-        const stringNode = writer.toString();
+        const stringNode = writer.toString(skipImports);
         return format ? this.toFormattedSnippet(stringNode) : stringNode;
     }
 
@@ -40,10 +41,8 @@ export abstract class AstNode {
         code += ";";
         try {
             const finalCode = AstNode.formatCSharpCode(code);
-            console.log("SUCCESS!");
             return finalCode;
         } catch (e: unknown) {
-            console.log("FAILURE!");
             return code;
         }
     }

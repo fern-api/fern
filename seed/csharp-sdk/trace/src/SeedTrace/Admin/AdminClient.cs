@@ -56,17 +56,11 @@ public partial class AdminClient
 
     /// <example>
     /// <code>
-    /// using System.Globalization;
-    /// #nullable enable
     /// await client.Admin.SendTestSubmissionUpdateAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     new TestSubmissionUpdate
     ///     {
-    ///         UpdateTime = DateTime.Parse(
-    ///             "2024-01-15T09:30:00.000Z",
-    ///             null,
-    ///             DateTimeStyles.AdjustToUniversal
-    ///         ),
+    ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         UpdateInfo = RunningSubmissionState.QueueingSubmission,
     ///     }
     /// );
@@ -142,17 +136,11 @@ public partial class AdminClient
 
     /// <example>
     /// <code>
-    /// using System.Globalization;
-    /// #nullable enable
     /// await client.Admin.SendWorkspaceSubmissionUpdateAsync(
     ///     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///     new WorkspaceSubmissionUpdate
     ///     {
-    ///         UpdateTime = DateTime.Parse(
-    ///             "2024-01-15T09:30:00.000Z",
-    ///             null,
-    ///             DateTimeStyles.AdjustToUniversal
-    ///         ),
+    ///         UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         UpdateInfo = RunningSubmissionState.QueueingSubmission,
     ///     }
     /// );
