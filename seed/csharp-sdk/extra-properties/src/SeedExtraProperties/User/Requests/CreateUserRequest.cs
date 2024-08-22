@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedExtraProperties.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record CreateUserRequest
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

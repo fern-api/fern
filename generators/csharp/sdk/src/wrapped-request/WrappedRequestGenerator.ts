@@ -147,6 +147,8 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             _other: () => undefined
         });
 
+        class_.addMethod(this.context.getToStringMethod());
+
         const protobufService = this.context.protobufResolver.getProtobufServiceForServiceId(this.serviceId);
         if (protobufService != null) {
             const protobufClassReference = new csharp.ClassReference({

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedOauthClientCredentialsDefault.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record GetTokenRequest
 
     [JsonPropertyName("grant_type")]
     public required string GrantType { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

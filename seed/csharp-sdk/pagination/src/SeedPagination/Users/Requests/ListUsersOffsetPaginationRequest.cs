@@ -1,3 +1,7 @@
+using SeedPagination.Core;
+
+#nullable enable
+
 namespace SeedPagination;
 
 public record ListUsersOffsetPaginationRequest
@@ -19,4 +23,9 @@ public record ListUsersOffsetPaginationRequest
     /// the next page of results.
     /// </summary>
     public string? StartingAfter { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }
