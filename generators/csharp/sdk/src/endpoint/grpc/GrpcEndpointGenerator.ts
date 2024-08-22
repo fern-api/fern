@@ -152,7 +152,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
     private createCallOptions({ rawGrpcClientReference }: { rawGrpcClientReference: string }): csharp.CodeBlock {
         return csharp.codeblock((writer) => {
             writer.write("var callOptions = ");
-            writer.writeNodeStatement(
+            writer.writeNode(
                 csharp.invokeMethod({
                     on: csharp.codeblock(rawGrpcClientReference),
                     method: "CreateCallOptions",
