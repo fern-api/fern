@@ -202,11 +202,11 @@ export class PrimitiveInstantiation extends AstNode {
         });
     }
 
-    public static dateTime(value: Date, parsed = true): PrimitiveInstantiation {
+    public static dateTime(value: Date, parse = true): PrimitiveInstantiation {
         return new this({
             type: "dateTime",
             value,
-            parse: parsed
+            parse
         });
     }
 
