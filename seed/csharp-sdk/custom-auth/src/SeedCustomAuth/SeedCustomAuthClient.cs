@@ -1,4 +1,3 @@
-using System;
 using SeedCustomAuth.Core;
 
 #nullable enable
@@ -14,15 +13,23 @@ public partial class SeedCustomAuthClient
         ClientOptions? clientOptions = null
     )
     {
-        _client = new RawClient(
+        var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-API-KEY", customAuthScheme },
                 { "X-Fern-Language", "C#" },
-            },
-            new Dictionary<string, Func<string>>(),
-            clientOptions ?? new ClientOptions()
+                { "User-Agent", "Ferncustom-auth/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         CustomAuth = new CustomAuthClient(_client);
         Errors = new ErrorsClient(_client);
     }

@@ -18,10 +18,10 @@ public class ExampleTypeTest
         var inputJson =
             @"
         {
-  ""docs"": ""This is an example type."",
-  ""name"": ""Example""
-}
-";
+          ""docs"": ""This is an example type."",
+          ""name"": ""Example""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

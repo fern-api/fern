@@ -34,6 +34,16 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
                     }
                 ]
             }),
+            oauth: () => ({
+                type: "bearer",
+                bearer: [
+                    {
+                        key: "token",
+                        value: getReferenceToVariable(BEARER_AUTH_TOKEN_VARIABLE),
+                        type: "string"
+                    }
+                ]
+            }),
             header: (header) => {
                 return {
                     type: "apikey",
@@ -71,10 +81,11 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
 
 export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
     return schemes.flatMap((scheme) =>
-        AuthScheme._visit(scheme, {
+        AuthScheme._visit<PostmanHeader[]>(scheme, {
             basic: () => [],
             bearer: () => [],
-            header: (header) => [
+            oauth: () => [],
+            header: (header): PostmanHeader[] => [
                 {
                     key: header.name.wireValue,
                     value: getReferenceToVariable(getVariableForAuthHeader(header)),
@@ -104,6 +115,13 @@ export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[]
             }
         ],
         bearer: () => [
+            {
+                key: BEARER_AUTH_TOKEN_VARIABLE,
+                value: "",
+                type: "string"
+            }
+        ],
+        oauth: () => [
             {
                 key: BEARER_AUTH_TOKEN_VARIABLE,
                 value: "",

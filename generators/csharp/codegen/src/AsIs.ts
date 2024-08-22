@@ -12,6 +12,8 @@ export enum AsIsFiles {
     DateTimeSerializer = "DateTimeSerializer.cs",
     EnumConverter = "EnumConverter.Template.cs",
     GrpcRequestOptions = "GrpcRequestOptions.Template.cs",
+    Headers = "Headers.Template.cs",
+    HeaderValue = "HeaderValue.Template.cs",
     HttpMethodExtensions = "HttpMethodExtensions.cs",
     JsonConfiguration = "JsonConfiguration.cs",
     OneOfSerializer = "OneOfSerializer.cs",
@@ -22,5 +24,6 @@ export enum AsIsFiles {
     TemplateCsProj = "Template.csproj",
     TemplateTestCsProj = "Template.Test.csproj",
     TemplateTestClientCs = "TemplateTestClient.cs",
-    UsingCs = "Using.cs"
+    UsingCs = "Using.cs",
+    Extensions = "Extensions.cs"
 }

@@ -101,10 +101,9 @@ public partial class ServiceClient
         {
             _query["shallow"] = request.Shallow.ToString();
         }
-        var _headers = new Dictionary<string, string>()
-        {
-            { "X-API-Version", request.XApiVersion },
-        };
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "X-API-Version", request.XApiVersion } }
+        );
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {

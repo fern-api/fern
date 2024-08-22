@@ -22,17 +22,21 @@ public partial class HeadersClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Dictionary<string, string>()
-        {
-            { "X-Endpoint-Version", request.EndpointVersion.ToString() },
-            { "X-Async", request.Async.ToString() },
-        };
+        var _headers = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Endpoint-Version", request.EndpointVersion.ToString() },
+                { "X-Async", request.Async.ToString() },
+            }
+        );
+        var requestBody = new Dictionary<string, object>() { { "query", request.Query } };
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "headers",
+                Body = requestBody,
                 Headers = _headers,
                 Options = options,
             },

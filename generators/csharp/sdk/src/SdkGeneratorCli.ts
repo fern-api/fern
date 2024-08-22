@@ -1,5 +1,9 @@
 import { AbstractCsharpGeneratorCli, TestFileGenerator, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
-import { generateModels, generateTests, generateWellKnownProtobufFiles } from "@fern-api/fern-csharp-model";
+import {
+    generateModels,
+    generateTests as generateModelTests,
+    generateWellKnownProtobufFiles
+} from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
@@ -8,6 +12,7 @@ import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmen
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
+import { generateSdkTests } from "./generateSdkTests";
 import { BaseOptionsGenerator } from "./options/BaseOptionsGenerator";
 import { ClientOptionsGenerator } from "./options/ClientOptionsGenerator";
 import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
@@ -91,10 +96,17 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         for (const file of models) {
             context.project.addSourceFiles(file);
         }
-        const tests = generateTests({ context });
-        for (const file of tests) {
-            context.project.addTestFiles(file);
+        if (context.config.writeUnitTests) {
+            const modelTests = generateModelTests({ context });
+            for (const file of modelTests) {
+                context.project.addTestFiles(file);
+            }
+            const sdkTests = generateSdkTests({ context });
+            for (const file of sdkTests) {
+                context.project.addTestFiles(file);
+            }
         }
+
         for (const [_, subpackage] of Object.entries(context.ir.subpackages)) {
             const service = subpackage.service != null ? context.getHttpServiceOrThrow(subpackage.service) : undefined;
             const subClient = new SubPackageClientGenerator({
