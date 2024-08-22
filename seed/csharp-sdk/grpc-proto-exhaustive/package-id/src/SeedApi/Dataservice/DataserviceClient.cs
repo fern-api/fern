@@ -32,9 +32,9 @@ public partial class DataserviceClient
     ///             new Column
     ///             {
     ///                 Id = "id",
-    ///                 Values = new List<float>() { 1.1f }
-    ///             }
-    ///         }
+    ///                 Values = new List<float>() { 1.1f },
+    ///             },
+    ///         },
     ///     }
     /// );
     /// </code>

@@ -59,7 +59,7 @@ public partial class UnionClient
 
     /// <example>
     /// <code>
-    /// await client.Union.UpdateAsync(new Circle { Id = "string", Radius = 1.1 });
+    /// await client.Union.UpdateAsync(new Circle { Id = "string", Radius = 1.1d });
     /// </code>
     /// </example>
     public async Task<bool> UpdateAsync(

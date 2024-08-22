@@ -52,7 +52,7 @@ public record Column
             Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
             Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
             IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
         };
     }
 }

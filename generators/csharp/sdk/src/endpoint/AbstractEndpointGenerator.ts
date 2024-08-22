@@ -20,7 +20,7 @@ export abstract class AbstractEndpointGenerator {
         clientVariableName,
         serviceId,
         additionalEndParameters,
-        parsedDatetimes
+        parseDatetimes
     }: {
         example: ExampleEndpointCall;
         endpoint: HttpEndpoint;
@@ -28,7 +28,7 @@ export abstract class AbstractEndpointGenerator {
         serviceId: ServiceId;
         additionalEndParameters?: csharp.CodeBlock[];
         getResult?: boolean;
-        parsedDatetimes?: boolean;
+        parseDatetimes?: boolean;
     }): csharp.MethodInvocation | undefined {
         const service = this.context.ir.services[serviceId];
         if (service == null) {
@@ -40,12 +40,12 @@ export abstract class AbstractEndpointGenerator {
         if (requestBodyType === "fileUpload" || requestBodyType === "bytes") {
             return undefined;
         }
-        const args = this.getNonEndpointArguments(example, parsedDatetimes ?? true);
+        const args = this.getNonEndpointArguments(example, parseDatetimes ?? true);
         const endpointRequestSnippet = this.getEndpointRequestSnippet(
             example,
             endpoint,
             serviceId,
-            parsedDatetimes ?? true
+            parseDatetimes ?? true
         );
         if (endpointRequestSnippet != null) {
             args.push(endpointRequestSnippet);
@@ -74,7 +74,7 @@ export abstract class AbstractEndpointGenerator {
         exampleEndpointCall: ExampleEndpointCall,
         endpoint: HttpEndpoint,
         serviceId: ServiceId,
-        parsedDatetimes: boolean
+        parseDatetimes: boolean
     ): csharp.CodeBlock | undefined {
         switch (endpoint.sdkRequest?.shape.type) {
             case "wrapper":
@@ -83,12 +83,12 @@ export abstract class AbstractEndpointGenerator {
                     context: this.context,
                     serviceId,
                     endpoint
-                }).doGenerateSnippet(exampleEndpointCall, parsedDatetimes);
+                }).doGenerateSnippet({ example: exampleEndpointCall, parseDatetimes });
             case "justRequestBody": {
                 if (exampleEndpointCall.request == null) {
                     throw new Error("Unexpected no example request for just request body");
                 }
-                return this.getJustRequestBodySnippet(exampleEndpointCall.request, parsedDatetimes);
+                return this.getJustRequestBodySnippet(exampleEndpointCall.request, parseDatetimes);
             }
         }
         return undefined;
@@ -96,22 +96,28 @@ export abstract class AbstractEndpointGenerator {
 
     private getJustRequestBodySnippet(
         exampleRequestBody: ExampleRequestBody,
-        parsedDatetimes: boolean
+        parseDatetimes: boolean
     ): csharp.CodeBlock {
         if (exampleRequestBody.type === "inlinedRequestBody") {
             throw new Error("Unexpected inlinedRequestBody"); // should be a wrapped request and already handled
         }
-        return this.exampleGenerator.getSnippetForTypeReference(exampleRequestBody, parsedDatetimes);
+        return this.exampleGenerator.getSnippetForTypeReference({
+            exampleTypeReference: exampleRequestBody,
+            parseDatetimes
+        });
     }
 
-    private getNonEndpointArguments(example: ExampleEndpointCall, parsedDatetimes: boolean): csharp.CodeBlock[] {
+    private getNonEndpointArguments(example: ExampleEndpointCall, parseDatetimes: boolean): csharp.CodeBlock[] {
         const pathParameters = [
             ...example.rootPathParameters,
             ...example.servicePathParameters,
             ...example.endpointPathParameters
         ];
         return pathParameters.map((pathParameter) =>
-            this.exampleGenerator.getSnippetForTypeReference(pathParameter.value, parsedDatetimes)
+            this.exampleGenerator.getSnippetForTypeReference({
+                exampleTypeReference: pathParameter.value,
+                parseDatetimes
+            })
         );
     }
 }

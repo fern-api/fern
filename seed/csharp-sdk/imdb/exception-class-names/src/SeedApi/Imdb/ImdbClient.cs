@@ -21,7 +21,7 @@ public partial class ImdbClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Rating = 1.1 });
+    /// await client.Imdb.CreateMovieAsync(new CreateMovieRequest { Title = "string", Rating = 1.1d });
     /// </code>
     /// </example>
     public async Task<string> CreateMovieAsync(

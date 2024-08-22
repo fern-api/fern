@@ -113,7 +113,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                           clientVariableName: "client",
                           serviceId,
                           getResult: true,
-                          parsedDatetimes: false
+                          parseDatetimes: false
                       })
                     : undefined
         });
@@ -126,7 +126,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         serviceId,
         requestOptions,
         getResult,
-        parsedDatetimes
+        parseDatetimes
     }: {
         example: ExampleEndpointCall;
         endpoint: HttpEndpoint;
@@ -134,7 +134,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         serviceId: ServiceId;
         requestOptions?: csharp.CodeBlock;
         getResult?: boolean;
-        parsedDatetimes?: boolean;
+        parseDatetimes?: boolean;
     }): csharp.MethodInvocation | undefined {
         return this.generateEndpointSnippet({
             example,
@@ -143,7 +143,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             serviceId,
             additionalEndParameters: requestOptions != null ? [requestOptions] : [],
             getResult,
-            parsedDatetimes
+            parseDatetimes
         });
     }
 

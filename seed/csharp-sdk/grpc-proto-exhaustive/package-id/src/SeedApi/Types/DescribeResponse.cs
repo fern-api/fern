@@ -61,7 +61,7 @@ public record DescribeResponse
             ),
             Dimension = value.Dimension,
             Fullness = value.Fullness,
-            TotalCount = value.TotalCount
+            TotalCount = value.TotalCount,
         };
     }
 }

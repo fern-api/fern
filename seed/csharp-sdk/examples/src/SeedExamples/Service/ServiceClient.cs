@@ -66,7 +66,7 @@ public partial class ServiceClient
     ///         Prequel = "movie-cv9b914f",
     ///         Title = "The Boy and the Heron",
     ///         From = "Hayao Miyazaki",
-    ///         Rating = 8,
+    ///         Rating = 8d,
     ///         Type = "movie",
     ///         Tag = "tag-wf9as23d",
     ///         Metadata = new Dictionary<string, object>()
@@ -78,7 +78,7 @@ public partial class ServiceClient
     ///             { "releaseDate", "2023-12-08" },
     ///             {
     ///                 "ratings",
-    ///                 new Dictionary<object, object?>() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
+    ///                 new Dictionary<object, object?>() { { "imdb", 7.6d }, { "rottenTomatoes", 97d } }
     ///             },
     ///         },
     ///     }

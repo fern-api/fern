@@ -29,8 +29,8 @@ public partial class DataserviceClient
     ///     {
     ///         Columns = new List<Column>()
     ///         {
-    ///             new Column { Id = "id", Values = new[] { 1.1f } }
-    ///         }
+    ///             new Column { Id = "id", Values = new[] { 1.1f } },
+    ///         },
     ///     }
     /// );
     /// </code>

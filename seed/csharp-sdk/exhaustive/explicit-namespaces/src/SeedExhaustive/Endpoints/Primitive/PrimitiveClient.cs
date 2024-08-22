@@ -103,7 +103,7 @@ public partial class PrimitiveClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);
+    /// await client.Endpoints.Primitive.GetAndReturnLongAsync(1000000L);
     /// </code>
     /// </example>
     public async Task<long> GetAndReturnLongAsync(
@@ -145,7 +145,7 @@ public partial class PrimitiveClient
 
     /// <example>
     /// <code>
-    /// await client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);
+    /// await client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1d);
     /// </code>
     /// </example>
     public async Task<double> GetAndReturnDoubleAsync(

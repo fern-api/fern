@@ -22,8 +22,8 @@ public sealed class MetadataValue(
             {
                 ListValue = new Proto.ListValue
                 {
-                    Values = { list.Select(item => item?.ToProto()) }
-                }
+                    Values = { list.Select(item => item?.ToProto()) },
+                },
             },
             nested => new Proto.Value { StructValue = nested.ToProto() }
         );
@@ -36,8 +36,9 @@ public sealed class MetadataValue(
             Proto.Value.KindOneofCase.StringValue => value.StringValue,
             Proto.Value.KindOneofCase.NumberValue => value.NumberValue,
             Proto.Value.KindOneofCase.BoolValue => value.BoolValue,
-            Proto.Value.KindOneofCase.ListValue
-                => value.ListValue.Values.Select(FromProto).ToList(),
+            Proto.Value.KindOneofCase.ListValue => value
+                .ListValue.Values.Select(FromProto)
+                .ToList(),
             Proto.Value.KindOneofCase.StructValue => Metadata.FromProto(value.StructValue),
             _ => null,
         };

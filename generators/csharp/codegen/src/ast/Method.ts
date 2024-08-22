@@ -101,15 +101,15 @@ export class Method extends AstNode {
             writer.writeLine("/// <example>");
             writer.writeLine("/// <code>");
             this.codeExample
-                .toString(
-                    writer.getNamespace(),
-                    writer.getAllNamespaceSegments(),
-                    writer.getAllTypeClassReferences(),
-                    writer.getRootNamespace(),
-                    writer.getCustomConfig(),
-                    true,
-                    true
-                )
+                .toString({
+                    namespace: writer.getNamespace(),
+                    allNamespaceSegments: writer.getAllNamespaceSegments(),
+                    allTypeClassReferences: writer.getAllTypeClassReferences(),
+                    rootNamespace: writer.getRootNamespace(),
+                    customConfig: writer.getCustomConfig(),
+                    format: true,
+                    skipImports: true
+                })
                 .split("\n")
                 .forEach((line) => {
                     if (line !== "") {

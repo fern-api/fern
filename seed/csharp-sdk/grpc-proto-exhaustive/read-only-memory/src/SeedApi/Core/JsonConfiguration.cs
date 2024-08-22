@@ -13,7 +13,7 @@ internal static class JsonOptions
         {
             Converters = { new DateTimeSerializer() },
             WriteIndented = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
     }
 }

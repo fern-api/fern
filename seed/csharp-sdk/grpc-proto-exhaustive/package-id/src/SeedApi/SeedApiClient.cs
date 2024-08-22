@@ -11,7 +11,11 @@ public partial class SeedApiClient
     public SeedApiClient(ClientOptions? clientOptions = null)
     {
         var defaultHeaders = new Headers(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, }
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "User-Agent", "Ferngrpc-proto-exhaustive/0.0.1" },
+            }
         );
         clientOptions ??= new ClientOptions();
         foreach (var header in defaultHeaders)

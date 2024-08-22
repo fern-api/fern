@@ -33,7 +33,6 @@ public partial class UserserviceClient
         CancellationToken cancellationToken = default
     )
     {
-        var thing = new[] { 1.2f };
         try
         {
             var callOptions = _grpc.CreateCallOptions(

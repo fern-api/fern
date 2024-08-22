@@ -13,15 +13,23 @@ export abstract class AstNode {
     /**
      * Writes the node to a string.
      */
-    public toString(
-        namespace: string,
-        allNamespaceSegments: Set<string>,
-        allTypeClassReferences: Map<string, Set<Namespace>>,
-        rootNamespace: string,
-        customConfig: BaseCsharpCustomConfigSchema,
+    public toString({
+        namespace,
+        allNamespaceSegments,
+        allTypeClassReferences,
+        rootNamespace,
+        customConfig,
         format = false,
         skipImports = false
-    ): string {
+    }: {
+        namespace: string;
+        allNamespaceSegments: Set<string>;
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        rootNamespace: string;
+        customConfig: BaseCsharpCustomConfigSchema;
+        format?: boolean;
+        skipImports?: boolean;
+    }): string {
         const writer = new Writer({
             namespace,
             allNamespaceSegments,

@@ -38,7 +38,7 @@ public record IndexedData
         return new IndexedData
         {
             Indices = value.Indices?.ToList() ?? new List<uint>(),
-            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>()
+            Values = value.Values?.ToArray() ?? new ReadOnlyMemory<float>(),
         };
     }
 }

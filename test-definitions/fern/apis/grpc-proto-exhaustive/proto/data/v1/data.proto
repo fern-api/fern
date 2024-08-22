@@ -25,9 +25,7 @@ message Column {
   repeated float values = 2 [
     (google.api.field_behavior) = REQUIRED
   ];
-  google.protobuf.Struct metadata = 3 [
-    (google.api.field_behavior) = REQUIRED
-  ];
+  google.protobuf.Struct metadata = 3;
   IndexedData indexed_data = 4;
 }
 

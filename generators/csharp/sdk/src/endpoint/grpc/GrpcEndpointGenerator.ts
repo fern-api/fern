@@ -70,7 +70,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
                           clientVariableName: "client",
                           serviceId,
                           getResult: true,
-                          parsedDatetimes: false
+                          parseDatetimes: false
                       })
                     : undefined
         });
@@ -80,14 +80,14 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
         example,
         endpoint,
         clientVariableName,
-        parsedDatetimes,
+        parseDatetimes,
         serviceId
     }: {
         example: ExampleEndpointCall;
         endpoint: HttpEndpoint;
         clientVariableName: string;
         serviceId: ServiceId;
-        parsedDatetimes: boolean;
+        parseDatetimes: boolean;
         getResult?: boolean;
     }): csharp.MethodInvocation | undefined {
         return this.generateEndpointSnippet({
@@ -96,7 +96,7 @@ export class GrpcEndpointGenerator extends AbstractEndpointGenerator {
             clientVariableName,
             serviceId,
             additionalEndParameters: [],
-            parsedDatetimes
+            parseDatetimes
         });
     }
 

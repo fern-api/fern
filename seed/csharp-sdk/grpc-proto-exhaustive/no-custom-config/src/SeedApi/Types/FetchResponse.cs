@@ -53,7 +53,7 @@ public record FetchResponse
                 kvp => Column.FromProto(kvp.Value)
             ),
             Namespace = value.Namespace,
-            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null
+            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
         };
     }
 }

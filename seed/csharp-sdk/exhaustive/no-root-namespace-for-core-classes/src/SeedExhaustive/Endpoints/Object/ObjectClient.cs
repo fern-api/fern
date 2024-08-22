@@ -24,8 +24,8 @@ public partial class ObjectClient
     ///     {
     ///         String = "string",
     ///         Integer = 1,
-    ///         Long = 1000000,
-    ///         Double = 1.1,
+    ///         Long = 1000000L,
+    ///         Double = 1.1d,
     ///         Bool = true,
     ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Date = new DateOnly(2023, 1, 15),
@@ -183,8 +183,8 @@ public partial class ObjectClient
     ///         {
     ///             String = "string",
     ///             Integer = 1,
-    ///             Long = 1000000,
-    ///             Double = 1.1,
+    ///             Long = 1000000L,
+    ///             Double = 1.1d,
     ///             Bool = true,
     ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///             Date = new DateOnly(2023, 1, 15),
@@ -247,8 +247,8 @@ public partial class ObjectClient
     ///         {
     ///             String = "string",
     ///             Integer = 1,
-    ///             Long = 1000000,
-    ///             Double = 1.1,
+    ///             Long = 1000000L,
+    ///             Double = 1.1d,
     ///             Bool = true,
     ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///             Date = new DateOnly(2023, 1, 15),
@@ -313,8 +313,8 @@ public partial class ObjectClient
     ///             {
     ///                 String = "string",
     ///                 Integer = 1,
-    ///                 Long = 1000000,
-    ///                 Double = 1.1,
+    ///                 Long = 1000000L,
+    ///                 Double = 1.1d,
     ///                 Bool = true,
     ///                 Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///                 Date = new DateOnly(2023, 1, 15),

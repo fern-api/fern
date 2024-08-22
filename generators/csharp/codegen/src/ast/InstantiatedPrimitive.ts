@@ -64,7 +64,7 @@ interface DateInstantiation {
 interface DateTimeInstantiation {
     type: "dateTime";
     value: Date;
-    parsed: boolean;
+    parse: boolean;
 }
 
 interface GuidInstantiation {
@@ -116,7 +116,7 @@ export class PrimitiveInstantiation extends AstNode {
                 break;
             }
             case "dateTime": {
-                if (this.internalType.parsed) {
+                if (this.internalType.parse) {
                     writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, DateTimeStyles.`);
                     writer.writeNode(
                         csharp.classReference({
@@ -206,7 +206,7 @@ export class PrimitiveInstantiation extends AstNode {
         return new this({
             type: "dateTime",
             value,
-            parsed
+            parse: parsed
         });
     }
 
