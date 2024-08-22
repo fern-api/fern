@@ -373,7 +373,6 @@ describe("test", () => {
                                 return literalOf(value.value.wireValue);
                             },
                             object: (value) => {
-                                console.log(value.properties);
                                 return Object.fromEntries(
                                     value.properties.map((property) => {
                                         return [
