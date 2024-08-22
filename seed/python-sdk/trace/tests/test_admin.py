@@ -10,10 +10,14 @@ from seed.submission import WorkspaceSubmissionStatus
 from seed.submission import WorkspaceSubmissionUpdateInfo_Running
 from seed.submission import TestCaseResultWithStdout
 from seed.submission import TestCaseResult
+from seed.commons import VariableValue_IntegerValue
+from seed.submission import ActualResult_Value
 from seed.submission import TraceResponse
 from seed.commons import DebugVariableValue_IntegerValue
 from seed.submission import ExpressionLocation
 from seed.submission import StackInformation
+from seed.submission import StackFrame
+from seed.submission import Scope
 from seed.submission import TraceResponseV2
 from seed.submission import TracedFile
 from seed.submission import WorkspaceRunDetails
@@ -103,14 +107,26 @@ async def test_store_traced_test_case(client: SeedTrace, async_client: AsyncSeed
         client.admin.store_traced_test_case(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             test_case_id="string",
-            result=TestCaseResultWithStdout(result=TestCaseResult(), stdout="string"),
+            result=TestCaseResultWithStdout(
+                result=TestCaseResult(
+                    expected_result=VariableValue_IntegerValue(value=1),
+                    actual_result=ActualResult_Value(value=VariableValue_IntegerValue(value={"key": "value"})),
+                    passed=True,
+                ),
+                stdout="string",
+            ),
             trace_responses=[
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -122,14 +138,26 @@ async def test_store_traced_test_case(client: SeedTrace, async_client: AsyncSeed
         await async_client.admin.store_traced_test_case(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             test_case_id="string",
-            result=TestCaseResultWithStdout(result=TestCaseResult(), stdout="string"),
+            result=TestCaseResultWithStdout(
+                result=TestCaseResult(
+                    expected_result=VariableValue_IntegerValue(value=1),
+                    actual_result=ActualResult_Value(value=VariableValue_IntegerValue(value={"key": "value"})),
+                    passed=True,
+                ),
+                stdout="string",
+            ),
             trace_responses=[
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -148,10 +176,15 @@ async def test_store_traced_test_case_v_2(client: SeedTrace, async_client: Async
                 TraceResponseV2(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    file=TracedFile(),
+                    file=TracedFile(filename="string", directory="string"),
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -167,10 +200,15 @@ async def test_store_traced_test_case_v_2(client: SeedTrace, async_client: Async
                 TraceResponseV2(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    file=TracedFile(),
+                    file=TracedFile(filename="string", directory="string"),
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -185,15 +223,26 @@ async def test_store_traced_workspace(client: SeedTrace, async_client: AsyncSeed
         client.admin.store_traced_workspace(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             workspace_run_details=WorkspaceRunDetails(
-                exception_v_2=ExceptionV2_Generic(), exception=ExceptionInfo(), stdout="string"
+                exception_v_2=ExceptionV2_Generic(
+                    exception_type="string", exception_message="string", exception_stacktrace="string"
+                ),
+                exception=ExceptionInfo(
+                    exception_type="string", exception_message="string", exception_stacktrace="string"
+                ),
+                stdout="string",
             ),
             trace_responses=[
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -205,15 +254,26 @@ async def test_store_traced_workspace(client: SeedTrace, async_client: AsyncSeed
         await async_client.admin.store_traced_workspace(
             submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
             workspace_run_details=WorkspaceRunDetails(
-                exception_v_2=ExceptionV2_Generic(), exception=ExceptionInfo(), stdout="string"
+                exception_v_2=ExceptionV2_Generic(
+                    exception_type="string", exception_message="string", exception_stacktrace="string"
+                ),
+                exception=ExceptionInfo(
+                    exception_type="string", exception_message="string", exception_stacktrace="string"
+                ),
+                stdout="string",
             ),
             trace_responses=[
                 TraceResponse(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -231,10 +291,15 @@ async def test_store_traced_workspace_v_2(client: SeedTrace, async_client: Async
                 TraceResponseV2(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    file=TracedFile(),
+                    file=TracedFile(filename="string", directory="string"),
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -249,10 +314,15 @@ async def test_store_traced_workspace_v_2(client: SeedTrace, async_client: Async
                 TraceResponseV2(
                     submission_id=uuid.UUID("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"),
                     line_number=1,
-                    file=TracedFile(),
+                    file=TracedFile(filename="string", directory="string"),
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(start=1, offset=1),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string", line_number=1, scopes=[Scope(variables={"string": {"key": "value"}})]
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
