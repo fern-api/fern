@@ -20,6 +20,11 @@ public partial class ProblemClient
     /// <summary>
     /// Returns lightweight versions of all problems
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.V2.V3.Problem.GetLightweightProblemsAsync();
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -58,6 +63,11 @@ public partial class ProblemClient
     /// <summary>
     /// Returns latest versions of all problems
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.V2.V3.Problem.GetProblemsAsync();
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -96,6 +106,11 @@ public partial class ProblemClient
     /// <summary>
     /// Returns latest version of a problem
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.V2.V3.Problem.GetLatestProblemAsync("string");
+    /// </code>
+    /// </example>
     public async Task<ProblemInfoV2> GetLatestProblemAsync(
         string problemId,
         RequestOptions? options = null,
@@ -135,6 +150,11 @@ public partial class ProblemClient
     /// <summary>
     /// Returns requested version of a problem
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.V2.V3.Problem.GetProblemVersionAsync("string", 1);
+    /// </code>
+    /// </example>
     public async Task<ProblemInfoV2> GetProblemVersionAsync(
         string problemId,
         int problemVersion,

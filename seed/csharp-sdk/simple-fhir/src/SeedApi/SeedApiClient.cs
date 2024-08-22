@@ -21,6 +21,11 @@ public partial class SeedApiClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.GetAccountAsync("string");
+    /// </code>
+    /// </example>
     public async Task<Account> GetAccountAsync(
         string accountId,
         RequestOptions? options = null,

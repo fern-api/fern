@@ -20,6 +20,11 @@ public partial class FolderClient
 
     public ServiceClient Service { get; }
 
+    /// <example>
+    /// <code>
+    /// await client.Folder.FooAsync();
+    /// </code>
+    /// </example>
     public async Task FooAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

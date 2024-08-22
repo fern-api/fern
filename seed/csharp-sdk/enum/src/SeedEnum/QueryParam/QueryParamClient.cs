@@ -16,6 +16,13 @@ public partial class QueryParamClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.QueryParam.SendAsync(
+    ///     new SendEnumAsQueryParamRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+    /// );
+    /// </code>
+    /// </example>
     public async Task SendAsync(
         SendEnumAsQueryParamRequest request,
         RequestOptions? options = null,
@@ -56,6 +63,19 @@ public partial class QueryParamClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.QueryParam.SendListAsync(
+    ///     new SendEnumListAsQueryParamRequest
+    ///     {
+    ///         Operand = [Operand.GreaterThan],
+    ///         MaybeOperand = [Operand.GreaterThan],
+    ///         OperandOrColor = [Color.Red],
+    ///         MaybeOperandOrColor = [Color.Red],
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task SendListAsync(
         SendEnumListAsQueryParamRequest request,
         RequestOptions? options = null,

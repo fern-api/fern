@@ -17,6 +17,35 @@ public partial class ObjectClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// using System.Globalization;
+    /// using SeedExhaustive.Types;
+    /// #nullable enable
+    /// await client.Endpoints.Object.GetAndReturnWithOptionalFieldAsync(
+    ///     new ObjectWithOptionalField
+    ///     {
+    ///         String = "string",
+    ///         Integer = 1,
+    ///         Long = 1000000,
+    ///         Double = 1.1,
+    ///         Bool = true,
+    ///         Datetime = DateTime.Parse(
+    ///             "2024-01-15T09:30:00.000Z",
+    ///             null,
+    ///             DateTimeStyles.AdjustToUniversal
+    ///         ),
+    ///         Date = new DateOnly(2023, 1, 15),
+    ///         Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Base64 = "SGVsbG8gd29ybGQh",
+    ///         List = new List<string>() { "string" },
+    ///         Set = new HashSet<string>() { "string" },
+    ///         Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///         Bigint = "123456789123456789",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ObjectWithOptionalField> GetAndReturnWithOptionalFieldAsync(
         ObjectWithOptionalField request,
         RequestOptions? options = null,
@@ -54,6 +83,15 @@ public partial class ObjectClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// using SeedExhaustive.Types;
+    /// #nullable enable
+    /// await client.Endpoints.Object.GetAndReturnWithRequiredFieldAsync(
+    ///     new ObjectWithRequiredField { String = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ObjectWithRequiredField> GetAndReturnWithRequiredFieldAsync(
         ObjectWithRequiredField request,
         RequestOptions? options = null,
@@ -91,6 +129,24 @@ public partial class ObjectClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// using SeedExhaustive.Types;
+    /// #nullable enable
+    /// await client.Endpoints.Object.GetAndReturnWithMapOfMapAsync(
+    ///     new ObjectWithMapOfMap
+    ///     {
+    ///         Map = new Dictionary<string, Dictionary<string, string>>()
+    ///         {
+    ///             {
+    ///                 "string",
+    ///                 new Dictionary<string, string>() { { "string", "string" } }
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ObjectWithMapOfMap> GetAndReturnWithMapOfMapAsync(
         ObjectWithMapOfMap request,
         RequestOptions? options = null,
@@ -128,6 +184,39 @@ public partial class ObjectClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// using System.Globalization;
+    /// using SeedExhaustive.Types;
+    /// #nullable enable
+    /// await client.Endpoints.Object.GetAndReturnNestedWithOptionalFieldAsync(
+    ///     new NestedObjectWithOptionalField
+    ///     {
+    ///         String = "string",
+    ///         NestedObject = new ObjectWithOptionalField
+    ///         {
+    ///             String = "string",
+    ///             Integer = 1,
+    ///             Long = 1000000,
+    ///             Double = 1.1,
+    ///             Bool = true,
+    ///             Datetime = DateTime.Parse(
+    ///                 "2024-01-15T09:30:00.000Z",
+    ///                 null,
+    ///                 DateTimeStyles.AdjustToUniversal
+    ///             ),
+    ///             Date = new DateOnly(2023, 1, 15),
+    ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             Base64 = "SGVsbG8gd29ybGQh",
+    ///             List = new List<string>() { "string" },
+    ///             Set = new HashSet<string>() { "string" },
+    ///             Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///             Bigint = "123456789123456789",
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<NestedObjectWithOptionalField> GetAndReturnNestedWithOptionalFieldAsync(
         NestedObjectWithOptionalField request,
         RequestOptions? options = null,
@@ -165,6 +254,40 @@ public partial class ObjectClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// using System.Globalization;
+    /// using SeedExhaustive.Types;
+    /// #nullable enable
+    /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsync(
+    ///     "string",
+    ///     new NestedObjectWithRequiredField
+    ///     {
+    ///         String = "string",
+    ///         NestedObject = new ObjectWithOptionalField
+    ///         {
+    ///             String = "string",
+    ///             Integer = 1,
+    ///             Long = 1000000,
+    ///             Double = 1.1,
+    ///             Bool = true,
+    ///             Datetime = DateTime.Parse(
+    ///                 "2024-01-15T09:30:00.000Z",
+    ///                 null,
+    ///                 DateTimeStyles.AdjustToUniversal
+    ///             ),
+    ///             Date = new DateOnly(2023, 1, 15),
+    ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///             Base64 = "SGVsbG8gd29ybGQh",
+    ///             List = new List<string>() { "string" },
+    ///             Set = new HashSet<string>() { "string" },
+    ///             Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///             Bigint = "123456789123456789",
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsync(
         string string_,
         NestedObjectWithRequiredField request,
@@ -203,6 +326,42 @@ public partial class ObjectClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// using System.Globalization;
+    /// using SeedExhaustive.Types;
+    /// #nullable enable
+    /// await client.Endpoints.Object.GetAndReturnNestedWithRequiredFieldAsListAsync(
+    ///     new List<NestedObjectWithRequiredField>()
+    ///     {
+    ///         new NestedObjectWithRequiredField
+    ///         {
+    ///             String = "string",
+    ///             NestedObject = new ObjectWithOptionalField
+    ///             {
+    ///                 String = "string",
+    ///                 Integer = 1,
+    ///                 Long = 1000000,
+    ///                 Double = 1.1,
+    ///                 Bool = true,
+    ///                 Datetime = DateTime.Parse(
+    ///                     "2024-01-15T09:30:00.000Z",
+    ///                     null,
+    ///                     DateTimeStyles.AdjustToUniversal
+    ///                 ),
+    ///                 Date = new DateOnly(2023, 1, 15),
+    ///                 Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///                 Base64 = "SGVsbG8gd29ybGQh",
+    ///                 List = new List<string>() { "string" },
+    ///                 Set = new HashSet<string>() { "string" },
+    ///                 Map = new Dictionary<int, string>() { { 1, "string" } },
+    ///                 Bigint = "123456789123456789",
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<NestedObjectWithRequiredField> GetAndReturnNestedWithRequiredFieldAsListAsync(
         IEnumerable<NestedObjectWithRequiredField> request,
         RequestOptions? options = null,

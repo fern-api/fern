@@ -29,6 +29,11 @@ public partial class SeedApiClient
 
     public FolderClient Folder { get; init; }
 
+    /// <example>
+    /// <code>
+    /// await client.FooAsync();
+    /// </code>
+    /// </example>
     public async Task FooAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

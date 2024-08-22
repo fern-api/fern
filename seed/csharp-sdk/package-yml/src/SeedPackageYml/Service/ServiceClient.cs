@@ -16,6 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.NopAsync("id-a2ijs82", "id-219xca8");
+    /// </code>
+    /// </example>
     public async Task NopAsync(
         string id,
         string nestedId,

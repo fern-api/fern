@@ -19,6 +19,11 @@ public partial class CustomAuthClient
     /// <summary>
     /// GET request with custom auth scheme
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.CustomAuth.GetWithCustomAuthAsync();
+    /// </code>
+    /// </example>
     public async Task<bool> GetWithCustomAuthAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -71,6 +76,13 @@ public partial class CustomAuthClient
     /// <summary>
     /// POST request with custom auth scheme
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.CustomAuth.PostWithCustomAuthAsync(
+    ///     new Dictionary<object, object?>() { { "key", "value" } }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<bool> PostWithCustomAuthAsync(
         object request,
         RequestOptions? options = null,

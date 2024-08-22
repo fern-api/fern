@@ -183,6 +183,10 @@ export class Writer {
         return this.namespace;
     }
 
+    public getCustomConfig(): BaseCsharpCustomConfigSchema {
+        return this.customConfig;
+    }
+
     public getSimplifyObjectDictionaries(): boolean {
         return this.customConfig["simplify-object-dictionaries"] ?? true;
     }

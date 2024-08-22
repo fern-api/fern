@@ -21,6 +21,19 @@ public partial class SeedValidationClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.CreateAsync(
+    ///     new CreateRequest
+    ///     {
+    ///         Decimal = 1.1,
+    ///         Even = 1,
+    ///         Name = "string",
+    ///         Shape = Shape.Square,
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<Type> CreateAsync(
         CreateRequest request,
         RequestOptions? options = null,
@@ -58,6 +71,18 @@ public partial class SeedValidationClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.GetAsync(
+    ///     new GetRequest
+    ///     {
+    ///         Decimal = 1.1,
+    ///         Even = 1,
+    ///         Name = "string",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<Type> GetAsync(
         GetRequest request,
         RequestOptions? options = null,

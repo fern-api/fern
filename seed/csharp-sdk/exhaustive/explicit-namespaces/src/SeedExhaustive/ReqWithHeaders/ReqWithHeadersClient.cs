@@ -17,6 +17,13 @@ public partial class ReqWithHeadersClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
+    ///     new ReqWithHeaders { XTestEndpointHeader = "string", Body = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task GetWithCustomHeaderAsync(
         ReqWithHeaders request,
         RequestOptions? options = null,

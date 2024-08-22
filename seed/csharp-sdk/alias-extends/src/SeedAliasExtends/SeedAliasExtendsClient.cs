@@ -21,6 +21,13 @@ public partial class SeedAliasExtendsClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.ExtendedInlineRequestBodyAsync(
+    ///     new InlinedChildRequest { Child = "string", Parent = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task ExtendedInlineRequestBodyAsync(
         InlinedChildRequest request,
         RequestOptions? options = null,

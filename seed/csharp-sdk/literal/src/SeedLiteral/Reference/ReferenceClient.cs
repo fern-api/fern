@@ -16,6 +16,19 @@ public partial class ReferenceClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Reference.SendAsync(
+    ///     new SendRequest
+    ///     {
+    ///         Prompt = "You are a helpful assistant",
+    ///         Stream = false,
+    ///         Context = "You're super wise",
+    ///         Query = "What is the weather today",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<SendResponse> SendAsync(
         SendRequest request,
         RequestOptions? options = null,

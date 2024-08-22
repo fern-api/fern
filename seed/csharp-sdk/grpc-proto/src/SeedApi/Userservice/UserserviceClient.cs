@@ -22,6 +22,11 @@ public partial class UserserviceClient
         _userService = new UserService.UserServiceClient(_grpc.Channel);
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Userservice.CreateAsync(new CreateRequest());
+    /// </code>
+    /// </example>
     public async Task<CreateResponse> CreateAsync(
         CreateRequest request,
         GrpcRequestOptions? options = null,

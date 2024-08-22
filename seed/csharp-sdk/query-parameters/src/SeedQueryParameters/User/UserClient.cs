@@ -16,6 +16,69 @@ public partial class UserClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// using System.Globalization;
+    /// #nullable enable
+    /// await client.User.GetUsernameAsync(
+    ///     new GetUsersRequest
+    ///     {
+    ///         Limit = 1,
+    ///         Id = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+    ///         Date = new DateOnly(2023, 1, 15),
+    ///         Deadline = DateTime.Parse(
+    ///             "2024-01-15T09:30:00.000Z",
+    ///             null,
+    ///             DateTimeStyles.AdjustToUniversal
+    ///         ),
+    ///         Bytes = "SGVsbG8gd29ybGQh",
+    ///         User = new User
+    ///         {
+    ///             Name = "string",
+    ///             Tags = new List<string>() { "string" },
+    ///         },
+    ///         UserList = new List<User>()
+    ///         {
+    ///             new User
+    ///             {
+    ///                 Name = "string",
+    ///                 Tags = new List<string>() { "string" },
+    ///             },
+    ///         },
+    ///         OptionalDeadline = DateTime.Parse(
+    ///             "2024-01-15T09:30:00.000Z",
+    ///             null,
+    ///             DateTimeStyles.AdjustToUniversal
+    ///         ),
+    ///         KeyValue = new Dictionary<string, string>() { { "string", "string" } },
+    ///         OptionalString = "string",
+    ///         NestedUser = new NestedUser
+    ///         {
+    ///             Name = "string",
+    ///             User = new User
+    ///             {
+    ///                 Name = "string",
+    ///                 Tags = new List<string>() { "string" },
+    ///             },
+    ///         },
+    ///         OptionalUser = new User
+    ///         {
+    ///             Name = "string",
+    ///             Tags = new List<string>() { "string" },
+    ///         },
+    ///         ExcludeUser =
+    ///         [
+    ///             new User
+    ///             {
+    ///                 Name = "string",
+    ///                 Tags = new List<string>() { "string" },
+    ///             },
+    ///         ],
+    ///         Filter = ["string"],
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<User> GetUsernameAsync(
         GetUsersRequest request,
         RequestOptions? options = null,

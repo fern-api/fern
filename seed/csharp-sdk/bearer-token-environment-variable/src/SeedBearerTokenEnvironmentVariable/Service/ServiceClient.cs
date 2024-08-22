@@ -19,6 +19,11 @@ public partial class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Service.GetWithBearerTokenAsync();
+    /// </code>
+    /// </example>
     public async Task<string> GetWithBearerTokenAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

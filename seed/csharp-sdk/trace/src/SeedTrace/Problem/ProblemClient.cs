@@ -20,6 +20,49 @@ public partial class ProblemClient
     /// <summary>
     /// Creates a problem
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Problem.CreateProblemAsync(
+    ///     new CreateProblemRequest
+    ///     {
+    ///         ProblemName = "string",
+    ///         ProblemDescription = new ProblemDescription { Boards = new List<object>() { "string" } },
+    ///         Files = new Dictionary<Language, ProblemFiles>()
+    ///         {
+    ///             {
+    ///                 Language.Java,
+    ///                 new ProblemFiles
+    ///                 {
+    ///                     SolutionFile = new FileInfo { Filename = "string", Contents = "string" },
+    ///                     ReadOnlyFiles = new List<FileInfo>()
+    ///                     {
+    ///                         new FileInfo { Filename = "string", Contents = "string" },
+    ///                     },
+    ///                 }
+    ///             },
+    ///         },
+    ///         InputParams = new List<VariableTypeAndName>()
+    ///         {
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///         },
+    ///         OutputType = "no-properties-union",
+    ///         Testcases = new List<TestCaseWithExpectedResult>()
+    ///         {
+    ///             new TestCaseWithExpectedResult
+    ///             {
+    ///                 TestCase = new TestCase
+    ///                 {
+    ///                     Id = "string",
+    ///                     Params = new List<object>() { 1 },
+    ///                 },
+    ///                 ExpectedResult = 1,
+    ///             },
+    ///         },
+    ///         MethodName = "string",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<object> CreateProblemAsync(
         CreateProblemRequest request,
         RequestOptions? options = null,
@@ -60,6 +103,50 @@ public partial class ProblemClient
     /// <summary>
     /// Updates a problem
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Problem.UpdateProblemAsync(
+    ///     "string",
+    ///     new CreateProblemRequest
+    ///     {
+    ///         ProblemName = "string",
+    ///         ProblemDescription = new ProblemDescription { Boards = new List<object>() { "string" } },
+    ///         Files = new Dictionary<Language, ProblemFiles>()
+    ///         {
+    ///             {
+    ///                 Language.Java,
+    ///                 new ProblemFiles
+    ///                 {
+    ///                     SolutionFile = new FileInfo { Filename = "string", Contents = "string" },
+    ///                     ReadOnlyFiles = new List<FileInfo>()
+    ///                     {
+    ///                         new FileInfo { Filename = "string", Contents = "string" },
+    ///                     },
+    ///                 }
+    ///             },
+    ///         },
+    ///         InputParams = new List<VariableTypeAndName>()
+    ///         {
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///         },
+    ///         OutputType = "no-properties-union",
+    ///         Testcases = new List<TestCaseWithExpectedResult>()
+    ///         {
+    ///             new TestCaseWithExpectedResult
+    ///             {
+    ///                 TestCase = new TestCase
+    ///                 {
+    ///                     Id = "string",
+    ///                     Params = new List<object>() { 1 },
+    ///                 },
+    ///                 ExpectedResult = 1,
+    ///             },
+    ///         },
+    ///         MethodName = "string",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<UpdateProblemResponse> UpdateProblemAsync(
         string problemId,
         CreateProblemRequest request,
@@ -101,6 +188,11 @@ public partial class ProblemClient
     /// <summary>
     /// Soft deletes a problem
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Problem.DeleteProblemAsync("string");
+    /// </code>
+    /// </example>
     public async Task DeleteProblemAsync(
         string problemId,
         RequestOptions? options = null,
@@ -132,6 +224,21 @@ public partial class ProblemClient
     /// <summary>
     /// Returns default starter files for problem
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Problem.GetDefaultStarterFilesAsync(
+    ///     new GetDefaultStarterFilesRequest
+    ///     {
+    ///         InputParams = new List<VariableTypeAndName>()
+    ///         {
+    ///             new VariableTypeAndName { VariableType = "no-properties-union", Name = "string" },
+    ///         },
+    ///         OutputType = "no-properties-union",
+    ///         MethodName = "string",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<GetDefaultStarterFilesResponse> GetDefaultStarterFilesAsync(
         GetDefaultStarterFilesRequest request,
         RequestOptions? options = null,

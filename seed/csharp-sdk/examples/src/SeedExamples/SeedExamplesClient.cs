@@ -39,6 +39,11 @@ public partial class SeedExamplesClient
 
     public TypesClient Types { get; init; }
 
+    /// <example>
+    /// <code>
+    /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
+    /// </code>
+    /// </example>
     public async Task<string> EchoAsync(
         string request,
         RequestOptions? options = null,
