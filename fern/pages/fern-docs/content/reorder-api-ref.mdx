@@ -31,7 +31,11 @@ navigation:
 ```
 
 ### Ordering top-level sections
-The `layout` option allows you to specify the order of subpackages and endpoints at the top level of your API Reference.
+The `layout` option allows you to specify the order of subpackages, sections, and endpoints at the top level of your API Reference.
+
+<Note title="Section names">
+If you are using an OpenAPI Defintiion, sections are created based on the `tags` property. If you are using a Fern Definition, sections are created based on the `service` file names.
+</Note>
 
 <Tabs>
 <Tab title="Ordering sections">
@@ -66,7 +70,9 @@ navigation:
 Adding a `:` after the section name allows you to specify the order of its nested subpackages and endpoints. 
 
 <Note title="Referencing Endpoints">
-To reference an endpoint, you can use 
+To reference an endpoint, you can use either:
+- `METHOD /path/name` (best for OpenAPI Defintiion)
+- `serviceName.endpointName` (best for Fern Definition)
 </Note>
 
 ```yaml title="docs.yml"
@@ -86,7 +92,44 @@ navigation:
 ## Customizing the API Reference
 
 ### Renaming the API Reference 
-To customize the name of your API Reference, edit the value following `api` (`- api: Title Here`). 
+To customize the name of your API Reference, edit the value following `api`. 
+
+```yaml title="docs.yml"
+navigation:
+  - api: Title Here
+```
+
+### Styling endpoints
+To customize the display of an endpoint, you can expand the endpoint description to include a `title` and `slug`, or set the endpoint as `hidden`. 
+
+```yaml title="docs.yml"
+navigation: 
+  - api: API Reference
+    layout: 
+      - user: 
+          - endpoint: user.create
+            title: Create a User
+            slug: user-creation
+          - user.delete
+```
+
+<Frame>
+<img src="custom-endpoint.png" alt="Setting an endpoint title" />
+</Frame>
+
+### Referencing more than one API Reference
+By default, the API Reference displays the API 
+
+To include multiple APIs in your documentation, you can indicate which to include using the `api-name` property. 
+
+```yaml title="docs.yml"
+navigation:
+  - api: Plant Store
+    api-name: plant-api
+  - api: Garden
+    api-name: garden-api
+```
+
 
 ### Adding custom sections
 You can add arbitrary folders in the sidebar by adding a `section` to your API Reference layout. Sections can be customized by adding properties like a `icon`, `summary`, `slug` (or `skip-slug`), and `contents`. 
@@ -107,7 +150,7 @@ navigation:
 </Frame>
 
 ### Adding a section overview
-The `summary` property allows you to add an `.md` or `.mdx` page as an overview of the API Reference or a custom section. 
+The `summary` property allows you to add an `.md` or `.mdx` page as an overview of the API Reference or a section. 
 
 ```yaml title="docs.yml"
 navigation: 
