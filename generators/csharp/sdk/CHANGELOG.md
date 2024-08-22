@@ -7,13 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-- Feature: Generate mock server tests for all endpoints. This can be disabled via the following configuration:
+- Feature: Mock server tests can be generated for all endpoints by setting the following configuration:
 
   ```yml
   generators:
     - name: fernapi/fern-csharp-sdk
       config:
-        disable-mock-server-tests: true
+        generate-mock-server-tests: true
   ```
 
 - Improvement: Rather than sending null property values in requests, omit the property entirely.
