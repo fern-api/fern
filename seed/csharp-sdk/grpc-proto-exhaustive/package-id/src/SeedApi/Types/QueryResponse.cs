@@ -54,7 +54,7 @@ public record QueryResponse
             Results = value.Results?.Select(QueryResult.FromProto),
             Matches = value.Matches?.Select(ScoredColumn.FromProto),
             Namespace = value.Namespace,
-            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
+            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null
         };
     }
 }

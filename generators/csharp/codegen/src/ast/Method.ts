@@ -36,7 +36,7 @@ export declare namespace Method {
         classReference?: ClassReference;
         /* Any annotations to add to the method */
         annotations?: Annotation[];
-        /* Any annotations to add to the method */
+        /* Any code example to add to the method */
         codeExample?: AstNode;
     }
 }
@@ -91,7 +91,7 @@ export class Method extends AstNode {
     public write(writer: Writer): void {
         if (this.summary != null) {
             writer.writeLine("/// <summary>");
-            this.summary?.split("\n").forEach((line) => {
+            this.summary.split("\n").forEach((line) => {
                 writer.writeLine(`/// ${line}`);
             });
 

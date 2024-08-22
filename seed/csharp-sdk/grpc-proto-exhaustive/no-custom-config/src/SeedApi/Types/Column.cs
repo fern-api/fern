@@ -52,7 +52,7 @@ public record Column
             Values = value.Values?.ToList() ?? new List<float>(),
             Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
             IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null
         };
     }
 }

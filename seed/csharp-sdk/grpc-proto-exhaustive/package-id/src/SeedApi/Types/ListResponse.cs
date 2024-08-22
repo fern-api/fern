@@ -54,7 +54,7 @@ public record ListResponse
             Columns = value.Columns?.Select(ListElement.FromProto),
             Pagination = value.Pagination != null ? Pagination.FromProto(value.Pagination) : null,
             Namespace = value.Namespace,
-            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null,
+            Usage = value.Usage != null ? Usage.FromProto(value.Usage) : null
         };
     }
 }

@@ -29,12 +29,8 @@ public partial class DataserviceClient
     ///     {
     ///         Columns = new List<Column>()
     ///         {
-    ///             new Column
-    ///             {
-    ///                 Id = "id",
-    ///                 Values = new List<float>() { 1.1 },
-    ///             },
-    ///         },
+    ///             new Column { Id = "id", Values = new[] { 1.1f } }
+    ///         }
     ///     }
     /// );
     /// </code>
@@ -221,7 +217,7 @@ public partial class DataserviceClient
 
     /// <example>
     /// <code>
-    /// await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });
+    /// await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1U });
     /// </code>
     /// </example>
     public async Task<QueryResponse> QueryAsync(

@@ -126,13 +126,23 @@ export class ExampleGenerator {
                 const entries = p.list.map((exampleTypeReference) =>
                     this.getSnippetForTypeReference(exampleTypeReference, parsedDatetimes)
                 );
-                return csharp.list({
-                    itemType: this.context.csharpTypeMapper.convert({
-                        reference: p.itemType,
-                        unboxOptionals: true
-                    }),
-                    entries
-                });
+                if (this.context.isReadOnlyMemoryType(p.itemType)) {
+                    return csharp.readOnlyMemory({
+                        itemType: this.context.csharpTypeMapper.convert({
+                            reference: p.itemType,
+                            unboxOptionals: true
+                        }),
+                        entries
+                    });
+                } else {
+                    return csharp.list({
+                        itemType: this.context.csharpTypeMapper.convert({
+                            reference: p.itemType,
+                            unboxOptionals: true
+                        }),
+                        entries
+                    });
+                }
             },
             set: (p) => {
                 const entries = p.set.map((exampleTypeReference) =>

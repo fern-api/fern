@@ -60,7 +60,7 @@ public record ScoredColumn
             Values = value.Values?.ToList(),
             Metadata = value.Metadata != null ? Metadata.FromProto(value.Metadata) : null,
             IndexedData =
-                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null,
+                value.IndexedData != null ? IndexedData.FromProto(value.IndexedData) : null
         };
     }
 }
