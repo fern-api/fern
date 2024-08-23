@@ -122,6 +122,7 @@ exports[`open api parser > defaults > parse open api 1`] = `
   "securitySchemes": {},
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "https://api.apiture.com/banking",

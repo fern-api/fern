@@ -102600,6 +102600,7 @@ Other details about this invoice",
   "securitySchemes": {},
   "servers": [
     {
+      "audiences": null,
       "description": "Flexport API",
       "name": null,
       "url": "https://api.flexport.com",

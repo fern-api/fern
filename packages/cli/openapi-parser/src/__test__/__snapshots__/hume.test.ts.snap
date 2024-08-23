@@ -6614,6 +6614,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "https://api.hume.ai",

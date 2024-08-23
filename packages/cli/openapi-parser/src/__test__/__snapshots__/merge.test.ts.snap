@@ -61698,11 +61698,13 @@ Fetch from the \`LIST TimeOffs\` endpoint and filter by \`ID\` to show all time 
   },
   "servers": [
     {
+      "audiences": null,
       "description": "Production",
       "name": "Production",
       "url": "https://api.merge.dev/api/hris/v1",
     },
     {
+      "audiences": null,
       "description": "Sandbox",
       "name": "Sandbox",
       "url": "https://api-sandbox.merge.dev/api/hris/v1",
