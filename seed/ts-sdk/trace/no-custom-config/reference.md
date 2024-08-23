@@ -116,7 +116,7 @@ await client.admin.updateTestSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ff
 
 ```typescript
 await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
-    updateTime: new Date("2024-01-15T09:30:00.000Z"),
+    updateTime: "2024-01-15T09:30:00Z",
     updateInfo: {
         type: "running",
         value: SeedTrace.RunningSubmissionState.QueueingSubmission,
@@ -236,7 +236,7 @@ await client.admin.updateWorkspaceSubmissionStatus("d5e9c84f-c2b2-4bf4-b4b0-7ffd
 
 ```typescript
 await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
-    updateTime: new Date("2024-01-15T09:30:00.000Z"),
+    updateTime: "2024-01-15T09:30:00Z",
     updateInfo: {
         type: "running",
         value: SeedTrace.RunningSubmissionState.QueueingSubmission,
@@ -862,8 +862,8 @@ Create a new playlist
 
 ```typescript
 await client.playlist.createPlaylist(1, {
-    datetime: new Date("2024-01-15T09:30:00.000Z"),
-    optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
+    datetime: "2024-01-15T09:30:00Z",
+    optionalDatetime: "2024-01-15T09:30:00Z",
     body: {
         name: "string",
         problems: ["string"],
