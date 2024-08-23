@@ -105,7 +105,7 @@ export class Admin {
      *
      * @example
      *     await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
-     *         updateTime: new Date("2024-01-15T09:30:00.000Z"),
+     *         updateTime: "2024-01-15T09:30:00Z",
      *         updateInfo: {
      *             type: "running",
      *             value: SeedTrace.RunningSubmissionState.QueueingSubmission
@@ -243,7 +243,7 @@ export class Admin {
      *
      * @example
      *     await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
-     *         updateTime: new Date("2024-01-15T09:30:00.000Z"),
+     *         updateTime: "2024-01-15T09:30:00Z",
      *         updateInfo: {
      *             type: "running",
      *             value: SeedTrace.RunningSubmissionState.QueueingSubmission

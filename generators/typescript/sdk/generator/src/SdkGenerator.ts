@@ -365,7 +365,7 @@ export class SdkGenerator {
             dependencyManager: this.dependencyManager,
             rootDirectory: this.rootDirectory,
             writeUnitTests: this.config.writeUnitTests,
-            includeSerdeLayer: config.includeSerdeLayer,
+            includeSerdeLayer: config.includeSerdeLayer
         });
         this.generatorCli = new GeneratorCli({
             logger: context.logger
