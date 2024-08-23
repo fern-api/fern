@@ -13,7 +13,8 @@ local:
   env:
     NODE_ENV: test
 customFixtureConfig: 
-  generateWireTests: true    
+  customConfig: 
+    generateWireTests: true    
 fixtures:
   imdb:
     - customConfig: null

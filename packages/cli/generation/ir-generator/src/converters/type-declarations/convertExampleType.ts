@@ -478,7 +478,7 @@ function convertObject({
     }
     return ExampleTypeShape.object({
         properties:
-            rawObject.properties != null
+            rawObject.properties != null || rawObject.extends != null
                 ? Object.entries(example).reduce<ExampleObjectProperty[]>(
                       (exampleProperties, [wireKey, propertyExample]) => {
                           const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({
