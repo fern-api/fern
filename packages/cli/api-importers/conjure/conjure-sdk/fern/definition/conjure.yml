@@ -1,0 +1,13 @@
+imports: 
+  types: types.yml
+  services: services.yml
+
+types: 
+
+  ConjureServiceName: 
+    type: string
+
+  DefinitionFile: 
+    properties: 
+      types: optional<types.ConjureTypes>
+      services: optional<map<ConjureServiceName, services.ConjureService>>

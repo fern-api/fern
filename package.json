@@ -39,6 +39,7 @@
     "seed:local": "pnpm --filter @fern-api/seed-cli dist:cli && node packages/seed/dist/bundle.cjs",
     "ir:generate": "pnpm --filter @fern-api/ir-sdk generate",
     "openapi-ir:generate": "pnpm --filter @fern-api/openapi-ir-sdk generate",
+    "conjure-sdk:generate": "pnpm --filter @fern-api/conjure-sdk generate",
     "seed-config:generate": "pnpm --filter @fern-api/seed-cli generate",
     "docs-config:generate": "pnpm --filter @fern-api/configuration generate",
     "prepare": "husky"
