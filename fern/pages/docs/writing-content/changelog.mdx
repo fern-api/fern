@@ -1,0 +1,153 @@
+---
+title: Keep a Changelog
+subtitle: Record the notable changes to your project
+---
+
+Keep a record of how your project has changed by writing changelog entries. The changelog will automatically populate with the files contained within the `changelog` folder.
+
+<Frame
+    caption="Keep your users updated as your project evolves"
+    background="subtle"
+  >
+      <img src="changelog-humanloop.png" />
+  </Frame>
+
+## Configure your Changelog
+
+<AccordionGroup>
+<Accordion title='Top-level Changelog'>
+Configure a changelog for your project by creating a changelog folder.
+
+<CodeBlock title="Configure a Changelog">
+```yaml {4-6}
+fern/
+├─ fern.config.json
+├─ docs.yml
+├─ changelog
+    ├─ 07-08-24.md
+    └─ 08-21-24.mdx
+```
+</CodeBlock>
+
+Once you've configured your changelog, specify where it should appear within your docs in your `docs.yml`.
+
+<CodeBlock title="docs.yml">
+```yaml {8-11}
+tabs:
+  guides:
+    display-name: Guides
+    icon: light book-open
+  api:
+    display-name: API Reference
+    icon: light code
+  changelog:
+    display-name: Changelog
+    icon: light clock
+    changelog: ../changelog
+```
+</CodeBlock>
+
+[View an example](https://github.com/humanloop/humanloop-docs/blob/30ddedaf6d2779361e8ee1f373f722364e5dd71d/fern/versions/v5.yml#L10-L13) in GitHub of Humanloop's `docs.yml` which powers [their Changelog](https://humanloop.com/docs/changelog).
+
+</Accordion>
+<Accordion title='API-level Changelog'>
+Configure a changelog at the API-level by creating a changelog folder specific to an API.
+
+<CodeBlocks>
+<CodeBlock title="OpenAPI">
+```yaml {6-8}
+fern/
+├─ fern.config.json
+├─ docs.yml
+└─ openapi/
+    ├─ openapi.yml
+    └─ changelog
+        ├─ 07-15-24.md
+        └─ 08-23-24.mdx
+```
+</CodeBlock>
+<CodeBlock title="Fern Definition">
+```yaml {7-9}
+fern/
+├─ fern.config.json
+├─ docs.yml
+└─ definition/
+    ├─ api.yml
+    ├─ imdb.yml
+    └─ changelog
+        ├─ 07-15-24.md
+        └─ 08-23-24.mdx 
+```
+</CodeBlock>
+<CodeBlock title="Multiple APIs">
+```yaml {8-10,14-17}
+fern/
+├─ fern.config.json
+├─ docs.yml
+└─ user-api
+    └─ openapi/
+        ├─ openapi.yml
+        ├─ openapi-overrides.yml
+        └─ changelog
+            ├─ 07-15-24.md
+            └─ 08-23-24.mdx
+└─ admin-api
+    └─ openapi/
+        ├─ openapi.yml
+        └─ changelog
+            ├─ 06-29-24.md
+            └─ 08-02-24.md
+            └─ 08-15-24.md
+```
+</CodeBlock>
+</CodeBlocks>
+
+Changelogs contained within your API folder will automatically be displayed at the bottom of your API reference. You do not need to configure your changelog(s) within `docs.yml`. 
+
+View an example of a changelog per API in [Astronomer's docs](https://www.astronomer.io/docs/api/iam-api-reference/changelog).
+
+<Frame
+    caption="A unique changelog per API"
+    background="subtle"
+  >
+      <img src="changelog-astronomer.png" />
+  </Frame>
+
+</Accordion>
+</AccordionGroup>
+
+## Write a Changelog Entry
+
+Create a new changelog entry by writing a markdown file. You can use `.md` or `.mdx` files. The benefit of using `.mdx` is that you can leverage the built-in [component library](/fern/pages/docs/components/overview.mdx) within an entry.
+
+<CodeBlock title = "fern/openapi/changelog/2024-07-31.mdx">
+```mdx
+## Summary
+
+In the latest release, we've added endpoints to create a new Plant.
+
+### What's new?
+
+New endpoints:
+
+- `POST /plant` add a new plant to inventory.
+
+New object schemas:
+
+- `CreatePlantRequest`
+
+<Note> Have questions? Reach out to your local botanist. </Note>
+```
+</CodeBlock>
+
+### Entry date 
+
+Changelog entries are automatically sorted chronologically by the date specific in the file name. Specify the date of your entry using one of the following formats:
+
+- MM-DD-YYYY (e.g., 10-06-2024)
+- MM-DD-YY (e.g., 10-06-24)
+- YYYY-MM-DD (e.g., 2024-04-21)
+
+### Linking to an Entry
+
+ Each changelog entry has a unique URL you can direct users to. For example, `https://plantstore.dev/changelog/2024/8/16`

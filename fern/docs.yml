@@ -262,6 +262,8 @@ navigation:
             path: ./pages/fern-docs/content/front-matter.mdx
           - page: Reusable snippets
             path: ./pages/fern-docs/content/reusable-snippets.mdx
+          - page: Changelog
+            path: ./pages/docs/writing-content/changelog.mdx
 
       - section: API References
         contents:
