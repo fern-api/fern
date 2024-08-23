@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedPagination.Core;
 
 #nullable enable
 
@@ -20,4 +21,9 @@ public record ListUsersPaginationResponse
 
     [JsonPropertyName("data")]
     public IEnumerable<User> Data { get; set; } = new List<User>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

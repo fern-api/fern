@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -20,4 +21,9 @@ public record RecordingResponseNotification
 
     [JsonPropertyName("tracedFile")]
     public TracedFile? TracedFile { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

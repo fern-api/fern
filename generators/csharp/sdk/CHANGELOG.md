@@ -5,6 +5,56 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2024-08-22
+
+- No changes.
+
+## [1.3.0-rc2] - 2024-08-22
+
+- Improvement: Fix warnings in generated `RawClient`.
+
+- Improvement: Use simpler primitive instantiation for the various number types.
+
+## [1.3.0-rc1] - 2024-08-22
+
+- Feature: Generate the `ToString` method to write the JSON format of an object. This
+  makes it far easier to visualize response objects by simply printing the object, i.e.
+
+  ```csharp
+  var response = await client.GetUserAsync(...);
+  System.Console.WriteLine(response);
+  ```
+
+- Feature: Generate snippets as example documentation, e.g.
+
+  ```csharp
+    /// <example>
+    /// <code>
+    /// await client.Data.UploadAsync(
+    ///     new UploadRequest
+    ///     {
+    ///         Columns = new List<Column>()
+    ///         {
+    ///             new Column
+    ///             {
+    ///                 Id = "id",
+    ///                 Values = new List<float>() { 1.1f },
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<UploadResponse> UploadAsync(
+        UploadRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        ...
+    }
+  ```
+
 ## [1.3.0-rc0] - 2024-08-21
 
 - Feature: Add support for sending the `User-Agent` header.
@@ -24,8 +74,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
       config:
         package-id: Acme.Client
   ```
-
-- Improvement: Endpoint method now include docstrings with example usage.
 
 - Feature: Mock server tests can be generated for all endpoints by setting the following configuration:
 

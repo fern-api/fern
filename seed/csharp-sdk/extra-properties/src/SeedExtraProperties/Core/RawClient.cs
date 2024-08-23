@@ -27,7 +27,7 @@ internal class RawClient(ClientOptions clientOptions)
         {
             request.Headers.Add("Content-Type", request.ContentType);
         }
-        SetHeaders(httpRequest, clientOptions.Headers);
+        SetHeaders(httpRequest, Options.Headers);
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new());
 

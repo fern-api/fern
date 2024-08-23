@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedPagination.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record User
 
     [JsonPropertyName("id")]
     public required int Id { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

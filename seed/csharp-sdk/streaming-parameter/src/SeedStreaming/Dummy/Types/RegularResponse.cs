@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedStreaming.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record RegularResponse
 
     [JsonPropertyName("name")]
     public string? Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

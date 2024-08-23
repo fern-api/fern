@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -22,6 +23,11 @@ public record QueryColumn
     [JsonPropertyName("indexedData")]
     public IndexedData? IndexedData { get; set; }
 
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+
     /// <summary>
     /// Maps the QueryColumn type into its Protobuf-equivalent representation.
     /// </summary>
@@ -34,7 +40,7 @@ public record QueryColumn
         }
         if (TopK != null)
         {
-            result.TopK = TopK ?? 0U;
+            result.TopK = TopK ?? 0;
         }
         if (Namespace != null)
         {

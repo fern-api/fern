@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record UpdatePlaylistRequest
     /// </summary>
     [JsonPropertyName("problems")]
     public IEnumerable<string> Problems { get; set; } = new List<string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

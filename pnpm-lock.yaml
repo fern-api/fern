@@ -220,8 +220,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
       '@fern-fern/ir-sdk':
-        specifier: ^53.6.0
-        version: 53.6.0
+        specifier: ^53.7.0
+        version: 53.7.2
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -269,8 +269,8 @@ importers:
         specifier: workspace:*
         version: link:../../commons
       '@fern-fern/ir-sdk':
-        specifier: ^53.6.0
-        version: 53.6.0
+        specifier: ^53.7.0
+        version: 53.7.2
       zod:
         specifier: ^3.22.3
         version: 3.22.4
@@ -3184,6 +3184,8 @@ importers:
         version: 4.6.4
 
   packages/cli/cli/dist/dev: {}
+
+  packages/cli/cli/dist/prod: {}
 
   packages/cli/configuration:
     dependencies:
@@ -6725,9 +6727,6 @@ packages:
 
   '@fern-fern/ir-sdk@53.5.0':
     resolution: {integrity: sha512-0mgKOG7BgAKpABFBlHQCb0Bqph4ZFz/hmLWv/EuBHm5YD7NwWA0ZsOcZ0UX9pX/CRG0GAG3Me2APxzYRYaCw4A==}
-
-  '@fern-fern/ir-sdk@53.6.0':
-    resolution: {integrity: sha512-LN7rilQZdMlgrUgLSj/3Tf9gEBAj/4auGDyqOsz295ji0aI+iq3KKwS7W/xdeZJJdf7yf0iJpJommGVqTDSd6A==}
 
   '@fern-fern/ir-sdk@53.7.0':
     resolution: {integrity: sha512-PoCj8yOep3kFeDZYORAzqPwVtCSNmbT2SfR/AoxKCcikeZ5i+4Um4ZXx1e6UaAy7dIYF5kWeRc6lptFBRoj7Gw==}
@@ -13816,8 +13815,6 @@ snapshots:
   '@fern-fern/ir-sdk@39.0.0': {}
 
   '@fern-fern/ir-sdk@53.5.0': {}
-
-  '@fern-fern/ir-sdk@53.6.0': {}
 
   '@fern-fern/ir-sdk@53.7.0': {}
 

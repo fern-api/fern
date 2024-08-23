@@ -17,4 +17,9 @@ public record Identifier
 
     [JsonPropertyName("label")]
     public required string Label { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }
