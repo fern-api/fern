@@ -1,20 +1,14 @@
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { isRawMultipleBaseUrlsEnvironment, RawSchemas } from "@fern-api/yaml-schema";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 
 const PRODUCTION_ENVNIRONMENT_NAME = "Production";
 const DEFAULT_ENVIRONMENT_NAME = "Default";
 
-function isMultiServerSchema(
-    schema: RawSchemas.EnvironmentSchema
-): schema is RawSchemas.MultipleBaseUrlsEnvironmentSchema {
-    return typeof schema === "object" && Object.hasOwn(schema, "urls");
-}
-
 function extractUrlsFromEnvironmentSchema(
     record: Record<string, RawSchemas.EnvironmentSchema>
 ): Record<string, string> {
     return Object.entries(record).reduce<Record<string, string>>((acc, [name, schemaOrUrl]) => {
-        if (isMultiServerSchema(schemaOrUrl)) {
+        if (isRawMultipleBaseUrlsEnvironment(schemaOrUrl)) {
             Object.entries(schemaOrUrl.urls).forEach(([urlsName, urlsValue]) => {
                 acc[urlsName] = urlsValue;
             });
