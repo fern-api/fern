@@ -18,6 +18,7 @@ export declare namespace JestTestGenerator {
         ir: IR.IntermediateRepresentation;
         dependencyManager: DependencyManager;
         rootDirectory: Directory;
+        includeSerdeLayer: boolean;
         writeUnitTests: boolean;
     }
 }
@@ -27,12 +28,14 @@ export class JestTestGenerator {
     private dependencyManager: DependencyManager;
     private rootDirectory: Directory;
     private writeUnitTests: boolean;
+    private includeSerdeLayer: boolean;
 
-    constructor({ ir, dependencyManager, rootDirectory, writeUnitTests }: JestTestGenerator.Args) {
+    constructor({ ir, dependencyManager, rootDirectory, includeSerdeLayer, writeUnitTests }: JestTestGenerator.Args) {
         this.ir = ir;
         this.dependencyManager = dependencyManager;
         this.rootDirectory = rootDirectory;
         this.writeUnitTests = writeUnitTests;
+        this.includeSerdeLayer = includeSerdeLayer;
     }
 
     private addJestConfig(): void {
@@ -321,6 +324,8 @@ describe("test", () => {
         // For certain complex types, we just JSON.parse/JSON.stringify to simplify some times
         let shouldJsonParseStringify = false;
 
+        const includeSerdeLayer = this.includeSerdeLayer;
+
         const getExpectedResponse = () => {
             const body = getExampleTypeReferenceForResponse(example.response);
             if (!body) {
@@ -341,7 +346,11 @@ describe("test", () => {
                             float: (value) => literalOf(value),
                             base64: (value) => literalOf(value),
                             bigInteger: (value) => literalOf(value),
-                            datetime: (value) => code`new Date(${literalOf(value.toISOString())})`,
+                            datetime: (value) => {
+                                return includeSerdeLayer
+                                    ? code`new Date(${literalOf(value.datetime.toISOString())})`
+                                    : literalOf(value.raw);
+                            },
                             date: (value) => literalOf(value),
                             uuid: (value) => literalOf(value),
                             _other: (value) => literalOf(value)
