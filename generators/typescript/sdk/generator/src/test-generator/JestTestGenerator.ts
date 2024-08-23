@@ -13,13 +13,27 @@ import path from "path";
 import { Directory, ts } from "ts-morph";
 import { arrayOf, code, Code, conditionalOutput, literalOf } from "ts-poet";
 
+export declare namespace JestTestGenerator {
+    interface Args {
+        ir: IR.IntermediateRepresentation;
+        dependencyManager: DependencyManager;
+        rootDirectory: Directory;
+        writeUnitTests: boolean;
+    }
+}
+
 export class JestTestGenerator {
-    constructor(
-        private ir: IR.IntermediateRepresentation,
-        private dependencyManager: DependencyManager,
-        private rootDirectory: Directory,
-        private writeUnitTests: boolean
-    ) {}
+    private ir: IR.IntermediateRepresentation;
+    private dependencyManager: DependencyManager;
+    private rootDirectory: Directory;
+    private writeUnitTests: boolean;
+
+    constructor({ ir, dependencyManager, rootDirectory, writeUnitTests }: JestTestGenerator.Args) {
+        this.ir = ir;
+        this.dependencyManager = dependencyManager;
+        this.rootDirectory = rootDirectory;
+        this.writeUnitTests = writeUnitTests;
+    }
 
     private addJestConfig(): void {
         const jestConfig = this.rootDirectory.createSourceFile(
