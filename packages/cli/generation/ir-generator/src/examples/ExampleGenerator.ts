@@ -905,7 +905,10 @@ export class ExampleGenerator {
                 const exDateTime = example != null && typeof example === "string" ? example : Examples.DATE_TIME;
                 return {
                     jsonExample: exDateTime,
-                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(new Date(exDateTime)))
+                    shape: ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime({
+                        datetime: new Date(exDateTime),
+                        raw: exDateTime,
+                    }))
                 };
             }
             case "UUID": {

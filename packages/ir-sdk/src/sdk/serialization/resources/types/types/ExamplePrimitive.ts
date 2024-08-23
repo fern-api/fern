@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernIr from "../../../../api/index";
 import * as core from "../../../../core";
 import { EscapedString } from "../../commons/types/EscapedString";
+import { ExampleDatetime } from "./ExampleDatetime";
 
 export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrimitive.Raw, FernIr.ExamplePrimitive> =
     core.serialization
@@ -37,9 +38,7 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
             date: core.serialization.object({
                 date: core.serialization.string(),
             }),
-            datetime: core.serialization.object({
-                datetime: core.serialization.date(),
-            }),
+            datetime: ExampleDatetime,
             uuid: core.serialization.object({
                 uuid: core.serialization.string(),
             }),
@@ -72,7 +71,7 @@ export const ExamplePrimitive: core.serialization.Schema<serializers.ExamplePrim
                     case "date":
                         return FernIr.ExamplePrimitive.date(value.date);
                     case "datetime":
-                        return FernIr.ExamplePrimitive.datetime(value.datetime);
+                        return FernIr.ExamplePrimitive.datetime(value);
                     case "uuid":
                         return FernIr.ExamplePrimitive.uuid(value.uuid);
                     case "base64":
@@ -147,9 +146,8 @@ export declare namespace ExamplePrimitive {
         date: string;
     }
 
-    interface Datetime {
+    interface Datetime extends ExampleDatetime.Raw {
         type: "datetime";
-        datetime: string;
     }
 
     interface Uuid {

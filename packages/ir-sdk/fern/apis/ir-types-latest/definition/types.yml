@@ -458,9 +458,7 @@ types:
       date:
         type: date
         key: date
-      datetime:
-        type: datetime
-        key: datetime
+      datetime: ExampleDatetime
       uuid:
         type: uuid
         key: uuid
@@ -470,6 +468,11 @@ types:
       bigInteger:
         type: bigint
         key: bigInteger
+  
+  ExampleDatetime: 
+    properties: 
+      datetime: datetime
+      raw: optional<string>
 
   ExampleNamedType:
     properties:
