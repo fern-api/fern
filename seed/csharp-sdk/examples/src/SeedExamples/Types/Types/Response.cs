@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record Response
 
     [JsonPropertyName("identifiers")]
     public IEnumerable<Identifier> Identifiers { get; set; } = new List<Identifier>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -38,4 +39,9 @@ public record ProblemInfo
 
     [JsonPropertyName("supportsCustomTestCases")]
     public required bool SupportsCustomTestCases { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

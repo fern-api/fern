@@ -39,7 +39,6 @@ public partial class UserserviceClient
                 options ?? new GrpcRequestOptions(),
                 cancellationToken
             );
-            ;
             var call = _userService.CreateAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return CreateResponse.FromProto(response);

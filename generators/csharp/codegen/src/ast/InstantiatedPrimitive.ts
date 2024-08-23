@@ -87,13 +87,13 @@ export class PrimitiveInstantiation extends AstNode {
                 writer.write(this.internalType.value.toString());
                 break;
             case "long":
-                writer.write(`${this.internalType.value.toString()}L`);
+                writer.write(`${this.internalType.value.toString()}`);
                 break;
             case "uint":
-                writer.write(`${this.internalType.value.toString()}U`);
+                writer.write(`${this.internalType.value.toString()}`);
                 break;
             case "ulong":
-                writer.write(`${this.internalType.value.toString()}UL`);
+                writer.write(`${this.internalType.value.toString()}`);
                 break;
             case "string":
                 writer.write(`"${PrimitiveInstantiation.escapeForCSharp(this.internalType.value)}"`);
@@ -105,7 +105,7 @@ export class PrimitiveInstantiation extends AstNode {
                 writer.write(`${this.internalType.value.toString()}f`);
                 break;
             case "double":
-                writer.write(`${this.internalType.value.toString()}d`);
+                writer.write(`${this.internalType.value.toString()}`);
                 break;
             case "date": {
                 const date = new Date(this.internalType.value);

@@ -66,6 +66,8 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             );
         });
 
+        class_.addMethod(this.context.getToStringMethod());
+
         if (this.shouldAddProtobufMappers(this.typeDeclaration)) {
             this.addProtobufMappers({
                 class_,

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -18,6 +19,11 @@ public record DeleteRequest
 
     [JsonPropertyName("filter")]
     public Metadata? Filter { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 
     /// <summary>
     /// Maps the DeleteRequest type into its Protobuf-equivalent representation.

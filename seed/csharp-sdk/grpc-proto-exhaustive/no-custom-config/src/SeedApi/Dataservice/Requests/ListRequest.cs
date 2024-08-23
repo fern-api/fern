@@ -1,3 +1,4 @@
+using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -14,6 +15,11 @@ public record ListRequest
 
     public string? Namespace { get; set; }
 
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+
     /// <summary>
     /// Maps the ListRequest type into its Protobuf-equivalent representation.
     /// </summary>
@@ -26,7 +32,7 @@ public record ListRequest
         }
         if (Limit != null)
         {
-            result.Limit = Limit ?? 0U;
+            result.Limit = Limit ?? 0;
         }
         if (PaginationToken != null)
         {

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -18,4 +19,9 @@ public record TestSubmissionStatusV2
 
     [JsonPropertyName("problemInfo")]
     public required V2.ProblemInfoV2 ProblemInfo { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

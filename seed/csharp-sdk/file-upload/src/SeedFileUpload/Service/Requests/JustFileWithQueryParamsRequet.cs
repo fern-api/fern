@@ -1,3 +1,7 @@
+using SeedFileUpload.Core;
+
+#nullable enable
+
 namespace SeedFileUpload;
 
 public record JustFileWithQueryParamsRequet
@@ -11,4 +15,9 @@ public record JustFileWithQueryParamsRequet
     public IEnumerable<string> ListOfStrings { get; set; } = new List<string>();
 
     public IEnumerable<string> OptionalListOfStrings { get; set; } = new List<string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

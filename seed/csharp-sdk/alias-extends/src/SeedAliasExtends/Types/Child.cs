@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedAliasExtends.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record Child
 
     [JsonPropertyName("parent")]
     public required string Parent { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

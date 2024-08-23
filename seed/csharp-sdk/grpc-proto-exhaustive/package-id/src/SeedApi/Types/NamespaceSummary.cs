@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -10,6 +11,11 @@ public record NamespaceSummary
     [JsonPropertyName("count")]
     public uint? Count { get; set; }
 
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+
     /// <summary>
     /// Maps the NamespaceSummary type into its Protobuf-equivalent representation.
     /// </summary>
@@ -18,7 +24,7 @@ public record NamespaceSummary
         var result = new Proto.NamespaceSummary();
         if (Count != null)
         {
-            result.Count = Count ?? 0U;
+            result.Count = Count ?? 0;
         }
         return result;
     }

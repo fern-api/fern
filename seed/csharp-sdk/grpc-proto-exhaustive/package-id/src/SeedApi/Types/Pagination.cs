@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -9,6 +10,11 @@ public record Pagination
 {
     [JsonPropertyName("next")]
     public string? Next { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 
     /// <summary>
     /// Maps the Pagination type into its Protobuf-equivalent representation.

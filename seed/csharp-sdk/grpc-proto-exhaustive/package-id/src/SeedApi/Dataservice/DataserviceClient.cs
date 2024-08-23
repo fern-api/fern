@@ -51,7 +51,6 @@ public partial class DataserviceClient
                 options ?? new GrpcRequestOptions(),
                 cancellationToken
             );
-            ;
             var call = _dataService.UploadAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return UploadResponse.FromProto(response);
@@ -88,7 +87,6 @@ public partial class DataserviceClient
                 options ?? new GrpcRequestOptions(),
                 cancellationToken
             );
-            ;
             var call = _dataService.DeleteAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return DeleteResponse.FromProto(response);
@@ -125,7 +123,6 @@ public partial class DataserviceClient
                 options ?? new GrpcRequestOptions(),
                 cancellationToken
             );
-            ;
             var call = _dataService.DescribeAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return DescribeResponse.FromProto(response);
@@ -162,7 +159,6 @@ public partial class DataserviceClient
                 options ?? new GrpcRequestOptions(),
                 cancellationToken
             );
-            ;
             var call = _dataService.FetchAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return FetchResponse.FromProto(response);
@@ -199,7 +195,6 @@ public partial class DataserviceClient
                 options ?? new GrpcRequestOptions(),
                 cancellationToken
             );
-            ;
             var call = _dataService.ListAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return ListResponse.FromProto(response);
@@ -221,7 +216,7 @@ public partial class DataserviceClient
 
     /// <example>
     /// <code>
-    /// await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1U });
+    /// await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });
     /// </code>
     /// </example>
     public async Task<QueryResponse> QueryAsync(
@@ -236,7 +231,6 @@ public partial class DataserviceClient
                 options ?? new GrpcRequestOptions(),
                 cancellationToken
             );
-            ;
             var call = _dataService.QueryAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return QueryResponse.FromProto(response);
@@ -273,7 +267,6 @@ public partial class DataserviceClient
                 options ?? new GrpcRequestOptions(),
                 cancellationToken
             );
-            ;
             var call = _dataService.UpdateAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return UpdateResponse.FromProto(response);
