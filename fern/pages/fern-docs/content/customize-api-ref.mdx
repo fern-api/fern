@@ -3,9 +3,98 @@ title: Customize API Reference layout
 description: Customize your API Reference's naming, ordering, and structure.  
 ---
 
-When you include an API in your `docs.yml` file, you can customize how the endpoints and sub-packages are displayed in the sidebar navigation. By default, the reference will generate a navigation hierarchy based on the structure of the API spec, but several customizations can be configured.
+When you [include an API in your `docs.yml` file](/learn/docs/api-references/generate-api-ref), you can customize how the endpoints and sections are displayed in the sidebar navigation. By default, the reference will generate a navigation hierarchy based on the structure of the API spec, but several customizations can be configured.
+
+<Note title="API Sections">
+If you are using an OpenAPI Specification, sections are created based on the `tags` property. If you are using a Fern Definition, sections are created based on the [`service`](/learn/api-definition/fern/endpoints#service-definition) file names.
+</Note>
+
+If you would like to only display a subset of endpoints, read more about the Audiences property for [OpenAPI Specifications](/learn/api-definition/openapi/extensions/audiences) or [Fern Definitions](/learn/api-definition/fern/audiences). 
 
 ## Ordering the API Reference
+
+### Alphabetizing endpoints and sections
+To sort all sections and endpoints alphabetically, unless explicitly ordered in `layout`, set `alphabetized` to `true`.
+
+```yaml title="docs.yml"
+navigation: 
+  - api: API Reference
+    alphabetized: true
+```
+
+### Ordering top-level sections
+The `layout` option allows you to specify the order of sub-packages, sections, endpoints, and pages at the top level of your API Reference.
+
+<Tabs>
+  <Tab title="OpenAPI Specification">
+  ```yaml title="docs.yml"
+  navigation: 
+    - api: API Reference
+      layout: 
+        - POST /user
+        - user
+        - store
+        - plant
+  ```
+  </Tab>
+  <Tab title="Fern Definition">
+  ```yaml title="docs.yml"
+  navigation: 
+    - api: API Reference
+      layout: 
+        - user.create
+        - user
+        - store
+        - plant
+  ```
+  </Tab>
+</Tabs>
+
+<Frame>
+<img src="ordered.png" alt="Ordered API Reference" />
+</Frame>
+
+### Ordering section contents
+Adding a `:` after the section name allows you to specify the order of its nested sub-packages and endpoints. 
+
+<Note title="Referencing Endpoints">
+To reference an endpoint, you can use either:
+- `METHOD /path/name` (best for OpenAPI Specification)
+- `serviceName.endpointName` (best for Fern Definition)
+</Note>
+
+<Tabs>
+  <Tab title="OpenAPI Specification">
+  You can reference an endpoint using the format `METHOD /path`. 
+  ```yaml title="docs.yml"
+  navigation: 
+    - api: API Reference
+      layout: 
+        - user: 
+            - POST /user
+            - PUT /user/{username}
+            - DELETE /user/{username}
+  ```
+  </Tab>
+  <Tab title="Fern Definition">
+  You can reference an endpoint using the format `serviceName.endpointName`.
+  ```yaml title="docs.yml"
+  navigation: 
+    - api: API Reference
+      layout: 
+        - user: 
+            - user.create
+            - user.update
+            - user.delete        
+  ```
+  </Tab>
+</Tabs>
+
+<Frame>
+<img src="content-ordered.png" alt="Content ordered in the API Reference" />
+</Frame>
+
+## Customizing the API Reference
 
 ### Flattening sections
 To remove the API Reference title and display the section contents, set `flattened` to `true`.
@@ -20,128 +109,70 @@ navigation:
 <img src="flattened.png" alt="Flattened API Reference" />
 </Frame>
 
-### Alphabetizing endpoints and sections
-To sort all sections and endpoints alphabetically, unless explicitly ordered in `layout`, set `alphabetized` to `true`.
-
-
-```yaml title="docs.yml"
-navigation: 
-  - api: API Reference
-    alphabetized: true
-```
-
-### Ordering top-level sections
-The `layout` option allows you to specify the order of subpackages, sections, and endpoints at the top level of your API Reference.
-
-<Note title="Section names">
-If you are using an OpenAPI Defintiion, sections are created based on the `tags` property. If you are using a Fern Definition, sections are created based on the `service` file names.
-</Note>
-
-<Tabs>
-<Tab title="Ordering sections">
-```yaml title="docs.yml"
-navigation: 
-  - api: API Reference
-    layout: 
-      - user
-      - store
-      - plant
-```
-</Tab>
-
-<Tab title="Ordering sections and endpoints">
-```yaml title="docs.yml"
-navigation: 
-  - api: API Reference
-    layout: 
-      - user.create
-      - user
-      - store
-      - plant
-```
-
-<Frame>
-<img src="ordered.png" alt="Ordered API Reference" />
-</Frame>
-</Tab>
-</Tabs>
-
-### Ordering section contents
-Adding a `:` after the section name allows you to specify the order of its nested subpackages and endpoints. 
-
-<Note title="Referencing Endpoints">
-To reference an endpoint, you can use either:
-- `METHOD /path/name` (best for OpenAPI Defintiion)
-- `serviceName.endpointName` (best for Fern Definition)
-</Note>
-
-```yaml title="docs.yml"
-navigation: 
-  - api: API Reference
-    layout: 
-      - user: 
-          - user.create
-          - user.update
-          - user.delete        
-```
-
-<Frame>
-<img src="content-ordered.png" alt="Content ordered in the API Reference" />
-</Frame>
-
-## Customizing the API Reference
-
-### Renaming the API Reference 
-To customize the name of your API Reference, edit the value following `api`. 
-
-```yaml title="docs.yml"
-navigation:
-  - api: Title Here
-```
-
 ### Styling endpoints
 To customize the display of an endpoint, you can expand the endpoint description to include a `title` and `slug`, or set the endpoint as `hidden`. 
 
-```yaml title="docs.yml"
-navigation: 
-  - api: API Reference
-    layout: 
-      - user: 
-          - endpoint: user.create
-            title: Create a User
-            slug: user-creation
-          - user.delete
-```
+<Tabs>
+  <Tab title="OpenAPI Specification">
+  ```yaml title="docs.yml"
+  navigation: 
+    - api: API Reference
+      layout: 
+        - user: 
+            - endpoint: POST /user
+              title: Create a User
+              slug: user-creation
+            - DELETE /user/{username}
+  ```
+  </Tab>
+  <Tab title="Fern Definition">
+  ```yaml title="docs.yml"
+  navigation: 
+    - api: API Reference
+      layout: 
+        - user: 
+            - endpoint: user.create
+              title: Create a User
+              slug: user-creation
+            - user.delete
+  ```
+  </Tab>
+</Tabs>
 
 <Frame>
 <img src="custom-endpoint.png" alt="Setting an endpoint title" />
 </Frame>
 
-### Referencing more than one API Reference
-To include multiple APIs in your documentation, you can indicate which to include using the `api-name` property. 
-
-```yaml title="docs.yml"
-navigation:
-  - api: Plant Store
-    api-name: plant-api
-  - api: Garden
-    api-name: garden-api
-```
-
 
 ### Adding custom sections
-You can add arbitrary folders in the sidebar by adding a `section` to your API Reference layout. Sections can be customized by adding properties like a `icon`, `summary`, `slug` (or `skip-slug`), and `contents`. 
+You can add arbitrary folders in the sidebar by adding a `section` to your API Reference layout. A section can comprise entire groups of endpoints, individual endpoints, or even just Markdown pages. Sections can be customized by adding properties like a `icon`, `summary`, `slug` (or `skip-slug`), and `contents`. 
 
-```yaml title="docs.yml"
-navigation: 
-  - api: API Reference
-    layout: 
-      - section: Updates
-        icon: pen
-        contents: 
-          - user.update
-          - plant.update
-```
+<Tabs>
+  <Tab title="OpenAPI Specification">
+  ```yaml title="docs.yml"
+  navigation: 
+    - api: API Reference
+      layout: 
+        - section: My Section
+          icon: flower
+          contents: 
+            - PUT /user/{username}
+            - plant
+  ```
+  </Tab>
+  <Tab title="Fern Definition">
+  ```yaml title="docs.yml"
+  navigation: 
+    - api: API Reference
+      layout: 
+        - section: My Section
+          icon: flower
+          contents: 
+            - user.update
+            - plant
+  ```
+  </Tab>
+</Tabs>
 
 <Frame>
 <img src="custom-section.png" alt="Custom section in the API Reference" />

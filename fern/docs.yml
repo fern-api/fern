@@ -263,7 +263,7 @@ navigation:
 
       - section: API References
         contents:
-          - page: Generate API reference
+          - page: Generate API Reference
             path: ./pages/fern-docs/content/generate-api-ref.mdx
             slug: generate-api-ref
           - page: SDK snippets
