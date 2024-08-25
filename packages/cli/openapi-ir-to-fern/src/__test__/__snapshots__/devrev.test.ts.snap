@@ -140,6 +140,26 @@ enterprise connections can be created by an organization.
               "root.DevOrgAuthConnectionsCreateRequestInternalServerError",
               "root.DevOrgAuthConnectionsCreateRequestServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "type": "waad",
+                },
+                "response": {
+                  "body": {
+                    "auth_connection": {
+                      "client_id": "auth_connection",
+                      "client_secret": "auth_connection",
+                      "display_name": "auth_connection",
+                      "domain": "auth_connection",
+                      "enabled": true,
+                      "id": "auth_connection",
+                      "type": "waad",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/dev-orgs.auth-connections.create",
@@ -202,6 +222,26 @@ connections can not be deleted using this method.
               "root.DevOrgAuthConnectionsGetRequestInternalServerError",
               "root.DevOrgAuthConnectionsGetRequestServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "auth_connection": {
+                      "client_id": "auth_connection",
+                      "client_secret": "auth_connection",
+                      "display_name": "auth_connection",
+                      "domain": "auth_connection",
+                      "enabled": true,
+                      "id": "auth_connection",
+                      "type": "waad",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "pagination": undefined,
             "path": "/dev-orgs.auth-connections.get",
@@ -238,7 +278,17 @@ created by the user.
               {
                 "response": {
                   "body": {
-                    "auth_connections": [],
+                    "auth_connections": [
+                      {
+                        "client_id": "auth_connections",
+                        "client_secret": "auth_connections",
+                        "display_name": "auth_connections",
+                        "domain": "auth_connections",
+                        "enabled": true,
+                        "id": "auth_connections",
+                        "type": "waad",
+                      },
+                    ],
                   },
                 },
               },
@@ -304,6 +354,27 @@ disabled.
               "root.DevOrgAuthConnectionsUpdateRequestTooManyRequestsError",
               "root.DevOrgAuthConnectionsUpdateRequestInternalServerError",
               "root.DevOrgAuthConnectionsUpdateRequestServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "id": "string",
+                  "type": "waad",
+                },
+                "response": {
+                  "body": {
+                    "auth_connection": {
+                      "client_id": "auth_connection",
+                      "client_secret": "auth_connection",
+                      "display_name": "auth_connection",
+                      "domain": "auth_connection",
+                      "enabled": true,
+                      "id": "auth_connection",
+                      "type": "waad",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -477,11 +548,35 @@ given Dev organization.
                   "body": {
                     "token": {
                       "client_id": "client_id",
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "expires_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "issued_at": "2024-01-15T09:30:00Z",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                       "scopes": [
@@ -534,11 +629,19 @@ token type issued for a given subject.
                     "tokens": [
                       {
                         "client_id": "client_id",
+                        "created_by": {
+                          "id": "created_by",
+                          "type": "sys_user",
+                        },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
                         "expires_at": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "issued_at": "2024-01-15T09:30:00Z",
+                        "modified_by": {
+                          "id": "modified_by",
+                          "type": "sys_user",
+                        },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                         "scopes": [
@@ -642,11 +745,35 @@ organization.
                   "body": {
                     "token": {
                       "client_id": "client_id",
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "expires_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "issued_at": "2024-01-15T09:30:00Z",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                       "scopes": [
@@ -719,6 +846,10 @@ organization.
                   "body": {
                     "dev_users": [
                       {
+                        "created_by": {
+                          "id": "created_by",
+                          "type": "sys_user",
+                        },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
                         "display_name": "display_name",
@@ -733,6 +864,10 @@ organization.
                         ],
                         "full_name": "full_name",
                         "id": "id",
+                        "modified_by": {
+                          "id": "modified_by",
+                          "type": "sys_user",
+                        },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "phone_numbers": [
                           "phone_numbers",
@@ -808,6 +943,18 @@ used.
                 "response": {
                   "body": {
                     "dev_user": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "display_name": "display_name",
@@ -823,6 +970,18 @@ used.
                       ],
                       "full_name": "full_name",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "phone_numbers": [
                         "phone_numbers",
@@ -867,6 +1026,76 @@ used.
               "root.PartsCreateRequestTooManyRequestsError",
               "root.PartsCreateRequestInternalServerError",
               "root.PartsCreateRequestServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "name": "string",
+                  "owned_by": [
+                    "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
+                  ],
+                  "parent_part": [
+                    "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  ],
+                  "type": "feature",
+                },
+                "response": {
+                  "body": {
+                    "part": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "created_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "part",
+                      "display_id": "part",
+                      "id": "part",
+                      "modified_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "part",
+                      "owned_by": [
+                        {
+                          "id": "part",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "type": "product",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -937,6 +1166,69 @@ used.
               "root.PartsGetRequestInternalServerError",
               "root.PartsGetRequestServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                },
+                "response": {
+                  "body": {
+                    "part": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "created_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "part",
+                      "display_id": "part",
+                      "id": "part",
+                      "modified_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "part",
+                      "owned_by": [
+                        {
+                          "id": "part",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "type": "product",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "pagination": undefined,
             "path": "/parts.get",
@@ -971,7 +1263,44 @@ used.
                 "response": {
                   "body": {
                     "next_cursor": "next_cursor",
-                    "parts": [],
+                    "parts": [
+                      {
+                        "artifacts": [
+                          {
+                            "id": "id",
+                          },
+                        ],
+                        "created_by": {
+                          "id": "parts",
+                          "type": "sys_user",
+                        },
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "description": "parts",
+                        "display_id": "parts",
+                        "id": "parts",
+                        "modified_by": {
+                          "id": "parts",
+                          "type": "sys_user",
+                        },
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "name": "parts",
+                        "owned_by": [
+                          {
+                            "id": "parts",
+                            "type": "sys_user",
+                          },
+                        ],
+                        "tags": [
+                          {
+                            "tag": {
+                              "id": "id",
+                              "name": "name",
+                            },
+                          },
+                        ],
+                        "type": "product",
+                      },
+                    ],
                     "prev_cursor": "prev_cursor",
                   },
                 },
@@ -1040,6 +1369,70 @@ used.
               "root.PartsUpdateRequestInternalServerError",
               "root.PartsUpdateRequestServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "type": "enhancement",
+                },
+                "response": {
+                  "body": {
+                    "part": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "created_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "part",
+                      "display_id": "part",
+                      "id": "part",
+                      "modified_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "part",
+                      "owned_by": [
+                        {
+                          "id": "part",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "type": "product",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/parts.update",
@@ -1088,6 +1481,18 @@ organization.
                 "response": {
                   "body": {
                     "rev_org": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -1095,6 +1500,18 @@ organization.
                       "domain": "domain",
                       "external_ref": "external_ref",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -1207,6 +1624,18 @@ records.
                 "response": {
                   "body": {
                     "rev_org": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -1214,6 +1643,18 @@ records.
                       "domain": "domain",
                       "external_ref": "external_ref",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -1260,6 +1701,10 @@ to access.
                     "prev_cursor": "prev_cursor",
                     "rev_orgs": [
                       {
+                        "created_by": {
+                          "id": "created_by",
+                          "type": "sys_user",
+                        },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
                         "display_id": "display_id",
@@ -1267,6 +1712,10 @@ to access.
                         "domain": "domain",
                         "external_ref": "external_ref",
                         "id": "id",
+                        "modified_by": {
+                          "id": "modified_by",
+                          "type": "sys_user",
+                        },
                         "modified_date": "2024-01-15T09:30:00Z",
                       },
                     ],
@@ -1363,6 +1812,18 @@ them.
                 "response": {
                   "body": {
                     "rev_org": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -1370,6 +1831,18 @@ them.
                       "domain": "domain",
                       "external_ref": "external_ref",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -1461,10 +1934,34 @@ and a logical concept denoted by the tag's name.
                       "allowed_values": [
                         "allowed_values",
                       ],
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "name": "name",
                     },
@@ -1572,10 +2069,34 @@ permitted.
                       "allowed_values": [
                         "allowed_values",
                       ],
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "name": "name",
                     },
@@ -1622,10 +2143,18 @@ permitted.
                         "allowed_values": [
                           "allowed_values",
                         ],
+                        "created_by": {
+                          "id": "created_by",
+                          "type": "sys_user",
+                        },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
                         "display_id": "display_id",
                         "id": "id",
+                        "modified_by": {
+                          "id": "modified_by",
+                          "type": "sys_user",
+                        },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
                       },
@@ -1686,10 +2215,34 @@ used.
                       "allowed_values": [
                         "allowed_values",
                       ],
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "name": "name",
                     },
@@ -1756,6 +2309,59 @@ tags.
               "root.TimelineEntriesCreateRequestInternalServerError",
               "root.TimelineEntriesCreateRequestServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "type": "timeline_comment",
+                },
+                "response": {
+                  "body": {
+                    "timeline_entry": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "timeline_entry",
+                      "body_type": "snap_kit",
+                      "created_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "timeline_entry",
+                      "id": "timeline_entry",
+                      "modified_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "snap_kit_body": {
+                        "key": "value",
+                      },
+                      "type": "timeline_comment",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/timeline-entries.create",
@@ -1778,6 +2384,58 @@ tags.
               "root.TimelineEntriesGetRequestTooManyRequestsError",
               "root.TimelineEntriesGetRequestInternalServerError",
               "root.TimelineEntriesGetRequestServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "timeline_entry": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "timeline_entry",
+                      "body_type": "snap_kit",
+                      "created_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "timeline_entry",
+                      "id": "timeline_entry",
+                      "modified_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "snap_kit_body": {
+                        "key": "value",
+                      },
+                      "type": "timeline_comment",
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "pagination": undefined,
@@ -1817,7 +2475,33 @@ tags.
                   "body": {
                     "next_cursor": "next_cursor",
                     "prev_cursor": "prev_cursor",
-                    "timeline_entries": [],
+                    "timeline_entries": [
+                      {
+                        "artifacts": [
+                          {
+                            "id": "id",
+                          },
+                        ],
+                        "body": "timeline_entries",
+                        "body_type": "snap_kit",
+                        "created_by": {
+                          "id": "timeline_entries",
+                          "type": "sys_user",
+                        },
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "timeline_entries",
+                        "id": "timeline_entries",
+                        "modified_by": {
+                          "id": "timeline_entries",
+                          "type": "sys_user",
+                        },
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "snap_kit_body": {
+                          "key": "value",
+                        },
+                        "type": "timeline_comment",
+                      },
+                    ],
                   },
                 },
               },
@@ -1868,6 +2552,59 @@ used.
               "root.TimelineEntriesUpdateRequestInternalServerError",
               "root.TimelineEntriesUpdateRequestServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "id": "string",
+                  "type": "timeline_comment",
+                },
+                "response": {
+                  "body": {
+                    "timeline_entry": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "timeline_entry",
+                      "body_type": "snap_kit",
+                      "created_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "timeline_entry",
+                      "id": "timeline_entry",
+                      "modified_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "snap_kit_body": {
+                        "key": "value",
+                      },
+                      "type": "timeline_comment",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/timeline-entries.update",
@@ -1914,12 +2651,36 @@ used.
                 "response": {
                   "body": {
                     "webhook": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "event_types": [
                         "part_created",
                       ],
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
                       "status": "active",
@@ -2033,12 +2794,36 @@ response.
                 "response": {
                   "body": {
                     "webhook": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "event_types": [
                         "part_created",
                       ],
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
                       "status": "active",
@@ -2082,12 +2867,20 @@ response.
                   "body": {
                     "webhooks": [
                       {
+                        "created_by": {
+                          "id": "created_by",
+                          "type": "sys_user",
+                        },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
                         "event_types": [
                           "part_created",
                         ],
                         "id": "id",
+                        "modified_by": {
+                          "id": "modified_by",
+                          "type": "sys_user",
+                        },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
                         "status": "active",
@@ -2126,12 +2919,36 @@ response.
                 "response": {
                   "body": {
                     "webhook": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "event_types": [
                         "part_created",
                       ],
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
                       "status": "active",
@@ -2215,6 +3032,107 @@ won't receive any object events until successfully verified.
               "root.WorksCreateRequestInternalServerError",
               "root.WorksCreateRequestServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "owned_by": [
+                    "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
+                  ],
+                  "rev_org": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "tags": [
+                    {
+                      "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                    },
+                  ],
+                  "title": "string",
+                  "type": "ticket",
+                },
+                "response": {
+                  "body": {
+                    "work": {
+                      "applies_to_part": {
+                        "display_id": "work",
+                        "id": "work",
+                        "name": "work",
+                        "type": "product",
+                      },
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "work",
+                      "created_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "work",
+                      "group": {
+                        "display_id": "display_id",
+                        "id": "id",
+                      },
+                      "id": "work",
+                      "modified_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "owned_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "reported_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "rev_org": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "id": "work",
+                        "type": "rev_org",
+                      },
+                      "severity": "blocker",
+                      "stage": {
+                        "name": "name",
+                      },
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "target_close_date": "2024-01-15T09:30:00Z",
+                      "title": "work",
+                      "type": "ticket",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/works.create",
@@ -2286,7 +3204,67 @@ won't receive any object events until successfully verified.
               {
                 "response": {
                   "body": {
-                    "works": [],
+                    "works": [
+                      {
+                        "applies_to_part": {
+                          "id": "works",
+                          "name": "works",
+                          "type": "product",
+                        },
+                        "artifacts": [
+                          {
+                            "id": "id",
+                          },
+                        ],
+                        "body": "works",
+                        "created_by": {
+                          "id": "works",
+                          "type": "sys_user",
+                        },
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "works",
+                        "group": {
+                          "id": "id",
+                        },
+                        "id": "works",
+                        "modified_by": {
+                          "id": "works",
+                          "type": "sys_user",
+                        },
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "owned_by": [
+                          {
+                            "id": "works",
+                            "type": "sys_user",
+                          },
+                        ],
+                        "reported_by": [
+                          {
+                            "id": "works",
+                            "type": "sys_user",
+                          },
+                        ],
+                        "rev_org": {
+                          "id": "works",
+                          "type": "rev_org",
+                        },
+                        "severity": "blocker",
+                        "stage": {
+                          "name": "name",
+                        },
+                        "tags": [
+                          {
+                            "tag": {
+                              "id": "id",
+                              "name": "name",
+                            },
+                          },
+                        ],
+                        "target_close_date": "2024-01-15T09:30:00Z",
+                        "title": "works",
+                        "type": "ticket",
+                      },
+                    ],
                   },
                 },
               },
@@ -2370,6 +3348,96 @@ organizations.
               "root.WorksGetRequestInternalServerError",
               "root.WorksGetRequestServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                },
+                "response": {
+                  "body": {
+                    "work": {
+                      "applies_to_part": {
+                        "display_id": "work",
+                        "id": "work",
+                        "name": "work",
+                        "type": "product",
+                      },
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "work",
+                      "created_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "work",
+                      "group": {
+                        "display_id": "display_id",
+                        "id": "id",
+                      },
+                      "id": "work",
+                      "modified_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "owned_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "reported_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "rev_org": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "id": "work",
+                        "type": "rev_org",
+                      },
+                      "severity": "blocker",
+                      "stage": {
+                        "name": "name",
+                      },
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "target_close_date": "2024-01-15T09:30:00Z",
+                      "title": "work",
+                      "type": "ticket",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "pagination": undefined,
             "path": "/works.get",
@@ -2404,7 +3472,67 @@ organizations.
                   "body": {
                     "next_cursor": "next_cursor",
                     "prev_cursor": "prev_cursor",
-                    "works": [],
+                    "works": [
+                      {
+                        "applies_to_part": {
+                          "id": "works",
+                          "name": "works",
+                          "type": "product",
+                        },
+                        "artifacts": [
+                          {
+                            "id": "id",
+                          },
+                        ],
+                        "body": "works",
+                        "created_by": {
+                          "id": "works",
+                          "type": "sys_user",
+                        },
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "works",
+                        "group": {
+                          "id": "id",
+                        },
+                        "id": "works",
+                        "modified_by": {
+                          "id": "works",
+                          "type": "sys_user",
+                        },
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "owned_by": [
+                          {
+                            "id": "works",
+                            "type": "sys_user",
+                          },
+                        ],
+                        "reported_by": [
+                          {
+                            "id": "works",
+                            "type": "sys_user",
+                          },
+                        ],
+                        "rev_org": {
+                          "id": "works",
+                          "type": "rev_org",
+                        },
+                        "severity": "blocker",
+                        "stage": {
+                          "name": "name",
+                        },
+                        "tags": [
+                          {
+                            "tag": {
+                              "id": "id",
+                              "name": "name",
+                            },
+                          },
+                        ],
+                        "target_close_date": "2024-01-15T09:30:00Z",
+                        "title": "works",
+                        "type": "ticket",
+                      },
+                    ],
                   },
                 },
               },
@@ -2498,6 +3626,98 @@ organizations.
               "root.WorksUpdateRequestTooManyRequestsError",
               "root.WorksUpdateRequestInternalServerError",
               "root.WorksUpdateRequestServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                  "type": "ticket",
+                },
+                "response": {
+                  "body": {
+                    "work": {
+                      "applies_to_part": {
+                        "display_id": "work",
+                        "id": "work",
+                        "name": "work",
+                        "type": "product",
+                      },
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "work",
+                      "created_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "work",
+                      "group": {
+                        "display_id": "display_id",
+                        "id": "id",
+                      },
+                      "id": "work",
+                      "modified_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "owned_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "reported_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "rev_org": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "id": "work",
+                        "type": "rev_org",
+                      },
+                      "severity": "blocker",
+                      "stage": {
+                        "name": "name",
+                      },
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "target_close_date": "2024-01-15T09:30:00Z",
+                      "title": "work",
+                      "type": "ticket",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -6828,6 +8048,26 @@ enterprise connections can be created by an organization.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "type": "waad",
+                },
+                "response": {
+                  "body": {
+                    "auth_connection": {
+                      "client_id": "auth_connection",
+                      "client_secret": "auth_connection",
+                      "display_name": "auth_connection",
+                      "domain": "auth_connection",
+                      "enabled": true,
+                      "id": "auth_connection",
+                      "type": "waad",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/dev-orgs.auth-connections.create",
@@ -6890,6 +8130,26 @@ connections can not be deleted using this method.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "auth_connection": {
+                      "client_id": "auth_connection",
+                      "client_secret": "auth_connection",
+                      "display_name": "auth_connection",
+                      "domain": "auth_connection",
+                      "enabled": true,
+                      "id": "auth_connection",
+                      "type": "waad",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "pagination": undefined,
             "path": "/dev-orgs.auth-connections.get",
@@ -6926,7 +8186,17 @@ created by the user.
               {
                 "response": {
                   "body": {
-                    "auth_connections": [],
+                    "auth_connections": [
+                      {
+                        "client_id": "auth_connections",
+                        "client_secret": "auth_connections",
+                        "display_name": "auth_connections",
+                        "domain": "auth_connections",
+                        "enabled": true,
+                        "id": "auth_connections",
+                        "type": "waad",
+                      },
+                    ],
                   },
                 },
               },
@@ -6992,6 +8262,27 @@ disabled.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "id": "string",
+                  "type": "waad",
+                },
+                "response": {
+                  "body": {
+                    "auth_connection": {
+                      "client_id": "auth_connection",
+                      "client_secret": "auth_connection",
+                      "display_name": "auth_connection",
+                      "domain": "auth_connection",
+                      "enabled": true,
+                      "id": "auth_connection",
+                      "type": "waad",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -7165,11 +8456,35 @@ given Dev organization.
                   "body": {
                     "token": {
                       "client_id": "client_id",
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "expires_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "issued_at": "2024-01-15T09:30:00Z",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                       "scopes": [
@@ -7222,11 +8537,19 @@ token type issued for a given subject.
                     "tokens": [
                       {
                         "client_id": "client_id",
+                        "created_by": {
+                          "id": "created_by",
+                          "type": "sys_user",
+                        },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
                         "expires_at": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "issued_at": "2024-01-15T09:30:00Z",
+                        "modified_by": {
+                          "id": "modified_by",
+                          "type": "sys_user",
+                        },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                         "scopes": [
@@ -7330,11 +8653,35 @@ organization.
                   "body": {
                     "token": {
                       "client_id": "client_id",
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "expires_at": "2024-01-15T09:30:00Z",
                       "id": "id",
                       "issued_at": "2024-01-15T09:30:00Z",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                       "scopes": [
@@ -7407,6 +8754,10 @@ organization.
                   "body": {
                     "dev_users": [
                       {
+                        "created_by": {
+                          "id": "created_by",
+                          "type": "sys_user",
+                        },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
                         "display_name": "display_name",
@@ -7421,6 +8772,10 @@ organization.
                         ],
                         "full_name": "full_name",
                         "id": "id",
+                        "modified_by": {
+                          "id": "modified_by",
+                          "type": "sys_user",
+                        },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "phone_numbers": [
                           "phone_numbers",
@@ -7496,6 +8851,18 @@ used.
                 "response": {
                   "body": {
                     "dev_user": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "display_name": "display_name",
@@ -7511,6 +8878,18 @@ used.
                       ],
                       "full_name": "full_name",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "phone_numbers": [
                         "phone_numbers",
@@ -7555,6 +8934,76 @@ used.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "name": "string",
+                  "owned_by": [
+                    "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
+                  ],
+                  "parent_part": [
+                    "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  ],
+                  "type": "feature",
+                },
+                "response": {
+                  "body": {
+                    "part": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "created_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "part",
+                      "display_id": "part",
+                      "id": "part",
+                      "modified_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "part",
+                      "owned_by": [
+                        {
+                          "id": "part",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "type": "product",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -7625,6 +9074,69 @@ used.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                },
+                "response": {
+                  "body": {
+                    "part": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "created_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "part",
+                      "display_id": "part",
+                      "id": "part",
+                      "modified_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "part",
+                      "owned_by": [
+                        {
+                          "id": "part",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "type": "product",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "pagination": undefined,
             "path": "/parts.get",
@@ -7659,7 +9171,44 @@ used.
                 "response": {
                   "body": {
                     "next_cursor": "next_cursor",
-                    "parts": [],
+                    "parts": [
+                      {
+                        "artifacts": [
+                          {
+                            "id": "id",
+                          },
+                        ],
+                        "created_by": {
+                          "id": "parts",
+                          "type": "sys_user",
+                        },
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "description": "parts",
+                        "display_id": "parts",
+                        "id": "parts",
+                        "modified_by": {
+                          "id": "parts",
+                          "type": "sys_user",
+                        },
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "name": "parts",
+                        "owned_by": [
+                          {
+                            "id": "parts",
+                            "type": "sys_user",
+                          },
+                        ],
+                        "tags": [
+                          {
+                            "tag": {
+                              "id": "id",
+                              "name": "name",
+                            },
+                          },
+                        ],
+                        "type": "product",
+                      },
+                    ],
                     "prev_cursor": "prev_cursor",
                   },
                 },
@@ -7728,6 +9277,70 @@ used.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "type": "enhancement",
+                },
+                "response": {
+                  "body": {
+                    "part": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "created_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "description": "part",
+                      "display_id": "part",
+                      "id": "part",
+                      "modified_by": {
+                        "display_id": "part",
+                        "display_name": "part",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "part",
+                        "full_name": "part",
+                        "id": "part",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "name": "part",
+                      "owned_by": [
+                        {
+                          "id": "part",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "type": "product",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/parts.update",
@@ -7776,6 +9389,18 @@ organization.
                 "response": {
                   "body": {
                     "rev_org": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -7783,6 +9408,18 @@ organization.
                       "domain": "domain",
                       "external_ref": "external_ref",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -7895,6 +9532,18 @@ records.
                 "response": {
                   "body": {
                     "rev_org": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -7902,6 +9551,18 @@ records.
                       "domain": "domain",
                       "external_ref": "external_ref",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -7948,6 +9609,10 @@ to access.
                     "prev_cursor": "prev_cursor",
                     "rev_orgs": [
                       {
+                        "created_by": {
+                          "id": "created_by",
+                          "type": "sys_user",
+                        },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
                         "display_id": "display_id",
@@ -7955,6 +9620,10 @@ to access.
                         "domain": "domain",
                         "external_ref": "external_ref",
                         "id": "id",
+                        "modified_by": {
+                          "id": "modified_by",
+                          "type": "sys_user",
+                        },
                         "modified_date": "2024-01-15T09:30:00Z",
                       },
                     ],
@@ -8051,6 +9720,18 @@ them.
                 "response": {
                   "body": {
                     "rev_org": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -8058,6 +9739,18 @@ them.
                       "domain": "domain",
                       "external_ref": "external_ref",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                     },
                   },
@@ -8149,10 +9842,34 @@ and a logical concept denoted by the tag's name.
                       "allowed_values": [
                         "allowed_values",
                       ],
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "name": "name",
                     },
@@ -8260,10 +9977,34 @@ permitted.
                       "allowed_values": [
                         "allowed_values",
                       ],
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "name": "name",
                     },
@@ -8310,10 +10051,18 @@ permitted.
                         "allowed_values": [
                           "allowed_values",
                         ],
+                        "created_by": {
+                          "id": "created_by",
+                          "type": "sys_user",
+                        },
                         "created_date": "2024-01-15T09:30:00Z",
                         "description": "description",
                         "display_id": "display_id",
                         "id": "id",
+                        "modified_by": {
+                          "id": "modified_by",
+                          "type": "sys_user",
+                        },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "name": "name",
                       },
@@ -8374,10 +10123,34 @@ used.
                       "allowed_values": [
                         "allowed_values",
                       ],
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "name": "name",
                     },
@@ -8444,6 +10217,59 @@ tags.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "type": "timeline_comment",
+                },
+                "response": {
+                  "body": {
+                    "timeline_entry": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "timeline_entry",
+                      "body_type": "snap_kit",
+                      "created_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "timeline_entry",
+                      "id": "timeline_entry",
+                      "modified_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "snap_kit_body": {
+                        "key": "value",
+                      },
+                      "type": "timeline_comment",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/timeline-entries.create",
@@ -8466,6 +10292,58 @@ tags.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "id",
+                },
+                "response": {
+                  "body": {
+                    "timeline_entry": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "timeline_entry",
+                      "body_type": "snap_kit",
+                      "created_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "timeline_entry",
+                      "id": "timeline_entry",
+                      "modified_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "snap_kit_body": {
+                        "key": "value",
+                      },
+                      "type": "timeline_comment",
+                    },
+                  },
+                },
+              },
             ],
             "method": "GET",
             "pagination": undefined,
@@ -8505,7 +10383,33 @@ tags.
                   "body": {
                     "next_cursor": "next_cursor",
                     "prev_cursor": "prev_cursor",
-                    "timeline_entries": [],
+                    "timeline_entries": [
+                      {
+                        "artifacts": [
+                          {
+                            "id": "id",
+                          },
+                        ],
+                        "body": "timeline_entries",
+                        "body_type": "snap_kit",
+                        "created_by": {
+                          "id": "timeline_entries",
+                          "type": "sys_user",
+                        },
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "timeline_entries",
+                        "id": "timeline_entries",
+                        "modified_by": {
+                          "id": "timeline_entries",
+                          "type": "sys_user",
+                        },
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "snap_kit_body": {
+                          "key": "value",
+                        },
+                        "type": "timeline_comment",
+                      },
+                    ],
                   },
                 },
               },
@@ -8556,6 +10460,59 @@ used.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "id": "string",
+                  "type": "timeline_comment",
+                },
+                "response": {
+                  "body": {
+                    "timeline_entry": {
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "timeline_entry",
+                      "body_type": "snap_kit",
+                      "created_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "timeline_entry",
+                      "id": "timeline_entry",
+                      "modified_by": {
+                        "display_id": "timeline_entry",
+                        "display_name": "timeline_entry",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "timeline_entry",
+                        "full_name": "timeline_entry",
+                        "id": "timeline_entry",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "snap_kit_body": {
+                        "key": "value",
+                      },
+                      "type": "timeline_comment",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/timeline-entries.update",
@@ -8602,12 +10559,36 @@ used.
                 "response": {
                   "body": {
                     "webhook": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "event_types": [
                         "part_created",
                       ],
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
                       "status": "active",
@@ -8721,12 +10702,36 @@ response.
                 "response": {
                   "body": {
                     "webhook": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "event_types": [
                         "part_created",
                       ],
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
                       "status": "active",
@@ -8770,12 +10775,20 @@ response.
                   "body": {
                     "webhooks": [
                       {
+                        "created_by": {
+                          "id": "created_by",
+                          "type": "sys_user",
+                        },
                         "created_date": "2024-01-15T09:30:00Z",
                         "display_id": "display_id",
                         "event_types": [
                           "part_created",
                         ],
                         "id": "id",
+                        "modified_by": {
+                          "id": "modified_by",
+                          "type": "sys_user",
+                        },
                         "modified_date": "2024-01-15T09:30:00Z",
                         "secret": "secret",
                         "status": "active",
@@ -8814,12 +10827,36 @@ response.
                 "response": {
                   "body": {
                     "webhook": {
+                      "created_by": {
+                        "display_id": "created_by",
+                        "display_name": "created_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "created_by",
+                        "full_name": "created_by",
+                        "id": "created_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
                       "event_types": [
                         "part_created",
                       ],
                       "id": "id",
+                      "modified_by": {
+                        "display_id": "modified_by",
+                        "display_name": "modified_by",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "modified_by",
+                        "full_name": "modified_by",
+                        "id": "modified_by",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
                       "status": "active",
@@ -8903,6 +10940,107 @@ won't receive any object events until successfully verified.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "owned_by": [
+                    "don:<partition>:identity:devo/<dev-org-id>:devu/<dev-user-id>",
+                  ],
+                  "rev_org": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
+                  "tags": [
+                    {
+                      "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
+                    },
+                  ],
+                  "title": "string",
+                  "type": "ticket",
+                },
+                "response": {
+                  "body": {
+                    "work": {
+                      "applies_to_part": {
+                        "display_id": "work",
+                        "id": "work",
+                        "name": "work",
+                        "type": "product",
+                      },
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "work",
+                      "created_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "work",
+                      "group": {
+                        "display_id": "display_id",
+                        "id": "id",
+                      },
+                      "id": "work",
+                      "modified_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "owned_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "reported_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "rev_org": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "id": "work",
+                        "type": "rev_org",
+                      },
+                      "severity": "blocker",
+                      "stage": {
+                        "name": "name",
+                      },
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "target_close_date": "2024-01-15T09:30:00Z",
+                      "title": "work",
+                      "type": "ticket",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "pagination": undefined,
             "path": "/works.create",
@@ -8974,7 +11112,67 @@ won't receive any object events until successfully verified.
               {
                 "response": {
                   "body": {
-                    "works": [],
+                    "works": [
+                      {
+                        "applies_to_part": {
+                          "id": "works",
+                          "name": "works",
+                          "type": "product",
+                        },
+                        "artifacts": [
+                          {
+                            "id": "id",
+                          },
+                        ],
+                        "body": "works",
+                        "created_by": {
+                          "id": "works",
+                          "type": "sys_user",
+                        },
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "works",
+                        "group": {
+                          "id": "id",
+                        },
+                        "id": "works",
+                        "modified_by": {
+                          "id": "works",
+                          "type": "sys_user",
+                        },
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "owned_by": [
+                          {
+                            "id": "works",
+                            "type": "sys_user",
+                          },
+                        ],
+                        "reported_by": [
+                          {
+                            "id": "works",
+                            "type": "sys_user",
+                          },
+                        ],
+                        "rev_org": {
+                          "id": "works",
+                          "type": "rev_org",
+                        },
+                        "severity": "blocker",
+                        "stage": {
+                          "name": "name",
+                        },
+                        "tags": [
+                          {
+                            "tag": {
+                              "id": "id",
+                              "name": "name",
+                            },
+                          },
+                        ],
+                        "target_close_date": "2024-01-15T09:30:00Z",
+                        "title": "works",
+                        "type": "ticket",
+                      },
+                    ],
                   },
                 },
               },
@@ -9058,6 +11256,96 @@ organizations.
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                },
+                "response": {
+                  "body": {
+                    "work": {
+                      "applies_to_part": {
+                        "display_id": "work",
+                        "id": "work",
+                        "name": "work",
+                        "type": "product",
+                      },
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "work",
+                      "created_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "work",
+                      "group": {
+                        "display_id": "display_id",
+                        "id": "id",
+                      },
+                      "id": "work",
+                      "modified_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "owned_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "reported_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "rev_org": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "id": "work",
+                        "type": "rev_org",
+                      },
+                      "severity": "blocker",
+                      "stage": {
+                        "name": "name",
+                      },
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "target_close_date": "2024-01-15T09:30:00Z",
+                      "title": "work",
+                      "type": "ticket",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "pagination": undefined,
             "path": "/works.get",
@@ -9092,7 +11380,67 @@ organizations.
                   "body": {
                     "next_cursor": "next_cursor",
                     "prev_cursor": "prev_cursor",
-                    "works": [],
+                    "works": [
+                      {
+                        "applies_to_part": {
+                          "id": "works",
+                          "name": "works",
+                          "type": "product",
+                        },
+                        "artifacts": [
+                          {
+                            "id": "id",
+                          },
+                        ],
+                        "body": "works",
+                        "created_by": {
+                          "id": "works",
+                          "type": "sys_user",
+                        },
+                        "created_date": "2024-01-15T09:30:00Z",
+                        "display_id": "works",
+                        "group": {
+                          "id": "id",
+                        },
+                        "id": "works",
+                        "modified_by": {
+                          "id": "works",
+                          "type": "sys_user",
+                        },
+                        "modified_date": "2024-01-15T09:30:00Z",
+                        "owned_by": [
+                          {
+                            "id": "works",
+                            "type": "sys_user",
+                          },
+                        ],
+                        "reported_by": [
+                          {
+                            "id": "works",
+                            "type": "sys_user",
+                          },
+                        ],
+                        "rev_org": {
+                          "id": "works",
+                          "type": "rev_org",
+                        },
+                        "severity": "blocker",
+                        "stage": {
+                          "name": "name",
+                        },
+                        "tags": [
+                          {
+                            "tag": {
+                              "id": "id",
+                              "name": "name",
+                            },
+                          },
+                        ],
+                        "target_close_date": "2024-01-15T09:30:00Z",
+                        "title": "works",
+                        "type": "ticket",
+                      },
+                    ],
                   },
                 },
               },
@@ -9186,6 +11534,98 @@ organizations.
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "applies_to_part": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
+                  "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
+                  "type": "ticket",
+                },
+                "response": {
+                  "body": {
+                    "work": {
+                      "applies_to_part": {
+                        "display_id": "work",
+                        "id": "work",
+                        "name": "work",
+                        "type": "product",
+                      },
+                      "artifacts": [
+                        {
+                          "id": "id",
+                        },
+                      ],
+                      "body": "work",
+                      "created_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "created_date": "2024-01-15T09:30:00Z",
+                      "display_id": "work",
+                      "group": {
+                        "display_id": "display_id",
+                        "id": "id",
+                      },
+                      "id": "work",
+                      "modified_by": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "display_picture": {
+                          "id": "id",
+                        },
+                        "email": "work",
+                        "full_name": "work",
+                        "id": "work",
+                        "state": "active",
+                        "type": "sys_user",
+                      },
+                      "modified_date": "2024-01-15T09:30:00Z",
+                      "owned_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "reported_by": [
+                        {
+                          "id": "work",
+                          "type": "sys_user",
+                        },
+                      ],
+                      "rev_org": {
+                        "display_id": "work",
+                        "display_name": "work",
+                        "id": "work",
+                        "type": "rev_org",
+                      },
+                      "severity": "blocker",
+                      "stage": {
+                        "name": "name",
+                      },
+                      "tags": [
+                        {
+                          "tag": {
+                            "id": "id",
+                            "name": "name",
+                          },
+                        },
+                      ],
+                      "target_close_date": "2024-01-15T09:30:00Z",
+                      "title": "work",
+                      "type": "ticket",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,

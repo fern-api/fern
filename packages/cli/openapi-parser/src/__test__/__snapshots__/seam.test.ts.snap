@@ -35274,7 +35274,7 @@ exports[`seam > seam > parse open api 1`] = `
                                   "type": "primitive",
                                   "value": {
                                     "type": "string",
-                                    "value": "seam_bridge_disconnected",
+                                    "value": "visionline_instance_unreachable",
                                   },
                                 },
                                 "message": {
@@ -48374,7 +48374,7 @@ exports[`seam > seam > parse open api 1`] = `
                               "type": "primitive",
                               "value": {
                                 "type": "string",
-                                "value": "seam_bridge_disconnected",
+                                "value": "visionline_instance_unreachable",
                               },
                             },
                             "message": {
@@ -48739,7 +48739,7 @@ exports[`seam > seam > parse open api 1`] = `
                                   "type": "primitive",
                                   "value": {
                                     "type": "string",
-                                    "value": "seam_bridge_disconnected",
+                                    "value": "visionline_instance_unreachable",
                                   },
                                 },
                                 "message": {
@@ -49130,7 +49130,7 @@ exports[`seam > seam > parse open api 1`] = `
                                   "type": "primitive",
                                   "value": {
                                     "type": "string",
-                                    "value": "seam_bridge_disconnected",
+                                    "value": "visionline_instance_unreachable",
                                   },
                                 },
                                 "message": {
