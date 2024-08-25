@@ -24,7 +24,7 @@ Clone the [starter repo](https://github.com/fern-api/spring-starter/) for Spring
 
 Learn how Fern can be helpful when building a Spring server. 
 
-<iframe src="https://www.loom.com/share/42de542022de4e55a1349383c7a465eb" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+<div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/42de542022de4e55a1349383c7a465eb?sid=6f69b37e-ceda-421d-af0f-6bbd94857804" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ## Getting started
 
@@ -32,7 +32,7 @@ Learn how Fern can be helpful when building a Spring server.
 
 ### Define your API 
 
-Define your API using OpenAPI or the Fern Definition.
+Define your API using the [OpenAPI Specification](/learn/api-definition/openapi/overview) or the [Fern Definition](/learn/api-definition/fern/overview).
 
 ### Add the Spring generator 
 
@@ -53,7 +53,7 @@ groups:
 
 ### Generate code
 
-Run the [CLI](../cli-api/overview.mdx#) command `fern generate --group spring-server`. 
+Run the [CLI](/learn/cli-api/cli-reference/cli-overview) command `fern generate --group spring-server`. 
 
 ### Implement the functions 
 
@@ -93,14 +93,10 @@ $ curl --location --request GET --silent 'localhost:8080/movies/oceans-11' | jq 
 
 Tailor the `config` of the Spring Boot server generator to your needs.
 
-```yaml
-wrappedAliases: 
-    type: boolean
-    default: true
-enablePublicConstructors: 
-    type: boolean
-    default: false
-```
+| Configuration Option | Description | 
+| -------------------- | ----------- |
+| `wrappedAliases`| |
+| `enablePublicConstructors` | | 
 
 <Note>The configuration options are accessible in [`SpringCustomConfig.java`](https://github.com/fern-api/fern/blob/main/generators/java/spring/src/main/java/com/fern/java/spring/SpringCustomConfig.java).</Note>
 

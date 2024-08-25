@@ -24,7 +24,7 @@ Clone the [starter repo](https://github.com/fern-api/express-starter/) for Expre
 
 Learn how Fern can be helpful when building an Express server. 
 
-<iframe src="https://www.loom.com/embed/31f4243c4d824c54938bdc4840fbb8ba" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+<div style="position: relative; padding-bottom: 62.5%; height: 0;"><iframe src="https://www.loom.com/embed/31f4243c4d824c54938bdc4840fbb8ba?sid=3f460e48-af22-4db3-be2f-48884ab0170d" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe></div>
 
 ## Getting started 
 
@@ -32,7 +32,7 @@ Learn how Fern can be helpful when building an Express server.
 
 ### Define your API 
 
-Define your API using OpenAPI or the Fern Definition.
+Define your API using the [OpenAPI Specification](/learn/api-definition/openapi/overview) or the [Fern Definition](/learn/api-definition/fern/overview).
 
 ### Add the Express generator 
 
@@ -52,7 +52,7 @@ groups:
 </CodeBlock>
 
 ### 
-Run the [CLI](../cli-api/overview.mdx#) command `fern generate --group express-server`. 
+Run the [CLI](/learn/cli-api/cli-reference/cli-overview) command `fern generate --group express-server`. 
 
 <Note>Make sure to enable `allowSyntheticDefaultImports` in your `tsconfig.json` when using this generator.</Note>
 
@@ -79,7 +79,7 @@ class MoviesService(AbstractMoviesService):
 ### Run the server
 
 ```bash
-$ poetry run start
+poetry run start
 ```
 
 ### Call the API 🚀
@@ -106,40 +106,21 @@ $ curl --location --request GET --silent 'localhost:8080/movies/oceans-11' | jq 
 
 Tailor the `config` of the Express server generator to your needs. The default values for all options are `false`.
 
-```yaml
-    useBrandedStringAliases:
-        type: boolean
-        docs: When enabled, string aliases are generated as branded strings. This makes each alias feel like its own type and improves compile-time safety.
-    areImplementationsOptional: boolean
-    doNotHandleUnrecognizedErrors: boolean
-    includeUtilsOnUnionMembers: boolean
-    includeOtherInUnionTypes: boolean
-    treatUnknownAsAny: 
-        type: boolean
-        docs: When enabled, unknown types at runtime are generated into TypeScript using the `any` type.
-    noSerdeLayer: 
-        type: boolean
-        docs: | 
-            Allows you to control whether (de-)serialization code is generated. When true, the client uses JSON.parse() and JSON.stringify() instead.
-            
-            By default, the generated client includes a layer for serializing requests and deserializing responses. This has three benefits:
-
-            1. The client validates requests and response at runtime, client-side.
-            2. The client can support complex types, like Date and Set.
-            3. The generated types can stray from the wire/JSON representation to be more idiomatic. For example, when `noSerdeLayer` is disabled, all properties are camelCase, even if the server is expecting snake_case.
-    skipRequestValidation: boolean
-    skipResponseValidation: 
-        type: boolean
-        docs: By default, this config is set to false and the client will throw an error if the response from the server doesn't match the expected type (based on how the response is modeled in the API definition). Set this config to true to never throw an error if the response is misshapen. Rather, the client will log the issue using console.warn and return the data (cast to the expected response type).
-    outputEsm: 
-        type: boolean
-        docs: Allows you to control whether the generated TypeScript targets `CommonJS` or `esnext`. By default, the generated TypeScript targets `CommonJS`.
-    outputSourceFiles: 
-        type: boolean
-        docs: When disabled (default), the generator outputs .js and d.ts files. When enabled, the generator outputs raw TypeScript files.
-    retainOriginalCasing: boolean
-    allowExtraFields: boolean
-```
+| Configuration Option | Description | 
+| -------------------- | ----------- |
+| `useBrandedStringAliases` | When `true`, string aliases are generated as branded strings. This makes each alias feel like its own type and improves compile-time safety. |
+| `areImplementationsOptional` | |
+| `doNotHandleUnrecognizedErrors` | | 
+| `includeUtilsOnUnionMembers` | |
+| `includeOtherInUnionTypes` | | 
+| `treatUnknownAsAny` | When `true`, unknown types at runtime are generated into TypeScript using the `any` type. | 
+| `noSerdeLayer` | Allows you to control whether (de-)serialization code is generated. When true, the client uses JSON.parse() and JSON.stringify() instead. <br /> By default, the generated client includes a layer for serializing requests and deserializing responses. This has three benefits: <br /> 1. The client validates requests and response at runtime, client-side. <br /> 2. The client can support complex types, like Date and Set. <br /> 3. The generated types can stray from the wire/JSON representation to be more idiomatic. For example, when `noSerdeLayer` is disabled, all properties are camelCase, even if the server is expecting snake_case. |
+| `skipRequestValidation` | |
+| `skipResponseValidation` | By default, this config is set to `false` and the client will throw an error if the response from the server doesn't match the expected type (based on how the response is modeled in the API definition). Set this config to `true` to never throw an error if the response is misshapen. Rather, the client will log the issue using console.warn and return the data (cast to the expected response type). |
+| `outputEsm` | Allows you to control whether the generated TypeScript targets `CommonJS` or `esnext`. By default, the generated TypeScript targets `CommonJS`. |
+| `outputSourceFiles` | When `false` (default), the generator outputs .js and d.ts files. When `true`, the generator outputs raw TypeScript files. | 
+| `retainOriginalCasing` | | 
+| `allowExtraFields` | | 
 
 <Note>The configuration options are accessible in [`ExpressCustomConfig.ts`](https://github.com/fern-api/fern/blob/main/generators/typescript/express/cli/src/custom-config/ExpressCustomConfig.ts).</Note>
 

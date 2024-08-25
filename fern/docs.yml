@@ -282,12 +282,12 @@ navigation:
             path: ./pages/servers/introduction.mdx
       - section: Server Frameworks
         contents:
+          - page: Express server
+            path: ./pages/servers/express.mdx
           - page: FastAPI server
             path: ./pages/servers/fastapi.mdx
           - page: Spring server 
             path: ./pages/servers/spring.mdx
-          - page: Express server
-            path: ./pages/servers/express.mdx
   - tab: cli-api
     layout:
       - section: CLI Reference
