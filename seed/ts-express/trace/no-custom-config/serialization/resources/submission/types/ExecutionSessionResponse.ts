@@ -12,8 +12,8 @@ export const ExecutionSessionResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     sessionId: core.serialization.string(),
     executionSessionUrl: core.serialization.string().optional(),
-    language: core.serialization.lazy(async () => (await import("../../..")).Language),
-    status: core.serialization.lazy(async () => (await import("../../..")).ExecutionSessionStatus),
+    language: core.serialization.lazy(() => serializers.Language),
+    status: core.serialization.lazy(() => serializers.ExecutionSessionStatus),
 });
 
 export declare namespace ExecutionSessionResponse {

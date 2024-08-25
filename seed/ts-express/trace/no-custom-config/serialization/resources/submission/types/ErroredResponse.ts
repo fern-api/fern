@@ -10,8 +10,8 @@ export const ErroredResponse: core.serialization.ObjectSchema<
     serializers.ErroredResponse.Raw,
     SeedTrace.ErroredResponse
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
-    errorInfo: core.serialization.lazy(async () => (await import("../../..")).ErrorInfo),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
+    errorInfo: core.serialization.lazy(() => serializers.ErrorInfo),
 });
 
 export declare namespace ErroredResponse {

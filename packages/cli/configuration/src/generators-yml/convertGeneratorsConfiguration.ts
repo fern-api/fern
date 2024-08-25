@@ -1,7 +1,7 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isPlainObject } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
-import { OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
+import { GithubPullRequestReviewer, OutputMetadata, PublishingMetadata, PypiMetadata } from "@fern-fern/fiddle-sdk/api";
 import { readFile } from "fs/promises";
 import path from "path";
 import {
@@ -12,6 +12,8 @@ import {
     GeneratorInvocation,
     GeneratorsConfiguration
 } from "./GeneratorsConfiguration";
+import { isRawProtobufAPIDefinitionSchema } from "./isRawProtobufAPIDefinitionSchema";
+import { APIConfigurationSchemaInternal } from "./schemas/APIConfigurationSchema";
 import { GeneratorGroupSchema } from "./schemas/GeneratorGroupSchema";
 import { GeneratorInvocationSchema } from "./schemas/GeneratorInvocationSchema";
 import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
@@ -24,9 +26,12 @@ import {
     OPENAPI_OVERRIDES_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
+import { GithubPullRequestSchema } from "./schemas/GithubPullRequestSchema";
 import { MavenOutputLocationSchema } from "./schemas/MavenOutputLocationSchema";
 import { OutputMetadataSchema } from "./schemas/OutputMetadataSchema";
 import { PypiOutputMetadataSchema } from "./schemas/PypiOutputMetadataSchema";
+import { ReadmeSchema } from "./schemas/ReadmeSchema";
+import { ReviewersSchema } from "./schemas/ReviewersSchema";
 
 export async function convertGeneratorsConfiguration({
     absolutePathToGeneratorsConfiguration,
@@ -36,11 +41,14 @@ export async function convertGeneratorsConfiguration({
     rawGeneratorsConfiguration: GeneratorsConfigurationSchema;
 }): Promise<GeneratorsConfiguration> {
     const maybeTopLevelMetadata = getOutputMetadata(rawGeneratorsConfiguration.metadata);
+    const readme = rawGeneratorsConfiguration.readme;
+    const parsedApiConfiguration = await parseAPIConfiguration(rawGeneratorsConfiguration);
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
-        api: await parseAPIConfiguration(rawGeneratorsConfiguration),
+        api: parsedApiConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
+        reviewers: rawGeneratorsConfiguration.reviewers,
         groups:
             rawGeneratorsConfiguration.groups != null
                 ? await Promise.all(
@@ -49,7 +57,9 @@ export async function convertGeneratorsConfiguration({
                               absolutePathToGeneratorsConfiguration,
                               groupName,
                               group,
-                              maybeTopLevelMetadata
+                              maybeTopLevelMetadata,
+                              maybeTopLevelReviewers: rawGeneratorsConfiguration.reviewers,
+                              readme
                           })
                       )
                   )
@@ -63,88 +73,192 @@ export async function convertGeneratorsConfiguration({
     };
 }
 
-async function parseAPIConfiguration(
-    rawGeneratorsConfiguration: GeneratorsConfigurationSchema
-): Promise<APIDefinition> {
-    const apiConfiguration = rawGeneratorsConfiguration.api;
+async function parseAPIConfigurationToApiLocations(
+    apiConfiguration: APIConfigurationSchemaInternal | undefined,
+    rawConfiguration: GeneratorsConfigurationSchema
+): Promise<APIDefinitionLocation[]> {
     const apiDefinitions: APIDefinitionLocation[] = [];
+
     if (apiConfiguration != null) {
         if (typeof apiConfiguration === "string") {
             apiDefinitions.push({
-                path: apiConfiguration,
+                schema: {
+                    type: "oss",
+                    path: apiConfiguration
+                },
                 origin: undefined,
                 overrides: undefined,
                 audiences: [],
-                shouldUseTitleAsName: undefined
+                settings: {
+                    shouldUseTitleAsName: undefined,
+                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    asyncApiMessageNaming: undefined
+                }
+            });
+        } else if (isRawProtobufAPIDefinitionSchema(apiConfiguration)) {
+            apiDefinitions.push({
+                schema: {
+                    type: "protobuf",
+                    root: apiConfiguration.proto.root,
+                    target: apiConfiguration.proto.target,
+                    localGeneration: apiConfiguration.proto["local-generation"] ?? false
+                },
+                origin: undefined,
+                overrides: apiConfiguration.proto.overrides,
+                audiences: [],
+                settings: {
+                    shouldUseTitleAsName: undefined,
+                    shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                    asyncApiMessageNaming: undefined
+                }
             });
         } else if (Array.isArray(apiConfiguration)) {
             for (const definition of apiConfiguration) {
                 if (typeof definition === "string") {
                     apiDefinitions.push({
-                        path: definition,
+                        schema: {
+                            type: "oss",
+                            path: definition
+                        },
                         origin: undefined,
                         overrides: undefined,
                         audiences: [],
-                        shouldUseTitleAsName: undefined
+                        settings: {
+                            shouldUseTitleAsName: undefined,
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                            asyncApiMessageNaming: undefined
+                        }
+                    });
+                } else if (isRawProtobufAPIDefinitionSchema(definition)) {
+                    apiDefinitions.push({
+                        schema: {
+                            type: "protobuf",
+                            root: definition.proto.root,
+                            target: definition.proto.target,
+                            localGeneration: definition.proto["local-generation"] ?? false
+                        },
+                        origin: undefined,
+                        overrides: definition.proto.overrides,
+                        audiences: [],
+                        settings: {
+                            shouldUseTitleAsName: undefined,
+                            shouldUseUndiscriminatedUnionsWithLiterals: undefined,
+                            asyncApiMessageNaming: undefined
+                        }
                     });
                 } else {
                     apiDefinitions.push({
-                        path: definition.path,
+                        schema: {
+                            type: "oss",
+                            path: definition.path
+                        },
                         origin: definition.origin,
                         overrides: definition.overrides,
                         audiences: definition.audiences,
-                        shouldUseTitleAsName: definition.settings?.["use-title"]
+                        settings: {
+                            shouldUseTitleAsName: definition.settings?.["use-title"],
+                            shouldUseUndiscriminatedUnionsWithLiterals: definition.settings?.unions === "v1",
+                            asyncApiMessageNaming: definition.settings?.["message-naming"]
+                        }
                     });
                 }
             }
         } else {
             apiDefinitions.push({
-                path: apiConfiguration.path,
+                schema: {
+                    type: "oss",
+                    path: apiConfiguration.path
+                },
                 origin: apiConfiguration.origin,
                 overrides: apiConfiguration.overrides,
                 audiences: apiConfiguration.audiences,
-                shouldUseTitleAsName: apiConfiguration.settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: apiConfiguration.settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: apiConfiguration.settings?.unions === "v1",
+                    asyncApiMessageNaming: apiConfiguration.settings?.["message-naming"]
+                }
             });
         }
     } else {
-        const openapi = rawGeneratorsConfiguration[OPENAPI_LOCATION_KEY];
-        const apiOrigin = rawGeneratorsConfiguration[API_ORIGIN_LOCATION_KEY];
-        const openapiOverrides = rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
-        const asyncapi = rawGeneratorsConfiguration[ASYNC_API_LOCATION_KEY];
-        const settings = rawGeneratorsConfiguration[API_SETTINGS_KEY];
-
+        const openapi = rawConfiguration[OPENAPI_LOCATION_KEY];
+        const apiOrigin = rawConfiguration[API_ORIGIN_LOCATION_KEY];
+        const openapiOverrides = rawConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
+        const asyncapi = rawConfiguration[ASYNC_API_LOCATION_KEY];
+        const settings = rawConfiguration[API_SETTINGS_KEY];
         if (openapi != null && typeof openapi === "string") {
             apiDefinitions.push({
-                path: openapi,
+                schema: {
+                    type: "oss",
+                    path: openapi
+                },
                 origin: apiOrigin,
                 overrides: openapiOverrides,
                 audiences: [],
-                shouldUseTitleAsName: settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+                    asyncApiMessageNaming: undefined
+                }
             });
         } else if (openapi != null) {
             apiDefinitions.push({
-                path: openapi.path,
+                schema: {
+                    type: "oss",
+                    path: openapi.path
+                },
                 origin: openapi.origin,
                 overrides: openapi.overrides,
                 audiences: [],
-                shouldUseTitleAsName: openapi.settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: openapi.settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: openapi.settings?.unions === "v1",
+                    asyncApiMessageNaming: undefined
+                }
             });
         }
 
         if (asyncapi != null) {
             apiDefinitions.push({
-                path: asyncapi,
+                schema: {
+                    type: "oss",
+                    path: asyncapi
+                },
                 origin: apiOrigin,
                 overrides: undefined,
                 audiences: [],
-                shouldUseTitleAsName: settings?.["use-title"]
+                settings: {
+                    shouldUseTitleAsName: settings?.["use-title"],
+                    shouldUseUndiscriminatedUnionsWithLiterals: settings?.unions === "v1",
+                    asyncApiMessageNaming: settings?.["message-naming"]
+                }
             });
         }
     }
 
+    return apiDefinitions;
+}
+
+async function parseAPIConfiguration(
+    rawGeneratorsConfiguration: GeneratorsConfigurationSchema
+): Promise<APIDefinition> {
+    const apiConfiguration = rawGeneratorsConfiguration.api;
+    if (isPlainObject(apiConfiguration) && "namespaces" in apiConfiguration) {
+        const namespacedDefinitions: Record<string, APIDefinitionLocation[]> = {};
+        for (const [namespace, configuration] of Object.entries(apiConfiguration.namespaces)) {
+            namespacedDefinitions[namespace] = await parseAPIConfigurationToApiLocations(
+                configuration,
+                rawGeneratorsConfiguration
+            );
+        }
+        return {
+            type: "multiNamespace",
+            definitions: namespacedDefinitions
+        };
+    }
+
     return {
         type: "singleNamespace",
-        definitions: apiDefinitions
+        definitions: await parseAPIConfigurationToApiLocations(apiConfiguration, rawGeneratorsConfiguration)
     };
 }
 
@@ -152,16 +266,21 @@ async function convertGroup({
     absolutePathToGeneratorsConfiguration,
     groupName,
     group,
-    maybeTopLevelMetadata
+    maybeTopLevelMetadata,
+    maybeTopLevelReviewers,
+    readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     groupName: string;
     group: GeneratorGroupSchema;
     maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeTopLevelReviewers: ReviewersSchema | undefined;
+    readme: ReadmeSchema | undefined;
 }): Promise<GeneratorGroup> {
     const maybeGroupLevelMetadata = getOutputMetadata(group.metadata);
     return {
         groupName,
+        reviewers: group.reviewers,
         audiences: group.audiences == null ? { type: "all" } : { type: "select", audiences: group.audiences },
         generators: await Promise.all(
             group.generators.map((generator) =>
@@ -169,7 +288,10 @@ async function convertGroup({
                     absolutePathToGeneratorsConfiguration,
                     generator,
                     maybeTopLevelMetadata,
-                    maybeGroupLevelMetadata
+                    maybeGroupLevelMetadata,
+                    maybeTopLevelReviewers,
+                    maybeGroupLevelReviewers: group.reviewers,
+                    readme
                 })
             )
         )
@@ -180,12 +302,18 @@ async function convertGenerator({
     absolutePathToGeneratorsConfiguration,
     generator,
     maybeGroupLevelMetadata,
-    maybeTopLevelMetadata
+    maybeTopLevelMetadata,
+    maybeGroupLevelReviewers,
+    maybeTopLevelReviewers,
+    readme
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
     maybeGroupLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeGroupLevelReviewers: ReviewersSchema | undefined;
+    maybeTopLevelReviewers: ReviewersSchema | undefined;
+    readme: ReadmeSchema | undefined;
 }): Promise<GeneratorInvocation> {
     return {
         name: generator.name,
@@ -195,8 +323,11 @@ async function convertGenerator({
             absolutePathToGeneratorsConfiguration,
             generator,
             maybeGroupLevelMetadata,
-            maybeTopLevelMetadata
+            maybeTopLevelMetadata,
+            maybeGroupLevelReviewers,
+            maybeTopLevelReviewers
         }),
+        keywords: generator.keywords,
         smartCasing: generator["smart-casing"] ?? false,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
@@ -209,7 +340,9 @@ async function convertGenerator({
                 : undefined,
         language: getLanguageFromGeneratorName(generator.name),
         irVersionOverride: generator["ir-version"] ?? undefined,
-        publishMetadata: getPublishMetadata({ generatorInvocation: generator })
+        publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
+        readme,
+        settings: generator.api?.settings ?? undefined
     };
 }
 
@@ -253,16 +386,63 @@ function _getPypiMetadata({
     }
     return maybePyPiMetadata;
 }
+
+function _getReviewers({
+    topLevelReviewers,
+    groupLevelReviewers,
+    outputModeReviewers
+}: {
+    topLevelReviewers: ReviewersSchema | undefined;
+    groupLevelReviewers: ReviewersSchema | undefined;
+    outputModeReviewers: ReviewersSchema | undefined;
+}): GithubPullRequestReviewer[] {
+    const teamNames = new Set<string>();
+    const userNames = new Set<string>();
+
+    const reviewers: GithubPullRequestReviewer[] = [];
+
+    const allTeamReviewers = [
+        ...(topLevelReviewers?.teams ?? []),
+        ...(groupLevelReviewers?.teams ?? []),
+        ...(outputModeReviewers?.teams ?? [])
+    ];
+    const allUserReviewers = [
+        ...(topLevelReviewers?.users ?? []),
+        ...(groupLevelReviewers?.users ?? []),
+        ...(outputModeReviewers?.users ?? [])
+    ];
+
+    for (const team of allTeamReviewers) {
+        if (!teamNames.has(team.name)) {
+            reviewers.push(GithubPullRequestReviewer.team({ name: team.name }));
+            teamNames.add(team.name);
+        }
+    }
+
+    for (const user of allUserReviewers) {
+        if (!userNames.has(user.name)) {
+            reviewers.push(GithubPullRequestReviewer.user({ name: user.name }));
+            userNames.add(user.name);
+        }
+    }
+
+    return reviewers;
+}
+
 async function convertOutputMode({
     absolutePathToGeneratorsConfiguration,
     generator,
     maybeGroupLevelMetadata = {},
-    maybeTopLevelMetadata = {}
+    maybeTopLevelMetadata = {},
+    maybeGroupLevelReviewers,
+    maybeTopLevelReviewers
 }: {
     absolutePathToGeneratorsConfiguration: AbsoluteFilePath;
     generator: GeneratorInvocationSchema;
     maybeGroupLevelMetadata: OutputMetadata | undefined;
     maybeTopLevelMetadata: OutputMetadata | undefined;
+    maybeGroupLevelReviewers: ReviewersSchema | undefined;
+    maybeTopLevelReviewers: ReviewersSchema | undefined;
 }): Promise<FernFiddle.OutputMode> {
     const downloadSnippets = generator.snippets != null && generator.snippets.path !== "";
     if (generator.github != null) {
@@ -294,16 +474,23 @@ async function convertOutputMode({
                         downloadSnippets
                     })
                 );
-            case "pull-request":
+            case "pull-request": {
+                const reviewers = _getReviewers({
+                    topLevelReviewers: maybeTopLevelReviewers,
+                    groupLevelReviewers: maybeGroupLevelReviewers,
+                    outputModeReviewers: (generator.github as GithubPullRequestSchema).reviewers
+                });
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.pullRequest({
                         owner,
                         repo,
                         license,
                         publishInfo,
-                        downloadSnippets
+                        downloadSnippets,
+                        reviewers
                     })
                 );
+            }
             case "push":
                 return FernFiddle.OutputMode.githubV2(
                     FernFiddle.GithubOutputModeV2.push({
@@ -415,7 +602,7 @@ async function getGithubLicense({
                 });
             case "Apache-2.0":
                 return FernFiddle.GithubLicense.basic({
-                    id: FernFiddle.GithubLicenseId.Apache2
+                    id: FernFiddle.GithubLicenseId.Apache
                 });
             default:
                 assertNever(githubLicense);
@@ -525,6 +712,9 @@ function getLanguageFromGeneratorName(generatorName: string) {
     }
     if (generatorName.includes("csharp")) {
         return GenerationLanguage.CSHARP;
+    }
+    if (generatorName.includes("swift")) {
+        return GenerationLanguage.SWIFT;
     }
     return undefined;
 }

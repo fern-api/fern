@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = JustFileWithQueryParamsRequet.Builder.class)
 public final class JustFileWithQueryParamsRequet {
     private final Optional<String> maybeString;
@@ -175,7 +175,7 @@ public final class JustFileWithQueryParamsRequet {
 
         @java.lang.Override
         public _FinalStage optionalListOfStrings(String optionalListOfStrings) {
-            this.optionalListOfStrings = Optional.of(optionalListOfStrings);
+            this.optionalListOfStrings = Optional.ofNullable(optionalListOfStrings);
             return this;
         }
 
@@ -188,7 +188,7 @@ public final class JustFileWithQueryParamsRequet {
 
         @java.lang.Override
         public _FinalStage maybeInteger(Integer maybeInteger) {
-            this.maybeInteger = Optional.of(maybeInteger);
+            this.maybeInteger = Optional.ofNullable(maybeInteger);
             return this;
         }
 
@@ -201,7 +201,7 @@ public final class JustFileWithQueryParamsRequet {
 
         @java.lang.Override
         public _FinalStage maybeString(String maybeString) {
-            this.maybeString = Optional.of(maybeString);
+            this.maybeString = Optional.ofNullable(maybeString);
             return this;
         }
 

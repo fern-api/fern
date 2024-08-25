@@ -1,5 +1,5 @@
-using System.Text.Json;
-using SeedExhaustive;
+using System.Net.Http;
+using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
 #nullable enable
@@ -18,17 +18,18 @@ public class EnumClient
     public async Task<WeatherReport> GetAndReturnEnumAsync(WeatherReport request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/enum",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<WeatherReport>(responseBody);
+            return JsonUtils.Deserialize<WeatherReport>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

@@ -1,12 +1,18 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class WorkspaceSubmissionStatusV2
+public record WorkspaceSubmissionStatusV2
 {
     [JsonPropertyName("updates")]
-    public IEnumerable<WorkspaceSubmissionUpdate> Updates { get; init; }
+    public IEnumerable<WorkspaceSubmissionUpdate> Updates { get; set; } =
+        new List<WorkspaceSubmissionUpdate>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

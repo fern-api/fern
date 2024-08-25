@@ -1,18 +1,23 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class WorkspaceRunDetails
+public record WorkspaceRunDetails
 {
     [JsonPropertyName("exceptionV2")]
-    public ExceptionV2? ExceptionV2 { get; init; }
+    public object? ExceptionV2 { get; set; }
 
     [JsonPropertyName("exception")]
-    public ExceptionInfo? Exception { get; init; }
+    public ExceptionInfo? Exception { get; set; }
 
     [JsonPropertyName("stdout")]
-    public string Stdout { get; init; }
+    public required string Stdout { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

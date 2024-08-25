@@ -1,17 +1,29 @@
 using System.Text.Json.Serialization;
+using SeedLiteral.Core;
 
 #nullable enable
 
 namespace SeedLiteral;
 
-public class SendRequest
+public record SendRequest
 {
     [JsonPropertyName("prompt")]
-    public string Prompt { get; init; }
+    public required string Prompt { get; set; }
 
     [JsonPropertyName("query")]
-    public string Query { get; init; }
+    public required string Query { get; set; }
 
     [JsonPropertyName("stream")]
-    public bool Stream { get; init; }
+    public required bool Stream { get; set; }
+
+    [JsonPropertyName("context")]
+    public required string Context { get; set; }
+
+    [JsonPropertyName("maybeContext")]
+    public string? MaybeContext { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

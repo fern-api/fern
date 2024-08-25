@@ -1,0 +1,74 @@
+{
+    "name": "@fern/exhaustive",
+    "version": "0.0.2",
+    "private": false,
+    "repository": "https://github.com/exhaustive/fern",
+    "scripts": {
+        "format": "prettier . --write --ignore-unknown",
+        "compile": "tsc",
+        "bundle": "node build.js",
+        "build": "yarn compile && yarn bundle"
+    },
+    "files": [
+        "exampleFile",
+        "dist",
+        "types",
+        "core.d.ts",
+        "serialization.d.ts"
+    ],
+    "exports": {
+        ".": {
+            "node": "./dist/node/index.js",
+            "import": "./dist/browser/esm/index.js",
+            "require": "./dist/browser/cjs/index.js",
+            "default": "./dist/browser/cjs/index.js",
+            "types": "./types/index.d.ts"
+        },
+        "./core": {
+            "node": "./dist/node/core.js",
+            "import": "./dist/browser/esm/core.js",
+            "require": "./dist/browser/cjs/core.js",
+            "default": "./dist/browser/cjs/core.js",
+            "types": "./types/core/index.d.ts"
+        },
+        "./serialization": {
+            "node": "./dist/node/serialization.js",
+            "import": "./dist/browser/esm/serialization.js",
+            "require": "./dist/browser/cjs/serialization.js",
+            "default": "./dist/browser/cjs/serialization.js",
+            "types": "./types/serialization/index.d.ts"
+        }
+    },
+    "types": "./types/index.d.ts",
+    "dependencies": {
+        "url-join": "4.0.1",
+        "form-data": "^4.0.0",
+        "formdata-node": "^6.0.3",
+        "node-fetch": "2.7.0",
+        "qs": "^6.11.2",
+        "js-base64": "3.7.2",
+        "lodash-es": "^4.17.21",
+        "stream": "^0.0.2"
+    },
+    "devDependencies": {
+        "@types/url-join": "4.0.1",
+        "@types/qs": "6.9.8",
+        "@types/node-fetch": "2.6.9",
+        "fetch-mock-jest": "^1.5.1",
+        "jest": "29.7.0",
+        "@types/jest": "29.5.5",
+        "ts-jest": "29.1.1",
+        "jest-environment-jsdom": "29.7.0",
+        "@types/node": "17.0.33",
+        "esbuild": "0.16.15",
+        "prettier": "2.7.1",
+        "typescript": "4.6.4"
+    },
+    "browser": {
+        "fs": false,
+        "os": false,
+        "path": false,
+        "command-exists": false,
+        "execa": false
+    }
+}

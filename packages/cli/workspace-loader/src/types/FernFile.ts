@@ -1,11 +1,13 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 
 export interface FernFile {
-    filepath: RelativeFilePath;
+    relativeFilepath: RelativeFilePath;
+    absoluteFilepath: AbsoluteFilePath;
     fileContents: string;
 }
 
 export interface ParsedFernFile<Schema> {
     rawContents: string;
     contents: Schema;
+    defaultUrl: string | undefined;
 }

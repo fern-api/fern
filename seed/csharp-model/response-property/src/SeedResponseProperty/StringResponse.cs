@@ -1,11 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedResponseProperty.Core;
 
 #nullable enable
 
 namespace SeedResponseProperty;
 
-public class StringResponse
+public record StringResponse
 {
     [JsonPropertyName("data")]
-    public string Data { get; init; }
+    public required string Data { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

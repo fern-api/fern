@@ -1,14 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class GenericValue
+public record GenericValue
 {
     [JsonPropertyName("stringifiedType")]
-    public string? StringifiedType { get; init; }
+    public string? StringifiedType { get; set; }
 
     [JsonPropertyName("stringifiedValue")]
-    public string StringifiedValue { get; init; }
+    public required string StringifiedValue { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

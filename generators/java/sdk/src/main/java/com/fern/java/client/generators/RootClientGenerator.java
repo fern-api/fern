@@ -16,18 +16,19 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.irV42.model.auth.AuthScheme;
-import com.fern.irV42.model.auth.BasicAuthScheme;
-import com.fern.irV42.model.auth.BearerAuthScheme;
-import com.fern.irV42.model.auth.EnvironmentVariable;
-import com.fern.irV42.model.auth.HeaderAuthScheme;
-import com.fern.irV42.model.auth.OAuthClientCredentials;
-import com.fern.irV42.model.auth.OAuthConfiguration;
-import com.fern.irV42.model.auth.OAuthScheme;
-import com.fern.irV42.model.commons.EndpointReference;
-import com.fern.irV42.model.commons.TypeId;
-import com.fern.irV42.model.ir.Subpackage;
-import com.fern.irV42.model.types.Literal;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.BasicAuthScheme;
+import com.fern.ir.model.auth.BearerAuthScheme;
+import com.fern.ir.model.auth.EnvironmentVariable;
+import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.auth.OAuthClientCredentials;
+import com.fern.ir.model.auth.OAuthConfiguration;
+import com.fern.ir.model.auth.OAuthScheme;
+import com.fern.ir.model.commons.EndpointReference;
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.Literal;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
@@ -64,6 +65,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName builderName;
     private final GeneratedJavaFile requestOptionsFile;
+    private final Map<ErrorId, GeneratedJavaFile> generatedErrors;
 
     public RootClientGenerator(
             AbstractGeneratorContext<?, ?> generatorContext,
@@ -74,7 +76,8 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedJavaFile requestOptionsFile,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
-            Optional<GeneratedJavaFile> generatedOAuthTokenSupplier) {
+            Optional<GeneratedJavaFile> generatedOAuthTokenSupplier,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 generatorContext
                         .getPoetClassNameFactory()
@@ -90,6 +93,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.generatedOAuthTokenSupplier = generatedOAuthTokenSupplier;
+        this.generatedErrors = generatedErrors;
         this.builderName = ClassName.get(className.packageName(), className.simpleName() + "Builder");
         this.requestOptionsFile = requestOptionsFile;
     }
@@ -105,7 +109,8 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 allGeneratedInterfaces,
                 generatedSuppliersFile,
                 requestOptionsFile,
-                generatorContext.getIr().getRootPackage());
+                generatorContext.getIr().getRootPackage(),
+                generatedErrors);
         Result result = clientGeneratorUtils.buildClients();
 
         TypeSpec builderTypeSpec = getClientBuilder();
@@ -147,7 +152,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 .addModifiers(Modifier.PRIVATE);
 
         AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(clientBuilder, buildMethod);
-        generatorContext.getIr().getAuth().getSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
+        generatorContext.getResolvedAuthSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
         generatorContext.getIr().getHeaders().forEach(httpHeader -> {
             authSchemeHandler.visitNonAuthHeader(HeaderAuthScheme.builder()
                     .name(httpHeader.getName())

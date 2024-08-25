@@ -1,14 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedExtends.Core;
 
 #nullable enable
 
 namespace SeedExtends;
 
-public class Json
+public record Json
 {
     [JsonPropertyName("raw")]
-    public string Raw { get; init; }
+    public required string Raw { get; set; }
 
     [JsonPropertyName("docs")]
-    public string Docs { get; init; }
+    public required string Docs { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

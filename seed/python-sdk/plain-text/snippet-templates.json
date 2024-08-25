@@ -11,7 +11,16 @@
             "identifierOverride": "endpoint_service.getText"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedPlainText\n\nclient = SeedPlainText(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedPlainText"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedPlainText(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -24,7 +33,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedPlainText\n\nclient = AsyncSeedPlainText(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedPlainText"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedPlainText(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,

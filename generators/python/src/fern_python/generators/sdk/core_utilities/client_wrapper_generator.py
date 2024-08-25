@@ -4,11 +4,13 @@ from enum import Enum
 from typing import List, Optional
 
 import fern.ir.resources as ir_types
+from fdr import PayloadInput, Template, TemplateInput
 
 from fern_python.codegen import AST, Project, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import httpx
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
+from fern_python.snippet.template_utils import TemplateGenerator
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import GeneratedEnvironment
@@ -26,6 +28,7 @@ class ConstructorParameter:
     environment_variable: typing.Optional[str] = None
     is_basic: bool = False
     docs: typing.Optional[str] = None
+    template: typing.Optional[Template] = None
 
 
 @dataclass
@@ -261,6 +264,8 @@ class ClientWrapperGenerator:
     def _get_write_derived_client_wrapper_constructor_body(
         self, *, constructor_parameters: List[ConstructorParameter], is_async: bool
     ) -> CodeWriterFunction:
+        has_base_url = get_client_wrapper_url_type(ir=self._context.ir) == ClientWrapperUrlStorage.URL
+
         def _write_derived_client_wrapper_constructor_body(writer: AST.NodeWriter) -> None:
             writer.write_line(
                 "super().__init__("
@@ -275,7 +280,13 @@ class ClientWrapperGenerator:
             writer.write(f"self.{ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME} = ")
             writer.write_node(
                 self._context.core_utilities.http_client(
-                    obj=AST.Expression(ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME), is_async=is_async
+                    base_client=AST.Expression(ClientWrapperGenerator.HTTPX_CLIENT_MEMBER_NAME),
+                    base_url=AST.Expression(f"self.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}()")
+                    if has_base_url
+                    else None,
+                    base_headers=AST.Expression(f"self.{ClientWrapperGenerator.GET_HEADERS_METHOD_NAME}()"),
+                    base_timeout=AST.Expression(f"self.{ClientWrapperGenerator.GET_TIMEOUT_METHOD_NAME}()"),
+                    is_async=is_async,
                 )
             )
 
@@ -466,7 +477,7 @@ class ClientWrapperGenerator:
                     ),
                     header_key=header_auth_scheme.name.wire_value,
                     header_prefix=header_auth_scheme.prefix,
-                    environment_variable=header_auth_scheme.header_env_var.get_as_str()
+                    environment_variable=header_auth_scheme.header_env_var
                     if header_auth_scheme.header_env_var is not None
                     else None,
                 )
@@ -505,9 +516,21 @@ class ClientWrapperGenerator:
                     ),
                     header_key=ClientWrapperGenerator.AUTHORIZATION_HEADER,
                     header_prefix=ClientWrapperGenerator.BEARER_AUTH_PREFIX,
-                    environment_variable=bearer_auth_scheme.token_env_var.get_as_str()
+                    environment_variable=bearer_auth_scheme.token_env_var
                     if bearer_auth_scheme.token_env_var is not None
                     else None,
+                    template=TemplateGenerator.string_template(
+                        is_optional=False,
+                        template_string_prefix=constructor_parameter_name,
+                        inputs=[
+                            TemplateInput.factory.payload(
+                                PayloadInput(
+                                    location="AUTH",
+                                    path="token",
+                                )
+                            )
+                        ],
+                    ),
                 )
             )
 
@@ -541,10 +564,22 @@ class ClientWrapperGenerator:
                         )
                     ),
                 ),
-                environment_variable=basic_auth_scheme.username_env_var.get_as_str()
+                environment_variable=basic_auth_scheme.username_env_var
                 if basic_auth_scheme.username_env_var is not None
                 else None,
                 is_basic=True,
+                template=TemplateGenerator.string_template(
+                    is_optional=False,
+                    template_string_prefix=username_constructor_parameter_name,
+                    inputs=[
+                        TemplateInput.factory.payload(
+                            PayloadInput(
+                                location="AUTH",
+                                path="username",
+                            )
+                        ),
+                    ],
+                ),
             )
             password_constructor_parameter_name = self._get_password_constructor_parameter_name(basic_auth_scheme)
             password_constructor_parameter = ConstructorParameter(
@@ -575,9 +610,21 @@ class ClientWrapperGenerator:
                     ),
                 ),
                 is_basic=True,
-                environment_variable=basic_auth_scheme.password_env_var.get_as_str()
+                environment_variable=basic_auth_scheme.password_env_var
                 if basic_auth_scheme.password_env_var is not None
                 else None,
+                template=TemplateGenerator.string_template(
+                    is_optional=False,
+                    template_string_prefix=password_constructor_parameter_name,
+                    inputs=[
+                        TemplateInput.factory.payload(
+                            PayloadInput(
+                                location="AUTH",
+                                path="password",
+                            )
+                        ),
+                    ],
+                ),
             )
             parameters.extend(
                 [

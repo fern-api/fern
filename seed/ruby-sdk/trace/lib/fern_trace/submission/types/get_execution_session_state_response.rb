@@ -46,12 +46,12 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        states = parsed_json["states"]&.transform_values do |v|
-          v = v.to_json
-          SeedTraceClient::Submission::ExecutionSessionState.from_json(json_object: v)
+        states = parsed_json["states"]&.transform_values do |value|
+          value = value.to_json
+          SeedTraceClient::Submission::ExecutionSessionState.from_json(json_object: value)
         end
-        num_warming_instances = struct["numWarmingInstances"]
-        warming_session_ids = struct["warmingSessionIds"]
+        num_warming_instances = parsed_json["numWarmingInstances"]
+        warming_session_ids = parsed_json["warmingSessionIds"]
         new(
           states: states,
           num_warming_instances: num_warming_instances,

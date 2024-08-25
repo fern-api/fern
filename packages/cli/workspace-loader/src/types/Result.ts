@@ -1,13 +1,14 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { ZodError } from "zod";
-import { APIWorkspace } from "./Workspace";
+import { OSSWorkspace } from "../workspaces";
+import { LazyFernWorkspace } from "../workspaces/FernWorkspace";
 
 export declare namespace WorkspaceLoader {
     export type Result = SuccessfulResult | FailedResult;
 
     export interface SuccessfulResult {
         didSucceed: true;
-        workspace: APIWorkspace;
+        workspace: LazyFernWorkspace | OSSWorkspace;
     }
 
     export interface FailedResult {
@@ -36,6 +37,10 @@ export declare namespace WorkspaceLoader {
         type: WorkspaceLoaderFailureType.FILE_MISSING;
     }
 
+    export interface MisconfiguredDirectoryFailure {
+        type: WorkspaceLoaderFailureType.MISCONFIGURED_DIRECTORY;
+    }
+
     export interface StructureValidationFailure {
         type: WorkspaceLoaderFailureType.STRUCTURE_VALIDATION;
         error: ZodError;
@@ -45,7 +50,8 @@ export declare namespace WorkspaceLoader {
         | DependencyNotListedFailure
         | FailedToLoadDependencyFailure
         | ExportPackageHasDefinitionsFailure
-        | ExportingPackageMarkerHasOtherKeysFailure;
+        | ExportingPackageMarkerHasOtherKeysFailure
+        | MisconfiguredDirectoryFailure;
 
     export interface DependencyNotListedFailure {
         type: WorkspaceLoaderFailureType.DEPENDENCY_NOT_LISTED;
@@ -76,5 +82,6 @@ export enum WorkspaceLoaderFailureType {
     DEPENDENCY_NOT_LISTED = "DEPENDENCY_NOT_LISTED",
     FAILED_TO_LOAD_DEPENDENCY = "FAILED_TO_LOAD_DEPENDENCY",
     EXPORTING_PACKAGE_MARKER_OTHER_KEYS = "EXPORTING_PACKAGE_MARKER_OTHER_KEYS",
-    EXPORT_PACKAGE_HAS_DEFINITIONS = "EXPORT_PACKAGE_HAS_DEFINITIONS"
+    EXPORT_PACKAGE_HAS_DEFINITIONS = "EXPORT_PACKAGE_HAS_DEFINITIONS",
+    MISCONFIGURED_DIRECTORY = "MISCONFIGURED_DIRECTORY"
 }

@@ -44,11 +44,13 @@ export interface ConvertedStreamingOperation {
 export function convertOperation({
     context,
     pathItemContext,
-    operation
+    operation,
+    convertToWebhook
 }: {
     context: AbstractOpenAPIV3ParserContext;
     pathItemContext: PathItemContext;
     operation: OpenAPIV3.OperationObject;
+    convertToWebhook: boolean;
 }): ConvertedOperation | undefined {
     const shouldIgnore = getExtension<boolean>(operation, FernOpenAPIExtension.IGNORE);
     if (shouldIgnore != null && shouldIgnore) {
@@ -58,7 +60,7 @@ export function convertOperation({
         return undefined;
     }
 
-    const sdkMethodName = getSdkGroupAndMethod(operation);
+    const sdkMethodName = getSdkGroupAndMethod(operation, context.namespace);
     const pagination = getFernPaginationExtension(context.document, operation);
 
     const operationContext: OperationContext = {
@@ -75,10 +77,11 @@ export function convertOperation({
         pagination
     };
 
-    if (isWebhook({ operation })) {
+    if (convertToWebhook) {
         const webhook = convertWebhookOperation({
             context,
-            operationContext
+            operationContext,
+            source: context.source
         });
         return webhook != null ? { type: "webhook", value: webhook } : undefined;
     }
@@ -104,7 +107,8 @@ export function convertOperation({
         const asyncAndSync = convertAsyncSyncOperation({
             context,
             operationContext,
-            asyncExtension
+            asyncExtension,
+            source: context.source
         });
         return {
             type: "async",
@@ -116,21 +120,25 @@ export function convertOperation({
     const convertedHttpOperation = convertHttpOperation({
         context,
         operationContext,
-        streamFormat: undefined
+        streamFormat: undefined,
+        source: context.source
     });
     return { type: "http", value: convertedHttpOperation };
 }
 
-function isWebhook({ operation }: { operation: OpenAPIV3.OperationObject }): boolean {
-    return getExtension<boolean>(operation, [FernOpenAPIExtension.WEBHOOK]) ?? false;
-}
-
-function getSdkGroupAndMethod(operation: OpenAPIV3.OperationObject): EndpointSdkName | undefined {
+function getSdkGroupAndMethod(
+    operation: OpenAPIV3.OperationObject,
+    namespace: string | undefined
+): EndpointSdkName | undefined {
     const sdkMethodName = getExtension<string>(operation, FernOpenAPIExtension.SDK_METHOD_NAME);
     const sdkGroupName = getExtension(operation, FernOpenAPIExtension.SDK_GROUP_NAME) ?? [];
     if (sdkMethodName != null) {
+        let groupName = typeof sdkGroupName === "string" ? [sdkGroupName] : sdkGroupName;
+        if (namespace != null) {
+            groupName = [namespace, ...groupName];
+        }
         return {
-            groupName: typeof sdkGroupName === "string" ? [sdkGroupName] : sdkGroupName,
+            groupName,
             methodName: sdkMethodName
         };
     }

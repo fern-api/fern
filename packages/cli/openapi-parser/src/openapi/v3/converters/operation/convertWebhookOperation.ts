@@ -1,4 +1,5 @@
-import { Webhook } from "@fern-api/openapi-ir-sdk";
+import { NamedFullExample, Source, Webhook, WebhookExampleCall } from "@fern-api/openapi-ir-sdk";
+import { convertToFullExample } from "../../../../schema/examples/convertToFullExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { OperationContext } from "../contexts";
@@ -7,10 +8,12 @@ import { convertRequest } from "../endpoint/convertRequest";
 
 export function convertWebhookOperation({
     context,
-    operationContext
+    operationContext,
+    source
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
+    source: Source;
 }): Webhook | undefined {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
     const payloadBreadcrumbs = [...baseBreadcrumbs, "Payload"];
@@ -20,7 +23,8 @@ export function convertWebhookOperation({
         context,
         requestBreadcrumbs: payloadBreadcrumbs,
         path,
-        httpMethod: method
+        httpMethod: method,
+        source
     });
 
     if (operation.requestBody == null) {
@@ -37,7 +41,9 @@ export function convertWebhookOperation({
         requestBody: operation.requestBody,
         document,
         context,
-        requestBreadcrumbs: [...baseBreadcrumbs, "Payload"]
+        requestBreadcrumbs: [...baseBreadcrumbs, "Payload"],
+        source,
+        namespace: context.namespace
     });
 
     if (convertedPayload == null || convertedPayload.type !== "json") {
@@ -55,10 +61,31 @@ export function convertWebhookOperation({
         sdkName: sdkMethodName,
         method,
         operationId: operation.operationId,
-        tags: operation.tags ?? [],
+        tags: context.resolveTags(operation.tags),
         headers: convertedParameters.headers,
         generatedPayloadName: getGeneratedTypeName(payloadBreadcrumbs),
         payload: convertedPayload.schema,
-        description: operation.description
+        description: operation.description,
+        examples: convertWebhookExamples(convertedPayload.fullExamples),
+        source
     };
+}
+
+function convertWebhookExamples(payloadExamples: NamedFullExample[] | undefined): WebhookExampleCall[] {
+    if (payloadExamples == null) {
+        return [];
+    }
+    const webhookExampleCalls: WebhookExampleCall[] = [];
+    for (const payloadExample of payloadExamples) {
+        const fullExample = convertToFullExample(payloadExample.value);
+        if (fullExample == null) {
+            continue;
+        }
+        webhookExampleCalls.push({
+            description: payloadExample.description,
+            name: payloadExample.name,
+            payload: fullExample
+        });
+    }
+    return webhookExampleCalls;
 }

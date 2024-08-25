@@ -1,4 +1,4 @@
-import { EndpointWithExample } from "@fern-api/openapi-ir-sdk";
+import { EndpointWithExample, Source } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../../getExtension";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
@@ -19,13 +19,15 @@ export function convertHttpOperation({
     context,
     responseStatusCode,
     suffix,
-    streamFormat
+    streamFormat,
+    source
 }: {
     operationContext: OperationContext;
     context: AbstractOpenAPIV3ParserContext;
     responseStatusCode?: number;
     suffix?: string;
     streamFormat: "sse" | "json" | undefined;
+    source: Source;
 }): EndpointWithExample {
     const { document, operation, path, method, baseBreadcrumbs, sdkMethodName } = operationContext;
 
@@ -40,7 +42,8 @@ export function convertHttpOperation({
         context,
         requestBreadcrumbs,
         path,
-        httpMethod: method
+        httpMethod: method,
+        source
     });
     let convertedRequest =
         operation.requestBody != null
@@ -49,9 +52,14 @@ export function convertHttpOperation({
                   document,
                   context: new DummyOpenAPIV3ParserContext({
                       document: context.document,
-                      taskContext: context.taskContext
+                      taskContext: context.taskContext,
+                      options: context.options,
+                      source: context.source,
+                      namespace: context.namespace
                   }),
-                  requestBreadcrumbs
+                  requestBreadcrumbs,
+                  source,
+                  namespace: context.namespace
               })
             : undefined;
 
@@ -67,14 +75,18 @@ export function convertHttpOperation({
             requestBody: operation.requestBody,
             document,
             context,
-            requestBreadcrumbs: [...requestBreadcrumbs, "Body"]
+            requestBreadcrumbs: [...requestBreadcrumbs, "Body"],
+            source,
+            namespace: context.namespace
         });
     } else if (operation.requestBody != null) {
         convertedRequest = convertRequest({
             requestBody: operation.requestBody,
             document,
             context,
-            requestBreadcrumbs: [...requestBreadcrumbs]
+            requestBreadcrumbs: [...requestBreadcrumbs],
+            source,
+            namespace: context.namespace
         });
     }
 
@@ -86,26 +98,12 @@ export function convertHttpOperation({
         responses: operation.responses,
         context,
         responseBreadcrumbs,
-        responseStatusCode
+        responseStatusCode,
+        source
     });
 
     const availability = getFernAvailability(operation);
-    const examples = [...getExamplesFromExtension(operationContext, operation, context)];
-    // Validation on readme examples is wrong, but we're changing this data model so it's a wontfix for now
-    // const readmeCodeSamples = getReadmeCodeSamples(operation);
-    // if (readmeCodeSamples.length > 0) {
-    //     examples.push({
-    //         codeSamples: readmeCodeSamples,
-    //         name: undefined,
-    //         description: undefined,
-    //         pathParameters: undefined,
-    //         queryParameters: undefined,
-    //         headers: undefined,
-    //         request: undefined,
-    //         response: undefined
-    //     });
-    // }
-
+    const examples = getExamplesFromExtension(operationContext, operation, context);
     return {
         summary: operation.summary,
         internal: getExtension<boolean>(operation, OpenAPIExtension.INTERNAL),
@@ -115,7 +113,7 @@ export function convertHttpOperation({
             operation.operationId != null && suffix != null
                 ? operation.operationId + "_" + suffix
                 : operation.operationId,
-        tags: operation.tags ?? [],
+        tags: context.resolveTags(operation.tags),
         sdkName: sdkMethodName,
         pathParameters: convertedParameters.pathParameters,
         queryParameters: convertedParameters.queryParameters,
@@ -132,16 +130,17 @@ export function convertHttpOperation({
         method,
         path,
         examples,
-        pagination: operationContext.pagination
+        pagination: operationContext.pagination,
+        source
     };
 }
 
 function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {
     if (operation.security != null) {
-        return Object.keys(operation.security).length >= 0;
+        return Object.keys(operation.security).length > 0;
     }
     if (document.security != null) {
-        return Object.keys(document.security).length >= 0;
+        return Object.keys(document.security).length > 0;
     }
     return false;
 }

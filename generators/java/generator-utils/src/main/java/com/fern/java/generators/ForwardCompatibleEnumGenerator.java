@@ -1,8 +1,8 @@
 package com.fern.java.generators;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fern.irV42.model.types.EnumTypeDeclaration;
-import com.fern.irV42.model.types.EnumValue;
+import com.fern.ir.model.types.EnumTypeDeclaration;
+import com.fern.ir.model.types.EnumValue;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.FernJavaAnnotations;
 import com.fern.java.VisitorFactory;

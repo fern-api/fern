@@ -1,39 +1,78 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedAudiences;
+using System.Threading;
+using SeedAudiences.Core;
 
 #nullable enable
 
 namespace SeedAudiences;
 
-public class FooClient
+public partial class FooClient
 {
     private RawClient _client;
 
-    public FooClient(RawClient client)
+    internal FooClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<ImportingType> FindAsync(FindRequest request)
+    /// <example>
+    /// <code>
+    /// await client.Foo.FindAsync(
+    ///     new FindRequest
+    ///     {
+    ///         OptionalString = "string",
+    ///         PublicProperty = "string",
+    ///         PrivateProperty = 1,
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<ImportingType> FindAsync(
+        FindRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>() { };
+        var _query = new Dictionary<string, object>();
         if (request.OptionalString != null)
         {
             _query["optionalString"] = request.OptionalString;
         }
+        var requestBody = new Dictionary<string, object>()
+        {
+            { "publicProperty", request.PublicProperty },
+            { "privateProperty", request.PrivateProperty },
+        };
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Query = _query
-            }
+                Body = requestBody,
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ImportingType>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<ImportingType>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedAudiencesException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedAudiencesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedEnum;
 using SeedEnum.Core;
 
 #nullable enable
@@ -17,5 +16,5 @@ public enum Operand
     EqualTo,
 
     [EnumMember(Value = "less_than")]
-    LessThan
+    LessThan,
 }

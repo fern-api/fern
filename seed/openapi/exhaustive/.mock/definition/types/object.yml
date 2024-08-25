@@ -13,6 +13,7 @@ types:
       list: optional<list<string>>
       set: optional<set<string>>
       map: optional<map<integer, string>>
+      bigint: optional<bigint>
 
   ObjectWithRequiredField:
     properties:
@@ -31,6 +32,12 @@ types:
     properties:
       string: string
       NestedObject: ObjectWithOptionalField
+
+  DoubleOptional:
+    properties:
+      optionalAlias: optional<OptionalAlias>
+
+  OptionalAlias: optional<string>
 
 errors:
   ObjectWithOptionalFieldError:

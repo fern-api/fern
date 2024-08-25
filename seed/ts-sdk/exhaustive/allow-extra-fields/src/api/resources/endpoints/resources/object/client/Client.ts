@@ -15,8 +15,11 @@ export declare namespace Object_ {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -29,13 +32,13 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnWithOptionalField({
+     *     await client.endpoints.object.getAndReturnWithOptionalField({
      *         string: "string",
      *         integer: 1,
      *         long: 1000000,
      *         double: 1.1,
      *         bool: true,
-     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *         datetime: "2024-01-15T09:30:00Z",
      *         date: "2023-01-15",
      *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         base64: "SGVsbG8gd29ybGQh",
@@ -43,7 +46,8 @@ export class Object_ {
      *         set: new Set(["string"]),
      *         map: {
      *             1: "string"
-     *         }
+     *         },
+     *         bigint: "123456789123456789"
      *     })
      */
     public async getAndReturnWithOptionalField(
@@ -61,11 +65,13 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -75,7 +81,7 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -110,7 +116,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnWithRequiredField({
+     *     await client.endpoints.object.getAndReturnWithRequiredField({
      *         string: "string"
      *     })
      */
@@ -129,11 +135,13 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -143,7 +151,7 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -178,7 +186,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnWithMapOfMap({
+     *     await client.endpoints.object.getAndReturnWithMapOfMap({
      *         map: {
      *             "string": {
      *                 "string": "string"
@@ -198,11 +206,13 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -212,7 +222,7 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -247,7 +257,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithOptionalField({
+     *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
      *         string: "string",
      *         nestedObject: {
      *             string: "string",
@@ -255,7 +265,7 @@ export class Object_ {
      *             long: 1000000,
      *             double: 1.1,
      *             bool: true,
-     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *             datetime: "2024-01-15T09:30:00Z",
      *             date: "2023-01-15",
      *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             base64: "SGVsbG8gd29ybGQh",
@@ -263,7 +273,8 @@ export class Object_ {
      *             set: new Set(["string"]),
      *             map: {
      *                 1: "string"
-     *             }
+     *             },
+     *             bigint: "123456789123456789"
      *         }
      *     })
      */
@@ -282,11 +293,13 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -296,7 +309,7 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
+            return serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -332,7 +345,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredField("string", {
+     *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
      *         string: "string",
      *         nestedObject: {
      *             string: "string",
@@ -340,7 +353,7 @@ export class Object_ {
      *             long: 1000000,
      *             double: 1.1,
      *             bool: true,
-     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *             datetime: "2024-01-15T09:30:00Z",
      *             date: "2023-01-15",
      *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             base64: "SGVsbG8gd29ybGQh",
@@ -348,7 +361,8 @@ export class Object_ {
      *             set: new Set(["string"]),
      *             map: {
      *                 1: "string"
-     *             }
+     *             },
+     *             bigint: "123456789123456789"
      *         }
      *     })
      */
@@ -368,11 +382,13 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -382,7 +398,7 @@ export class Object_ {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+            return serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -417,7 +433,7 @@ export class Object_ {
      * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExhaustive.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
+     *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
      *             string: "string",
      *             nestedObject: {
      *                 string: "string",
@@ -425,7 +441,7 @@ export class Object_ {
      *                 long: 1000000,
      *                 double: 1.1,
      *                 bool: true,
-     *                 datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *                 datetime: "2024-01-15T09:30:00Z",
      *                 date: "2023-01-15",
      *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 base64: "SGVsbG8gd29ybGQh",
@@ -433,7 +449,8 @@ export class Object_ {
      *                 set: new Set(["string"]),
      *                 map: {
      *                     1: "string"
-     *                 }
+     *                 },
+     *                 bigint: "123456789123456789"
      *             }
      *         }])
      */
@@ -452,24 +469,23 @@ export class Object_ {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(
-                request,
-                {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                }
-            ),
+            requestType: "json",
+            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+            return serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

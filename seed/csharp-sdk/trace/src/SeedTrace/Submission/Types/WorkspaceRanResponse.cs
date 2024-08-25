@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class WorkspaceRanResponse
+public record WorkspaceRanResponse
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("runDetails")]
-    public WorkspaceRunDetails RunDetails { get; init; }
+    public required WorkspaceRunDetails RunDetails { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

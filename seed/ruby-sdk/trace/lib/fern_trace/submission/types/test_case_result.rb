@@ -54,7 +54,7 @@ module SeedTraceClient
           actual_result = parsed_json["actualResult"].to_json
           actual_result = SeedTraceClient::Submission::ActualResult.from_json(json_object: actual_result)
         end
-        passed = struct["passed"]
+        passed = parsed_json["passed"]
         new(
           expected_result: expected_result,
           actual_result: actual_result,

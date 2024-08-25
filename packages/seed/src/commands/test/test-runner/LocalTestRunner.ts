@@ -1,8 +1,11 @@
 import { SNIPPET_JSON_FILENAME, SNIPPET_TEMPLATES_JSON_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { ApiDefinitionSource, SourceConfig } from "@fern-api/ir-sdk";
 import { getGeneratorConfig, getIntermediateRepresentation } from "@fern-api/local-workspace-runner";
 import { LocalTaskHandler } from "@fern-api/local-workspace-runner/src/LocalTaskHandler";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
+import { FernWorkspace } from "@fern-api/workspace-loader";
+import * as GeneratorExecSerialization from "@fern-fern/generator-exec-sdk/serialization";
 import { writeFile } from "fs/promises";
 import path from "path";
 import tmp from "tmp-promise";
@@ -22,7 +25,7 @@ export class LocalTestRunner extends TestRunner {
             commands: localConfig.buildCommand,
             doNotPipeOutput: false,
             logger: CONSOLE_LOGGER,
-            workingDir: workingDir
+            workingDir
         });
         if (result.exitCode !== 0) {
             throw new Error(`Failed to locally build ${this.generator.workspaceName}.`);
@@ -39,7 +42,8 @@ export class LocalTestRunner extends TestRunner {
         publishConfig,
         outputMode,
         irVersion,
-        publishMetadata
+        publishMetadata,
+        readme
     }: TestRunner.DoRunArgs): Promise<void> {
         const generatorConfigFile = await tmp.file();
         const absolutePathToGeneratorConfig = AbsoluteFilePath.of(generatorConfigFile.path);
@@ -59,8 +63,10 @@ export class LocalTestRunner extends TestRunner {
             outputMode,
             fixtureName: fixture,
             irVersion,
-            publishMetadata
+            publishMetadata,
+            readme
         });
+
         const ir = await getIntermediateRepresentation({
             workspace: fernWorkspace,
             audiences: {
@@ -68,15 +74,20 @@ export class LocalTestRunner extends TestRunner {
             },
             context: taskContext,
             irVersionOverride: irVersion,
-            generatorInvocation
+            generatorInvocation,
+            packageName: undefined,
+            version: undefined,
+            sourceConfig: this.getSourceConfig(fernWorkspace)
         });
         let generatorConfig = getGeneratorConfig({
             generatorInvocation,
             customConfig,
-            workspaceName: this.generator.workspaceName,
+            workspaceName: fernWorkspace.definition.rootApiFile.contents.name,
             outputVersion: undefined,
             organization: DUMMY_ORGANIZATION,
-            absolutePathToSnippetTemplates: undefined,
+            absolutePathToSnippetTemplates: AbsoluteFilePath.of(
+                join(absolutePathToLocalOutputDirectory, RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME))
+            ),
             writeUnitTests: true,
             generateOauthClients: true,
             generatePaginatedClients: true,
@@ -90,6 +101,10 @@ export class LocalTestRunner extends TestRunner {
             output: {
                 ...generatorConfig.output,
                 path: absolutePathToLocalOutputDirectory,
+                snippetTemplateFilepath: join(
+                    absolutePathToLocalOutputDirectory,
+                    RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
+                ),
                 snippetFilepath: join(absolutePathToLocalOutputDirectory, RelativeFilePath.of(SNIPPET_JSON_FILENAME))
             }
         };
@@ -97,7 +112,10 @@ export class LocalTestRunner extends TestRunner {
         await writeFile(absolutePathToIntermediateRepresentation, JSON.stringify(ir, undefined, 4));
         taskContext.logger.info(`Wrote IR to ${absolutePathToIntermediateRepresentation}`);
 
-        await writeFile(absolutePathToGeneratorConfig, JSON.stringify(generatorConfig, undefined, 2));
+        await writeFile(
+            absolutePathToGeneratorConfig,
+            JSON.stringify(await GeneratorExecSerialization.GeneratorConfig.jsonOrThrow(generatorConfig), undefined, 2)
+        );
         taskContext.logger.info(`Wrote generator config to ${absolutePathToGeneratorConfig}`);
 
         const localConfig = await this.getLocalConfigOrthrow();
@@ -108,7 +126,7 @@ export class LocalTestRunner extends TestRunner {
             commands: [`${localConfig.runCommand} ${absolutePathToGeneratorConfig}`],
             doNotPipeOutput: false,
             logger: taskContext.logger,
-            workingDir: workingDir,
+            workingDir,
             env: localConfig.env ?? {}
         });
         if (result.exitCode !== 0) {
@@ -122,15 +140,15 @@ export class LocalTestRunner extends TestRunner {
                     generatorConfig.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(generatorConfig.output.snippetFilepath)
                         : undefined,
-                absolutePathToLocalSnippetTemplateJSON: join(
-                    outputDir,
-                    RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
-                ),
-                absolutePathToTmpSnippetJSON: join(outputDir, RelativeFilePath.of(SNIPPET_JSON_FILENAME)),
-                absolutePathToTmpSnippetTemplatesJSON:
+                absolutePathToLocalSnippetTemplateJSON:
                     generatorConfig.output.snippetTemplateFilepath != null
                         ? AbsoluteFilePath.of(generatorConfig.output.snippetTemplateFilepath)
-                        : undefined
+                        : undefined,
+                absolutePathToTmpSnippetJSON: join(outputDir, RelativeFilePath.of(SNIPPET_JSON_FILENAME)),
+                absolutePathToTmpSnippetTemplatesJSON: join(
+                    outputDir,
+                    RelativeFilePath.of(SNIPPET_TEMPLATES_JSON_FILENAME)
+                )
             });
             await localTaskHandler.copyGeneratedFiles();
             taskContext.logger.info(`Wrote generated files to ${outputDir}`);
@@ -144,5 +162,19 @@ export class LocalTestRunner extends TestRunner {
             );
         }
         return this.generator.workspaceConfig.local;
+    }
+
+    private getSourceConfig(workspace: FernWorkspace): SourceConfig {
+        return {
+            sources: workspace.getSources().map((source) => {
+                if (source.type === "protobuf") {
+                    return ApiDefinitionSource.proto({
+                        id: source.id,
+                        protoRootUrl: `file:///${source.absoluteFilePath}`
+                    });
+                }
+                return ApiDefinitionSource.openapi();
+            })
+        };
     }
 }

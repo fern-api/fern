@@ -10,6 +10,7 @@ import (
 	"mime/multipart"
 	"net/http"
 	"net/url"
+	"reflect"
 )
 
 const (
@@ -240,7 +241,7 @@ func newRequest(
 // newRequestBody returns a new io.Reader that represents the HTTP request body.
 func newRequestBody(request interface{}) (io.Reader, error) {
 	var requestBody io.Reader
-	if request != nil {
+	if !isNil(request) {
 		if body, ok := request.(io.Reader); ok {
 			requestBody = body
 		} else {
@@ -277,4 +278,10 @@ func decodeError(response *http.Response, errorDecoder ErrorDecoder) error {
 		return NewAPIError(response.StatusCode, nil)
 	}
 	return NewAPIError(response.StatusCode, errors.New(string(bytes)))
+}
+
+// isNil is used to determine if the request value is equal to nil (i.e. an interface
+// value that holds a nil concrete value is itself non-nil).
+func isNil(value interface{}) bool {
+	return value == nil || reflect.ValueOf(value).IsNil()
 }

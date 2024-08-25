@@ -1,7 +1,8 @@
 import { Logger } from "@fern-api/logger";
-import { SchemaId } from "@fern-api/openapi-ir-sdk";
+import { SchemaId, Source } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
+import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
 import { getReferenceOccurrences } from "../../schema/utils/getReferenceOccurrences";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
@@ -16,37 +17,56 @@ export interface DiscriminatedUnionReference {
     numReferences: number;
 }
 
+export interface DiscriminatedUnionMetadata {
+    // Map of the field name to the field value
+    discriminants: Map<string, string>;
+}
+
 export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserContext {
-    public logger: Logger;
-    public document: OpenAPIV3.Document;
-    public taskContext: TaskContext;
-    public authHeaders: Set<string>;
-    public refOccurrences: Record<string, number>;
-    public DUMMY: SchemaParserContext;
-    public shouldUseTitleAsName: boolean;
+    public readonly logger: Logger;
+    public readonly document: OpenAPIV3.Document;
+    public readonly taskContext: TaskContext;
+    public readonly authHeaders: Set<string>;
+    public readonly refOccurrences: Record<string, number>;
+    public readonly DUMMY: SchemaParserContext;
+    public readonly options: ParseOpenAPIOptions;
+    public readonly source: Source;
+    public readonly namespace: string | undefined;
 
     constructor({
         document,
         taskContext,
         authHeaders,
-        shouldUseTitleAsName
+        options,
+        source,
+        namespace
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
-        shouldUseTitleAsName: boolean;
+        options: ParseOpenAPIOptions;
+        source: Source;
+        namespace: string | undefined;
     }) {
         this.document = document;
         this.logger = taskContext.logger;
         this.taskContext = taskContext;
         this.authHeaders = authHeaders;
         this.refOccurrences = getReferenceOccurrences(document);
+        this.options = options;
+        this.source = source;
         this.DUMMY = this.getDummy();
-        this.shouldUseTitleAsName = shouldUseTitleAsName;
+
+        this.namespace = namespace;
     }
 
     public getNumberOfOccurrencesForRef(schema: OpenAPIV3.ReferenceObject): number {
         return this.refOccurrences[schema.$ref] ?? 0;
+    }
+
+    public resolveTags(operationTags: string[] | undefined): string[] {
+        const tags = this.namespace ? [this.namespace] : [];
+        return tags.concat(operationTags ?? []);
     }
 
     public resolveSchemaReference(schema: OpenAPIV3.ReferenceObject): OpenAPIV3.SchemaObject {
@@ -194,6 +214,16 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
         discrminant: string,
         times: number
     ): void;
+
+    public abstract markSchemaWithDiscriminantValue(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        discriminantValue: string
+    ): void;
+
+    public abstract getDiscriminatedUnionMetadata(
+        schema: OpenAPIV3.ReferenceObject
+    ): DiscriminatedUnionMetadata | undefined;
 
     public abstract getReferencesFromDiscriminatedUnion(
         schema: OpenAPIV3.ReferenceObject

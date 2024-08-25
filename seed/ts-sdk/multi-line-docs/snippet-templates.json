@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_user.getUser"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedMultiLineDocs = new SeedMultiLineDocsClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";"
+                ],
+                "templateString": "const client = new SeedMultiLineDocsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedMultiLineDocs.user.getUser(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.user.getUser(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -64,10 +95,41 @@
             "identifierOverride": "endpoint_user.createUser"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedMultiLineDocs = new SeedMultiLineDocsClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedMultiLineDocsClient } from \"@fern/multi-line-docs\";"
+                ],
+                "templateString": "const client = new SeedMultiLineDocsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedMultiLineDocs.user.createUser(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.user.createUser(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

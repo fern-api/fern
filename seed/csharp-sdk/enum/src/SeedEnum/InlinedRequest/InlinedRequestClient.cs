@@ -1,27 +1,54 @@
-using SeedEnum;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using SeedEnum.Core;
 
 #nullable enable
 
 namespace SeedEnum;
 
-public class InlinedRequestClient
+public partial class InlinedRequestClient
 {
     private RawClient _client;
 
-    public InlinedRequestClient(RawClient client)
+    internal InlinedRequestClient(RawClient client)
     {
         _client = client;
     }
 
-    public async void SendAsync(SendEnumInlinedRequest request)
+    /// <example>
+    /// <code>
+    /// await client.InlinedRequest.SendAsync(
+    ///     new SendEnumInlinedRequest { Operand = Operand.GreaterThan, OperandOrColor = Color.Red }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task SendAsync(
+        SendEnumInlinedRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/inlined",
-                Body = request
-            }
+                Path = "inlined",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedEnumApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
     }
 }

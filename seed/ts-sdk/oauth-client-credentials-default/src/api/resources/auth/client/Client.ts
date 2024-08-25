@@ -15,8 +15,11 @@ export declare namespace Auth {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -29,10 +32,9 @@ export class Auth {
      * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedOauthClientCredentialsDefault.auth.getToken({
+     *     await client.auth.getToken({
      *         clientId: "string",
-     *         clientSecret: "string",
-     *         grantType: "client_credentials"
+     *         clientSecret: "string"
      *     })
      */
     public async getToken(
@@ -47,12 +49,14 @@ export class Auth {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/oauth-client-credentials-default",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/oauth-client-credentials-default/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
-                ...(await serializers.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 grant_type: "client_credentials",
             },
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -60,7 +64,7 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.TokenResponse.parseOrThrow(_response.body, {
+            return serializers.TokenResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

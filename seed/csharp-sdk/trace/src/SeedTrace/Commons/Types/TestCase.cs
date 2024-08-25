@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class TestCase
+public record TestCase
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("params")]
-    public IEnumerable<VariableValue> Params { get; init; }
+    public IEnumerable<object> Params { get; set; } = new List<object>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

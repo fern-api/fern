@@ -1,8 +1,11 @@
 import {
+    Availability,
+    Encoding,
     PrimitiveSchemaValueWithExample,
     PrimitiveSchemaWithExample,
     SchemaWithExample,
-    SdkGroupName
+    SdkGroupName,
+    Source
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertSchema } from "./convertSchemas";
@@ -15,20 +18,28 @@ export function convertAdditionalProperties({
     breadcrumbs,
     additionalProperties,
     description,
+    availability,
     wrapAsNullable,
     context,
     groupName,
-    example
+    example,
+    encoding,
+    source,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
     breadcrumbs: string[];
     additionalProperties: boolean | OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
     description: string | undefined;
+    availability: Availability | undefined;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
+    encoding: Encoding | undefined;
+    source: Source;
+    namespace: string | undefined;
 }): SchemaWithExample {
     if (typeof additionalProperties === "boolean" || isAdditionalPropertiesAny(additionalProperties)) {
         return wrapMap({
@@ -36,10 +47,12 @@ export function convertAdditionalProperties({
             generatedName,
             wrapAsNullable,
             description,
+            availability,
             keySchema: {
                 nameOverride: undefined,
                 generatedName: `${generatedName}Key`,
                 description: undefined,
+                availability: undefined,
                 schema: PrimitiveSchemaValueWithExample.string({
                     default: undefined,
                     pattern: undefined,
@@ -54,11 +67,13 @@ export function convertAdditionalProperties({
                 nameOverride: undefined,
                 generatedName: `${generatedName}Value`,
                 description: undefined,
+                availability: undefined,
                 example: undefined,
                 groupName: undefined
             }),
             groupName,
-            example
+            example,
+            encoding
         });
     }
     return wrapMap({
@@ -66,10 +81,12 @@ export function convertAdditionalProperties({
         generatedName,
         wrapAsNullable,
         description,
+        availability,
         keySchema: {
             nameOverride: undefined,
             generatedName: `${generatedName}Key`,
             description: undefined,
+            availability: undefined,
             schema: PrimitiveSchemaValueWithExample.string({
                 default: undefined,
                 pattern: undefined,
@@ -80,9 +97,17 @@ export function convertAdditionalProperties({
             }),
             groupName: undefined
         },
-        valueSchema: convertSchema(additionalProperties, wrapAsNullable, context, [...breadcrumbs, "Value"]),
+        valueSchema: convertSchema(
+            additionalProperties,
+            wrapAsNullable,
+            context,
+            [...breadcrumbs, "Value"],
+            source,
+            namespace
+        ),
         groupName,
-        example
+        example,
+        encoding
     });
 }
 
@@ -93,8 +118,10 @@ export function wrapMap({
     valueSchema,
     wrapAsNullable,
     description,
+    availability,
     groupName,
-    example
+    example,
+    encoding
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -102,8 +129,10 @@ export function wrapMap({
     valueSchema: SchemaWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
+    availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown | undefined;
+    encoding: Encoding | undefined;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -113,12 +142,15 @@ export function wrapMap({
                 nameOverride,
                 generatedName,
                 description,
+                availability: keySchema.availability,
                 key: keySchema,
                 value: valueSchema,
                 groupName,
+                encoding,
                 example
             }),
             description,
+            availability,
             groupName
         });
     }
@@ -126,9 +158,11 @@ export function wrapMap({
         nameOverride,
         generatedName,
         description,
+        availability,
         key: keySchema,
         value: valueSchema,
         groupName,
+        encoding,
         example
     });
 }

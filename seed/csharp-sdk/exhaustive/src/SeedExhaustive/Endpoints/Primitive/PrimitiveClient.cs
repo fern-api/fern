@@ -1,5 +1,5 @@
-using System.Text.Json;
-using SeedExhaustive;
+using System.Net.Http;
+using SeedExhaustive.Core;
 
 #nullable enable
 
@@ -17,17 +17,18 @@ public class PrimitiveClient
     public async Task<string> GetAndReturnStringAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/string",
+                Path = "/primitive/string",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -35,17 +36,18 @@ public class PrimitiveClient
     public async Task<int> GetAndReturnIntAsync(int request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/integer",
+                Path = "/primitive/integer",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<int>(responseBody);
+            return JsonUtils.Deserialize<int>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -53,17 +55,18 @@ public class PrimitiveClient
     public async Task<long> GetAndReturnLongAsync(long request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/long",
+                Path = "/primitive/long",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<long>(responseBody);
+            return JsonUtils.Deserialize<long>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -71,17 +74,18 @@ public class PrimitiveClient
     public async Task<double> GetAndReturnDoubleAsync(double request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/double",
+                Path = "/primitive/double",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<double>(responseBody);
+            return JsonUtils.Deserialize<double>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -89,17 +93,18 @@ public class PrimitiveClient
     public async Task<bool> GetAndReturnBoolAsync(bool request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/boolean",
+                Path = "/primitive/boolean",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody);
+            return JsonUtils.Deserialize<bool>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -107,17 +112,18 @@ public class PrimitiveClient
     public async Task<DateTime> GetAndReturnDatetimeAsync(DateTime request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/datetime",
+                Path = "/primitive/datetime",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<DateTime>(responseBody);
+            return JsonUtils.Deserialize<DateTime>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -125,35 +131,37 @@ public class PrimitiveClient
     public async Task<DateOnly> GetAndReturnDateAsync(DateOnly request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/date",
+                Path = "/primitive/date",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<DateOnly>(responseBody);
+            return JsonUtils.Deserialize<DateOnly>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
 
-    public async Task<Guid> GetAndReturnUuidAsync(Guid request)
+    public async Task<string> GetAndReturnUuidAsync(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/uuid",
+                Path = "/primitive/uuid",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Guid>(responseBody);
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -161,17 +169,18 @@ public class PrimitiveClient
     public async Task<string> GetAndReturnBase64Async(string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/base64",
+                Path = "/primitive/base64",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

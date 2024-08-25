@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migrateFromV36ToV35 snapshot 1`] = `
+exports[`migrateFromV36ToV35 > snapshot 1`] = `
 {
-  "apiDisplayName": undefined,
-  "apiDocs": undefined,
+  "apiDisplayName": null,
+  "apiDocs": null,
   "apiName": {
     "camelCase": {
       "safeName": "simpleAPI",
@@ -24,11 +24,11 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
     },
   },
   "auth": {
-    "docs": undefined,
+    "docs": null,
     "requirement": "ALL",
     "schemes": [],
   },
-  "basePath": undefined,
+  "basePath": null,
   "constants": {
     "errorInstanceIdKey": {
       "name": {
@@ -53,9 +53,8 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
       "wireValue": "errorInstanceId",
     },
   },
-  "environments": undefined,
+  "environments": null,
   "errorDiscriminationStrategy": {
-    "_visit": [Function],
     "type": "statusCode",
   },
   "errors": {},
@@ -63,26 +62,25 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
   "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
-    "docs": undefined,
+    "docs": null,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
-      "file": undefined,
+      "file": null,
       "packagePath": [],
     },
     "hasEndpointsInTree": true,
-    "navigationConfig": undefined,
-    "service": undefined,
+    "navigationConfig": null,
+    "service": null,
     "subpackages": [
       "subpackage_service",
     ],
     "types": [],
-    "webhooks": undefined,
-    "websocket": undefined,
+    "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
-    "hasPaginatedEndpoints": true,
     "hasStreamingEndpoints": false,
     "isAuthMandatory": false,
     "platformHeaders": {
@@ -103,20 +101,20 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
   },
   "services": {
     "service_service": {
-      "availability": undefined,
+      "availability": null,
       "basePath": {
         "head": "/",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": null,
       "endpoints": [
         {
           "allPathParameters": [],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -125,9 +123,8 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
           },
           "headers": [
             {
-              "availability": undefined,
+              "availability": null,
               "docs": "Specifies the endpoint key.",
-              "env": "MY_HEADER_ENV",
               "name": {
                 "name": {
                   "camelCase": {
@@ -151,9 +148,8 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                 "wireValue": "X-Endpoint-Header",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
             },
           ],
@@ -180,11 +176,10 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
             },
           },
           "pagination": {
-            "_visit": [Function],
             "page": {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -208,15 +203,14 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                 "wireValue": "pageNum",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "INTEGER",
-                "type": "primitive",
               },
             },
             "results": {
               "property": {
-                "availability": undefined,
-                "docs": undefined,
+                "availability": null,
+                "docs": null,
                 "name": {
                   "name": {
                     "camelCase": {
@@ -240,11 +234,11 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                   "wireValue": "users",
                 },
                 "valueType": {
-                  "_visit": [Function],
+                  "_type": "container",
                   "container": {
-                    "_visit": [Function],
+                    "_type": "list",
                     "list": {
-                      "_visit": [Function],
+                      "_type": "named",
                       "fernFilepath": {
                         "allParts": [
                           {
@@ -307,12 +301,9 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                           "unsafeName": "user",
                         },
                       },
-                      "type": "named",
                       "typeId": "type_service:User",
                     },
-                    "type": "list",
                   },
-                  "type": "container",
                 },
               },
               "propertyPath": [],
@@ -327,8 +318,8 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
           "queryParameters": [
             {
               "allowMultiple": false,
-              "availability": undefined,
-              "docs": undefined,
+              "availability": null,
+              "docs": null,
               "name": {
                 "name": {
                   "camelCase": {
@@ -352,21 +343,18 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                 "wireValue": "pageNum",
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "INTEGER",
-                "type": "primitive",
               },
             },
           ],
-          "requestBody": undefined,
+          "requestBody": null,
           "response": {
-            "_visit": [Function],
             "type": "json",
             "value": {
-              "_visit": [Function],
-              "docs": undefined,
+              "docs": null,
               "responseBodyType": {
-                "_visit": [Function],
+                "_type": "named",
                 "fernFilepath": {
                   "allParts": [
                     {
@@ -429,7 +417,6 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                     "unsafeName": "list_users_response",
                   },
                 },
-                "type": "named",
                 "typeId": "type_service:ListUsersResponse",
               },
               "type": "response",
@@ -456,7 +443,6 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -551,7 +537,7 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
   },
   "subpackages": {
     "subpackage_service": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -616,21 +602,21 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
           "unsafeName": "service",
         },
       },
-      "navigationConfig": undefined,
+      "navigationConfig": null,
       "service": "service_service",
       "subpackages": [],
       "types": [
         "type_service:User",
         "type_service:ListUsersResponse",
       ],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {
     "type_service:ListUsersResponse": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -697,17 +683,16 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
         },
         "typeId": "type_service:ListUsersResponse",
       },
-      "referencedTypes": Set {
+      "referencedTypes": [
         "type_service:User",
-      },
+      ],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
-        "extraProperties": false,
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -731,11 +716,11 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
               "wireValue": "users",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "container",
               "container": {
-                "_visit": [Function],
+                "_type": "list",
                 "list": {
-                  "_visit": [Function],
+                  "_type": "named",
                   "fernFilepath": {
                     "allParts": [
                       {
@@ -798,21 +783,17 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
                       "unsafeName": "user",
                     },
                   },
-                  "type": "named",
                   "typeId": "type_service:User",
                 },
-                "type": "list",
               },
-              "type": "container",
             },
           },
         ],
-        "type": "object",
       },
     },
     "type_service:User": {
-      "availability": undefined,
-      "docs": undefined,
+      "availability": null,
+      "docs": null,
       "examples": [],
       "name": {
         "fernFilepath": {
@@ -879,15 +860,14 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
         },
         "typeId": "type_service:User",
       },
-      "referencedTypes": Set {},
+      "referencedTypes": [],
       "shape": {
-        "_visit": [Function],
+        "_type": "object",
         "extends": [],
-        "extraProperties": false,
         "properties": [
           {
-            "availability": undefined,
-            "docs": undefined,
+            "availability": null,
+            "docs": null,
             "name": {
               "name": {
                 "camelCase": {
@@ -911,13 +891,11 @@ exports[`migrateFromV36ToV35 snapshot 1`] = `
               "wireValue": "name",
             },
             "valueType": {
-              "_visit": [Function],
+              "_type": "primitive",
               "primitive": "STRING",
-              "type": "primitive",
             },
           },
         ],
-        "type": "object",
       },
     },
   },

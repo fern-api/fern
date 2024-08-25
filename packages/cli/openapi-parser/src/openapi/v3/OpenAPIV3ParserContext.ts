@@ -1,8 +1,13 @@
-import { SchemaId } from "@fern-api/openapi-ir-sdk";
+import { SchemaId, Source } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
+import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
-import { AbstractOpenAPIV3ParserContext, DiscriminatedUnionReference } from "./AbstractOpenAPIV3ParserContext";
+import {
+    AbstractOpenAPIV3ParserContext,
+    DiscriminatedUnionMetadata,
+    DiscriminatedUnionReference
+} from "./AbstractOpenAPIV3ParserContext";
 import { DummyOpenAPIV3ParserContext } from "./DummyOpenAPIV3ParserContext";
 
 export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
@@ -13,24 +18,43 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
 
     private discrminatedUnionReferences: Record<string, DiscriminatedUnionReference> = {};
 
+    private discrminatedUnionMetadata: Record<string, DiscriminatedUnionMetadata> = {};
+
     private schemasToExclude: Set<SchemaId> = new Set();
 
     constructor({
         document,
         taskContext,
         authHeaders,
-        shouldUseTitleAsName
+        options,
+        source,
+        namespace
     }: {
         document: OpenAPIV3.Document;
         taskContext: TaskContext;
         authHeaders: Set<string>;
-        shouldUseTitleAsName: boolean;
+        options: ParseOpenAPIOptions;
+        source: Source;
+        namespace?: string;
     }) {
-        super({ document, taskContext, authHeaders, shouldUseTitleAsName });
+        super({
+            document,
+            taskContext,
+            authHeaders,
+            options,
+            source,
+            namespace
+        });
     }
 
     public getDummy(): SchemaParserContext {
-        return new DummyOpenAPIV3ParserContext({ document: this.document, taskContext: this.taskContext });
+        return new DummyOpenAPIV3ParserContext({
+            document: this.document,
+            taskContext: this.taskContext,
+            options: this.options,
+            source: this.source,
+            namespace: this.namespace
+        });
     }
 
     public markSchemaAsReferencedByNonRequest(schemaId: SchemaId): void {
@@ -70,6 +94,25 @@ export class OpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
         schema: OpenAPIV3.ReferenceObject
     ): DiscriminatedUnionReference | undefined {
         return this.discrminatedUnionReferences[schema.$ref];
+    }
+
+    public markSchemaWithDiscriminantValue(
+        schema: OpenAPIV3.ReferenceObject,
+        discrminant: string,
+        discriminantValue: string
+    ): void {
+        const existingMetadata = this.discrminatedUnionMetadata[schema.$ref];
+        if (existingMetadata != null) {
+            existingMetadata.discriminants.set(discrminant, discriminantValue);
+        } else {
+            this.discrminatedUnionMetadata[schema.$ref] = {
+                discriminants: new Map([[discrminant, discriminantValue]])
+            };
+        }
+    }
+
+    public getDiscriminatedUnionMetadata(schema: OpenAPIV3.ReferenceObject): DiscriminatedUnionMetadata | undefined {
+        return this.discrminatedUnionMetadata[schema.$ref];
     }
 
     public excludeSchema(schemaId: SchemaId): void {

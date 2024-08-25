@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedPagination;
+using SeedPagination.Core;
 
 #nullable enable
 
 namespace SeedPagination;
 
-public class UserPage
+public record UserPage
 {
     [JsonPropertyName("data")]
-    public UserListContainer Data { get; init; }
+    public required UserListContainer Data { get; set; }
 
     [JsonPropertyName("next")]
-    public Guid? Next { get; init; }
+    public string? Next { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

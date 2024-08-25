@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`fdr {"name":"changelog"} 1`] = `
+exports[`fdr > {"name":"changelog"} 1`] = `
 "{
     "types": {
         "type_commons:UndiscriminatedUnion": {
@@ -324,8 +324,30 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     "originalEndpointId": "endpoint_imdb.createMovie",
                     "name": "Create Movie",
                     "path": {
-                        "pathParameters": [],
+                        "pathParameters": [
+                            {
+                                "key": "rootPathParam",
+                                "type": {
+                                    "type": "primitive",
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
@@ -368,8 +390,10 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     ],
                     "examples": [
                         {
-                            "path": "/movies",
-                            "pathParameters": {},
+                            "path": "/test/root/movies",
+                            "pathParameters": {
+                                "rootPathParam": "root"
+                            },
                             "queryParameters": {},
                             "headers": {},
                             "requestBody": {
@@ -401,8 +425,10 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             }
                         },
                         {
-                            "path": "/movies",
-                            "pathParameters": {},
+                            "path": "/test/root/movies",
+                            "pathParameters": {
+                                "rootPathParam": "root"
+                            },
                             "queryParameters": {},
                             "headers": {},
                             "requestBody": {
@@ -442,6 +468,15 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     "path": {
                         "pathParameters": [
                             {
+                                "key": "rootPathParam",
+                                "type": {
+                                    "type": "primitive",
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            {
                                 "key": "movieId",
                                 "type": {
                                     "type": "id",
@@ -450,6 +485,18 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             }
                         ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
@@ -526,8 +573,9 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     ],
                     "examples": [
                         {
-                            "path": "/movies/id-123",
+                            "path": "/test/root/movies/id-123",
                             "pathParameters": {
+                                "rootPathParam": "root",
                                 "movieId": "id-123"
                             },
                             "queryParameters": {
@@ -550,8 +598,9 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             }
                         },
                         {
-                            "path": "/movies/id-123",
+                            "path": "/test/root/movies/id-123",
                             "pathParameters": {
+                                "rootPathParam": "root",
                                 "movieId": "id-123"
                             },
                             "queryParameters": {
@@ -576,6 +625,15 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     "path": {
                         "pathParameters": [
                             {
+                                "key": "rootPathParam",
+                                "type": {
+                                    "type": "primitive",
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            {
                                 "key": "movieId",
                                 "type": {
                                     "type": "id",
@@ -584,6 +642,18 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             }
                         ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
@@ -621,6 +691,15 @@ exports[`fdr {"name":"changelog"} 1`] = `
                     "path": {
                         "pathParameters": [
                             {
+                                "key": "rootPathParam",
+                                "type": {
+                                    "type": "primitive",
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            {
                                 "key": "movieId",
                                 "type": {
                                     "type": "id",
@@ -629,6 +708,18 @@ exports[`fdr {"name":"changelog"} 1`] = `
                             }
                         ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
@@ -708,7 +799,7 @@ exports[`fdr {"name":"changelog"} 1`] = `
 }"
 `;
 
-exports[`fdr {"name":"simple"} 1`] = `
+exports[`fdr > {"name":"simple"} 1`] = `
 "{
     "types": {
         "type_commons:UndiscriminatedUnion": {
@@ -1032,8 +1123,30 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "originalEndpointId": "endpoint_imdb.createMovie",
                     "name": "Create Movie",
                     "path": {
-                        "pathParameters": [],
+                        "pathParameters": [
+                            {
+                                "key": "rootPathParam",
+                                "type": {
+                                    "type": "primitive",
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
@@ -1076,8 +1189,10 @@ exports[`fdr {"name":"simple"} 1`] = `
                     ],
                     "examples": [
                         {
-                            "path": "/movies",
-                            "pathParameters": {},
+                            "path": "/test/root/movies",
+                            "pathParameters": {
+                                "rootPathParam": "root"
+                            },
                             "queryParameters": {},
                             "headers": {},
                             "requestBody": {
@@ -1109,8 +1224,10 @@ exports[`fdr {"name":"simple"} 1`] = `
                             }
                         },
                         {
-                            "path": "/movies",
-                            "pathParameters": {},
+                            "path": "/test/root/movies",
+                            "pathParameters": {
+                                "rootPathParam": "root"
+                            },
                             "queryParameters": {},
                             "headers": {},
                             "requestBody": {
@@ -1150,6 +1267,15 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "path": {
                         "pathParameters": [
                             {
+                                "key": "rootPathParam",
+                                "type": {
+                                    "type": "primitive",
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            {
                                 "key": "movieId",
                                 "type": {
                                     "type": "id",
@@ -1158,6 +1284,18 @@ exports[`fdr {"name":"simple"} 1`] = `
                             }
                         ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
@@ -1234,8 +1372,9 @@ exports[`fdr {"name":"simple"} 1`] = `
                     ],
                     "examples": [
                         {
-                            "path": "/movies/id-123",
+                            "path": "/test/root/movies/id-123",
                             "pathParameters": {
+                                "rootPathParam": "root",
                                 "movieId": "id-123"
                             },
                             "queryParameters": {
@@ -1258,8 +1397,9 @@ exports[`fdr {"name":"simple"} 1`] = `
                             }
                         },
                         {
-                            "path": "/movies/id-123",
+                            "path": "/test/root/movies/id-123",
                             "pathParameters": {
+                                "rootPathParam": "root",
                                 "movieId": "id-123"
                             },
                             "queryParameters": {
@@ -1284,6 +1424,15 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "path": {
                         "pathParameters": [
                             {
+                                "key": "rootPathParam",
+                                "type": {
+                                    "type": "primitive",
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            {
                                 "key": "movieId",
                                 "type": {
                                     "type": "id",
@@ -1292,6 +1441,18 @@ exports[`fdr {"name":"simple"} 1`] = `
                             }
                         ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"
@@ -1329,6 +1490,15 @@ exports[`fdr {"name":"simple"} 1`] = `
                     "path": {
                         "pathParameters": [
                             {
+                                "key": "rootPathParam",
+                                "type": {
+                                    "type": "primitive",
+                                    "value": {
+                                        "type": "string"
+                                    }
+                                }
+                            },
+                            {
                                 "key": "movieId",
                                 "type": {
                                     "type": "id",
@@ -1337,6 +1507,18 @@ exports[`fdr {"name":"simple"} 1`] = `
                             }
                         ],
                         "parts": [
+                            {
+                                "type": "literal",
+                                "value": "/test/"
+                            },
+                            {
+                                "type": "pathParameter",
+                                "value": "rootPathParam"
+                            },
+                            {
+                                "type": "literal",
+                                "value": ""
+                            },
                             {
                                 "type": "literal",
                                 "value": "/movies"

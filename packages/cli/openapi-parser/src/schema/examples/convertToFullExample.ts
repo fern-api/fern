@@ -10,6 +10,12 @@ export function convertToFullExample(value: unknown): FullExample | undefined {
         return FullExample.primitive(PrimitiveExample.double(value));
     } else if (typeof value === "boolean") {
         return FullExample.primitive(PrimitiveExample.boolean(value));
+    } else if (Array.isArray(value)) {
+        const examples = value.map((example) => convertToFullExample(example));
+        if (examples.length === 0) {
+            return undefined;
+        }
+        return FullExample.array(examples.filter((example) => example != null) as FullExample[]);
     } else if (
         value != null &&
         typeof value === "object" &&

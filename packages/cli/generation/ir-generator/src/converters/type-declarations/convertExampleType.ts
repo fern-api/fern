@@ -140,7 +140,8 @@ export function convertTypeExample({
                     typeResolver,
                     exampleResolver,
                     file: fileContainingType,
-                    workspace
+                    workspace,
+                    breadcrumbs: []
                 });
                 if (violationsForMember.length === 0) {
                     return ExampleTypeShape.undiscriminatedUnion({
@@ -204,8 +205,8 @@ export function convertTypeReferenceExample({
                     throw new Error("Example is not an object");
                 }
                 return ExampleTypeReferenceShape.container(
-                    ExampleContainer.map(
-                        Object.entries(resolvedExample).map(([key, value]) => ({
+                    ExampleContainer.map({
+                        map: Object.entries(resolvedExample).map(([key, value]) => ({
                             key: convertTypeReferenceExample({
                                 example: key,
                                 fileContainingExample: fileContainingResolvedExample,
@@ -224,8 +225,10 @@ export function convertTypeReferenceExample({
                                 exampleResolver,
                                 workspace
                             })
-                        }))
-                    )
+                        })),
+                        keyType: fileContainingRawTypeReference.parseTypeReference(keyType),
+                        valueType: fileContainingRawTypeReference.parseTypeReference(valueType)
+                    })
                 );
             },
             list: (itemType) => {
@@ -233,8 +236,8 @@ export function convertTypeReferenceExample({
                     throw new Error("Example is not a list");
                 }
                 return ExampleTypeReferenceShape.container(
-                    ExampleContainer.list(
-                        resolvedExample.map((exampleItem) =>
+                    ExampleContainer.list({
+                        list: resolvedExample.map((exampleItem) =>
                             convertTypeReferenceExample({
                                 example: exampleItem,
                                 fileContainingExample: fileContainingResolvedExample,
@@ -244,8 +247,9 @@ export function convertTypeReferenceExample({
                                 exampleResolver,
                                 workspace
                             })
-                        )
-                    )
+                        ),
+                        itemType: fileContainingRawTypeReference.parseTypeReference(itemType)
+                    })
                 );
             },
             set: (itemType) => {
@@ -253,8 +257,8 @@ export function convertTypeReferenceExample({
                     throw new Error("Example is not a list");
                 }
                 return ExampleTypeReferenceShape.container(
-                    ExampleContainer.set(
-                        resolvedExample.map((exampleItem) =>
+                    ExampleContainer.set({
+                        set: resolvedExample.map((exampleItem) =>
                             convertTypeReferenceExample({
                                 example: exampleItem,
                                 fileContainingExample: fileContainingResolvedExample,
@@ -264,35 +268,42 @@ export function convertTypeReferenceExample({
                                 exampleResolver,
                                 workspace
                             })
-                        )
-                    )
+                        ),
+                        itemType: fileContainingRawTypeReference.parseTypeReference(itemType)
+                    })
                 );
             },
             optional: (itemType) => {
                 return ExampleTypeReferenceShape.container(
-                    ExampleContainer.optional(
-                        resolvedExample != null
-                            ? convertTypeReferenceExample({
-                                  example: resolvedExample,
-                                  fileContainingExample: fileContainingResolvedExample,
-                                  rawTypeBeingExemplified: itemType,
-                                  fileContainingRawTypeReference,
-                                  typeResolver,
-                                  exampleResolver,
-                                  workspace
-                              })
-                            : undefined
-                    )
+                    ExampleContainer.optional({
+                        optional:
+                            resolvedExample != null
+                                ? convertTypeReferenceExample({
+                                      example: resolvedExample,
+                                      fileContainingExample: fileContainingResolvedExample,
+                                      rawTypeBeingExemplified: itemType,
+                                      fileContainingRawTypeReference,
+                                      typeResolver,
+                                      exampleResolver,
+                                      workspace
+                                  })
+                                : undefined,
+                        valueType: fileContainingRawTypeReference.parseTypeReference(itemType)
+                    })
                 );
             },
             literal: (literal) => {
                 switch (literal.type) {
                     case "boolean":
-                        return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(literal.boolean));
+                        return ExampleTypeReferenceShape.container(
+                            ExampleContainer.literal({ literal: ExamplePrimitive.boolean(literal.boolean) })
+                        );
                     case "string":
-                        return ExampleTypeReferenceShape.primitive(
-                            ExamplePrimitive.string({
-                                original: literal.string
+                        return ExampleTypeReferenceShape.container(
+                            ExampleContainer.literal({
+                                literal: ExamplePrimitive.string({
+                                    original: literal.string
+                                })
                             })
                         );
                     default:
@@ -361,7 +372,12 @@ function convertPrimitiveExample({
             if (typeof example !== "string") {
                 throw new Error("Example is not a string");
             }
-            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.datetime(new Date(example)));
+            return ExampleTypeReferenceShape.primitive(
+                ExamplePrimitive.datetime({
+                    datetime: new Date(example),
+                    raw: example
+                })
+            );
         },
         date: () => {
             if (typeof example !== "string") {
@@ -379,11 +395,29 @@ function convertPrimitiveExample({
                 })
             );
         },
+        uint: () => {
+            if (typeof example !== "number") {
+                throw new Error("Example is not a number");
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(example));
+        },
+        uint64: () => {
+            if (typeof example !== "number") {
+                throw new Error("Example is not a number");
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(example));
+        },
         integer: () => {
             if (typeof example !== "number") {
                 throw new Error("Example is not a number");
             }
             return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(example));
+        },
+        float: () => {
+            if (typeof example !== "number") {
+                throw new Error("Example is not a number");
+            }
+            return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(example));
         },
         double: () => {
             if (typeof example !== "number") {
@@ -449,7 +483,7 @@ function convertObject({
     }
     return ExampleTypeShape.object({
         properties:
-            rawObject.properties != null
+            rawObject.properties != null || rawObject.extends != null
                 ? Object.entries(example).reduce<ExampleObjectProperty[]>(
                       (exampleProperties, [wireKey, propertyExample]) => {
                           const originalTypeDeclaration = getOriginalTypeDeclarationForProperty({

@@ -1,5 +1,6 @@
 import { HttpEndpoint, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { BytesOnlyEndpointRequest } from "./BytesOnlyEndpointRequest";
 import { EndpointRequest } from "./EndpointRequest";
 import { ReferencedEndpointRequest } from "./ReferencedEndpointRequest";
 import { WrappedEndpointRequest } from "./WrappedEndpointRequest";
@@ -31,7 +32,7 @@ export function createEndpointRequest({
         },
         justRequestBody: (value) => {
             if (value.type === "bytes") {
-                return undefined;
+                return new BytesOnlyEndpointRequest(context, sdkRequest, endpoint);
             } else {
                 return new ReferencedEndpointRequest(context, sdkRequest, endpoint, value.requestBodyType);
             }

@@ -15,14 +15,16 @@ import com.seed.queryParameters.core.ObjectMappers;
 import com.seed.queryParameters.resources.user.types.NestedUser;
 import com.seed.queryParameters.resources.user.types.User;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetUsersRequest.Builder.class)
 public final class GetUsersRequest {
     private final int limit;
@@ -36,6 +38,10 @@ public final class GetUsersRequest {
     private final byte[] bytes;
 
     private final User user;
+
+    private final List<User> userList;
+
+    private final Optional<OffsetDateTime> optionalDeadline;
 
     private final Map<String, String> keyValue;
 
@@ -58,6 +64,8 @@ public final class GetUsersRequest {
             OffsetDateTime deadline,
             byte[] bytes,
             User user,
+            List<User> userList,
+            Optional<OffsetDateTime> optionalDeadline,
             Map<String, String> keyValue,
             Optional<String> optionalString,
             NestedUser nestedUser,
@@ -71,6 +79,8 @@ public final class GetUsersRequest {
         this.deadline = deadline;
         this.bytes = bytes;
         this.user = user;
+        this.userList = userList;
+        this.optionalDeadline = optionalDeadline;
         this.keyValue = keyValue;
         this.optionalString = optionalString;
         this.nestedUser = nestedUser;
@@ -108,6 +118,16 @@ public final class GetUsersRequest {
     @JsonProperty("user")
     public User getUser() {
         return user;
+    }
+
+    @JsonProperty("userList")
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    @JsonProperty("optionalDeadline")
+    public Optional<OffsetDateTime> getOptionalDeadline() {
+        return optionalDeadline;
     }
 
     @JsonProperty("keyValue")
@@ -158,6 +178,8 @@ public final class GetUsersRequest {
                 && deadline.equals(other.deadline)
                 && bytes.equals(other.bytes)
                 && user.equals(other.user)
+                && userList.equals(other.userList)
+                && optionalDeadline.equals(other.optionalDeadline)
                 && keyValue.equals(other.keyValue)
                 && optionalString.equals(other.optionalString)
                 && nestedUser.equals(other.nestedUser)
@@ -175,6 +197,8 @@ public final class GetUsersRequest {
                 this.deadline,
                 this.bytes,
                 this.user,
+                this.userList,
+                this.optionalDeadline,
                 this.keyValue,
                 this.optionalString,
                 this.nestedUser,
@@ -233,6 +257,16 @@ public final class GetUsersRequest {
     public interface _FinalStage {
         GetUsersRequest build();
 
+        _FinalStage userList(List<User> userList);
+
+        _FinalStage addUserList(User userList);
+
+        _FinalStage addAllUserList(List<User> userList);
+
+        _FinalStage optionalDeadline(Optional<OffsetDateTime> optionalDeadline);
+
+        _FinalStage optionalDeadline(OffsetDateTime optionalDeadline);
+
         _FinalStage keyValue(Map<String, String> keyValue);
 
         _FinalStage putAllKeyValue(Map<String, String> keyValue);
@@ -284,6 +318,10 @@ public final class GetUsersRequest {
 
         private Map<String, String> keyValue = new LinkedHashMap<>();
 
+        private Optional<OffsetDateTime> optionalDeadline = Optional.empty();
+
+        private List<User> userList = new ArrayList<>();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -297,6 +335,8 @@ public final class GetUsersRequest {
             deadline(other.getDeadline());
             bytes(other.getBytes());
             user(other.getUser());
+            userList(other.getUserList());
+            optionalDeadline(other.getOptionalDeadline());
             keyValue(other.getKeyValue());
             optionalString(other.getOptionalString());
             nestedUser(other.getNestedUser());
@@ -371,7 +411,7 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         public _FinalStage optionalUser(User optionalUser) {
-            this.optionalUser = Optional.of(optionalUser);
+            this.optionalUser = Optional.ofNullable(optionalUser);
             return this;
         }
 
@@ -384,7 +424,7 @@ public final class GetUsersRequest {
 
         @java.lang.Override
         public _FinalStage optionalString(String optionalString) {
-            this.optionalString = Optional.of(optionalString);
+            this.optionalString = Optional.ofNullable(optionalString);
             return this;
         }
 
@@ -416,6 +456,39 @@ public final class GetUsersRequest {
         }
 
         @java.lang.Override
+        public _FinalStage optionalDeadline(OffsetDateTime optionalDeadline) {
+            this.optionalDeadline = Optional.ofNullable(optionalDeadline);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "optionalDeadline", nulls = Nulls.SKIP)
+        public _FinalStage optionalDeadline(Optional<OffsetDateTime> optionalDeadline) {
+            this.optionalDeadline = optionalDeadline;
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addAllUserList(List<User> userList) {
+            this.userList.addAll(userList);
+            return this;
+        }
+
+        @java.lang.Override
+        public _FinalStage addUserList(User userList) {
+            this.userList.add(userList);
+            return this;
+        }
+
+        @java.lang.Override
+        @JsonSetter(value = "userList", nulls = Nulls.SKIP)
+        public _FinalStage userList(List<User> userList) {
+            this.userList.clear();
+            this.userList.addAll(userList);
+            return this;
+        }
+
+        @java.lang.Override
         public GetUsersRequest build() {
             return new GetUsersRequest(
                     limit,
@@ -424,6 +497,8 @@ public final class GetUsersRequest {
                     deadline,
                     bytes,
                     user,
+                    userList,
+                    optionalDeadline,
                     keyValue,
                     optionalString,
                     nestedUser,

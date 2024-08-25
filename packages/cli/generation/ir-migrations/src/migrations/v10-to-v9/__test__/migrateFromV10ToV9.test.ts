@@ -10,7 +10,7 @@ describe("migrateFromV10ToV9", () => {
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
 
-        expect(migrated.services["service_no-docs"]?.docs).toBeUndefined();
-        expect(migrated.services["service_only-top-level-docs"]?.docs).toBe("top-level docs");
+        expect(migrated.ir.services["service_no-docs"]?.docs).toBeUndefined();
+        expect(migrated.ir.services["service_only-top-level-docs"]?.docs).toBe("top-level docs");
     });
 });

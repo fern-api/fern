@@ -16,8 +16,11 @@ export declare namespace Service {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -35,7 +38,7 @@ export class Service {
      * @throws {@link SeedExamples.NotFoundError}
      *
      * @example
-     *     await seedExamples.file.service.getFile("file.txt", {
+     *     await client.file.service.getFile("file.txt", {
      *         xFileApiVersion: "0.0.2"
      *     })
      */
@@ -53,17 +56,19 @@ export class Service {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/examples",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/examples/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "X-File-API-Version": xFileApiVersion,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.File_.parseOrThrow(_response.body, {
+            return serializers.File_.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -75,7 +80,7 @@ export class Service {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new SeedExamples.NotFoundError(
-                        await serializers.NotFoundError.parseOrThrow(_response.error.body, {
+                        serializers.NotFoundError.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

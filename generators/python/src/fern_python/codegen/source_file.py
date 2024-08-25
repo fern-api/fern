@@ -36,7 +36,7 @@ class SourceFile(ClassParent):
         ...
 
     @abstractmethod
-    def to_str(self, include_imports: Optional[bool] = True) -> str:
+    def to_str(self, include_imports: Optional[bool] = True, should_format_override: Optional[bool] = None) -> str:
         ...
 
     @abstractmethod
@@ -47,6 +47,10 @@ class SourceFile(ClassParent):
     def get_imports_manager(self) -> ImportsManager:
         ...
 
+    @abstractmethod
+    def get_dummy_class_declaration(self, declaration: AST.ClassDeclaration) -> LocalClassReference:
+        ...
+
 
 class SourceFileImpl(SourceFile):
     def __init__(
@@ -55,7 +59,7 @@ class SourceFileImpl(SourceFile):
         module_path: AST.ModulePath,
         reference_resolver: ReferenceResolverImpl,
         dependency_manager: DependencyManager,
-        completion_listener: Callable[[SourceFileImpl], None] = None,
+        completion_listener: Optional[Callable[[SourceFileImpl], None]] = None,
         should_format: bool,
         should_format_as_snippet: bool = False,
         should_include_header: bool = True,
@@ -89,7 +93,7 @@ class SourceFileImpl(SourceFile):
     def add_class_declaration(
         self,
         declaration: AST.ClassDeclaration,
-        should_export: bool = None,
+        should_export: bool = True,
     ) -> LocalClassReference:
         new_declaration = declaration
 
@@ -97,7 +101,7 @@ class SourceFileImpl(SourceFile):
             def add_class_declaration(
                 class_reference_self,
                 declaration: AST.ClassDeclaration,
-                should_export: bool = None,
+                should_export: bool = True,
             ) -> LocalClassReference:
                 new_declaration.add_class(declaration)
                 return LocalClassReferenceImpl(
@@ -112,8 +116,38 @@ class SourceFileImpl(SourceFile):
 
         self.add_declaration(
             declaration=declaration,
-            should_export=should_export if should_export is not None else not declaration.name.startswith("_"),
+            should_export=should_export if not declaration.name.startswith("_") else False,
         )
+        return LocalClassReferenceImpl(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path),
+                named_import=declaration.name,
+            ),
+        )
+
+    def get_dummy_class_declaration(
+        self,
+        declaration: AST.ClassDeclaration,
+    ) -> LocalClassReference:
+        new_declaration = declaration
+
+        class LocalClassReferenceImpl(LocalClassReference):
+            def add_class_declaration(
+                class_reference_self,
+                declaration: AST.ClassDeclaration,
+                should_export: Optional[bool] = None,
+            ) -> LocalClassReference:
+                return LocalClassReferenceImpl(
+                    qualified_name_excluding_import=(
+                        class_reference_self.qualified_name_excluding_import + (declaration.name,)
+                    ),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path),
+                        named_import=new_declaration.name,
+                    ),
+                )
+
         return LocalClassReferenceImpl(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
@@ -131,9 +165,9 @@ class SourceFileImpl(SourceFile):
     def add_footer_expression(self, expression: AST.Expression) -> None:
         self._footer_statements.append(TopLevelStatement(node=expression))
 
-    def to_str(self, include_imports: Optional[bool] = True) -> str:
+    def to_str(self, include_imports: Optional[bool] = True, should_format_override: Optional[bool] = None) -> str:
         writer = self._prepare_for_writing(include_imports)
-        return writer.to_str()
+        return writer.to_str(should_format_override)
 
     def write_to_file(self, *, filepath: str) -> None:
         writer = self._prepare_for_writing()
@@ -170,6 +204,12 @@ class SourceFileImpl(SourceFile):
             )
 
         for reference in ast_metadata.references:
+            # At times we may be trying to write `if TYPE_CHECKING` imports when no other import brings in typing
+            # and so the resolution of the import is off. This is a fine short circuit since it's a built-in module.
+            if reference.import_if_type_checking:
+                tc_ref = AST.TypeHint.type_checking_reference()
+                self._reference_resolver.register_reference(tc_ref)
+
             # register refrence for resolving later
             self._reference_resolver.register_reference(reference)
 

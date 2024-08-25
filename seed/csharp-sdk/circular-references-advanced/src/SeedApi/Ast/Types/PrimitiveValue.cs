@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedApi;
 using SeedApi.Core;
 
 #nullable enable
@@ -14,5 +13,5 @@ public enum PrimitiveValue
     String,
 
     [EnumMember(Value = "NUMBER")]
-    Number
+    Number,
 }

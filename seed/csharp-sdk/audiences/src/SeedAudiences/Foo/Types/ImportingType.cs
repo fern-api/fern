@@ -1,11 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedAudiences.Core;
 
 #nullable enable
 
 namespace SeedAudiences;
 
-public class ImportingType
+public record ImportingType
 {
     [JsonPropertyName("imported")]
-    public string Imported { get; init; }
+    public required string Imported { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -19,7 +19,7 @@
             },
             "snippet": {
                 "type": "go",
-                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/validation/fern\"\n\tfernclient \"github.com/validation/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreateRequest{\n\t\tDecimal: 1.1,\n\t\tEven:    1,\n\t\tName:    \"string\",\n\t},\n)\n"
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/validation/fern\"\n\tfernclient \"github.com/validation/fern/client\"\n)\n\nclient := fernclient.NewClient()\nresponse, err := client.Create(\n\tcontext.TODO(),\n\t\u0026fern.CreateRequest{\n\t\tDecimal: 1.1,\n\t\tEven:    1,\n\t\tName:    \"string\",\n\t\tShape:   fern.ShapeSquare,\n\t},\n)\n"
             }
         }
     ]

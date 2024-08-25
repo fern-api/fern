@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = UsernamePage.Builder.class
 )
@@ -93,7 +93,7 @@ public final class UsernamePage {
     }
 
     public Builder after(String after) {
-      this.after = Optional.of(after);
+      this.after = Optional.ofNullable(after);
       return this;
     }
 

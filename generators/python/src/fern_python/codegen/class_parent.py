@@ -15,6 +15,6 @@ class ClassParent(ABC):
         self,
         declaration: AST.ClassDeclaration,
         # defaults to false if declaration.name starts with an underscore, true otherwise
-        should_export: bool = None,
+        should_export: bool = True,
     ) -> LocalClassReference:
         ...

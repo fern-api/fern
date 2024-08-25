@@ -1,4 +1,16 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/stream",
+                "method": "POST",
+                "identifier_override": "endpoint_completions.stream"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedServerSentEventsClient } from \"@fern/server-sent-events\";\n\nconst client = new SeedServerSentEventsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.completions.stream({\n    query: \"string\"\n});\n"
+            }
+        }
+    ],
     "types": {}
 }

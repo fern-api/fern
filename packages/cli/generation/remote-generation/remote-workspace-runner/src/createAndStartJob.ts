@@ -8,6 +8,7 @@ import {
     ROOT_API_FILENAME
 } from "@fern-api/configuration";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import {
     migrateIntermediateRepresentationForGenerator,
@@ -22,10 +23,10 @@ import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
+import { relative } from "path";
 import tar from "tar";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
-import { substituteEnvVariables } from "./substituteEnvVariables";
 
 export async function createAndStartJob({
     projectConfig,
@@ -93,6 +94,7 @@ async function createJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
+    const isPreview = absolutePathToPreview != null;
     const generatorConfig: FernFiddle.GeneratorConfigV2 = {
         id: generatorInvocation.name,
         version: generatorInvocation.version,
@@ -100,9 +102,17 @@ async function createJob({
         customConfig: generatorInvocation.config,
         publishMetadata: generatorInvocation.publishMetadata
     };
-    const generatorConfigsWithEnvVarSubstitutions = substituteEnvVariables(generatorConfig, context);
-    const whitelabelWithEnvVarSubstiutions =
-        whitelabel != null ? substituteEnvVariables(whitelabel, context) : undefined;
+
+    /** Sugar to substitute templated env vars in a standard way */
+    const substituteEnvVars = <T>(stringOrObject: T) =>
+        replaceEnvVariables(
+            stringOrObject,
+            { onError: (e) => context.failAndThrow(e) },
+            { substituteAsEmpty: isPreview }
+        );
+
+    const generatorConfigsWithEnvVarSubstitutions = substituteEnvVars(generatorConfig);
+    const whitelabelWithEnvVarSubstiutions = whitelabel != null ? substituteEnvVars(whitelabel) : undefined;
 
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -139,6 +149,25 @@ async function createJob({
                 RelativeFilePath.of(PROJECT_CONFIG_FILENAME)
             );
             await writeFile(absolutePathToFernConfigJson, JSON.stringify(projectConfig.rawConfig, undefined, 2));
+            // write sources
+            // TODO: We need handle what happens with source files outside of the fern directory
+            try {
+                const sources = workspace.getSources();
+                for (const source of sources) {
+                    const sourceContents = await readFile(source.absoluteFilePath);
+                    const relativeLocation = relative(workspace.absoluteFilepath, source.absoluteFilePath);
+                    const absolutePathToSourceFile = join(
+                        absolutePathToTmpFernDirectory,
+                        RelativeFilePath.of(relativeLocation)
+                    );
+                    // Make sure the directory exists
+                    await mkdir(dirname(absolutePathToSourceFile), { recursive: true });
+
+                    await writeFile(absolutePathToSourceFile, sourceContents);
+                }
+            } catch (error) {
+                context.logger.debug(`Failed to write source files to disk, continuing: ${error}`);
+            }
 
             const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of("definition.tgz"));
             await tar.create({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."]);
@@ -146,7 +175,7 @@ async function createJob({
             // Upload definition to S3
             context.logger.debug("Getting upload URL for Fern definition.");
             const definitionUploadUrlRequest = await remoteGenerationService.remoteGen.getDefinitionUploadUrl({
-                apiName: workspace.name,
+                apiName: workspace.definition.rootApiFile.contents.name,
                 organizationName: organization,
                 version
             });
@@ -172,7 +201,8 @@ async function createJob({
                 // Create definition metadata
                 fernDefinitionMetadata = {
                     definitionS3DownloadUrl: definitionUploadUrlRequest.body.s3Url,
-                    outputPath: ".mock"
+                    outputPath: ".mock",
+                    cliVersion: projectConfig.version
                 };
             }
         } catch (error) {
@@ -181,7 +211,7 @@ async function createJob({
     }
 
     const createResponse = await remoteGenerationService.remoteGen.createJobV3({
-        apiName: workspace.name,
+        apiName: workspace.definition.rootApiFile.contents.name,
         version,
         organizationName: organization,
         generators: [generatorConfigsWithEnvVarSubstitutions],
@@ -199,7 +229,7 @@ async function createJob({
     if (!createResponse.ok) {
         return convertCreateJobError(createResponse.error as unknown as Fetcher.Error)._visit({
             illegalApiNameError: () => {
-                return context.failAndThrow("API name is invalid: " + workspace.name);
+                return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
             },
             illegalApiVersionError: () => {
                 return context.failAndThrow("API version is invalid: " + version);
@@ -275,7 +305,8 @@ async function writeFernDefinition({
                 absolutePathToDefinitionDirectory,
                 RelativeFilePath.of(relativePath)
             ),
-            definition: importedDefinition
+            // TODO write with the defaulted url
+            definition: importedDefinition.definition
         });
     }
 }

@@ -15,8 +15,11 @@ export declare namespace Auth {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -29,11 +32,9 @@ export class Auth {
      * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedOauthClientCredentials.auth.getTokenWithClientCredentials({
+     *     await client.auth.getTokenWithClientCredentials({
      *         clientId: "string",
      *         clientSecret: "string",
-     *         audience: "https://api.example.com",
-     *         grantType: "client_credentials",
      *         scope: "string"
      *     })
      */
@@ -49,12 +50,14 @@ export class Auth {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/oauth-client-credentials",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/oauth-client-credentials/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
-                ...(await serializers.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 audience: "https://api.example.com",
                 grant_type: "client_credentials",
             },
@@ -63,7 +66,7 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.TokenResponse.parseOrThrow(_response.body, {
+            return serializers.TokenResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -98,12 +101,10 @@ export class Auth {
      * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedOauthClientCredentials.auth.refreshToken({
+     *     await client.auth.refreshToken({
      *         clientId: "string",
      *         clientSecret: "string",
      *         refreshToken: "string",
-     *         audience: "https://api.example.com",
-     *         grantType: "refresh_token",
      *         scope: "string"
      *     })
      */
@@ -119,12 +120,14 @@ export class Auth {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/oauth-client-credentials",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/oauth-client-credentials/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
-                ...(await serializers.RefreshTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.RefreshTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 audience: "https://api.example.com",
                 grant_type: "refresh_token",
             },
@@ -133,7 +136,7 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.TokenResponse.parseOrThrow(_response.body, {
+            return serializers.TokenResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

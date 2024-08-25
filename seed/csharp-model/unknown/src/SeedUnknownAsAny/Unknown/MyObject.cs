@@ -1,11 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedUnknownAsAny.Core;
 
 #nullable enable
 
 namespace SeedUnknownAsAny;
 
-public class MyObject
+public record MyObject
 {
     [JsonPropertyName("unknown")]
-    public object Unknown { get; init; }
+    public required object Unknown { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

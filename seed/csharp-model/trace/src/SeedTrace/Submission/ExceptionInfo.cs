@@ -1,17 +1,23 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class ExceptionInfo
+public record ExceptionInfo
 {
     [JsonPropertyName("exceptionType")]
-    public string ExceptionType { get; init; }
+    public required string ExceptionType { get; set; }
 
     [JsonPropertyName("exceptionMessage")]
-    public string ExceptionMessage { get; init; }
+    public required string ExceptionMessage { get; set; }
 
     [JsonPropertyName("exceptionStacktrace")]
-    public string ExceptionStacktrace { get; init; }
+    public required string ExceptionStacktrace { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

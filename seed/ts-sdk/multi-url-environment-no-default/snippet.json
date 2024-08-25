@@ -1,0 +1,27 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/ec2/boot",
+                "method": "POST",
+                "identifier_override": "endpoint_ec2.bootInstance"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMultiUrlEnvironmentNoDefaultEnvironment, SeedMultiUrlEnvironmentNoDefaultClient } from \"@fern/multi-url-environment-no-default\";\n\nconst client = new SeedMultiUrlEnvironmentNoDefaultClient({ environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.ec2.bootInstance({\n    size: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/s3/presigned-url",
+                "method": "POST",
+                "identifier_override": "endpoint_s3.getPresignedUrl"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedMultiUrlEnvironmentNoDefaultEnvironment, SeedMultiUrlEnvironmentNoDefaultClient } from \"@fern/multi-url-environment-no-default\";\n\nconst client = new SeedMultiUrlEnvironmentNoDefaultClient({ environment: SeedMultiUrlEnvironmentNoDefaultEnvironment.Production, token: \"YOUR_TOKEN\" });\nawait client.s3.getPresignedUrl({\n    s3Key: \"string\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

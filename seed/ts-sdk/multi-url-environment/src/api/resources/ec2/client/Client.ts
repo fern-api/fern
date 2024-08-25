@@ -18,8 +18,11 @@ export declare namespace Ec2 {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -32,7 +35,7 @@ export class Ec2 {
      * @param {Ec2.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedMultiUrlEnvironment.ec2.bootInstance({
+     *     await client.ec2.bootInstance({
      *         size: "string"
      *     })
      */
@@ -54,11 +57,13 @@ export class Ec2 {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/multi-url-environment",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/multi-url-environment/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.BootInstanceRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.BootInstanceRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

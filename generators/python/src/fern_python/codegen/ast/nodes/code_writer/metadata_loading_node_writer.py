@@ -21,7 +21,7 @@ class MetadataLoadingNodeWriter(NodeWriter):
     def write_newline_if_last_line_not(self) -> None:
         pass
 
-    def write_node(self, node: AstNode) -> None:
+    def write_node(self, node: AstNode, should_write_as_snippet: Optional[bool] = None) -> None:
         self.metadata.update(node.get_metadata())
 
     def write_reference(self, reference: Reference) -> None:

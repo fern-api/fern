@@ -1,58 +1,115 @@
-using SeedFileUpload;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
+using SeedFileUpload.Core;
 
 #nullable enable
 
 namespace SeedFileUpload;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
 
-    public async void PostAsync(MyRequest request)
+    public async Task PostAsync(
+        MyRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "",
+                Options = options,
+            },
+            cancellationToken
         );
-    }
-
-    public async void JustFileAsync(JustFileRequet request)
-    {
-        var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/just-file" }
-        );
-    }
-
-    public async void JustFileWithQueryParamsAsync(JustFileWithQueryParamsRequet request)
-    {
-        var _query = new Dictionary<string, object>()
+        if (response.StatusCode is >= 200 and < 400)
         {
-            { "integer", request.Integer.ToString() },
-            { "listOfStrings", request.ListOfStrings },
-        };
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedFileUploadApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    public async Task JustFileAsync(
+        JustFileRequet request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "/just-file",
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedFileUploadApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    public async Task JustFileWithQueryParamsAsync(
+        JustFileWithQueryParamsRequet request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        _query["integer"] = request.Integer.ToString();
+        _query["listOfStrings"] = request.ListOfStrings;
+        _query["optionalListOfStrings"] = request.OptionalListOfStrings;
         if (request.MaybeString != null)
         {
             _query["maybeString"] = request.MaybeString;
         }
         if (request.MaybeInteger != null)
         {
-            _query["maybeInteger"] = request.MaybeInteger;
-        }
-        if (request.OptionalListOfStrings != null)
-        {
-            _query["optionalListOfStrings"] = request.OptionalListOfStrings;
+            _query["maybeInteger"] = request.MaybeInteger.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/just-file-with-query-params",
-                Query = _query
-            }
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedFileUploadApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
     }
 }

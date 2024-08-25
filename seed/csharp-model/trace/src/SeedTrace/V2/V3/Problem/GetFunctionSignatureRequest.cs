@@ -1,12 +1,17 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2.V3;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2.V3;
 
-public class GetFunctionSignatureRequest
+public record GetFunctionSignatureRequest
 {
     [JsonPropertyName("functionSignature")]
-    public FunctionSignature FunctionSignature { get; init; }
+    public required object FunctionSignature { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

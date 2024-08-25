@@ -1,40 +1,93 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedTrace;
+using System.Threading;
+using System.Threading.Tasks;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class SyspropClient
+public partial class SyspropClient
 {
     private RawClient _client;
 
-    public SyspropClient(RawClient client)
+    internal SyspropClient(RawClient client)
     {
         _client = client;
     }
 
-    public async void SetNumWarmInstancesAsync(Language language, int numWarmInstances)
+    /// <example>
+    /// <code>
+    /// await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
+    /// </code>
+    /// </example>
+    public async Task SetNumWarmInstancesAsync(
+        Language language,
+        int numWarmInstances,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
-                Path = $"/num-warm-instances/{language}/{numWarmInstances}"
-            }
+                Path = $"/sysprop/num-warm-instances/{language}/{numWarmInstances}",
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
     }
 
-    public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync()
+    /// <example>
+    /// <code>
+    /// await client.Sysprop.GetNumWarmInstancesAsync();
+    /// </code>
+    /// </example>
+    public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/num-warm-instances" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/sysprop/num-warm-instances",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Dictionary<Language, int>>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Dictionary<Language, int>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

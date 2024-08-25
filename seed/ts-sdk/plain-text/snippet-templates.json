@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_service.getText"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPlainText = new SeedPlainTextClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedPlainTextClient } from \"@fern/plain-text\";"
+                ],
+                "templateString": "const client = new SeedPlainTextClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedPlainText.service.getText()",
+                "templateString": "await client.service.getText()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

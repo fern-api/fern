@@ -1,8 +1,8 @@
 import sys
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources.config import GeneratorConfig
-from fern.generator_exec.resources.logging import (
+from fern.generator_exec.config import GeneratorConfig
+from fern.generator_exec.logging import (
     ErrorExitStatusUpdate,
     ExitStatusUpdate,
     GeneratorUpdate,
@@ -43,7 +43,9 @@ class GeneratorCli:
             )
 
             self.abstract_generator.generate_project(
-                generator_exec_wrapper=generator_exec_wrapper, ir=ir, generator_config=config
+                generator_exec_wrapper=generator_exec_wrapper,
+                ir=ir,
+                generator_config=config,
             )
             generator_exec_wrapper.send_update(
                 GeneratorUpdate.factory.exit_status_update(

@@ -17,10 +17,52 @@ paths:
             schema:
               type: object
               properties:
+                stream:
+                  type: boolean
                 num_events:
                   type: integer
               required:
+                - stream
                 - num_events
+  /generate:
+    post:
+      operationId: dummy_generate
+      tags:
+        - Dummy
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StreamResponse'
+              examples:
+                Default:
+                  value:
+                    id: id
+                    name: name
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                stream:
+                  type: boolean
+                  example: false
+                num_events:
+                  type: integer
+                  example: 5
+              required:
+                - stream
+                - num_events
+            examples:
+              Default:
+                value:
+                  stream: false
+                  num_events: 5
 components:
   schemas:
     StreamResponse:
@@ -29,6 +71,7 @@ components:
       properties:
         id:
           type: string
+          example: id
         name:
           type: string
           nullable: true

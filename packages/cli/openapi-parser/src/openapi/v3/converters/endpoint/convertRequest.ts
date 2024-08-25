@@ -1,5 +1,5 @@
 import { MediaType } from "@fern-api/core-utils";
-import { MultipartRequestProperty, MultipartSchema, RequestWithExample } from "@fern-api/openapi-ir-sdk";
+import { MultipartRequestProperty, MultipartSchema, RequestWithExample, Source } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { isAdditionalPropertiesAny } from "../../../../schema/convertAdditionalProperties";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../../../../schema/convertSchemas";
@@ -48,12 +48,16 @@ export function convertRequest({
     requestBody,
     document,
     context,
-    requestBreadcrumbs
+    requestBreadcrumbs,
+    source,
+    namespace
 }: {
     requestBody: OpenAPIV3.ReferenceObject | OpenAPIV3.RequestBodyObject;
     document: OpenAPIV3.Document;
     context: AbstractOpenAPIV3ParserContext;
     requestBreadcrumbs: string[];
+    source: Source;
+    namespace: string | undefined;
 }): RequestWithExample | undefined {
     const resolvedRequestBody = isReferenceObject(requestBody)
         ? context.resolveRequestBodyReference(requestBody)
@@ -65,7 +69,8 @@ export function convertRequest({
     // convert as application/octet-stream
     if (isOctetStreamRequest(resolvedRequestBody)) {
         return RequestWithExample.octetStream({
-            description: undefined
+            description: undefined,
+            source
         });
     }
 
@@ -84,7 +89,9 @@ export function convertRequest({
             resolvedMultipartSchema.schema,
             false,
             context,
-            requestBreadcrumbs
+            requestBreadcrumbs,
+            source,
+            namespace
         );
         const properties: MultipartRequestProperty[] = [];
         if (convertedMultipartSchema.type === "object") {
@@ -159,7 +166,8 @@ export function convertRequest({
                     ? resolvedMultipartSchema.id
                     : undefined,
             description: undefined,
-            properties
+            properties,
+            source
         });
     }
 
@@ -167,7 +175,15 @@ export function convertRequest({
     if (jsonMediaObject == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(jsonMediaObject.schema, false, context, requestBreadcrumbs, true);
+    const requestSchema = convertSchema(
+        jsonMediaObject.schema,
+        false,
+        context,
+        requestBreadcrumbs,
+        source,
+        namespace,
+        true
+    );
     return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,
@@ -175,7 +191,8 @@ export function convertRequest({
         fullExamples: jsonMediaObject.examples,
         additionalProperties:
             !isReferenceObject(jsonMediaObject.schema) &&
-            isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties)
+            isAdditionalPropertiesAny(jsonMediaObject.schema.additionalProperties),
+        source
     });
 }
 

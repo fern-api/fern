@@ -16,24 +16,25 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.irV42.model.commons.Name;
-import com.fern.irV42.model.commons.NameAndWireValue;
-import com.fern.irV42.model.commons.TypeId;
-import com.fern.irV42.model.http.BytesRequest;
-import com.fern.irV42.model.http.FileUploadRequest;
-import com.fern.irV42.model.http.FileUploadRequestProperty;
-import com.fern.irV42.model.http.HttpEndpoint;
-import com.fern.irV42.model.http.HttpRequestBody;
-import com.fern.irV42.model.http.HttpRequestBodyReference;
-import com.fern.irV42.model.http.HttpService;
-import com.fern.irV42.model.http.InlinedRequestBody;
-import com.fern.irV42.model.http.SdkRequestWrapper;
-import com.fern.irV42.model.types.ContainerType;
-import com.fern.irV42.model.types.DeclaredTypeName;
-import com.fern.irV42.model.types.ObjectProperty;
-import com.fern.irV42.model.types.ObjectTypeDeclaration;
-import com.fern.irV42.model.types.PrimitiveType;
-import com.fern.irV42.model.types.TypeReference;
+import com.fern.ir.model.commons.Name;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.http.BytesRequest;
+import com.fern.ir.model.http.FileUploadRequest;
+import com.fern.ir.model.http.FileUploadRequestProperty;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpRequestBody;
+import com.fern.ir.model.http.HttpRequestBodyReference;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.InlinedRequestBody;
+import com.fern.ir.model.http.SdkRequestWrapper;
+import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.PrimitiveTypeV1;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.java.RequestBodyUtils;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedWrappedRequest;
@@ -265,6 +266,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
 
         @Override
         public List<ObjectProperty> visitBytes(BytesRequest bytes) {
+            TypeReference base64TypeReference = TypeReference.primitive(
+                    PrimitiveType.builder().v1(PrimitiveTypeV1.BASE_64).build());
             return List.of(ObjectProperty.builder()
                     .name(NameAndWireValue.builder()
                             .wireValue(sdkRequestWrapper.getBodyKey().getOriginalName())
@@ -279,9 +282,8 @@ public final class WrappedRequestGenerator extends AbstractFileGenerator {
                             .build())
                     .valueType(
                             bytes.getIsOptional()
-                                    ? TypeReference.container(
-                                            ContainerType.optional(TypeReference.primitive(PrimitiveType.BASE_64)))
-                                    : TypeReference.primitive(PrimitiveType.BASE_64))
+                                    ? TypeReference.container(ContainerType.optional(base64TypeReference))
+                                    : base64TypeReference)
                     .build());
         }
 

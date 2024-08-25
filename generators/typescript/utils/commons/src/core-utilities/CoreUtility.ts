@@ -16,6 +16,13 @@ export declare namespace CoreUtility {
             path: RelativeFilePath;
             ignoreGlob?: string;
         };
+        unitTests?: {
+            fromDirectory: RelativeFilePath;
+            /**
+             * Import strings that we want to find + replace
+             */
+            findAndReplace: Record<string, string>;
+        };
         originalPathOnDocker: AbsoluteFilePath;
         pathInCoreUtilities: ExportedDirectory[];
         addDependencies?: (dependencyManager: DependencyManager) => void;

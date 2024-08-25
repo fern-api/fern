@@ -1,29 +1,59 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedLiteral;
+using System.Threading;
+using SeedLiteral.Core;
 
 #nullable enable
 
 namespace SeedLiteral;
 
-public class PathClient
+public partial class PathClient
 {
     private RawClient _client;
 
-    public PathClient(RawClient client)
+    internal PathClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<SendResponse> SendAsync(string id)
+    /// <example>
+    /// <code>
+    /// await client.Path.SendAsync("123");
+    /// </code>
+    /// </example>
+    public async Task<SendResponse> SendAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = $"/path/{id}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = $"path/{id}",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<SendResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedLiteralException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedLiteralApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

@@ -1,19 +1,24 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class TraceResponsesPageV2
+public record TraceResponsesPageV2
 {
     /// <summary>
     /// If present, use this to load subseqent pages.
     /// The offset is the id of the next trace response to load.
     /// </summary>
     [JsonPropertyName("offset")]
-    public int? Offset { get; init; }
+    public int? Offset { get; set; }
 
     [JsonPropertyName("traceResponses")]
-    public IEnumerable<TraceResponseV2> TraceResponses { get; init; }
+    public IEnumerable<TraceResponseV2> TraceResponses { get; set; } = new List<TraceResponseV2>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

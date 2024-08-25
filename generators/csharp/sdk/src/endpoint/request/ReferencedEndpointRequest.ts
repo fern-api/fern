@@ -1,6 +1,7 @@
 import { csharp } from "@fern-api/csharp-codegen";
 import { HttpEndpoint, SdkRequest, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
+import { RawClient } from "../http/RawClient";
 import {
     EndpointRequest,
     HeaderParameterCodeBlock,
@@ -37,5 +38,9 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         return {
             requestBodyReference: this.getParameterName()
         };
+    }
+
+    public getRequestType(): RawClient.RequestBodyType | undefined {
+        return "json";
     }
 }

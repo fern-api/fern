@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class DoublyLinkedListNodeAndListValue
+public record DoublyLinkedListNodeAndListValue
 {
     [JsonPropertyName("nodeId")]
-    public string NodeId { get; init; }
+    public required string NodeId { get; set; }
 
     [JsonPropertyName("fullList")]
-    public DoublyLinkedListValue FullList { get; init; }
+    public required DoublyLinkedListValue FullList { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

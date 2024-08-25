@@ -12,9 +12,7 @@ export const DefaultProvidedFile: core.serialization.ObjectSchema<
     SeedTrace.v2.v3.DefaultProvidedFile
 > = core.serialization.object({
     file: FileInfoV2,
-    relatedTypes: core.serialization.list(
-        core.serialization.lazy(async () => (await import("../../../../../../..")).VariableType)
-    ),
+    relatedTypes: core.serialization.list(core.serialization.lazy(() => serializers.VariableType)),
 });
 
 export declare namespace DefaultProvidedFile {

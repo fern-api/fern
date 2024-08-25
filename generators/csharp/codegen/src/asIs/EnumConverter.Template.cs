@@ -3,7 +3,7 @@
 /// Tolerant Enum converter. Based on code in the StackOverflow post below.
 /// http://stackoverflow.com/questions/22752075/how-can-i-ignore-unknown-enum-values-during-json-deserialization
 /// </summary>
-class TolerantEnumConverter : JsonConverter
+internal class TolerantEnumConverter : JsonConverter
 {
     public override bool CanConvert(Type objectType)
     {

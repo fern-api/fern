@@ -14,8 +14,11 @@ export declare namespace Union {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,7 +31,7 @@ export class Union {
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedUnions.union.get("string")
+     *     await client.union.get("string")
      */
     public async get(id: string, requestOptions?: Union.RequestOptions): Promise<SeedUnions.Shape> {
         const _response = await core.fetcher({
@@ -38,16 +41,18 @@ export class Union {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/unions",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/unions/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Shape.parseOrThrow(_response.body, {
+            return serializers.Shape.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -82,7 +87,7 @@ export class Union {
      * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedUnions.union.update({
+     *     await client.union.update({
      *         type: "circle",
      *         id: "string",
      *         radius: 1.1
@@ -96,17 +101,19 @@ export class Union {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/unions",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/unions/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.Shape.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.Shape.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.union.update.Response.parseOrThrow(_response.body, {
+            return serializers.union.update.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

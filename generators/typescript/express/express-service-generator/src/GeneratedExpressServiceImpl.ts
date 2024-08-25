@@ -21,6 +21,7 @@ export declare namespace GeneratedExpressServiceImpl {
         includeSerdeLayer: boolean;
         skipRequestValidation: boolean;
         skipResponseValidation: boolean;
+        requestValidationStatusCode: number;
     }
 }
 
@@ -43,6 +44,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private includeSerdeLayer: boolean;
     private skipRequestValidation: boolean;
     private skipResponseValidation: boolean;
+    private requestValidationStatusCode: number;
 
     constructor({
         packageId,
@@ -52,7 +54,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         doNotHandleUnrecognizedErrors,
         includeSerdeLayer,
         skipRequestValidation,
-        skipResponseValidation
+        skipResponseValidation,
+        requestValidationStatusCode
     }: GeneratedExpressServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
@@ -62,6 +65,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         this.includeSerdeLayer = includeSerdeLayer;
         this.skipRequestValidation = skipRequestValidation;
         this.skipResponseValidation = skipResponseValidation;
+        this.requestValidationStatusCode = requestValidationStatusCode;
     }
 
     public writeToFile(context: ExpressContext): void {
@@ -483,7 +487,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 context.externalDependencies.express.Response.json({
                                     referenceToExpressResponse: context.externalDependencies.express.Response.status({
                                         referenceToExpressResponse: expressResponse,
-                                        status: 422
+                                        status: this.requestValidationStatusCode
                                     }),
                                     valueToSend: ts.factory.createObjectLiteralExpression([
                                         ts.factory.createPropertyAssignment(
@@ -924,6 +928,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         return HttpResponseBody._visit<ts.TypeNode>(response, {
             json: (jsonResponse) => context.type.getReferenceToType(jsonResponse.responseBodyType).typeNode,
             streaming: () => {
+                throw new Error("Streaming is not supported");
+            },
+            streamParameter: () => {
                 throw new Error("Streaming is not supported");
             },
             fileDownload: () => {

@@ -10,7 +10,7 @@ export const VariableTypeAndName: core.serialization.ObjectSchema<
     serializers.VariableTypeAndName.Raw,
     SeedTrace.VariableTypeAndName
 > = core.serialization.object({
-    variableType: core.serialization.lazy(async () => (await import("../../..")).VariableType),
+    variableType: core.serialization.lazy(() => serializers.VariableType),
     name: core.serialization.string(),
 });
 

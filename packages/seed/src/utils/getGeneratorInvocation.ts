@@ -15,7 +15,8 @@ export function getGeneratorInvocation({
     outputMode,
     fixtureName,
     irVersion,
-    publishMetadata
+    publishMetadata,
+    readme
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
@@ -26,6 +27,7 @@ export function getGeneratorInvocation({
     fixtureName: string;
     irVersion: string;
     publishMetadata: unknown;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): generatorsYml.GeneratorInvocation {
     return {
         name: docker.name,
@@ -35,10 +37,13 @@ export function getGeneratorInvocation({
         absolutePathToLocalOutput: absolutePathToOutput,
         absolutePathToLocalSnippets: undefined,
         language,
+        keywords: undefined,
         smartCasing: false,
         disableExamples: false,
         irVersionOverride: irVersion,
-        publishMetadata: publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined
+        publishMetadata: publishMetadata != null ? (publishMetadata as FernFiddle.PublishingMetadata) : undefined,
+        readme,
+        settings: undefined
     };
 }
 
@@ -119,6 +124,8 @@ function getGithubPublishInfo({
                 packageName: `Fern${fixtureName}`,
                 registryUrl: ""
             });
+        case "swift":
+            return undefined;
         default:
             assertNever(language);
     }
@@ -158,6 +165,8 @@ function getPublishInfo({
             throw new Error("Seed doesn't support publish mode in Ruby!");
         case "csharp":
             throw new Error("Seed doesn't support publish mode in C#!");
+        case "swift":
+            throw new Error("Seed doesn't support publish mode in Swift");
         default:
             assertNever(language);
     }

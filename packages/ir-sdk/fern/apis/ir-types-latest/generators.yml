@@ -3,7 +3,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.8.13
+        version: 0.38.6
         output:
           location: local-file-system
           path: ../../../src/sdk
@@ -11,10 +11,10 @@ groups:
           outputSourceFiles: true
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
-  node-sdk:
+  node:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.8.13
+        version: 0.38.6
         output:
           location: npm
           url: npm.buildwithfern.com
@@ -22,30 +22,34 @@ groups:
         config:
           includeUtilsOnUnionMembers: true
           noOptionalProperties: true
-  java-sdk:
+  java:
     generators:
       - name: fernapi/java-model
         version: 0.5.20
         output:
           location: maven
           url: maven.buildwithfern.com
-          coordinate: com.fern.fern:irV44
+          coordinate: com.fern.fern:irV53
         config:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
-  python-sdk:
+  python: 
     generators:
       - name: fernapi/fern-pydantic-model
-        version: 0.8.1-rc0
+        version: 1.4.2
         output:
           location: pypi
           url: pypi.buildwithfern.com
-          package-name: fern_fern_ir_v44
+          package-name: fern_fern_ir_v53
         config:
-          wrapped_aliases: true
+          # wrapped_aliases: true
           include_union_utils: true
           frozen: true
-      - name: fernapi/fern-go-model
+          version: v2
+          enum_type: python_enums
+  go: 
+    generators:
+      - name: fernapi/fern-go-model 
         version: 0.9.3
         github:
           repository: fern-api/ir-go

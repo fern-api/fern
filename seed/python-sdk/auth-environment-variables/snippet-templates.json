@@ -11,7 +11,16 @@
             "identifierOverride": "endpoint_service.getWithApiKey"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedAuthEnvironmentVariables\n\nclient = SeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedAuthEnvironmentVariables"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -24,7 +33,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedAuthEnvironmentVariables\n\nclient = AsyncSeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedAuthEnvironmentVariables"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -49,7 +67,16 @@
             "identifierOverride": "endpoint_service.getWithHeader"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedAuthEnvironmentVariables\n\nclient = SeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedAuthEnvironmentVariables"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -79,7 +106,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedAuthEnvironmentVariables\n\nclient = AsyncSeedAuthEnvironmentVariables(\n    x_another_header=\"YOUR_X_ANOTHER_HEADER\",\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedAuthEnvironmentVariables"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedAuthEnvironmentVariables(x_another_header=\"YOUR_X_ANOTHER_HEADER\", api_key=\"YOUR_API_KEY\", base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,

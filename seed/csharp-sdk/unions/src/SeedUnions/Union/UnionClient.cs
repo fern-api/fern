@@ -1,47 +1,101 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedUnions;
+using System.Threading;
+using SeedUnions.Core;
 
 #nullable enable
 
 namespace SeedUnions;
 
-public class UnionClient
+public partial class UnionClient
 {
     private RawClient _client;
 
-    public UnionClient(RawClient client)
+    internal UnionClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<Shape> GetAsync(string id)
+    /// <example>
+    /// <code>
+    /// await client.Union.GetAsync("string");
+    /// </code>
+    /// </example>
+    public async Task<object> GetAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{id}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"/{id}",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Shape>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<object>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUnionsException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedUnionsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
-    public async Task<bool> UpdateAsync(Shape request)
+    /// <example>
+    /// <code>
+    /// await client.Union.UpdateAsync(new Circle { Id = "string", Radius = 1.1 });
+    /// </code>
+    /// </example>
+    public async Task<bool> UpdateAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
-                Method = HttpMethod.Patch,
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethodExtensions.Patch,
                 Path = "",
-                Body = request
-            }
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<bool>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUnionsException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedUnionsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

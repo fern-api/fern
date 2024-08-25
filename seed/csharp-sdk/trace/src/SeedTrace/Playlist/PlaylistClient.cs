@@ -1,15 +1,18 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedTrace;
+using System.Threading;
+using System.Threading.Tasks;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class PlaylistClient
+public partial class PlaylistClient
 {
     private RawClient _client;
 
-    public PlaylistClient(RawClient client)
+    internal PlaylistClient(RawClient client)
     {
         _client = client;
     }
@@ -17,115 +20,269 @@ public class PlaylistClient
     /// <summary>
     /// Create a new playlist
     /// </summary>
-    public async Task<Playlist> CreatePlaylistAsync(CreatePlaylistRequest request)
+    /// <example>
+    /// <code>
+    /// await client.Playlist.CreatePlaylistAsync(
+    ///     1,
+    ///     new CreatePlaylistRequest
+    ///     {
+    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Body = new PlaylistCreateRequest
+    ///         {
+    ///             Name = "string",
+    ///             Problems = new List<string>() { "string" },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<Playlist> CreatePlaylistAsync(
+        int serviceParam,
+        CreatePlaylistRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "datetime", request.Datetime.ToString() },
-        };
+        var _query = new Dictionary<string, object>();
+        _query["datetime"] = request.Datetime.ToString(Constants.DateTimeFormat);
         if (request.OptionalDatetime != null)
         {
-            _query["optionalDatetime"] = request.OptionalDatetime;
+            _query["optionalDatetime"] = request.OptionalDatetime.Value.ToString(
+                Constants.DateTimeFormat
+            );
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/create",
+                Path = $"/v2/playlist/{serviceParam}/create",
                 Body = request.Body,
-                Query = _query
-            }
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Playlist>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Playlist>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns the user's playlists
     /// </summary>
-    public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(GetPlaylistsRequest request)
+    /// <example>
+    /// <code>
+    /// await client.Playlist.GetPlaylistsAsync(
+    ///     1,
+    ///     new GetPlaylistsRequest
+    ///     {
+    ///         Limit = 1,
+    ///         OtherField = "string",
+    ///         MultiLineDocs = "string",
+    ///         OptionalMultipleField = ["string"],
+    ///         MultipleField = ["string"],
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<Playlist>> GetPlaylistsAsync(
+        int serviceParam,
+        GetPlaylistsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "otherField", request.OtherField },
-            { "multiLineDocs", request.MultiLineDocs },
-            { "multipleField", request.MultipleField },
-        };
+        var _query = new Dictionary<string, object>();
+        _query["otherField"] = request.OtherField;
+        _query["multiLineDocs"] = request.MultiLineDocs;
+        _query["optionalMultipleField"] = request.OptionalMultipleField;
+        _query["multipleField"] = request.MultipleField;
         if (request.Limit != null)
         {
-            _query["limit"] = request.Limit;
-        }
-        if (request.OptionalMultipleField != null)
-        {
-            _query["optionalMultipleField"] = request.OptionalMultipleField;
+            _query["limit"] = request.Limit.ToString();
         }
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "/all",
-                Query = _query
-            }
+                Path = $"/v2/playlist/{serviceParam}/all",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<Playlist>>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<Playlist>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns a playlist
     /// </summary>
-    public async Task<Playlist> GetPlaylistAsync(string playlistId)
+    /// <example>
+    /// <code>
+    /// await client.Playlist.GetPlaylistAsync(1, "string");
+    /// </code>
+    /// </example>
+    public async Task<Playlist> GetPlaylistAsync(
+        int serviceParam,
+        string playlistId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{playlistId}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"/v2/playlist/{serviceParam}/{playlistId}",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Playlist>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Playlist>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Updates a playlist
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Playlist.UpdatePlaylistAsync(
+    ///     1,
+    ///     "string",
+    ///     new UpdatePlaylistRequest
+    ///     {
+    ///         Name = "string",
+    ///         Problems = new List<string>() { "string" },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<Playlist?> UpdatePlaylistAsync(
+        int serviceParam,
         string playlistId,
-        UpdatePlaylistRequest? request
+        UpdatePlaylistRequest? request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
-                Path = $"/{playlistId}",
-                Body = request
-            }
+                Path = $"/v2/playlist/{serviceParam}/{playlistId}",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Playlist?>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Playlist?>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Deletes a playlist
     /// </summary>
-    public async void DeletePlaylistAsync(string playlistId)
+    /// <example>
+    /// <code>
+    /// await client.Playlist.DeletePlaylistAsync(1, "string");
+    /// </code>
+    /// </example>
+    public async Task DeletePlaylistAsync(
+        int serviceParam,
+        string playlistId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Delete, Path = $"/{playlistId}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Delete,
+                Path = $"/v2/playlist/{serviceParam}/{playlistId}",
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
     }
 }

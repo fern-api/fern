@@ -19,6 +19,9 @@ types:
     union:
       int: integer
       int64: long
+      # TODO: Refactor the following once the uint types are available.
+      uint: integer
+      uint64: long
       float: double
       double: double
       string: string

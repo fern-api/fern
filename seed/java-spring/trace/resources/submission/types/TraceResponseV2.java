@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 import resources.commons.types.DebugVariableValue;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = TraceResponseV2.Builder.class
 )
@@ -204,7 +204,7 @@ public final class TraceResponseV2 {
 
     @java.lang.Override
     public _FinalStage stdout(String stdout) {
-      this.stdout = Optional.of(stdout);
+      this.stdout = Optional.ofNullable(stdout);
       return this;
     }
 
@@ -220,7 +220,7 @@ public final class TraceResponseV2 {
 
     @java.lang.Override
     public _FinalStage expressionLocation(ExpressionLocation expressionLocation) {
-      this.expressionLocation = Optional.of(expressionLocation);
+      this.expressionLocation = Optional.ofNullable(expressionLocation);
       return this;
     }
 
@@ -236,7 +236,7 @@ public final class TraceResponseV2 {
 
     @java.lang.Override
     public _FinalStage returnValue(DebugVariableValue returnValue) {
-      this.returnValue = Optional.of(returnValue);
+      this.returnValue = Optional.ofNullable(returnValue);
       return this;
     }
 

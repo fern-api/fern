@@ -21,9 +21,9 @@ class ClassDeclaration(AstNode):
         self,
         name: str,
         is_abstract: bool = False,
-        extends: Sequence[ClassReference] = None,
-        constructor: ClassConstructor = None,
-        docstring: Docstring = None,
+        extends: Sequence[ClassReference] = [],
+        constructor: Optional[ClassConstructor] = None,
+        docstring: Optional[Docstring] = None,
         snippet: Optional[str] = None,
         write_parameter_docstring: bool = False,
     ):
@@ -42,7 +42,7 @@ class ClassDeclaration(AstNode):
         self.snippet = snippet
         self.class_vars: List[VariableDeclaration] = []
         self.statements: List[AstNode] = []
-        self.ghost_references: OrderedSet[Reference] = OrderedSet()
+        self.ghost_references: OrderedSet[Reference] = OrderedSet([])
         self.write_parameter_docstring = write_parameter_docstring
 
     def add_class_var(self, variable_declaration: VariableDeclaration) -> None:
@@ -51,7 +51,7 @@ class ClassDeclaration(AstNode):
     def add_method(
         self,
         declaration: FunctionDeclaration,
-        decorator: ClassMethodDecorator = None,
+        decorator: Optional[ClassMethodDecorator] = None,
         no_implicit_decorator: bool = False,
     ) -> FunctionDeclaration:
         def augment_signature(signature: FunctionSignature) -> FunctionSignature:
@@ -96,7 +96,7 @@ class ClassDeclaration(AstNode):
         self,
         name: str,
         signature: FunctionSignature,
-        docstring: Docstring = None,
+        docstring: Optional[Docstring] = None,
         is_async: bool = False,
     ) -> FunctionDeclaration:
         return self.add_method(
@@ -119,6 +119,9 @@ class ClassDeclaration(AstNode):
 
     def add_class(self, declaration: ClassDeclaration) -> None:
         self.statements.append(declaration)
+
+    def add_snippet(self, snippet: str) -> None:
+        self.snippet = snippet
 
     def add_statement(self, statement: AstNode) -> None:
         self.statements.append(statement)
@@ -144,7 +147,7 @@ class ClassDeclaration(AstNode):
     def add_expression(self, expression: Expression) -> None:
         self.statements.append(expression)
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         writer.write(f"class {self.name}")
 
         just_wrote_extension = False
@@ -220,6 +223,7 @@ class ClassDeclaration(AstNode):
                 writer.write_newline_if_last_line_not()
                 did_write_statement = True
             for statement in self.statements:
+                writer.write_line()
                 writer.write_node(statement)
                 writer.write_newline_if_last_line_not()
                 did_write_statement = True

@@ -2,7 +2,7 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import { serialization } from "@fern-api/openapi-ir-sdk";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { parse } from "../openapi/parse";
+import { parse, Spec, SpecImportSettings } from "../parse";
 
 const FIXTURES_PATH = join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("fixtures"));
 
@@ -11,7 +11,7 @@ export function testParseOpenAPI(
     fixtureName: string,
     openApiFilename: string,
     asyncApiFilename?: string,
-    useTitle?: boolean
+    settings?: SpecImportSettings
 ): void {
     // eslint-disable-next-line jest/valid-title
     describe(fixtureName, () => {
@@ -25,12 +25,15 @@ export function testParseOpenAPI(
                 asyncApiFilename != null
                     ? join(FIXTURES_PATH, RelativeFilePath.of(fixtureName), RelativeFilePath.of(asyncApiFilename))
                     : undefined;
-            const settings = useTitle != null ? { shouldUseTitleAsName: useTitle, audiences: [] } : undefined;
-            const specs = [];
+            const specs: Spec[] = [];
             if (absolutePathToOpenAPI != null) {
                 specs.push({
                     absoluteFilepath: absolutePathToOpenAPI,
                     absoluteFilepathToOverrides: undefined,
+                    source: {
+                        type: "openapi",
+                        file: absolutePathToOpenAPI
+                    },
                     settings
                 });
             }
@@ -38,14 +41,17 @@ export function testParseOpenAPI(
                 specs.push({
                     absoluteFilepath: absolutePathToAsyncAPI,
                     absoluteFilepathToOverrides: undefined,
+                    source: {
+                        type: "asyncapi",
+                        file: absolutePathToAsyncAPI
+                    },
                     settings
                 });
             }
 
             const openApiIr = await parse({
-                workspace: {
-                    specs
-                },
+                absoluteFilePathToWorkspace: FIXTURES_PATH,
+                specs,
                 taskContext: createMockTaskContext({ logger: CONSOLE_LOGGER })
             });
             const openApiIrJson = await serialization.OpenApiIntermediateRepresentation.jsonOrThrow(openApiIr, {

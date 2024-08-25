@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
+exports[`x-fern-parameter-name > x-fern-parameter-name > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -13,7 +13,12 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
           "docs": undefined,
           "examples": [
             {
-              "headers": {},
+              "headers": {
+                "X-API-Version": "X-API-Version",
+              },
+              "path-parameters": {
+                "id": "userId",
+              },
               "query-parameters": {
                 "foo": "foo",
               },
@@ -24,8 +29,17 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
           ],
           "method": "GET",
           "pagination": undefined,
-          "path": "/user",
+          "path": "/user/{id}",
+          "path-parameters": {
+            "id": "string",
+          },
           "request": {
+            "headers": {
+              "X-API-Version": {
+                "name": "version",
+                "type": "string",
+              },
+            },
             "name": "GetUserRequest",
             "query-parameters": {
               "foo": {
@@ -39,6 +53,9 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
             "type": "string",
           },
         },
+      },
+      "source": {
+        "openapi": "x-fern-parameter-name/openapi.yml",
       },
     },
   },
@@ -47,18 +64,12 @@ exports[`x-fern-parameter-name x-fern-parameter-name docs 1`] = `
     "error-discrimination": {
       "strategy": "status-code",
     },
-    "headers": {
-      "X-API-Version": {
-        "name": "version",
-        "type": "string",
-      },
-    },
     "name": "api",
   },
 }
 `;
 
-exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
+exports[`x-fern-parameter-name > x-fern-parameter-name > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -72,6 +83,9 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
           "examples": [
             {
               "headers": {},
+              "path-parameters": {
+                "id": "userId",
+              },
               "query-parameters": {
                 "foo": "foo",
               },
@@ -82,7 +96,10 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
           ],
           "method": "GET",
           "pagination": undefined,
-          "path": "/user",
+          "path": "/user/{id}",
+          "path-parameters": {
+            "id": "string",
+          },
           "request": {
             "name": "GetUserRequest",
             "query-parameters": {
@@ -97,6 +114,9 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
             "type": "string",
           },
         },
+      },
+      "source": {
+        "openapi": "x-fern-parameter-name/openapi.yml",
       },
     },
   },

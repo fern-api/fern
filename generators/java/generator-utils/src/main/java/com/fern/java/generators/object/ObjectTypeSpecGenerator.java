@@ -3,6 +3,7 @@ package com.fern.java.generators.object;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.ICustomConfig;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.fern.java.PoetTypeWithClassName;
@@ -26,6 +27,7 @@ public final class ObjectTypeSpecGenerator {
     private final ClassName generatedObjectMapperClassName;
     private final List<EnrichedObjectProperty> allEnrichedProperties = new ArrayList<>();
     private final List<ImplementsInterface> interfaces;
+    private final ICustomConfig.JsonInclude jsonInclude;
     private final boolean isSerialized;
     private final boolean publicConstructorsEnabled;
     private final boolean supportAdditionalProperties;
@@ -37,10 +39,12 @@ public final class ObjectTypeSpecGenerator {
             List<ImplementsInterface> interfaces,
             boolean isSerialized,
             boolean publicConstructorsEnabled,
-            boolean supportAdditionalProperties) {
+            boolean supportAdditionalProperties,
+            ICustomConfig.JsonInclude jsonInclude) {
         this.objectClassName = objectClassName;
         this.generatedObjectMapperClassName = generatedObjectMapperClassName;
         this.interfaces = interfaces;
+        this.jsonInclude = jsonInclude;
         for (ImplementsInterface implementsInterface : interfaces) {
             allEnrichedProperties.addAll(implementsInterface.interfaceProperties());
         }
@@ -88,7 +92,11 @@ public final class ObjectTypeSpecGenerator {
                     .collect(Collectors.toList()));
             if (isSerialized) {
                 typeSpecBuilder.addAnnotation(AnnotationSpec.builder(JsonInclude.class)
-                        .addMember("value", "$T.Include.NON_EMPTY", JsonInclude.class)
+                        .addMember(
+                                "value",
+                                "$T.Include.$L",
+                                JsonInclude.class,
+                                jsonInclude == ICustomConfig.JsonInclude.NON_ABSENT ? "NON_ABSENT" : "NON_EMPTY")
                         .build());
                 typeSpecBuilder.addAnnotation(AnnotationSpec.builder(JsonDeserialize.class)
                         .addMember("builder", "$T.class", objectBuilder.getBuilderImplClassName())
@@ -174,7 +182,7 @@ public final class ObjectTypeSpecGenerator {
                             ObjectMappersGenerator.STRINGIFY_METHOD_NAME)
                     .build();
         }
-        return ObjectMethodFactory.createToStringMethod(
+        return ObjectMethodFactory.createToStringMethodFromFieldSpecs(
                 objectClassName,
                 allEnrichedProperties.stream()
                         .map(EnrichedObjectProperty::fieldSpec)

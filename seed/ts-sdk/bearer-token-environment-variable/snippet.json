@@ -8,7 +8,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedBearerTokenEnvironmentVariableClient } from \"@fern/bearer-token-environment-variable\";\n\nconst seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient({ apiKey: \"YOUR_API_KEY\" });\nawait seedBearerTokenEnvironmentVariable.service.getWithBearerToken();\n"
+                "client": "import { SeedBearerTokenEnvironmentVariableClient } from \"@fern/bearer-token-environment-variable\";\n\nconst client = new SeedBearerTokenEnvironmentVariableClient({ environment: \"YOUR_BASE_URL\", apiKey: \"YOUR_API_KEY\" });\nawait client.service.getWithBearerToken();\n"
             }
         }
     ],

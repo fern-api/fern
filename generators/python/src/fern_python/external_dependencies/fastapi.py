@@ -6,7 +6,7 @@ FAST_API_MODULE = AST.Module.external(
     module_path=("fastapi",),
     dependency=AST.Dependency(
         name="fastapi",
-        version="^0.79.0",
+        version="^0.111.0",
     ),
 )
 
@@ -126,7 +126,7 @@ class FastAPI:
             kwargs.append(
                 (
                     "description",
-                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n") + docs.replace("\r", "\\r") + '"')),
+                    AST.Expression(AST.CodeWriter('"' + docs.replace("\n", "\\n").replace("\r", "\\r") + '"')),
                 )
             )
         return AST.Expression(
@@ -151,12 +151,12 @@ class FastAPI:
         )
 
     @staticmethod
-    def jsonable_encoder(body: AST.Expression, *, exclude_none: bool = None) -> AST.Expression:
+    def jsonable_encoder(body: AST.Expression, *, exclude_none: bool = False) -> AST.Expression:
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=_export("encoders", "jsonable_encoder"),
                 args=[body],
-                kwargs=[("exclude_none", AST.Expression(str(exclude_none)))] if exclude_none is not None else None,
+                kwargs=[("exclude_none", AST.Expression(str(exclude_none)))] if exclude_none else [],
             )
         )
 

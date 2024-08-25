@@ -11,7 +11,7 @@ export const UpdatePlaylistRequest: core.serialization.ObjectSchema<
     SeedTrace.UpdatePlaylistRequest
 > = core.serialization.object({
     name: core.serialization.string(),
-    problems: core.serialization.list(core.serialization.lazy(async () => (await import("../../..")).ProblemId)),
+    problems: core.serialization.list(core.serialization.lazy(() => serializers.ProblemId)),
 });
 
 export declare namespace UpdatePlaylistRequest {

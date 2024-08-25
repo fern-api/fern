@@ -1,4 +1,4 @@
-using SeedApi;
+using SeedApi.Core;
 
 #nullable enable
 
@@ -8,27 +8,29 @@ public partial class SeedApiClient
 {
     private RawClient _client;
 
-    public SeedApiClient(ClientOptions clientOptions = null)
+    public SeedApiClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "User-Agent", "Ferncircular-references/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         A = new AClient(_client);
         Ast = new AstClient(_client);
     }
 
-    public AClient A { get; }
+    public AClient A { get; init; }
 
-    public AstClient Ast { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public AstClient Ast { get; init; }
 }

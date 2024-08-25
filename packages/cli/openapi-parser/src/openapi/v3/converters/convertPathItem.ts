@@ -1,8 +1,10 @@
 import { HttpMethod } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { getExtension } from "../../../getExtension";
 import { AbstractOpenAPIV3ParserContext } from "../AbstractOpenAPIV3ParserContext";
+import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { PathItemContext } from "./contexts";
-import { ConvertedOperation, convertOperation } from "./operation/convertOperation";
+import { ConvertedOperation, ConvertedWebhookOperation, convertOperation } from "./operation/convertOperation";
 
 export function convertPathItem(
     path: string,
@@ -21,16 +23,51 @@ export function convertPathItem(
     };
 
     for (const operation of operations) {
+        const convertToWebhook = isWebhook({ operation: operation.operation });
         const convertedOperation = convertOperation({
             context,
             pathItemContext: {
                 ...basePathItemContext,
                 method: operation.method
             },
-            operation: operation.operation
+            operation: operation.operation,
+            convertToWebhook
         });
         if (convertedOperation != null) {
             result.push(convertedOperation);
+        }
+    }
+    return result;
+}
+
+export function convertPathItemToWebhooks(
+    path: string,
+    pathItemObject: OpenAPIV3.PathItemObject,
+    document: OpenAPIV3.Document,
+    context: AbstractOpenAPIV3ParserContext
+): ConvertedWebhookOperation[] {
+    const result: ConvertedWebhookOperation[] = [];
+    const operations = getOperationObjectsFromPathItem(pathItemObject);
+
+    const basePathItemContext: Omit<PathItemContext, "method"> = {
+        document,
+        pathItem: pathItemObject,
+        path,
+        pathItemParameters: pathItemObject.parameters ?? []
+    };
+
+    for (const operation of operations) {
+        const convertedOperation = convertOperation({
+            context,
+            pathItemContext: {
+                ...basePathItemContext,
+                method: operation.method
+            },
+            operation: operation.operation,
+            convertToWebhook: true
+        });
+        if (convertedOperation != null) {
+            result.push(convertedOperation as ConvertedWebhookOperation);
         }
     }
     return result;
@@ -77,4 +114,8 @@ function getOperationObjectsFromPathItem(
     }
 
     return operations;
+}
+
+function isWebhook({ operation }: { operation: OpenAPIV3.OperationObject }): boolean {
+    return getExtension<boolean>(operation, [FernOpenAPIExtension.WEBHOOK]) ?? false;
 }

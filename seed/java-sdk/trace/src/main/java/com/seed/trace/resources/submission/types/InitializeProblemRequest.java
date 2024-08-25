@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = InitializeProblemRequest.Builder.class)
 public final class InitializeProblemRequest {
     private final String problemId;
@@ -113,7 +113,7 @@ public final class InitializeProblemRequest {
 
         @java.lang.Override
         public _FinalStage problemVersion(Integer problemVersion) {
-            this.problemVersion = Optional.of(problemVersion);
+            this.problemVersion = Optional.ofNullable(problemVersion);
             return this;
         }
 

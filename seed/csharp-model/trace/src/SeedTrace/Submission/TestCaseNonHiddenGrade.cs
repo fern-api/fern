@@ -1,21 +1,26 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class TestCaseNonHiddenGrade
+public record TestCaseNonHiddenGrade
 {
     [JsonPropertyName("passed")]
-    public bool Passed { get; init; }
+    public required bool Passed { get; set; }
 
     [JsonPropertyName("actualResult")]
-    public VariableValue? ActualResult { get; init; }
+    public object? ActualResult { get; set; }
 
     [JsonPropertyName("exception")]
-    public ExceptionV2? Exception { get; init; }
+    public object? Exception { get; set; }
 
     [JsonPropertyName("stdout")]
-    public string Stdout { get; init; }
+    public required string Stdout { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

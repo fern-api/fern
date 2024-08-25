@@ -1,0 +1,37 @@
+---
+title: Integrating npm
+---
+
+To authenticate and integrate npm within your TypeScript/JavaScript SDK, you'll need to [create an npm token](/learn/sdks/package-managers/npm#creating-an-npm-token) and [add it to your repository](/learn/sdks/package-managers/npm#adding-tokens-to-your-github-repository). 
+
+## Creating an npm token
+<Steps>
+### Log In
+Log into [npm](https://www.npmjs.com/). 
+### Navigate to Access Tokens
+Click on your profile picture and select **Access Tokens**. 
+### Generate Token
+Click on **Generate New Token** and select **Classic Token**. Name your token and select **Automation** as the token type. Once finished, click **Generate Token**. 
+<Note title='Save your token'>
+Be sure to save the generated token - it won't be displayed after you leave the page. 
+</Note>
+</Steps>
+
+## Adding tokens to your GitHub repository
+<Info>
+Using GitLab? Follow [these steps](/learn/docs/developer-tools/gitlab#add-a-token-to-gitlab). 
+</Info>
+<Steps>
+### Open Repository
+Open your Fern repository in GitHub.
+### Navigate to Actions in Settings
+Click on the **Settings** tab in your repository. Then, under the **Security** section, open **Secrets and variables** > **Actions**. 
+
+<Frame>
+<img src="github-secret.png" alt="Adding GitHub Repository Secret" />
+</Frame>
+
+You can also use the url `https://github.com/<your-repo>/settings/secrets/actions`.
+### Add Secret
+Select **New repository secret**. Name your secret (we recommend `NPM_TOKEN`), add the corresponding token, and click **Add secret**. 
+</Steps>

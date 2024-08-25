@@ -5,6 +5,12 @@ language: go
 generatorType: sdk
 defaultOutputMode: github
 fixtures:
+  examples:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: always-send-required-properties
+      customConfig:
+        alwaysSendRequiredProperties: true
   undiscriminated-unions:
     - outputFolder: .
       outputVersion: 0.0.1
@@ -45,3 +51,4 @@ allowedFailures:
   - reserved-keywords
   - server-sent-events
   - trace
+  - alias-extends

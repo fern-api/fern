@@ -1,18 +1,42 @@
+import { assertNever } from "@fern-api/core-utils";
 import * as IR from "@fern-fern/ir-sdk/api";
-import { DependencyManager, DependencyType, ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
+import {
+    DependencyManager,
+    DependencyType,
+    ExportedFilePath,
+    getExampleEndpointCalls,
+    getTextOfTsNode
+} from "@fern-typescript/commons";
 import { GeneratedSdkClientClass, SdkContext } from "@fern-typescript/contexts";
 import { OAuthTokenProviderGenerator } from "@fern-typescript/sdk-client-class-generator/src/oauth-generator/OAuthTokenProviderGenerator";
 import path from "path";
 import { Directory, ts } from "ts-morph";
 import { arrayOf, code, Code, conditionalOutput, literalOf } from "ts-poet";
 
+export declare namespace JestTestGenerator {
+    interface Args {
+        ir: IR.IntermediateRepresentation;
+        dependencyManager: DependencyManager;
+        rootDirectory: Directory;
+        includeSerdeLayer: boolean;
+        writeUnitTests: boolean;
+    }
+}
+
 export class JestTestGenerator {
-    constructor(
-        private ir: IR.IntermediateRepresentation,
-        private dependencyManager: DependencyManager,
-        private rootDirectory: Directory,
-        private writeUnitTests: boolean
-    ) {}
+    private ir: IR.IntermediateRepresentation;
+    private dependencyManager: DependencyManager;
+    private rootDirectory: Directory;
+    private writeUnitTests: boolean;
+    private includeSerdeLayer: boolean;
+
+    constructor({ ir, dependencyManager, rootDirectory, includeSerdeLayer, writeUnitTests }: JestTestGenerator.Args) {
+        this.ir = ir;
+        this.dependencyManager = dependencyManager;
+        this.rootDirectory = rootDirectory;
+        this.writeUnitTests = writeUnitTests;
+        this.includeSerdeLayer = includeSerdeLayer;
+    }
 
     private addJestConfig(): void {
         const jestConfig = this.rootDirectory.createSourceFile(
@@ -63,7 +87,7 @@ export class JestTestGenerator {
         const folders = service.name.fernFilepath.packagePath.map((folder) => folder.originalName);
         const filename = `${service.name.fernFilepath.file?.camelCase.unsafeName ?? "main"}.test.ts`;
 
-        const filePath = path.join(...folders, filename);
+        const filePath = path.join("wire", ...folders, filename);
         return {
             directories: [],
             file: {
@@ -89,7 +113,8 @@ export class JestTestGenerator {
     public get scripts(): Record<string, string> {
         if (this.writeUnitTests) {
             return {
-                test: "fern test --command='jest'"
+                test: "jest tests/unit",
+                "wire:test": "npm install -g fern-api && fern test --command 'jest tests/wire'"
             };
         } else {
             return {
@@ -254,12 +279,18 @@ describe("test", () => {
         const notSupportedRequest =
             !!endpoint.requestBody &&
             (endpoint.requestBody.type === "bytes" || endpoint.requestBody.type === "fileUpload");
-        const shouldSkip = endpoint.idempotent || notSupportedResponse || notSupportedRequest;
+        const shouldSkip =
+            endpoint.idempotent ||
+            (endpoint.pagination != null && context.config.generatePaginatedClients) ||
+            notSupportedResponse ||
+            notSupportedRequest;
         if (shouldSkip) {
             return;
         }
 
-        const successfulExamples = endpoint.examples.filter((example) => example.response.type === "ok");
+        const successfulExamples = getExampleEndpointCalls(endpoint).filter(
+            (example) => example.response.type === "ok"
+        );
         const example = successfulExamples[0];
         if (!example) {
             return;
@@ -293,8 +324,10 @@ describe("test", () => {
         // For certain complex types, we just JSON.parse/JSON.stringify to simplify some times
         let shouldJsonParseStringify = false;
 
+        const includeSerdeLayer = this.includeSerdeLayer;
+
         const getExpectedResponse = () => {
-            const body = example.response.body;
+            const body = getExampleTypeReferenceForResponse(example.response);
             if (!body) {
                 return code`undefined`;
             }
@@ -308,7 +341,16 @@ describe("test", () => {
                             string: (value) => literalOf(value.original),
                             boolean: (value) => literalOf(value),
                             long: (value) => literalOf(value),
-                            datetime: (value) => code`new Date(${literalOf(value.toISOString())})`,
+                            uint: (value) => literalOf(value),
+                            uint64: (value) => literalOf(value),
+                            float: (value) => literalOf(value),
+                            base64: (value) => literalOf(value),
+                            bigInteger: (value) => literalOf(value),
+                            datetime: (value) => {
+                                return includeSerdeLayer
+                                    ? code`new Date(${literalOf(value.datetime.toISOString())})`
+                                    : literalOf(value.raw);
+                            },
                             date: (value) => literalOf(value),
                             uuid: (value) => literalOf(value),
                             _other: (value) => literalOf(value)
@@ -317,25 +359,28 @@ describe("test", () => {
                     container: (value) => {
                         return value._visit({
                             list: (value) => {
-                                return arrayOf(...value.map((item) => visitExampleTypeReference(item)));
+                                return arrayOf(...value.list.map((item) => visitExampleTypeReference(item)));
                             },
                             map: (value) => {
                                 return Object.fromEntries(
-                                    value.map((item) => {
+                                    value.map.map((item) => {
                                         return [item.key.jsonExample, visitExampleTypeReference(item.value)];
                                     })
                                 );
                             },
                             optional: (value) => {
-                                if (!value) {
+                                if (!value.optional) {
                                     return code`undefined`;
                                 }
-                                return visitExampleTypeReference(value);
+                                return visitExampleTypeReference(value.optional);
                             },
                             set: (value) => {
                                 // return code`new Set(${arrayOf(value.map(visitExampleTypeReference))})`;
                                 // Sets are not supported in ts-sdk
-                                return arrayOf(...value.map(visitExampleTypeReference));
+                                return arrayOf(...value.set.map(visitExampleTypeReference));
+                            },
+                            literal: (value) => {
+                                return jsonExample;
                             },
                             _other: (value) => {
                                 return jsonExample;
@@ -396,5 +441,32 @@ describe("test", () => {
                 expect(${expected}).toEqual(${response});
             });
           `;
+    }
+}
+
+function getExampleTypeReferenceForResponse(exampleResponse: IR.ExampleResponse): IR.ExampleTypeReference | undefined {
+    switch (exampleResponse.type) {
+        case "ok":
+            return getExampleTypeReferenceForSuccessResponse(exampleResponse.value);
+        case "error":
+            return exampleResponse.body;
+        default:
+            assertNever(exampleResponse);
+    }
+}
+
+// TODO: Update this to handle multiple responses in the stream and sse cases.
+function getExampleTypeReferenceForSuccessResponse(
+    successResponse: IR.ExampleEndpointSuccessResponse
+): IR.ExampleTypeReference | undefined {
+    switch (successResponse.type) {
+        case "body":
+            return successResponse.value;
+        case "stream":
+            return successResponse.value[0];
+        case "sse":
+            return successResponse.value[0]?.data;
+        default:
+            assertNever(successResponse);
     }
 }

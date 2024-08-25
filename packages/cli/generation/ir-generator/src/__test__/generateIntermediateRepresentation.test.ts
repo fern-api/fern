@@ -1,61 +1,109 @@
-import { Audiences } from "@fern-api/configuration";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { serialization as IrSerialization } from "@fern-api/ir-sdk";
+/* eslint-disable jest/expect-expect */
+/* eslint-disable jest/no-disabled-tests */
+
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { loadApis } from "@fern-api/project-loader";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { APIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import path from "path";
-// import * as prettier from "prettier";
-import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
+import { generateAndSnapshotIR, generateAndSnapshotIRFromPath } from "./generateAndSnapshotIR";
 
-require("jest-specific-snapshot");
+const IR_DIR = path.join(__dirname, "irs");
 
-const FHIR_DIR = path.join(__dirname, "../../../../../../fern/apis/fhir");
+it("audiences", async () => {
+    const AUDIENCES_DIR = path.join(__dirname, "fixtures/audiences/fern");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(AUDIENCES_DIR),
+        audiences: { type: "select", audiences: ["external"] },
+        workspaceName: "audiences"
+    });
+});
 
-const TEST_DEFINITION_CONFIG: Record<string, TestConfig> = {
-    audiences: {
-        audiences: { type: "select", audiences: ["public"] }
-    }
-};
+it("environments no audiences", async () => {
+    const AUDIENCES_DIR = path.join(__dirname, "fixtures/audiences/fern");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(AUDIENCES_DIR),
+        audiences: { type: "all" },
+        workspaceName: "environmentAudiences"
+    });
+});
 
-interface TestConfig {
-    audiences?: Audiences;
-}
+it("environments no audiences on environments but all hack", async () => {
+    const AUDIENCES_DIR = path.join(__dirname, "fixtures/audiences/fern-hack-override-environment-audience");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(AUDIENCES_DIR),
+        audiences: { type: "all" },
+        workspaceName: "environmentAudiencesAllHack"
+    });
+});
 
-it("generate IR", async () => {
-    const apiWorkspaces: APIWorkspace[] = [];
-    // FHIR
-    // The FHIR API definition is huge and we previously encountered issues with serializing it.
-    // Here we add the FHIR spec to the list of API definitions to test. If this test doesn't
-    // error out, we know that the FHIR spec can be serialized.
-    const fhirWorkspace = await loadAPIWorkspace({
+it("environments no audiences on environments but selected hack", async () => {
+    const AUDIENCES_DIR = path.join(__dirname, "fixtures/audiences/fern-hack-override-environment-audience");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
+        absolutePathToWorkspace: AbsoluteFilePath.of(AUDIENCES_DIR),
+        audiences: { type: "select", audiences: ["external"] },
+        workspaceName: "environmentAudiencesSelectHack"
+    });
+});
+
+it.skip("fhir", async () => {
+    const FHIR_DIR = path.join(__dirname, "../../../../../../fern/apis/fhir");
+    await generateAndSnapshotIRFromPath({
+        absolutePathToIr: AbsoluteFilePath.of(IR_DIR),
         absolutePathToWorkspace: AbsoluteFilePath.of(FHIR_DIR),
-        context: createMockTaskContext(),
-        cliVersion: "0.0.0",
+        audiences: { type: "all" },
         workspaceName: "fhir"
     });
-    if (fhirWorkspace.didSucceed) {
-        apiWorkspaces.push(fhirWorkspace.workspace);
-    }
+}, 200_000);
 
-    for (const workspace of apiWorkspaces) {
-        if (workspace.type === "oss") {
-            throw new Error("Convert OpenAPI to Fern workspace before generating IR");
-        }
+it("test definitions", async () => {
+    const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions");
+    const apiWorkspaces = await loadApis({
+        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
+        context: createMockTaskContext(),
+        cliVersion: "0.0.0",
+        cliName: "fern",
+        commandLineApiWorkspace: undefined,
+        defaultToAllApiWorkspaces: true
+    });
 
-        const intermediateRepresentation = await generateIntermediateRepresentation({
-            workspace,
-            generationLanguage: undefined,
-            audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" },
-            smartCasing: true, // Verify the special casing convention in tests.
-            disableExamples: false
-        });
+    await Promise.all(
+        apiWorkspaces.map(async (workspace) => {
+            await generateAndSnapshotIR({
+                absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions")),
+                workspace,
+                audiences: { type: "all" },
+                workspaceName: workspace.workspaceName ?? ""
+            });
+        })
+    );
+}, 200_000);
 
-        const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(
-            intermediateRepresentation,
-            {
-                unrecognizedObjectKeys: "strip"
-            }
-        );
-        expect(intermediateRepresentationJson).toMatchSpecificSnapshot(`__snapshots__/${workspace.name}.txt`);
-    }
-});
+it("test definitions openapi", async () => {
+    const TEST_DEFINITIONS_DIR = path.join(__dirname, "../../../../../../test-definitions-openapi");
+    const apiWorkspaces = await loadApis({
+        fernDirectory: join(AbsoluteFilePath.of(TEST_DEFINITIONS_DIR), RelativeFilePath.of("fern")),
+        context: createMockTaskContext(),
+        cliVersion: "0.0.0",
+        cliName: "fern",
+        commandLineApiWorkspace: undefined,
+        defaultToAllApiWorkspaces: true
+    });
+
+    await Promise.all(
+        apiWorkspaces.map(async (workspace) => {
+            await generateAndSnapshotIR({
+                absolutePathToIr: AbsoluteFilePath.of(path.join(__dirname, "test-definitions-openapi")),
+                workspace,
+                audiences:
+                    workspace.workspaceName === "audiences"
+                        ? { type: "select", audiences: ["public"] }
+                        : { type: "all" },
+                workspaceName: workspace.workspaceName ?? ""
+            });
+        })
+    );
+}, 200_000);

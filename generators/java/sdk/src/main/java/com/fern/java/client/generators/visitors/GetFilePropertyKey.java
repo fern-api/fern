@@ -1,9 +1,9 @@
 package com.fern.java.client.generators.visitors;
 
-import com.fern.irV42.model.commons.NameAndWireValue;
-import com.fern.irV42.model.http.FileProperty;
-import com.fern.irV42.model.http.FilePropertyArray;
-import com.fern.irV42.model.http.FilePropertySingle;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.http.FileProperty;
+import com.fern.ir.model.http.FilePropertyArray;
+import com.fern.ir.model.http.FilePropertySingle;
 
 public class GetFilePropertyKey implements FileProperty.Visitor<NameAndWireValue> {
 

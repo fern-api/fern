@@ -1,4 +1,6 @@
+using System;
 using SeedServerSentEvents;
+using SeedServerSentEvents.Core;
 
 #nullable enable
 
@@ -8,24 +10,15 @@ public partial class SeedServerSentEventsClient
 {
     private RawClient _client;
 
-    public SeedServerSentEventsClient(ClientOptions clientOptions = null)
+    public SeedServerSentEventsClient(ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Completions = new CompletionsClient(_client);
     }
 
-    public CompletionsClient Completions { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public CompletionsClient Completions { get; init; }
 }

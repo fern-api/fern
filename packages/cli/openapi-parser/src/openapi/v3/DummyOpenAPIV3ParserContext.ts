@@ -1,12 +1,36 @@
-import { SchemaId } from "@fern-api/openapi-ir-sdk";
+import { SchemaId, Source } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
+import { ParseOpenAPIOptions } from "../../options";
 import { SchemaParserContext } from "../../schema/SchemaParserContext";
-import { AbstractOpenAPIV3ParserContext, DiscriminatedUnionReference } from "./AbstractOpenAPIV3ParserContext";
+import {
+    AbstractOpenAPIV3ParserContext,
+    DiscriminatedUnionMetadata,
+    DiscriminatedUnionReference
+} from "./AbstractOpenAPIV3ParserContext";
 
 export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext {
-    constructor({ document, taskContext }: { document: OpenAPIV3.Document; taskContext: TaskContext }) {
-        super({ document, taskContext, authHeaders: new Set(), shouldUseTitleAsName: false });
+    constructor({
+        document,
+        taskContext,
+        options,
+        source,
+        namespace
+    }: {
+        document: OpenAPIV3.Document;
+        taskContext: TaskContext;
+        options: ParseOpenAPIOptions;
+        source: Source;
+        namespace: string | undefined;
+    }) {
+        super({
+            document,
+            taskContext,
+            authHeaders: new Set(),
+            options,
+            source,
+            namespace
+        });
     }
 
     public getDummy(): SchemaParserContext {
@@ -45,5 +69,17 @@ export class DummyOpenAPIV3ParserContext extends AbstractOpenAPIV3ParserContext 
 
     public isSchemaExcluded(_schemaId: SchemaId): boolean {
         return false;
+    }
+
+    public markSchemaWithDiscriminantValue(
+        _schema: OpenAPIV3.ReferenceObject,
+        _discrminant: string,
+        _discriminantValue: string
+    ): void {
+        return;
+    }
+
+    public getDiscriminatedUnionMetadata(_schema: OpenAPIV3.ReferenceObject): DiscriminatedUnionMetadata | undefined {
+        return;
     }
 }

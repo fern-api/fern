@@ -1,4 +1,4 @@
-using SeedAuthEnvironmentVariables;
+using SeedAuthEnvironmentVariables.Core;
 
 #nullable enable
 
@@ -8,29 +8,40 @@ public partial class SeedAuthEnvironmentVariablesClient
 {
     private RawClient _client;
 
-    public SeedAuthEnvironmentVariablesClient (string xAnotherHeader, string apiKey = null, ClientOptions clientOptions = null) {
-        apiKey = apiKey ?? GetFromEnvironmentOrThrow(
+    public SeedAuthEnvironmentVariablesClient(
+        string xAnotherHeader,
+        string? apiKey = null,
+        ClientOptions? clientOptions = null
+    )
+    {
+        apiKey ??= GetFromEnvironmentOrThrow(
             "FERN_API_KEY",
             "Please pass in apiKey or set the environment variable FERN_API_KEY."
-        _client = 
-        new RawClient(
-            new Dictionary<string, string>() {
-                { "X-FERN-API-KEY", apiKey }, 
-                { "X-Fern-Language", "C#" }, 
-            }, clientOptions ?? new ClientOptions());
-        Service = 
-        new ServiceClient(
-            _client);
-    }
-
-    public ServiceClient Service { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message) {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null) {
-            throw new Exception(message);
+        );
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-FERN-API-KEY", apiKey },
+                { "X-Fern-Language", "C#" },
+                { "User-Agent", "Fernauth-environment-variables/0.0.1" },
+            }
+        );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
         }
-        return value;
+        _client = new RawClient(clientOptions);
+        Service = new ServiceClient(_client);
     }
 
+    public ServiceClient Service { get; init; }
+
+    private static string GetFromEnvironmentOrThrow(string env, string message)
+    {
+        return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
+    }
 }

@@ -43,7 +43,7 @@ export class AuthService {
 
     public toRouter(): express.Router {
         this.router.post("/token", async (req, res, next) => {
-            const request = await serializers.GetTokenRequest.parse(req.body);
+            const request = serializers.GetTokenRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -52,7 +52,7 @@ export class AuthService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.TokenResponse.jsonOrThrow(responseBody, {
+                                    serializers.TokenResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

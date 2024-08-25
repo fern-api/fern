@@ -1,11 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class SubmissionIdNotFound
+public record SubmissionIdNotFound
 {
     [JsonPropertyName("missingSubmissionId")]
-    public Guid MissingSubmissionId { get; init; }
+    public required string MissingSubmissionId { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

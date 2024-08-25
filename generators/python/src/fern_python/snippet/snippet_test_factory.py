@@ -171,7 +171,7 @@ class SnippetTestFactory:
             file=Filepath.FilepathPart(module_name="conftest"),
         )
 
-        source_file = SourceFileFactory.create(
+        source_file = self._context.source_file_factory.create(
             project=self._project,
             filepath=utilities_filepath,
             generator_exec_wrapper=self._generator_exec_wrapper,
@@ -244,6 +244,11 @@ class SnippetTestFactory:
             primitive=lambda primitive: primitive.visit(
                 integer=lambda _: "integer",
                 double=lambda _: None,
+                uint=lambda _: None,
+                uint_64=lambda _: None,
+                float_=lambda _: None,
+                base_64=lambda _: None,
+                big_integer=lambda _: None,
                 string=lambda _: None,
                 boolean=lambda _: None,
                 long_=lambda _: None,
@@ -257,7 +262,7 @@ class SnippetTestFactory:
                     dict(
                         [
                             (idx, self._generate_type_expectations_for_type_reference(ex))
-                            for idx, ex in enumerate(item_type)
+                            for idx, ex in enumerate(item_type.list_)
                         ]
                     ),
                 ),
@@ -266,12 +271,12 @@ class SnippetTestFactory:
                     dict(
                         [
                             (idx, self._generate_type_expectations_for_type_reference(ex))
-                            for idx, ex in enumerate(item_type)
+                            for idx, ex in enumerate(item_type.set_)
                         ]
                     ),
                 ),
-                optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type)
-                if item_type is not None
+                optional=lambda item_type: self._generate_type_expectations_for_type_reference(item_type.optional)
+                if item_type.optional is not None
                 else None,
                 map_=lambda map_type: (
                     "dict",
@@ -284,10 +289,11 @@ class SnippetTestFactory:
                                     self._generate_type_expectations_for_type_reference(ex.value),
                                 ),
                             )
-                            for idx, ex in enumerate(map_type)
+                            for idx, ex in enumerate(map_type.map_)
                         ]
                     ),
                 ),
+                literal=lambda _: None,
             ),
             named=lambda named: named.shape.visit(
                 alias=lambda alias: self._generate_type_expectations_for_type_reference(alias.value),
@@ -313,20 +319,24 @@ class SnippetTestFactory:
         sync_expression: Optional[AST.Expression],
         async_expression: Optional[AST.Expression],
         example_response: Optional[ir_types.ExampleResponse],
+        endpoint: ir_types.HttpEndpoint,
     ) -> AST.CodeWriter:
         expectation_name = "expected_response"
         type_expectation_name = "expected_types"
         response_name = "response"
         async_response_name = "async_response"
 
-        response_body = example_response.get_as_union().body if example_response is not None else None
+        response_body = self.maybe_get_response_body(example_response)
         response_json = response_body.json_example if response_body is not None else None
-        response_body = example_response.get_as_union().body if example_response is not None else None
 
         def writer(writer: AST.NodeWriter) -> None:
             if response_json is not None:
                 maybe_stringify_response_json = repr(response_json) if type(response_json) is str else response_json
-                writer.write_line(f"{expectation_name} = {maybe_stringify_response_json}")
+
+                writer.write(f"{expectation_name}: ")
+                writer.write_node(AST.Expression(AST.TypeHint.any()))
+                writer.write_line(f" = {maybe_stringify_response_json}")
+
                 expectations = (
                     self._generate_type_expectations_for_type_reference(response_body)
                     if response_body is not None
@@ -335,7 +345,7 @@ class SnippetTestFactory:
                 maybe_stringify_expectations = f"'{expectations}'" if type(expectations) is str else expectations
 
                 writer.write(f"{type_expectation_name}: ")
-                writer.write_node(AST.Expression(AST.TypeHint.any()))
+                writer.write_node(AST.Expression(AST.TypeHint.tuple_(AST.TypeHint.any(), AST.TypeHint.any())) if isinstance(expectations, Tuple) else AST.Expression(AST.TypeHint.any()))  # type: ignore
                 writer.write_line(f" = {maybe_stringify_expectations}")
             if sync_expression:
                 if response_json is not None:
@@ -353,9 +363,21 @@ class SnippetTestFactory:
                     writer.write_line(
                         f"# Type ignore to avoid mypy complaining about the function not being meant to return a value"
                     )
-                    writer.write(f"assert ")
-                    writer.write_node(sync_expression)
-                    writer.write(f" is None  # type: ignore[func-returns-value]")
+                    writer.write(f"assert (")
+                    with writer.indent():
+                        writer.write_node(sync_expression)
+                        writer.write(" # type: ignore[func-returns-value]")
+                    writer.write_newline_if_last_line_not()
+                    if (
+                        endpoint.response is not None
+                        and endpoint.response.body is not None
+                        and endpoint.response.body.get_as_union().type == "text"
+                    ):
+                        # HttpX returns an empty string for text responses that are empty/no content
+                        writer.write(f" == ''")
+                    else:
+                        writer.write(f" is None")
+                    writer.write_line(")")
                 if async_expression:
                     writer.write_line("\n\n")
             if async_expression:
@@ -375,12 +397,30 @@ class SnippetTestFactory:
                         writer.write_line(
                             f"# Type ignore to avoid mypy complaining about the function not being meant to return a value"
                         )
-                    writer.write(f"assert ")
-                    writer.write_node(async_expression)
-                    writer.write(f" is None  # type: ignore[func-returns-value]")
+                    writer.write(f"assert (")
+                    with writer.indent():
+                        writer.write_node(async_expression)
+                        writer.write(" # type: ignore[func-returns-value]")
+                    writer.write_newline_if_last_line_not()
+                    writer.write(f" is None")
+                    writer.write_line(")")
             writer.write_newline_if_last_line_not()
 
         return AST.CodeWriter(writer)
+
+    def maybe_get_response_body(
+        self, example_response: Optional[ir_types.ExampleResponse]
+    ) -> Optional[ir_types.ExampleTypeReference]:
+        return (
+            example_response.visit(
+                ok=lambda res: res.visit(
+                    body=lambda body: body if body else None, stream=lambda _: None, sse=lambda _: None
+                ),
+                error=lambda _: None,
+            )
+            if example_response
+            else None
+        )
 
     def _client_snippet(self, is_async: bool, package_path: str, function_invocation: AST.Expression) -> AST.Expression:
         def client_writer(writer: AST.NodeWriter) -> None:
@@ -417,9 +457,10 @@ class SnippetTestFactory:
                 or endpoint.pagination is not None
                 or (
                     endpoint.response is not None
+                    and endpoint.response.body
                     and (
-                        endpoint.response.get_as_union().type == "streaming"
-                        or endpoint.response.get_as_union().type == "fileDownload"
+                        endpoint.response.body.get_as_union().type == "streaming"
+                        or endpoint.response.body.get_as_union().type == "fileDownload"
                     )
                 )
                 or (
@@ -429,23 +470,34 @@ class SnippetTestFactory:
                         or endpoint.request_body.get_as_union().type == "bytes"
                     )
                 )
+                # TODO(FER-2852): support test generation for nested property responses
+                or (
+                    endpoint.response is not None
+                    and endpoint.response.body
+                    and (
+                        endpoint.response.body.get_as_union().type == "json"
+                        and endpoint.response.body.get_as_union().value.get_as_union().type == "nestedPropertyAsResponse"  # type: ignore
+                    )
+                )
             ):
                 continue
-            endpoint_name = endpoint.name.get_as_name().snake_case.safe_name
+            endpoint_name = endpoint.name.snake_case.safe_name
 
-            # TODO: We should make the mock server return the specified error response
-            # if we want to test that as well, then we can test each example, but that seems less pressing.
+            examples = [ex.example for ex in endpoint.user_specified_examples if ex.example is not None]
+            if len(endpoint.user_specified_examples) == 0:
+                examples = [ex.example for ex in endpoint.autogenerated_examples]
             successful_examples = list(
                 filter(
                     lambda ex: ir_types.ExampleResponse.visit(
-                        ex.get_as_union().response,
+                        ex.response,
                         ok=lambda _: True,
                         error=lambda _: False,
                     ),
-                    endpoint.examples,
+                    examples,
                 )
             )
-            if len(successful_examples) == 0:
+
+            if successful_examples is None or len(successful_examples) == 0:
                 continue
 
             example = successful_examples[0]
@@ -465,8 +517,8 @@ class SnippetTestFactory:
                 continue
 
             response = ir_types.ExampleResponse.visit(
-                example.get_as_union().response,
-                ok=lambda _: example.get_as_union().response,
+                example.response,
+                ok=lambda _: example.response,
                 error=lambda _: None,
             )
             # Add functions to a test function
@@ -489,11 +541,11 @@ class SnippetTestFactory:
                     named_parameters=[],
                     return_type=AST.TypeHint.none(),
                 ),
-                body=self._test_body(sync_snippet, async_snippet, response),
+                body=self._test_body(sync_snippet, async_snippet, response, endpoint),
             )
 
             # At least one endpoint has a snippet, now make the file
-            source_file = source_file or SourceFileFactory.create(
+            source_file = source_file or self._context.source_file_factory.create(
                 project=self._project,
                 filepath=filepath,
                 generator_exec_wrapper=self._generator_exec_wrapper,
@@ -526,6 +578,7 @@ class SnippetTestFactory:
             ),
             # This doesn't matter here either
             is_async=False,
+            endpoint_metadata_collector=None,
         )
 
     def _write_test_files(self) -> None:

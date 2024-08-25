@@ -1,30 +1,35 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class TraceResponseV2
+public record TraceResponseV2
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("lineNumber")]
-    public int LineNumber { get; init; }
+    public required int LineNumber { get; set; }
 
     [JsonPropertyName("file")]
-    public TracedFile File { get; init; }
+    public required TracedFile File { get; set; }
 
     [JsonPropertyName("returnValue")]
-    public DebugVariableValue? ReturnValue { get; init; }
+    public object? ReturnValue { get; set; }
 
     [JsonPropertyName("expressionLocation")]
-    public ExpressionLocation? ExpressionLocation { get; init; }
+    public ExpressionLocation? ExpressionLocation { get; set; }
 
     [JsonPropertyName("stack")]
-    public StackInformation Stack { get; init; }
+    public required StackInformation Stack { get; set; }
 
     [JsonPropertyName("stdout")]
-    public string? Stdout { get; init; }
+    public string? Stdout { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

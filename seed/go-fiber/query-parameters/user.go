@@ -11,18 +11,20 @@ import (
 )
 
 type GetUsersRequest struct {
-	Limit          int               `query:"limit"`
-	Id             uuid.UUID         `query:"id"`
-	Date           time.Time         `query:"date"`
-	Deadline       time.Time         `query:"deadline"`
-	Bytes          []byte            `query:"bytes"`
-	User           *User             `query:"user"`
-	KeyValue       map[string]string `query:"keyValue"`
-	OptionalString *string           `query:"optionalString"`
-	NestedUser     *NestedUser       `query:"nestedUser"`
-	OptionalUser   *User             `query:"optionalUser"`
-	ExcludeUser    []*User           `query:"excludeUser"`
-	Filter         []string          `query:"filter"`
+	Limit            int               `query:"limit"`
+	Id               uuid.UUID         `query:"id"`
+	Date             time.Time         `query:"date"`
+	Deadline         time.Time         `query:"deadline"`
+	Bytes            []byte            `query:"bytes"`
+	User             *User             `query:"user"`
+	UserList         []*User           `query:"userList"`
+	OptionalDeadline *time.Time        `query:"optionalDeadline"`
+	KeyValue         map[string]string `query:"keyValue"`
+	OptionalString   *string           `query:"optionalString"`
+	NestedUser       *NestedUser       `query:"nestedUser"`
+	OptionalUser     *User             `query:"optionalUser"`
+	ExcludeUser      []*User           `query:"excludeUser"`
+	Filter           []string          `query:"filter"`
 }
 
 type NestedUser struct {

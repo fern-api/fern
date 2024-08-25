@@ -15,8 +15,11 @@ export declare namespace Payment {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 
@@ -34,7 +37,7 @@ export class Payment {
      * @param {Payment.IdempotentRequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedIdempotencyHeaders.payment.create({
+     *     await client.payment.create({
      *         amount: 1,
      *         currency: SeedIdempotencyHeaders.Currency.Usd
      *     })
@@ -51,19 +54,21 @@ export class Payment {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/idempotency-headers",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/idempotency-headers/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 "Idempotency-Key": requestOptions?.idempotencyKey,
                 "Idempotency-Expiration": requestOptions?.idempotencyExpiration.toString(),
             },
             contentType: "application/json",
-            body: await serializers.CreatePaymentRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.CreatePaymentRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.payment.create.Response.parseOrThrow(_response.body, {
+            return serializers.payment.create.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -98,7 +103,7 @@ export class Payment {
      * @param {Payment.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedIdempotencyHeaders.payment.delete("string")
+     *     await client.payment.delete("string")
      */
     public async delete(paymentId: string, requestOptions?: Payment.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
@@ -112,10 +117,12 @@ export class Payment {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/idempotency-headers",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/idempotency-headers/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

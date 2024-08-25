@@ -1,34 +1,102 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedUnknownAsAny;
+using System.Threading;
+using SeedUnknownAsAny.Core;
 
 #nullable enable
 
 namespace SeedUnknownAsAny;
 
-public class UnknownClient
+public partial class UnknownClient
 {
     private RawClient _client;
 
-    public UnknownClient(RawClient client)
+    internal UnknownClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<IEnumerable<object>> PostAsync(object request)
+    /// <example>
+    /// <code>
+    /// await client.Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "value" } });
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<object>> PostAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "",
-                Body = request
-            }
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<object>>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUnknownAsAnyException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedUnknownAsAnyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
+    }
+
+    /// <example>
+    /// <code>
+    /// await client.Unknown.PostObjectAsync(new MyObject());
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<object>> PostObjectAsync(
+        MyObject request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "/with-object",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedUnknownAsAnyException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedUnknownAsAnyApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

@@ -1,15 +1,15 @@
-using SeedObjectsWithImports;
+using SeedObjectsWithImports.Core;
 using SeedObjectsWithImports.File;
 
 #nullable enable
 
 namespace SeedObjectsWithImports;
 
-public class FileClient
+public partial class FileClient
 {
     private RawClient _client;
 
-    public FileClient(RawClient client)
+    internal FileClient(RawClient client)
     {
         _client = client;
         Directory = new DirectoryClient(_client);

@@ -15,7 +15,7 @@ import java.lang.String;
 import java.util.Objects;
 import resources.payment.types.Currency;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = CreatePaymentRequest.Builder.class
 )

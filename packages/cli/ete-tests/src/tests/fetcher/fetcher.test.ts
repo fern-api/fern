@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable jest/no-disabled-tests */
-import { fetcher, FormDataWrapper, Stream } from "@fern-typescript/fetcher";
+import { fetcher, newFormData, Stream } from "@fern-typescript/fetcher";
 import * as fs from "fs";
 import path from "path";
 import * as stream from "stream";
@@ -12,17 +12,16 @@ describe("Fetcher Tests", () => {
             method: "GET"
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        expect((response as any)?.error?.statusCode).toEqual(200);
+        expect((response as any)?.ok).toEqual(true);
     }, 90_000);
 
     it.skip("Formdata request", async () => {
         const file = fs.createReadStream(path.join(__dirname, "addresses.csv"));
 
-        const formData = new FormDataWrapper();
-        await formData.append("data", file);
+        const formData = await newFormData();
+        formData.append("data", file);
 
-        const formDataRequest = formData.getRequest();
-        const headers = await formDataRequest.getHeaders();
+        const { headers, body } = await formData.getRequest();
         const response = await fetcher({
             url: "https://api.cohere.ai/v1/datasets",
             method: "POST",
@@ -34,11 +33,9 @@ describe("Fetcher Tests", () => {
                 name: "my-dataset",
                 type: "embed-input"
             },
-            body: await formDataRequest.getBody()
+            body
         });
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        expect((response as any)?.error?.statusCode).toEqual(200);
+        expect((response as any)?.ok).toEqual(true);
     }, 90_000);
 
     it.skip("JSON streaming", async () => {
@@ -51,7 +48,7 @@ describe("Fetcher Tests", () => {
                 "Content-Type": "application/json"
             },
             body: {
-                message: "Write a long essay about devtools",
+                message: "Write a very short poem about devtools",
                 stream: true
             }
         });
@@ -90,8 +87,8 @@ describe("Fetcher Tests", () => {
                         content: "Write a long essay about devtools"
                     }
                 ],
-                model: "qwen1.5-32b-chat",
-                max_tokens: 22105,
+                model: "meta-llama-3-8b-instruct",
+                max_tokens: 100,
                 presence_penalty: 0,
                 temperature: 0.1,
                 top_p: 0.9,
@@ -106,11 +103,12 @@ describe("Fetcher Tests", () => {
             stream: response.body,
             parse: async (data) => data,
             eventShape: {
-                type: "sse"
+                type: "sse",
+                streamTerminator: "[DONE]"
             }
         });
+
         for await (const message of stream) {
-            process.stdout.write("event");
             // eslint-disable-next-line no-console
             process.stdout.write(JSON.stringify(message));
         }
@@ -149,7 +147,7 @@ describe("Fetcher Tests", () => {
             method: "POST",
             responseType: "streaming",
             headers: {
-                Authorization: "Bearer ",
+                Authorization: "Bearer <>",
                 "Content-Type": "application/json"
             },
             body: {
@@ -172,13 +170,16 @@ describe("Fetcher Tests", () => {
             }
         });
         let i = 1;
-        for await (const event of stream) {
-            if (i === 10) {
-                controller.abort();
+        await expect(async () => {
+            for await (const event of stream) {
+                if (i === 10) {
+                    controller.abort();
+                    // expect(controller.abort()).toThrow();
+                }
+                // eslint-disable-next-line no-console
+                console.log(JSON.stringify(event));
+                i += 1;
             }
-            // eslint-disable-next-line no-console
-            console.log(JSON.stringify(event));
-            i += 1;
-        }
+        }).rejects.toThrow();
     }, 90_000);
 });

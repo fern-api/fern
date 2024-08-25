@@ -1,4 +1,5 @@
 import { FernFileContext, ResolvedType, TypeResolver } from "@fern-api/ir-generator";
+import { PrimitiveTypeV1 } from "@fern-api/ir-sdk";
 import { isInlineRequestBody, isRawObjectDefinition, RawSchemas } from "@fern-api/yaml-schema";
 
 export const REQUEST_PREFIX = "$request.";
@@ -45,13 +46,14 @@ export function requestTypeHasProperty({
         return false;
     }
     if (typeof endpoint.request === "string") {
+        const resolvedType = typeResolver.resolveType({
+            type: endpoint.request,
+            file
+        });
         return resolvedTypeHasProperty({
             typeResolver,
-            file,
-            resolvedType: typeResolver.resolveType({
-                type: endpoint.request,
-                file
-            }),
+            file: maybeFileFromResolvedType(resolvedType) ?? file,
+            resolvedType,
             propertyComponents,
             validate
         });
@@ -93,13 +95,14 @@ function inlinedRequestTypeHasProperty({
         return false;
     }
     if (typeof requestType.body === "string") {
+        const resolvedType = typeResolver.resolveType({
+            type: requestType.body,
+            file
+        });
         return resolvedTypeHasProperty({
             typeResolver,
-            file,
-            resolvedType: typeResolver.resolveType({
-                type: requestType.body,
-                file
-            }),
+            file: maybeFileFromResolvedType(resolvedType) ?? file,
+            resolvedType,
             propertyComponents,
             validate
         });
@@ -113,9 +116,13 @@ function inlinedRequestTypeHasProperty({
             validate
         });
     }
+    const resolvedType = typeResolver.resolveType({
+        type: requestType.body.type,
+        file
+    });
     return resolvedTypeHasProperty({
         typeResolver,
-        file,
+        file: maybeFileFromResolvedType(resolvedType) ?? file,
         resolvedType: typeResolver.resolveType({
             type: requestType.body.type,
             file
@@ -202,7 +209,7 @@ export function resolveResponseType({
     });
 }
 
-export function maybePrimitiveType(resolvedType: ResolvedType | undefined): string | undefined {
+export function maybePrimitiveType(resolvedType: ResolvedType | undefined): PrimitiveTypeV1 | undefined {
     if (resolvedType?._type === "primitive") {
         return resolvedType.primitive.v1;
     }

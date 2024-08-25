@@ -1,9 +1,10 @@
 package com.fern.java.generators.auth;
 
-import com.fern.irV42.model.auth.HeaderAuthScheme;
-import com.fern.irV42.model.types.AliasTypeDeclaration;
-import com.fern.irV42.model.types.PrimitiveType;
-import com.fern.irV42.model.types.ResolvedTypeReference;
+import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.types.AliasTypeDeclaration;
+import com.fern.ir.model.types.PrimitiveType;
+import com.fern.ir.model.types.PrimitiveTypeV1;
+import com.fern.ir.model.types.ResolvedTypeReference;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.generators.AliasGenerator;
@@ -30,7 +31,8 @@ public final class HeaderAuthGenerator extends AbstractFileGenerator {
         // TODO(dsinghvi): Fix resolved type
         AliasTypeDeclaration aliasTypeDeclaration = AliasTypeDeclaration.builder()
                 .aliasOf(headerAuthScheme.getValueType())
-                .resolvedType(ResolvedTypeReference.primitive(PrimitiveType.STRING))
+                .resolvedType(ResolvedTypeReference.primitive(
+                        PrimitiveType.builder().v1(PrimitiveTypeV1.STRING).build()))
                 .build();
         AliasGenerator aliasGenerator = new AliasGenerator(className, generatorContext, aliasTypeDeclaration, false);
         return aliasGenerator.generateFile();

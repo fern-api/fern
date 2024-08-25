@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const InternalError: core.serialization.ObjectSchema<serializers.InternalError.Raw, SeedTrace.InternalError> =
     core.serialization.object({
-        exceptionInfo: core.serialization.lazyObject(async () => (await import("../../..")).ExceptionInfo),
+        exceptionInfo: core.serialization.lazyObject(() => serializers.ExceptionInfo),
     });
 
 export declare namespace InternalError {

@@ -8,7 +8,7 @@ import {
     resolvedTypeHasProperty,
     resolveResponseType
 } from "../../utils/propertyValidatorUtils";
-import { validateQueryParameterProperty, validateResponseProperty, validateResultsProperty } from "./validateUtils";
+import { validateRequestProperty, validateResponseProperty, validateResultsProperty } from "./validateUtils";
 
 export function validateCursorPagination({
     endpointId,
@@ -80,15 +80,15 @@ function validateCursorProperty({
     file: FernFileContext;
     cursorPagination: RawSchemas.CursorPaginationSchema;
 }): RuleViolation[] {
-    return validateQueryParameterProperty({
+    return validateRequestProperty({
         endpointId,
         endpoint,
         typeResolver,
         file,
-        queryParameterProperty: cursorPagination.cursor,
+        requestProperty: cursorPagination.cursor,
         propertyValidator: {
             propertyID: "cursor",
-            validate: isValidCursorProperty
+            validate: isValidCursorType
         }
     });
 }

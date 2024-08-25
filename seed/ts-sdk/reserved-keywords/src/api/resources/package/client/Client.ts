@@ -12,8 +12,11 @@ export declare namespace Package {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -26,7 +29,7 @@ export class Package {
      * @param {Package.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedNurseryApi.package.test({
+     *     await client.package.test({
      *         for: "string"
      *     })
      */
@@ -41,11 +44,13 @@ export class Package {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/reserved-keywords",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/reserved-keywords/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

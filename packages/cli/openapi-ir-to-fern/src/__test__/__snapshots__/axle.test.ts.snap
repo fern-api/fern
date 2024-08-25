@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser axle docs 1`] = `
+exports[`open api parser > axle > docs 1`] = `
 {
   "definitionFiles": {
     "accounts.yml": {
@@ -17,7 +17,10 @@ exports[`open api parser axle docs 1`] = `
             "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
                 "path-parameters": {
                   "id": "id",
                 },
@@ -52,6 +55,18 @@ exports[`open api parser axle docs 1`] = `
               },
             },
             "request": {
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
               "name": "GetAccountRequest",
               "query-parameters": {
                 "expand": {
@@ -65,6 +80,9 @@ exports[`open api parser axle docs 1`] = `
               "type": "GetAccountResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "types": {
@@ -82,12 +100,18 @@ exports[`open api parser axle docs 1`] = `
             "policies": "list<string>",
             "refreshedAt": "string",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "GetAccountResponse": {
           "docs": undefined,
           "properties": {
             "data": "optional<Account>",
             "success": "optional<root.Success>",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
         "Policy": {
@@ -122,12 +146,18 @@ exports[`open api parser axle docs 1`] = `
             },
             "type": "PolicyType",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "PolicyType": {
           "enum": [
             "auto",
             "motorcycle",
           ],
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
       },
     },
@@ -145,7 +175,10 @@ exports[`open api parser axle docs 1`] = `
             "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
                 "path-parameters": {
                   "id": "id",
                 },
@@ -181,6 +214,21 @@ exports[`open api parser axle docs 1`] = `
                 "type": "string",
               },
             },
+            "request": {
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
+              "name": "GetCarrierRequest",
+            },
             "response": {
               "docs": "",
               "type": "GetCarrierResponse",
@@ -192,7 +240,10 @@ exports[`open api parser axle docs 1`] = `
             "docs": "The Get Carriers method returns an array of Carrier objects.",
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
                 "response": {
                   "body": {
                     "data": [
@@ -214,11 +265,29 @@ exports[`open api parser axle docs 1`] = `
             "method": "GET",
             "pagination": undefined,
             "path": "/carriers",
+            "request": {
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
+              "name": "GetCarriersRequest",
+            },
             "response": {
               "docs": "",
               "type": "GetCarriersResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "types": {
@@ -228,12 +297,18 @@ exports[`open api parser axle docs 1`] = `
             "data": "optional<root.Carrier>",
             "success": "optional<root.Success>",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "GetCarriersResponse": {
           "docs": undefined,
           "properties": {
             "data": "optional<list<root.Carrier>>",
             "success": "optional<root.Success>",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
       },
@@ -252,7 +327,10 @@ exports[`open api parser axle docs 1`] = `
             "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
                 "request": {
                   "redirectUri": "https://example.com/redirect",
                   "webhookUri": "https://example.com/webhook",
@@ -275,27 +353,32 @@ exports[`open api parser axle docs 1`] = `
               "body": {
                 "properties": {
                   "metadata": {
-                    "default": undefined,
                     "docs": "Optional object to store ephermeral information about the session, such as \`reservationTime\`. Will be returned in webhook events.",
                     "type": "optional<map<string, unknown>>",
-                    "validation": undefined,
                   },
                   "redirectUri": {
-                    "default": undefined,
                     "docs": "The URI we should direct the user to after authenticating successfully.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "user": "optional<root.User>",
                   "webhookUri": {
-                    "default": undefined,
                     "docs": "The URI we should send updates about this session or the resulting account to.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
               "name": "StartIgnitionRequest",
               "query-parameters": undefined,
             },
@@ -305,6 +388,9 @@ exports[`open api parser axle docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "types": {
         "StartIgnitionResponse": {
@@ -312,6 +398,9 @@ exports[`open api parser axle docs 1`] = `
           "properties": {
             "data": "StartIgnitionResponseData",
             "success": "root.Success",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
         "StartIgnitionResponseData": {
@@ -325,6 +414,9 @@ exports[`open api parser axle docs 1`] = `
               "docs": "The url you should direct the user to to link their account.",
               "type": "string",
             },
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
       },
@@ -344,7 +436,10 @@ exports[`open api parser axle docs 1`] = `
             "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
                 "path-parameters": {
                   "id": "id",
                 },
@@ -430,6 +525,18 @@ exports[`open api parser axle docs 1`] = `
               },
             },
             "request": {
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
               "name": "GetPolicyRequest",
               "query-parameters": {
                 "expand": {
@@ -444,6 +551,9 @@ exports[`open api parser axle docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "types": {
         "GetPolicyResponse": {
@@ -451,6 +561,9 @@ exports[`open api parser axle docs 1`] = `
           "properties": {
             "data": "optional<accounts.Policy>",
             "success": "optional<root.Success>",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
       },
@@ -471,7 +584,10 @@ exports[`open api parser axle docs 1`] = `
 Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-client-id": "x-client-id",
+                  "x-client-secret": "x-client-secret",
+                },
                 "request": {
                   "authCode": "authCode",
                 },
@@ -503,7 +619,18 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "x-client-id": {
+                  "docs": "Your client ID. This will be shared with you during onboarding.",
+                  "name": "clientId",
+                  "type": "string",
+                },
+                "x-client-secret": {
+                  "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
+                  "name": "clientSecret",
+                  "type": "string",
+                },
+              },
               "name": "ExchangeTokenRequest",
               "query-parameters": undefined,
             },
@@ -513,6 +640,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             },
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "types": {
         "ExchangeTokenResponse": {
@@ -520,6 +650,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "properties": {
             "data": "ExchangeTokenResponseData",
             "success": "root.Success",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
         "ExchangeTokenResponseData": {
@@ -538,6 +671,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "type": "list<unknown>",
             },
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
       },
     },
@@ -554,6 +690,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "postalCode": "optional<string>",
           "state": "optional<string>",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Carrier": {
         "docs": undefined,
@@ -566,6 +705,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "name": "string",
           "phone": "string",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Coverage": {
         "docs": undefined,
@@ -576,6 +718,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "limitPerAccident": "optional<integer>",
           "limitPerPerson": "optional<integer>",
           "property": "optional<string>",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "CoverageCode": {
@@ -589,17 +734,21 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "COLL",
           "COMP",
         ],
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Error": {
         "docs": undefined,
         "properties": {
           "message": {
-            "default": undefined,
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "success": "optional<Success>",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "Insured": {
@@ -615,6 +764,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "property": "optional<string>",
           "type": "optional<string>",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Property": {
         "docs": undefined,
@@ -622,6 +774,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "data": "Vehicle",
           "id": "string",
           "type": "literal<"vehicle">",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "Success": {
@@ -634,47 +789,52 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "address": "optional<Address>",
           "name": "string",
           "property": "optional<string>",
-          "type": "ThirdPartyType",
+          "type": {
+            "default": "interest",
+            "type": "ThirdPartyType",
+          },
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "ThirdPartyType": {
+        "default": "interest",
         "enum": [
           "lienholder",
           "lessor",
           "interest",
         ],
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "User": {
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
-            "default": undefined,
             "docs": "User's email address.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "firstName": {
-            "default": undefined,
             "docs": "User's first name.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "Your application's unique user id.",
             "type": "string",
           },
           "lastName": {
-            "default": undefined,
             "docs": "User's last name.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "phone": {
-            "default": undefined,
             "docs": "User's phone number in E.164 format.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "Vehicle": {
@@ -685,6 +845,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "model": "string",
           "vin": "string",
           "year": "string",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
     },
@@ -707,24 +870,12 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
     "error-discrimination": {
       "strategy": "status-code",
     },
-    "headers": {
-      "x-client-id": {
-        "docs": "Your client ID. This will be shared with you during onboarding.",
-        "name": "clientId",
-        "type": "string",
-      },
-      "x-client-secret": {
-        "docs": "Your secret API key. This will be shared with you during onboarding and should be considered sensitive - it’s a password after all!",
-        "name": "clientSecret",
-        "type": "string",
-      },
-    },
     "name": "api",
   },
 }
 `;
 
-exports[`open api parser axle simple 1`] = `
+exports[`open api parser > axle > simple 1`] = `
 {
   "definitionFiles": {
     "accounts.yml": {
@@ -790,6 +941,9 @@ exports[`open api parser axle simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "types": {
         "Account": {
@@ -806,12 +960,18 @@ exports[`open api parser axle simple 1`] = `
             "policies": "list<string>",
             "refreshedAt": "string",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "GetAccountResponse": {
           "docs": undefined,
           "properties": {
             "data": "optional<Account>",
             "success": "optional<root.Success>",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
         "Policy": {
@@ -846,12 +1006,18 @@ exports[`open api parser axle simple 1`] = `
             },
             "type": "PolicyType",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "PolicyType": {
           "enum": [
             "auto",
             "motorcycle",
           ],
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
       },
     },
@@ -944,6 +1110,9 @@ exports[`open api parser axle simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "types": {
         "GetCarrierResponse": {
@@ -952,12 +1121,18 @@ exports[`open api parser axle simple 1`] = `
             "data": "optional<root.Carrier>",
             "success": "optional<root.Success>",
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
         "GetCarriersResponse": {
           "docs": undefined,
           "properties": {
             "data": "optional<list<root.Carrier>>",
             "success": "optional<root.Success>",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
       },
@@ -999,23 +1174,17 @@ exports[`open api parser axle simple 1`] = `
               "body": {
                 "properties": {
                   "metadata": {
-                    "default": undefined,
                     "docs": "Optional object to store ephermeral information about the session, such as \`reservationTime\`. Will be returned in webhook events.",
                     "type": "optional<map<string, unknown>>",
-                    "validation": undefined,
                   },
                   "redirectUri": {
-                    "default": undefined,
                     "docs": "The URI we should direct the user to after authenticating successfully.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "user": "optional<root.User>",
                   "webhookUri": {
-                    "default": undefined,
                     "docs": "The URI we should send updates about this session or the resulting account to.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1029,6 +1198,9 @@ exports[`open api parser axle simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "types": {
         "StartIgnitionResponse": {
@@ -1036,6 +1208,9 @@ exports[`open api parser axle simple 1`] = `
           "properties": {
             "data": "StartIgnitionResponseData",
             "success": "root.Success",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
         "StartIgnitionResponseData": {
@@ -1049,6 +1224,9 @@ exports[`open api parser axle simple 1`] = `
               "docs": "The url you should direct the user to to link their account.",
               "type": "string",
             },
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
       },
@@ -1168,6 +1346,9 @@ exports[`open api parser axle simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "types": {
         "GetPolicyResponse": {
@@ -1175,6 +1356,9 @@ exports[`open api parser axle simple 1`] = `
           "properties": {
             "data": "optional<accounts.Policy>",
             "success": "optional<root.Success>",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
       },
@@ -1237,6 +1421,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             },
           },
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "types": {
         "ExchangeTokenResponse": {
@@ -1244,6 +1431,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "properties": {
             "data": "ExchangeTokenResponseData",
             "success": "root.Success",
+          },
+          "source": {
+            "openapi": "axle/openapi.yml",
           },
         },
         "ExchangeTokenResponseData": {
@@ -1262,6 +1452,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
               "type": "list<unknown>",
             },
           },
+          "source": {
+            "openapi": "axle/openapi.yml",
+          },
         },
       },
     },
@@ -1278,6 +1471,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "postalCode": "optional<string>",
           "state": "optional<string>",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Carrier": {
         "docs": undefined,
@@ -1290,6 +1486,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "name": "string",
           "phone": "string",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Coverage": {
         "docs": undefined,
@@ -1300,6 +1499,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "limitPerAccident": "optional<integer>",
           "limitPerPerson": "optional<integer>",
           "property": "optional<string>",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "CoverageCode": {
@@ -1313,17 +1515,21 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "COLL",
           "COMP",
         ],
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Error": {
         "docs": undefined,
         "properties": {
           "message": {
-            "default": undefined,
             "docs": "Provides a reason for why the operation failed, if available.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "success": "optional<Success>",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "Insured": {
@@ -1339,6 +1545,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "property": "optional<string>",
           "type": "optional<string>",
         },
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "Property": {
         "docs": undefined,
@@ -1346,6 +1555,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "data": "Vehicle",
           "id": "string",
           "type": "literal<"vehicle">",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "Success": {
@@ -1358,47 +1570,52 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "address": "optional<Address>",
           "name": "string",
           "property": "optional<string>",
-          "type": "ThirdPartyType",
+          "type": {
+            "default": "interest",
+            "type": "ThirdPartyType",
+          },
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "ThirdPartyType": {
+        "default": "interest",
         "enum": [
           "lienholder",
           "lessor",
           "interest",
         ],
+        "source": {
+          "openapi": "axle/openapi.yml",
+        },
       },
       "User": {
         "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
         "properties": {
           "email": {
-            "default": undefined,
             "docs": "User's email address.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "firstName": {
-            "default": undefined,
             "docs": "User's first name.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "Your application's unique user id.",
             "type": "string",
           },
           "lastName": {
-            "default": undefined,
             "docs": "User's last name.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "phone": {
-            "default": undefined,
             "docs": "User's phone number in E.164 format.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
       "Vehicle": {
@@ -1409,6 +1626,9 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "model": "string",
           "vin": "string",
           "year": "string",
+        },
+        "source": {
+          "openapi": "axle/openapi.yml",
         },
       },
     },

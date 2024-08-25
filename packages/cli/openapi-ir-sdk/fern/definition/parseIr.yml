@@ -4,7 +4,8 @@ imports:
 
 types:
   NamedFullExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
     properties:
       name: optional<string>
       value: unknown
@@ -15,13 +16,15 @@ types:
       headers: list<HeaderWithExample>
 
   EndpointWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
+      - commons.WithSource
     properties:
       authed: boolean
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: finalIr.HttpMethod
-      availability: optional<finalIr.EndpointAvailability>
       audiences: list<string>
       path:
         type: string
@@ -62,6 +65,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSource
     properties:
       statusCode: commons.StatusCode
       schema: SchemaWithExample
@@ -74,7 +78,9 @@ types:
       json: JsonRequestWithExample
 
   JsonRequestWithExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
     properties:
       schema: SchemaWithExample
       contentType: optional<string>
@@ -93,21 +99,33 @@ types:
         docs: Checks if `x-fern-streaming` is present and is true.
 
   JsonResponseWithExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithSource
     properties:
       schema: SchemaWithExample
       responseProperty: optional<string>
       fullExamples: optional<list<NamedFullExample>>
 
   PathParameterWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
+      - commons.WithSource
     properties:
       name: string
       schema: SchemaWithExample
       variableReference: optional<string>
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   QueryParameterWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
+      - commons.WithSource
     properties:
       name: string
       schema: SchemaWithExample
@@ -116,8 +134,12 @@ types:
         docs: |
           Populated by `x-fern-parameter-name` on a parameter object.
 
+
   HeaderWithExample:
-    extends: commons.WithDescription
+    extends: 
+      - commons.WithDescription
+      - commons.WithAvailability
+      - commons.WithSource
     properties:
       name: string
       schema: SchemaWithExample
@@ -146,6 +168,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithName
       - commons.WithDescription
+      - commons.WithAvailability
     properties:
       value: SchemaWithExample
       example: optional<list<unknown>>
@@ -155,6 +178,8 @@ types:
       - commons.WithSdkGroupName
       - commons.WithName
       - commons.WithDescription
+      - commons.WithAvailability
+      - commons.WithEncoding
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
@@ -165,6 +190,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithName
       - commons.WithDescription
+      - commons.WithAvailability
     properties:
       value: SchemaWithExample
 
@@ -173,6 +199,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithName
       - commons.WithDescription
+      - commons.WithAvailability
     properties:
       value: SchemaWithExample
 
@@ -181,7 +208,10 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
+      - commons.WithSource
     properties:
+      default: optional<finalIr.EnumValue>
       values: list<finalIr.EnumValue>
       example: optional<string>
 
@@ -190,6 +220,7 @@ types:
       - commons.WithSdkGroupName
       - commons.WithName
       - commons.WithDescription
+      - commons.WithAvailability
     properties:
       example: unknown
 
@@ -198,6 +229,8 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
+      - commons.WithSource
     properties:
       allOf: list<finalIr.ReferencedSchema>
       properties: list<ObjectPropertyWithExample>
@@ -206,6 +239,8 @@ types:
       additionalProperties: boolean
 
   ObjectPropertyWithExample:
+    extends:
+      - commons.WithAvailability
     properties:
       key: string
       schema: SchemaWithExample
@@ -232,6 +267,9 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
+      - commons.WithEncoding
+      - commons.WithSource
     properties:
       discriminantProperty: string
       commonProperties: list<CommonPropertyWithExample>
@@ -247,6 +285,9 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
+      - commons.WithEncoding
+      - commons.WithSource
     properties:
       schemas: list<SchemaWithExample>
 
@@ -255,6 +296,7 @@ types:
       - commons.WithDescription
       - commons.WithName
       - commons.WithSdkGroupName
+      - commons.WithAvailability
     properties:
       schema: PrimitiveSchemaValueWithExample
 
@@ -262,6 +304,8 @@ types:
     union:
       int: IntWithExample
       int64: Int64WithExample
+      uint: UintWithExample
+      uint64: Uint64WithExample
       float: FloatWithExample
       double: DoubleWithExample
       string: StringSchemaWithExample
@@ -282,7 +326,39 @@ types:
 
   Int64WithExample:
     properties:
+      default: optional<long>
       example: optional<integer>
+
+  # TODO: Refactor the following once the uint types are available.
+  #
+  # UintWithExample:
+  #   properties:
+  #     default: optional<uint>
+  #     minimum: optional<uint>
+  #     maximum: optional<uint>
+  #     exclusiveMinimum: optional<boolean>
+  #     exclusiveMaximum: optional<boolean>
+  #     multipleOf: optional<uint>
+  #     example: optional<uint>
+  #
+  # Uint64WithExample:
+  #   properties:
+  #     default: optional<uint64>
+  #     minimum: optional<uint64>
+  #     maximum: optional<uint64>
+  #     exclusiveMinimum: optional<boolean>
+  #     exclusiveMaximum: optional<boolean>
+  #     multipleOf: optional<uint64>
+  #     example: optional<uint64>
+  UintWithExample:
+    properties:
+      default: optional<integer>
+      example: optional<integer>
+
+  Uint64WithExample:
+    properties:
+      default: optional<long>
+      example: optional<long>
 
   FloatWithExample:
     properties:
@@ -321,4 +397,5 @@ types:
 
   BooleanWithExample:
     properties:
+      default: optional<boolean>
       example: optional<boolean>

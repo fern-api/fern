@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TestCaseV2.Builder.class)
 public final class TestCaseV2 {
     private final TestCaseMetadata metadata;
@@ -161,7 +161,7 @@ public final class TestCaseV2 {
 
         @java.lang.Override
         public _FinalStage expects(TestCaseExpects expects) {
-            this.expects = Optional.of(expects);
+            this.expects = Optional.ofNullable(expects);
             return this;
         }
 

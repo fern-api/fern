@@ -5,7 +5,8 @@ import { RuleViolation } from "../../Rule";
 import {
     getRequestPropertyComponents,
     getResponsePropertyComponents,
-    maybeFileFromResolvedType,
+    RequestPropertyValidator,
+    requestTypeHasProperty,
     resolvedTypeHasProperty,
     ResponsePropertyValidator
 } from "../../utils/propertyValidatorUtils";
@@ -36,25 +37,25 @@ export function validateResultsProperty({
     });
 }
 
-export function validateQueryParameterProperty({
+export function validateRequestProperty({
     endpointId,
     endpoint,
     typeResolver,
     file,
-    queryParameterProperty,
+    requestProperty,
     propertyValidator
 }: {
     endpointId: string;
     endpoint: RawSchemas.HttpEndpointSchema;
     typeResolver: TypeResolver;
     file: FernFileContext;
-    queryParameterProperty: string;
-    propertyValidator: ResponsePropertyValidator;
+    requestProperty: string;
+    propertyValidator: RequestPropertyValidator;
 }): RuleViolation[] {
     const violations: RuleViolation[] = [];
 
-    const queryPropertyComponents = getRequestPropertyComponents(queryParameterProperty);
-    if (queryPropertyComponents == null) {
+    const requestPropertyComponents = getRequestPropertyComponents(requestProperty);
+    if (requestPropertyComponents == null) {
         violations.push({
             severity: "error",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} must define a dot-delimited '${
@@ -63,58 +64,20 @@ export function validateQueryParameterProperty({
         });
         return violations;
     }
-
-    const queryPropertyName = queryPropertyComponents?.[0];
-    if (queryPropertyName == null || queryPropertyComponents.length !== 1) {
-        violations.push({
-            severity: "error",
-            message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} is only compatible with '${
-                propertyValidator.propertyID
-            }' properties that are defined as query parameters (e.g. $request.${propertyValidator.propertyID}).`
-        });
-        return violations;
-    }
-
-    const queryParameters = typeof endpoint.request !== "string" ? endpoint.request?.["query-parameters"] : null;
-    if (queryParameters == null) {
-        violations.push({
-            severity: "error",
-            message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} specifies '${
-                propertyValidator.propertyID
-            }' ${queryParameterProperty}, but that query parameter does not exist.`
-        });
-        return violations;
-    }
-
-    const queryParameter = queryParameters[queryPropertyName];
-    if (queryParameter == null) {
-        violations.push({
-            severity: "error",
-            message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} specifies '${
-                propertyValidator.propertyID
-            }' ${queryParameterProperty}, but that query parameter does not exist.`
-        });
-        return violations;
-    }
-
-    const queryParameterType = typeof queryParameter !== "string" ? queryParameter.type : queryParameter;
-    const resolvedQueryParameterType = typeResolver.resolveType({
-        type: queryParameterType,
-        file
-    });
     if (
-        !propertyValidator.validate({
+        !requestTypeHasProperty({
             typeResolver,
-            file: maybeFileFromResolvedType(resolvedQueryParameterType) ?? file,
-            resolvedType: resolvedQueryParameterType,
-            propertyComponents: queryPropertyComponents.slice(1)
+            file,
+            endpoint,
+            propertyComponents: requestPropertyComponents,
+            validate: propertyValidator.validate
         })
     ) {
         violations.push({
             severity: "error",
             message: `Pagination configuration for endpoint ${chalk.bold(endpointId)} specifies '${
                 propertyValidator.propertyID
-            }' ${queryParameterProperty}, which is not a valid '${propertyValidator.propertyID}' type.`
+            }' ${requestProperty}, which is not a valid '${propertyValidator.propertyID}' type.`
         });
     }
 

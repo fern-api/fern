@@ -11,7 +11,33 @@
             "identifierOverride": "endpoint_service.getWithBearerToken"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedBearerTokenEnvironmentVariable\n\nclient = SeedBearerTokenEnvironmentVariable(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedBearerTokenEnvironmentVariable"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedBearerTokenEnvironmentVariable(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                "templateInputs": [
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": false,
+                            "templateString": "api_key=$FERN_INPUT",
+                            "templateInputs": [
+                                {
+                                    "location": "AUTH",
+                                    "path": "token",
+                                    "type": "payload"
+                                }
+                            ],
+                            "type": "generic"
+                        }
+                    }
+                ],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -24,7 +50,33 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedBearerTokenEnvironmentVariable\n\nclient = AsyncSeedBearerTokenEnvironmentVariable(\n    api_key=\"YOUR_API_KEY\",\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedBearerTokenEnvironmentVariable"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedBearerTokenEnvironmentVariable(base_url=\"https://yourhost.com/path/to/api\", $FERN_INPUT, )",
+                    "templateInputs": [
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": false,
+                                "templateString": "api_key=$FERN_INPUT",
+                                "templateInputs": [
+                                    {
+                                        "location": "AUTH",
+                                        "path": "token",
+                                        "type": "payload"
+                                    }
+                                ],
+                                "type": "generic"
+                            }
+                        }
+                    ],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,

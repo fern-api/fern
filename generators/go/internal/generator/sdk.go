@@ -1018,7 +1018,7 @@ func (f *fileWriter) WriteClient(
 				f.P(content.Name.PascalCase.UnsafeName, " json.RawMessage `json:\"", content.WireValue, "\"`")
 				f.P("}")
 				f.P("if err := decoder.Decode(&discriminant); err != nil {")
-				f.P("return err")
+				f.P("return apiError")
 				f.P("}")
 			}
 			f.P("switch ", switchValue, " {")
@@ -2444,7 +2444,7 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
-		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types))
+		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
 	}
 	if endpoint.RequestBody == nil {
 		// If the request doesn't have a body, we don't need any custom [de]serialization logic.
@@ -2827,6 +2827,7 @@ func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.Inli
 		true,  // includeJSONTags
 		false, // includeURLTags
 		r.includeGenericOptionals,
+		false, // includeLiterals
 	)
 	r.dates = objectProperties.dates
 	r.literals = objectProperties.literals
@@ -2870,6 +2871,7 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 		true,  // includeJSONTags
 		false, // includeURLTags
 		r.includeGenericOptionals,
+		false, // includeLiterals
 	)
 	r.dates = objectProperties.dates
 	r.literals = objectProperties.literals

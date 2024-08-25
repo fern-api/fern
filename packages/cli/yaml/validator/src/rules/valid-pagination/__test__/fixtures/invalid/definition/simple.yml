@@ -6,6 +6,7 @@ types:
         type: integer
         docs: The totall number of /users
       data: list<User>
+      hasNextPage: boolean
       valid: boolean
 
   Page: 
@@ -70,6 +71,7 @@ service:
       pagination: 
         offset: $request.starting_after
         results: $response.data
+        has-next-page: $response.hasNextPage
       method: GET
       path: ""
       request: 
@@ -80,6 +82,27 @@ service:
             docs: | 
               The cursor used for pagination in order to fetch 
               the next page of results.
+      response: ListUsersResponse
+
+    listWithInvalidOffsetStepPaginationType:
+      pagination: 
+        offset: $request.starting_after
+        results: $response.data
+        step: $request.limit
+      method: GET
+      path: ""
+      request: 
+        name: ListWithInvalidOffsetStepPaginationTypeRequest
+        query-parameters: 
+          starting_after: 
+            type: optional<integer>
+            docs: | 
+              The cursor used for pagination in order to fetch 
+              the next page of results.
+          limit: 
+            type: optional<string>
+            docs: | 
+              The step size used between every page.
       response: ListUsersResponse
 
     listWithInvalidPaginationPrefix:
@@ -98,25 +121,7 @@ service:
               The cursor used for pagination in order to fetch 
               the next page of results.
       response: ListUsersResponse
-
-    listWithInvalidRequest:
-      pagination:
-        cursor: $request.starting_after
-        next_cursor: $response.page.next.starting_after
-        results: $response.data
-      method: GET
-      path: ""
-      request:
-        name: ListWithInvalidRequest
-        body:
-          properties:
-            starting_after: 
-              type: optional<string>
-              docs: | 
-                The cursor used for pagination in order to fetch 
-                the next page of results.
-      response: ListUsersResponse
-
+  
     listWithInvalidGlobalConfig:
       method: GET
       path: ""

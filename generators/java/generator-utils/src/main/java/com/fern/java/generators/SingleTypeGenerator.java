@@ -1,13 +1,13 @@
 package com.fern.java.generators;
 
-import com.fern.irV42.model.commons.TypeId;
-import com.fern.irV42.model.types.AliasTypeDeclaration;
-import com.fern.irV42.model.types.DeclaredTypeName;
-import com.fern.irV42.model.types.EnumTypeDeclaration;
-import com.fern.irV42.model.types.ObjectTypeDeclaration;
-import com.fern.irV42.model.types.Type;
-import com.fern.irV42.model.types.UndiscriminatedUnionTypeDeclaration;
-import com.fern.irV42.model.types.UnionTypeDeclaration;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.AliasTypeDeclaration;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.EnumTypeDeclaration;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.Type;
+import com.fern.ir.model.types.UndiscriminatedUnionTypeDeclaration;
+import com.fern.ir.model.types.UnionTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;

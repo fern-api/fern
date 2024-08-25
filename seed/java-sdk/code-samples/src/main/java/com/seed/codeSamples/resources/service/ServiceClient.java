@@ -3,11 +3,13 @@
  */
 package com.seed.codeSamples.resources.service;
 
-import com.seed.codeSamples.core.ApiError;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.seed.codeSamples.core.ClientOptions;
 import com.seed.codeSamples.core.MediaTypes;
 import com.seed.codeSamples.core.ObjectMappers;
 import com.seed.codeSamples.core.RequestOptions;
+import com.seed.codeSamples.core.SeedCodeSamplesApiException;
+import com.seed.codeSamples.core.SeedCodeSamplesException;
 import com.seed.codeSamples.resources.service.requests.MyRequest;
 import com.seed.codeSamples.resources.service.types.MyResponse;
 import java.io.IOException;
@@ -39,8 +41,8 @@ public class ServiceClient {
         try {
             body = RequestBody.create(
                     ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (JsonProcessingException e) {
+            throw new SeedCodeSamplesException("Failed to serialize request", e);
         }
         Request okhttpRequest = new Request.Builder()
                 .url(httpUrl)
@@ -48,22 +50,22 @@ public class ServiceClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), MyResponse.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedCodeSamplesApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedCodeSamplesException("Network error executing HTTP request", e);
         }
     }
 }

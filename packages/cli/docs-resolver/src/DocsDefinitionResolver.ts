@@ -1,21 +1,32 @@
 import { docsYml, WithoutQuestionMarks } from "@fern-api/configuration";
 import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
-import { APIV1Write, DocsV1Write } from "@fern-api/fdr-sdk";
-import { AbsoluteFilePath, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
+import {
+    parseImagePaths,
+    replaceImagePathsAndUrls,
+    replaceReferencedCode,
+    replaceReferencedMarkdown
+} from "@fern-api/docs-markdown-utils";
+import { APIV1Write, DocsV1Write, FernNavigation } from "@fern-api/fdr-sdk";
+import { AbsoluteFilePath, listFiles, relative, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { readFile, stat } from "fs/promises";
 import matter from "gray-matter";
-import { last, orderBy } from "lodash-es";
+import { kebabCase } from "lodash-es";
 import urlJoin from "url-join";
-import { convertDocsSnippetsConfigToFdr } from "./convertDocsSnippetsConfigToFdr";
-import { convertIrToNavigation } from "./convertIrToNavigation";
-import { extractDatetimeFromChangelogTitle } from "./extractDatetimeFromChangelogTitle";
-import { collectFilesFromDocsConfig } from "./getImageFilepathsToUpload";
-import { parseImagePaths, replaceImagePathsAndUrls } from "./parseImagePaths";
-import { replaceReferencedMarkdown } from "./replaceReferencedMarkdown";
+import { ApiReferenceNodeConverter } from "./ApiReferenceNodeConverter";
+import { ChangelogNodeConverter } from "./ChangelogNodeConverter";
+import { NodeIdGenerator } from "./NodeIdGenerator";
+import { convertDocsSnippetsConfigToFdr } from "./utils/convertDocsSnippetsConfigToFdr";
+import { convertIrToApiDefinition } from "./utils/convertIrToApiDefinition";
+import { collectFilesFromDocsConfig } from "./utils/getImageFilepathsToUpload";
 import { wrapWithHttps } from "./wrapWithHttps";
+
+dayjs.extend(utc);
 
 export interface FilePathPair {
     absoluteFilePath: AbsoluteFilePath;
@@ -80,6 +91,16 @@ export class DocsDefinitionResolver {
             });
         }
 
+        // replaces all instances of <Code src="path/to/file.js" /> with the content of the referenced code file
+        for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
+            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
+                markdown,
+                absolutePathToFernFolder: this.docsWorkspace.absoluteFilepath,
+                absolutePathToMdx: this.resolveFilepath(relativePath),
+                context: this.taskContext
+            });
+        }
+
         const filesToUploadSet = collectFilesFromDocsConfig(this.parsedDocsConfig);
 
         // preprocess markdown files to extract image paths
@@ -112,7 +133,7 @@ export class DocsDefinitionResolver {
         });
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
-        const basePath = this.getDocsBasePath() ?? "/";
+        const basePath = this.getDocsBasePath();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
                 markdown,
@@ -142,7 +163,41 @@ export class DocsDefinitionResolver {
 
         const config = await this.convertDocsConfiguration();
 
-        return { config, pages };
+        // detect experimental js files to include in the docs
+        let jsFiles: Record<string, string> = {};
+        if (this._parsedDocsConfig.experimental?.mdxComponents != null) {
+            const jsFilePaths = new Set<AbsoluteFilePath>();
+            await Promise.all(
+                this._parsedDocsConfig.experimental.mdxComponents.map(async (filepath) => {
+                    const absoluteFilePath = resolve(this.docsWorkspace.absoluteFilepath, filepath);
+
+                    // check if absoluteFilePath is a directory or a file
+                    const stats = await stat(absoluteFilePath);
+
+                    if (stats.isDirectory()) {
+                        const files = await listFiles(absoluteFilePath, "{js,ts,jsx,tsx}");
+
+                        files.forEach((file) => {
+                            jsFilePaths.add(file);
+                        });
+                    } else if (absoluteFilePath.match(/\.(js|ts|jsx|tsx)$/) != null) {
+                        jsFilePaths.add(absoluteFilePath);
+                    }
+                })
+            );
+
+            jsFiles = Object.fromEntries(
+                await Promise.all(
+                    [...jsFilePaths].map(async (filePath): Promise<[string, string]> => {
+                        const relativeFilePath = this.toRelativeFilepath(filePath);
+                        const contents = (await readFile(filePath)).toString();
+                        return [relativeFilePath, contents];
+                    })
+                )
+            );
+        }
+
+        return { config, pages, jsFiles };
     }
 
     private resolveFilepath(unresolvedFilepath: string): AbsoluteFilePath;
@@ -154,7 +209,12 @@ export class DocsDefinitionResolver {
         return resolve(this.docsWorkspace.absoluteFilepath, unresolvedFilepath);
     }
 
-    private toRelativeFilepath(filepath: AbsoluteFilePath): RelativeFilePath {
+    private toRelativeFilepath(filepath: AbsoluteFilePath): RelativeFilePath;
+    private toRelativeFilepath(filepath: AbsoluteFilePath | undefined): RelativeFilePath | undefined;
+    private toRelativeFilepath(filepath: AbsoluteFilePath | undefined): RelativeFilePath | undefined {
+        if (filepath == null) {
+            return undefined;
+        }
         return relative(this.docsWorkspace.absoluteFilepath, filepath);
     }
 
@@ -172,7 +232,7 @@ export class DocsDefinitionResolver {
         return mdxFilePathToSlug;
     }
 
-    private getDocsBasePath(): string | undefined {
+    private getDocsBasePath(): string {
         const url = new URL(wrapWithHttps(this.domain));
         return url.pathname;
     }
@@ -195,7 +255,8 @@ export class DocsDefinitionResolver {
             redirects: this.parsedDocsConfig.redirects,
             integrations: this.parsedDocsConfig.integrations,
             footerLinks: this.parsedDocsConfig.footerLinks,
-
+            defaultLanguage: this.parsedDocsConfig.defaultLanguage,
+            analyticsConfig: this.parsedDocsConfig.analyticsConfig,
             // deprecated
             logo: undefined,
             logoV2: undefined,
@@ -222,23 +283,18 @@ export class DocsDefinitionResolver {
     }
 
     private async convertNavigationConfig(): Promise<DocsV1Write.NavigationConfig> {
+        const slug = FernNavigation.SlugGenerator.init(FernNavigation.utils.slugjoin(this.getDocsBasePath()));
+        const landingPage = this.parsedDocsConfig.landingPage;
         switch (this.parsedDocsConfig.navigation.type) {
-            case "untabbed": {
-                const items = await Promise.all(
-                    this.parsedDocsConfig.navigation.items.map((item) => this.convertNavigationItem(item))
-                );
-                return { items };
-            }
-            case "tabbed": {
-                return this.convertTabbedNavigation(this.parsedDocsConfig.navigation.items, this.parsedDocsConfig.tabs);
-            }
             case "versioned": {
                 const versions = await Promise.all(
                     this.parsedDocsConfig.navigation.versions.map(
                         async (version): Promise<DocsV1Write.VersionedNavigationConfigData> => {
+                            const versionSlug = slug.setVersionSlug(version.slug ?? kebabCase(version.version));
                             const convertedNavigation = await this.convertUnversionedNavigationConfig({
+                                landingPage: version.landingPage,
                                 navigationConfig: version.navigation,
-                                tabs: version.tabs
+                                parentSlug: versionSlug
                             });
                             return {
                                 version: version.version,
@@ -254,12 +310,22 @@ export class DocsDefinitionResolver {
                 );
                 return { versions };
             }
+            case "untabbed":
+            case "tabbed":
+                return this.convertUnversionedNavigationConfig({
+                    landingPage: this.parsedDocsConfig.landingPage,
+                    navigationConfig: this.parsedDocsConfig.navigation,
+                    parentSlug: slug
+                });
             default:
                 assertNever(this.parsedDocsConfig.navigation);
         }
     }
 
-    private async convertNavigationItem(item: docsYml.DocsNavigationItem): Promise<DocsV1Write.NavigationItem> {
+    private async convertNavigationItem(
+        item: docsYml.DocsNavigationItem,
+        parentSlug: FernNavigation.SlugGenerator
+    ): Promise<DocsV1Write.NavigationItem> {
         switch (item.type) {
             case "page": {
                 return {
@@ -273,18 +339,25 @@ export class DocsDefinitionResolver {
                 };
             }
             case "section": {
+                const slug = parentSlug.apply({
+                    fullSlug: undefined, // TODO: implement fullSlug for sections when summary pages are supported
+                    skipUrlSlug: item.skipUrlSlug,
+                    urlSlug: item.slug ?? kebabCase(item.title)
+                });
                 const sectionItems = await Promise.all(
-                    item.contents.map((nestedItem) => this.convertNavigationItem(nestedItem))
+                    item.contents.map((nestedItem) => this.convertNavigationItem(nestedItem, slug))
                 );
                 return {
                     type: "section",
                     title: item.title,
+
                     items: sectionItems,
                     urlSlugOverride: item.slug,
                     collapsed: item.collapsed,
                     icon: item.icon,
                     hidden: item.hidden,
-                    skipUrlSlug: item.skipUrlSlug
+                    skipUrlSlug: item.skipUrlSlug,
+                    overviewPageId: this.toRelativeFilepath(item.overviewAbsolutePath)
                 };
             }
             case "apiSection": {
@@ -294,59 +367,27 @@ export class DocsDefinitionResolver {
                     workspace,
                     audiences: item.audiences,
                     generationLanguage: undefined,
+                    keywords: undefined,
                     smartCasing: false,
-                    disableExamples: false
+                    disableExamples: false,
+                    readme: undefined,
+                    version: undefined,
+                    packageName: undefined,
+                    context: this.taskContext
                 });
                 const apiDefinitionId = await this.registerApi({ ir, snippetsConfig });
-                const unsortedChangelogItems: { date: Date; pageId: RelativeFilePath }[] = [];
-                if (workspace.changelog != null) {
-                    for (const file of workspace.changelog.files) {
-                        const filename = last(file.absoluteFilepath.split("/"));
-                        if (filename == null) {
-                            continue;
-                        }
-                        const changelogDate = extractDatetimeFromChangelogTitle(filename);
-                        if (changelogDate == null) {
-                            continue;
-                        }
-                        const relativePath = this.toRelativeFilepath(file.absoluteFilepath);
-                        unsortedChangelogItems.push({ date: changelogDate, pageId: relativePath });
-                    }
-                }
-
-                // sort changelog items by date, in descending order
-                const changelogItems = orderBy(unsortedChangelogItems, (item) => item.date, "desc").map(
-                    (item): DocsV1Write.ChangelogItem => ({
-                        date: item.date.toISOString(),
-                        pageId: item.pageId
-                    })
+                const api = convertIrToApiDefinition(ir, apiDefinitionId);
+                const node = new ApiReferenceNodeConverter(
+                    item,
+                    api,
+                    parentSlug,
+                    workspace,
+                    this.docsWorkspace,
+                    this.taskContext,
+                    this.markdownFilesToFullSlugs
                 );
 
-                return {
-                    type: "api",
-                    title: item.title,
-                    icon: item.icon,
-                    api: apiDefinitionId,
-                    urlSlugOverride: item.slug,
-                    skipUrlSlug: item.skipUrlSlug,
-                    showErrors: item.showErrors,
-                    changelog:
-                        changelogItems.length > 0
-                            ? {
-                                  urlSlug: "changelog",
-                                  items: changelogItems
-                              }
-                            : undefined,
-                    hidden: item.hidden,
-                    navigation: convertIrToNavigation(
-                        ir,
-                        item.summaryAbsolutePath,
-                        item.navigation,
-                        this.docsWorkspace.absoluteFilepathToDocsConfig,
-                        this.markdownFilesToFullSlugs
-                    ),
-                    flattened: item.flattened
-                };
+                return { type: "apiV2", node: node.get() };
             }
             case "link": {
                 return {
@@ -355,31 +396,70 @@ export class DocsDefinitionResolver {
                     url: item.url
                 };
             }
+            case "changelog": {
+                const idgen = NodeIdGenerator.init(parentSlug.get());
+                const node = new ChangelogNodeConverter(
+                    this.markdownFilesToFullSlugs,
+                    item.changelog,
+                    this.docsWorkspace,
+                    idgen
+                ).convert({
+                    parentSlug,
+                    title: item.title,
+                    icon: item.icon,
+                    hidden: item.hidden,
+                    slug: item.slug
+                });
+                return {
+                    type: "changelogV3",
+                    node: node ?? {
+                        id: idgen.append("changelog").get(),
+                        type: "changelog",
+                        title: item.title,
+                        slug: parentSlug.append(item.slug ?? kebabCase(item.title)).get(),
+                        children: []
+                    }
+                };
+            }
             default:
                 assertNever(item);
         }
     }
 
     private async convertUnversionedNavigationConfig({
+        landingPage: landingPageConfig,
         navigationConfig,
-        tabs
+        parentSlug
     }: {
+        landingPage: docsYml.DocsNavigationItem.Page | undefined;
         navigationConfig: docsYml.UnversionedNavigationConfiguration;
-        tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined;
+        parentSlug: FernNavigation.SlugGenerator;
     }): Promise<DocsV1Write.UnversionedNavigationConfig> {
+        const landingPage =
+            landingPageConfig != null
+                ? {
+                      id: this.toRelativeFilepath(landingPageConfig.absolutePath),
+                      urlSlugOverride: landingPageConfig.slug,
+                      fullSlug: this.markdownFilesToFullSlugs.get(landingPageConfig.absolutePath)?.split("/"),
+                      hidden: landingPageConfig.hidden,
+                      title: landingPageConfig.title,
+                      icon: landingPageConfig.icon
+                  }
+                : undefined;
         switch (navigationConfig.type) {
             case "untabbed": {
-                const untabbedItems = await Promise.all(
-                    navigationConfig.items.map((item) => this.convertNavigationItem(item))
+                const untabs = await Promise.all(
+                    navigationConfig.items.map((item) => this.convertNavigationItem(item, parentSlug))
                 );
                 return {
-                    items: untabbedItems
+                    landingPage,
+                    items: untabs
                 };
             }
             case "tabbed": {
-                const tabbedItem = await this.convertTabbedNavigation(navigationConfig.items, tabs);
                 return {
-                    tabs: tabbedItem.tabs
+                    landingPage,
+                    tabsV2: await this.convertTabbedNavigation(navigationConfig.items, parentSlug)
                 };
             }
             default:
@@ -389,48 +469,70 @@ export class DocsDefinitionResolver {
 
     private async convertTabbedNavigation(
         items: docsYml.TabbedNavigation[],
-        tabs: Record<string, docsYml.RawSchemas.TabConfig> | undefined
-    ): Promise<{ tabs: DocsV1Write.NavigationTab[] }> {
-        const convertedTabs = await Promise.all(
-            items.map(async (tabbedItem) => {
-                const tabConfig = tabs?.[tabbedItem.tab];
-                if (tabConfig == null) {
-                    throw new Error(`Couldn't find config for tab id ${tabbedItem.tab}`);
-                }
-
-                if (tabConfig.href != null) {
-                    if (tabbedItem.layout != null) {
-                        throw new Error(
-                            `Tab ${tabConfig.displayName} contains an external link (href), and should not have any items`
-                        );
-                    }
-
+        parentSlug: FernNavigation.SlugGenerator
+    ): Promise<DocsV1Write.NavigationTabV2[]> {
+        return Promise.all(
+            items.map(async (tab): Promise<WithoutQuestionMarks<DocsV1Write.NavigationTabV2>> => {
+                if (tab.child.type === "link") {
                     return {
-                        title: tabConfig.displayName,
-                        icon: tabConfig.icon,
-                        url: tabConfig.href
+                        type: "link",
+                        title: tab.title,
+                        icon: tab.icon,
+                        url: tab.child.href
                     };
                 }
 
-                if (tabbedItem.layout == null) {
-                    throw new Error(
-                        `Tab ${tabConfig.displayName} does not contain an external link (href), and should have items`
-                    );
+                if (tab.child.type === "changelog") {
+                    const idgen = NodeIdGenerator.init(parentSlug.get());
+                    const node = new ChangelogNodeConverter(
+                        this.markdownFilesToFullSlugs,
+                        tab.child.changelog,
+                        this.docsWorkspace,
+                        idgen
+                    ).convert({
+                        parentSlug,
+                        title: tab.title,
+                        icon: tab.icon,
+                        hidden: tab.hidden,
+                        slug: tab.slug
+                    });
+                    return {
+                        type: "changelogV3",
+                        node: node ?? {
+                            id: idgen.append("changelog").get(),
+                            type: "changelog",
+                            title: tab.title,
+                            slug: parentSlug.append(tab.slug ?? kebabCase(tab.title)).get(),
+                            children: []
+                        }
+                    };
                 }
 
-                const tabbedItems = await Promise.all(
-                    tabbedItem.layout.map((item) => this.convertNavigationItem(item))
-                );
+                if (tab.child.type === "layout") {
+                    const slug = parentSlug.apply({
+                        skipUrlSlug: tab.skipUrlSlug,
+                        urlSlug: tab.slug ?? kebabCase(tab.title)
+                    });
 
-                return {
-                    title: tabConfig.displayName,
-                    icon: tabConfig.icon,
-                    items: tabbedItems,
-                    urlSlugOverride: tabConfig.slug
-                };
+                    const tabs = await Promise.all(
+                        tab.child.layout.map((item) => this.convertNavigationItem(item, slug))
+                    );
+
+                    return {
+                        type: "group",
+                        title: tab.title,
+                        icon: tab.icon,
+                        items: tabs,
+                        urlSlugOverride: tab.slug,
+                        skipUrlSlug: tab.skipUrlSlug,
+                        hidden: tab.hidden,
+                        fullSlug: undefined
+                    };
+                }
+
+                assertNever(tab.child);
             })
         );
-        return { tabs: convertedTabs };
     }
 
     private getFileId(filepath: AbsoluteFilePath): DocsV1Write.FileId;

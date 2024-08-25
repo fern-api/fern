@@ -1,41 +1,93 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedTrace;
+using System.Threading;
+using System.Threading.Tasks;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class HomepageClient
+public partial class HomepageClient
 {
     private RawClient _client;
 
-    public HomepageClient(RawClient client)
+    internal HomepageClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<IEnumerable<string>> GetHomepageProblemsAsync()
+    /// <example>
+    /// <code>
+    /// await client.Homepage.GetHomepageProblemsAsync();
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<string>> GetHomepageProblemsAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/homepage-problems",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<string>>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
-    public async void SetHomepageProblemsAsync(IEnumerable<string> request)
+    /// <example>
+    /// <code>
+    /// await client.Homepage.SetHomepageProblemsAsync(new List<string>() { "string" });
+    /// </code>
+    /// </example>
+    public async Task SetHomepageProblemsAsync(
+        IEnumerable<string> request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "",
-                Body = request
-            }
+                Path = "/homepage-problems",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
     }
 }

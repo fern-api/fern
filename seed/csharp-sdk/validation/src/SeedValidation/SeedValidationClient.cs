@@ -1,4 +1,7 @@
-using SeedValidation;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading;
+using SeedValidation.Core;
 
 #nullable enable
 
@@ -8,25 +11,126 @@ public partial class SeedValidationClient
 {
     private RawClient _client;
 
-    public SeedValidationClient(ClientOptions clientOptions = null)
+    public SeedValidationClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "User-Agent", "Fernvalidation/0.0.1" },
+            }
+        );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
+    }
+
+    /// <example>
+    /// <code>
+    /// await client.CreateAsync(
+    ///     new CreateRequest
+    ///     {
+    ///         Decimal = 1.1,
+    ///         Even = 1,
+    ///         Name = "string",
+    ///         Shape = Shape.Square,
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<Type> CreateAsync(
+        CreateRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "/create",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            try
+            {
+                return JsonUtils.Deserialize<Type>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedValidationException("Failed to deserialize response", e);
+            }
+        }
+
+        throw new SeedValidationApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
     }
 
-    public async void CreateAsync() { }
-
-    public async void GetAsync() { }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
+    /// <example>
+    /// <code>
+    /// await client.GetAsync(
+    ///     new GetRequest
+    ///     {
+    ///         Decimal = 1.1,
+    ///         Even = 1,
+    ///         Name = "string",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<Type> GetAsync(
+        GetRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
+        var _query = new Dictionary<string, object>();
+        _query["decimal"] = request.Decimal.ToString();
+        _query["even"] = request.Even.ToString();
+        _query["name"] = request.Name;
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            throw new Exception(message);
+            try
+            {
+                return JsonUtils.Deserialize<Type>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedValidationException("Failed to deserialize response", e);
+            }
         }
-        return value;
+
+        throw new SeedValidationApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

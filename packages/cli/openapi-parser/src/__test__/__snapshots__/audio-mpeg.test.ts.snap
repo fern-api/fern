@@ -1,7 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser audio-mpeg-content-type parse open api 1`] = `
+exports[`open api parser > audio-mpeg-content-type > parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -27,10 +28,18 @@ exports[`open api parser audio-mpeg-content-type parse open api 1`] = `
       "requestNameOverride": null,
       "response": {
         "description": "",
+        "source": {
+          "file": "audio-mpeg-content-type/openapi.yml",
+          "type": "openapi",
+        },
         "type": "file",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "audio-mpeg-content-type/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [
         "audio",

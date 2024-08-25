@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class TestCaseWithExpectedResult
+public record TestCaseWithExpectedResult
 {
     [JsonPropertyName("testCase")]
-    public TestCase TestCase { get; init; }
+    public required TestCase TestCase { get; set; }
 
     [JsonPropertyName("expectedResult")]
-    public VariableValue ExpectedResult { get; init; }
+    public required object ExpectedResult { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

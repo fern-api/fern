@@ -6,12 +6,12 @@ require "async/http/faraday"
 
 module SeedNoEnvironmentClient
   class RequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :token
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -20,13 +20,8 @@ module SeedNoEnvironmentClient
     # @return [SeedNoEnvironmentClient::RequestClient]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_no_environment",
-        "X-Fern-SDK-Version": "0.0.1",
-        "Authorization": "Bearer #{token}"
-      }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+      @token = "Bearer #{token}"
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.request :retry, { max: max_retries } unless max_retries.nil?
@@ -39,15 +34,22 @@ module SeedNoEnvironmentClient
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
     end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_no_environment", "X-Fern-SDK-Version": "0.0.1" }
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
+      headers
+    end
   end
 
   class AsyncRequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String]
+    attr_reader :token
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -56,13 +58,8 @@ module SeedNoEnvironmentClient
     # @return [SeedNoEnvironmentClient::AsyncRequestClient]
     def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_no_environment",
-        "X-Fern-SDK-Version": "0.0.1",
-        "Authorization": "Bearer #{token}"
-      }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+      @token = "Bearer #{token}"
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.adapter :async_http
@@ -75,6 +72,13 @@ module SeedNoEnvironmentClient
     # @return [String]
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
+    end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_no_environment", "X-Fern-SDK-Version": "0.0.1" }
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
+      headers
     end
   end
 

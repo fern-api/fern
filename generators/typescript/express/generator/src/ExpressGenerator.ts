@@ -63,6 +63,7 @@ export declare namespace ExpressGenerator {
         allowExtraFields: boolean;
         skipRequestValidation: boolean;
         skipResponseValidation: boolean;
+        requestValidationStatusCode: number;
     }
 }
 
@@ -208,7 +209,8 @@ export class ExpressGenerator {
             doNotHandleUnrecognizedErrors: config.doNotHandleUnrecognizedErrors,
             includeSerdeLayer: config.includeSerdeLayer,
             skipRequestValidation: config.skipRequestValidation,
-            skipResponseValidation: config.skipResponseValidation
+            skipResponseValidation: config.skipResponseValidation,
+            requestValidationStatusCode: config.requestValidationStatusCode
         });
         this.expressRegisterGenerator = new ExpressRegisterGenerator({
             packageResolver: this.packageResolver,
@@ -243,6 +245,7 @@ export class ExpressGenerator {
         this.exportsManager.writeExportsToProject(this.rootDirectory);
 
         return new SimpleTypescriptProject({
+            runScripts: true,
             npmPackage: this.npmPackage,
             dependencies: this.dependencyManager.getDependencies(),
             tsMorphProject: this.project,
@@ -255,12 +258,20 @@ export class ExpressGenerator {
             extraPeerDependenciesMeta: {},
             resolutions: {
                 "@types/mime": "3.0.4"
-            }
+            },
+            extraConfigs: undefined,
+            outputJsr: false
         });
     }
 
-    public async copyCoreUtilities({ pathToSrc }: { pathToSrc: AbsoluteFilePath }): Promise<void> {
-        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc });
+    public async copyCoreUtilities({
+        pathToSrc,
+        pathToRoot
+    }: {
+        pathToSrc: AbsoluteFilePath;
+        pathToRoot: AbsoluteFilePath;
+    }): Promise<void> {
+        await this.coreUtilitiesManager.copyCoreUtilities({ pathToSrc, pathToRoot });
     }
 
     private generateTypeDeclarations() {

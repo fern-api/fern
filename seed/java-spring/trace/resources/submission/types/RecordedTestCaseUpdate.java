@@ -15,7 +15,7 @@ import java.lang.String;
 import java.util.Objects;
 import resources.v2.problem.types.TestCaseId;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = RecordedTestCaseUpdate.Builder.class
 )

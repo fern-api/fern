@@ -1,14 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedObjectsWithImports.Core;
 
 #nullable enable
 
 namespace SeedObjectsWithImports.Commons;
 
-public class Metadata
+public record Metadata
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("data")]
-    public Dictionary<string, string>? Data { get; init; }
+    public Dictionary<string, string>? Data { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

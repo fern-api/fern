@@ -1,5 +1,6 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import { CustomCodeSample } from "@fern-api/openapi-ir-sdk";
+import { RawSchemas } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
 import { ReadmeOpenAPIExtension } from "./readmeExtensions";
@@ -51,6 +52,34 @@ export function getReadmeCodeSamples(operationObject: OpenAPIV3.OperationObject)
                 description: undefined
             })
         );
+    }
+    return customCodeSamples;
+}
+
+export function getRawReadmeCodeSamples(
+    operationObject: OpenAPIV3.OperationObject
+): RawSchemas.ExampleCodeSampleSchema[] {
+    const readme = getExtension<unknown>(operationObject, ReadmeOpenAPIExtension.README_EXT);
+
+    if (!isPlainObject(readme)) {
+        return [];
+    }
+
+    const readmeCodeSamples = readme["code-samples"];
+
+    if (!isReadMeCodeSamples(readmeCodeSamples)) {
+        return [];
+    }
+
+    const customCodeSamples: RawSchemas.ExampleCodeSampleSchema[] = [];
+    for (const codeSample of readmeCodeSamples) {
+        customCodeSamples.push({
+            name: codeSample.name,
+            language: codeSample.language,
+            code: codeSample.code,
+            install: codeSample.install,
+            docs: undefined
+        });
     }
     return customCodeSamples;
 }

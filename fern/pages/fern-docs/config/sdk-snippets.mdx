@@ -14,17 +14,17 @@ Fern allows you to add SDK code snippets to your documentation. This is useful f
 
 ## Language support
 
-TypeScript and Python are the SDK code snippet languages supported today. Our development work is driven by customer requests, so please request support for another language by [opening an issue](https://github.com/fern-api/fern/issues/new/choose).
+TypeScript, Python, Go, and Ruby are the SDK code snippet languages supported today. Our development work is driven by customer requests, so please request support for another language by [opening an issue](https://github.com/fern-api/fern/issues/new/choose).
 
 ## Configuring SDK Snippets
 
 To configure SDK snippets, you'll need to name your SDKs in `generators.yml` and then reference that name in `docs.yml`. In the following example, We'll use `your-organization` as the package name because it is a common practice. For example, Stripe calls their npm package `stripe` and Twilio calls their PyPI package `twilio`.
 
-### Step 1: Add examples to your API definition.
+### Add examples to your API definition
 
 In order to generate code snippets, Fern needs to read request examples from your API definition. If you're using a Fern Definition, you can follow [these instructions](/learn/api-definition/fern/examples). If you're using an OpenAPI Specification, you can follow [these instructions](https://swagger.io/docs/specification/adding-examples/).
 
-### Step 2: Define a package name for your SDK(s).
+### Define a package name for your SDK(s)
 
 <CodeBlock title="generators.yml">
 ```yaml
@@ -32,31 +32,43 @@ groups:
   production:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 0.7.6
+        version: 2.8.0
         output:
           location: pypi
           token: ${PYPI_TOKEN}
-          package-name: YOUR_ORGANIZATION # <---- add this field
+          package-name: your-package-name # <---- add this field
         ...
      - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.0
+        version: 0.20.9
         output:
           location: npm
           token: ${NPM_TOKEN}
-          package-name: YOUR_ORGANIZATION # <---- add this field
+          package-name: your-package-name # <---- add this field
+     - name: fernapi/fern-ruby-sdk
+        version: 0.6.3
+        output:
+          location: rubygems
+          token: ${RUBYGEMS_TOKEN}
+          package-name: your-package-name # <---- add this field
+     - name: fernapi/fern-go-sdk
+        version: 0.22.0
+        github:
+          repository: your-organization/your-repository # <---- add this field
         ...        
 ```
 </CodeBlock>
 
-### Step 3: Add the package name to your docs configuration.
+### Add the package name to your docs configuration
 
 <CodeBlock title="docs.yml">
 ```yaml 
 navigation:
   - api: API Reference
     snippets:
-      python: YOUR_ORGANIZATION  # <---- needs to match the naming in generators.yml
-      typescript: YOUR_ORGANIZATION 
+      python: your-package-name  # <---- needs to match the naming in generators.yml
+      typescript: your-package-name
+      ruby: your-package-name
+      go: https://github.com/your-organization/your-repository # <---- needs the https://github.com/ prefix
 ```
 </CodeBlock>
 

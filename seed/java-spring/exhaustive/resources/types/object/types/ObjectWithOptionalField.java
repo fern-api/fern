@@ -17,6 +17,7 @@ import java.lang.Integer;
 import java.lang.Long;
 import java.lang.Object;
 import java.lang.String;
+import java.math.BigInteger;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ObjectWithOptionalField.Builder.class
 )
@@ -54,11 +55,13 @@ public final class ObjectWithOptionalField {
 
   private final Optional<Map<Integer, String>> map;
 
+  private final Optional<BigInteger> bigint;
+
   private ObjectWithOptionalField(Optional<String> string, Optional<Integer> integer,
       Optional<Long> long_, Optional<Double> double_, Optional<Boolean> bool,
       Optional<OffsetDateTime> datetime, Optional<String> date, Optional<UUID> uuid,
       Optional<byte[]> base64, Optional<List<String>> list, Optional<Set<String>> set,
-      Optional<Map<Integer, String>> map) {
+      Optional<Map<Integer, String>> map, Optional<BigInteger> bigint) {
     this.string = string;
     this.integer = integer;
     this.long_ = long_;
@@ -71,8 +74,12 @@ public final class ObjectWithOptionalField {
     this.list = list;
     this.set = set;
     this.map = map;
+    this.bigint = bigint;
   }
 
+  /**
+   * @return This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
+   */
   @JsonProperty("string")
   public Optional<String> getString() {
     return string;
@@ -133,6 +140,11 @@ public final class ObjectWithOptionalField {
     return map;
   }
 
+  @JsonProperty("bigint")
+  public Optional<BigInteger> getBigint() {
+    return bigint;
+  }
+
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -140,12 +152,12 @@ public final class ObjectWithOptionalField {
   }
 
   private boolean equalTo(ObjectWithOptionalField other) {
-    return string.equals(other.string) && integer.equals(other.integer) && long_.equals(other.long_) && double_.equals(other.double_) && bool.equals(other.bool) && datetime.equals(other.datetime) && date.equals(other.date) && uuid.equals(other.uuid) && base64.equals(other.base64) && list.equals(other.list) && set.equals(other.set) && map.equals(other.map);
+    return string.equals(other.string) && integer.equals(other.integer) && long_.equals(other.long_) && double_.equals(other.double_) && bool.equals(other.bool) && datetime.equals(other.datetime) && date.equals(other.date) && uuid.equals(other.uuid) && base64.equals(other.base64) && list.equals(other.list) && set.equals(other.set) && map.equals(other.map) && bigint.equals(other.bigint);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.string, this.integer, this.long_, this.double_, this.bool, this.datetime, this.date, this.uuid, this.base64, this.list, this.set, this.map);
+    return Objects.hash(this.string, this.integer, this.long_, this.double_, this.bool, this.datetime, this.date, this.uuid, this.base64, this.list, this.set, this.map, this.bigint);
   }
 
   @java.lang.Override
@@ -185,6 +197,8 @@ public final class ObjectWithOptionalField {
 
     private Optional<Map<Integer, String>> map = Optional.empty();
 
+    private Optional<BigInteger> bigint = Optional.empty();
+
     private Builder() {
     }
 
@@ -201,6 +215,7 @@ public final class ObjectWithOptionalField {
       list(other.getList());
       set(other.getSet());
       map(other.getMap());
+      bigint(other.getBigint());
       return this;
     }
 
@@ -214,7 +229,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder string(String string) {
-      this.string = Optional.of(string);
+      this.string = Optional.ofNullable(string);
       return this;
     }
 
@@ -228,7 +243,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder integer(Integer integer) {
-      this.integer = Optional.of(integer);
+      this.integer = Optional.ofNullable(integer);
       return this;
     }
 
@@ -242,7 +257,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder long_(Long long_) {
-      this.long_ = Optional.of(long_);
+      this.long_ = Optional.ofNullable(long_);
       return this;
     }
 
@@ -256,7 +271,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder double_(Double double_) {
-      this.double_ = Optional.of(double_);
+      this.double_ = Optional.ofNullable(double_);
       return this;
     }
 
@@ -270,7 +285,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder bool(Boolean bool) {
-      this.bool = Optional.of(bool);
+      this.bool = Optional.ofNullable(bool);
       return this;
     }
 
@@ -284,7 +299,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder datetime(OffsetDateTime datetime) {
-      this.datetime = Optional.of(datetime);
+      this.datetime = Optional.ofNullable(datetime);
       return this;
     }
 
@@ -298,7 +313,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder date(String date) {
-      this.date = Optional.of(date);
+      this.date = Optional.ofNullable(date);
       return this;
     }
 
@@ -312,7 +327,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder uuid(UUID uuid) {
-      this.uuid = Optional.of(uuid);
+      this.uuid = Optional.ofNullable(uuid);
       return this;
     }
 
@@ -326,7 +341,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder base64(byte[] base64) {
-      this.base64 = Optional.of(base64);
+      this.base64 = Optional.ofNullable(base64);
       return this;
     }
 
@@ -340,7 +355,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder list(List<String> list) {
-      this.list = Optional.of(list);
+      this.list = Optional.ofNullable(list);
       return this;
     }
 
@@ -354,7 +369,7 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder set(Set<String> set) {
-      this.set = Optional.of(set);
+      this.set = Optional.ofNullable(set);
       return this;
     }
 
@@ -368,12 +383,26 @@ public final class ObjectWithOptionalField {
     }
 
     public Builder map(Map<Integer, String> map) {
-      this.map = Optional.of(map);
+      this.map = Optional.ofNullable(map);
+      return this;
+    }
+
+    @JsonSetter(
+        value = "bigint",
+        nulls = Nulls.SKIP
+    )
+    public Builder bigint(Optional<BigInteger> bigint) {
+      this.bigint = bigint;
+      return this;
+    }
+
+    public Builder bigint(BigInteger bigint) {
+      this.bigint = Optional.ofNullable(bigint);
       return this;
     }
 
     public ObjectWithOptionalField build() {
-      return new ObjectWithOptionalField(string, integer, long_, double_, bool, datetime, date, uuid, base64, list, set, map);
+      return new ObjectWithOptionalField(string, integer, long_, double_, bool, datetime, date, uuid, base64, list, set, map, bigint);
     }
   }
 }

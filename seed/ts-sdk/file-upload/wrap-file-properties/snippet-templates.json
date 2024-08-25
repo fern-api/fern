@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_service.post"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedFileUploadClient } from \"@fern/file-upload\";"
+                ],
+                "templateString": "const client = new SeedFileUploadClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedFileUpload.service.post(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.post(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -245,10 +276,41 @@
             "identifierOverride": "endpoint_service.justFile"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedFileUploadClient } from \"@fern/file-upload\";"
+                ],
+                "templateString": "const client = new SeedFileUploadClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedFileUpload.service.justFile(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.justFile(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -300,10 +362,41 @@
             "identifierOverride": "endpoint_service.justFileWithQueryParams"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedFileUpload = new SeedFileUploadClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedFileUploadClient } from \"@fern/file-upload\";"
+                ],
+                "templateString": "const client = new SeedFileUploadClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedFileUpload.service.justFileWithQueryParams(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.justFileWithQueryParams(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

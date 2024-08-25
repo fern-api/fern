@@ -34,12 +34,14 @@ interface RunningScriptConfig extends ScriptConfig {
  * Runs scripts on the generated code to verify the output.
  */
 export class ScriptRunner {
-    private startContainersFn: Promise<void>;
+    private startContainersFn: Promise<void> | undefined;
     private scripts: RunningScriptConfig[] = [];
     private lock = new Semaphore(1);
 
-    constructor(private readonly workspace: GeneratorWorkspace) {
-        this.startContainersFn = this.startContainers();
+    constructor(private readonly workspace: GeneratorWorkspace, private readonly skipScripts: boolean) {
+        if (!skipScripts) {
+            this.startContainersFn = this.startContainers();
+        }
     }
 
     public async run({ taskContext, id, outputDir }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
@@ -82,7 +84,7 @@ export class ScriptRunner {
 
         const workDir = id.replace(":", "_");
         const scriptFile = await tmp.file();
-        await writeFile(scriptFile.path, [`cd /${workDir}/generated`, ...script.commands].join("\n"));
+        await writeFile(scriptFile.path, ["set -e", `cd /${workDir}/generated`, ...script.commands].join("\n"));
 
         // Move scripts and generated files into the container
         const mkdirCommand = await loggingExeca(
@@ -95,7 +97,7 @@ export class ScriptRunner {
             }
         );
         if (mkdirCommand.failed) {
-            taskContext.logger.error("Failed to mkdir for scripts. See ouptut below");
+            taskContext.logger.error("Failed to mkdir for scripts. See output below");
             taskContext.logger.error(mkdirCommand.stdout);
             taskContext.logger.error(mkdirCommand.stderr);
             return { type: "failure", message: mkdirCommand.stdout };
@@ -110,7 +112,7 @@ export class ScriptRunner {
             }
         );
         if (copyScriptCommand.failed) {
-            taskContext.logger.error("Failed to copy script. See ouptut below");
+            taskContext.logger.error("Failed to copy script. See output below");
             taskContext.logger.error(copyScriptCommand.stdout);
             taskContext.logger.error(copyScriptCommand.stderr);
             return { type: "failure", message: copyScriptCommand.stdout };
@@ -125,7 +127,7 @@ export class ScriptRunner {
             }
         );
         if (copyCommand.failed) {
-            taskContext.logger.error("Failed to copy generated files. See ouptut below");
+            taskContext.logger.error("Failed to copy generated files. See output below");
             taskContext.logger.error(copyCommand.stdout);
             taskContext.logger.error(copyCommand.stderr);
             return { type: "failure", message: copyCommand.stdout };
@@ -142,7 +144,7 @@ export class ScriptRunner {
             }
         );
         if (command.failed) {
-            taskContext.logger.error("Failed to run script. See ouptut below");
+            taskContext.logger.error("Failed to run script. See output below");
             taskContext.logger.error(command.stdout);
             taskContext.logger.error(command.stderr);
             return { type: "failure", message: command.stdout };

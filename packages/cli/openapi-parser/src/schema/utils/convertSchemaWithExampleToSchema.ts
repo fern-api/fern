@@ -21,11 +21,14 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 groupName: schema.groupName,
-                additionalProperties: schema.additionalProperties
+                additionalProperties: schema.additionalProperties,
+                availability: schema.availability,
+                source: schema.source
             });
         case "array":
             return Schema.array({
                 description: schema.description,
+                availability: schema.availability,
                 value: convertSchemaWithExampleToSchema(schema.value),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
@@ -34,14 +37,18 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
         case "enum":
             return Schema.enum({
                 description: schema.description,
+                availability: schema.availability,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 values: schema.values,
-                groupName: schema.groupName
+                default: schema.default,
+                groupName: schema.groupName,
+                source: schema.source
             });
         case "literal":
             return Schema.literal({
                 description: schema.description,
+                availability: schema.availability,
                 value: schema.value,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
@@ -52,6 +59,7 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 description: schema.description,
+                availability: schema.availability,
                 value: convertSchemaWithExampleToSchema(schema.value),
                 groupName: schema.groupName
             });
@@ -60,12 +68,14 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 description: schema.description,
+                availability: schema.availability,
                 value: convertSchemaWithExampleToSchema(schema.value),
                 groupName: schema.groupName
             });
         case "primitive":
             return Schema.primitive({
                 description: schema.description,
+                availability: schema.availability,
                 schema: convertToPrimitiveSchemaValue(schema.schema),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
@@ -74,8 +84,10 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
         case "map":
             return Schema.map({
                 description: schema.description,
+                availability: schema.availability,
                 key: Schema.primitive({
                     description: schema.key.description,
+                    availability: schema.key.availability,
                     schema: convertToPrimitiveSchemaValue(schema.key.schema),
                     generatedName: schema.key.generatedName,
                     nameOverride: schema.key.nameOverride,
@@ -84,15 +96,18 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 value: convertSchemaWithExampleToSchema(schema.value),
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                encoding: schema.encoding
             });
         case "reference":
             return Schema.reference({
                 description: schema.description,
+                availability: schema.availability,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 schema: schema.schema,
-                groupName: schema.groupName
+                groupName: schema.groupName,
+                source: schema.source
             });
         case "oneOf":
             return Schema.oneOf(convertToOneOf(schema.value));
@@ -118,6 +133,7 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 description: schema.description,
+                availability: schema.availability,
                 value: convertSchemaWithExampleToSchema(schema),
                 groupName: schema.groupName
             });
@@ -126,6 +142,7 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
                 description: schema.description,
+                availability: schema.availability,
                 value: convertSchemaWithExampleToSchema(schema.value),
                 groupName: schema.groupName
             });
@@ -135,6 +152,7 @@ export function convertSchemaWithExampleToOptionalSchema(schema: SchemaWithExamp
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 description: oneOfSchema.description,
+                availability: oneOfSchema.availability,
                 value: Schema.oneOf(convertToOneOf(schema.value)),
                 groupName: oneOfSchema.groupName
             });
@@ -155,6 +173,7 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                     };
                 }),
                 description: oneOfSchema.description,
+                availability: oneOfSchema.availability,
                 discriminantProperty: oneOfSchema.discriminantProperty,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
@@ -163,15 +182,20 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                         return [discriminantValue, convertSchemaWithExampleToSchema(schemaWithExample)];
                     })
                 ),
-                groupName: oneOfSchema.groupName
+                groupName: oneOfSchema.groupName,
+                encoding: oneOfSchema.encoding,
+                source: oneOfSchema.source
             });
         case "undisciminated":
             return OneOfSchema.undisciminated({
                 description: oneOfSchema.description,
+                availability: oneOfSchema.availability,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
                 schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema)),
-                groupName: oneOfSchema.groupName
+                groupName: oneOfSchema.groupName,
+                encoding: oneOfSchema.encoding,
+                source: oneOfSchema.source
             });
         default:
             assertNever(oneOfSchema);
@@ -185,7 +209,7 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWith
         case "base64":
             return PrimitiveSchemaValue.base64();
         case "boolean":
-            return PrimitiveSchemaValue.boolean();
+            return PrimitiveSchemaValue.boolean(primitiveSchema);
         case "date":
             return PrimitiveSchemaValue.date();
         case "datetime":
@@ -197,7 +221,11 @@ function convertToPrimitiveSchemaValue(primitiveSchema: PrimitiveSchemaValueWith
         case "int":
             return PrimitiveSchemaValue.int(primitiveSchema);
         case "int64":
-            return PrimitiveSchemaValue.int64();
+            return PrimitiveSchemaValue.int64(primitiveSchema);
+        case "uint":
+            return PrimitiveSchemaValue.uint();
+        case "uint64":
+            return PrimitiveSchemaValue.uint64();
         default:
             assertNever(primitiveSchema);
     }
@@ -210,6 +238,7 @@ function convertToObjectProperty(objectProperty: ObjectPropertyWithExample): Obj
         key: objectProperty.key,
         schema: convertSchemaWithExampleToSchema(objectProperty.schema),
         audiences: objectProperty.audiences,
-        nameOverride: objectProperty.nameOverride
+        nameOverride: objectProperty.nameOverride,
+        availability: objectProperty.availability
     };
 }

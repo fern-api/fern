@@ -3,10 +3,11 @@
  */
 package com.seed.literal.resources.query;
 
-import com.seed.literal.core.ApiError;
 import com.seed.literal.core.ClientOptions;
 import com.seed.literal.core.ObjectMappers;
 import com.seed.literal.core.RequestOptions;
+import com.seed.literal.core.SeedLiteralApiException;
+import com.seed.literal.core.SeedLiteralException;
 import com.seed.literal.resources.query.requests.SendLiteralsInQueryRequest;
 import com.seed.literal.types.SendResponse;
 import java.io.IOException;
@@ -42,22 +43,22 @@ public class QueryClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();
-        try {
-            OkHttpClient client = clientOptions.httpClient();
-            if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-                client = clientOptions.httpClientWithTimeout(requestOptions);
-            }
-            Response response = client.newCall(okhttpRequest).execute();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
                 return ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), SendResponse.class);
             }
-            throw new ApiError(
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            throw new SeedLiteralApiException(
+                    "Error with status code " + response.code(),
                     response.code(),
-                    ObjectMappers.JSON_MAPPER.readValue(
-                            responseBody != null ? responseBody.string() : "{}", Object.class));
+                    ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new SeedLiteralException("Network error executing HTTP request", e);
         }
     }
 }

@@ -7,7 +7,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, cast
 
-from fern.generator_exec.resources import (
+from fern.generator_exec import (
     BasicLicense,
     GithubOutputMode,
     LicenseConfig,
@@ -204,12 +204,16 @@ packages = [
         def to_string(self) -> str:
             deps = self.deps_to_string(self.dependencies)
             dev_deps = self.deps_to_string(self.dev_dependencies)
+            # Note mypy and pydantic don't play well together, we either needed
+            # to use an old mypy version (1.0.1) or bump the pydantic version (1.10.7)
+            # I couldn't confirm bumping the pydantic version worked, so we lower mypy for now
+            # https://github.com/pydantic/pydantic/issues/5070
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
 {deps}
 [tool.poetry.dev-dependencies]
-mypy = "1.9.0"
+mypy = "1.0.1"
 pytest = "^7.4.0"
 pytest-asyncio = "^0.23.5"
 python-dateutil = "^2.9.0"
@@ -226,6 +230,9 @@ asyncio_mode = "auto"
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
+
+[tool.ruff]
+line-length = 120
 
 """
 

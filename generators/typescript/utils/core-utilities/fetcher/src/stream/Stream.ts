@@ -106,14 +106,14 @@ export class Stream<T> implements AsyncIterable<T> {
 
     private decodeChunk(chunk: any): string {
         let decoded = "";
-        // Buffer is present in Node.js environment
-        if (RUNTIME.type === "node" && typeof chunk != "undefined") {
-            decoded += Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
-        }
-        // TextDecoder is present in Browser environment
-        else if (RUNTIME.type === "browser" && typeof TextDecoder !== "undefined") {
+        // If TextDecoder is present, use it
+        if (typeof TextDecoder !== "undefined") {
             const decoder = new TextDecoder("utf8");
             decoded += decoder.decode(chunk);
+        }
+        // Buffer is present in Node.js environment
+        else if (RUNTIME.type === "node" && typeof chunk != "undefined") {
+            decoded += Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk);
         }
         return decoded;
     }

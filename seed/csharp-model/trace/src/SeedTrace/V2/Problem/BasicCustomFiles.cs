@@ -1,22 +1,28 @@
 using System.Text.Json.Serialization;
 using SeedTrace;
-using SeedTrace.V2;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2;
 
-public class BasicCustomFiles
+public record BasicCustomFiles
 {
     [JsonPropertyName("methodName")]
-    public string MethodName { get; init; }
+    public required string MethodName { get; set; }
 
     [JsonPropertyName("signature")]
-    public NonVoidFunctionSignature Signature { get; init; }
+    public required NonVoidFunctionSignature Signature { get; set; }
 
     [JsonPropertyName("additionalFiles")]
-    public Dictionary<Language, Files> AdditionalFiles { get; init; }
+    public Dictionary<Language, Files> AdditionalFiles { get; set; } =
+        new Dictionary<Language, Files>();
 
     [JsonPropertyName("basicTestCaseTemplate")]
-    public BasicTestCaseTemplate BasicTestCaseTemplate { get; init; }
+    public required BasicTestCaseTemplate BasicTestCaseTemplate { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

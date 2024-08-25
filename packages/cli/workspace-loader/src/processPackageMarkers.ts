@@ -9,6 +9,7 @@ import { ParsedFernFile } from "./types/FernFile";
 import { WorkspaceLoader, WorkspaceLoaderFailureType } from "./types/Result";
 import { FernDefinition } from "./types/Workspace";
 import { validateStructureOfYamlFiles } from "./validateStructureOfYamlFiles";
+import { OSSWorkspace } from "./workspaces";
 
 export declare namespace processPackageMarkers {
     export type Return = SuccessfulResult | FailedResult;
@@ -16,12 +17,17 @@ export declare namespace processPackageMarkers {
     export interface SuccessfulResult {
         didSucceed: true;
         packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>>;
-        importedDefinitions: Record<RelativeFilePath, FernDefinition>;
+        importedDefinitions: Record<RelativeFilePath, ImportedDefinition>;
     }
 
     export interface FailedResult {
         didSucceed: false;
         failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure>;
+    }
+
+    export interface ImportedDefinition {
+        url: string | undefined;
+        definition: FernDefinition;
     }
 }
 
@@ -29,15 +35,17 @@ export async function processPackageMarkers({
     dependenciesConfiguration,
     structuralValidationResult,
     context,
-    cliVersion
+    cliVersion,
+    settings
 }: {
     dependenciesConfiguration: dependenciesYml.DependenciesConfiguration;
     structuralValidationResult: validateStructureOfYamlFiles.SuccessfulResult;
     context: TaskContext;
     cliVersion: string;
+    settings?: OSSWorkspace.Settings;
 }): Promise<processPackageMarkers.Return> {
     const packageMarkers: Record<RelativeFilePath, ParsedFernFile<PackageMarkerFileSchema>> = {};
-    const importedDefinitions: Record<RelativeFilePath, FernDefinition> = {};
+    const importedDefinitions: Record<RelativeFilePath, processPackageMarkers.ImportedDefinition> = {};
     const failures: Record<RelativeFilePath, WorkspaceLoader.DependencyFailure> = {};
 
     await Promise.all(
@@ -63,14 +71,24 @@ export async function processPackageMarkers({
                         };
                     } else {
                         const loadDependencyResult = await loadDependency({
-                            dependencyName: packageMarker.contents.export,
+                            dependencyName:
+                                typeof packageMarker.contents.export === "string"
+                                    ? packageMarker.contents.export
+                                    : packageMarker.contents.export.dependency,
                             dependenciesConfiguration,
                             context,
                             rootApiFile: structuralValidationResult.rootApiFile.contents,
-                            cliVersion
+                            cliVersion,
+                            settings
                         });
                         if (loadDependencyResult.didSucceed) {
-                            importedDefinitions[dirname(pathOfPackageMarker)] = loadDependencyResult.definition;
+                            importedDefinitions[dirname(pathOfPackageMarker)] = {
+                                definition: loadDependencyResult.definition,
+                                url:
+                                    typeof packageMarker.contents.export === "object"
+                                        ? packageMarker.contents.export.url
+                                        : undefined
+                            };
                         } else {
                             failures[pathOfPackageMarker] = loadDependencyResult.failure;
                         }

@@ -9,7 +9,7 @@ describe("migrateFromV7ToV6", () => {
         const migrated = await runMigration({
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
-        expect(migrated.services).toEqual([
+        expect(migrated.ir.services).toEqual([
             {
                 availability: {
                     message: undefined,

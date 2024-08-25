@@ -3,7 +3,7 @@ import {
     ErrorDiscriminationStrategy,
     HttpEndpoint,
     HttpService,
-    PrimitiveType,
+    PrimitiveTypeV1,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { getSchemaOptions, PackageId } from "@fern-typescript/commons";
@@ -27,6 +27,7 @@ export declare namespace GeneratedSdkEndpointTypeSchemasImpl {
         skipResponseValidation: boolean;
         includeSerdeLayer: boolean;
         allowExtraFields: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -43,6 +44,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
     private skipResponseValidation: boolean;
     private includeSerdeLayer: boolean;
     private allowExtraFields: boolean;
+    private omitUndefined: boolean;
 
     constructor({
         packageId,
@@ -53,12 +55,14 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         shouldGenerateErrors,
         skipResponseValidation,
         includeSerdeLayer,
-        allowExtraFields
+        allowExtraFields,
+        omitUndefined
     }: GeneratedSdkEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.skipResponseValidation = skipResponseValidation;
         this.includeSerdeLayer = includeSerdeLayer;
         this.allowExtraFields = allowExtraFields;
+        this.omitUndefined = omitUndefined;
 
         if (this.includeSerdeLayer) {
             // only generate request schemas for referenced request bodies.  inlined
@@ -222,7 +226,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     .getSchemaOfNamedType(this.endpoint.requestBody.requestBodyType, { isGeneratingSchema: false })
                     .jsonOrThrow(referenceToParsedRequest, {
                         ...getSchemaOptions({
-                            allowExtraFields: this.allowExtraFields
+                            allowExtraFields: this.allowExtraFields,
+                            omitUndefined: this.omitUndefined
                         })
                     });
             case "primitive":
@@ -234,7 +239,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     .getReferenceToZurgSchema(context)
                     .jsonOrThrow(referenceToParsedRequest, {
                         ...getSchemaOptions({
-                            allowExtraFields: this.allowExtraFields
+                            allowExtraFields: this.allowExtraFields,
+                            omitUndefined: this.omitUndefined
                         })
                     });
             default:
@@ -249,6 +255,9 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         if (this.endpoint.response.body.type === "streaming") {
             throw new Error("Cannot deserailize streaming response in deserializeResponse");
         }
+        if (this.endpoint.response.body.type === "streamParameter") {
+            throw new Error("Cannot deserailize streaming response in deserializeResponse");
+        }
 
         if (this.endpoint.response.body.type === "fileDownload") {
             return referenceToRawResponse;
@@ -257,7 +266,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         if (this.endpoint.response.body.type === "text") {
             return ts.factory.createAsExpression(
                 referenceToRawResponse,
-                context.type.getReferenceToType(TypeReference.primitive(PrimitiveType.String)).typeNode
+                context.type.getReferenceToType(TypeReference.primitive({ v1: PrimitiveTypeV1.String, v2: undefined }))
+                    .typeNode
             );
         }
 
@@ -283,7 +293,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"]
+                        breadcrumbsPrefix: ["response"],
+                        omitUndefined: false
                     });
             case "primitive":
             case "container":
@@ -297,7 +308,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"]
+                        breadcrumbsPrefix: ["response"],
+                        omitUndefined: false
                     });
             default:
                 assertNever(this.endpoint.response.body.value.responseBodyType);
@@ -316,7 +328,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             allowUnrecognizedUnionMembers: true,
             unrecognizedObjectKeys: "passthrough",
             skipValidation: this.skipResponseValidation,
-            breadcrumbsPrefix: ["response"]
+            breadcrumbsPrefix: ["response"],
+            omitUndefined: false
         });
     }
 
@@ -345,7 +358,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"]
+                        breadcrumbsPrefix: ["response"],
+                        omitUndefined: false
                     });
             case "primitive":
             case "container":
@@ -359,7 +373,8 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"]
+                        breadcrumbsPrefix: ["response"],
+                        omitUndefined: false
                     });
             default:
                 assertNever(this.endpoint.response.body?.value.payload);

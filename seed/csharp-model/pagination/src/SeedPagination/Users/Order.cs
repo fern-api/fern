@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedPagination;
 using SeedPagination.Core;
 
 #nullable enable
@@ -14,5 +13,5 @@ public enum Order
     Asc,
 
     [EnumMember(Value = "desc")]
-    Desc
+    Desc,
 }

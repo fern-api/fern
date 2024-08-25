@@ -37,12 +37,6 @@ describe("valid-service-urls", () => {
 
         const expectedViolations: ValidationViolation[] = [
             {
-                message: '"url" cannot be specified on both the service and endpoint',
-                nodePath: ["service", "endpoints", "test", "url"],
-                relativeFilepath: RelativeFilePath.of("both-service-and-endpoint.yml"),
-                severity: "error"
-            },
-            {
                 message: `URL InvalidUrl is not recognized. Please add it to your environments in api.yml or specify one of the configured environment URLs:
   - A
   - B

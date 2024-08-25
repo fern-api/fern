@@ -1,11 +1,10 @@
-import { Audiences } from "@fern-api/configuration";
+import { Audiences, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
-import { generatorsYml } from "@fern-api/configuration";
 import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-migrations";
 import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
@@ -18,7 +17,9 @@ export async function generateIrForWorkspaces({
     generationLanguage,
     audiences,
     version,
-    smartCasing
+    keywords,
+    smartCasing,
+    readme
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -26,24 +27,26 @@ export async function generateIrForWorkspaces({
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
     audiences: Audiences;
     version: string | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                const fernWorkspace =
-                    workspace.type === "oss"
-                        ? await convertOpenApiWorkspaceToFernWorkspace(workspace, context)
-                        : workspace;
+                cliContext.logger.info(`Generating IR for workspace ${workspace.workspaceName}`);
+                const fernWorkspace = await workspace.toFernWorkspace({ context });
 
                 const intermediateRepresentation = await getIntermediateRepresentation({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage,
+                    keywords,
                     smartCasing,
                     disableExamples: false,
                     audiences,
-                    version
+                    version,
+                    readme
                 });
 
                 const irOutputFilePath = path.resolve(irFilepath);
@@ -62,25 +65,31 @@ async function getIntermediateRepresentation({
     context,
     generationLanguage,
     audiences,
+    keywords,
     smartCasing,
     disableExamples,
-    version
+    version,
+    readme
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
     generationLanguage: generatorsYml.GenerationLanguage | undefined;
+    keywords: string[] | undefined;
     smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
     version: string | undefined;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<unknown> {
     const intermediateRepresentation = await generateIrForFernWorkspace({
         workspace,
         context,
         generationLanguage,
         audiences,
+        keywords,
         smartCasing,
-        disableExamples
+        disableExamples,
+        readme
     });
 
     if (version == null) {

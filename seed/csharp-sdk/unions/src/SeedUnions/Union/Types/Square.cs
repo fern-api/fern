@@ -1,11 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedUnions.Core;
 
 #nullable enable
 
 namespace SeedUnions;
 
-public class Square
+public record Square
 {
     [JsonPropertyName("length")]
-    public double Length { get; init; }
+    public required double Length { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

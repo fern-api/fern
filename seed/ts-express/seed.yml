@@ -1,6 +1,6 @@
-irVersion: v43
+irVersion: v53
 docker: fernapi/fern-typescript-express:local
-dockerCommand: yarn workspace @fern-typescript/express-generator-cli dockerTagLocal
+dockerCommand: pnpm --filter @fern-typescript/express-generator-cli dockerTagLocal
 language: typescript
 generatorType: Server
 defaultOutputMode: local_files
@@ -9,8 +9,8 @@ defaultCustomConfig:
 local: 
   workingDirectory: generators/typescript
   buildCommand: 
-    - yarn workspace @fern-typescript/express-generator-cli compile 
-    - yarn workspace @fern-typescript/express-generator-cli build
+    - pnpm --filter @fern-typescript/express-generator-cli compile 
+    - pnpm --filter @fern-typescript/express-generator-cli build
   runCommand: node express/cli/dist/cli.cjs
   env: 
     NODE_ENV: test
@@ -33,6 +33,9 @@ fixtures:
     - customConfig: 
         skipResponseValidation: true
       outputFolder: skip-response-validation
+    - customConfig: 
+        requestValidationStatusCode: 400
+      outputFolder: validation-status-code
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
@@ -60,6 +63,7 @@ allowedFailures:
   - file-upload
   - plain-text
   - streaming
+  - streaming-parameter
   - server-sent-events
 
 

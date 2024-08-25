@@ -10,10 +10,10 @@ export const SinglyLinkedListValue: core.serialization.ObjectSchema<
     serializers.SinglyLinkedListValue.Raw,
     SeedTrace.SinglyLinkedListValue
 > = core.serialization.object({
-    head: core.serialization.lazy(async () => (await import("../../..")).NodeId).optional(),
+    head: core.serialization.lazy(() => serializers.NodeId).optional(),
     nodes: core.serialization.record(
-        core.serialization.lazy(async () => (await import("../../..")).NodeId),
-        core.serialization.lazyObject(async () => (await import("../../..")).SinglyLinkedListNodeValue)
+        core.serialization.lazy(() => serializers.NodeId),
+        core.serialization.lazyObject(() => serializers.SinglyLinkedListNodeValue)
     ),
 });
 

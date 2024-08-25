@@ -44,7 +44,7 @@ export class MigrationService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(responseBody, {
+                                serializers.migration.getAttemptedMigrations.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

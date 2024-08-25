@@ -1,4 +1,4 @@
-from typing import Dict, List, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 
 import pydantic
 from fern_python.codegen.module_manager import ModuleExport
@@ -10,7 +10,6 @@ class SdkPydanticModelCustomConfig(PydanticModelCustomConfig):
     orm_mode: bool = False
     smart_union: bool = True
     include_union_utils: bool = False
-    wrapped_aliases: bool = False
     require_optional_fields: bool = False
 
 
@@ -66,5 +65,19 @@ class SDKCustomConfig(pydantic.BaseModel):
     # to change your version requirements.
     pyproject_python_version: Optional[str] = "^3.8"
 
+    # Whether or not to generate TypedDicts instead of Pydantic
+    # Models for request objects.
+    use_typeddict_requests: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
+
+    @classmethod
+    def parse_obj(cls, obj: Any) -> "SDKCustomConfig":
+        obj = super().parse_obj(obj)
+
+        use_typeddict_requests = obj.use_typeddict_requests or obj.pydantic_config.use_typeddict_requests
+        obj.use_typeddict_requests = use_typeddict_requests
+        obj.pydantic_config.use_typeddict_requests = use_typeddict_requests
+
+        return obj

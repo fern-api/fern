@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedQueryParameters;
+using SeedQueryParameters.Core;
 
 #nullable enable
 
 namespace SeedQueryParameters;
 
-public class NestedUser
+public record NestedUser
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("user")]
-    public User User { get; init; }
+    public required User User { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

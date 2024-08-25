@@ -27,6 +27,9 @@ import {
     buildUnknownTypeReference
 } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertAvailability } from "./utils/convertAvailability";
+import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
+import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
 export interface ConvertedTypeDeclaration {
@@ -107,24 +110,17 @@ export function buildObjectTypeDeclaration({
             context,
             fileContainingReference: declarationFile
         });
+
         const audiences = property.audiences;
         const name = property.nameOverride;
-        if (audiences.length > 0 && name != null) {
-            properties[property.key] =
-                typeof typeReference === "string"
-                    ? { type: typeReference, audiences, name }
-                    : { ...typeReference, audiences, name };
-        } else if (name != null) {
-            properties[property.key] =
-                typeof typeReference === "string" ? { type: typeReference, name } : { ...typeReference, name };
-        } else if (audiences.length > 0) {
-            properties[property.key] =
-                typeof typeReference === "string"
-                    ? { type: typeReference, audiences }
-                    : { ...typeReference, audiences };
-        } else {
-            properties[property.key] = typeReference;
-        }
+        const availability = convertAvailability(property.availability);
+
+        properties[property.key] = convertPropertyTypeReferenceToTypeDefinition(
+            typeReference,
+            audiences,
+            name,
+            availability
+        );
     }
     const propertiesToSetToUnknown: Set<string> = new Set<string>();
 
@@ -207,6 +203,13 @@ export function buildObjectTypeDeclaration({
     if (schema.additionalProperties) {
         objectTypeDeclaration["extra-properties"] = true;
     }
+    if (schema.availability != null) {
+        objectTypeDeclaration.availability = convertAvailability(schema.availability);
+    }
+    if (schema.source != null) {
+        objectTypeDeclaration.source = convertToSourceSchema(schema.source);
+    }
+
     return {
         name: schema.nameOverride ?? schema.generatedName,
         schema: objectTypeDeclaration
@@ -297,6 +300,7 @@ export function buildMapTypeDeclaration({
 
 export function buildPrimitiveTypeDeclaration(schema: PrimitiveSchema): ConvertedTypeDeclaration {
     const typeReference = buildPrimitiveTypeReference(schema);
+
     if (typeof typeReference === "string") {
         return {
             name: schema.nameOverride ?? schema.generatedName,
@@ -329,6 +333,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
             ) {
                 return name;
             }
+
             const enumValueDeclaration: RawSchemas.EnumValueSchema = {
                 value: enumValue.value
             };
@@ -367,10 +372,14 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
     if (schema.description != null) {
         enumSchema.docs = schema.description;
     }
+    if (schema.default != null) {
+        enumSchema.default = schema.default.value;
+    }
     const uniqueEnumName = new Set<string>();
     const uniqueEnumSchema: RawSchemas.EnumSchema = {
         ...enumSchema,
-        enum: []
+        enum: [],
+        source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
     };
     for (const enumValue of enumSchema.enum) {
         const name = typeof enumValue === "string" ? enumValue : enumValue.name ?? enumValue.value;
@@ -450,6 +459,7 @@ export function buildOneOfTypeDeclaration({
     context: OpenApiIrConverterContext;
     declarationFile: RelativeFilePath;
 }): ConvertedTypeDeclaration {
+    const encoding = schema.encoding != null ? convertToEncodingSchema(schema.encoding) : undefined;
     if (schema.type === "discriminated") {
         const baseProperties: Record<string, RawSchemas.ObjectPropertySchema> = {};
         for (const property of schema.commonProperties) {
@@ -473,7 +483,9 @@ export function buildOneOfTypeDeclaration({
                 discriminant: schema.discriminantProperty,
                 "base-properties": baseProperties,
                 docs: schema.description ?? undefined,
-                union
+                union,
+                encoding,
+                source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
             }
         };
     }
@@ -493,7 +505,9 @@ export function buildOneOfTypeDeclaration({
         schema: {
             discriminated: false,
             docs: schema.description ?? undefined,
-            union
+            union,
+            encoding,
+            source: schema.source != null ? convertToSourceSchema(schema.source) : undefined
         }
     };
 }
@@ -518,4 +532,22 @@ function getSchemaIdOfResolvedType({
         return getSchemaIdOfResolvedType({ context, schema: resolvedSchema.schema });
     }
     return schema;
+}
+
+function convertPropertyTypeReferenceToTypeDefinition(
+    typeReference: RawSchemas.TypeReferenceWithDocsSchema,
+    audiences: string[],
+    name?: string | undefined,
+    availability?: RawSchemas.AvailabilityUnionSchema
+): RawSchemas.ObjectPropertySchema {
+    if (audiences.length === 0 && name == null && availability == null) {
+        return typeReference;
+    } else {
+        return {
+            ...(typeof typeReference === "string" ? { type: typeReference } : { ...typeReference }),
+            ...(audiences.length > 0 ? { audiences } : {}),
+            ...(name != null ? { name } : {}),
+            ...(availability != null ? { availability } : {})
+        };
+    }
 }

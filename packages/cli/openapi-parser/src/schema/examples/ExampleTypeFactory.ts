@@ -170,7 +170,10 @@ export class ExampleTypeFactory {
                         const exampleDiscriminant = fullExample?.[schema.value.discriminantProperty];
                         const exampleUnionVariantSchema = schema.value.schemas[exampleDiscriminant];
 
-                        const unionVariant = this.getDiscriminatedUnionVariantSchema(schema.value, fullExample);
+                        // Pick the union variant from the example, or default to the first one
+                        const unionVariant =
+                            this.getDiscriminatedUnionVariantSchema(schema.value, fullExample) ??
+                            Object.entries(schema.value.schemas)[0];
                         if (
                             exampleDiscriminant != null &&
                             exampleUnionVariantSchema != null &&
@@ -346,10 +349,26 @@ export class ExampleTypeFactory {
                     }
                     return FullExample.map(kvs);
                 }
+                // In this instance we have an unknown object, which becomes a map of string to unknown
+                // we special case this to not create a nested map, but rather have a cleaner "Any Object" example
+                // of: "object": {"key": "value"} as opposed to "object": {"object": {"key": "value"}}
+                if (schema.key.schema.type === "string" && schema.value.type === "unknown") {
+                    return FullExample.map([
+                        {
+                            key: PrimitiveExample.string("key"),
+                            value: FullExample.unknown(FullExample.primitive(PrimitiveExample.string("value")))
+                        }
+                    ]);
+                }
                 const keyExample = this.buildExampleFromPrimitive({
                     schema: schema.key.schema,
                     example: undefined,
-                    options
+                    options: {
+                        ...options,
+                        // override the name to be "key" for map keys otherwise you can start to get key name
+                        // nesting since primitive examples use their name e.g. "metadata": {"metadata": {...}}
+                        name: "key"
+                    }
                 });
                 const valueExample = this.buildExampleHelper({
                     exampleId,
@@ -357,7 +376,12 @@ export class ExampleTypeFactory {
                     schema: schema.value,
                     visitedSchemaIds,
                     depth: depth + 1,
-                    options
+                    options: {
+                        ...options,
+                        // override the name to be "value" for map value otherwise you can start to get key name
+                        // nesting since primitive examples use their name e.g. "metadata": {"metadata": "metadata"}
+                        name: "value"
+                    }
                 });
                 if (valueExample != null) {
                     return FullExample.map([
@@ -527,6 +551,8 @@ export class ExampleTypeFactory {
                 const matches = schema.schema._visit({
                     int: () => typeof fullExample === "number",
                     int64: () => typeof fullExample === "number",
+                    uint: () => typeof fullExample === "number",
+                    uint64: () => typeof fullExample === "number",
                     float: () => typeof fullExample === "number",
                     double: () => typeof fullExample === "number",
                     string: () => typeof fullExample === "string",
@@ -749,6 +775,22 @@ export class ExampleTypeFactory {
                     return PrimitiveExample.int64(schema.example);
                 } else {
                     return PrimitiveExample.int64(Examples.INT64);
+                }
+            case "uint":
+                if (example != null && typeof example === "number") {
+                    return PrimitiveExample.uint(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.uint(schema.example);
+                } else {
+                    return PrimitiveExample.uint(Examples.UINT);
+                }
+            case "uint64":
+                if (example != null && typeof example === "number") {
+                    return PrimitiveExample.uint64(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.uint64(schema.example);
+                } else {
+                    return PrimitiveExample.uint64(Examples.UINT64);
                 }
             default:
                 assertNever(schema);

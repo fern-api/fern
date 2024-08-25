@@ -1,4 +1,6 @@
+using System;
 using SeedExhaustive;
+using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints;
 using SeedExhaustive.Types;
 
@@ -10,10 +12,11 @@ public partial class SeedExhaustiveClient
 {
     private RawClient _client;
 
-    public SeedExhaustiveClient(string token, ClientOptions clientOptions = null)
+    public SeedExhaustiveClient(string token, ClientOptions? clientOptions = null)
     {
         _client = new RawClient(
             new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
+            new Dictionary<string, Func<string>>() { },
             clientOptions ?? new ClientOptions()
         );
         Endpoints = new EndpointsClient(_client);
@@ -25,27 +28,17 @@ public partial class SeedExhaustiveClient
         Types = new TypesClient(_client);
     }
 
-    public EndpointsClient Endpoints { get; }
+    public EndpointsClient Endpoints { get; init; }
 
-    public GeneralErrorsClient GeneralErrors { get; }
+    public GeneralErrorsClient GeneralErrors { get; init; }
 
-    public InlinedRequestsClient InlinedRequests { get; }
+    public InlinedRequestsClient InlinedRequests { get; init; }
 
-    public NoAuthClient NoAuth { get; }
+    public NoAuthClient NoAuth { get; init; }
 
-    public NoReqBodyClient NoReqBody { get; }
+    public NoReqBodyClient NoReqBody { get; init; }
 
-    public ReqWithHeadersClient ReqWithHeaders { get; }
+    public ReqWithHeadersClient ReqWithHeaders { get; init; }
 
-    public TypesClient Types { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public TypesClient Types { get; init; }
 }

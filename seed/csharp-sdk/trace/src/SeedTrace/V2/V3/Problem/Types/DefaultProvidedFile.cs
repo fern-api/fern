@@ -1,16 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
-using SeedTrace.V2.V3;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2.V3;
 
-public class DefaultProvidedFile
+public record DefaultProvidedFile
 {
     [JsonPropertyName("file")]
-    public FileInfoV2 File { get; init; }
+    public required FileInfoV2 File { get; set; }
 
     [JsonPropertyName("relatedTypes")]
-    public IEnumerable<VariableType> RelatedTypes { get; init; }
+    public IEnumerable<object> RelatedTypes { get; set; } = new List<object>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

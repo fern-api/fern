@@ -281,7 +281,7 @@ export const FernOpenAPIExtension = {
      * paths:
      *  /path/to/my:
      *    get:
-     *     x-fern-fern-examples:
+     *     x-fern-examples:
      *      - name: Example 1
      *        docs: This is an example
      *        request: {}
@@ -383,7 +383,56 @@ export const FernOpenAPIExtension = {
     /**
      * Allows a user to configure the property name for the schema.
      */
-    FERN_PROPERTY_NAME: "x-fern-property-name"
+    FERN_PROPERTY_NAME: "x-fern-property-name",
+
+    /**
+     * Allows a user to configure that a union wiht a discriminant should
+     * be undiscriminated.
+     *
+     * Shape:
+     *   x-fern-undiscriminated: true
+     *   oneOf:
+     *    - $ref: components/schemas/Triangle
+     *    - $ref: components/schemas/Square
+     */
+    IS_UNDISCRIMINATED: "x-fern-undiscriminated",
+
+    /**
+     * Allows users to specify the version scheme supported by the API.
+     *
+     * x-fern-version:
+     *   header: X-API-Version
+     *   default: "2.0"
+     *   values:
+     *     - "1.0"
+     *     - "2.0"
+     *     - "Latest"
+     */
+    FERN_VERSION: "x-fern-version",
+
+    /**
+     * Allows users to specify the encoding of the type. For example, suppose you need to configure
+     * Protobuf-encoding details like the following:
+     *
+     * User:
+     *  properties:
+     *    username:
+     *      type: string
+     *  x-fern-encoding:
+     *    proto:
+     *      type: user.v1.User
+     */
+    ENCODING: "x-fern-encoding",
+
+    /**
+     * Allows users to configure gRPC services. This must be specified on individual service
+     * declarations.
+     *
+     * x-fern-transport:
+     *   grpc:
+     *     service-name: UserService
+     */
+    TRANSPORT: "x-fern-transport"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

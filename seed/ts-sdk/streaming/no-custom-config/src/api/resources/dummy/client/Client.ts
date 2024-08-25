@@ -15,8 +15,11 @@ export declare namespace Dummy {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -25,7 +28,7 @@ export class Dummy {
     constructor(protected readonly _options: Dummy.Options) {}
 
     public async generateStream(
-        request: SeedStreaming.GenerateStreamRequestzs,
+        request: SeedStreaming.GenerateStreamRequest,
         requestOptions?: Dummy.RequestOptions
     ): Promise<core.Stream<SeedStreaming.StreamResponse>> {
         const _response = await core.fetcher<stream.Readable>({
@@ -35,12 +38,17 @@ export class Dummy {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/streaming",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/streaming/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.GenerateStreamRequestzs.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
-            responseType: "streaming",
+            requestType: "json",
+            body: {
+                ...serializers.GenerateStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+                stream: true,
+            },
+            responseType: "sse",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -49,7 +57,7 @@ export class Dummy {
             return new core.Stream({
                 stream: _response.body,
                 parse: async (data) => {
-                    return await serializers.StreamResponse.parseOrThrow(data, {
+                    return serializers.StreamResponse.parseOrThrow(data, {
                         unrecognizedObjectKeys: "passthrough",
                         allowUnrecognizedUnionMembers: true,
                         allowUnrecognizedEnumValues: true,
@@ -61,6 +69,71 @@ export class Dummy {
                     type: "json",
                     messageTerminator: "\n",
                 },
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedStreamingError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedStreamingError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedStreamingTimeoutError();
+            case "unknown":
+                throw new errors.SeedStreamingError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {SeedStreaming.Generateequest} request
+     * @param {Dummy.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.dummy.generate({
+     *         numEvents: 5
+     *     })
+     */
+    public async generate(
+        request: SeedStreaming.Generateequest,
+        requestOptions?: Dummy.RequestOptions
+    ): Promise<SeedStreaming.StreamResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "generate"),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "@fern/streaming",
+                "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/streaming/0.0.1",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: {
+                ...serializers.Generateequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+                stream: false,
+            },
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.StreamResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                breadcrumbsPrefix: ["response"],
             });
         }
 

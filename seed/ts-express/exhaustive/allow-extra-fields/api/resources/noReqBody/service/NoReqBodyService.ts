@@ -53,7 +53,7 @@ export class NoReqBodyService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
+                                serializers.types.ObjectWithOptionalField.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "passthrough",
                                     allowUnrecognizedUnionMembers: true,
                                     allowUnrecognizedEnumValues: true,
@@ -87,7 +87,7 @@ export class NoReqBodyService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.noReqBody.postWithNoRequestBody.Response.jsonOrThrow(responseBody, {
+                                serializers.noReqBody.postWithNoRequestBody.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "passthrough",
                                     allowUnrecognizedUnionMembers: true,
                                     allowUnrecognizedEnumValues: true,

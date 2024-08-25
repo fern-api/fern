@@ -262,7 +262,11 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "until",
         "when",
         "while",
-        "yield"
+        "yield",
+        "Object",
+        "JSON",
+        "Date",
+        "DateTime"
     ]),
     [generatorsYml.GenerationLanguage.CSHARP]: new Set([
         "abstract",
@@ -385,5 +389,7 @@ export const RESERVED_KEYWORDS: Record<generatorsYml.GenerationLanguage, Set<str
         "where",
         "with",
         "yield"
-    ])
+    ]),
+    // TODO(mikemilla): add reserved keywords for Swift
+    [generatorsYml.GenerationLanguage.SWIFT]: new Set([])
 };

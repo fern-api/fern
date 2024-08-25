@@ -1,6 +1,7 @@
+import re
 from typing import Dict, List, Optional
 
-import fern.generator_exec.resources as generator_exec
+import fern.generator_exec as generator_exec
 import fern.ir.resources as ir_types
 from typing_extensions import assert_never
 
@@ -10,11 +11,12 @@ from fern_python.source_file_factory import SourceFileFactory
 
 
 class SnippetRegistry:
-    def __init__(self) -> None:
+    def __init__(self, *, source_file_factory: SourceFileFactory) -> None:
         self._snippets: Dict[ir_types.TypeId, AST.Expression] = {}
         self._endpoint_snippets: Dict[ir_types.EndpointId, AST.Expression] = {}
         self._sync_client_endpoint_snippets: Dict[ir_types.EndpointId, List[EndpointExpression]] = {}
         self._async_client_endpoint_snippets: Dict[ir_types.EndpointId, List[EndpointExpression]] = {}
+        self._source_file_factory = source_file_factory
 
     def snippets(self) -> Optional[generator_exec.Snippets]:
         if (
@@ -26,7 +28,7 @@ class SnippetRegistry:
 
         types: Dict[generator_exec.TypeId, str] = {}
         for typeId, expr in self._snippets.items():
-            types[generator_exec.TypeId(typeId.get_as_str())] = self._expression_to_snippet_str(expr)
+            types[generator_exec.TypeId(typeId)] = self._expression_to_snippet_str(expr)
 
         endpoints: List[generator_exec.Endpoint] = []
         for endpointId, sync_endpoint_expressions in self._sync_client_endpoint_snippets.items():
@@ -101,7 +103,7 @@ class SnippetRegistry:
         return generator_exec.EndpointIdentifier(
             path=generator_exec.EndpointPath(self._full_path_for_endpoint(endpoint)),
             method=self._ir_method_to_generator_exec_method(endpoint.method),
-            identifier_override=endpoint.id.get_as_str(),
+            identifier_override=endpoint.id,
         )
 
     def _full_path_for_endpoint(
@@ -109,15 +111,16 @@ class SnippetRegistry:
         endpoint: ir_types.HttpEndpoint,
     ) -> str:
         components: List[str] = []
-        head = endpoint.full_path.head.strip("/")
-        if len(head) > 0:
-            components.append(head)
+        if not endpoint.full_path.head.startswith("/"):
+            components.append("/")
+        if len(endpoint.full_path.head) > 0:
+            components.append(endpoint.full_path.head)
         for part in endpoint.full_path.parts:
             components.append("{" + part.path_parameter + "}")
-            tail = part.tail.strip("/")
-            if len(tail) > 0:
-                components.append(tail)
-        return "/" + "/".join(components)
+            if len(part.tail) > 0:
+                components.append(part.tail)
+        joined_components = "".join(components)
+        return re.sub("/+", "/", joined_components)
 
     def _ir_method_to_generator_exec_method(
         self,
@@ -139,6 +142,6 @@ class SnippetRegistry:
         self,
         expr: AST.Expression,
     ) -> str:
-        snippet = SourceFileFactory.create_snippet()
+        snippet = self._source_file_factory.create_snippet()
         snippet.add_expression(expr)
         return snippet.to_str()

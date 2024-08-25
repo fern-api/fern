@@ -1,17 +1,23 @@
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 #nullable enable
 
 namespace SeedExamples;
 
-public class Moment
+public record Moment
 {
     [JsonPropertyName("id")]
-    public Guid Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("date")]
-    public DateOnly Date { get; init; }
+    public required DateOnly Date { get; set; }
 
     [JsonPropertyName("datetime")]
-    public DateTime Datetime { get; init; }
+    public required DateTime Datetime { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,5 +1,14 @@
 import { assertNever } from "@fern-api/core-utils";
-import { ContainerType, DeclaredTypeName, Literal, PrimitiveType, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    ContainerType,
+    DeclaredTypeName,
+    Literal,
+    Name,
+    PrimitiveType,
+    PrimitiveTypeV1,
+    TypeId,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import { csharp } from "../";
 import { ClassReference, Type } from "../ast";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
@@ -38,7 +47,7 @@ export class CsharpTypeMapper {
         }
     }
 
-    public convertToClassReference(declaredTypeName: DeclaredTypeName): ClassReference {
+    public convertToClassReference(declaredTypeName: { typeId: TypeId; name: Name }): ClassReference {
         const objectNamespace = this.context.getNamespaceForTypeId(declaredTypeName.typeId);
         return new csharp.ClassReference({
             name: this.context.getPascalCaseSafeName(declaredTypeName.name),
@@ -56,11 +65,15 @@ export class CsharpTypeMapper {
         switch (container.type) {
             case "list":
                 return Type.list(this.convert({ reference: container.list, unboxOptionals: true }));
-            case "map":
-                return Type.map(
-                    this.convert({ reference: container.keyType }),
-                    this.convert({ reference: container.valueType })
-                );
+            case "map": {
+                const key = this.convert({ reference: container.keyType });
+                const value = this.convert({ reference: container.valueType });
+                if (value.internalType.type === "object") {
+                    // object map values should be nullable.
+                    return Type.map(key, csharp.Type.optional(value));
+                }
+                return Type.map(key, value);
+            }
             case "set":
                 return Type.set(this.convert({ reference: container.set, unboxOptionals: true }));
             case "optional":
@@ -75,17 +88,21 @@ export class CsharpTypeMapper {
     }
 
     private convertPrimitive({ primitive }: { primitive: PrimitiveType }): Type {
-        return PrimitiveType._visit<csharp.Type>(primitive, {
+        return PrimitiveTypeV1._visit<csharp.Type>(primitive.v1, {
             integer: () => csharp.Type.integer(),
-            double: () => csharp.Type.double(),
-            string: () => csharp.Type.string(),
-            boolean: () => csharp.Type.boolean(),
             long: () => csharp.Type.long(),
+            uint: () => csharp.Type.uint(),
+            uint64: () => csharp.Type.ulong(),
+            float: () => csharp.Type.float(),
+            double: () => csharp.Type.double(),
+            boolean: () => csharp.Type.boolean(),
+            string: () => csharp.Type.string(),
             date: () => csharp.Type.date(),
             dateTime: () => csharp.Type.dateTime(),
-            uuid: () => csharp.Type.uuid(),
+            uuid: () => csharp.Type.string(),
             // https://learn.microsoft.com/en-us/dotnet/api/system.convert.tobase64string?view=net-8.0
             base64: () => csharp.Type.string(),
+            bigInteger: () => csharp.Type.string(),
             _other: () => csharp.Type.object()
         });
     }
@@ -101,6 +118,9 @@ export class CsharpTypeMapper {
 
     private convertNamed({ named }: { named: DeclaredTypeName }): Type {
         const objectClassReference = this.convertToClassReference(named);
+        if (this.context.protobufResolver.isAnyWellKnownProtobufType(named.typeId)) {
+            return csharp.Type.reference(objectClassReference);
+        }
         const typeDeclaration = this.context.getTypeDeclarationOrThrow(named.typeId);
         switch (typeDeclaration.shape.type) {
             case "alias":
@@ -110,7 +130,7 @@ export class CsharpTypeMapper {
             case "object":
                 return csharp.Type.reference(objectClassReference);
             case "union":
-                return csharp.Type.reference(objectClassReference);
+                return csharp.Type.object();
             case "undiscriminatedUnion": {
                 return csharp.Type.oneOf(
                     typeDeclaration.shape.members.map((member) => {

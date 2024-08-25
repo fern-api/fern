@@ -43,14 +43,14 @@ module SeedExamplesClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        name = struct["name"]
-        files = parsed_json["files"]&.map do |v|
-          v = v.to_json
-          SeedExamplesClient::Types::File.from_json(json_object: v)
+        name = parsed_json["name"]
+        files = parsed_json["files"]&.map do |item|
+          item = item.to_json
+          SeedExamplesClient::Types::File.from_json(json_object: item)
         end
-        directories = parsed_json["directories"]&.map do |v|
-          v = v.to_json
-          SeedExamplesClient::Types::Directory.from_json(json_object: v)
+        directories = parsed_json["directories"]&.map do |item|
+          item = item.to_json
+          SeedExamplesClient::Types::Directory.from_json(json_object: item)
         end
         new(
           name: name,

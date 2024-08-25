@@ -1,18 +1,24 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class GetExecutionSessionStateResponse
+public record GetExecutionSessionStateResponse
 {
     [JsonPropertyName("states")]
-    public Dictionary<string, ExecutionSessionState> States { get; init; }
+    public Dictionary<string, ExecutionSessionState> States { get; set; } =
+        new Dictionary<string, ExecutionSessionState>();
 
     [JsonPropertyName("numWarmingInstances")]
-    public int? NumWarmingInstances { get; init; }
+    public int? NumWarmingInstances { get; set; }
 
     [JsonPropertyName("warmingSessionIds")]
-    public IEnumerable<string> WarmingSessionIds { get; init; }
+    public IEnumerable<string> WarmingSessionIds { get; set; } = new List<string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

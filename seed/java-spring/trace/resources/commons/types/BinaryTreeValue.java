@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = BinaryTreeValue.Builder.class
 )
@@ -93,7 +93,7 @@ public final class BinaryTreeValue {
     }
 
     public Builder root(NodeId root) {
-      this.root = Optional.of(root);
+      this.root = Optional.ofNullable(root);
       return this;
     }
 

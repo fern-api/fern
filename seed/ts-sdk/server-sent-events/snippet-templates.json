@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_completions.stream"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedServerSentEvents = new SeedServerSentEventsClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedServerSentEventsClient } from \"@fern/server-sent-events\";"
+                ],
+                "templateString": "const client = new SeedServerSentEventsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedServerSentEvents.completions.stream(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.completions.stream(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

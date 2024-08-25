@@ -1,4 +1,4 @@
-name: IR Publish
+name: IR SDKs
 
 on:
   workflow_dispatch:
@@ -6,10 +6,10 @@ on:
     branches:
       - main
     paths:
-      - "packages/ir-sdk/fern/apis/ir-types-latest/**"
+      - "packages/ir-sdk/fern/apis/ir-types-latest/VERSION"
 
 jobs:
-  sdks:
+  node:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -18,9 +18,61 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
 
-      - name: Release IR SDKs
+      - name: Release SDKs
         env:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           cd packages/ir-sdk
-          fern generate --api ir-types-latest --group sdks --log-level debug
+          version=$(cat fern/apis/ir-types-latest/VERSION)
+          fern generate --api ir-types-latest --group node --version $version
+  
+  python:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Release SDKs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          cd packages/ir-sdk
+          version=$(cat fern/apis/ir-types-latest/VERSION)
+          fern generate --api ir-types-latest --group python --version $version
+
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Release SDKs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          cd packages/ir-sdk
+          version=$(cat fern/apis/ir-types-latest/VERSION)
+          fern generate --api ir-types-latest --group go --version $version
+  
+  java:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Release SDKs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          cd packages/ir-sdk
+          version=$(cat fern/apis/ir-types-latest/VERSION)
+          fern generate --api ir-types-latest --group java --version $version

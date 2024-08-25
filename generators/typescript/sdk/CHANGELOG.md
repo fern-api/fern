@@ -5,6 +5,492 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.39.5] - 2024-08-20
+
+- Fix: If `noSerdeLayer` is enabled, then the generated TypeScript SDK snippets and wire tests 
+  will not use `Date` objects but instead use strings. Without this fix, the generated 
+  wire tests would result in failures. 
+
+## [0.39.4] - 2024-08-20
+
+- Fix: Ensure that environment files don't generate, unless there is a valid environment available.
+
+## [0.39.3] - 2024-08-16
+
+- Fix: Multipart form data unit tests only get generated if the SDK has multipart form uploads.
+
+## [0.39.2] - 2024-08-16
+
+- Fix: Allows filenames to be passed from underlying File objects in Node 18+ and browsers
+  Users can now supply files like so, using a simple multipart upload API as an example:
+  ```typescript
+  client.file.upload(new File([...blobParts], 'filename.ext'), ...)
+  ```
+  `filename.ext` will be encoded into the upload.
+
+## [0.39.1] - 2024-08-07
+
+- Feature: The SDK now supports looking directly at a `hasNextPage` property for offset pagination if configured.
+  Previously the SDK would look if the number of items were empty, but this failed in certain edge cases.
+
+## [0.38.6] - 2024-08-07
+
+- Feature: The SDK generator now sends a `User-Agent` header on each request that is set to
+  `<package>/<version>`. For example if your package is called `imdb` and is versioned `0.1.0`, then
+  the user agent header will be `imdb/0.1.0`.
+
+## [0.38.5] - 2024-08-07
+
+- Fix: Addressed fetcher unit test flakiness by using a mock fetcher
+
+## [0.38.4] - 2024-08-04
+
+- Fix: Literal templates are generated if they are union members
+- Fix: Snippet templates no longer try to inline objects within containers
+
+## [0.38.3] - 2024-08-02
+
+- Fix: Adds async iterable to StreamWrapper implementation for easier use with downstream dependencies.
+
+## [0.38.2] - 2024-08-01
+
+- Fix: Refactors the `noScripts` feature flag to make sure that no `yarn install` commands
+  can be accidentally triggered.
+
+## [0.38.1] - 2024-08-01
+
+- Feature: A feature flag called `noScripts` has been introduced to prevent the generator
+  from running any scripts such as `yarn format` or `yarn install`. If any of the scripts
+  cause errors, toggling this option will allow you to receive the generated code.
+
+  ```
+  - name: fernapi/fern-typescript-node-sdk
+    version: 0.38.1
+    config:
+      noScripts: true
+  ```
+
+## [0.38.0-rc0] - 2024-07-31
+
+- internal: Upgrade to IRv53.
+- chore: The generator now creates snippet templates for undiscriminated unions.
+
+## [0.37.0-rc0] - 2024-07-29
+
+- Feature: The business plan Typescript SDK will now generate wire tests if the feature flag
+  in the configuration is turned on.
+
+  ```
+  - name: fernapi/fern-typescript-node-sdk
+    version: 0.37.0-rc0
+    config:
+      generateWireTests: true
+  ```
+
+## [0.36.6] - 2024-07-29
+
+- Fix: Now import paths are correctly added to getResponseBody tests. CI checks also added.
+
+## [0.36.5] - 2024-07-29
+
+- Fix: Now, server sent events are treated differently as streaming responses, to ensure the correct wrapping happens.
+
+## [0.36.4] - 2024-07-26
+
+- Fix: Now, import paths are correctly added to stream wrapper tests.
+
+## [0.36.3] - 2024-07-26
+
+- Fix: Support starting the stream on `StreamWrapper.pipe(...)` for shorter syntax when dealing with `node:stream` primitives.
+
+## [0.36.2] - 2024-07-26
+
+- Fix: This release comes with numerous improvements to streaming responses:
+
+  1. Introduces new stream wrapper polyfills that implement the ability to stream to more streams, per environment.
+  2. For `Node 18+`, stream responses can now be piped to `WritableStream`. They can also be streamed to `stream.Writable`, as possible before.
+  3. For `< Node 18`, stream responses can be piped to `stream.Writeable`, as before.
+  4. For `Browser` environments, stream responses can be piped to `WritableStream`.
+  5. For `Cloudflare Workers`, stream responses can be piped to `WritableStream`.
+
+- Fix: Now, there are generated unit tests for the `fetcher/stream-wrappers` core directory which makes sure that
+  Fern's stream wrapping from responses work as expected!
+
+## [0.36.1] - 2024-07-16
+
+- Fix: Now, there are generated unit tests for the `auth` and `fetcher` core directory which makes sure that
+  Fern's fetcher and authorization helpers work as expected!
+
+## [0.36.0] - 2024-07-16
+
+- Fix: Now, there are generated unit tests for the `schemas` core directory which makes sure that
+  Fern's request + response validation will work as expected!
+
+## [0.35.0] - 2024-07-16
+
+- Fix: Support Multipart Form uploads where `fs.createReadStream` is passed. This requires
+  coercing the stream into a `File`.
+
+## [0.34.0] - 2024-07-16
+
+- Internal: Upgrade to IRv50.
+- Feature: Add support for generating an API version scheme in `version.ts`.
+  Consider the following `api.yml` configuration:
+
+  ```yaml
+  version:
+    header: X-API-Version
+    default: "1.0.0"
+    values:
+      - "1.0.0-alpha"
+      - "1.0.0-beta"
+      - "1.0.0"
+  ```
+
+  The following `version.ts` file is generated:
+
+  ```typescript
+  /**
+   * This file was auto-generated by Fern from our API Definition.
+   */
+
+  /** The version of the API, sent as the X-API-Version header. */
+  export type AcmeVersion = "1.0.0" | "2.0.0" | "latest";
+  ```
+
+  If a default value is specified, it is set on every request but can be overridden
+  in either the client-level `Options` or call-specific `RequestOptions`. If a default
+  value is _not_ specified, the value of the header is required on the generated `Options`.
+
+  An example call is shown below:
+
+  ```typescript
+  import { AcmeClient } from "acme";
+
+  const client = new AcmeClient({ apiKey: "YOUR_API_KEY", xApiVersion: "2.0.0" });
+  await client.users.create({
+    firstName: "john",
+    lastName: "doe"
+  });
+  ```
+
+## [0.33.0] - 2024-07-16
+
+- Fix: This release comes with numerous improvements to multipart uploads:
+
+  1. `Fetcher.ts` no longer depends on form-data and formdata-node which reduces
+     the size of the SDK for all consumers that are not leveraging multipart form
+     data uploads.
+  2. The SDK now accepts `fs.ReadStream`, `Blob` and `File` as inputs and handles
+     parsing them appropriately.
+  3. By accepting a `Blob` as a file parameter, the SDK now supports sending the
+     filename when making a request.
+
+## [0.32.0] - 2024-07-15
+
+- Feature: The `reference.md` is now generated for every SDK.
+- Improvement: The `reference.md` is now generated by the `generator-cli`.
+- Fix: The `reference.md` includes a single section for the _first_ example specified
+  on the endpoint. Previously, a separate section was included for _every_ example.
+
+## [0.31.0] - 2024-07-12
+
+- Feature: Add `omitUndefined` generator option. This is enabled with the following config:
+
+  ```yaml
+  groups:
+    generators:
+      - name: fernapi/fern-typscript-node-sdk
+        version: 0.31.0
+        ...
+        config:
+          omitUndefined: true
+  ```
+
+  When enabled, any property set to an explicit `undefined` is _not_ included
+  in the serialized result. For example,
+
+  ```typescript
+  const request: Acme.CreateUserRequest = {
+    firstName: "John",
+    lastName: "Doe",
+    email: undefined
+  };
+  ```
+
+  By default, explicit `undefined` values are serialized as `null` like so:
+
+  ```json
+  {
+    "firstName": "John",
+    "lastName": "Doe",
+    "email": null
+  }
+  ```
+
+  When `omitUndefined` is enabled, the JSON object is instead serialized as:
+
+  ```json
+  {
+    "firstName": "John",
+    "lastName": "Doe"
+  }
+  ```
+
+## [0.30.0] - 2024-07-11
+
+- Feature: Client-level `Options` now supports overriding global headers like version.
+
+## [0.29.2] - 2024-07-10
+
+- Fix: This fixes a bug introduced in `0.29.0-rc0` that prevented the SDK from serializing types
+  with circular references.
+
+## [0.29.1] - 2024-07-10
+
+- Fix: Pagination endpoints that define nested offset/cursor properties are now functional.
+  A new `setObjectProperty` helper is used to dynamically set the property, which is inspired
+  by Lodash's `set` function (https://lodash.com/docs/4.17.15#set).
+
+  The generated code now looks like the following:
+
+  ```typescript
+  let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
+  return new core.Pageable<SeedPagination.ListUsersPaginationResponse, SeedPagination.User>({
+    response: await list(request),
+    hasNextPage: (response) => (response?.data ?? []).length > 0,
+    getItems: (response) => response?.data ?? [],
+    loadPage: (_response) => {
+      _offset += 1;
+      return list(core.setObjectProperty(request, "pagination.page", _offset));
+    }
+  });
+  ```
+
+## [0.29.0] - 2024-07-09
+
+- Internal: Upgrade to IRv48.
+- Feature: Add support for pagination endpoints that require request body properties.
+- Feature: Add support for pagination with an offset step. This is useful for endpoints
+  that page based on the element index rather than a page index (i.e. the 100th element
+  vs. the 10th page).
+
+  This feature shares the same UX as both the `offset` and `cursor` pagination variants.
+
+## [0.29.0-rc0] - 2024-07-09
+
+- Fix: All serializers in the generated SDK are now synchronous. This makes the serializers
+  easier to use and improves the performance as well.
+
+## [0.28.0-rc0] - 2024-07-09
+
+- Feature: Add support for offset pagination, which uses the same pagination API introduced
+  in `0.26.0-rc0`.
+
+## [0.27.2] - 2024-07-08
+
+- Fix: The generated readme now moves the sections for `AbortController`, `Runtime Compatiblity` and
+  `Custom Fetcher` under the Advanced section in the generated README.
+
+## [0.27.1] - 2024-07-08
+
+- Feature: Support JSR publishing. If you would like your SDK to be published to JSR, there
+  is now a configuration option called `publishToJsr: true`. When enabled, the generator will
+  generate a `jsr.json` as well as a GitHub workflow to publish to JSR.
+
+  ```yaml
+  - name: fernapi/fern-typescript-sdk
+    version: 0.27.1
+    config:
+      publishToJsr: true
+  ```
+
+## [0.27.0] - 2024-07-08
+
+- Fix: Boolean literal headers can now be overridden via `RequestOptions`.
+- Feature: The generated `.github/workflows/ci.yml` file now supports NPM publishing with
+  alpha/beta dist tags. If the selected version contains the `alpha` or `beta` substring,
+  the associated dist tag will be added in the `npm publish` command like the following:
+
+  ```sh
+  # Version 1.0.0-beta
+  npm publish --tag beta
+  ```
+
+  For more on NPM dist tags, see https://docs.npmjs.com/adding-dist-tags-to-packages
+
+## [0.26.0-rc3] - 2024-06-30
+
+- Fix: The typesript generator now returns all `FormData` headers and Fetcher no longer stringifies stream.Readable type.
+
+## [0.26.0-rc2] - 2024-06-27
+
+- Improvement: `RequestOptions` now supports overriding global headers like authentication
+  and version.
+
+## [0.26.0-rc1] - 2024-06-27
+
+- Fix: The generator was skipping auto pagination for item arrays that were optional. Now,
+  those are safely handled as well.
+
+## [0.26.0-rc0] - 2024-06-27
+
+- Feature: The TypeScript generator now supports cursor-based auto pagination. With
+  auto pagination, a user can simply iterate over the results automatically:
+
+  ```ts
+  for (const user of client.users.list()) {
+    consoler.log(user);
+  }
+  ```
+
+  Users can also paginate over data manually
+
+  ```ts
+  const page = client.users.list();
+  for (const user of page.data) {
+    consoler.log(user);
+  }
+
+  // Helper methods for manually paginating:
+  while (page.hasNextPage()) {
+    page = page.getNextPage();
+    // ...
+  }
+  ```
+
+## [0.25.3] - 2024-06-26
+
+- Internal: The generator is now upgraded to `v46.2.0` of the IR.
+
+## [0.25.2] - 2024-06-20
+
+- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+  runtime.
+
+## [0.25.1] - 2024-06-20
+
+- Fix: The generator now removes `fs`, `path`, and `os` depdencencies from the browser
+  runtime.
+
+## [0.25.0] - 2024-06-19
+
+- Fix: The generator now generates snippets for streaming endpoints. There is also a
+  fix where literals are excluded from inlined requests.
+
+## [0.25.0-rc0] - 2024-06-19
+
+- Feature: The generator now merges the user's original `README.md` file (if any).
+
+## [0.24.4] - 2024-06-19
+
+- Fix: APIs that specify a default environment no longer include an unused environment import
+  in their generated snippets.
+
+## [0.24.3] - 2024-06-18
+
+- Fix: The generator only adds a publish step in github actions if credentials are specified.
+
+## [0.24.2] - 2024-06-19
+
+- Improvement: Remove the unnecessary client call from the request/response README.md section.
+- Fix: The generated README.md snippets now correctly referenced nested methods. For example,
+  `client.users.create` (instead of `client.create`) in the following:
+
+  ```ts
+  import { AcmeClient } from "acme";
+
+  const client = new AcmeClient({ apiKey: "YOUR_API_KEY" });
+  await client.users.create({
+    firstName: "john",
+    lastName: "doe"
+  });
+  ```
+
+## [0.24.1] - 2024-06-19
+
+- Fix: Dynamic snippets now support importing the client directly from the package.
+
+  ```typescript
+  import { MyClient } from "@org/sdk";
+
+  const client = new MyClient({ ... });
+  ```
+
+## [0.24.0-rc0] - 2024-06-18
+
+- Feature: Dynamic client instantiation snippets are now generated. Note this only affects
+  enteprise users that are using Fern's Snippets API.
+
+## [0.23.3] - 2024-06-17
+
+- Fix: The NPM publish job is _not_ generated if the token environment variable is not specified.
+- Improvement: The snippets now use the `client` variable name like so:
+
+  ```ts
+  import { AcmeClient } from "acme";
+
+  const client = new AcmeClient({ apiKey: "YOUR_API_KEY" });
+  await client.users.create({
+    firstName: "john",
+    lastName: "doe"
+  });
+  ```
+
+## [0.23.2] - 2024-06-14
+
+- Fix: Client constructor snippets now include an `environment` property whenever it's required.
+- Fix: The import paths included in the `README.md` exclusively use double quotes.
+- Fix: When an NPM package name is not specified, the generated `README.md` will default to using
+  the namespace export.
+
+## [0.23.1] - 2024-06-13
+
+- Fix: Undiscriminated unions used as map keys examples no longer return an error.
+
+## [0.23.0] - 2024-06-12
+
+- Fix: The latest version of the `generator-cli` (used to generate `README.md` files) is
+  always installed.
+
+## [0.23.0-rc1] - 2024-06-11
+
+- Feature: Introduce a custom configuration for arbitrary package json field. Now you can specify
+  arbitrary key, value pairs that you want to be merged in the generated `package.json`.
+
+  ```yml
+  config:
+    packageJson:
+      dependencies:
+        my-dep: "2.0.0"
+      bin: "./index.js"
+  ```
+
+## [0.23.0-rc0] - 2024-06-07
+
+- Fix: Union snippet templates are fixed in 2 ways:
+  1. The templates do not have a leading single quote (a typo from before)
+  2. The templates now inline union properties (in certain cases)
+
+## [0.22.0] - 2024-06-07
+
+- Feature: Add support for higher quality `README.md` generation.
+
+## [0.21.1] - 2024-06-05
+
+- Improvement: Detect `workerd` (Cloudflare) environments in `Runtime.ts`. The `Stream` class which is
+  used for Server-Sent Events now prefers `TextDecoder` if it is present in the environment, to
+  work in Cloudflare environments.
+
+## [0.21.0] - 2024-06-05
+
+- Feature: The generator now supports `bigint` types.
+- Internal: Bump to IRv46.
+
+## [0.20.9] - 2024-06-02
+
+- Fix: TypeScript generator outputs code snippets that have `example-identifier` embedded.
+
 ## [0.20.8] - 2024-06-02
 
 - Improvement: TypeScript projects were skipping added peer dependencies in certain cases,

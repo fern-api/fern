@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.Optional;
 import resources.commons.types.Language;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = GetSubmissionStateResponse.Builder.class
 )
@@ -152,7 +152,7 @@ public final class GetSubmissionStateResponse {
 
     @java.lang.Override
     public _FinalStage timeSubmitted(OffsetDateTime timeSubmitted) {
-      this.timeSubmitted = Optional.of(timeSubmitted);
+      this.timeSubmitted = Optional.ofNullable(timeSubmitted);
       return this;
     }
 

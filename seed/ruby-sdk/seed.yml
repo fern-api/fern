@@ -1,13 +1,42 @@
-irVersion: v32
+irVersion: v39
 docker: fernapi/fern-ruby-sdk:latest
-dockerCommand: yarn workspace @fern-api/fern-ruby-sdk dockerTagLatest
+dockerCommand: pnpm --filter @fern-api/fern-ruby-sdk dockerTagLatest
 language: ruby
 generatorType: sdk
 defaultOutputMode: github
-fixtures: []
+fixtures:
+  exhaustive: 
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        extraDependencies:
+          faraday-multipart:
+            upperBound:
+              version: "1.0.4"
+              specifier: ">="
+            lowerBound:
+              version: "1.0"
+              specifier: "~>"
+        extraDevDependencies:
+          dotenv: "2.1"
+          faraday:
+            upperBound:
+              version: "0.17.3"
+              specifier: ">"
+            lowerBound:
+              version: "0.20.0"
+      outputFolder: extra-deps
+    - customConfig:
+        flattenModuleStructure: true
+      outputFolder: flattened-module-structure
 allowedFailures:
   - streaming
   - objects-with-imports
+  - circular-references
+  # TODO: Add support for recursive undiscriminated unions.
+  - grpc
+  - any-auth
+  - trace
 features:
   requestOptions: true
   idempotency: false

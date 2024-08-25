@@ -13,7 +13,7 @@ import com.seed.serverSentEvents.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = StreamedCompletion.Builder.class)
 public final class StreamedCompletion {
     private final String delta;
@@ -97,7 +97,7 @@ public final class StreamedCompletion {
 
         @java.lang.Override
         public _FinalStage tokens(Integer tokens) {
-            this.tokens = Optional.of(tokens);
+            this.tokens = Optional.ofNullable(tokens);
             return this;
         }
 

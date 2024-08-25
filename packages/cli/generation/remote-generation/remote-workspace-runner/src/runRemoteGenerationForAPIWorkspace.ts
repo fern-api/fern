@@ -2,7 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { APIWorkspace, getOSSWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { downloadSnippetsForTask } from "./downloadSnippetsForTask";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
@@ -21,11 +21,12 @@ export async function runRemoteGenerationForAPIWorkspace({
     shouldLogS3Url,
     token,
     whitelabel,
-    absolutePathToPreview
+    absolutePathToPreview,
+    mode
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
-    workspace: FernWorkspace;
+    workspace: APIWorkspace;
     context: TaskContext;
     generatorGroup: generatorsYml.GeneratorGroup;
     version: string | undefined;
@@ -33,6 +34,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    mode: "pull-request" | undefined;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -45,17 +47,45 @@ export async function runRemoteGenerationForAPIWorkspace({
     interactiveTasks.push(
         ...generatorGroup.generators.map((generatorInvocation) =>
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
+                const fernWorkspace = await workspace.toFernWorkspace(
+                    { context },
+                    getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                );
+
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,
                     organization,
-                    workspace,
+                    workspace: fernWorkspace,
                     interactiveTaskContext,
-                    generatorInvocation,
+                    generatorInvocation: {
+                        ...generatorInvocation,
+                        outputMode: generatorInvocation.outputMode._visit<FernFiddle.OutputMode>({
+                            downloadFiles: () => generatorInvocation.outputMode,
+                            github: (val) => {
+                                return FernFiddle.OutputMode.github({
+                                    ...val,
+                                    makePr: mode === "pull-request"
+                                });
+                            },
+                            githubV2: (val) => {
+                                if (mode === "pull-request") {
+                                    return FernFiddle.OutputMode.githubV2(
+                                        FernFiddle.GithubOutputModeV2.pullRequest(val)
+                                    );
+                                }
+                                return generatorInvocation.outputMode;
+                            },
+                            publish: () => generatorInvocation.outputMode,
+                            publishV2: () => generatorInvocation.outputMode,
+                            _other: () => generatorInvocation.outputMode
+                        })
+                    },
                     version,
                     audiences: generatorGroup.audiences,
                     shouldLogS3Url,
                     token,
                     whitelabel,
+                    readme: generatorInvocation.readme,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     absolutePathToPreview
                 });

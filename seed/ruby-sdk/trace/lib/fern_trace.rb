@@ -31,18 +31,18 @@ module SeedTraceClient
     # @return [SeedTraceClient::SyspropClient]
     attr_reader :sysprop
 
-    # @param environment [SeedTraceClient::Environment]
     # @param base_url [String]
+    # @param environment [SeedTraceClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @param x_random_header [String]
     # @return [SeedTraceClient::Client]
-    def initialize(token:, environment: SeedTraceClient::Environment::PROD, base_url: nil, max_retries: nil,
+    def initialize(token:, base_url: nil, environment: SeedTraceClient::Environment::PROD, max_retries: nil,
                    timeout_in_seconds: nil, x_random_header: nil)
       @request_client = SeedTraceClient::RequestClient.new(
-        environment: environment,
         base_url: base_url,
+        environment: environment,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
         token: token,
@@ -77,18 +77,18 @@ module SeedTraceClient
     # @return [SeedTraceClient::AsyncSyspropClient]
     attr_reader :sysprop
 
-    # @param environment [SeedTraceClient::Environment]
     # @param base_url [String]
+    # @param environment [SeedTraceClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @param x_random_header [String]
     # @return [SeedTraceClient::AsyncClient]
-    def initialize(token:, environment: SeedTraceClient::Environment::PROD, base_url: nil, max_retries: nil,
+    def initialize(token:, base_url: nil, environment: SeedTraceClient::Environment::PROD, max_retries: nil,
                    timeout_in_seconds: nil, x_random_header: nil)
       @async_request_client = SeedTraceClient::AsyncRequestClient.new(
-        environment: environment,
         base_url: base_url,
+        environment: environment,
         max_retries: max_retries,
         timeout_in_seconds: timeout_in_seconds,
         token: token,

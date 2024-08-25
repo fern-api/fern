@@ -22,7 +22,7 @@ import resources.commons.types.Language;
 import resources.commons.types.TestCaseWithExpectedResult;
 import resources.commons.types.VariableType;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = CreateProblemRequest.Builder.class
 )

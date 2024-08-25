@@ -11,10 +11,10 @@ describe("migrateFromV3ToV2", () => {
         });
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        expect((migrated.services.http[0]?.endpoints[0] as any)?.requestBody).toBeUndefined();
+        expect((migrated.ir.services.http[0]?.endpoints[0] as any)?.requestBody).toBeUndefined();
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        expect((migrated.services.http[0]?.endpoints[0] as any)?.sdkRequest).toBeUndefined();
-        expect(migrated.services.http[0]?.endpoints[0]?.request).toEqual({
+        expect((migrated.ir.services.http[0]?.endpoints[0] as any)?.sdkRequest).toBeUndefined();
+        expect(migrated.ir.services.http[0]?.endpoints[0]?.request).toEqual({
             docs: undefined,
             type: {
                 _type: "named",

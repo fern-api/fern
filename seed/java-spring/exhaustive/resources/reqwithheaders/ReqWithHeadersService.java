@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface ReqWithHeadersService {
   @PostMapping(
       value = "/custom-header",
+      produces = "application/json",
       consumes = "application/json"
   )
   void getWithCustomHeader(@RequestHeader("Authorization") BearerAuth auth, Principal principal,

@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class TestCaseResultWithStdout
+public record TestCaseResultWithStdout
 {
     [JsonPropertyName("result")]
-    public TestCaseResult Result { get; init; }
+    public required TestCaseResult Result { get; set; }
 
     [JsonPropertyName("stdout")]
-    public string Stdout { get; init; }
+    public required string Stdout { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

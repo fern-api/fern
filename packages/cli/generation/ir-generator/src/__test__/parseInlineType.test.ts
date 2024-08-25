@@ -9,6 +9,7 @@ describe("parse inline types", () => {
     it("nested containers", async () => {
         const casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
+            keywords: undefined,
             smartCasing: false
         });
 
@@ -37,7 +38,9 @@ describe("parse inline types", () => {
                                 relativeFilepath: dummyFilepath,
                                 casingsGenerator
                             }),
-                            name: casingsGenerator.generateName(dummyTypeName)
+                            name: casingsGenerator.generateName(dummyTypeName),
+                            default: undefined,
+                            inline: undefined
                         })
                     )
                 )

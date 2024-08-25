@@ -1,15 +1,17 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedAuthEnvironmentVariables;
+using System.Threading;
+using SeedAuthEnvironmentVariables.Core;
 
 #nullable enable
 
 namespace SeedAuthEnvironmentVariables;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
@@ -17,41 +19,97 @@ public class ServiceClient
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async Task<string> GetWithApiKeyAsync()
+    /// <example>
+    /// <code>
+    /// await client.Service.GetWithApiKeyAsync();
+    /// </code>
+    /// </example>
+    public async Task<string> GetWithApiKeyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/apiKey" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "apiKey",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedAuthEnvironmentVariablesException(
+                    "Failed to deserialize response",
+                    e
+                );
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedAuthEnvironmentVariablesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// GET request with custom api key
     /// </summary>
-    public async Task<string> GetWithHeaderAsync(HeaderAuthRequest request)
+    /// <example>
+    /// <code>
+    /// await client.Service.GetWithHeaderAsync(new HeaderAuthRequest { XEndpointHeader = "string" });
+    /// </code>
+    /// </example>
+    public async Task<string> GetWithHeaderAsync(
+        HeaderAuthRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _headers = new Dictionary<string, string>()
-        {
-            { "X-Endpoint-Header", request.XEndpointHeader },
-        };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
-            {
-                Method = HttpMethod.Get,
-                Path = "/apiKeyInHeader",
-                Headers = _headers
-            }
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "X-Endpoint-Header", request.XEndpointHeader } }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "apiKeyInHeader",
+                Headers = _headers,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedAuthEnvironmentVariablesException(
+                    "Failed to deserialize response",
+                    e
+                );
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedAuthEnvironmentVariablesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

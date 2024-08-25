@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedExamples;
+using SeedExamples.Core;
 
 #nullable enable
 
 namespace SeedExamples;
 
-public class Response
+public record Response
 {
     [JsonPropertyName("response")]
-    public object Response_ { get; init; }
+    public required object Response_ { get; set; }
 
     [JsonPropertyName("identifiers")]
-    public IEnumerable<Identifier> Identifiers { get; init; }
+    public IEnumerable<Identifier> Identifiers { get; set; } = new List<Identifier>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

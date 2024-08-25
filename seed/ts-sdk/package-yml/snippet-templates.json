@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_.echo"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPackageYml = new SeedPackageYmlClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedPackageYmlClient } from \"@fern/package-yml\";"
+                ],
+                "templateString": "const client = new SeedPackageYmlClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedPackageYml.echo(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.echo(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -56,12 +87,41 @@
                                 {
                                     "value": {
                                         "imports": [],
-                                        "templateString": "$FERN_INPUT",
+                                        "templateString": "{\n\t\t\t$FERN_INPUT\n\t\t}",
                                         "isOptional": true,
+                                        "inputDelimiter": ",\n\t\t\t",
                                         "templateInputs": [
                                             {
-                                                "location": "BODY",
-                                                "type": "payload"
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "name: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "name",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
+                                            },
+                                            {
+                                                "value": {
+                                                    "imports": [],
+                                                    "templateString": "size: $FERN_INPUT",
+                                                    "isOptional": true,
+                                                    "templateInputs": [
+                                                        {
+                                                            "location": "BODY",
+                                                            "path": "size",
+                                                            "type": "payload"
+                                                        }
+                                                    ],
+                                                    "type": "generic"
+                                                },
+                                                "type": "template"
                                             }
                                         ],
                                         "type": "generic"
@@ -91,10 +151,41 @@
             "identifierOverride": "endpoint_service.nop"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedPackageYml = new SeedPackageYmlClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedPackageYmlClient } from \"@fern/package-yml\";"
+                ],
+                "templateString": "const client = new SeedPackageYmlClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedPackageYml.service.nop(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.nop(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

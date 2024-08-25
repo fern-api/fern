@@ -1,29 +1,58 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedNoEnvironment;
+using System.Threading;
+using SeedNoEnvironment.Core;
 
 #nullable enable
 
 namespace SeedNoEnvironment;
 
-public class DummyClient
+public partial class DummyClient
 {
     private RawClient _client;
 
-    public DummyClient(RawClient client)
+    internal DummyClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<string> GetDummyAsync()
+    /// <example>
+    /// <code>
+    /// await client.Dummy.GetDummyAsync();
+    /// </code>
+    /// </example>
+    public async Task<string> GetDummyAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/dummy" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "dummy",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedNoEnvironmentException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedNoEnvironmentApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

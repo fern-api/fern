@@ -27,7 +27,7 @@ class Expression(AstNode):
         if isinstance(self.expression, AstNode):
             return self.expression.get_metadata()
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         if self.spread is not None:
             writer.write(self.spread.value)
         if isinstance(self.expression, Reference):

@@ -13,13 +13,19 @@ export declare namespace Playlist {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -34,9 +40,9 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.createPlaylist(1, {
-     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
-     *         optionalDatetime: new Date("2024-01-15T09:30:00.000Z"),
+     *     await client.playlist.createPlaylist(1, {
+     *         datetime: "2024-01-15T09:30:00Z",
+     *         optionalDatetime: "2024-01-15T09:30:00Z",
      *         body: {
      *             name: "string",
      *             problems: ["string"]
@@ -70,18 +76,20 @@ export class Playlist {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
-            body: await serializers.PlaylistCreateRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.PlaylistCreateRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Playlist.parseOrThrow(_response.body, {
+            return serializers.Playlist.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -119,7 +127,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.getPlaylists(1, {
+     *     await client.playlist.getPlaylists(1, {
      *         limit: 1,
      *         otherField: "string",
      *         multiLineDocs: "string",
@@ -169,17 +177,19 @@ export class Playlist {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
+            return serializers.playlist.getPlaylists.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -220,7 +230,7 @@ export class Playlist {
      * @throws {@link SeedTrace.UnauthorizedError}
      *
      * @example
-     *     await seedTrace.playlist.getPlaylist(1, "string")
+     *     await client.playlist.getPlaylist(1, "string")
      */
     public async getPlaylist(
         serviceParam: number,
@@ -231,7 +241,7 @@ export class Playlist {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
-                    await serializers.PlaylistId.jsonOrThrow(playlistId)
+                    serializers.PlaylistId.jsonOrThrow(playlistId)
                 )}`
             ),
             method: "GET",
@@ -244,16 +254,18 @@ export class Playlist {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Playlist.parseOrThrow(_response.body, {
+            return serializers.Playlist.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -265,7 +277,7 @@ export class Playlist {
             switch ((_response.error.body as any)?.["errorName"]) {
                 case "PlaylistIdNotFoundError":
                     throw new SeedTrace.PlaylistIdNotFoundError(
-                        await serializers.PlaylistIdNotFoundErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.PlaylistIdNotFoundErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -308,7 +320,7 @@ export class Playlist {
      * @throws {@link SeedTrace.PlaylistIdNotFoundError}
      *
      * @example
-     *     await seedTrace.playlist.updatePlaylist(1, "string", {
+     *     await client.playlist.updatePlaylist(1, "string", {
      *         name: "string",
      *         problems: ["string"]
      *     })
@@ -323,7 +335,7 @@ export class Playlist {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
-                    await serializers.PlaylistId.jsonOrThrow(playlistId)
+                    serializers.PlaylistId.jsonOrThrow(playlistId)
                 )}`
             ),
             method: "PUT",
@@ -336,13 +348,15 @@ export class Playlist {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body:
                 request != null
-                    ? await serializers.playlist.updatePlaylist.Request.jsonOrThrow(request, {
+                    ? serializers.playlist.updatePlaylist.Request.jsonOrThrow(request, {
                           unrecognizedObjectKeys: "strip",
                       })
                     : undefined,
@@ -351,7 +365,7 @@ export class Playlist {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
+            return serializers.playlist.updatePlaylist.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -363,7 +377,7 @@ export class Playlist {
             switch ((_response.error.body as any)?.["errorName"]) {
                 case "PlaylistIdNotFoundError":
                     throw new SeedTrace.PlaylistIdNotFoundError(
-                        await serializers.PlaylistIdNotFoundErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.PlaylistIdNotFoundErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -401,7 +415,7 @@ export class Playlist {
      * @param {Playlist.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.playlist.deletePlaylist(1, "string")
+     *     await client.playlist.deletePlaylist(1, "string")
      */
     public async deletePlaylist(
         serviceParam: number,
@@ -412,7 +426,7 @@ export class Playlist {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/v2/playlist/${encodeURIComponent(serviceParam)}/${encodeURIComponent(
-                    await serializers.PlaylistId.jsonOrThrow(playlistId)
+                    serializers.PlaylistId.jsonOrThrow(playlistId)
                 )}`
             ),
             method: "DELETE",
@@ -425,10 +439,12 @@ export class Playlist {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

@@ -4,11 +4,11 @@ using System.Text.Json.Serialization;
 
 namespace SeedServerSentEvents;
 
-public class StreamedCompletion
+public record StreamedCompletion
 {
     [JsonPropertyName("delta")]
-    public string Delta { get; init; }
+    public required string Delta { get; set; }
 
     [JsonPropertyName("tokens")]
-    public int? Tokens { get; init; }
+    public int? Tokens { get; set; }
 }

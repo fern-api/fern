@@ -121,7 +121,7 @@ export class PlaylistService {
 
     public toRouter(): express.Router {
         this.router.post("/create", async (req, res, next) => {
-            const request = await serializers.PlaylistCreateRequest.parse(req.body);
+            const request = serializers.PlaylistCreateRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -130,9 +130,7 @@ export class PlaylistService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.Playlist.jsonOrThrow(responseBody, {
-                                        unrecognizedObjectKeys: "strip",
-                                    })
+                                    serializers.Playlist.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                                 );
                             },
                             cookie: res.cookie.bind(res),
@@ -170,7 +168,7 @@ export class PlaylistService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.playlist.getPlaylists.Response.jsonOrThrow(responseBody, {
+                                serializers.playlist.getPlaylists.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -202,9 +200,7 @@ export class PlaylistService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.Playlist.jsonOrThrow(responseBody, {
-                                    unrecognizedObjectKeys: "strip",
-                                })
+                                serializers.Playlist.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" })
                             );
                         },
                         cookie: res.cookie.bind(res),
@@ -234,7 +230,7 @@ export class PlaylistService {
             }
         });
         this.router.put("/:playlistId", async (req, res, next) => {
-            const request = await serializers.playlist.updatePlaylist.Request.parse(req.body);
+            const request = serializers.playlist.updatePlaylist.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -243,7 +239,7 @@ export class PlaylistService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.playlist.updatePlaylist.Response.jsonOrThrow(responseBody, {
+                                    serializers.playlist.updatePlaylist.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

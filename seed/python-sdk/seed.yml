@@ -1,9 +1,24 @@
-irVersion: v39
+irVersion: v53
+changelogLocation: ../../generators/python/sdk/versions.yml
 docker: fernapi/fern-python-sdk:latest
 dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
 language: python
 generatorType: sdk
 defaultOutputMode: github
+local:
+  workingDirectory: generators/python
+  buildCommand:
+    - chmod +x setup-python.sh && ./setup-python.sh
+    - poetry config virtualenvs.in-project true
+    - poetry install
+  # The envvar is needed to trick the generator to look in the right place for the core_utils files
+  runCommand: poetry run python -m src.fern_python.generators.sdk.cli
+  env: 
+    PYTEST_CURRENT_TEST: "some value"
+customFixtureConfig:
+  customConfig: 
+    use_typeddict_requests: true
+  outputFolder: client-filename
 fixtures:
   examples: 
     - customConfig: null
@@ -15,6 +30,17 @@ fixtures:
           exported_filename: client.py
           exported_class_name: SeedExhaustive
       outputFolder: client-filename
+    - customConfig: null
+      readmeConfig:
+        bannerLink: https://www.fernapi.com
+        apiReferenceLink: https://www.docs.fernapi.com
+        defaultEndpoint: POST /movie
+        features:
+          asyncClient:
+            - GET /movie/{movieId}
+            - method: POST
+              path: /movie
+      outputFolder: readme
   enum:
     - customConfig: null
       outputFolder: no-custom-config
@@ -22,6 +48,14 @@ fixtures:
         pydantic_config:
           use_str_enums: true
       outputFolder: strenum
+    - customConfig:
+        pydantic_config:
+          enum_type: "forward_compatible_python_enums"
+      outputFolder: real-enum-forward-compat
+    - customConfig:
+        pydantic_config:
+          enum_type: "python_enums"
+      outputFolder: real-enum
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
@@ -39,6 +73,11 @@ fixtures:
         pydantic_config:
           version: v1
       outputFolder: pydantic-v1
+    - customConfig:
+        pydantic_config:
+          version: v1
+          wrapped_aliases: True
+      outputFolder: pydantic-v1-wrapped
     - customConfig:
         pydantic_config:
           extra_fields: "allow"
@@ -88,6 +127,30 @@ fixtures:
     - customConfig:
         inline_request_params: true
       outputFolder: inline_request_params
+  unions:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          include_union_utils: true
+      outputFolder: union-utils
+    - customConfig:
+        pydantic_config:
+          union_naming: v1
+      outputFolder: union-naming-v1
+  validation:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        pydantic_config:
+          use_provided_defaults: true
+      outputFolder: with-defaults
+  literal:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        use_typeddict_requests: true
+      outputFolder: use_typeddict_requests
   streaming:
     - customConfig: null
       outputFolder: no-custom-config
@@ -96,34 +159,72 @@ fixtures:
           skip_validation: true
       outputFolder: skip-pydantic-validation
 scripts:
+  # Test Pydantic V2
   - docker: fernapi/python-seed
     commands:
-      # - poetry run mypy .
       # The global python version is 3.8
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"
       - poetry config virtualenvs.path .
-      - poetry install && fern test --command "poetry run pytest -rP ."
+      - poetry add pydantic=^2.8
+      - poetry lock
+      - poetry install
+      - poetry run mypy ./src ./tests
+      - fern test --command "poetry run pytest -rP ."
+  # Test Pydantic V1
+  - docker: fernapi/python-seed
+    commands:
+      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+      - export HOME="$(pwd)/"
+      - poetry config virtualenvs.path .
+      - poetry add pydantic=^1.10
+      - poetry lock
+      - poetry install
+      - poetry run mypy ./src ./tests
+      - fern test --command "poetry run pytest -rP ."
 allowedFailures: 
   # This is the only one that should always fail
   - exhaustive:additional_init_exports
+  # This should only succeed in Pydantic V1 tests
+  - exhaustive:pydantic-v1-wrapped
+
   # TODO(FER-1837): Address this list
-  - response-property
   - websocket
   - exhaustive:union-utils
   - extra-properties
   - trace
-  - circular-references-advanced
-  - oauth-client-credentials-default
+
+  # Remove the following fixtures soon as a CLI is released with
+  # default enum value support, the latest primitive types, and gRPC
+  # configuration. This otherwise causes a 'fern check' issue when
+  # 'fern test' is run.
+  - grpc-proto-exhaustive
+  - grpc-proto
+  - object
+  - validation:no-custom-config
+  - validation:with-defaults
   # === Allowed failures due to unit testing ===
-  # We don't have oauth tests yet
-  - oauth-client-credentials
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
-  # Currently, autogenned examples are not marking some literals as literals and so they're being passed
-  # into the method as parameters when they're meant to be omitted (so the tests fail on unrecognized params).
-  - examples:no-custom-config
-  - examples:client-filename
-  - literal
+  - pagination
   # ===========================================
+  # We are not currently generating the examples correctly,
+  # so the mock server and the expectations in the unit
+  # tests are not correct (`status` on `Resource_User`).
+  - mixed-case
+  # We are not generating the correct snippets for union-utils
+  # types (e.g. we generate `Shape_Square` instead of Shape.factory.square())
+  - unions:union-utils
+
+  # Complex circular refs
+  - simple-fhir
+
+  # TODO(FER-2946): Support deep object query parameter arrays in the mock
+  # server the mock server today doesn't take into account the shape of the
+  # request from the IR and so doesn't know the shape to explicitly coerce 
+  # the query string into
+  - query-parameters
+
+  - any-auth
+
+  - cross-package-type-names
+  - audiences

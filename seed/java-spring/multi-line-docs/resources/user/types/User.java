@@ -17,7 +17,7 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = User.Builder.class
 )
@@ -152,7 +152,7 @@ public final class User {
      */
     @java.lang.Override
     public _FinalStage age(Integer age) {
-      this.age = Optional.of(age);
+      this.age = Optional.ofNullable(age);
       return this;
     }
 

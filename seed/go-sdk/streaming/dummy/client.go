@@ -32,7 +32,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 
 func (c *Client) GenerateStream(
 	ctx context.Context,
-	request *v2.GenerateStreamRequestzs,
+	request *v2.GenerateStreamRequest,
 	opts ...option.RequestOption,
 ) (*core.Stream[v2.StreamResponse], error) {
 	options := core.NewRequestOptions(opts...)
@@ -60,4 +60,40 @@ func (c *Client) GenerateStream(
 			Request:     request,
 		},
 	)
+}
+
+func (c *Client) Generate(
+	ctx context.Context,
+	request *v2.Generateequest,
+	opts ...option.RequestOption,
+) (*v2.StreamResponse, error) {
+	options := core.NewRequestOptions(opts...)
+
+	baseURL := ""
+	if c.baseURL != "" {
+		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
+	endpointURL := baseURL + "/generate"
+
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
+
+	var response *v2.StreamResponse
+	if err := c.caller.Call(
+		ctx,
+		&core.CallParams{
+			URL:         endpointURL,
+			Method:      http.MethodPost,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Request:     request,
+			Response:    &response,
+		},
+	); err != nil {
+		return nil, err
+	}
+	return response, nil
 }

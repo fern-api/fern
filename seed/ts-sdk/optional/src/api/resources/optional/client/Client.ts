@@ -13,8 +13,11 @@ export declare namespace Optional {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -27,7 +30,7 @@ export class Optional {
      * @param {Optional.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedObjectsWithImports.optional.sendOptionalBody({
+     *     await client.optional.sendOptionalBody({
      *         "string": {
      *             "key": "value"
      *         }
@@ -44,13 +47,15 @@ export class Optional {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/optional",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/optional/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body:
                 request != null
-                    ? await serializers.optional.sendOptionalBody.Request.jsonOrThrow(request, {
+                    ? serializers.optional.sendOptionalBody.Request.jsonOrThrow(request, {
                           unrecognizedObjectKeys: "strip",
                       })
                     : undefined,
@@ -59,7 +64,7 @@ export class Optional {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.optional.sendOptionalBody.Response.parseOrThrow(_response.body, {
+            return serializers.optional.sendOptionalBody.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

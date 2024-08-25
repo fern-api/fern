@@ -1,5 +1,5 @@
-using System.Text.Json;
-using SeedExhaustive;
+using System.Net.Http;
+using SeedExhaustive.Core;
 
 #nullable enable
 
@@ -20,17 +20,18 @@ public class NoAuthClient
     public async Task<bool> PostWithNoAuthAsync(object request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "",
+                Path = "/no-auth",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<bool>(responseBody);
+            return JsonUtils.Deserialize<bool>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

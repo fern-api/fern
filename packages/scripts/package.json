@@ -21,20 +21,21 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "vitest --run --passWithNoTests",
+    "test:update": "vitest --run --passWithNoTests -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "dist:cli": "yarn compile && node build.cjs",
-    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
+    "dist:cli": "pnpm compile && node build.cjs",
+    "publish:cli": "pnpm dist:cli && cd dist && pnpm publish"
   },
   "dependencies": {
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/json-schema": "workspace:*",
-    "chalk": "^5.0.1",
+    "chalk": "^5.3.0",
     "execa": "^5.1.1",
     "immer": "^9.0.15",
     "js-yaml": "^4.1.0",
@@ -42,7 +43,7 @@
     "yargs": "^17.4.1"
   },
   "devDependencies": {
-    "@types/jest": "^29.0.3",
+    "@types/jest": "^29.5.12",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",
     "@types/node": "^18.7.18",
@@ -51,9 +52,9 @@
     "depcheck": "^1.4.6",
     "esbuild": "^0.15.7",
     "eslint": "^8.56.0",
-    "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",
-    "typescript": "4.6.4"
+    "typescript": "4.6.4",
+    "vitest": "^2.0.5"
   }
 }

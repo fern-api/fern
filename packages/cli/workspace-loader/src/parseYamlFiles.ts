@@ -23,14 +23,15 @@ export async function parseYamlFiles(files: readonly FernFile[]): Promise<Parser
 
     function parseFilePath(file: FernFile) {
         try {
-            parsedFiles[file.filepath] = {
+            parsedFiles[file.relativeFilepath] = {
+                defaultUrl: undefined,
                 contents: yaml.load(file.fileContents, {
                     schema: yaml.CORE_SCHEMA
                 }),
                 rawContents: file.fileContents
             };
         } catch (error) {
-            failures[file.filepath] = {
+            failures[file.relativeFilepath] = {
                 type: WorkspaceLoaderFailureType.FILE_PARSE,
                 error
             };

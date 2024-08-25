@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser devrev docs 1`] = `
+exports[`open api parser > devrev > docs 1`] = `
 {
   "definitionFiles": {
     "artifacts.yml": {
@@ -107,6 +107,9 @@ exports[`open api parser devrev docs 1`] = `
               "type": "root.ArtifactsPrepareResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -314,6 +317,9 @@ disabled.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
     },
     "authTokens.yml": {
@@ -346,7 +352,7 @@ authenticated user.
                   "body": {
                     "access_token": "access_token",
                     "client_id": "client_id",
-                    "expires_in": 1,
+                    "expires_in": 1000000,
                     "refresh_token": "refresh_token",
                     "scope": "scope",
                     "token_type": "bearer",
@@ -361,54 +367,42 @@ authenticated user.
               "body": {
                 "properties": {
                   "aud": {
-                    "default": undefined,
                     "docs": "The expected audience values with respect to the token.",
                     "type": "optional<list<string>>",
-                    "validation": undefined,
                   },
                   "client_id": {
-                    "default": undefined,
                     "docs": "An identifier that represents the application which is requesting
 the token. If no client_id is present in the request to generate an
 application access token (AAT), DevRev will generate a client_id.
 This client_id is only associated with an AAT.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "expires_in": {
-                    "default": undefined,
                     "docs": "The expected validity lifetime of the token in number of days.
 ",
-                    "type": "optional<integer>",
-                    "validation": undefined,
+                    "type": "optional<long>",
                   },
                   "grant_type": "optional<root.AuthTokenGrantType>",
                   "requested_token_type": "optional<root.AuthTokenRequestedTokenType>",
                   "rev_info": "optional<root.AuthTokensRevInfo>",
                   "scope": {
-                    "default": undefined,
                     "docs": "The requested set of scopes associated with the issued token. A
 space-delimited list of values in which the order of values does
 not matter.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "subject_token": {
-                    "default": undefined,
                     "docs": "Represents the entity that requests the token. Not required when
 requesting an application access token (AAT).
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "subject_token_type": "optional<root.AuthTokenSubjectTokenType>",
                   "token_hint": {
-                    "default": undefined,
                     "docs": "A hint that identifies the token.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -447,13 +441,11 @@ given Dev organization.
               "body": {
                 "properties": {
                   "token_id": {
-                    "default": undefined,
                     "docs": "The unique identifier for the token under a given Dev organization.
 If no token ID is provided, then the token ID will be set from the
 JTI claim of the token in the authorization header.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -695,6 +687,9 @@ organization.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
     },
     "devUsers.yml": {
@@ -732,7 +727,9 @@ organization.
                         },
                         "email": "email",
                         "external_identities": [
-                          {},
+                          {
+                            "key": "value",
+                          },
                         ],
                         "full_name": "full_name",
                         "id": "id",
@@ -820,7 +817,9 @@ used.
                       },
                       "email": "email",
                       "external_identities": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                       "full_name": "full_name",
                       "id": "id",
@@ -842,6 +841,9 @@ used.
               "type": "root.DevUsersSelfResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -896,9 +898,7 @@ used.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -1052,6 +1052,9 @@ used.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
     },
     "revOrgs.yml": {
@@ -1105,36 +1108,28 @@ organization.
               "body": {
                 "properties": {
                   "description": {
-                    "default": undefined,
                     "docs": "Description of the Rev organization.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "display_name": {
                     "docs": "Name of the Rev organization.",
                     "type": "string",
                   },
                   "domain": {
-                    "default": undefined,
                     "docs": "Company's domain name. Example - 'devrev.ai'.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "environment": "optional<root.OrgEnvironment>",
                   "external_ref": {
-                    "default": undefined,
                     "docs": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
 records.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "tier": {
-                    "default": undefined,
                     "docs": "The tier of the RevOrg.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1166,9 +1161,7 @@ records.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -1390,42 +1383,32 @@ them.
               "body": {
                 "properties": {
                   "description": {
-                    "default": undefined,
                     "docs": "Description of the Rev organization.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "display_name": {
-                    "default": undefined,
                     "docs": "Customer chosen name for the Rev organization.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "domain": {
-                    "default": undefined,
                     "docs": "Company's domain name. Example - 'devrev.ai'.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "environment": "optional<root.OrgEnvironment>",
                   "external_ref": {
-                    "default": undefined,
                     "docs": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
 records.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "id": {
                     "docs": "The ID of Rev organization to update.",
                     "type": "string",
                   },
                   "tier": {
-                    "default": undefined,
                     "docs": "The tier of the RevOrg.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1438,6 +1421,9 @@ records.
               "type": "root.RevOrgsUpdateResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -1493,18 +1479,14 @@ and a logical concept denoted by the tag's name.
               "body": {
                 "properties": {
                   "allowed_values": {
-                    "default": undefined,
                     "docs": "The allowed values for the tag, or empty if no values are
 permitted.
 ",
                     "type": "optional<list<string>>",
-                    "validation": undefined,
                   },
                   "description": {
-                    "default": undefined,
                     "docs": "The description for the tag.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "name": {
                     "docs": "The name for the tag, which must be unique across all tags.
@@ -1541,9 +1523,7 @@ permitted.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -1725,22 +1705,18 @@ used.
                 "properties": {
                   "allowed_values": "optional<root.TagsUpdateAllowedValues>",
                   "description": {
-                    "default": undefined,
                     "docs": "The updated description of the tag.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "id": {
                     "docs": "The ID of the tag to update.",
                     "type": "string",
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "The updated name of the tag. The name must be unique across all
 tags.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1753,6 +1729,9 @@ tags.
               "type": "root.TagsUpdateResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -1901,6 +1880,9 @@ used.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
     },
     "webhooks.yml": {
@@ -1954,13 +1936,10 @@ used.
               "body": {
                 "properties": {
                   "event_types": {
-                    "default": undefined,
                     "docs": "The event types that the webhook endpoint will receive.",
                     "type": "optional<list<root.WebhookEventType>>",
-                    "validation": undefined,
                   },
                   "secret": {
-                    "default": undefined,
                     "docs": "The secret to use when verifying webhook events. If provided, the
 secret must be between 8 and 32 bytes (inclusive). If not set, a
 secret will be automatically generated and provided in the
@@ -2008,9 +1987,7 @@ response.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -2177,7 +2154,6 @@ response.
                     "type": "string",
                   },
                   "secret": {
-                    "default": undefined,
                     "docs": "If provided, updates the secret that's used when verifying webhook
 events, which must be between 8 and 32 bytes (inclusive). Otherwise
 if empty, then a new secret is generated. If the webhook is active,
@@ -2193,13 +2169,11 @@ won't receive any object events until successfully verified.
                     },
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "The webhook's updated URL. If the webhook is active, then the
 webhook's status will transition to the 'unverified' state and it
 won't receive any object events until successfully verified.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -2212,6 +2186,9 @@ won't receive any object events until successfully verified.
               "type": "root.WebhooksUpdateResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -2268,9 +2245,7 @@ won't receive any object events until successfully verified.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -2535,6 +2510,9 @@ organizations.
               "type": "root.WorksUpdateResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -4068,15 +4046,16 @@ organizations.
         "docs": "The response to getting an artifact's download URL.",
         "properties": {
           "expires_at": {
-            "default": undefined,
             "docs": "The expiration timestamp of the URL.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "url": {
             "docs": "The artifact's download URL.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ArtifactsPrepareResponse": {
@@ -4095,6 +4074,9 @@ organizations.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ArtifactsPrepareResponseFormData": {
         "docs": undefined,
@@ -4108,22 +4090,21 @@ organizations.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AtomBase": {
         "docs": undefined,
         "properties": {
           "created_by": "optional<UserSummary>",
           "created_date": {
-            "default": undefined,
             "docs": "Timestamp when the object was created.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "display_id": {
-            "default": undefined,
             "docs": "Human-readable object ID unique to the Dev organization.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "Globally unique object ID.",
@@ -4131,48 +4112,46 @@ organizations.
           },
           "modified_by": "optional<UserSummary>",
           "modified_date": {
-            "default": undefined,
             "docs": "Timestamp when the object was last modified.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AtomBaseSummary": {
         "docs": undefined,
         "properties": {
           "display_id": {
-            "default": undefined,
             "docs": "Human-readable object ID unique to the Dev organization.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "Globally unique object ID.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthConnection": {
         "base-properties": {
           "display_name": {
-            "default": undefined,
             "docs": "Display name of the authentication connection. This name will be
 visible to all the users when they sign in to this Dev
 organization. For example, if the display_name is 'abclogin', then
 it would appear on the login button as 'Log in to abclogin'.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "enabled": {
-            "default": undefined,
             "docs": "Whether the authentication connection is enabled or disabled. If
 set to false, the authentication connection will not show up on the
 login screen as a login option.
 ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "id": {
             "docs": "ID of the authentication connection.",
@@ -4183,6 +4162,10 @@ login screen as a login option.
         "docs": "Connection object that specifies the configuration for an
 authentication connection that is set up for a Dev organization.
 ",
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "google_apps": "AuthConnectionOptionsGoogleApps",
           "oidc": "AuthConnectionOptionsOidc",
@@ -4197,23 +4180,20 @@ authentication connection.
 ",
         "properties": {
           "client_id": {
-            "default": undefined,
             "docs": "Client ID for the Azure authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "client_secret": {
-            "default": undefined,
             "docs": "Client secret for the Azure authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "domain": {
-            "default": undefined,
             "docs": "Domain URL of the Azure authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthConnectionOptionsGoogleApps": {
@@ -4222,25 +4202,22 @@ authentication connection.
 ",
         "properties": {
           "client_id": {
-            "default": undefined,
             "docs": "Client ID for the Google Apps authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "client_secret": {
-            "default": undefined,
             "docs": "Client secret for the Google Apps authentication connection.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "tenant_domain": {
-            "default": undefined,
             "docs": "Tenant domain URL of the Google Apps authentication connection.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthConnectionOptionsOidc": {
@@ -4249,23 +4226,20 @@ authentication connection.
 ",
         "properties": {
           "client_id": {
-            "default": undefined,
             "docs": "Client ID for the OIDC authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "client_secret": {
-            "default": undefined,
             "docs": "Client secret for the OIDC authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "issuer": {
-            "default": undefined,
             "docs": "Issuer URL of the OIDC authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthConnectionOptionsSaml": {
@@ -4274,18 +4248,17 @@ authentication connection.
 ",
         "properties": {
           "sign_in_endpoint": {
-            "default": undefined,
             "docs": "Sign In endpoint for the SAML authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "signing_cert": {
-            "default": undefined,
             "docs": "Signing certificate for the SAML authentication connection.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthConnectionOptionsSocial": "map<string, unknown>",
@@ -4294,6 +4267,9 @@ authentication connection.
           "disable",
           "enable",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthConnectionType": {
         "docs": "Defines the type for the authentication connection. The configuration
@@ -4306,6 +4282,9 @@ for each authentication connection will depend on the type value.
           "social",
           "waad",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthToken": {
         "docs": undefined,
@@ -4314,45 +4293,36 @@ for each authentication connection will depend on the type value.
         ],
         "properties": {
           "client_id": {
-            "default": undefined,
             "docs": "An identifier that represents the application that requested the
 token. Only applicable for application access tokens.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "expires_at": {
-            "default": undefined,
             "docs": "The time at which the token expires.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "issued_at": {
-            "default": undefined,
             "docs": "The time at which the token was issued.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "requested_token_type": "optional<AuthTokenRequestedTokenType>",
           "scopes": {
-            "default": undefined,
             "docs": "The scopes associated with the issued token.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "status": "optional<AuthTokenStatus>",
           "subject": {
-            "default": undefined,
             "docs": "The subject of the token.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "token_hint": {
-            "default": undefined,
             "docs": "A hint that identifies the token.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthTokenGrantType": {
@@ -4367,6 +4337,9 @@ token. Only applicable for application access tokens.
             "value": "urn:ietf:params:oauth:grant-type:token-exchange",
           },
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokenRequestedTokenType": {
         "docs": "The type of the requested token.",
@@ -4408,6 +4381,9 @@ token. Only applicable for application access tokens.
             "value": "urn:ietf:params:oauth:token-type:jwt",
           },
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokenStatus": {
         "docs": "The status of the token.",
@@ -4416,6 +4392,9 @@ token. Only applicable for application access tokens.
           "expired",
           "revoked",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokenSubjectTokenType": {
         "docs": "The type of the subject token.",
@@ -4449,6 +4428,9 @@ token. Only applicable for application access tokens.
             "value": "urn:ietf:params:oauth:token-type:jwt",
           },
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokenTokenType": {
         "docs": "The type of the issued token. Bearer is the only supported token type.
@@ -4467,41 +4449,41 @@ token type.
             "type": "string",
           },
           "client_id": {
-            "default": undefined,
             "docs": "An identifier that represents the application which is requesting
 the token. Only present in a response corresponding to an
 application access token (AAT).
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "expires_in": {
             "docs": "The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
-            "type": "integer",
+            "type": "long",
           },
           "refresh_token": {
-            "default": undefined,
             "docs": "A token to refresh the issued token.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "scope": {
-            "default": undefined,
             "docs": "The scopes associated with the issued token. A space-delimited list
 of values in which the order of values does not matter.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "token_type": "AuthTokenTokenType",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthTokensGetResponse": {
         "docs": "The response to get the token metadata.",
         "properties": {
           "token": "AuthToken",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthTokensListResponse": {
@@ -4512,22 +4494,24 @@ of values in which the order of values does not matter.
             "type": "list<AuthToken>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokensOrgTraits": {
         "docs": "Carries Rev org info.",
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "The display name of the Rev org.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "domain": {
-            "default": undefined,
             "docs": "The domain of the Rev org.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthTokensRevInfo": {
@@ -4536,17 +4520,13 @@ issue a Rev session token.
 ",
         "properties": {
           "org_ref": {
-            "default": undefined,
             "docs": "An identifier which uniquely identifies a Rev org.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "org_traits": "optional<AuthTokensOrgTraits>",
           "rev_user_id": {
-            "default": undefined,
             "docs": "The unique ID of the Rev user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "user_ref": {
             "docs": "An identifier which uniquely identifies a Rev user.",
@@ -4554,34 +4534,37 @@ issue a Rev session token.
           },
           "user_traits": "optional<AuthTokensUserTraits>",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokensUpdateResponse": {
         "docs": "Response for the request to update the token metadata.",
         "properties": {
           "token": "AuthToken",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokensUserTraits": {
         "docs": "Carries Rev user info.",
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "The display name of the Rev user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "email": {
-            "default": undefined,
             "docs": "The email address of the Rev user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "full_name": {
-            "default": undefined,
             "docs": "The full name of the Rev user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "Capability": "PartBase",
@@ -4589,19 +4572,21 @@ issue a Rev session token.
       "DevOrgAuthConnectionsCreateRequest": {
         "base-properties": {
           "display_name": {
-            "default": undefined,
             "docs": "Display name of the authentication connection. This name will be
 visible to all the users when they sign in to this Dev
 organization. For example, if the display_name is 'abclogin', then
 it would appear on the login button as 'Log in to abclogin'.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
         "docs": "Request to create a new enterprise authentication connection.
 ",
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "google_apps": "AuthConnectionOptionsGoogleApps",
           "oidc": "AuthConnectionOptionsOidc",
@@ -4619,6 +4604,9 @@ authentication connections have different configuration parameters.
           "samlp",
           "waad",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "DevOrgAuthConnectionsCreateResponse": {
         "docs": "Response for the request to create a new enterprise authentication
@@ -4627,6 +4615,9 @@ connection.
         "properties": {
           "auth_connection": "AuthConnection",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "DevOrgAuthConnectionsGetResponse": {
         "docs": "Response object encapsulating the configuration details of an
@@ -4634,6 +4625,9 @@ authentication connection.
 ",
         "properties": {
           "auth_connection": "AuthConnection",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "DevOrgAuthConnectionsListResponse": {
@@ -4648,18 +4642,19 @@ a Dev organization.
             "type": "list<AuthConnection>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "DevOrgAuthConnectionsUpdateRequest": {
         "base-properties": {
           "display_name": {
-            "default": undefined,
             "docs": "New display name of the authentication connection. This name will
 be visible to all the users when they sign in to this Dev
 organization. For example, if the display_name is 'abclogin', then
 it would appear on the login button as 'Log in to abclogin'.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "ID of the authentication connection which is to be updated.
@@ -4671,6 +4666,10 @@ it would appear on the login button as 'Log in to abclogin'.
         "docs": "Request to update an enterprise authentication connection for a Dev
 organization.
 ",
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "google_apps": "AuthConnectionOptionsGoogleApps",
           "none": "empty",
@@ -4691,6 +4690,9 @@ that can be updated.
           "samlp",
           "waad",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "DevOrgAuthConnectionsUpdateResponse": {
         "docs": "Response for the request to update an enterprise authentication
@@ -4698,6 +4700,9 @@ connection.
 ",
         "properties": {
           "auth_connection": "AuthConnection",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "DevUser": {
@@ -4707,11 +4712,12 @@ connection.
         ],
         "properties": {
           "external_identities": {
-            "default": undefined,
             "docs": "IDs of the Dev User outside the DevRev SOR.",
             "type": "optional<list<ExternalIdentity>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "DevUserSummary": "UserBaseSummary",
@@ -4723,21 +4729,20 @@ connection.
             "type": "list<DevUser>",
           },
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "DevUsersSelfResponse": {
@@ -4745,6 +4750,9 @@ sort order. If not set, then no prior elements exist.
 ",
         "properties": {
           "dev_user": "DevUser",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EnhancementSummary": "PartBaseSummary",
@@ -4754,6 +4762,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorBadRequestBadRequest": "map<string, unknown>",
       "ErrorBadRequestInvalidEnumValue": {
@@ -4772,6 +4783,9 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorBadRequestMissingRequiredField": {
         "docs": undefined,
@@ -4780,6 +4794,9 @@ sort order. If not set, then no prior elements exist.
             "docs": "The missing field's name.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ErrorBadRequestParseError": "map<string, unknown>",
@@ -4791,6 +4808,9 @@ sort order. If not set, then no prior elements exist.
           "parse_error",
           "value_not_permitted",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorBadRequestValueNotPermitted": {
         "docs": undefined,
@@ -4800,22 +4820,24 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
           "reason": {
-            "default": undefined,
             "docs": "The reason the value isn't permitted.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ErrorBase": {
         "docs": undefined,
         "properties": {
           "message": {
-            "default": undefined,
             "docs": "The message associated with the error.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ErrorForbidden": {
@@ -4824,6 +4846,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorForbiddenForbidden": "map<string, unknown>",
       "ErrorForbiddenType": "literal<"forbidden">",
@@ -4833,6 +4858,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorInternalServerErrorInternalError": "map<string, unknown>",
       "ErrorInternalServerErrorType": "literal<"internal_error">",
@@ -4842,6 +4870,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorNotFoundNotFound": "map<string, unknown>",
       "ErrorNotFoundType": "literal<"not_found">",
@@ -4851,6 +4882,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorServiceUnavailableServiceUnavailable": "map<string, unknown>",
       "ErrorServiceUnavailableType": "literal<"service_unavailable">",
@@ -4860,6 +4894,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorTooManyRequestsTooManyRequests": "map<string, unknown>",
       "ErrorTooManyRequestsType": "literal<"too_many_requests">",
@@ -4869,6 +4906,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorUnauthorizedType": "literal<"unauthenticated">",
       "ErrorUnauthorizedUnauthenticated": "map<string, unknown>",
@@ -4876,6 +4916,9 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "part": "part",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventPartDeleted": {
@@ -4886,17 +4929,26 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventPartUpdated": {
         "docs": undefined,
         "properties": {
           "part": "part",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventRevOrgCreated": {
         "docs": undefined,
         "properties": {
           "rev_org": "RevOrg",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventRevOrgDeleted": {
@@ -4907,17 +4959,26 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventRevOrgUpdated": {
         "docs": undefined,
         "properties": {
           "rev_org": "RevOrg",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventTagCreated": {
         "docs": undefined,
         "properties": {
           "tag": "tag",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventTagDeleted": {
@@ -4928,17 +4989,26 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventTagUpdated": {
         "docs": undefined,
         "properties": {
           "tag": "tag",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventTimelineEntryCreated": {
         "docs": undefined,
         "properties": {
           "entry": "TimelineEntry",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventTimelineEntryDeleted": {
@@ -4949,17 +5019,26 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventTimelineEntryUpdated": {
         "docs": undefined,
         "properties": {
           "entry": "TimelineEntry",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventWebhookCreated": {
         "docs": undefined,
         "properties": {
           "webhook": "webhook",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventWebhookDeleted": {
@@ -4970,17 +5049,26 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventWebhookUpdated": {
         "docs": undefined,
         "properties": {
           "webhook": "webhook",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventWorkCreated": {
         "docs": undefined,
         "properties": {
           "work": "work",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventWorkDeleted": {
@@ -4991,11 +5079,17 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventWorkUpdated": {
         "docs": undefined,
         "properties": {
           "work": "work",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ExternalIdentity": {
@@ -5013,6 +5107,9 @@ sort order. If not set, then no prior elements exist.
           "p2",
           "p3",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ListMode": {
         "docs": "The iteration mode to use. If "after", then entries after the provided
@@ -5025,6 +5122,9 @@ always be returned in the specified sort-by order.
           "after",
           "before",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "OrgBase": {
         "docs": undefined,
@@ -5033,11 +5133,12 @@ always be returned in the specified sort-by order.
         ],
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "Name of the Organization.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "OrgBaseSummary": {
@@ -5047,11 +5148,12 @@ always be returned in the specified sort-by order.
         ],
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "Name of the Organization.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "OrgEnvironment": {
@@ -5062,11 +5164,18 @@ always be returned in the specified sort-by order.
           "staging",
           "test",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "OrgSummary": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "rev_org": "RevOrgSummary",
         },
@@ -5079,16 +5188,12 @@ always be returned in the specified sort-by order.
         ],
         "properties": {
           "artifacts": {
-            "default": undefined,
             "docs": "The attached artifacts.",
             "type": "optional<list<ArtifactSummary>>",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "Description of the part.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "name": {
             "docs": "Name of the part.",
@@ -5099,11 +5204,12 @@ always be returned in the specified sort-by order.
             "type": "list<UserSummary>",
           },
           "tags": {
-            "default": undefined,
             "docs": "Tags associated with the object.",
             "type": "optional<list<TagWithValue>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartBaseSummary": {
@@ -5117,11 +5223,18 @@ always be returned in the specified sort-by order.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "PartSummary": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "capability": "CapabilitySummary",
           "enhancement": "EnhancementSummary",
@@ -5136,14 +5249,15 @@ always be returned in the specified sort-by order.
           "feature",
           "product",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "PartsCreateRequest": {
         "base-properties": {
           "description": {
-            "default": undefined,
             "docs": "Description of the part.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "name": {
             "docs": "Name of the part.",
@@ -5156,6 +5270,10 @@ always be returned in the specified sort-by order.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "capability": "PartsCreateRequestCapability",
           "enhancement": "PartsCreateRequestEnhancement",
@@ -5171,6 +5289,9 @@ always be returned in the specified sort-by order.
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "PartsCreateRequestEnhancement": {
         "docs": undefined,
@@ -5181,12 +5302,13 @@ always be returned in the specified sort-by order.
             "type": "list<string>",
           },
           "target_close_date": {
-            "default": undefined,
             "docs": "Target close date by which enhancement is expected to be closed.
 ",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartsCreateRequestFeature": {
@@ -5197,12 +5319,18 @@ always be returned in the specified sort-by order.
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "PartsCreateRequestProduct": "map<string, unknown>",
       "PartsCreateResponse": {
         "docs": undefined,
         "properties": {
           "part": "part",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartsDeleteResponse": "map<string, unknown>",
@@ -5211,54 +5339,56 @@ always be returned in the specified sort-by order.
         "properties": {
           "part": "part",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "PartsListResponse": {
         "docs": undefined,
         "properties": {
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "parts": {
             "docs": "The list of parts.",
             "type": "list<part>",
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartsUpdateRequest": {
         "base-properties": {
           "description": {
-            "default": undefined,
             "docs": "The updated description of the part.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The ID of the part to update.",
             "type": "string",
           },
           "name": {
-            "default": undefined,
             "docs": "The updated name of the part.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "owned_by": "optional<PartsUpdateRequestOwnedBy>",
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "capability": "PartsUpdateRequestCapability",
           "enhancement": "PartsUpdateRequestEnhancement",
@@ -5272,11 +5402,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "target_close_date": {
-            "default": undefined,
             "docs": "Updates the target close date of the enhancement.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartsUpdateRequestFeature": "map<string, unknown>",
@@ -5284,13 +5415,14 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the owner IDs to the provided user IDs. This must not be
 empty.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartsUpdateRequestProduct": "map<string, unknown>",
@@ -5298,6 +5430,9 @@ empty.
         "docs": undefined,
         "properties": {
           "part": "part",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "Product": "PartBase",
@@ -5309,27 +5444,24 @@ empty.
         ],
         "properties": {
           "description": {
-            "default": undefined,
             "docs": "Description of the Rev organization.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "domain": {
-            "default": undefined,
             "docs": "Company's domain name. Example - 'devrev.ai'.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "external_ref": {
-            "default": undefined,
             "docs": "External ref is a unique identifier for the Rev (customer)
 organization from your primary customer system of records. If none
 is specified, a system-generated identifier will be assigned to the
 organization.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "RevOrgSummary": "OrgBaseSummary",
@@ -5338,6 +5470,9 @@ organization.
 ",
         "properties": {
           "rev_org": "RevOrg",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "RevOrgsDeleteResponse": {
@@ -5349,37 +5484,42 @@ organization.
         "properties": {
           "rev_org": "RevOrg",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "RevOrgsListResponse": {
         "docs": "The response to getting a list of Rev organizations' information.
 ",
         "properties": {
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "rev_orgs": {
             "docs": "List with all of the Rev organizations' information.",
             "type": "list<RevOrg>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "RevOrgsUpdateResponse": {
         "docs": "Response object to updating Rev organization's information.",
         "properties": {
           "rev_org": "RevOrg",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "RevUserSummary": {
@@ -5389,7 +5529,6 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {
           "external_ref": {
-            "default": undefined,
             "docs": "External ref is a mutable unique identifier for a user within the
 Rev organization from your primary customer record. If none is
 available, a good alternative is the email address/phone number
@@ -5397,9 +5536,11 @@ which could uniquely identify the user. If none is specified, a
 system-generated identifier will be assigned to the user.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "rev_org": "optional<OrgSummary>",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "SetTagWithValue": {
@@ -5410,36 +5551,39 @@ system-generated identifier will be assigned to the user.
             "type": "string",
           },
           "value": {
-            "default": undefined,
             "docs": "The value for the object's association with the tag. If specified,
 the value must be one that's specified in the tag's allowed values.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "StageInit": {
         "docs": "Sets an object's initial stage.",
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The name of the stage.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "StageUpdate": {
         "docs": "Updates an object's stage.",
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The updated name of the stage, otherwise unchanged if not set.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "SysUserSummary": "UserBaseSummary",
@@ -5457,23 +5601,30 @@ unique.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TagWithValue": {
         "docs": undefined,
         "properties": {
           "tag": "TagSummary",
           "value": {
-            "default": undefined,
             "docs": "The value for the object's association with the tag.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TagsCreateResponse": {
         "docs": "The response to creating a new tag.",
         "properties": {
           "tag": "tag",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TagsDeleteResponse": {
@@ -5485,47 +5636,53 @@ unique.
         "properties": {
           "tag": "tag",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TagsListResponse": {
         "docs": "The response to listing the tags.",
         "properties": {
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "tags": {
             "docs": "The list of tags.",
             "type": "list<tag>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TagsUpdateAllowedValues": {
         "docs": "Specifies an update to a tag's allowed values.",
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the allowed values for the tag.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TagsUpdateResponse": {
         "docs": "The response for updating a tag.",
         "properties": {
           "tag": "tag",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TicketSeverity": {
@@ -5536,6 +5693,9 @@ sort order. If not set, then no prior elements exist.
           "low",
           "medium",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TimelineComment": {
         "docs": undefined,
@@ -5544,26 +5704,23 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {
           "artifacts": {
-            "default": undefined,
             "docs": "The artifacts for the comment.",
             "type": "optional<list<ArtifactSummary>>",
-            "validation": undefined,
           },
           "body": {
-            "default": undefined,
             "docs": "The comment's body. If the comment has been deleted, then no body
 will appear in the response.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "body_type": "optional<TimelineCommentBodyType>",
           "snap_kit_body": {
-            "default": undefined,
             "docs": "The SnapKit Body of the comment.",
             "type": "optional<map<string, unknown>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TimelineCommentBodyType": {
@@ -5572,6 +5729,9 @@ will appear in the response.
           "snap_kit",
           "text",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TimelineEntriesCreateRequest": {
         "base-properties": {
@@ -5583,6 +5743,10 @@ will appear in the response.
         },
         "discriminant": "type",
         "docs": "The request to create a timeline entry for an object.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "timeline_comment": "TimelineEntriesCreateRequestTimelineComment",
         },
@@ -5591,24 +5755,21 @@ will appear in the response.
         "docs": undefined,
         "properties": {
           "artifacts": {
-            "default": undefined,
             "docs": "The IDs of the artifacts attached to the comment.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "body": {
-            "default": undefined,
             "docs": "The comment's body.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "body_type": "optional<TimelineCommentBodyType>",
           "snap_kit_body": {
-            "default": undefined,
             "docs": "The SnapKit body of the comment.",
             "type": "optional<map<string, unknown>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TimelineEntriesCreateRequestType": "literal<"timeline_comment">",
@@ -5617,36 +5778,41 @@ will appear in the response.
         "properties": {
           "timeline_entry": "TimelineEntry",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TimelineEntriesGetResponse": {
         "docs": "The request to getting a timeline entry.",
         "properties": {
           "timeline_entry": "TimelineEntry",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TimelineEntriesListResponse": {
         "docs": "The response to listing timeline entries for an object.",
         "properties": {
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "timeline_entries": {
             "docs": "The timeline entries for the object.",
             "type": "list<TimelineEntry>",
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TimelineEntriesUpdateRequest": {
@@ -5658,6 +5824,10 @@ sort order. If not set, then no prior elements exist.
         },
         "discriminant": "type",
         "docs": "The request to update a timeline entry.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "timeline_comment": "TimelineEntriesUpdateRequestTimelineComment",
         },
@@ -5667,46 +5837,42 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "artifacts": "optional<TimelineEntriesUpdateRequestTimelineCommentArtifacts>",
           "body": {
-            "default": undefined,
             "docs": "The updated comment's body.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "body_type": "optional<TimelineCommentBodyType>",
           "snap_kit_body": {
-            "default": undefined,
             "docs": "The SnapKit body of the comment.",
             "type": "optional<map<string, unknown>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TimelineEntriesUpdateRequestTimelineCommentArtifacts": {
         "docs": undefined,
         "properties": {
           "add": {
-            "default": undefined,
             "docs": "Adds the provided artifacts to the comment. An artifact cannot be
 added more than once, i.e. nothing is done if the artifact is
 already attached. Mutually exclusive with \`set\`.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "remove": {
-            "default": undefined,
             "docs": "Removes the provided artifacts from the comment. If an artifact is
 not present, then it's ignored. Mututally exclusive with \`set\`.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "set": {
-            "default": undefined,
             "docs": "Sets the field to the provided artifacts.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TimelineEntriesUpdateRequestType": "literal<"timeline_comment">",
@@ -5715,11 +5881,18 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "properties": {
           "timeline_entry": "TimelineEntry",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TimelineEntry": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "timeline_comment": "TimelineComment",
         },
@@ -5740,32 +5913,27 @@ default visibility.
         ],
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "The user's display name. The name is non-unique and mutable.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "display_picture": "optional<ArtifactSummary>",
           "email": {
-            "default": undefined,
             "docs": "Email address of the user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "full_name": {
-            "default": undefined,
             "docs": "Full name of the user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "phone_numbers": {
-            "default": undefined,
             "docs": "Phone numbers of the user.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "state": "optional<UserState>",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "UserBaseSummary": {
@@ -5775,26 +5943,23 @@ default visibility.
         ],
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "The user's display name. The name is non-unique and mutable.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "display_picture": "optional<ArtifactSummary>",
           "email": {
-            "default": undefined,
             "docs": "Email address of the user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "full_name": {
-            "default": undefined,
             "docs": "Full name of the user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "state": "optional<UserState>",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "UserState": {
@@ -5806,11 +5971,18 @@ default visibility.
           "shadow",
           "unassigned",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "UserSummary": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "dev_user": "DevUserSummary",
           "rev_user": "RevUserSummary",
@@ -5823,6 +5995,9 @@ default visibility.
           "rev_user",
           "sys_user",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhookEventRequest": {
         "docs": undefined,
@@ -5844,14 +6019,12 @@ default visibility.
           "timeline_entry_deleted": "optional<EventTimelineEntryDeleted>",
           "timeline_entry_updated": "optional<EventTimelineEntryUpdated>",
           "timestamp": {
-            "default": undefined,
             "docs": "Timestamp of the webhook's invocation for the event. Note this
 should be used to protect against replay attacks, where the event
 should only be processed if the timestamp isn't stale by several
 seconds.
 ",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "type": "optional<WebhookEventType>",
           "verify": "optional<WebhookEventVerify>",
@@ -5866,12 +6039,14 @@ seconds.
           "work_deleted": "optional<EventWorkDeleted>",
           "work_updated": "optional<EventWorkUpdated>",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhookEventResponse": {
         "docs": undefined,
         "properties": {
           "challenge": {
-            "default": undefined,
             "docs": "The challenge from the "verify" request, otherwise this should not
 be set for other request types.
 ",
@@ -5883,6 +6058,9 @@ be set for other request types.
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WebhookEventType": {
@@ -5908,6 +6086,9 @@ be set for other request types.
           "work_deleted",
           "work_updated",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhookEventVerify": {
         "docs": undefined,
@@ -5923,6 +6104,9 @@ be set for other request types.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhookStatus": {
         "docs": "The status of the webhook.",
@@ -5931,11 +6115,17 @@ be set for other request types.
           "inactive",
           "unverified",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhooksCreateResponse": {
         "docs": "The response to creating a new webhook.",
         "properties": {
           "webhook": "webhook",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WebhooksDeleteResponse": {
@@ -5947,6 +6137,9 @@ be set for other request types.
         "properties": {
           "webhook": "webhook",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhooksListResponse": {
         "docs": "The response to listing the webhooks.",
@@ -5956,6 +6149,9 @@ be set for other request types.
             "type": "list<webhook>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhooksUpdateAction": {
         "docs": "The action to update the webhook's status.",
@@ -5963,43 +6159,46 @@ be set for other request types.
           "activate",
           "deactivate",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhooksUpdateRequestEventTypes": {
         "docs": undefined,
         "properties": {
           "add": {
-            "default": undefined,
             "docs": "The event types to add. If a provided event type is already set for
 the webhook, then nothing is done. Note this is mutually exclusive
 with 'set'.
 ",
             "type": "optional<list<WebhookEventType>>",
-            "validation": undefined,
           },
           "remove": {
-            "default": undefined,
             "docs": "The event types to remove. If a provided event type isn't set for
 the webhook, then nothing is done. Note this is mutually exclusive
 with 'set'.
 ",
             "type": "optional<list<WebhookEventType>>",
-            "validation": undefined,
           },
           "set": {
-            "default": undefined,
             "docs": "The updated event types, which will replace the webhook's current
 event types. Note this is mutually exclusive with 'add' and
 'remove'.
 ",
             "type": "optional<list<WebhookEventType>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WebhooksUpdateResponse": {
         "docs": "The response to updating the webhook.",
         "properties": {
           "webhook": "webhook",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorkBase": {
@@ -6010,44 +6209,37 @@ event types. Note this is mutually exclusive with 'add' and
         "properties": {
           "applies_to_part": "optional<PartSummary>",
           "artifacts": {
-            "default": undefined,
             "docs": "The artifacts attached to the work item.",
             "type": "optional<list<ArtifactSummary>>",
-            "validation": undefined,
           },
           "body": {
-            "default": undefined,
             "docs": "Body of the work object.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "owned_by": {
             "docs": "The users that own the work.",
             "type": "list<UserSummary>",
           },
           "reported_by": {
-            "default": undefined,
             "docs": "Users that reported the work.",
             "type": "optional<list<UserSummary>>",
-            "validation": undefined,
           },
           "stage": "optional<stage>",
           "tags": {
-            "default": undefined,
             "docs": "Tags associated with the object.",
             "type": "optional<list<TagWithValue>>",
-            "validation": undefined,
           },
           "target_close_date": {
-            "default": undefined,
             "docs": "Timestamp when the work is expected to be complete.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "title": {
             "docs": "Title of the work object.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorkType": {
@@ -6055,6 +6247,9 @@ event types. Note this is mutually exclusive with 'add' and
           "issue",
           "ticket",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WorksCreateRequest": {
         "base-properties": {
@@ -6066,40 +6261,30 @@ issues.
             "type": "string",
           },
           "artifacts": {
-            "default": undefined,
             "docs": "The IDs of the artifacts to associate with the work item.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "body": {
-            "default": undefined,
             "docs": "Body of the work object.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "owned_by": {
             "docs": "The users that own the work.",
             "type": "list<string>",
           },
           "reported_by": {
-            "default": undefined,
             "docs": "The users that reported the work.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "stage": "optional<StageInit>",
           "tags": {
-            "default": undefined,
             "docs": "Tags associated with the work item.",
             "type": "optional<list<SetTagWithValue>>",
-            "validation": undefined,
           },
           "target_close_date": {
-            "default": undefined,
             "docs": "Timestamp for when the work is expected to be complete.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "title": {
             "docs": "Title of the work object.",
@@ -6108,6 +6293,10 @@ issues.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "issue": "WorksCreateRequestIssue",
           "ticket": "WorksCreateRequestTicket",
@@ -6118,35 +6307,38 @@ issues.
         "properties": {
           "priority": "optional<IssuePriority>",
           "sprint": {
-            "default": undefined,
             "docs": "The sprint that the issue belongs to.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksCreateRequestTicket": {
         "docs": undefined,
         "properties": {
           "group": {
-            "default": undefined,
             "docs": "The group that the ticket is associated with.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "rev_org": {
-            "default": undefined,
             "docs": "The Rev organization that the ticket is associated with.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "severity": "optional<TicketSeverity>",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksCreateResponse": {
         "docs": undefined,
         "properties": {
           "work": "work",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksDeleteResponse": "map<string, unknown>",
@@ -6158,53 +6350,54 @@ issues.
             "type": "list<work>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WorksGetResponse": {
         "docs": undefined,
         "properties": {
           "work": "work",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WorksListResponse": {
         "docs": undefined,
         "properties": {
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "works": {
             "docs": "The list of works.",
             "type": "list<work>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WorksUpdateRequest": {
         "base-properties": {
           "applies_to_part": {
-            "default": undefined,
             "docs": "Updates the part that the work applies to.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "artifacts": "optional<WorksUpdateRequestArtifactIds>",
           "body": {
-            "default": undefined,
             "docs": "Updated body of the work object, or unchanged if not provided.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The work's ID.",
@@ -6215,22 +6408,22 @@ sort order. If not set, then no prior elements exist.
           "stage": "optional<StageUpdate>",
           "tags": "optional<WorksUpdateRequestTags>",
           "target_close_date": {
-            "default": undefined,
             "docs": "Updates the timestamp for when the work is expected to be complete.
 ",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Updated title of the work object, or unchanged if not provided.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "issue": "WorksUpdateRequestIssue",
           "none": "empty",
@@ -6241,11 +6434,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the IDs to the provided artifact IDs.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateRequestIssue": {
@@ -6253,72 +6447,78 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "priority": "optional<IssuePriority>",
           "sprint": {
-            "default": undefined,
             "docs": "Updates the sprint that the issue belongs to.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateRequestOwnedBy": {
         "docs": undefined,
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the owner IDs to the provided user IDs. This must not be
 empty.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateRequestReportedBy": {
         "docs": undefined,
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the users that reported the work to the provided user IDs.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateRequestTags": {
         "docs": undefined,
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the provided tags on the work item.",
             "type": "optional<list<SetTagWithValue>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateRequestTicket": {
         "docs": undefined,
         "properties": {
           "group": {
-            "default": undefined,
             "docs": "The group that the ticket is associated with.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "rev_org": {
-            "default": undefined,
             "docs": "Updates the Rev organization that the ticket is associated with.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "severity": "optional<TicketSeverity>",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateResponse": {
         "docs": undefined,
         "properties": {
           "work": "work",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "empty": "map<string, unknown>",
@@ -6329,11 +6529,12 @@ empty.
         ],
         "properties": {
           "target_close_date": {
-            "default": undefined,
             "docs": "Timestamp when the enhancement is expected to be closed.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "issue": {
@@ -6344,11 +6545,18 @@ empty.
         "properties": {
           "priority": "optional<IssuePriority>",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "part": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "capability": "Capability",
           "enhancement": "enhancement",
@@ -6364,6 +6572,9 @@ empty.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "tag": {
         "docs": undefined,
@@ -6372,21 +6583,17 @@ empty.
         ],
         "properties": {
           "allowed_values": {
-            "default": undefined,
             "docs": "The allowed values for the tag, where a value is provided when a
 tag is associated with an object. If empty, then no value should be
 provided when the association is made.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "An informative description for the tag that should provide context
 on the tag's purpose and usage.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "name": {
             "docs": "The name of the tag, which denotes the logical concept by which all
@@ -6395,6 +6602,9 @@ unique.
 ",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ticket": {
@@ -6407,6 +6617,9 @@ unique.
           "rev_org": "optional<OrgSummary>",
           "severity": "optional<TicketSeverity>",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "webhook": {
         "docs": undefined,
@@ -6415,10 +6628,8 @@ unique.
         ],
         "properties": {
           "event_types": {
-            "default": undefined,
             "docs": "The event types that the webhook will receive.",
             "type": "optional<list<WebhookEventType>>",
-            "validation": undefined,
           },
           "secret": {
             "docs": "The secret to use for verifying webhook events.",
@@ -6436,11 +6647,18 @@ unique.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "work": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "issue": "issue",
           "ticket": "ticket",
@@ -6470,7 +6688,7 @@ unique.
 }
 `;
 
-exports[`open api parser devrev simple 1`] = `
+exports[`open api parser > devrev > simple 1`] = `
 {
   "definitionFiles": {
     "artifacts.yml": {
@@ -6577,6 +6795,9 @@ exports[`open api parser devrev simple 1`] = `
               "type": "root.ArtifactsPrepareResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -6784,6 +7005,9 @@ disabled.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
     },
     "authTokens.yml": {
@@ -6816,7 +7040,7 @@ authenticated user.
                   "body": {
                     "access_token": "access_token",
                     "client_id": "client_id",
-                    "expires_in": 1,
+                    "expires_in": 1000000,
                     "refresh_token": "refresh_token",
                     "scope": "scope",
                     "token_type": "bearer",
@@ -6831,54 +7055,42 @@ authenticated user.
               "body": {
                 "properties": {
                   "aud": {
-                    "default": undefined,
                     "docs": "The expected audience values with respect to the token.",
                     "type": "optional<list<string>>",
-                    "validation": undefined,
                   },
                   "client_id": {
-                    "default": undefined,
                     "docs": "An identifier that represents the application which is requesting
 the token. If no client_id is present in the request to generate an
 application access token (AAT), DevRev will generate a client_id.
 This client_id is only associated with an AAT.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "expires_in": {
-                    "default": undefined,
                     "docs": "The expected validity lifetime of the token in number of days.
 ",
-                    "type": "optional<integer>",
-                    "validation": undefined,
+                    "type": "optional<long>",
                   },
                   "grant_type": "optional<root.AuthTokenGrantType>",
                   "requested_token_type": "optional<root.AuthTokenRequestedTokenType>",
                   "rev_info": "optional<root.AuthTokensRevInfo>",
                   "scope": {
-                    "default": undefined,
                     "docs": "The requested set of scopes associated with the issued token. A
 space-delimited list of values in which the order of values does
 not matter.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "subject_token": {
-                    "default": undefined,
                     "docs": "Represents the entity that requests the token. Not required when
 requesting an application access token (AAT).
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "subject_token_type": "optional<root.AuthTokenSubjectTokenType>",
                   "token_hint": {
-                    "default": undefined,
                     "docs": "A hint that identifies the token.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -6917,13 +7129,11 @@ given Dev organization.
               "body": {
                 "properties": {
                   "token_id": {
-                    "default": undefined,
                     "docs": "The unique identifier for the token under a given Dev organization.
 If no token ID is provided, then the token ID will be set from the
 JTI claim of the token in the authorization header.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -7165,6 +7375,9 @@ organization.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
     },
     "devUsers.yml": {
@@ -7202,7 +7415,9 @@ organization.
                         },
                         "email": "email",
                         "external_identities": [
-                          {},
+                          {
+                            "key": "value",
+                          },
                         ],
                         "full_name": "full_name",
                         "id": "id",
@@ -7290,7 +7505,9 @@ used.
                       },
                       "email": "email",
                       "external_identities": [
-                        {},
+                        {
+                          "key": "value",
+                        },
                       ],
                       "full_name": "full_name",
                       "id": "id",
@@ -7312,6 +7529,9 @@ used.
               "type": "root.DevUsersSelfResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -7366,9 +7586,7 @@ used.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -7522,6 +7740,9 @@ used.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
     },
     "revOrgs.yml": {
@@ -7575,36 +7796,28 @@ organization.
               "body": {
                 "properties": {
                   "description": {
-                    "default": undefined,
                     "docs": "Description of the Rev organization.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "display_name": {
                     "docs": "Name of the Rev organization.",
                     "type": "string",
                   },
                   "domain": {
-                    "default": undefined,
                     "docs": "Company's domain name. Example - 'devrev.ai'.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "environment": "optional<root.OrgEnvironment>",
                   "external_ref": {
-                    "default": undefined,
                     "docs": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
 records.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "tier": {
-                    "default": undefined,
                     "docs": "The tier of the RevOrg.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -7636,9 +7849,7 @@ records.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -7860,42 +8071,32 @@ them.
               "body": {
                 "properties": {
                   "description": {
-                    "default": undefined,
                     "docs": "Description of the Rev organization.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "display_name": {
-                    "default": undefined,
                     "docs": "Customer chosen name for the Rev organization.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "domain": {
-                    "default": undefined,
                     "docs": "Company's domain name. Example - 'devrev.ai'.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "environment": "optional<root.OrgEnvironment>",
                   "external_ref": {
-                    "default": undefined,
                     "docs": "External ref is a custom unique identifier which is a reference to
 an unique id for this organization's data in some system of
 records.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "id": {
                     "docs": "The ID of Rev organization to update.",
                     "type": "string",
                   },
                   "tier": {
-                    "default": undefined,
                     "docs": "The tier of the RevOrg.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -7908,6 +8109,9 @@ records.
               "type": "root.RevOrgsUpdateResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -7963,18 +8167,14 @@ and a logical concept denoted by the tag's name.
               "body": {
                 "properties": {
                   "allowed_values": {
-                    "default": undefined,
                     "docs": "The allowed values for the tag, or empty if no values are
 permitted.
 ",
                     "type": "optional<list<string>>",
-                    "validation": undefined,
                   },
                   "description": {
-                    "default": undefined,
                     "docs": "The description for the tag.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "name": {
                     "docs": "The name for the tag, which must be unique across all tags.
@@ -8011,9 +8211,7 @@ permitted.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -8195,22 +8393,18 @@ used.
                 "properties": {
                   "allowed_values": "optional<root.TagsUpdateAllowedValues>",
                   "description": {
-                    "default": undefined,
                     "docs": "The updated description of the tag.",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "id": {
                     "docs": "The ID of the tag to update.",
                     "type": "string",
                   },
                   "name": {
-                    "default": undefined,
                     "docs": "The updated name of the tag. The name must be unique across all
 tags.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8223,6 +8417,9 @@ tags.
               "type": "root.TagsUpdateResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -8371,6 +8568,9 @@ used.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
     },
     "webhooks.yml": {
@@ -8424,13 +8624,10 @@ used.
               "body": {
                 "properties": {
                   "event_types": {
-                    "default": undefined,
                     "docs": "The event types that the webhook endpoint will receive.",
                     "type": "optional<list<root.WebhookEventType>>",
-                    "validation": undefined,
                   },
                   "secret": {
-                    "default": undefined,
                     "docs": "The secret to use when verifying webhook events. If provided, the
 secret must be between 8 and 32 bytes (inclusive). If not set, a
 secret will be automatically generated and provided in the
@@ -8478,9 +8675,7 @@ response.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -8647,7 +8842,6 @@ response.
                     "type": "string",
                   },
                   "secret": {
-                    "default": undefined,
                     "docs": "If provided, updates the secret that's used when verifying webhook
 events, which must be between 8 and 32 bytes (inclusive). Otherwise
 if empty, then a new secret is generated. If the webhook is active,
@@ -8663,13 +8857,11 @@ won't receive any object events until successfully verified.
                     },
                   },
                   "url": {
-                    "default": undefined,
                     "docs": "The webhook's updated URL. If the webhook is active, then the
 webhook's status will transition to the 'unverified' state and it
 won't receive any object events until successfully verified.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -8682,6 +8874,9 @@ won't receive any object events until successfully verified.
               "type": "root.WebhooksUpdateResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
     },
@@ -8738,9 +8933,7 @@ won't receive any object events until successfully verified.
                 },
                 "response": {
                   "body": {
-                    "string": {
-                      "key": "value",
-                    },
+                    "key": "value",
                   },
                 },
               },
@@ -9006,6 +9199,9 @@ organizations.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
     },
   },
@@ -9053,15 +9249,16 @@ organizations.
         "docs": "The response to getting an artifact's download URL.",
         "properties": {
           "expires_at": {
-            "default": undefined,
             "docs": "The expiration timestamp of the URL.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "url": {
             "docs": "The artifact's download URL.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ArtifactsPrepareResponse": {
@@ -9080,6 +9277,9 @@ organizations.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ArtifactsPrepareResponseFormData": {
         "docs": undefined,
@@ -9093,22 +9293,21 @@ organizations.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AtomBase": {
         "docs": undefined,
         "properties": {
           "created_by": "optional<UserSummary>",
           "created_date": {
-            "default": undefined,
             "docs": "Timestamp when the object was created.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "display_id": {
-            "default": undefined,
             "docs": "Human-readable object ID unique to the Dev organization.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "Globally unique object ID.",
@@ -9116,48 +9315,46 @@ organizations.
           },
           "modified_by": "optional<UserSummary>",
           "modified_date": {
-            "default": undefined,
             "docs": "Timestamp when the object was last modified.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AtomBaseSummary": {
         "docs": undefined,
         "properties": {
           "display_id": {
-            "default": undefined,
             "docs": "Human-readable object ID unique to the Dev organization.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "Globally unique object ID.",
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthConnection": {
         "base-properties": {
           "display_name": {
-            "default": undefined,
             "docs": "Display name of the authentication connection. This name will be
 visible to all the users when they sign in to this Dev
 organization. For example, if the display_name is 'abclogin', then
 it would appear on the login button as 'Log in to abclogin'.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "enabled": {
-            "default": undefined,
             "docs": "Whether the authentication connection is enabled or disabled. If
 set to false, the authentication connection will not show up on the
 login screen as a login option.
 ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "id": {
             "docs": "ID of the authentication connection.",
@@ -9168,6 +9365,10 @@ login screen as a login option.
         "docs": "Connection object that specifies the configuration for an
 authentication connection that is set up for a Dev organization.
 ",
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "google_apps": "AuthConnectionOptionsGoogleApps",
           "oidc": "AuthConnectionOptionsOidc",
@@ -9182,23 +9383,20 @@ authentication connection.
 ",
         "properties": {
           "client_id": {
-            "default": undefined,
             "docs": "Client ID for the Azure authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "client_secret": {
-            "default": undefined,
             "docs": "Client secret for the Azure authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "domain": {
-            "default": undefined,
             "docs": "Domain URL of the Azure authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthConnectionOptionsGoogleApps": {
@@ -9207,25 +9405,22 @@ authentication connection.
 ",
         "properties": {
           "client_id": {
-            "default": undefined,
             "docs": "Client ID for the Google Apps authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "client_secret": {
-            "default": undefined,
             "docs": "Client secret for the Google Apps authentication connection.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "tenant_domain": {
-            "default": undefined,
             "docs": "Tenant domain URL of the Google Apps authentication connection.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthConnectionOptionsOidc": {
@@ -9234,23 +9429,20 @@ authentication connection.
 ",
         "properties": {
           "client_id": {
-            "default": undefined,
             "docs": "Client ID for the OIDC authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "client_secret": {
-            "default": undefined,
             "docs": "Client secret for the OIDC authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "issuer": {
-            "default": undefined,
             "docs": "Issuer URL of the OIDC authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthConnectionOptionsSaml": {
@@ -9259,18 +9451,17 @@ authentication connection.
 ",
         "properties": {
           "sign_in_endpoint": {
-            "default": undefined,
             "docs": "Sign In endpoint for the SAML authentication connection.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "signing_cert": {
-            "default": undefined,
             "docs": "Signing certificate for the SAML authentication connection.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthConnectionOptionsSocial": "map<string, unknown>",
@@ -9279,6 +9470,9 @@ authentication connection.
           "disable",
           "enable",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthConnectionType": {
         "docs": "Defines the type for the authentication connection. The configuration
@@ -9291,6 +9485,9 @@ for each authentication connection will depend on the type value.
           "social",
           "waad",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthToken": {
         "docs": undefined,
@@ -9299,45 +9496,36 @@ for each authentication connection will depend on the type value.
         ],
         "properties": {
           "client_id": {
-            "default": undefined,
             "docs": "An identifier that represents the application that requested the
 token. Only applicable for application access tokens.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "expires_at": {
-            "default": undefined,
             "docs": "The time at which the token expires.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "issued_at": {
-            "default": undefined,
             "docs": "The time at which the token was issued.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "requested_token_type": "optional<AuthTokenRequestedTokenType>",
           "scopes": {
-            "default": undefined,
             "docs": "The scopes associated with the issued token.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "status": "optional<AuthTokenStatus>",
           "subject": {
-            "default": undefined,
             "docs": "The subject of the token.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "token_hint": {
-            "default": undefined,
             "docs": "A hint that identifies the token.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthTokenGrantType": {
@@ -9352,6 +9540,9 @@ token. Only applicable for application access tokens.
             "value": "urn:ietf:params:oauth:grant-type:token-exchange",
           },
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokenRequestedTokenType": {
         "docs": "The type of the requested token.",
@@ -9393,6 +9584,9 @@ token. Only applicable for application access tokens.
             "value": "urn:ietf:params:oauth:token-type:jwt",
           },
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokenStatus": {
         "docs": "The status of the token.",
@@ -9401,6 +9595,9 @@ token. Only applicable for application access tokens.
           "expired",
           "revoked",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokenSubjectTokenType": {
         "docs": "The type of the subject token.",
@@ -9434,6 +9631,9 @@ token. Only applicable for application access tokens.
             "value": "urn:ietf:params:oauth:token-type:jwt",
           },
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokenTokenType": {
         "docs": "The type of the issued token. Bearer is the only supported token type.
@@ -9452,41 +9652,41 @@ token type.
             "type": "string",
           },
           "client_id": {
-            "default": undefined,
             "docs": "An identifier that represents the application which is requesting
 the token. Only present in a response corresponding to an
 application access token (AAT).
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "expires_in": {
             "docs": "The validity lifetime of the token specified in seconds since Unix
 epoch.
 ",
-            "type": "integer",
+            "type": "long",
           },
           "refresh_token": {
-            "default": undefined,
             "docs": "A token to refresh the issued token.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "scope": {
-            "default": undefined,
             "docs": "The scopes associated with the issued token. A space-delimited list
 of values in which the order of values does not matter.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "token_type": "AuthTokenTokenType",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthTokensGetResponse": {
         "docs": "The response to get the token metadata.",
         "properties": {
           "token": "AuthToken",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthTokensListResponse": {
@@ -9497,22 +9697,24 @@ of values in which the order of values does not matter.
             "type": "list<AuthToken>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokensOrgTraits": {
         "docs": "Carries Rev org info.",
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "The display name of the Rev org.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "domain": {
-            "default": undefined,
             "docs": "The domain of the Rev org.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "AuthTokensRevInfo": {
@@ -9521,17 +9723,13 @@ issue a Rev session token.
 ",
         "properties": {
           "org_ref": {
-            "default": undefined,
             "docs": "An identifier which uniquely identifies a Rev org.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "org_traits": "optional<AuthTokensOrgTraits>",
           "rev_user_id": {
-            "default": undefined,
             "docs": "The unique ID of the Rev user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "user_ref": {
             "docs": "An identifier which uniquely identifies a Rev user.",
@@ -9539,34 +9737,37 @@ issue a Rev session token.
           },
           "user_traits": "optional<AuthTokensUserTraits>",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokensUpdateResponse": {
         "docs": "Response for the request to update the token metadata.",
         "properties": {
           "token": "AuthToken",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "AuthTokensUserTraits": {
         "docs": "Carries Rev user info.",
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "The display name of the Rev user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "email": {
-            "default": undefined,
             "docs": "The email address of the Rev user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "full_name": {
-            "default": undefined,
             "docs": "The full name of the Rev user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "Capability": "PartBase",
@@ -9574,19 +9775,21 @@ issue a Rev session token.
       "DevOrgAuthConnectionsCreateRequest": {
         "base-properties": {
           "display_name": {
-            "default": undefined,
             "docs": "Display name of the authentication connection. This name will be
 visible to all the users when they sign in to this Dev
 organization. For example, if the display_name is 'abclogin', then
 it would appear on the login button as 'Log in to abclogin'.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
         "docs": "Request to create a new enterprise authentication connection.
 ",
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "google_apps": "AuthConnectionOptionsGoogleApps",
           "oidc": "AuthConnectionOptionsOidc",
@@ -9604,6 +9807,9 @@ authentication connections have different configuration parameters.
           "samlp",
           "waad",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "DevOrgAuthConnectionsCreateResponse": {
         "docs": "Response for the request to create a new enterprise authentication
@@ -9612,6 +9818,9 @@ connection.
         "properties": {
           "auth_connection": "AuthConnection",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "DevOrgAuthConnectionsGetResponse": {
         "docs": "Response object encapsulating the configuration details of an
@@ -9619,6 +9828,9 @@ authentication connection.
 ",
         "properties": {
           "auth_connection": "AuthConnection",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "DevOrgAuthConnectionsListResponse": {
@@ -9633,18 +9845,19 @@ a Dev organization.
             "type": "list<AuthConnection>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "DevOrgAuthConnectionsUpdateRequest": {
         "base-properties": {
           "display_name": {
-            "default": undefined,
             "docs": "New display name of the authentication connection. This name will
 be visible to all the users when they sign in to this Dev
 organization. For example, if the display_name is 'abclogin', then
 it would appear on the login button as 'Log in to abclogin'.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "ID of the authentication connection which is to be updated.
@@ -9656,6 +9869,10 @@ it would appear on the login button as 'Log in to abclogin'.
         "docs": "Request to update an enterprise authentication connection for a Dev
 organization.
 ",
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "google_apps": "AuthConnectionOptionsGoogleApps",
           "none": "empty",
@@ -9676,6 +9893,9 @@ that can be updated.
           "samlp",
           "waad",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "DevOrgAuthConnectionsUpdateResponse": {
         "docs": "Response for the request to update an enterprise authentication
@@ -9683,6 +9903,9 @@ connection.
 ",
         "properties": {
           "auth_connection": "AuthConnection",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "DevUser": {
@@ -9692,11 +9915,12 @@ connection.
         ],
         "properties": {
           "external_identities": {
-            "default": undefined,
             "docs": "IDs of the Dev User outside the DevRev SOR.",
             "type": "optional<list<ExternalIdentity>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "DevUserSummary": "UserBaseSummary",
@@ -9708,21 +9932,20 @@ connection.
             "type": "list<DevUser>",
           },
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "DevUsersSelfResponse": {
@@ -9730,6 +9953,9 @@ sort order. If not set, then no prior elements exist.
 ",
         "properties": {
           "dev_user": "DevUser",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EnhancementSummary": "PartBaseSummary",
@@ -9739,6 +9965,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorBadRequestBadRequest": "map<string, unknown>",
       "ErrorBadRequestInvalidEnumValue": {
@@ -9757,6 +9986,9 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorBadRequestMissingRequiredField": {
         "docs": undefined,
@@ -9765,6 +9997,9 @@ sort order. If not set, then no prior elements exist.
             "docs": "The missing field's name.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ErrorBadRequestParseError": "map<string, unknown>",
@@ -9776,6 +10011,9 @@ sort order. If not set, then no prior elements exist.
           "parse_error",
           "value_not_permitted",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorBadRequestValueNotPermitted": {
         "docs": undefined,
@@ -9785,22 +10023,24 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
           "reason": {
-            "default": undefined,
             "docs": "The reason the value isn't permitted.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ErrorBase": {
         "docs": undefined,
         "properties": {
           "message": {
-            "default": undefined,
             "docs": "The message associated with the error.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ErrorForbidden": {
@@ -9809,6 +10049,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorForbiddenForbidden": "map<string, unknown>",
       "ErrorForbiddenType": "literal<"forbidden">",
@@ -9818,6 +10061,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorInternalServerErrorInternalError": "map<string, unknown>",
       "ErrorInternalServerErrorType": "literal<"internal_error">",
@@ -9827,6 +10073,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorNotFoundNotFound": "map<string, unknown>",
       "ErrorNotFoundType": "literal<"not_found">",
@@ -9836,6 +10085,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorServiceUnavailableServiceUnavailable": "map<string, unknown>",
       "ErrorServiceUnavailableType": "literal<"service_unavailable">",
@@ -9845,6 +10097,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorTooManyRequestsTooManyRequests": "map<string, unknown>",
       "ErrorTooManyRequestsType": "literal<"too_many_requests">",
@@ -9854,6 +10109,9 @@ sort order. If not set, then no prior elements exist.
           "ErrorBase",
         ],
         "properties": {},
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ErrorUnauthorizedType": "literal<"unauthenticated">",
       "ErrorUnauthorizedUnauthenticated": "map<string, unknown>",
@@ -9861,6 +10119,9 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "part": "part",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventPartDeleted": {
@@ -9871,17 +10132,26 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventPartUpdated": {
         "docs": undefined,
         "properties": {
           "part": "part",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventRevOrgCreated": {
         "docs": undefined,
         "properties": {
           "rev_org": "RevOrg",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventRevOrgDeleted": {
@@ -9892,17 +10162,26 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventRevOrgUpdated": {
         "docs": undefined,
         "properties": {
           "rev_org": "RevOrg",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventTagCreated": {
         "docs": undefined,
         "properties": {
           "tag": "tag",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventTagDeleted": {
@@ -9913,17 +10192,26 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventTagUpdated": {
         "docs": undefined,
         "properties": {
           "tag": "tag",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventTimelineEntryCreated": {
         "docs": undefined,
         "properties": {
           "entry": "TimelineEntry",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventTimelineEntryDeleted": {
@@ -9934,17 +10222,26 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventTimelineEntryUpdated": {
         "docs": undefined,
         "properties": {
           "entry": "TimelineEntry",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventWebhookCreated": {
         "docs": undefined,
         "properties": {
           "webhook": "webhook",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventWebhookDeleted": {
@@ -9955,17 +10252,26 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventWebhookUpdated": {
         "docs": undefined,
         "properties": {
           "webhook": "webhook",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventWorkCreated": {
         "docs": undefined,
         "properties": {
           "work": "work",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "EventWorkDeleted": {
@@ -9976,11 +10282,17 @@ sort order. If not set, then no prior elements exist.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "EventWorkUpdated": {
         "docs": undefined,
         "properties": {
           "work": "work",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ExternalIdentity": {
@@ -9998,6 +10310,9 @@ sort order. If not set, then no prior elements exist.
           "p2",
           "p3",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "ListMode": {
         "docs": "The iteration mode to use. If "after", then entries after the provided
@@ -10010,6 +10325,9 @@ always be returned in the specified sort-by order.
           "after",
           "before",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "OrgBase": {
         "docs": undefined,
@@ -10018,11 +10336,12 @@ always be returned in the specified sort-by order.
         ],
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "Name of the Organization.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "OrgBaseSummary": {
@@ -10032,11 +10351,12 @@ always be returned in the specified sort-by order.
         ],
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "Name of the Organization.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "OrgEnvironment": {
@@ -10047,11 +10367,18 @@ always be returned in the specified sort-by order.
           "staging",
           "test",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "OrgSummary": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "rev_org": "RevOrgSummary",
         },
@@ -10064,16 +10391,12 @@ always be returned in the specified sort-by order.
         ],
         "properties": {
           "artifacts": {
-            "default": undefined,
             "docs": "The attached artifacts.",
             "type": "optional<list<ArtifactSummary>>",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "Description of the part.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "name": {
             "docs": "Name of the part.",
@@ -10084,11 +10407,12 @@ always be returned in the specified sort-by order.
             "type": "list<UserSummary>",
           },
           "tags": {
-            "default": undefined,
             "docs": "Tags associated with the object.",
             "type": "optional<list<TagWithValue>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartBaseSummary": {
@@ -10102,11 +10426,18 @@ always be returned in the specified sort-by order.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "PartSummary": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "capability": "CapabilitySummary",
           "enhancement": "EnhancementSummary",
@@ -10121,14 +10452,15 @@ always be returned in the specified sort-by order.
           "feature",
           "product",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "PartsCreateRequest": {
         "base-properties": {
           "description": {
-            "default": undefined,
             "docs": "Description of the part.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "name": {
             "docs": "Name of the part.",
@@ -10141,6 +10473,10 @@ always be returned in the specified sort-by order.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "capability": "PartsCreateRequestCapability",
           "enhancement": "PartsCreateRequestEnhancement",
@@ -10156,6 +10492,9 @@ always be returned in the specified sort-by order.
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "PartsCreateRequestEnhancement": {
         "docs": undefined,
@@ -10166,12 +10505,13 @@ always be returned in the specified sort-by order.
             "type": "list<string>",
           },
           "target_close_date": {
-            "default": undefined,
             "docs": "Target close date by which enhancement is expected to be closed.
 ",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartsCreateRequestFeature": {
@@ -10182,12 +10522,18 @@ always be returned in the specified sort-by order.
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "PartsCreateRequestProduct": "map<string, unknown>",
       "PartsCreateResponse": {
         "docs": undefined,
         "properties": {
           "part": "part",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartsDeleteResponse": "map<string, unknown>",
@@ -10196,54 +10542,56 @@ always be returned in the specified sort-by order.
         "properties": {
           "part": "part",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "PartsListResponse": {
         "docs": undefined,
         "properties": {
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "parts": {
             "docs": "The list of parts.",
             "type": "list<part>",
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartsUpdateRequest": {
         "base-properties": {
           "description": {
-            "default": undefined,
             "docs": "The updated description of the part.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The ID of the part to update.",
             "type": "string",
           },
           "name": {
-            "default": undefined,
             "docs": "The updated name of the part.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "owned_by": "optional<PartsUpdateRequestOwnedBy>",
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "capability": "PartsUpdateRequestCapability",
           "enhancement": "PartsUpdateRequestEnhancement",
@@ -10257,11 +10605,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "target_close_date": {
-            "default": undefined,
             "docs": "Updates the target close date of the enhancement.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartsUpdateRequestFeature": "map<string, unknown>",
@@ -10269,13 +10618,14 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the owner IDs to the provided user IDs. This must not be
 empty.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "PartsUpdateRequestProduct": "map<string, unknown>",
@@ -10283,6 +10633,9 @@ empty.
         "docs": undefined,
         "properties": {
           "part": "part",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "Product": "PartBase",
@@ -10294,27 +10647,24 @@ empty.
         ],
         "properties": {
           "description": {
-            "default": undefined,
             "docs": "Description of the Rev organization.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "domain": {
-            "default": undefined,
             "docs": "Company's domain name. Example - 'devrev.ai'.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "external_ref": {
-            "default": undefined,
             "docs": "External ref is a unique identifier for the Rev (customer)
 organization from your primary customer system of records. If none
 is specified, a system-generated identifier will be assigned to the
 organization.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "RevOrgSummary": "OrgBaseSummary",
@@ -10323,6 +10673,9 @@ organization.
 ",
         "properties": {
           "rev_org": "RevOrg",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "RevOrgsDeleteResponse": {
@@ -10334,37 +10687,42 @@ organization.
         "properties": {
           "rev_org": "RevOrg",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "RevOrgsListResponse": {
         "docs": "The response to getting a list of Rev organizations' information.
 ",
         "properties": {
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "rev_orgs": {
             "docs": "List with all of the Rev organizations' information.",
             "type": "list<RevOrg>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "RevOrgsUpdateResponse": {
         "docs": "Response object to updating Rev organization's information.",
         "properties": {
           "rev_org": "RevOrg",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "RevUserSummary": {
@@ -10374,7 +10732,6 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {
           "external_ref": {
-            "default": undefined,
             "docs": "External ref is a mutable unique identifier for a user within the
 Rev organization from your primary customer record. If none is
 available, a good alternative is the email address/phone number
@@ -10382,9 +10739,11 @@ which could uniquely identify the user. If none is specified, a
 system-generated identifier will be assigned to the user.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "rev_org": "optional<OrgSummary>",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "SetTagWithValue": {
@@ -10395,36 +10754,39 @@ system-generated identifier will be assigned to the user.
             "type": "string",
           },
           "value": {
-            "default": undefined,
             "docs": "The value for the object's association with the tag. If specified,
 the value must be one that's specified in the tag's allowed values.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "StageInit": {
         "docs": "Sets an object's initial stage.",
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The name of the stage.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "StageUpdate": {
         "docs": "Updates an object's stage.",
         "properties": {
           "name": {
-            "default": undefined,
             "docs": "The updated name of the stage, otherwise unchanged if not set.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "SysUserSummary": "UserBaseSummary",
@@ -10442,23 +10804,30 @@ unique.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TagWithValue": {
         "docs": undefined,
         "properties": {
           "tag": "TagSummary",
           "value": {
-            "default": undefined,
             "docs": "The value for the object's association with the tag.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TagsCreateResponse": {
         "docs": "The response to creating a new tag.",
         "properties": {
           "tag": "tag",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TagsDeleteResponse": {
@@ -10470,47 +10839,53 @@ unique.
         "properties": {
           "tag": "tag",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TagsListResponse": {
         "docs": "The response to listing the tags.",
         "properties": {
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "tags": {
             "docs": "The list of tags.",
             "type": "list<tag>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TagsUpdateAllowedValues": {
         "docs": "Specifies an update to a tag's allowed values.",
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the allowed values for the tag.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TagsUpdateResponse": {
         "docs": "The response for updating a tag.",
         "properties": {
           "tag": "tag",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TicketSeverity": {
@@ -10521,6 +10896,9 @@ sort order. If not set, then no prior elements exist.
           "low",
           "medium",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TimelineComment": {
         "docs": undefined,
@@ -10529,26 +10907,23 @@ sort order. If not set, then no prior elements exist.
         ],
         "properties": {
           "artifacts": {
-            "default": undefined,
             "docs": "The artifacts for the comment.",
             "type": "optional<list<ArtifactSummary>>",
-            "validation": undefined,
           },
           "body": {
-            "default": undefined,
             "docs": "The comment's body. If the comment has been deleted, then no body
 will appear in the response.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "body_type": "optional<TimelineCommentBodyType>",
           "snap_kit_body": {
-            "default": undefined,
             "docs": "The SnapKit Body of the comment.",
             "type": "optional<map<string, unknown>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TimelineCommentBodyType": {
@@ -10557,6 +10932,9 @@ will appear in the response.
           "snap_kit",
           "text",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TimelineEntriesCreateRequest": {
         "base-properties": {
@@ -10568,6 +10946,10 @@ will appear in the response.
         },
         "discriminant": "type",
         "docs": "The request to create a timeline entry for an object.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "timeline_comment": "TimelineEntriesCreateRequestTimelineComment",
         },
@@ -10576,24 +10958,21 @@ will appear in the response.
         "docs": undefined,
         "properties": {
           "artifacts": {
-            "default": undefined,
             "docs": "The IDs of the artifacts attached to the comment.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "body": {
-            "default": undefined,
             "docs": "The comment's body.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "body_type": "optional<TimelineCommentBodyType>",
           "snap_kit_body": {
-            "default": undefined,
             "docs": "The SnapKit body of the comment.",
             "type": "optional<map<string, unknown>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TimelineEntriesCreateRequestType": "literal<"timeline_comment">",
@@ -10602,36 +10981,41 @@ will appear in the response.
         "properties": {
           "timeline_entry": "TimelineEntry",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TimelineEntriesGetResponse": {
         "docs": "The request to getting a timeline entry.",
         "properties": {
           "timeline_entry": "TimelineEntry",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TimelineEntriesListResponse": {
         "docs": "The response to listing timeline entries for an object.",
         "properties": {
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "timeline_entries": {
             "docs": "The timeline entries for the object.",
             "type": "list<TimelineEntry>",
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TimelineEntriesUpdateRequest": {
@@ -10643,6 +11027,10 @@ sort order. If not set, then no prior elements exist.
         },
         "discriminant": "type",
         "docs": "The request to update a timeline entry.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "timeline_comment": "TimelineEntriesUpdateRequestTimelineComment",
         },
@@ -10652,46 +11040,42 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "artifacts": "optional<TimelineEntriesUpdateRequestTimelineCommentArtifacts>",
           "body": {
-            "default": undefined,
             "docs": "The updated comment's body.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "body_type": "optional<TimelineCommentBodyType>",
           "snap_kit_body": {
-            "default": undefined,
             "docs": "The SnapKit body of the comment.",
             "type": "optional<map<string, unknown>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TimelineEntriesUpdateRequestTimelineCommentArtifacts": {
         "docs": undefined,
         "properties": {
           "add": {
-            "default": undefined,
             "docs": "Adds the provided artifacts to the comment. An artifact cannot be
 added more than once, i.e. nothing is done if the artifact is
 already attached. Mutually exclusive with \`set\`.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "remove": {
-            "default": undefined,
             "docs": "Removes the provided artifacts from the comment. If an artifact is
 not present, then it's ignored. Mututally exclusive with \`set\`.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "set": {
-            "default": undefined,
             "docs": "Sets the field to the provided artifacts.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "TimelineEntriesUpdateRequestType": "literal<"timeline_comment">",
@@ -10700,11 +11084,18 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
         "properties": {
           "timeline_entry": "TimelineEntry",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "TimelineEntry": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "timeline_comment": "TimelineComment",
         },
@@ -10725,32 +11116,27 @@ default visibility.
         ],
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "The user's display name. The name is non-unique and mutable.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "display_picture": "optional<ArtifactSummary>",
           "email": {
-            "default": undefined,
             "docs": "Email address of the user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "full_name": {
-            "default": undefined,
             "docs": "Full name of the user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "phone_numbers": {
-            "default": undefined,
             "docs": "Phone numbers of the user.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "state": "optional<UserState>",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "UserBaseSummary": {
@@ -10760,26 +11146,23 @@ default visibility.
         ],
         "properties": {
           "display_name": {
-            "default": undefined,
             "docs": "The user's display name. The name is non-unique and mutable.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "display_picture": "optional<ArtifactSummary>",
           "email": {
-            "default": undefined,
             "docs": "Email address of the user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "full_name": {
-            "default": undefined,
             "docs": "Full name of the user.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "state": "optional<UserState>",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "UserState": {
@@ -10791,11 +11174,18 @@ default visibility.
           "shadow",
           "unassigned",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "UserSummary": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "dev_user": "DevUserSummary",
           "rev_user": "RevUserSummary",
@@ -10808,6 +11198,9 @@ default visibility.
           "rev_user",
           "sys_user",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhookEventRequest": {
         "docs": undefined,
@@ -10829,14 +11222,12 @@ default visibility.
           "timeline_entry_deleted": "optional<EventTimelineEntryDeleted>",
           "timeline_entry_updated": "optional<EventTimelineEntryUpdated>",
           "timestamp": {
-            "default": undefined,
             "docs": "Timestamp of the webhook's invocation for the event. Note this
 should be used to protect against replay attacks, where the event
 should only be processed if the timestamp isn't stale by several
 seconds.
 ",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "type": "optional<WebhookEventType>",
           "verify": "optional<WebhookEventVerify>",
@@ -10851,12 +11242,14 @@ seconds.
           "work_deleted": "optional<EventWorkDeleted>",
           "work_updated": "optional<EventWorkUpdated>",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhookEventResponse": {
         "docs": undefined,
         "properties": {
           "challenge": {
-            "default": undefined,
             "docs": "The challenge from the "verify" request, otherwise this should not
 be set for other request types.
 ",
@@ -10868,6 +11261,9 @@ be set for other request types.
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WebhookEventType": {
@@ -10893,6 +11289,9 @@ be set for other request types.
           "work_deleted",
           "work_updated",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhookEventVerify": {
         "docs": undefined,
@@ -10908,6 +11307,9 @@ be set for other request types.
             },
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhookStatus": {
         "docs": "The status of the webhook.",
@@ -10916,11 +11318,17 @@ be set for other request types.
           "inactive",
           "unverified",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhooksCreateResponse": {
         "docs": "The response to creating a new webhook.",
         "properties": {
           "webhook": "webhook",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WebhooksDeleteResponse": {
@@ -10932,6 +11340,9 @@ be set for other request types.
         "properties": {
           "webhook": "webhook",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhooksListResponse": {
         "docs": "The response to listing the webhooks.",
@@ -10941,6 +11352,9 @@ be set for other request types.
             "type": "list<webhook>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhooksUpdateAction": {
         "docs": "The action to update the webhook's status.",
@@ -10948,43 +11362,46 @@ be set for other request types.
           "activate",
           "deactivate",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WebhooksUpdateRequestEventTypes": {
         "docs": undefined,
         "properties": {
           "add": {
-            "default": undefined,
             "docs": "The event types to add. If a provided event type is already set for
 the webhook, then nothing is done. Note this is mutually exclusive
 with 'set'.
 ",
             "type": "optional<list<WebhookEventType>>",
-            "validation": undefined,
           },
           "remove": {
-            "default": undefined,
             "docs": "The event types to remove. If a provided event type isn't set for
 the webhook, then nothing is done. Note this is mutually exclusive
 with 'set'.
 ",
             "type": "optional<list<WebhookEventType>>",
-            "validation": undefined,
           },
           "set": {
-            "default": undefined,
             "docs": "The updated event types, which will replace the webhook's current
 event types. Note this is mutually exclusive with 'add' and
 'remove'.
 ",
             "type": "optional<list<WebhookEventType>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WebhooksUpdateResponse": {
         "docs": "The response to updating the webhook.",
         "properties": {
           "webhook": "webhook",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorkBase": {
@@ -10995,44 +11412,37 @@ event types. Note this is mutually exclusive with 'add' and
         "properties": {
           "applies_to_part": "optional<PartSummary>",
           "artifacts": {
-            "default": undefined,
             "docs": "The artifacts attached to the work item.",
             "type": "optional<list<ArtifactSummary>>",
-            "validation": undefined,
           },
           "body": {
-            "default": undefined,
             "docs": "Body of the work object.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "owned_by": {
             "docs": "The users that own the work.",
             "type": "list<UserSummary>",
           },
           "reported_by": {
-            "default": undefined,
             "docs": "Users that reported the work.",
             "type": "optional<list<UserSummary>>",
-            "validation": undefined,
           },
           "stage": "optional<stage>",
           "tags": {
-            "default": undefined,
             "docs": "Tags associated with the object.",
             "type": "optional<list<TagWithValue>>",
-            "validation": undefined,
           },
           "target_close_date": {
-            "default": undefined,
             "docs": "Timestamp when the work is expected to be complete.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "title": {
             "docs": "Title of the work object.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorkType": {
@@ -11040,6 +11450,9 @@ event types. Note this is mutually exclusive with 'add' and
           "issue",
           "ticket",
         ],
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WorksCreateRequest": {
         "base-properties": {
@@ -11051,40 +11464,30 @@ issues.
             "type": "string",
           },
           "artifacts": {
-            "default": undefined,
             "docs": "The IDs of the artifacts to associate with the work item.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "body": {
-            "default": undefined,
             "docs": "Body of the work object.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "owned_by": {
             "docs": "The users that own the work.",
             "type": "list<string>",
           },
           "reported_by": {
-            "default": undefined,
             "docs": "The users that reported the work.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "stage": "optional<StageInit>",
           "tags": {
-            "default": undefined,
             "docs": "Tags associated with the work item.",
             "type": "optional<list<SetTagWithValue>>",
-            "validation": undefined,
           },
           "target_close_date": {
-            "default": undefined,
             "docs": "Timestamp for when the work is expected to be complete.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "title": {
             "docs": "Title of the work object.",
@@ -11093,6 +11496,10 @@ issues.
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "issue": "WorksCreateRequestIssue",
           "ticket": "WorksCreateRequestTicket",
@@ -11103,35 +11510,38 @@ issues.
         "properties": {
           "priority": "optional<IssuePriority>",
           "sprint": {
-            "default": undefined,
             "docs": "The sprint that the issue belongs to.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksCreateRequestTicket": {
         "docs": undefined,
         "properties": {
           "group": {
-            "default": undefined,
             "docs": "The group that the ticket is associated with.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "rev_org": {
-            "default": undefined,
             "docs": "The Rev organization that the ticket is associated with.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "severity": "optional<TicketSeverity>",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksCreateResponse": {
         "docs": undefined,
         "properties": {
           "work": "work",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksDeleteResponse": "map<string, unknown>",
@@ -11143,53 +11553,54 @@ issues.
             "type": "list<work>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WorksGetResponse": {
         "docs": undefined,
         "properties": {
           "work": "work",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WorksListResponse": {
         "docs": undefined,
         "properties": {
           "next_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate subsequent results in accordance to the
 sort order. If not set, then no later elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "prev_cursor": {
-            "default": undefined,
             "docs": "The cursor used to iterate preceding results in accordance to the
 sort order. If not set, then no prior elements exist.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "works": {
             "docs": "The list of works.",
             "type": "list<work>",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "WorksUpdateRequest": {
         "base-properties": {
           "applies_to_part": {
-            "default": undefined,
             "docs": "Updates the part that the work applies to.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "artifacts": "optional<WorksUpdateRequestArtifactIds>",
           "body": {
-            "default": undefined,
             "docs": "Updated body of the work object, or unchanged if not provided.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The work's ID.",
@@ -11200,22 +11611,22 @@ sort order. If not set, then no prior elements exist.
           "stage": "optional<StageUpdate>",
           "tags": "optional<WorksUpdateRequestTags>",
           "target_close_date": {
-            "default": undefined,
             "docs": "Updates the timestamp for when the work is expected to be complete.
 ",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "title": {
-            "default": undefined,
             "docs": "Updated title of the work object, or unchanged if not provided.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
         },
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "issue": "WorksUpdateRequestIssue",
           "none": "empty",
@@ -11226,11 +11637,12 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the IDs to the provided artifact IDs.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateRequestIssue": {
@@ -11238,72 +11650,78 @@ sort order. If not set, then no prior elements exist.
         "properties": {
           "priority": "optional<IssuePriority>",
           "sprint": {
-            "default": undefined,
             "docs": "Updates the sprint that the issue belongs to.",
             "type": "optional<string>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateRequestOwnedBy": {
         "docs": undefined,
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the owner IDs to the provided user IDs. This must not be
 empty.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateRequestReportedBy": {
         "docs": undefined,
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the users that reported the work to the provided user IDs.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateRequestTags": {
         "docs": undefined,
         "properties": {
           "set": {
-            "default": undefined,
             "docs": "Sets the provided tags on the work item.",
             "type": "optional<list<SetTagWithValue>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateRequestTicket": {
         "docs": undefined,
         "properties": {
           "group": {
-            "default": undefined,
             "docs": "The group that the ticket is associated with.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "rev_org": {
-            "default": undefined,
             "docs": "Updates the Rev organization that the ticket is associated with.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "severity": "optional<TicketSeverity>",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "WorksUpdateResponse": {
         "docs": undefined,
         "properties": {
           "work": "work",
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "empty": "map<string, unknown>",
@@ -11314,11 +11732,12 @@ empty.
         ],
         "properties": {
           "target_close_date": {
-            "default": undefined,
             "docs": "Timestamp when the enhancement is expected to be closed.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "issue": {
@@ -11329,11 +11748,18 @@ empty.
         "properties": {
           "priority": "optional<IssuePriority>",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "part": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "capability": "Capability",
           "enhancement": "enhancement",
@@ -11349,6 +11775,9 @@ empty.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "tag": {
         "docs": undefined,
@@ -11357,21 +11786,17 @@ empty.
         ],
         "properties": {
           "allowed_values": {
-            "default": undefined,
             "docs": "The allowed values for the tag, where a value is provided when a
 tag is associated with an object. If empty, then no value should be
 provided when the association is made.
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "description": {
-            "default": undefined,
             "docs": "An informative description for the tag that should provide context
 on the tag's purpose and usage.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "name": {
             "docs": "The name of the tag, which denotes the logical concept by which all
@@ -11380,6 +11805,9 @@ unique.
 ",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "devrev/openapi.yml",
         },
       },
       "ticket": {
@@ -11392,6 +11820,9 @@ unique.
           "rev_org": "optional<OrgSummary>",
           "severity": "optional<TicketSeverity>",
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "webhook": {
         "docs": undefined,
@@ -11400,10 +11831,8 @@ unique.
         ],
         "properties": {
           "event_types": {
-            "default": undefined,
             "docs": "The event types that the webhook will receive.",
             "type": "optional<list<WebhookEventType>>",
-            "validation": undefined,
           },
           "secret": {
             "docs": "The secret to use for verifying webhook events.",
@@ -11421,11 +11850,18 @@ unique.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
       },
       "work": {
         "base-properties": {},
         "discriminant": "type",
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "devrev/openapi.yml",
+        },
         "union": {
           "issue": "issue",
           "ticket": "ticket",

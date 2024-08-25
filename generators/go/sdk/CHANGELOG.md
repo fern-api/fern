@@ -7,6 +7,104 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.23.1 - 2024-08-19]
+
+- Fix: Updates object and undisriminated union deserialization to return an error whenever any
+  literal values do not exist or are mismatched.
+
+## [0.23.0 - 2024-08-07]
+
+- Fix: When `alwaysSendRequiredProperties` is enabled, required properties are never omitted in
+  the type's wire representation. Any required property that is not explicitly set will
+  send the default value for that type. For example,
+
+  ```yaml
+  - name: fernapi/fern-go-sdk
+    version: 0.23.0
+    config:
+      alwaysSendRequiredProperties: true
+  ```
+
+  ```go
+  type CreateUserRequest struct {
+    Admin   *User   `json:"admin"`
+    Members []*User `json:"members"`
+  }
+
+  type User struct {
+    Name string `json:"name"`
+  }
+  ```
+
+  If the `CreateUserRequest` is constructed without any values, it will send `null`
+  for both fields. If it is instead constructed with the zero value of the underlying
+  type, the empty representation will be sent:
+
+  ```go
+  // The following is serialized as `{"admin": null, "members": null}`
+  nullRequest := &CreateUserRequest{}
+
+  // The following is serialized as `{"admin": null, "members": []}`
+  noMembersRequest := &CreateUserRequest{
+    Members: []*User{},
+  }
+
+  // The following is serialized as `{"admin":{"name":""}, "members":[]}`
+  emptyValueRequest := &CreateUserRequest{
+    Admin:   &User{},
+    Members: []*User{},
+  }
+
+  // The following is serialized as `{"admin":{"name": "john.doe"}, "members":[{"name": "jane.doe"}]}`
+  simpleRequest := &CreateUserRequest{
+    Admin:   &User{
+       Name: "john.doe",
+    },
+    Members: []*User{
+      {
+        Name: "jane.doe",
+      },
+    },
+  }
+  ```
+
+## [0.22.3 - 2024-07-22]
+
+- Fix: Fix an issue where APIs that specify the `property-name` error discrimination strategy would
+  receive JSON decode errors instead of the server's error.
+
+## [0.22.2 - 2024-07-04]
+
+- Fix: Request types set to `nil` no longer send an explicit `null` value.
+
+  ```go
+  user, err := client.Users.Create(ctx, nil) // No request body is sent in the POST.
+  ```
+
+## [0.22.1 - 2024-06-11]
+
+- Fix: Array of `deepObject` query parameters are correctly serialized. An array of objects
+  are encoded like so:
+
+  ```go
+  user, err := client.Users.Get(
+    ...,
+    acme.GetUserRequest{
+      Filters: []*acme.Filter{
+        {
+          Key: "age",
+          Value: "42",
+        },
+        {
+          Key: "firstName",
+          Value: "john",
+        },
+      },
+    },
+  )
+  // The query string is serialized as: ?filters[key]=age&filters[key]=firstName&filters[value]=42&filters[value]=john
+  ```
+
 ## [0.22.0 - 2024-05-21]
 
 - Feature: Extra properties decoded from response objects are retained and accessible via the
@@ -24,7 +122,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.21.3 - 2024-05-17]
 
-- Internal: The generator now uses the latest FDR SDK.
+- Internal: The gnnerator now uses the latest FDR SDK.
 
 ## [0.21.2 - 2024-05-07]
 

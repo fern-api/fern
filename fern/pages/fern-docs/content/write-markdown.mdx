@@ -70,3 +70,24 @@ Read the [Introduction](/learn/overview/introduction).
 To use images in your Markdown pages, upload them to a service such as [Amazon S3](https://aws.amazon.com/media-sharing/) or [Google Cloud Storage](https://cloud.google.com/storage).
 
 Once you have the URL to your image, use [Markdown syntax to insert the image](https://www.markdownguide.org/basic-syntax/#images-1).
+
+## LaTeX
+
+Fern supports [LaTeX](https://www.latex-project.org/) math equations. To use LaTeX, wrap your inline math equations in `$`. For example, `$(x^2 + y^2 = z^2)$` will render $x^2 + y^2 = z^2$.
+
+For display math equations, wrap the equation in `$$`. For example:
+
+```latex
+$$
+% \f is defined as #1f(#2) using the macro
+\f\relax{x} = \int_{-\infty}^\infty
+    \f\hat\xi\,e^{2 \pi i \xi x}
+    \,d\xi
+$$
+```
+
+$$
+\f\relax{x} = \int_{-\infty}^\infty
+    \f\hat\xi\,e^{2 \pi i \xi x}
+    \,d\xi
+$$

@@ -1,43 +1,30 @@
-from typing import List, Literal, Optional
+from typing import Callable, Optional
+from urllib import response
 
 import fern.ir.resources as ir_types
-from typing_extensions import Never
 
 from fern_python.codegen import AST
-from fern_python.codegen.ast.nodes.declarations.function.function_parameter import (
-    FunctionParameter,
-)
-from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
-    NamedFunctionParameter,
-)
 from fern_python.external_dependencies.httpx_sse import HttpxSSE
 from fern_python.external_dependencies.json import Json
-from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
+from fern_python.generators.sdk.client_generator.pagination.abstract_paginator import (
+    PaginationSnippetConfig,
+)
+from fern_python.generators.sdk.client_generator.pagination.cursor import (
+    CursorPagination,
+)
+from fern_python.generators.sdk.client_generator.pagination.offset import (
+    OffsetPagination,
+)
+from fern_python.generators.sdk.client_generator.streaming.utilities import (
+    StreamingParameterType,
+)
 
-
-# HACKHACK yes this is kinda duplicative of snippets,
-# but we don't need the complexity of snippets here, we just
-# need to reinvoke the function call with slightly tweaked params
-class EndpointDummySnippetConfig:
-    endpoint_name: str
-    parameters: List[FunctionParameter]
-    named_parameters: List[NamedFunctionParameter]
-
-    def __init__(
-        self, endpoint_name: str, parameters: List[FunctionParameter], named_parameters: List[NamedFunctionParameter]
-    ) -> None:
-        self.endpoint_name = endpoint_name
-        self.parameters = parameters
-        self.named_parameters = named_parameters
+from ..context.sdk_generator_context import SdkGeneratorContext
 
 
 class EndpointResponseCodeWriter:
     RESPONSE_VARIABLE = "_response"
     PARSED_RESPONSE_VARIABLE = "_parsed_response"
-    PARSED_RESPONSE_NEXT_VARIABLE = "_parsed_next"
-    PAGINATION_GET_NEXT_VARIABLE = "_get_next"
-    PAGINATION_HAS_NEXT_VARIABLE = "_has_next"
-    PAGINATION_ITEMS_VARIABLE = "_items"
     RESPONSE_JSON_VARIABLE = "_response_json"
     STREAM_TEXT_VARIABLE = "_text"
     FILE_CHUNK_VARIABLE = "_chunk"
@@ -48,16 +35,20 @@ class EndpointResponseCodeWriter:
         self,
         *,
         context: SdkGeneratorContext,
-        endpoint: ir_types.HttpEndpoint,
+        response: Optional[ir_types.HttpResponse],
+        errors: ir_types.ResponseErrors,
         is_async: bool,
+        streaming_parameter: Optional[StreamingParameterType] = None,
         pagination: Optional[ir_types.Pagination],
-        dummy_snippet_config: EndpointDummySnippetConfig,
+        pagination_snippet_config: PaginationSnippetConfig,
     ):
         self._context = context
-        self._endpoint = endpoint
+        self._response = response
+        self._errors = errors
+        self._streaming_parameter = streaming_parameter
         self._is_async = is_async
         self._pagination = pagination
-        self._dummy_snippet_config = dummy_snippet_config
+        self._pagination_snippet_config = pagination_snippet_config
 
     def get_writer(self) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
@@ -88,13 +79,27 @@ class EndpointResponseCodeWriter:
                 f"for {EndpointResponseCodeWriter.SSE_VARIABLE} in {EndpointResponseCodeWriter.EVENT_SOURCE_VARIABLE}.{self._get_iter_sse_method(is_async=self._is_async)}():"
             )
             with writer.indent():
-                writer.write("yield ")
-                writer.write_node(
-                    self._context.core_utilities.get_construct(
-                        self._get_streaming_response_data_type(stream_response),
-                        AST.Expression(Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))),
-                    ),
-                )
+                if stream_response_union.terminator is not None:
+                    writer.write_line(
+                        f'if {EndpointResponseCodeWriter.SSE_VARIABLE}.data == "{stream_response_union.terminator}":'
+                    )
+                    with writer.indent():
+                        writer.write_line("return")
+                writer.write_line("try:")
+                with writer.indent():
+                    writer.write("yield ")
+                    writer.write_node(
+                        self._context.core_utilities.get_construct(
+                            self._get_streaming_response_data_type(stream_response),
+                            AST.Expression(
+                                Json.loads(AST.Expression(f"{EndpointResponseCodeWriter.SSE_VARIABLE}.data"))
+                            ),
+                        ),
+                    )
+                    writer.write_newline_if_last_line_not()
+                writer.write_line("except:")
+                with writer.indent():
+                    writer.write_line("pass")
         else:
             if self._is_async:
                 writer.write("async ")
@@ -102,16 +107,31 @@ class EndpointResponseCodeWriter:
                 f"for {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} in {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.{self._get_iter_lines_method(is_async=self._is_async)}(): "
             )
             with writer.indent():
-                writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
+                writer.write_line("try:")
                 with writer.indent():
-                    writer.write_line("continue")
-                writer.write("yield ")
-                writer.write_node(
-                    self._context.core_utilities.get_construct(
-                        self._get_streaming_response_data_type(stream_response),
-                        AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
-                    ),
-                )
+                    # handle stream termination
+                    if stream_response_union.type == "json" and stream_response_union.terminator is not None:
+                        writer.write_line(
+                            f'if {EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE} == "{stream_response_union.terminator}":'
+                        )
+                        with writer.indent():
+                            writer.write_line("return")
+                    # handle stream message that is empty
+                    writer.write_line(f"if len({EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE}) == 0:")
+                    with writer.indent():
+                        writer.write_line("continue")
+                    # handle message
+                    writer.write("yield ")
+                    writer.write_node(
+                        self._context.core_utilities.get_construct(
+                            self._get_streaming_response_data_type(stream_response),
+                            AST.Expression(Json.loads(AST.Expression(EndpointResponseCodeWriter.STREAM_TEXT_VARIABLE))),
+                        ),
+                    )
+                    writer.write_newline_if_last_line_not()
+                writer.write_line("except:")
+                with writer.indent():
+                    writer.write_line("pass")
 
         writer.write_line("return")
 
@@ -127,55 +147,6 @@ class EndpointResponseCodeWriter:
         else:
             return "iter_sse"
 
-    def _get_none_safe_property_condition(self, response_property: ir_types.ResponseProperty) -> Optional[str]:
-        if response_property.property_path is None or len(response_property.property_path) == 0:
-            return None
-        condition = ""
-        property_path = (response_property.property_path or []).copy()
-        built_path = "_parsed_response."
-        for idx, property in enumerate(property_path):
-            if idx > 0:
-                built_path += "."
-                condition += " and "
-            built_path += f"{property.snake_case.safe_name}"
-            condition += f"{built_path} is not None"
-        return f"if {condition}:"
-
-    # Need to do null-safe dereferencing here, with some fallback value
-    def _response_property_to_dot_access(self, response_property: ir_types.ResponseProperty) -> str:
-        property_path = (response_property.property_path or []).copy()
-        property_path.append(response_property.property.name.name)
-        path_name = list(map(lambda name: name.snake_case.safe_name, property_path))
-        return ".".join(path_name)
-
-    def _write_dummy_snippet_to_paginate(
-        self, *, writer: AST.NodeWriter, page_parameter: ir_types.QueryParameter, type: Literal["cursor", "offset"]
-    ) -> None:
-        writer.write(f"self.{self._dummy_snippet_config.endpoint_name}(")
-        for parameter in self._dummy_snippet_config.parameters:
-            # We currently assume the paging mechanism is a direct parameter (e.g. not nested)
-            if parameter.name == page_parameter.name.name.snake_case.safe_name:
-                if type == "offset":
-                    # Here we assume the offset parameter is an integer
-                    writer.write(f"{parameter.name} + 1 if {parameter.name} is not None else 1")
-                else:
-                    writer.write(EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE)
-            else:
-                writer.write(parameter.name)
-            writer.write(", ")
-
-        for parameter in self._dummy_snippet_config.named_parameters:
-            if parameter.name == page_parameter.name.name.snake_case.safe_name:
-                if type == "offset":
-                    # Here we assume the offset parameter is an integer
-                    writer.write(f"{parameter.name}={parameter.name} + 1 if {parameter.name} is not None else 1")
-                else:
-                    writer.write(f"{parameter.name}={EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE}")
-            else:
-                writer.write(f"{parameter.name}={parameter.name}")
-            writer.write(", ")
-        writer.write_line(")")
-
     def _handle_success_json(
         self, *, writer: AST.NodeWriter, json_response: ir_types.JsonResponse, use_response_json: bool
     ) -> None:
@@ -187,87 +158,68 @@ class EndpointResponseCodeWriter:
                 else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"
             ),
         )
-        if self._pagination is not None:
-            writer.write(f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE} = ")
-            writer.write_node(pydantic_parse_expression)
 
-            # Has next
-            # Always allow a next page if the response has a next property, for offset
-            # pagination we're going to continue until there aren't any more pages
-            if self._pagination.get_as_union().type == "cursor":
-                # TODO: This is mirroring go for now, we should really bake in the types of the property_path into the
-                # IR so we can do a quick check on the type and only do this conditional if the property can be null
-                none_safe_condition = self._get_none_safe_property_condition(self._pagination.get_as_union().next)
-                property_path_next_access = f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{self._response_property_to_dot_access(self._pagination.get_as_union().next)}"
-                if none_safe_condition is not None:
-                    writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = False")
-                    writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = None")
-
-                    writer.write_line(none_safe_condition)
-                    with writer.indent():
-                        writer.write_line(
-                            f"{EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE} = {property_path_next_access}"
-                        )
-
-                        writer.write_line(
-                            f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = {EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE} is not None"
-                        )
-
-                        writer.write(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = lambda: ")
-                        self._write_dummy_snippet_to_paginate(
-                            writer=writer,
-                            page_parameter=self._pagination.get_as_union().page,
-                            type="cursor",
-                        )
-                else:
-                    writer.write_line(
-                        f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = {property_path_next_access} is not None"
-                    )
-                    writer.write_line(
-                        f"{EndpointResponseCodeWriter.PARSED_RESPONSE_NEXT_VARIABLE} = {property_path_next_access}"
-                    )
-                    writer.write(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = lambda: ")
-                    self._write_dummy_snippet_to_paginate(
-                        writer=writer,
-                        page_parameter=self._pagination.get_as_union().page,
-                        type="cursor",
-                    )
-            else:
-                writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE} = True")
-
-                # Get next, only for offset, since cursor is handled in the above if statement
-                writer.write(f"{EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE} = lambda: ")
-                pagination_type = self._pagination.get_as_union().type
-                self._write_dummy_snippet_to_paginate(
-                    writer=writer,
-                    page_parameter=self._pagination.get_as_union().page,
-                    type=pagination_type,
-                )
-
-            # Items
-            none_safe_condition = self._get_none_safe_property_condition(self._pagination.get_as_union().results)
-            property_path_results_access = f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{self._response_property_to_dot_access(self._pagination.get_as_union().results)}"
-            if none_safe_condition is not None:
-                writer.write_line(f"{EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE} = []")
-                writer.write_line(none_safe_condition)
-                with writer.indent():
-                    writer.write_line(
-                        f"{EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE} = {property_path_results_access}"
-                    )
-            else:
-                writer.write_line(
-                    f"{EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE} = {property_path_results_access}"
-                )
-
-            writer.write("return ")
-            writer.write_node(
-                self._context.core_utilities.instantiate_paginator(
-                    items=AST.Expression(EndpointResponseCodeWriter.PAGINATION_ITEMS_VARIABLE),
-                    has_next=AST.Expression(EndpointResponseCodeWriter.PAGINATION_HAS_NEXT_VARIABLE),
-                    get_next=AST.Expression(EndpointResponseCodeWriter.PAGINATION_GET_NEXT_VARIABLE),
-                    is_async=self._is_async,
-                )
+        # Validation rules limit the type of the response object to be either
+        # an object or optional object
+        property_access_expression: Optional[AST.Expression] = None
+        response_union = json_response.get_as_union()
+        if response_union.type == "nestedPropertyAsResponse":
+            response_body: ir_types.TypeReference = response_union.response_body_type
+            response_body_union = response_body.get_as_union()
+            response_property = (
+                response_union.response_property.name.name.snake_case.safe_name
+                if response_union.response_property is not None
+                else None
             )
+            if response_body_union.type == "container":
+                response_container = response_body_union.container.get_as_union()
+                if response_container.type == "optional" and response_property is not None:
+                    property_access_expression = AST.Expression(
+                        f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{response_property} if {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE} is not None else {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}"
+                    )
+            elif response_body_union.type == "named":
+                response_named = self._context.pydantic_generator_context.get_declaration_for_type_id(
+                    response_body_union.type_id
+                )
+                property_access_expression = response_named.shape.visit(
+                    object=lambda _: AST.Expression(
+                        f"{EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE}.{response_property}"
+                    ),
+                    alias=lambda _: None,
+                    enum=lambda _: None,
+                    union=lambda _: None,
+                    undiscriminated_union=lambda _: None,
+                )
+
+            if property_access_expression is not None:
+                # If you are indeed accessing a property, set the parsed response to an intermediate variable
+                writer.write_node(
+                    AST.VariableDeclaration(
+                        name=EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE, initializer=pydantic_parse_expression
+                    )
+                )
+
+                # Then use the property accessed expression moving forward
+                pydantic_parse_expression = property_access_expression
+
+        if self._pagination is not None:
+            paginator = self._pagination.visit(
+                cursor=lambda cursor: CursorPagination(
+                    context=self._context,
+                    is_async=self._is_async,
+                    pydantic_parse_expression=pydantic_parse_expression,
+                    config=self._pagination_snippet_config,
+                    cursor=cursor,
+                ),
+                offset=lambda offset: OffsetPagination(
+                    context=self._context,
+                    is_async=self._is_async,
+                    pydantic_parse_expression=pydantic_parse_expression,
+                    config=self._pagination_snippet_config,
+                    offset=offset,
+                ),
+            )
+            paginator.write(writer=writer)
         else:
             writer.write("return ")
             writer.write_node(pydantic_parse_expression)
@@ -301,60 +253,77 @@ class EndpointResponseCodeWriter:
             return "iter_bytes"
 
     def _write_status_code_discriminated_response_handler(self, *, writer: AST.NodeWriter) -> None:
-        writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
-        with writer.indent():
-            if self._endpoint.response is None:
-                writer.write_line("return")
-            else:
-                self._endpoint.response.visit(
-                    json=lambda json_response: self._handle_success_json(
-                        writer=writer, json_response=json_response, use_response_json=False
-                    ),
-                    streaming=lambda stream_response: self._handle_success_stream(
-                        writer=writer, stream_response=stream_response
-                    ),
-                    file_download=lambda _: self._handle_success_file_download(writer=writer),
-                    text=lambda _: self._handle_success_text(writer=writer),
-                )
-
-        # in streaming responses, we need to call read() or aread()
-        # before deserializing or httpx will raise ResponseNotRead
-        if self._endpoint.response is not None and (
-            self._endpoint.response.get_as_union().type == "streaming"
-            or self._endpoint.response.get_as_union().type == "fileDownload"
-        ):
-            writer.write_line(
-                f"await {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.aread()"
-                if self._is_async
-                else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.read()"
-            )
-
-        for error in self._endpoint.errors.get_as_list():
-            error_declaration = self._context.ir.errors[error.error.error_id]
-
-            writer.write_line(
-                f"if {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:"
-            )
+        def handle_endpoint_response(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
             with writer.indent():
-                writer.write("raise ")
-                writer.write_node(
-                    AST.ClassInstantiation(
-                        class_=self._context.get_reference_to_error(error.error),
-                        args=[
-                            self._context.core_utilities.get_construct(
-                                self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                    error_declaration.type
-                                ),
-                                AST.Expression(f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"),
-                            )
-                        ]
-                        if error_declaration.type is not None
-                        else None,
+                if self._response is None or self._response.body is None:
+                    writer.write_line("return")
+                else:
+                    self._response.body.visit(
+                        json=lambda json_response: self._handle_success_json(
+                            writer=writer, json_response=json_response, use_response_json=False
+                        ),
+                        streaming=lambda stream_response: self._handle_success_stream(
+                            writer=writer, stream_response=stream_response
+                        ),
+                        file_download=lambda _: self._handle_success_file_download(writer=writer),
+                        text=lambda _: self._handle_success_text(writer=writer),
+                        stream_parameter=lambda stream_param_response: self._handle_success_stream(
+                            writer=writer, stream_response=stream_param_response.stream_response
+                        )
+                        if self._streaming_parameter == "streaming"
+                        else stream_param_response.non_stream_response.visit(
+                            json=lambda json_response: self._handle_success_json(
+                                writer=writer, json_response=json_response, use_response_json=False
+                            ),
+                            file_download=lambda _: self._handle_success_file_download(writer=writer),
+                            text=lambda _: self._handle_success_text(writer=writer),
+                        ),
                     )
-                )
-                writer.write_newline_if_last_line_not()
 
-        self._try_deserialize_json_response(writer=writer)
+            # in streaming responses, we need to call read() or aread()
+            # before deserializing or httpx will raise ResponseNotRead
+            if (
+                self._response is not None
+                and self._response.body
+                and (
+                    self._response.body.get_as_union().type == "streaming"
+                    or self._response.body.get_as_union().type == "fileDownload"
+                    or self._streaming_parameter == "streaming"
+                )
+            ):
+                writer.write_line(
+                    f"await {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.aread()"
+                    if self._is_async
+                    else f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.read()"
+                )
+
+            for error in self._errors:
+                error_declaration = self._context.ir.errors[error.error.error_id]
+
+                writer.write_line(
+                    f"if {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code == {error_declaration.status_code}:"
+                )
+                with writer.indent():
+                    writer.write("raise ")
+                    writer.write_node(
+                        AST.ClassInstantiation(
+                            class_=self._context.get_reference_to_error(error.error),
+                            args=[
+                                self._context.core_utilities.get_construct(
+                                    self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                                        error_declaration.type
+                                    ),
+                                    AST.Expression(f"{EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"),
+                                )
+                            ]
+                            if error_declaration.type is not None
+                            else [],
+                        )
+                    )
+                    writer.write_newline_if_last_line_not()
+
+        self._try_deserialize_json_response(writer=writer, response_handler=handle_endpoint_response)
 
         writer.write("raise ")
         writer.write_node(
@@ -371,15 +340,15 @@ class EndpointResponseCodeWriter:
         writer: AST.NodeWriter,
         strategy: ir_types.ErrorDiscriminationByPropertyStrategy,
     ) -> None:
-        if self._endpoint.response is not None:
+        if self._response is not None and self._response.body is not None:
             self._try_deserialize_json_response(writer=writer)
 
         writer.write_line(f"if 200 <= {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.status_code < 300:")
         with writer.indent():
-            if self._endpoint.response is None:
+            if self._response is None or self._response.body is None:
                 writer.write_line("return")
             else:
-                self._endpoint.response.visit(
+                self._response.body.visit(
                     json=lambda json_response: self._handle_success_json(
                         writer=writer, json_response=json_response, use_response_json=True
                     ),
@@ -388,17 +357,28 @@ class EndpointResponseCodeWriter:
                     ),
                     file_download=lambda _: self._handle_success_file_download(writer=writer),
                     text=lambda _: self._handle_success_text(writer=writer),
+                    stream_parameter=lambda stream_param_response: self._handle_success_stream(
+                        writer=writer, stream_response=stream_param_response.stream_response
+                    )
+                    if self._streaming_parameter == "streaming"
+                    else stream_param_response.non_stream_response.visit(
+                        json=lambda json_response: self._handle_success_json(
+                            writer=writer, json_response=json_response, use_response_json=False
+                        ),
+                        file_download=lambda _: self._handle_success_file_download(writer=writer),
+                        text=lambda _: self._handle_success_text(writer=writer),
+                    ),
                 )
 
-        if self._endpoint.response is None:
-            self._try_deserialize_json_response(writer=writer)
+        if self._response is None or self._response.body is None:
+            self._try_deserialize_json_response(writer=writer, response_handler=None)
 
-        if len(self._endpoint.errors.get_as_list()) > 0:
+        if len(self._errors) > 0:
             writer.write_line(
                 f'if "{strategy.discriminant.wire_value}" in {EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE}:'
             )
             with writer.indent():
-                for error in self._endpoint.errors.get_as_list():
+                for error in self._errors:
                     error_declaration = self._context.ir.errors[error.error.error_id]
 
                     writer.write_line(
@@ -420,7 +400,7 @@ class EndpointResponseCodeWriter:
                                     )
                                 ]
                                 if error_declaration.type is not None
-                                else None,
+                                else [],
                             )
                         )
                         writer.write_newline_if_last_line_not()
@@ -439,9 +419,13 @@ class EndpointResponseCodeWriter:
             f"{EndpointResponseCodeWriter.RESPONSE_JSON_VARIABLE} = {EndpointResponseCodeWriter.RESPONSE_VARIABLE}.json()"
         )
 
-    def _try_deserialize_json_response(self, *, writer: AST.NodeWriter) -> None:
+    def _try_deserialize_json_response(
+        self, *, writer: AST.NodeWriter, response_handler: Optional[Callable[[AST.NodeWriter], None]] = None
+    ) -> None:
         writer.write_line("try:")
         with writer.indent():
+            if response_handler is not None:
+                response_handler(writer)
             self._deserialize_json_response(writer=writer)
         writer.write("except ")
         writer.write_reference(Json.JSONDecodeError())
@@ -456,16 +440,6 @@ class EndpointResponseCodeWriter:
             )
             writer.write_newline_if_last_line_not()
 
-    def _get_response_body_type(self, response: ir_types.HttpResponse) -> AST.TypeHint:
-        return response.visit(
-            file_download=lambda _: AST.TypeHint.async_iterator(AST.TypeHint.bytes())
-            if self._is_async
-            else AST.TypeHint.iterator(AST.TypeHint.bytes()),
-            json=lambda json_response: self._get_json_response_body_type(json_response),
-            streaming=lambda streaming_response: self._get_streaming_response_data_type(streaming_response),
-            text=lambda _: AST.TypeHint.str_(),
-        )
-
     def _get_json_response_body_type(
         self,
         json_response: ir_types.JsonResponse,
@@ -474,7 +448,10 @@ class EndpointResponseCodeWriter:
             response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 response.response_body_type
             ),
-            nested_property_as_response=lambda _: raise_json_nested_property_as_response_unsupported(),
+            # TODO: What is the case where you have a nested property as response, but no response property configured?
+            nested_property_as_response=lambda response: self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                response.response_body_type
+            ),
         )
 
     def _get_streaming_response_data_type(self, streaming_response: ir_types.StreamingResponse) -> AST.TypeHint:
@@ -486,7 +463,3 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
-
-
-def raise_json_nested_property_as_response_unsupported() -> Never:
-    raise RuntimeError("nested property json response is unsupported")

@@ -1,4 +1,7 @@
-using SeedPackageYml;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading;
+using SeedPackageYml.Core;
 
 #nullable enable
 
@@ -8,26 +11,69 @@ public partial class SeedPackageYmlClient
 {
     private RawClient _client;
 
-    public SeedPackageYmlClient(ClientOptions clientOptions = null)
+    public SeedPackageYmlClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "User-Agent", "Fernpackage-yml/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         Service = new ServiceClient(_client);
     }
 
-    public ServiceClient Service { get; }
+    public ServiceClient Service { get; init; }
 
-    public async void EchoAsync() { }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
+    /// <example>
+    /// <code>
+    /// await client.EchoAsync("id-ksfd9c1", new EchoRequest { Name = "Hello world!", Size = 20 });
+    /// </code>
+    /// </example>
+    public async Task<string> EchoAsync(
+        string id,
+        EchoRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = $"/{id}/",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            throw new Exception(message);
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPackageYmlException("Failed to deserialize response", e);
+            }
         }
-        return value;
+
+        throw new SeedPackageYmlApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

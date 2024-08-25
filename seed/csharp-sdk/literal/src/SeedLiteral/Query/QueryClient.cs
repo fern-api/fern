@@ -1,40 +1,71 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedLiteral;
+using System.Threading;
+using SeedLiteral.Core;
 
 #nullable enable
 
 namespace SeedLiteral;
 
-public class QueryClient
+public partial class QueryClient
 {
     private RawClient _client;
 
-    public QueryClient(RawClient client)
+    internal QueryClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<SendResponse> SendAsync(SendLiteralsInQueryRequest request)
+    /// <example>
+    /// <code>
+    /// await client.Query.SendAsync(
+    ///     new SendLiteralsInQueryRequest
+    ///     {
+    ///         Prompt = "You are a helpful assistant",
+    ///         Stream = false,
+    ///         Query = "What is the weather today",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<SendResponse> SendAsync(
+        SendLiteralsInQueryRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "prompt", request.Prompt.ToString() },
-            { "query", request.Query },
-            { "stream", request.Stream.ToString() },
-        };
+        var _query = new Dictionary<string, object>();
+        _query["prompt"] = request.Prompt.ToString();
+        _query["query"] = request.Query;
+        _query["stream"] = request.Stream.ToString();
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/query",
-                Query = _query
-            }
+                Path = "query",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<SendResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<SendResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedLiteralException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedLiteralApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

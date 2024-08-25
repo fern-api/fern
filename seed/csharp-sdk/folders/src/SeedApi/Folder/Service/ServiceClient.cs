@@ -1,34 +1,100 @@
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using SeedApi;
+using SeedApi.Core;
 
 #nullable enable
 
 namespace SeedApi.Folder;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
 
-    public async void EndpointAsync()
+    /// <example>
+    /// <code>
+    /// await client.Folder.Service.EndpointAsync();
+    /// </code>
+    /// </example>
+    public async Task EndpointAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/service",
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        throw new SeedApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
     }
 
-    public async void UnknownRequestAsync(object request)
+    /// <example>
+    /// <code>
+    /// await client.Folder.Service.UnknownRequestAsync(
+    ///     new Dictionary<object, object?>() { { "key", "value" } }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task UnknownRequestAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "",
-                Body = request
+                Path = "/service",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
+        );
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return;
+        }
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        try
+        {
+            switch (response.StatusCode)
+            {
+                case 404:
+                    throw new NotFoundError(JsonUtils.Deserialize<string>(responseBody));
             }
+        }
+        catch (JsonException)
+        {
+            // unable to map error response, throwing generic error
+        }
+        throw new SeedApiApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
     }
 }

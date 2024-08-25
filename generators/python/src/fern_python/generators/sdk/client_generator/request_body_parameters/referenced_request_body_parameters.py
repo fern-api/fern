@@ -6,14 +6,12 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.nodes.declarations.function.named_function_parameter import (
     NamedFunctionParameter,
 )
+from fern_python.generators.pydantic_model.typeddict import FernTypedDict
 
 from ...context.sdk_generator_context import SdkGeneratorContext
 from ..constants import DEFAULT_BODY_PARAMETER_VALUE
 from .abstract_request_body_parameters import AbstractRequestBodyParameters
-from .flattened_request_body_parameter_utils import (
-    get_json_body_for_inlined_request,
-    get_pre_fetch_statements_for_inlined_request,
-)
+from .flattened_request_body_parameter_utils import get_json_body_for_inlined_request
 
 
 class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
@@ -78,7 +76,7 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                     maybe_body_name = self.get_body_name()
                     property_name = f'{(maybe_body_name.snake_case.safe_name if maybe_body_name is not None else "request")}_{property_name}'
 
-                self.parameter_name_rewrites[property.name] = property_name
+                self.parameter_name_rewrites[property.name.name] = property_name
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=property_name,
@@ -105,6 +103,10 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                     property.value_type,
                     in_endpoint=True,
                 )
+
+                maybe_default_value = self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                    property.value_type
+                )
                 non_param_properties.append(
                     AST.NamedFunctionParameter(
                         name=self._get_property_name(property),
@@ -113,7 +115,11 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
                             property.value_type,
                             in_endpoint=True,
                         ),
-                        initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
+                        initializer=maybe_default_value
+                        if maybe_default_value is not None
+                        else AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
+                        if type_hint.is_optional
+                        else None,
                         raw_type=property.value_type,
                         raw_name=property.name.wire_value,
                     ),
@@ -157,14 +163,26 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
         return self.get_parameters(names_to_deconflict) + self._get_non_parameter_properties()
 
     def get_json_body(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.Expression]:
-        return (
-            AST.Expression(self._get_request_parameter_name())
-            if not self.should_inline_request_parameters
-            else get_json_body_for_inlined_request(
-                self._context,
-                self._get_properties(names_to_deconflict),
-                self._are_any_properties_optional,
-            )
+        if not self.should_inline_request_parameters:
+            request_param = AST.Expression(self._get_request_parameter_name())
+            request_param_tr = self._request_body.request_body_type
+            if (
+                self._context.custom_config.pydantic_config.use_typeddict_requests
+                and FernTypedDict.can_tr_be_typeddict(request_param_tr, self._context.get_types())
+            ):
+                # We don't need any optional wrappings for the coercion here.
+                unwrapped_tr = self._context.unwrap_optional_type_reference(request_param_tr)
+                type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    unwrapped_tr, in_endpoint=True, for_typeddict=True
+                )
+                return self._context.core_utilities.convert_and_respect_annotation_metadata(
+                    object_=request_param, annotation=type_hint
+                )
+            return request_param
+
+        return get_json_body_for_inlined_request(
+            self._context,
+            self._get_properties(names_to_deconflict),
         )
 
     def _get_request_parameter_name(self) -> str:
@@ -174,17 +192,6 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
 
     def get_files(self) -> Optional[AST.Expression]:
         return None
-
-    def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
-        return (
-            None
-            if not self.should_inline_request_parameters
-            else get_pre_fetch_statements_for_inlined_request(
-                self._context,
-                self._get_properties(names_to_deconflict),
-                self._are_any_properties_optional,
-            )
-        )
 
     def is_default_body_parameter_used(self) -> bool:
         return self._are_any_properties_optional

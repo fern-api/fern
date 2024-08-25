@@ -1,16 +1,14 @@
 import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
-    ExampleCodeSample,
     ExampleEndpointCall,
     ExampleEndpointSuccessResponse,
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
     ExamplePathParameter,
+    ExampleQueryParameterShape,
     ExampleRequestBody,
     ExampleResponse,
-    HttpEndpointExample,
-    Name,
-    SupportedSdkLanguage
+    Name
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import {
@@ -18,9 +16,9 @@ import {
     parseBytesRequest,
     parseRawFileType,
     RawSchemas,
-    visitExampleCodeSampleSchema,
     visitExampleResponseSchema
 } from "@fern-api/yaml-schema";
+import crypto from "crypto";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -34,6 +32,12 @@ import {
 import { getPropertyName } from "../type-declarations/convertObjectTypeDeclaration";
 import { getHeaderName, resolvePathParameterOrThrow } from "./convertHttpService";
 import { getQueryParameterName } from "./convertQueryParameter";
+import urlJoin from "url-join";
+
+function hashJSON(obj: unknown): string {
+    const jsonString = JSON.stringify(obj);
+    return crypto.createHash("sha256").update(jsonString).digest("hex");
+}
 
 export function convertExampleEndpointCall({
     service,
@@ -55,7 +59,7 @@ export function convertExampleEndpointCall({
     variableResolver: VariableResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
-}): HttpEndpointExample {
+}): ExampleEndpointCall {
     const convertedPathParameters = convertPathParameters({
         service,
         endpoint,
@@ -66,10 +70,11 @@ export function convertExampleEndpointCall({
         file,
         workspace
     });
-    return HttpEndpointExample.userProvided({
+    return {
+        id: example.name ?? hashJSON(example),
         name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
         docs: example.docs,
-        url: buildUrl({ service, endpoint, example, pathParams: convertedPathParameters }),
+        url: buildUrl({ file, service, endpoint, example, pathParams: convertedPathParameters }),
         ...convertedPathParameters,
         ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file, workspace }),
         queryParameters:
@@ -101,7 +106,8 @@ export function convertExampleEndpointCall({
                               fileContainingRawTypeReference: file,
                               fileContainingExample: file,
                               workspace
-                          })
+                          }),
+                          shape: getQueryParamaterDeclationShape({ queryParameter: queryParameterDeclaration })
                       };
                   })
                 : [],
@@ -114,53 +120,16 @@ export function convertExampleEndpointCall({
             exampleResolver,
             file,
             workspace
-        }),
-        codeSamples: example["code-samples"]?.map((codeSample) => {
-            return visitExampleCodeSampleSchema<ExampleCodeSample>(codeSample, {
-                language: (languageScheme) =>
-                    ExampleCodeSample.language({
-                        name:
-                            languageScheme.name != null
-                                ? file.casingsGenerator.generateName(languageScheme.name)
-                                : undefined,
-                        docs: languageScheme.docs,
-                        language: languageScheme.language,
-                        code: languageScheme.code,
-                        install: languageScheme.install
-                    }),
-                sdk: (sdkScheme) =>
-                    ExampleCodeSample.sdk({
-                        name: sdkScheme.name != null ? file.casingsGenerator.generateName(sdkScheme.name) : undefined,
-                        docs: sdkScheme.docs,
-                        sdk: removeSdkAlias(sdkScheme.sdk),
-                        code: sdkScheme.code
-                    })
-            });
         })
-    });
+    };
 }
 
-function removeSdkAlias(sdk: RawSchemas.SupportedSdkLanguageSchema): SupportedSdkLanguage {
-    switch (sdk) {
-        case "js":
-            return "javascript";
-        case "node":
-            return "javascript";
-        case "ts":
-            return "typescript";
-        case "nodets":
-            return "typescript";
-        case "golang":
-            return "go";
-        case "dotnet":
-            return "csharp";
-        case "c#":
-            return "csharp";
-        case "jvm":
-            return "java";
-        default:
-            return sdk;
-    }
+function getQueryParamaterDeclationShape({ queryParameter }: { queryParameter: RawSchemas.HttpQueryParameterSchema }) {
+    const isAllowMultiple =
+        typeof queryParameter !== "string" && queryParameter["allow-multiple"] != null
+            ? queryParameter["allow-multiple"]
+            : false;
+    return isAllowMultiple ? ExampleQueryParameterShape.exploded() : ExampleQueryParameterShape.single();
 }
 
 function convertPathParameters({
@@ -592,17 +561,19 @@ function convertExampleResponseBody({
 }
 
 function buildUrl({
+    file,
     service,
     endpoint,
     example,
     pathParams
 }: {
+    file: FernFileContext;
     service: RawSchemas.HttpServiceSchema;
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
     pathParams: Pick<ExampleEndpointCall, "rootPathParameters" | "endpointPathParameters" | "servicePathParameters">;
 }): string {
-    let url = service["base-path"] + endpoint.path;
+    let url = urlJoin(file.rootApiFile["base-path"] ?? "", service["base-path"], endpoint.path);
     if (example["path-parameters"] != null) {
         for (const parameter of [
             ...pathParams.endpointPathParameters,
@@ -612,6 +583,12 @@ function buildUrl({
             // TODO: should we URL encode the value?
             url = url.replaceAll(`{${parameter.name.originalName}}`, `${parameter.value.jsonExample}`);
         }
+    }
+    // urlJoin has some bugs where it may miss forward slash concatting https://github.com/jfromaniello/url-join/issues/42
+    url = url.replaceAll("//", "/");
+    // for backwards compatiblity we always make sure that the url stats with a slash
+    if (!url.startsWith("/")) {
+        url = `/${url}`;
     }
     return url;
 }

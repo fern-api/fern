@@ -7,32 +7,28 @@ require "async/http/faraday"
 
 module SeedTraceClient
   class RequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
     # @return [String]
+    attr_reader :token
+    # @return [String]
     attr_reader :default_environment
 
-    # @param environment [SeedTraceClient::Environment]
     # @param base_url [String]
+    # @param environment [SeedTraceClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @param x_random_header [String]
     # @return [SeedTraceClient::RequestClient]
-    def initialize(token:, environment: SeedTraceClient::Environment::PROD, base_url: nil, max_retries: nil,
+    def initialize(token:, base_url: nil, environment: SeedTraceClient::Environment::PROD, max_retries: nil,
                    timeout_in_seconds: nil, x_random_header: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_trace",
-        "X-Fern-SDK-Version": "0.0.1",
-        "Authorization": "Bearer #{token}"
-      }
+      @token = "Bearer #{token}"
+      @headers = {}
       @headers["X-Random-Header"] = x_random_header unless x_random_header.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
@@ -47,35 +43,38 @@ module SeedTraceClient
     def get_url(request_options: nil)
       request_options&.base_url || @default_environment || @base_url
     end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_trace", "X-Fern-SDK-Version": "0.0.1" }
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
+      headers
+    end
   end
 
   class AsyncRequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
     # @return [String]
+    attr_reader :token
+    # @return [String]
     attr_reader :default_environment
 
-    # @param environment [SeedTraceClient::Environment]
     # @param base_url [String]
+    # @param environment [SeedTraceClient::Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @param x_random_header [String]
     # @return [SeedTraceClient::AsyncRequestClient]
-    def initialize(token:, environment: SeedTraceClient::Environment::PROD, base_url: nil, max_retries: nil,
+    def initialize(token:, base_url: nil, environment: SeedTraceClient::Environment::PROD, max_retries: nil,
                    timeout_in_seconds: nil, x_random_header: nil)
       @default_environment = environment
       @base_url = environment || base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_trace",
-        "X-Fern-SDK-Version": "0.0.1",
-        "Authorization": "Bearer #{token}"
-      }
+      @token = "Bearer #{token}"
+      @headers = {}
       @headers["X-Random-Header"] = x_random_header unless x_random_header.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
@@ -90,6 +89,13 @@ module SeedTraceClient
     # @return [String]
     def get_url(request_options: nil)
       request_options&.base_url || @default_environment || @base_url
+    end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "fern_trace", "X-Fern-SDK-Version": "0.0.1" }
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
+      headers
     end
   end
 

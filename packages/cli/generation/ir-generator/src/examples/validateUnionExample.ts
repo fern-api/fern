@@ -17,7 +17,8 @@ export function validateUnionExample({
     typeResolver,
     exampleResolver,
     file,
-    workspace
+    workspace,
+    breadcrumbs
 }: {
     typeName: string;
     rawUnion: RawSchemas.DiscriminatedUnionSchema;
@@ -26,6 +27,7 @@ export function validateUnionExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
+    breadcrumbs: string[];
 }): ExampleViolation[] {
     if (!isPlainObject(example)) {
         return getViolationsForMisshapenExample(example, "an object");
@@ -85,7 +87,8 @@ export function validateUnionExample({
             example: nonDiscriminantPropertyExamples,
             typeResolver,
             exampleResolver,
-            workspace
+            workspace,
+            breadcrumbs
         });
     }
 
@@ -114,7 +117,8 @@ export function validateUnionExample({
                 typeResolver,
                 exampleResolver,
                 file,
-                workspace
+                workspace,
+                breadcrumbs
             })
         );
     }

@@ -1,13 +1,8 @@
-import { DEFINITION_DIRECTORY, ROOT_API_FILENAME } from "@fern-api/configuration";
+import { DEFINITION_DIRECTORY, generatorsYml, ROOT_API_FILENAME } from "@fern-api/configuration";
 import { AbsoluteFilePath, dirname, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import {
-    convertOpenApiWorkspaceToFernWorkspace,
-    FernDefinition,
-    FernWorkspace,
-    OSSWorkspace
-} from "@fern-api/workspace-loader";
+import { FernDefinition, FernWorkspace, OSSWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import { mkdir, rmdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -16,17 +11,19 @@ import { CliContext } from "../../cli-context/CliContext";
 
 export async function writeDefinitionForWorkspaces({
     project,
-    cliContext
+    cliContext,
+    sdkLanguage
 }: {
     project: Project;
     cliContext: CliContext;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "oss") {
-                    await writeDefinitionForOpenAPIWorkspace({ workspace, context });
-                } else {
+                if (workspace instanceof OSSWorkspace) {
+                    await writeDefinitionForOpenAPIWorkspace({ workspace, context, sdkLanguage });
+                } else if (workspace instanceof FernWorkspace) {
                     await writeDefinitionForFernWorkspace({ workspace, context });
                 }
             });
@@ -41,7 +38,7 @@ async function writeDefinitionForFernWorkspace({
     workspace: FernWorkspace;
     context: TaskContext;
 }): Promise<void> {
-    for (const [relativePath, definition] of Object.entries(workspace.definition.importedDefinitions)) {
+    for (const [relativePath, importedDefinition] of Object.entries(workspace.definition.importedDefinitions)) {
         const absolutePathToOutputDirectory = join(
             workspace.absoluteFilepath,
             RelativeFilePath.of(DEFINITION_DIRECTORY),
@@ -49,7 +46,7 @@ async function writeDefinitionForFernWorkspace({
             RelativeFilePath.of(`.${DEFINITION_DIRECTORY}`)
         );
         await writeFernDefinition({
-            definition,
+            definition: importedDefinition.definition,
             absolutePathToOutputDirectory
         });
         context.logger.info(
@@ -60,12 +57,14 @@ async function writeDefinitionForFernWorkspace({
 
 async function writeDefinitionForOpenAPIWorkspace({
     workspace,
-    context
+    context,
+    sdkLanguage
 }: {
     workspace: OSSWorkspace;
     context: TaskContext;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
-    const fernWorkspace = await convertOpenApiWorkspaceToFernWorkspace(workspace, context);
+    const fernWorkspace = await workspace.toFernWorkspace({ context });
     const absolutePathToOutputDirectory = join(
         workspace.absoluteFilepath,
         RelativeFilePath.of(`.${DEFINITION_DIRECTORY}`)

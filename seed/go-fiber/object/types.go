@@ -47,25 +47,29 @@ func (n *Name) String() string {
 
 // Exercises all of the built-in types.
 type Type struct {
-	One       int              `json:"one" url:"one"`
-	Two       float64          `json:"two" url:"two"`
-	Three     string           `json:"three" url:"three"`
-	Four      bool             `json:"four" url:"four"`
-	Five      int64            `json:"five" url:"five"`
-	Six       time.Time        `json:"six" url:"six"`
-	Seven     time.Time        `json:"seven" url:"seven" format:"date"`
-	Eight     uuid.UUID        `json:"eight" url:"eight"`
-	Nine      []byte           `json:"nine" url:"nine"`
-	Ten       []int            `json:"ten,omitempty" url:"ten,omitempty"`
-	Eleven    []float64        `json:"eleven,omitempty" url:"eleven,omitempty"`
-	Twelve    map[string]bool  `json:"twelve,omitempty" url:"twelve,omitempty"`
-	Thirteen  *int64           `json:"thirteen,omitempty" url:"thirteen,omitempty"`
-	Fourteen  interface{}      `json:"fourteen,omitempty" url:"fourteen,omitempty"`
-	Fifteen   [][]int          `json:"fifteen,omitempty" url:"fifteen,omitempty"`
-	Sixteen   []map[string]int `json:"sixteen,omitempty" url:"sixteen,omitempty"`
-	Seventeen []*uuid.UUID     `json:"seventeen,omitempty" url:"seventeen,omitempty"`
-	Nineteen  *Name            `json:"nineteen,omitempty" url:"nineteen,omitempty"`
-	eighteen  string
+	One         int              `json:"one" url:"one"`
+	Two         float64          `json:"two" url:"two"`
+	Three       string           `json:"three" url:"three"`
+	Four        bool             `json:"four" url:"four"`
+	Five        int64            `json:"five" url:"five"`
+	Six         time.Time        `json:"six" url:"six"`
+	Seven       time.Time        `json:"seven" url:"seven" format:"date"`
+	Eight       uuid.UUID        `json:"eight" url:"eight"`
+	Nine        []byte           `json:"nine" url:"nine"`
+	Ten         []int            `json:"ten,omitempty" url:"ten,omitempty"`
+	Eleven      []float64        `json:"eleven,omitempty" url:"eleven,omitempty"`
+	Twelve      map[string]bool  `json:"twelve,omitempty" url:"twelve,omitempty"`
+	Thirteen    *int64           `json:"thirteen,omitempty" url:"thirteen,omitempty"`
+	Fourteen    interface{}      `json:"fourteen,omitempty" url:"fourteen,omitempty"`
+	Fifteen     [][]int          `json:"fifteen,omitempty" url:"fifteen,omitempty"`
+	Sixteen     []map[string]int `json:"sixteen,omitempty" url:"sixteen,omitempty"`
+	Seventeen   []*uuid.UUID     `json:"seventeen,omitempty" url:"seventeen,omitempty"`
+	Nineteen    *Name            `json:"nineteen,omitempty" url:"nineteen,omitempty"`
+	Twenty      int              `json:"twenty" url:"twenty"`
+	Twentyone   int64            `json:"twentyone" url:"twentyone"`
+	Twentytwo   float64          `json:"twentytwo" url:"twentytwo"`
+	Twentythree string           `json:"twentythree" url:"twentythree"`
+	eighteen    string
 
 	extraProperties map[string]interface{}
 }
@@ -82,8 +86,9 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	type embed Type
 	var unmarshaler = struct {
 		embed
-		Six   *core.DateTime `json:"six"`
-		Seven *core.Date     `json:"seven"`
+		Six      *core.DateTime `json:"six"`
+		Seven    *core.Date     `json:"seven"`
+		Eighteen string         `json:"eighteen"`
 	}{
 		embed: embed(*t),
 	}
@@ -93,7 +98,10 @@ func (t *Type) UnmarshalJSON(data []byte) error {
 	*t = Type(unmarshaler.embed)
 	t.Six = unmarshaler.Six.Time()
 	t.Seven = unmarshaler.Seven.Time()
-	t.eighteen = "eighteen"
+	if unmarshaler.Eighteen != "eighteen" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", t, "eighteen", unmarshaler.Eighteen)
+	}
+	t.eighteen = unmarshaler.Eighteen
 
 	extraProperties, err := core.ExtractExtraProperties(data, *t, "eighteen")
 	if err != nil {

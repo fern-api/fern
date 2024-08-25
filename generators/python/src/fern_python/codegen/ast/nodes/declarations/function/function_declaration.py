@@ -20,8 +20,8 @@ class FunctionDeclaration(AstNode):
         name: str,
         signature: FunctionSignature,
         body: CodeWriter,
-        overloads: Sequence[FunctionSignature] = None,
-        decorators: Sequence[AstNode] = None,
+        overloads: Optional[Sequence[FunctionSignature]] = None,
+        decorators: Optional[Sequence[AstNode]] = None,
         docstring: Optional[CodeWriter] = None,
         is_async: Optional[bool] = False,
     ):
@@ -48,7 +48,7 @@ class FunctionDeclaration(AstNode):
             metadata.update(self.docstring.get_metadata())
         return metadata
 
-    def write(self, writer: NodeWriter) -> None:
+    def write(self, writer: NodeWriter, should_write_as_snippet: Optional[bool] = None) -> None:
         for overload in self.overloads:
             self._write(writer, signature=overload, body=None)
         self._write(writer, signature=self.signature, body=self.body)

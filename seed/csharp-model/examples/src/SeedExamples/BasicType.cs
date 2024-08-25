@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedExamples;
 using SeedExamples.Core;
 
 #nullable enable
@@ -14,5 +13,5 @@ public enum BasicType
     Primitive,
 
     [EnumMember(Value = "literal")]
-    Literal
+    Literal,
 }

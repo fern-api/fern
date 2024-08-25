@@ -5,11 +5,11 @@ using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Types;
 
-public class NestedObjectWithOptionalField
+public record NestedObjectWithOptionalField
 {
     [JsonPropertyName("string")]
-    public string? String { get; init; }
+    public string? String { get; }
 
     [JsonPropertyName("NestedObject")]
-    public ObjectWithOptionalField? NestedObject { get; init; }
+    public ObjectWithOptionalField? NestedObject { get; }
 }

@@ -1,4 +1,4 @@
-using SeedNoEnvironment;
+using SeedNoEnvironment.Core;
 
 #nullable enable
 
@@ -8,28 +8,27 @@ public partial class SeedNoEnvironmentClient
 {
     private RawClient _client;
 
-    public SeedNoEnvironmentClient(string token = null, ClientOptions clientOptions = null)
+    public SeedNoEnvironmentClient(string? token = null, ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
+        var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
-            },
-            clientOptions ?? new ClientOptions()
+                { "User-Agent", "Fernno-environment/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         Dummy = new DummyClient(_client);
     }
 
-    public DummyClient Dummy { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public DummyClient Dummy { get; init; }
 }

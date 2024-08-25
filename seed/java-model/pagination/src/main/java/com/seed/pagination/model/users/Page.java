@@ -13,7 +13,7 @@ import com.seed.pagination.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Page.Builder.class)
 public final class Page {
     private final int page;
@@ -151,7 +151,7 @@ public final class Page {
 
         @java.lang.Override
         public _FinalStage next(NextPage next) {
-            this.next = Optional.of(next);
+            this.next = Optional.ofNullable(next);
             return this;
         }
 

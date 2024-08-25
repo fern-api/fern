@@ -1,8 +1,25 @@
-irVersion: v33
+irVersion: v53
 docker: fernapi/fern-csharp-model:latest
-dockerCommand: yarn workspace @fern-api/fern-csharp-model dockerTagLatest
+dockerCommand: pnpm --filter @fern-api/fern-csharp-model dockerTagLatest
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
-fixtures: []
-scripts: []
+fixtures:
+  grpc-proto-exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        read-only-memory-types:
+          - float
+      outputFolder: read-only-memory
+scripts:
+  - docker: bitnami/dotnet-sdk:8
+    commands:
+      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+local:
+  workingDirectory: generators/csharp
+  buildCommand:
+    - pnpm --filter @fern-api/fern-csharp-model dist:cli
+  runCommand: node model/dist/bundle.cjs
+allowedFailures:
+  - objects-with-imports

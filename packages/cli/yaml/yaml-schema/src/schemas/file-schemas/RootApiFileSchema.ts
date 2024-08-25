@@ -7,6 +7,7 @@ import { HttpHeaderSchema } from "../HttpHeaderSchema";
 import { HttpPathParameterSchema } from "../HttpPathParameterSchema";
 import { PaginationSchema } from "../PaginationSchema";
 import { VariableDeclarationSchema } from "../VariableDeclarationSchema";
+import { VersionDeclarationSchema } from "../VersionDeclarationSchema";
 
 export const RootApiFileSchema = z.strictObject({
     name: z.string(), // TODO: should this be migrated to id?
@@ -15,6 +16,7 @@ export const RootApiFileSchema = z.strictObject({
     auth: z.optional(ApiAuthSchema),
     "auth-schemes": z.optional(z.record(AuthSchemeDeclarationSchema)),
     headers: z.optional(z.record(z.string(), HttpHeaderSchema)),
+    "default-url": z.optional(z.string()),
     "default-environment": z.optional(z.string().or(z.null())),
     environments: z.optional(z.record(z.string(), EnvironmentSchema)),
     "error-discrimination": z.optional(ErrorDiscriminationSchema),
@@ -22,10 +24,11 @@ export const RootApiFileSchema = z.strictObject({
     docs: z.optional(z.string()),
     errors: z.optional(z.array(z.string())),
     "base-path": z.optional(z.string()),
-    ["path-parameters"]: z.optional(z.record(HttpPathParameterSchema)),
+    "path-parameters": z.optional(z.record(HttpPathParameterSchema)),
     "idempotency-headers": z.optional(z.record(z.string(), HttpHeaderSchema)),
     variables: z.optional(z.record(VariableDeclarationSchema)),
-    pagination: z.optional(PaginationSchema)
+    pagination: z.optional(PaginationSchema),
+    version: z.optional(VersionDeclarationSchema)
 });
 
 export type RootApiFileSchema = z.infer<typeof RootApiFileSchema>;

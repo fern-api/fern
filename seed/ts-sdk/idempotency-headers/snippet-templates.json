@@ -11,10 +11,57 @@
             "identifierOverride": "endpoint_payment.create"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";"
+                ],
+                "templateString": "const client = new SeedIdempotencyHeadersClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedIdempotencyHeaders.payment.create(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.payment.create(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -82,10 +129,57 @@
             "identifierOverride": "endpoint_payment.delete"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedIdempotencyHeaders = new SeedIdempotencyHeadersClient({ token: \"YOUR_TOKEN\" });\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedIdempotencyHeadersClient } from \"@fern/idempotency-headers\";"
+                ],
+                "templateString": "const client = new SeedIdempotencyHeadersClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "token: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedIdempotencyHeaders.payment.delete(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.payment.delete(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

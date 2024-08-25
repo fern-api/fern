@@ -52,15 +52,15 @@ module SeedTraceClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parsed_json = JSON.parse(json_object)
-            template_id = struct["templateId"]
-            name = struct["name"]
+            template_id = parsed_json["templateId"]
+            name = parsed_json["name"]
             if parsed_json["description"].nil?
               description = nil
             else
               description = parsed_json["description"].to_json
               description = SeedTraceClient::V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: description)
             end
-            expected_value_parameter_id = struct["expectedValueParameterId"]
+            expected_value_parameter_id = parsed_json["expectedValueParameterId"]
             new(
               template_id: template_id,
               name: name,

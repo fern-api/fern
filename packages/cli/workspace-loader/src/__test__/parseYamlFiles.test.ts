@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { YAMLException } from "js-yaml";
 import { parseYamlFiles } from "../parseYamlFiles";
 
@@ -8,7 +8,8 @@ describe("parseYamlFiles", () => {
     it("duplicate-key", async () => {
         const result = await parseYamlFiles([
             {
-                filepath: FILEPATH,
+                absoluteFilepath: resolve(AbsoluteFilePath.of(__dirname), FILEPATH),
+                relativeFilepath: FILEPATH,
                 fileContents: `
 key: hello
 key: world`

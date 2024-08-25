@@ -1,6 +1,9 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
-import { getIntermediateRepresentationMigrator } from "../../IntermediateRepresentationMigrator";
+import {
+    getIntermediateRepresentationMigrator,
+    MigratedIntermediateMigration
+} from "../../IntermediateRepresentationMigrator";
 import { IrMigrationContext } from "../../IrMigrationContext";
 import { IrMigration } from "../../types/IrMigration";
 import { getIrForApi } from "./getIrForApi";
@@ -12,14 +15,14 @@ export interface MigrationTesterArgs {
 
 export function createMigrationTester<LaterVersion, EarlierVersion>(
     migration: IrMigration<LaterVersion, EarlierVersion>
-): (args: MigrationTesterArgs) => Promise<EarlierVersion> {
+): (args: MigrationTesterArgs) => Promise<MigratedIntermediateMigration<EarlierVersion>> {
     return (args) => runFixtureThroughMigration(migration, args);
 }
 
 async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
     migration: IrMigration<LaterVersion, EarlierVersion>,
     { pathToFixture, context }: MigrationTesterArgs
-): Promise<EarlierVersion> {
+): Promise<MigratedIntermediateMigration<EarlierVersion>> {
     const migrated = getIntermediateRepresentationMigrator().migrateThroughMigration({
         migration,
         intermediateRepresentation: await getIrForApi(pathToFixture),
@@ -29,5 +32,5 @@ async function runFixtureThroughMigration<LaterVersion, EarlierVersion>(
             version: ""
         }
     });
-    return migrated.ir;
+    return migrated;
 }

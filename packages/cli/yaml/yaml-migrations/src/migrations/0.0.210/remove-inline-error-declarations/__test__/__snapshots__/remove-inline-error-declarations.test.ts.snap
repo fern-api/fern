@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`remove-inline-error-declarations simple 1`] = `
+exports[`remove-inline-error-declarations > simple 1`] = `
 "types:
   A: string
   B:
@@ -28,7 +28,7 @@ errors:
 "
 `;
 
-exports[`remove-inline-error-declarations simple 2`] = `
+exports[`remove-inline-error-declarations > simple 2`] = `
 "errors:
   Error1: {}
   Error2:

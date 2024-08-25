@@ -1,5 +1,5 @@
 import { constructFernFileContext, ResolvedType, TypeResolverImpl } from "@fern-api/ir-generator";
-import { RawSchemas } from "@fern-api/yaml-schema";
+import { isRawEnumDefinition, RawSchemas } from "@fern-api/yaml-schema";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
 
@@ -9,6 +9,25 @@ export const ValidTypeReferenceWithDefaultAndValidationRule: Rule = {
         const typeResolver = new TypeResolverImpl(workspace);
         return {
             definitionFile: {
+                typeDeclaration: ({ declaration }) => {
+                    if (!isRawEnumDefinition(declaration)) {
+                        return [];
+                    }
+                    const enumValues = new Set<string>(
+                        declaration.enum.map((enumValue) =>
+                            typeof enumValue === "string" ? enumValue : enumValue.value
+                        )
+                    );
+                    if (declaration.default != null && !enumValues.has(declaration.default)) {
+                        return [
+                            {
+                                message: `Default value '${declaration.default}' is not a valid enum value`,
+                                severity: "error"
+                            }
+                        ];
+                    }
+                    return [];
+                },
                 typeReference: (
                     { typeReference, _default, validation, location },
                     { relativeFilepath, contents: definitionFile }
@@ -74,11 +93,11 @@ function validateResolvedType({
             case "INTEGER":
                 return validateIntegerDefaultAndValidation({ _default, validation });
             case "BOOLEAN":
-                typeName = "boolean";
-                break;
+                return validateBooleanDefaultAndValidation({ _default, validation });
             case "LONG":
-                typeName = "long";
-                break;
+                return validateLongDefaultAndValidation({ _default, validation });
+            case "BIG_INTEGER":
+                return validateBigIntegerDefaultAndValidation({ _default, validation });
             case "DATE_TIME":
                 typeName = "datetime";
                 break;
@@ -88,10 +107,17 @@ function validateResolvedType({
             case "BASE_64":
                 typeName = "base64";
                 break;
-            case "BIG_INTEGER":
-                typeName = "bigint";
+            case "UINT":
+                typeName = "uint";
+                break;
+            case "UINT_64":
+                typeName = "uint64";
                 break;
         }
+    }
+
+    if (resolvedType._type === "named" && isRawEnumDefinition(resolvedType.declaration)) {
+        return validateEnumDefault({ declaration: resolvedType.declaration, _default });
     }
 
     if (_default != null) {
@@ -104,6 +130,32 @@ function validateResolvedType({
     if (validation != null) {
         violations.push({
             message: `Validation rules are not supported for the ${typeName} type`,
+            severity: "error"
+        });
+    }
+
+    return violations;
+}
+
+function validateEnumDefault({
+    declaration,
+    _default
+}: {
+    declaration: RawSchemas.EnumSchema;
+    _default: unknown | undefined;
+}): RuleViolation[] {
+    if (_default == null) {
+        return [];
+    }
+
+    const enumValues = new Set<string>(
+        declaration.enum.map((enumValue) => (typeof enumValue === "string" ? enumValue : enumValue.value))
+    );
+
+    const violations: RuleViolation[] = [];
+    if (!enumValues.has(_default as string)) {
+        violations.push({
+            message: `Default value '${_default}' is not a valid enum value`,
             severity: "error"
         });
     }
@@ -192,6 +244,95 @@ function validateIntegerDefaultAndValidation({
                 ...validateIntegerValidation({ name: "multipleOf", value: validation.multipleOf })
             );
         }
+    }
+
+    return violations;
+}
+
+function validateBooleanDefaultAndValidation({
+    _default,
+    validation
+}: {
+    _default: unknown | undefined;
+    validation: RawSchemas.ValidationSchema | undefined;
+}): RuleViolation[] {
+    const violations: RuleViolation[] = [];
+
+    if (_default != null && typeof _default !== "boolean") {
+        violations.push({
+            message: `Default value '${_default}' is not a valid boolean`,
+            severity: "error"
+        });
+    }
+
+    if (validation != null) {
+        violations.push({
+            message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the boolean type`,
+            severity: "error"
+        });
+    }
+
+    return violations;
+}
+
+function validateLongDefaultAndValidation({
+    _default,
+    validation
+}: {
+    _default: unknown | undefined;
+    validation: RawSchemas.ValidationSchema | undefined;
+}): RuleViolation[] {
+    const violations: RuleViolation[] = [];
+
+    if (_default != null && typeof _default !== "number") {
+        violations.push({
+            message: `Default value '${_default}' is not a valid long`,
+            severity: "error"
+        });
+    }
+
+    if (validation != null) {
+        violations.push({
+            message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the long type`,
+            severity: "error"
+        });
+    }
+
+    return violations;
+}
+
+function validateBigIntegerDefaultAndValidation({
+    _default,
+    validation
+}: {
+    _default: unknown | undefined;
+    validation: RawSchemas.ValidationSchema | undefined;
+}): RuleViolation[] {
+    const violations: RuleViolation[] = [];
+
+    if (_default != null) {
+        if (typeof _default !== "string") {
+            violations.push({
+                message: `Default value '${_default}' is not a valid bigint`,
+                severity: "error"
+            });
+        } else {
+            try {
+                BigInt(_default as string);
+            } catch (error) {
+                violations.push({
+                    message: `Default value '${_default}' is not a valid bigint`,
+                    severity: "error"
+                });
+            }
+        }
+    }
+
+    if (validation != null) {
+        violations.push({
+            message: `Validation rules '${JSON.stringify(validation)}' are not compatible with the bigint type`,
+            severity: "error"
+        });
     }
 
     return violations;

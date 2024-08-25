@@ -7,6 +7,11 @@ import (
 	fmt "fmt"
 )
 
+// Undiscriminated unions can act as a map key
+// as long as all of their values are valid keys
+// (i.e. do they have a valid string representation).
+type Metadata = map[*Key]string
+
 // Several different types are accepted.
 type MyUnion struct {
 	String          string

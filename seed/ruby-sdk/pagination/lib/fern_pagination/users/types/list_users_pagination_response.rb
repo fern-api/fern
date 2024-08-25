@@ -8,6 +8,8 @@ require "json"
 module SeedPaginationClient
   class Users
     class ListUsersPaginationResponse
+      # @return [Boolean]
+      attr_reader :has_next_page
       # @return [SeedPaginationClient::Users::Page]
       attr_reader :page
       # @return [Integer] The totall number of /users
@@ -22,17 +24,24 @@ module SeedPaginationClient
 
       OMIT = Object.new
 
+      # @param has_next_page [Boolean]
       # @param page [SeedPaginationClient::Users::Page]
       # @param total_count [Integer] The totall number of /users
       # @param data [Array<SeedPaginationClient::Users::User>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [SeedPaginationClient::Users::ListUsersPaginationResponse]
-      def initialize(total_count:, data:, page: OMIT, additional_properties: nil)
+      def initialize(total_count:, data:, has_next_page: OMIT, page: OMIT, additional_properties: nil)
+        @has_next_page = has_next_page if has_next_page != OMIT
         @page = page if page != OMIT
         @total_count = total_count
         @data = data
         @additional_properties = additional_properties
-        @_field_set = { "page": page, "total_count": total_count, "data": data }.reject do |_k, v|
+        @_field_set = {
+          "hasNextPage": has_next_page,
+          "page": page,
+          "total_count": total_count,
+          "data": data
+        }.reject do |_k, v|
           v == OMIT
         end
       end
@@ -44,18 +53,20 @@ module SeedPaginationClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
+        has_next_page = parsed_json["hasNextPage"]
         if parsed_json["page"].nil?
           page = nil
         else
           page = parsed_json["page"].to_json
           page = SeedPaginationClient::Users::Page.from_json(json_object: page)
         end
-        total_count = struct["total_count"]
-        data = parsed_json["data"]&.map do |v|
-          v = v.to_json
-          SeedPaginationClient::Users::User.from_json(json_object: v)
+        total_count = parsed_json["total_count"]
+        data = parsed_json["data"]&.map do |item|
+          item = item.to_json
+          SeedPaginationClient::Users::User.from_json(json_object: item)
         end
         new(
+          has_next_page: has_next_page,
           page: page,
           total_count: total_count,
           data: data,
@@ -77,6 +88,7 @@ module SeedPaginationClient
       # @param obj [Object]
       # @return [Void]
       def self.validate_raw(obj:)
+        obj.has_next_page&.is_a?(Boolean) != false || raise("Passed value for field obj.has_next_page is not the expected type, validation failed.")
         obj.page.nil? || SeedPaginationClient::Users::Page.validate_raw(obj: obj.page)
         obj.total_count.is_a?(Integer) != false || raise("Passed value for field obj.total_count is not the expected type, validation failed.")
         obj.data.is_a?(Array) != false || raise("Passed value for field obj.data is not the expected type, validation failed.")

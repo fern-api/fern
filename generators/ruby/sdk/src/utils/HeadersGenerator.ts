@@ -7,6 +7,7 @@ import {
     FunctionInvocation,
     Function_,
     Import,
+    MethodClassReference,
     Parameter,
     Property,
     StringClassReference
@@ -17,8 +18,10 @@ import {
     BasicAuthScheme,
     BearerAuthScheme,
     HeaderAuthScheme,
-    HttpHeader
+    HttpHeader,
+    OAuthScheme
 } from "@fern-fern/ir-sdk/api";
+import { OauthTokenProvider } from "./oauth/OauthTokenProvider";
 import { isTypeOptional } from "./TypeUtilities";
 
 export interface BasicAuth {
@@ -31,13 +34,15 @@ export interface BearerAuth {
 
 // For global headers + auth headers
 export class HeadersGenerator {
+    BASIC_AUTH_VARIABLE_NAME = "basic_auth_token";
     public headers: HttpHeader[];
     public crf: ClassReferenceFactory;
     public auth: ApiAuth;
 
     public isAuthRequired: boolean;
+    public shouldGeneratOauth: boolean;
 
-    constructor(headers: HttpHeader[], crf: ClassReferenceFactory, auth: ApiAuth) {
+    constructor(headers: HttpHeader[], crf: ClassReferenceFactory, auth: ApiAuth, shouldGeneratOauth: boolean) {
         this.headers = headers;
         this.crf = crf;
         this.auth = auth;
@@ -49,6 +54,7 @@ export class HeadersGenerator {
                 throw new Error("Unrecognized auth requirement.");
             }
         });
+        this.shouldGeneratOauth = shouldGeneratOauth;
     }
 
     // Get as parameters
@@ -66,7 +72,7 @@ export class HeadersGenerator {
         );
     }
 
-    public getAuthHeadersAsParameters(): Parameter[] {
+    public getAuthHeadersAsParameters(forRootClient: boolean): Parameter[] {
         return this.auth.schemes.flatMap((scheme) =>
             scheme._visit<Parameter[]>({
                 bearer: (bas: BearerAuthScheme) => [
@@ -74,7 +80,11 @@ export class HeadersGenerator {
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: bas.tokenEnvVar !== undefined || !this.isAuthRequired,
-                        example: '"YOUR_AUTH_TOKEN"'
+                        example: '"YOUR_AUTH_TOKEN"',
+                        defaultValue:
+                            bas.tokenEnvVar != null
+                                ? new EnvironmentVariable({ variableName: bas.tokenEnvVar })
+                                : undefined
                     })
                 ],
                 basic: (bas: BasicAuthScheme) => [
@@ -82,21 +92,81 @@ export class HeadersGenerator {
                         name: bas.username.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: bas.usernameEnvVar !== undefined || !this.isAuthRequired,
-                        example: '"YOUR_USERNAME"'
+                        example: '"YOUR_USERNAME"',
+                        defaultValue:
+                            bas.usernameEnvVar != null
+                                ? new EnvironmentVariable({ variableName: bas.usernameEnvVar })
+                                : undefined
                     }),
                     new Parameter({
                         name: bas.password.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: bas.passwordEnvVar !== undefined || !this.isAuthRequired,
-                        example: '"YOUR_PASSWORD"'
+                        example: '"YOUR_PASSWORD"',
+                        defaultValue:
+                            bas.passwordEnvVar != null
+                                ? new EnvironmentVariable({ variableName: bas.passwordEnvVar })
+                                : undefined
                     })
                 ],
+                oauth: (oas: OAuthScheme) =>
+                    this.shouldGeneratOauth
+                        ? oas.configuration._visit<Parameter[]>({
+                              clientCredentials: (cc) =>
+                                  forRootClient
+                                      ? [
+                                            new Parameter({
+                                                name: "client_id",
+                                                type: StringClassReference,
+                                                isOptional: cc.clientIdEnvVar !== undefined || !this.isAuthRequired,
+                                                example: '"YOUR_CLIENT_ID"',
+                                                defaultValue:
+                                                    cc.clientIdEnvVar != null
+                                                        ? new EnvironmentVariable({ variableName: cc.clientIdEnvVar })
+                                                        : undefined
+                                            }),
+                                            new Parameter({
+                                                name: "client_secret",
+                                                type: StringClassReference,
+                                                isOptional: cc.clientSecretEnvVar !== undefined || !this.isAuthRequired,
+                                                example: '"YOUR_CLIENT_SECRET"',
+                                                defaultValue:
+                                                    cc.clientSecretEnvVar != null
+                                                        ? new EnvironmentVariable({
+                                                              variableName: cc.clientSecretEnvVar
+                                                          })
+                                                        : undefined
+                                            })
+                                        ]
+                                      : [
+                                            new Parameter({
+                                                name: OauthTokenProvider.FIELD_NAME,
+                                                type: [StringClassReference, MethodClassReference],
+                                                isOptional: true
+                                            })
+                                        ],
+                              _other: () => {
+                                  throw new Error("Unrecognized auth scheme.");
+                              }
+                          })
+                        : [
+                              new Parameter({
+                                  name: OauthTokenProvider.FIELD_NAME,
+                                  type: StringClassReference,
+                                  isOptional: !this.isAuthRequired,
+                                  example: '"YOUR_AUTH_TOKEN"'
+                              })
+                          ],
                 header: (has: HeaderAuthScheme) => [
                     new Parameter({
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
                         isOptional: has.headerEnvVar !== undefined || !this.isAuthRequired,
-                        example: `"YOUR_${has.name.name.screamingSnakeCase.safeName}"`
+                        example: `"YOUR_${has.name.name.screamingSnakeCase.safeName}"`,
+                        defaultValue:
+                            has.headerEnvVar != null
+                                ? new EnvironmentVariable({ variableName: has.headerEnvVar })
+                                : undefined
                     })
                 ],
                 _other: () => {
@@ -136,14 +206,16 @@ export class HeadersGenerator {
                 ],
                 basic: (bas: BasicAuthScheme) => [
                     new Property({
-                        name: bas.username.snakeCase.safeName,
+                        name: this.BASIC_AUTH_VARIABLE_NAME,
                         type: StringClassReference,
-                        isOptional: isOptionalOverride ?? (bas.usernameEnvVar !== undefined || !this.isAuthRequired)
-                    }),
-                    new Property({
-                        name: bas.password.snakeCase.safeName,
-                        type: StringClassReference,
-                        isOptional: isOptionalOverride ?? (bas.passwordEnvVar !== undefined || !this.isAuthRequired)
+                        // If you've overridden optionality, use that, otherwise:
+                        //     If there's an envvar it should be optional
+                        //     If there's not an envvar then check if auth is required
+                        isOptional:
+                            isOptionalOverride ??
+                            ((bas.usernameEnvVar !== undefined && bas.passwordEnvVar !== undefined) ||
+                                !this.isAuthRequired),
+                        wireValue: "Authorization"
                     })
                 ],
                 header: (has: HeaderAuthScheme) => [
@@ -154,6 +226,14 @@ export class HeadersGenerator {
                         wireValue: has.name.wireValue
                     })
                 ],
+                oauth: (_: OAuthScheme) => [
+                    new Property({
+                        name: OauthTokenProvider.FIELD_NAME,
+                        type: [StringClassReference, MethodClassReference],
+                        isOptional: true,
+                        wireValue: "Authorization"
+                    })
+                ],
                 _other: () => {
                     throw new Error("Unrecognized auth scheme.");
                 }
@@ -162,43 +242,39 @@ export class HeadersGenerator {
     }
 
     // Get as hash
-    public getAdditionalHeaders(): [string, string][] {
-        return this.headers.map((header) => [`"${header.name.wireValue}"`, header.name.name.snakeCase.safeName]);
-    }
+    // public getAdditionalHeaders(): [string, string][] {
+    //     return this.headers.map((header) => [`"${header.name.wireValue}"`, header.name.name.snakeCase.safeName]);
+    // }
 
     private getBearerAuthorizationHeader(bas: BearerAuthScheme): [string, string] {
-        const bearerValue =
-            bas.tokenEnvVar !== undefined
-                ? new Expression({
-                      leftSide: bas.token.snakeCase.safeName,
-                      rightSide: new EnvironmentVariable({ variableName: bas.tokenEnvVar }),
-                      isAssignment: false,
-                      operation: "||"
-                  })
-                : new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
+        const bearerValue = new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
+        return [`@${bas.token.snakeCase.safeName}`, `"Bearer #{${bearerValue.write({})}}"`];
+    }
 
-        return ['"Authorization"', `Bearer #{${bearerValue.write({})}}`];
+    private getOAuthBearerAuthorizationHeader(oas: OAuthScheme): [string, string] {
+        // The meat of the logic for bearer auth happens within an oauth token provider, which passes
+        // the get token function to the RequestClient, so this is just leveraging that.
+        return this.shouldGeneratOauth
+            ? oas.configuration._visit<[string, string]>({
+                  clientCredentials: (cc) => {
+                      // Note we're hardcoding to bearer auth and assuming that we're setting an `@token` property
+                      return [
+                          `@${OauthTokenProvider.FIELD_NAME}`,
+                          cc.tokenPrefix != null
+                              ? `"${cc.tokenPrefix} #{${OauthTokenProvider.FIELD_NAME}}"`
+                              : OauthTokenProvider.FIELD_NAME
+                      ];
+                  },
+                  _other: () => {
+                      throw new Error("Unrecognized auth scheme.");
+                  }
+              })
+            : [`@${OauthTokenProvider.FIELD_NAME}`, `"Bearer #{${OauthTokenProvider.FIELD_NAME}}"`];
     }
 
     private getBasicAuthorizationHeader(bas: BasicAuthScheme): [string, string] {
-        const userName =
-            bas.usernameEnvVar !== undefined
-                ? new Expression({
-                      leftSide: bas.username.snakeCase.safeName,
-                      rightSide: new EnvironmentVariable({ variableName: bas.usernameEnvVar }),
-                      isAssignment: false,
-                      operation: "||"
-                  })
-                : new Expression({ rightSide: bas.username.snakeCase.safeName, isAssignment: false });
-        const password =
-            bas.passwordEnvVar !== undefined
-                ? new Expression({
-                      leftSide: bas.password.snakeCase.safeName,
-                      rightSide: new EnvironmentVariable({ variableName: bas.passwordEnvVar }),
-                      isAssignment: false,
-                      operation: "||"
-                  })
-                : new Expression({ rightSide: bas.password.snakeCase.safeName, isAssignment: false });
+        const userName = new Expression({ rightSide: bas.username.snakeCase.safeName, isAssignment: false });
+        const password = new Expression({ rightSide: bas.password.snakeCase.safeName, isAssignment: false });
 
         const b64 = new FunctionInvocation({
             onObject: new ClassReference({ name: "Base64", import_: new Import({ from: "base64", isExternal: true }) }),
@@ -206,12 +282,12 @@ export class HeadersGenerator {
             arguments_: [
                 new Argument({
                     isNamed: false,
-                    value: `"#{${userName.write({})}}:#{${password.write({})}}"`
+                    value: `'#{${userName.write({})}}:#{${password.write({})}}'`
                 })
             ]
         });
 
-        return ['"Authorization"', `Basic #{${b64.write({})}}`];
+        return [`@${this.BASIC_AUTH_VARIABLE_NAME}`, `"Basic #{${b64.write({})}}"`];
     }
 
     // TODO: I don't love how this works, ideally it's a string to expression hash instead, but we don't
@@ -224,19 +300,11 @@ export class HeadersGenerator {
         //     onObject: has.name.name.snakeCase.safeName,
         //     baseFunction: new Function_({ name: "to_json", functionBody: [] })
         // });
-        const headerValue =
-            has.headerEnvVar !== undefined
-                ? new Expression({
-                      leftSide: has.name.name.snakeCase.safeName,
-                      rightSide: new EnvironmentVariable({ variableName: has.headerEnvVar }),
-                      isAssignment: false,
-                      operation: "||"
-                  })
-                : new Expression({ rightSide: has.name.name.snakeCase.safeName, isAssignment: false });
+        const headerValue = new Expression({ rightSide: has.name.name.snakeCase.safeName, isAssignment: false });
 
         return [
-            `"${has.name.wireValue}"`,
-            `${has.prefix !== undefined ? has.prefix + " " : ""}#{${headerValue.write({})}}`
+            `@${has.name.name.snakeCase.safeName}`,
+            has.prefix != null ? `"${has.prefix} #{${headerValue.write({})}}"` : headerValue.write({})
         ];
     }
 
@@ -246,6 +314,7 @@ export class HeadersGenerator {
                 bearer: (bas: BearerAuthScheme) => this.getBearerAuthorizationHeader(bas),
                 basic: (bas: BasicAuthScheme) => this.getBasicAuthorizationHeader(bas),
                 header: (has: HeaderAuthScheme) => this.getCustomAuthorizationHeader(has),
+                oauth: (oas: OAuthScheme) => this.getOAuthBearerAuthorizationHeader(oas),
                 _other: () => {
                     throw new Error("Unrecognized auth scheme.");
                 }

@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2;
 
-public class VoidFunctionDefinitionThatTakesActualResult
+public record VoidFunctionDefinitionThatTakesActualResult
 {
     [JsonPropertyName("additionalParameters")]
-    public IEnumerable<Parameter> AdditionalParameters { get; init; }
+    public IEnumerable<Parameter> AdditionalParameters { get; set; } = new List<Parameter>();
 
     [JsonPropertyName("code")]
-    public FunctionImplementationForMultipleLanguages Code { get; init; }
+    public required FunctionImplementationForMultipleLanguages Code { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

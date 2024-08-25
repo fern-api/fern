@@ -11,6 +11,7 @@ import { TypeResolver } from "../resolvers/TypeResolver";
 // when the call-site doesn't care about the language nor special casing convention.
 export const CASINGS_GENERATOR = constructCasingsGenerator({
     generationLanguage: undefined,
+    keywords: undefined,
     smartCasing: false
 });
 
@@ -72,6 +73,7 @@ export function getAllPropertiesForObject({
     if (smartCasing) {
         casingsGenerator = constructCasingsGenerator({
             generationLanguage: undefined,
+            keywords: undefined,
             smartCasing
         });
     }

@@ -11,7 +11,16 @@
             "identifierOverride": "endpoint_completions.stream"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedServerSentEvents\n\nclient = SeedServerSentEvents(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedServerSentEvents"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedServerSentEvents(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -41,7 +50,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedServerSentEvents\n\nclient = AsyncSeedServerSentEvents(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedServerSentEvents"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedServerSentEvents(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,

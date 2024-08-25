@@ -1,12 +1,18 @@
 using System.Text.Json.Serialization;
+using SeedAudiences.Core;
 using SeedAudiences.FolderC;
 
 #nullable enable
 
 namespace SeedAudiences.FolderB;
 
-public class Foo
+public record Foo
 {
     [JsonPropertyName("foo")]
-    public Foo? Foo_ { get; init; }
+    public FolderCFoo? Foo_ { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

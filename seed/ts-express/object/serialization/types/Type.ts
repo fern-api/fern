@@ -27,7 +27,11 @@ export const Type: core.serialization.ObjectSchema<serializers.Type.Raw, SeedObj
     ),
     seventeen: core.serialization.list(core.serialization.string().optional()),
     eighteen: core.serialization.stringLiteral("eighteen"),
-    nineteen: core.serialization.lazyObject(async () => (await import("..")).Name),
+    nineteen: core.serialization.lazyObject(() => serializers.Name),
+    twenty: core.serialization.number(),
+    twentyone: core.serialization.number(),
+    twentytwo: core.serialization.number(),
+    twentythree: core.serialization.string(),
 });
 
 export declare namespace Type {
@@ -51,5 +55,9 @@ export declare namespace Type {
         seventeen: (string | null | undefined)[];
         eighteen: "eighteen";
         nineteen: serializers.Name.Raw;
+        twenty: number;
+        twentyone: number;
+        twentytwo: number;
+        twentythree: string;
     }
 }

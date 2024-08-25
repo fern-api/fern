@@ -1,5 +1,10 @@
 import { assertNever } from "@fern-api/core-utils";
-import { LiteralSchemaValue, PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-api/openapi-ir-sdk";
+import {
+    Availability,
+    LiteralSchemaValue,
+    PrimitiveSchemaValueWithExample,
+    SchemaWithExample
+} from "@fern-api/openapi-ir-sdk";
 import { recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../../getExtension";
@@ -9,12 +14,14 @@ export function getFernTypeExtension({
     nameOverride,
     generatedName,
     schema,
-    description
+    description,
+    availability
 }: {
     nameOverride: string | undefined;
     generatedName: string;
     schema: OpenAPIV3.SchemaObject;
     description: string | undefined;
+    availability: Availability | undefined;
 }): SchemaWithExample | undefined {
     const groupName = getExtension(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const fernType = getExtension<string>(schema, FernOpenAPIExtension.TYPE_DEFINITION);
@@ -26,6 +33,7 @@ export function getFernTypeExtension({
         nameOverride,
         generatedName,
         description,
+        availability,
         groupName: typeof groupName === "string" ? [groupName] : groupName
     });
 }
@@ -35,12 +43,14 @@ export function getSchemaFromFernType({
     nameOverride,
     generatedName,
     description,
+    availability,
     groupName
 }: {
     fernType: string;
     nameOverride: string | undefined;
     generatedName: string;
     description: string | undefined;
+    availability: Availability | undefined;
     groupName: string[] | undefined;
 }): SchemaWithExample | undefined {
     return recursivelyVisitRawTypeReference<SchemaWithExample | undefined>({
@@ -55,6 +65,7 @@ export function getSchemaFromFernType({
                             nameOverride,
                             generatedName,
                             description,
+                            availability,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.base64({
                                 example: undefined
@@ -65,8 +76,10 @@ export function getSchemaFromFernType({
                             nameOverride,
                             generatedName,
                             description,
+                            availability,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.boolean({
+                                default: undefined,
                                 example: undefined
                             })
                         });
@@ -75,6 +88,7 @@ export function getSchemaFromFernType({
                             nameOverride,
                             generatedName,
                             description,
+                            availability,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.date({
                                 example: undefined
@@ -85,8 +99,20 @@ export function getSchemaFromFernType({
                             nameOverride,
                             generatedName,
                             description,
+                            availability,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.datetime({
+                                example: undefined
+                            })
+                        });
+                    case "FLOAT":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            availability,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.float({
                                 example: undefined
                             })
                         });
@@ -95,6 +121,7 @@ export function getSchemaFromFernType({
                             nameOverride,
                             generatedName,
                             description,
+                            availability,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.double({
                                 default: undefined,
@@ -106,11 +133,24 @@ export function getSchemaFromFernType({
                                 example: undefined
                             })
                         });
+                    case "UINT":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            availability,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.uint({
+                                default: undefined,
+                                example: undefined
+                            })
+                        });
                     case "INTEGER":
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
                             description,
+                            availability,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.int({
                                 default: undefined,
@@ -122,13 +162,27 @@ export function getSchemaFromFernType({
                                 example: undefined
                             })
                         });
+                    case "UINT_64":
+                        return SchemaWithExample.primitive({
+                            nameOverride,
+                            generatedName,
+                            description,
+                            availability,
+                            groupName,
+                            schema: PrimitiveSchemaValueWithExample.uint64({
+                                default: undefined,
+                                example: undefined
+                            })
+                        });
                     case "LONG":
                         return SchemaWithExample.primitive({
                             nameOverride,
                             generatedName,
                             description,
+                            availability,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.int64({
+                                default: undefined,
                                 example: undefined
                             })
                         });
@@ -139,6 +193,7 @@ export function getSchemaFromFernType({
                             nameOverride,
                             generatedName,
                             description,
+                            availability,
                             groupName,
                             schema: PrimitiveSchemaValueWithExample.string({
                                 default: undefined,
@@ -159,6 +214,7 @@ export function getSchemaFromFernType({
                     generatedName,
                     example: undefined,
                     description,
+                    availability,
                     groupName
                 });
             },
@@ -170,7 +226,9 @@ export function getSchemaFromFernType({
                           key: keyType,
                           value: valueType,
                           description,
+                          availability,
                           groupName,
+                          encoding: undefined,
                           example: undefined
                       })
                     : undefined,
@@ -181,6 +239,7 @@ export function getSchemaFromFernType({
                           generatedName,
                           value: itemType,
                           description,
+                          availability,
                           groupName,
                           example: undefined
                       })
@@ -192,6 +251,7 @@ export function getSchemaFromFernType({
                           generatedName,
                           value: itemType,
                           description,
+                          availability,
                           groupName
                       })
                     : undefined,
@@ -202,6 +262,7 @@ export function getSchemaFromFernType({
                           generatedName,
                           value: itemType,
                           description,
+                          availability,
                           groupName,
                           example: undefined
                       })
@@ -218,6 +279,7 @@ export function getSchemaFromFernType({
                         }
                     }),
                     description,
+                    availability,
                     groupName
                 }),
             named: () => {

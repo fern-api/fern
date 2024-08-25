@@ -16,7 +16,7 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = FunctionImplementation.Builder.class
 )
@@ -105,7 +105,7 @@ public final class FunctionImplementation {
 
     @java.lang.Override
     public _FinalStage imports(String imports) {
-      this.imports = Optional.of(imports);
+      this.imports = Optional.ofNullable(imports);
       return this;
     }
 

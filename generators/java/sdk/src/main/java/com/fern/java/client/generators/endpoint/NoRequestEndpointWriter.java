@@ -16,21 +16,24 @@
 
 package com.fern.java.client.generators.endpoint;
 
-import com.fern.irV42.model.http.HttpEndpoint;
-import com.fern.irV42.model.http.HttpMethod;
-import com.fern.irV42.model.http.HttpService;
-import com.fern.irV42.model.http.SdkRequest;
+import com.fern.ir.model.commons.ErrorId;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpMethod;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
+import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.ParameterSpec;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import okhttp3.Headers;
 import okhttp3.Request;
@@ -45,7 +48,8 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             ClientGeneratorContext clientGeneratorContext,
             FieldSpec clientOptionsField,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
-            GeneratedClientOptions generatedClientOptions) {
+            GeneratedClientOptions generatedClientOptions,
+            Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 httpService,
                 httpEndpoint,
@@ -53,7 +57,8 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass);
+                generatedEnvironmentsClass,
+                generatedErrors);
     }
 
     @Override
@@ -69,6 +74,11 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
     @Override
     public List<ParameterSpec> additionalParameters() {
         return Collections.emptyList();
+    }
+
+    @Override
+    public Optional<ParameterSpec> requestParameterSpec() {
+        return Optional.empty();
     }
 
     @Override

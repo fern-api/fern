@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`converts to api reference node 1`] = `
+{
+  "apiDefinitionId": "550e8400-e29b-41d4-a716-446655440000",
+  "availability": undefined,
+  "changelog": undefined,
+  "children": [
+    {
+      "apiDefinitionId": "550e8400-e29b-41d4-a716-446655440000",
+      "availability": undefined,
+      "children": [
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440000:endpoint_stream.createChatCompletion+endpoint_stream.createChatCompletion_stream",
+          "nonStream": {
+            "apiDefinitionId": "550e8400-e29b-41d4-a716-446655440000",
+            "availability": undefined,
+            "endpointId": "endpoint_stream.createChatCompletion",
+            "hidden": undefined,
+            "icon": undefined,
+            "id": "550e8400-e29b-41d4-a716-446655440000:endpoint_stream.createChatCompletion",
+            "isResponseStream": false,
+            "method": "POST",
+            "playground": undefined,
+            "slug": "base/path/api-reference/stream/create-chat-completion",
+            "title": "Create Chat Completion",
+            "type": "endpoint",
+          },
+          "stream": {
+            "apiDefinitionId": "550e8400-e29b-41d4-a716-446655440000",
+            "availability": undefined,
+            "endpointId": "endpoint_stream.createChatCompletion_stream",
+            "hidden": undefined,
+            "icon": undefined,
+            "id": "550e8400-e29b-41d4-a716-446655440000:endpoint_stream.createChatCompletion_stream",
+            "isResponseStream": true,
+            "method": "POST",
+            "playground": undefined,
+            "slug": "base/path/api-reference/stream/create-chat-completion-stream",
+            "title": "Create Chat Completion",
+            "type": "endpoint",
+          },
+          "type": "endpointPair",
+        },
+        {
+          "id": "550e8400-e29b-41d4-a716-446655440000:endpoint_stream.createCompletion+endpoint_stream.createCompletion_stream",
+          "nonStream": {
+            "apiDefinitionId": "550e8400-e29b-41d4-a716-446655440000",
+            "availability": undefined,
+            "endpointId": "endpoint_stream.createCompletion",
+            "hidden": undefined,
+            "icon": undefined,
+            "id": "550e8400-e29b-41d4-a716-446655440000:endpoint_stream.createCompletion",
+            "isResponseStream": false,
+            "method": "POST",
+            "playground": undefined,
+            "slug": "base/path/api-reference/stream/create-completion",
+            "title": "Create Completion",
+            "type": "endpoint",
+          },
+          "stream": {
+            "apiDefinitionId": "550e8400-e29b-41d4-a716-446655440000",
+            "availability": undefined,
+            "endpointId": "endpoint_stream.createCompletion_stream",
+            "hidden": undefined,
+            "icon": undefined,
+            "id": "550e8400-e29b-41d4-a716-446655440000:endpoint_stream.createCompletion_stream",
+            "isResponseStream": true,
+            "method": "POST",
+            "playground": undefined,
+            "slug": "base/path/api-reference/stream/create-completion-stream",
+            "title": "Create Completion",
+            "type": "endpoint",
+          },
+          "type": "endpointPair",
+        },
+      ],
+      "hidden": undefined,
+      "icon": undefined,
+      "id": "550e8400-e29b-41d4-a716-446655440000:subpackage_stream",
+      "noindex": undefined,
+      "overviewPageId": undefined,
+      "playground": undefined,
+      "pointsTo": "base/path/api-reference/stream/create-chat-completion",
+      "slug": "base/path/api-reference/stream",
+      "title": "Stream",
+      "type": "apiPackage",
+    },
+  ],
+  "hidden": undefined,
+  "hideTitle": false,
+  "icon": undefined,
+  "id": "550e8400-e29b-41d4-a716-446655440000",
+  "noindex": undefined,
+  "overviewPageId": undefined,
+  "paginated": false,
+  "playground": undefined,
+  "pointsTo": "base/path/api-reference/stream/create-chat-completion",
+  "showErrors": false,
+  "slug": "base/path/api-reference",
+  "title": "API Reference",
+  "type": "apiReference",
+}
+`;
+
+exports[`converts to api reference node: endpointsByLocator keys 1`] = `
+[
+  "POST /v1/chat/completions",
+  "STREAM /v1/chat/completions",
+  "POST /v1/completions",
+  "STREAM /v1/completions",
+  "stream.createChatCompletion_stream",
+  "stream/createChatCompletion_stream",
+  "stream.createChatCompletion",
+  "stream/createChatCompletion",
+  "stream.createCompletion_stream",
+  "stream/createCompletion_stream",
+  "stream.createCompletion",
+  "stream/createCompletion",
+]
+`;
+
+exports[`converts to api reference node: subpackagesByLocator keys 1`] = `
+[
+  "__package__",
+  "__package__.yml",
+  "stream",
+  "stream.yml",
+]
+`;

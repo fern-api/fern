@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = CreatePlaylistRequest.Builder.class)
 public final class CreatePlaylistRequest {
     private final OffsetDateTime datetime;
@@ -142,7 +142,7 @@ public final class CreatePlaylistRequest {
 
         @java.lang.Override
         public _FinalStage optionalDatetime(OffsetDateTime optionalDatetime) {
-            this.optionalDatetime = Optional.of(optionalDatetime);
+            this.optionalDatetime = Optional.ofNullable(optionalDatetime);
             return this;
         }
 

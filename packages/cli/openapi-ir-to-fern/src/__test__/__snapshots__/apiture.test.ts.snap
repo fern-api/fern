@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser apiture docs 1`] = `
+exports[`open api parser > apiture > docs 1`] = `
 {
   "definitionFiles": {
     "accountJointOwners.yml": {
@@ -54,6 +54,9 @@ exports[`open api parser apiture docs 1`] = `
               "type": "root.AccountJointOwners",
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
     },
@@ -314,6 +317,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "types": {
         "AccountsListAccountsRequestLocation": {
@@ -321,6 +327,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
             "internal",
             "external",
           ],
+          "source": {
+            "openapi": "apiture/openapi.yml",
+          },
         },
       },
     },
@@ -746,6 +755,9 @@ This information provides hints to clients, allowing bank customers to select tr
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
     },
     "jointOwners.yml": {
@@ -821,6 +833,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
     },
     "overdraftProtection.yml": {
@@ -893,18 +908,18 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                 },
                 "response": {
                   "body": {
-                    "items": {
-                      "0": {
+                    "items": [
+                      {
                         "id": "da1331a9e9168ea91346",
                         "label": "Checking *3456",
                         "maskedNumber": "*3456",
                       },
-                      "1": {
+                      {
                         "id": "5c9b4e50a0401ef4eb2e",
                         "label": "Premiere Savings *1234",
                         "maskedNumber": "*1234",
                       },
-                    },
+                    ],
                     "limit": 100,
                     "maximumOverdraftAccounts": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
@@ -996,6 +1011,9 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
     },
     "transactionCategories.yml": {
@@ -1053,6 +1071,9 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               "type": "root.TransactionCategories",
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
     },
@@ -1173,6 +1194,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<root.CheckNumberRange>",
                 },
                 "createdOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`createdOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`createdOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`createdOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -1189,6 +1211,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<boolean>",
                 },
                 "postedOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`postedOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`postedOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`postedOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -1217,6 +1240,9 @@ The default response lists only recent transactions. Normally, this is transacti
               "type": "root.Transactions",
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
     },
@@ -1307,10 +1333,8 @@ Note: This operation requires an identity challenge if the financial institution
                 ],
                 "properties": {
                   "schedule": {
-                    "default": undefined,
                     "docs": "When the transfer should occur and any recurrence.",
                     "type": "optional<root.TransferSchedule>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1621,10 +1645,8 @@ Note: This operation requires an identity challenge if the financial institution
                 ],
                 "properties": {
                   "schedule": {
-                    "default": undefined,
                     "docs": "When the transfer should occur and any recurrence.",
                     "type": "optional<root.TransferSchedule>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -1643,6 +1665,9 @@ Note: This operation requires an identity challenge if the financial institution
               "type": "root.Transfer",
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
     },
@@ -3498,6 +3523,9 @@ This error response may have one of the following \`type\` values:
       "AbstractBody": {
         "docs": "An abstract schema used to define other request and response body model schemas.",
         "properties": {},
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AbstractPagedBody": {
         "docs": "An abstract schema used to define paginated collections of resources. Collection classes which extend this schema define an array of \`items\` which represent a page of data.",
@@ -3507,7 +3535,6 @@ This error response may have one of the following \`type\` values:
         ],
         "properties": {
           "start": {
-            "default": undefined,
             "docs": "The opaque cursor that specifies the starting location of this page of items.",
             "type": "optional<string>",
             "validation": {
@@ -3517,6 +3544,9 @@ This error response may have one of the following \`type\` values:
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AbstractPagedBodyFields": {
@@ -3535,16 +3565,18 @@ This error response may have one of the following \`type\` values:
             },
           },
           "nextPage_url": {
-            "default": undefined,
             "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 8000,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "Account": {
@@ -3562,6 +3594,9 @@ This error response may have one of the following \`type\` values:
             "docs": "If \`true\`, the customer has opted in to receive account statements electronically.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AccountAllowsFilter": {
@@ -3615,27 +3650,24 @@ This error response may have one of the following \`type\` values:
           "viewCards",
           "manageCards",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AccountBalance": {
         "docs": "The current balances of the given account.",
         "properties": {
           "available": {
-            "default": undefined,
             "docs": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
-            "validation": undefined,
           },
           "current": {
-            "default": undefined,
             "docs": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
-            "validation": undefined,
           },
           "currentWithPending": {
-            "default": undefined,
             "docs": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The account ID.",
@@ -3646,11 +3678,12 @@ This error response may have one of the following \`type\` values:
             "type": "boolean",
           },
           "updatedAt": {
-            "default": undefined,
             "docs": "The time when the balance values were last updated from the banking core.",
             "type": "optional<ReadOnlyTimestamp>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AccountBalances": {
@@ -3663,6 +3696,9 @@ This error response may have one of the following \`type\` values:
             "docs": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
             "type": "list<AccountBalance>",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AccountFields": {
@@ -3690,6 +3726,9 @@ This error response may have one of the following \`type\` values:
           "nickname": "optional<AccountNickname>",
           "product": "ProductReference",
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AccountIds": {
         "docs": "An array of account IDs.",
@@ -3700,13 +3739,10 @@ This error response may have one of the following \`type\` values:
         "properties": {
           "allows": "AccountPermissions",
           "id": {
-            "default": undefined,
             "docs": "The unique identifier for this account resource. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
             "validation": {
@@ -3717,14 +3753,15 @@ This error response may have one of the following \`type\` values:
             },
           },
           "location": {
-            "default": undefined,
             "docs": "Indicates where an account is held.",
             "type": "optional<AccountLocation>",
-            "validation": undefined,
           },
           "maskedNumber": "optional<MaskedAccountNumber>",
           "nickname": "optional<AccountNickname>",
           "product": "optional<ProductReference>",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AccountJointOwner": {
@@ -3745,6 +3782,9 @@ This error response may have one of the following \`type\` values:
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AccountJointOwners": {
         "docs": undefined,
@@ -3753,6 +3793,9 @@ This error response may have one of the following \`type\` values:
             "docs": "An array containing account joint owner items.",
             "type": "list<AccountJointOwner>",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AccountLocation": {
@@ -3766,6 +3809,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "external",
           "outside",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AccountNickname": {
         "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
@@ -3809,6 +3855,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AccountRoutingNumber": {
         "docs": "An account ABA routing and transit number.",
@@ -3827,7 +3876,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         ],
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
             "type": "optional<integer>",
             "validation": {
@@ -3855,24 +3903,20 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "nextPage_url": {
-            "default": undefined,
             "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 256,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
           "primaryAccountId": {
-            "default": undefined,
             "docs": "The \`id\` of the customer's primary account. This property only exists for retail customers, and only if the customer has designated a primary account.",
             "type": "optional<ReadOnlyResourceId>",
-            "validation": undefined,
           },
           "start": {
-            "default": undefined,
             "docs": "The opaque cursor that specifies the starting location of this page of items.",
             "type": "optional<string>",
             "validation": {
@@ -3882,6 +3926,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AchAccountRisk": {
@@ -3920,6 +3967,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "float",
           "sameDay",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AchSecCode": {
         "docs": "The ACH transfer type.
@@ -3977,6 +4027,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "tel",
           "web",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "Address": {
         "docs": "A postal address that can hold a US address or an international (non-US) postal addresses.",
@@ -3995,7 +4048,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "regionCode": {
-            "default": undefined,
             "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
             "type": "optional<string>",
             "validation": {
@@ -4006,7 +4058,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "regionName": {
-            "default": undefined,
             "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
             "type": "optional<string>",
             "validation": {
@@ -4016,6 +4067,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AddressFields": {
@@ -4032,7 +4086,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "address2": {
-            "default": undefined,
             "docs": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
             "type": "optional<string>",
             "validation": {
@@ -4063,6 +4116,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AmountRange": {
         "docs": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
@@ -4078,50 +4134,32 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
         "properties": {
           "attributes": {
-            "default": undefined,
             "docs": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
             "type": "optional<map<string, unknown>>",
-            "validation": undefined,
           },
           "detail": {
-            "default": undefined,
             "docs": "A human-readable explanation specific to this occurrence of the problem.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The unique identifier for this problem. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
-            "validation": undefined,
           },
           "instance": {
-            "default": undefined,
             "docs": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": "uri-reference",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
           },
           "occurredAt": {
-            "default": undefined,
             "docs": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC.",
             "type": "optional<ReadOnlyTimestamp>",
-            "validation": undefined,
           },
           "problems": {
-            "default": undefined,
             "docs": "Optional root-causes if there are multiple problems in the request or API call processing.",
             "type": "optional<list<ApiProblem>>",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
 ",
             "type": "optional<integer>",
@@ -4134,37 +4172,32 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "title": {
-            "default": undefined,
             "docs": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": "uri-reference",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ChallengeFactor": {
         "docs": "An challenge factor. See [\`requiredIdentityChallenge\`](#schema-requiredIdentityChallenge) for multiple examples.",
         "properties": {
           "labels": {
-            "default": undefined,
             "docs": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "securityQuestions": "optional<ChallengeSecurityQuestions>",
           "type": "ChallengeFactorType",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ChallengeFactorType": {
@@ -4208,6 +4241,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "securityQuestions",
           "authenticatorToken",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "ChallengePromptId": {
         "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
@@ -4237,6 +4273,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "ChallengeSecurityQuestions": {
         "docs": "Describes a \`securityQuestions\` challenge. This is omitted if the challenge \`type\` is not \`securityQuestions\`.",
@@ -4245,6 +4284,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "The array of security questions.",
             "type": "list<ChallengeSecurityQuestion>",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ChallengeToken": {
@@ -4285,6 +4327,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "type": "CutoffTimeType",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "CutoffTimeType": {
@@ -4333,6 +4378,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "externalTransfer",
           "billPay",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "CutoffTimes": {
         "docs": "A representation of financial institution cutoff times for different money movement processes. A money movement process can have multiple cutoff times. The cutoff times are sorted in ascending chronological order by money movement process.",
@@ -4349,6 +4397,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
             "type": "TimeZoneId",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "DateRange": {
@@ -4396,18 +4447,16 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "nextPage_url": {
-            "default": undefined,
             "docs": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 256,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
           "start": {
-            "default": undefined,
             "docs": "The opaque cursor that specifies the starting location of this page of items.",
             "type": "optional<string>",
             "validation": {
@@ -4417,6 +4466,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ExternalAccountVerificationMethod": {
@@ -4450,6 +4502,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "microDeposits",
           "manual",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "FullAccountNumber": {
         "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
@@ -4475,6 +4530,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "If \`true\`, the customer can list and manage overdraft account settings.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "IncompleteAccountBalances": {
@@ -4503,6 +4561,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "IncompleteTransactions": {
         "docs": "Response when requesting transactions that are not yet available.",
@@ -4521,6 +4582,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "InstitutionId": {
@@ -4564,6 +4628,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "swiftBicCode",
           "ibanAccountNumber",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "InstitutionLookupResult": {
         "docs": "Successful institution lookup result.",
@@ -4576,17 +4643,16 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "boolean",
           },
           "institution": {
-            "default": undefined,
             "docs": "The name and other information about the financial institution, if found.",
             "type": "optional<SimpleInstitution>",
-            "validation": undefined,
           },
           "intermediaryInstitutions": {
-            "default": undefined,
             "docs": "Optional intermediary institutions, if requested and if intermediary institutions are required for for international wire transfers to the beneficiary institution. This array is omitted if there none are required.",
             "type": "optional<list<SimpleInstitution>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "JointOwnerInvitation": {
@@ -4601,15 +4667,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "ReadOnlyResourceId",
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "JointOwnerInvitationFields": {
         "docs": "Fields used to compose other joint owner invitation schemas.",
         "properties": {
           "disallowDebitCardAccess": {
-            "default": undefined,
+            "default": false,
             "docs": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "emailAddress": {
             "docs": "The invitee's email address.",
@@ -4652,7 +4720,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "taxId": {
-            "default": undefined,
             "docs": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
             "type": "optional<string>",
             "validation": {
@@ -4662,6 +4729,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "pattern": "^[0-9]{4}$",
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "MaskedAccountNumber": {
@@ -4688,13 +4758,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Fields of an overdraft protection account, used to compose other schemas.",
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The unique ID of the account resource. Use this as the \`{accountId}\` in [\`getAccount\`](#op-getAccount) or [\`listAccountBalances\`](#op-listAccountBalances).",
             "type": "optional<ResourceId>",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
             "validation": {
@@ -4705,6 +4772,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "maskedNumber": "optional<MaskedAccountNumber>",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "OverdraftAccountItem": {
@@ -4730,11 +4800,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "OverdraftProtectionFields": {
         "docs": "Fields used to compose other overdraft protection schemas.",
         "properties": {
           "accounts": "optional<unknown>",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "PositiveIntegerRange": {
@@ -4754,6 +4830,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "ApiProblem",
         ],
         "properties": {},
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "ProductReference": {
         "docs": "A reference to a banking product.",
@@ -4772,7 +4851,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "A human-readable description of this banking product.",
             "type": "string",
             "validation": {
-              "format": "markdown",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -4792,6 +4871,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The type of account.",
             "type": "ProductType",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ProductType": {
@@ -4840,6 +4922,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "loan",
           "creditCard",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "ReadOnlyResourceId": {
         "docs": "The unique, opaque system-assigned identifier for a resource. This case-sensitive ID is also used in URLs as path parameters or in other properties or parameters that reference a resource by ID rather than URL. Resource IDs are immutable.",
@@ -4864,6 +4949,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The ID of the API operation for which the user must verify their identity. This is passed when starting a challenge factor or when validating the identity challenge responses.",
             "type": "ReadOnlyResourceId",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ResourceId": {
@@ -4908,6 +4996,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TimeZoneId": {
         "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
@@ -4923,17 +5014,16 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Timestamps which describe when a resource was created or last updated.",
         "properties": {
           "createdAt": {
-            "default": undefined,
             "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "updatedAt": {
-            "default": undefined,
             "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransactionCategories": {
@@ -4943,6 +5033,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "An array containing transaction category items.",
             "type": "list<TransactionCategory>",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransactionCategorization": {
@@ -4960,6 +5053,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "label": "TransactionCategoryLabel",
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionCategory": {
         "docs": "Representation of transaction category resources.",
@@ -4969,6 +5065,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "type": "TransactionCategoryType",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransactionCategoryLabel": {
@@ -5007,27 +5106,28 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "credit",
           "debit",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionCheck": {
         "docs": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
         "properties": {
           "imageBack_url": {
-            "default": undefined,
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
           "imageFront_url": {
-            "default": undefined,
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -5045,6 +5145,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionFields": {
         "docs": "Common fields of the transaction resource used to build other model schemas.",
@@ -5054,20 +5157,16 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "CreditOrDebitValue",
           },
           "balance": {
-            "default": undefined,
             "docs": "The account's running current balance as of this transaction. The \`balance\` may be omitted if the request includes filters which preclude the inclusion of a running balance.",
             "type": "optional<CreditOrDebitValue>",
-            "validation": undefined,
           },
           "category": {
-            "default": undefined,
             "docs": "The transaction category, if assigned.",
             "type": "optional<TransactionCategorization>",
-            "validation": undefined,
           },
           "check": "optional<TransactionCheck>",
           "createdOn": {
-            "default": undefined,
+            "availability": "deprecated",
             "docs": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
             "validation": {
@@ -5078,7 +5177,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "description": {
-            "default": undefined,
             "docs": "The transaction description assigned by the transaction cleansing service.",
             "type": "optional<string>",
             "validation": {
@@ -5099,7 +5197,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "memo": {
-            "default": undefined,
             "docs": "The user-settable transaction memo.",
             "type": "optional<string>",
             "validation": {
@@ -5121,13 +5218,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "posted": {
-            "default": undefined,
             "docs": "If \`true\`, the transaction has been posted (cleared) and applied to the account. If \`false\`, the transaction is still pending and might be canceled. \`posted\` is only valid for credit and debit transactions and omitted for balance transactions.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "postedOn": {
-            "default": undefined,
+            "availability": "deprecated",
             "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
             "validation": {
@@ -5146,6 +5241,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "TransactionType",
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionItem": {
         "docs": "Summary representation of a transaction resource in transactions collections.",
@@ -5154,23 +5252,24 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "TransactionFields",
         ],
         "properties": {},
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionMerchant": {
         "docs": "Describes the merchant associated with a transaction.",
         "properties": {
           "logo_url": {
-            "default": undefined,
             "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
           "name": {
-            "default": undefined,
             "docs": "The merchant\\'s name.",
             "type": "optional<string>",
             "validation": {
@@ -5181,16 +5280,18 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "website_url": {
-            "default": undefined,
             "docs": "The merchant's website URL.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransactionSubType": {
@@ -5219,6 +5320,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "check",
           "other",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionType": {
         "docs": "Distinguishes between balance, debit, or credit transactions.
@@ -5251,6 +5355,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "debit",
           "credit",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "Transactions": {
         "docs": "Collection of transactions. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link.",
@@ -5259,7 +5366,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
             "type": "optional<integer>",
             "validation": {
@@ -5271,11 +5377,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "items": {
-            "default": undefined,
             "docs": "An array containing a page of transaction items.",
             "type": "optional<list<TransactionItem>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "Transfer": {
@@ -5285,6 +5392,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "TransferItem",
         ],
         "properties": {},
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferAccountReference": {
         "docs": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
@@ -5294,7 +5404,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "ResourceId",
           },
           "label": {
-            "default": undefined,
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
             "validation": {
@@ -5305,24 +5414,22 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "location": {
-            "default": undefined,
             "docs": "Indicates where an account is held.",
             "type": "optional<AccountLocation>",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "The product type of the account.",
             "type": "optional<ProductType>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferDateRestriction": {
         "docs": "A date where a transfer restriction occurs, and the \`reason\` it is restricted. If the \`reason\` is \`holiday\`, \`closure\` and the transfer is an ACH transfer, the object also contains either a \`debitOn\` or \`creditOn\` date or both.",
         "properties": {
           "creditOn": {
-            "default": undefined,
             "docs": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
             "type": "optional<string>",
             "validation": {
@@ -5333,7 +5440,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "debitOn": {
-            "default": undefined,
             "docs": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
             "type": "optional<string>",
             "validation": {
@@ -5357,6 +5463,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "Indicates why this date is restricted.",
             "type": "TransferDateRestrictionType",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferDateRestrictionType": {
@@ -5405,6 +5514,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "closure",
           "other",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferDateRestrictions": {
         "docs": "A list of the financial institution's transfer date restrictions. This is a list of weekdays and specific dates when the institution cannot perform the requested transfers.
@@ -5414,7 +5526,6 @@ The response may include dates prior to requested the start date, as that is use
         ],
         "properties": {
           "accuracyEndsOn": {
-            "default": undefined,
             "docs": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
             "type": "optional<string>",
             "validation": {
@@ -5425,24 +5536,22 @@ The response may include dates prior to requested the start date, as that is use
             },
           },
           "restrictedDates": {
-            "default": undefined,
             "docs": "A list of restricted transfer dates as determined by the requested transfer parameters, holidays, and scheduled closures. This includes dates that correspond to normal day-of-week restrictions as listed in \`restrictedDays\`.",
             "type": "optional<list<TransferDateRestriction>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferFields": {
         "docs": "Common fields of the transfer resource used to build other model schemas.",
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "The amount of money to transfer between accounts.",
             "type": "optional<MonetaryValue>",
-            "validation": undefined,
           },
           "memo": {
-            "default": undefined,
             "docs": "A customer-defined memo to describe the transfer.",
             "type": "optional<string>",
             "validation": {
@@ -5453,17 +5562,16 @@ The response may include dates prior to requested the start date, as that is use
             },
           },
           "sourceAccount": {
-            "default": undefined,
             "docs": "The source account where the funds are withdrawn.",
             "type": "optional<TransferAccountReference>",
-            "validation": undefined,
           },
           "targetAccount": {
-            "default": undefined,
             "docs": "The target account where the funds are deposited.",
             "type": "optional<TransferAccountReference>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferFrequency": {
@@ -5547,6 +5655,9 @@ The response may include dates prior to requested the start date, as that is use
           "semiyearly",
           "yearly",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferItem": {
         "docs": "Summary representation of a transfer resource in transfers collections. To fetch the full representation of this transfer, use the [\`getTransfer\`](#op-getTransfer) operation, passing this item's \`id\` field as the \`transferId\` path parameter.",
@@ -5560,10 +5671,8 @@ The response may include dates prior to requested the start date, as that is use
             "type": "ReadOnlyResourceId",
           },
           "processedAt": {
-            "default": undefined,
             "docs": "The date/time the transfer was processed.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "schedule": {
             "docs": "When the transfer should occur and any recurrence.",
@@ -5574,7 +5683,6 @@ The response may include dates prior to requested the start date, as that is use
             "type": "TransferState",
           },
           "updatedBy": {
-            "default": undefined,
             "docs": "The full name of the banking customer who last updated the transfer.",
             "type": "optional<string>",
             "validation": {
@@ -5585,6 +5693,9 @@ The response may include dates prior to requested the start date, as that is use
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferItemSchedule": {
         "docs": "A transfer's schedule: when the transfer is scheduled, its recurrence properties, and derived credit and debit dates.",
@@ -5593,7 +5704,6 @@ The response may include dates prior to requested the start date, as that is use
         ],
         "properties": {
           "creditsOn": {
-            "default": undefined,
             "docs": "The effective the transfer is scheduled to credit the target account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
             "type": "optional<string>",
             "validation": {
@@ -5604,7 +5714,6 @@ The response may include dates prior to requested the start date, as that is use
             },
           },
           "debitsOn": {
-            "default": undefined,
             "docs": "The effective date the transfer is scheduled to debit the source account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
             "type": "optional<string>",
             "validation": {
@@ -5614,6 +5723,9 @@ The response may include dates prior to requested the start date, as that is use
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferRecurrenceType": {
@@ -5642,6 +5754,9 @@ The response may include dates prior to requested the start date, as that is use
           "fixed",
           "variable",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferSchedule": {
         "docs": "The scheduled date when the transfer should be completed, the recurrence, if any, and other derived dates based on the scheduled date.
@@ -5649,10 +5764,8 @@ The response may include dates prior to requested the start date, as that is use
 For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are mutually exclusive.",
         "properties": {
           "amountLimit": {
-            "default": undefined,
             "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<MonetaryValue>",
-            "validation": undefined,
           },
           "count": {
             "default": 1,
@@ -5667,7 +5780,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
           },
           "endsOn": {
-            "default": undefined,
             "docs": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<string>",
             "validation": {
@@ -5680,7 +5792,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "frequency": "TransferFrequency",
           "recurrenceType": "optional<TransferRecurrenceType>",
           "scheduledOn": {
-            "default": undefined,
             "docs": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
             "type": "optional<string>",
             "validation": {
@@ -5690,6 +5801,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferScheduleDirection": {
@@ -5723,6 +5837,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "credit",
           "both",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferScheduleItem": {
         "docs": "Summary representation of a transfer schedule resource in transfer schedule list.",
@@ -5748,6 +5865,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferSchedules": {
         "docs": "List of transfer methods. The items in the list are ordered in the \`items\` array.",
@@ -5759,6 +5879,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "docs": "An array containing upcoming transfer schedule items.",
             "type": "list<TransferScheduleItem>",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferState": {
@@ -5812,8 +5935,12 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "failed",
           "other",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferTypeForDateRestrictions": {
+        "default": "internal",
         "docs": "Indicates the type of transfer. This determines what business rules and adjustments to make to the date restrictions.
 
 <strong><code>transferTypeForDateRestrictions</code></strong> strings may have one of the following
@@ -5857,6 +5984,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "domesticWireTransfer",
           "internationalWireTransfer",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "Transfers": {
         "docs": "Collection of transfers. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link..",
@@ -5865,7 +5995,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         ],
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The number of transfers that meet the filters in the \`listTransfers\` operation. This is optional and only included if the service can calculate it efficiently.",
             "type": "optional<integer>",
             "validation": {
@@ -5881,6 +6010,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "type": "list<TransferItem>",
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "WireTransferInstitution": {
         "docs": "A representation of a financial institution used for wire transfers.",
@@ -5889,16 +6021,18 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         ],
         "properties": {
           "localClearingCode": {
-            "default": undefined,
             "docs": "The clearing code used to identify the financial institution for select countries.",
             "type": "optional<string>",
             "validation": {
-              "format": "[a-zA-Z0-9]{3,12}",
+              "format": undefined,
               "maxLength": 12,
               "minLength": 3,
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
     },
@@ -5923,15 +6057,12 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
     "error-discrimination": {
       "strategy": "status-code",
     },
-    "imports": {
-      "root": "__package__.yml",
-    },
     "name": "api",
   },
 }
 `;
 
-exports[`open api parser apiture simple 1`] = `
+exports[`open api parser > apiture > simple 1`] = `
 {
   "definitionFiles": {
     "accountJointOwners.yml": {
@@ -5985,6 +6116,9 @@ exports[`open api parser apiture simple 1`] = `
               "type": "root.AccountJointOwners",
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
     },
@@ -6245,6 +6379,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "types": {
         "AccountsListAccountsRequestLocation": {
@@ -6252,6 +6389,9 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
             "internal",
             "external",
           ],
+          "source": {
+            "openapi": "apiture/openapi.yml",
+          },
         },
       },
     },
@@ -6677,6 +6817,9 @@ This information provides hints to clients, allowing bank customers to select tr
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
     },
     "jointOwners.yml": {
@@ -6752,6 +6895,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
     },
     "overdraftProtection.yml": {
@@ -6824,18 +6970,18 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                 },
                 "response": {
                   "body": {
-                    "items": {
-                      "0": {
+                    "items": [
+                      {
                         "id": "da1331a9e9168ea91346",
                         "label": "Checking *3456",
                         "maskedNumber": "*3456",
                       },
-                      "1": {
+                      {
                         "id": "5c9b4e50a0401ef4eb2e",
                         "label": "Premiere Savings *1234",
                         "maskedNumber": "*1234",
                       },
-                    },
+                    ],
                     "limit": 100,
                     "maximumOverdraftAccounts": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/f204d292df9fb/eligibleOverdraftAccounts?start=641f62296ecbf1882c84?limit=100",
@@ -6927,6 +7073,9 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
     },
     "transactionCategories.yml": {
@@ -6984,6 +7133,9 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
               "type": "root.TransactionCategories",
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
     },
@@ -7104,6 +7256,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<root.CheckNumberRange>",
                 },
                 "createdOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`createdOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`createdOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`createdOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -7120,6 +7273,7 @@ The default response lists only recent transactions. Normally, this is transacti
                   "type": "optional<boolean>",
                 },
                 "postedOn": {
+                  "availability": "deprecated",
                   "docs": "Return only transactions whose \`postedOn\` date is in this date range. Example date ranges are the same format as the \`occurredOn\` query parameter.<br>**Warning**: The parameter \`postedOn\` was deprecated on version \`v0.6.0\` of the API. Use the \`?occurredOn=\` query parameter instead. \`postedOn\` will be removed on version \`v0.9.0\` of the API.",
                   "type": "optional<root.DateRange>",
                 },
@@ -7148,6 +7302,9 @@ The default response lists only recent transactions. Normally, this is transacti
               "type": "root.Transactions",
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
     },
@@ -7238,10 +7395,8 @@ Note: This operation requires an identity challenge if the financial institution
                 ],
                 "properties": {
                   "schedule": {
-                    "default": undefined,
                     "docs": "When the transfer should occur and any recurrence.",
                     "type": "optional<root.TransferSchedule>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -7552,10 +7707,8 @@ Note: This operation requires an identity challenge if the financial institution
                 ],
                 "properties": {
                   "schedule": {
-                    "default": undefined,
                     "docs": "When the transfer should occur and any recurrence.",
                     "type": "optional<root.TransferSchedule>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -7574,6 +7727,9 @@ Note: This operation requires an identity challenge if the financial institution
               "type": "root.Transfer",
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
     },
@@ -7742,6 +7898,9 @@ This error response may have one of the following \`type\` values:
       "AbstractBody": {
         "docs": "An abstract schema used to define other request and response body model schemas.",
         "properties": {},
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AbstractPagedBody": {
         "docs": "An abstract schema used to define paginated collections of resources. Collection classes which extend this schema define an array of \`items\` which represent a page of data.",
@@ -7751,7 +7910,6 @@ This error response may have one of the following \`type\` values:
         ],
         "properties": {
           "start": {
-            "default": undefined,
             "docs": "The opaque cursor that specifies the starting location of this page of items.",
             "type": "optional<string>",
             "validation": {
@@ -7761,6 +7919,9 @@ This error response may have one of the following \`type\` values:
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AbstractPagedBodyFields": {
@@ -7779,16 +7940,18 @@ This error response may have one of the following \`type\` values:
             },
           },
           "nextPage_url": {
-            "default": undefined,
             "docs": "The URL of the next page of resources. If this URL is omitted, there are no more resources in the collection.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 8000,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "Account": {
@@ -7806,6 +7969,9 @@ This error response may have one of the following \`type\` values:
             "docs": "If \`true\`, the customer has opted in to receive account statements electronically.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AccountAllowsFilter": {
@@ -7859,27 +8025,24 @@ This error response may have one of the following \`type\` values:
           "viewCards",
           "manageCards",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AccountBalance": {
         "docs": "The current balances of the given account.",
         "properties": {
           "available": {
-            "default": undefined,
             "docs": "The available balance: the funds available for use. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
-            "validation": undefined,
           },
           "current": {
-            "default": undefined,
             "docs": "The current balance. This is the balance at the end of the previous business day. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
-            "validation": undefined,
           },
           "currentWithPending": {
-            "default": undefined,
             "docs": "The current balance, with posted transactions. This is the string representation of the exact decimal amount.",
             "type": "optional<CreditOrDebitValue>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The account ID.",
@@ -7890,11 +8053,12 @@ This error response may have one of the following \`type\` values:
             "type": "boolean",
           },
           "updatedAt": {
-            "default": undefined,
             "docs": "The time when the balance values were last updated from the banking core.",
             "type": "optional<ReadOnlyTimestamp>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AccountBalances": {
@@ -7907,6 +8071,9 @@ This error response may have one of the following \`type\` values:
             "docs": "An array of items, one for each of the \`?accounts=\` in the request, returned in the same order.",
             "type": "list<AccountBalance>",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AccountFields": {
@@ -7934,6 +8101,9 @@ This error response may have one of the following \`type\` values:
           "nickname": "optional<AccountNickname>",
           "product": "ProductReference",
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AccountIds": {
         "docs": "An array of account IDs.",
@@ -7944,13 +8114,10 @@ This error response may have one of the following \`type\` values:
         "properties": {
           "allows": "AccountPermissions",
           "id": {
-            "default": undefined,
             "docs": "The unique identifier for this account resource. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
             "validation": {
@@ -7961,14 +8128,15 @@ This error response may have one of the following \`type\` values:
             },
           },
           "location": {
-            "default": undefined,
             "docs": "Indicates where an account is held.",
             "type": "optional<AccountLocation>",
-            "validation": undefined,
           },
           "maskedNumber": "optional<MaskedAccountNumber>",
           "nickname": "optional<AccountNickname>",
           "product": "optional<ProductReference>",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AccountJointOwner": {
@@ -7989,6 +8157,9 @@ This error response may have one of the following \`type\` values:
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AccountJointOwners": {
         "docs": undefined,
@@ -7997,6 +8168,9 @@ This error response may have one of the following \`type\` values:
             "docs": "An array containing account joint owner items.",
             "type": "list<AccountJointOwner>",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AccountLocation": {
@@ -8010,6 +8184,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "external",
           "outside",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AccountNickname": {
         "docs": "The nickname (friendly name) the customer has given this account. Each customer can define their own nickname for the same account. If omitted, the customer has not set a nickname.",
@@ -8053,6 +8230,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AccountRoutingNumber": {
         "docs": "An account ABA routing and transit number.",
@@ -8071,7 +8251,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         ],
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The total number of accounts for which the user has access. This value ignores any filters. This value is _optional_ and may be omitted if the count is not computable efficiently.",
             "type": "optional<integer>",
             "validation": {
@@ -8099,24 +8278,20 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "nextPage_url": {
-            "default": undefined,
             "docs": "The URL of the next page of accounts. If this URL is omitted, there are no more accounts.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 256,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
           "primaryAccountId": {
-            "default": undefined,
             "docs": "The \`id\` of the customer's primary account. This property only exists for retail customers, and only if the customer has designated a primary account.",
             "type": "optional<ReadOnlyResourceId>",
-            "validation": undefined,
           },
           "start": {
-            "default": undefined,
             "docs": "The opaque cursor that specifies the starting location of this page of items.",
             "type": "optional<string>",
             "validation": {
@@ -8126,6 +8301,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AchAccountRisk": {
@@ -8164,6 +8342,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "float",
           "sameDay",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AchSecCode": {
         "docs": "The ACH transfer type.
@@ -8221,6 +8402,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "tel",
           "web",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "Address": {
         "docs": "A postal address that can hold a US address or an international (non-US) postal addresses.",
@@ -8239,7 +8423,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "regionCode": {
-            "default": undefined,
             "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is \`US\` \`regionCode\` and \`regionName\` are mutually exclusive.",
             "type": "optional<string>",
             "validation": {
@@ -8250,7 +8433,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "regionName": {
-            "default": undefined,
             "docs": "The state, district, or outlying area of the postal address. This is required if \`countryCode\` is not \`US\`. \`regionCode\` and \`regionName\` are mutually exclusive.",
             "type": "optional<string>",
             "validation": {
@@ -8260,6 +8442,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "AddressFields": {
@@ -8276,7 +8461,6 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "address2": {
-            "default": undefined,
             "docs": "The second line of the street address. This should only be used if it has a value. Typical values include building numbers, suite numbers, and other identifying information beyond the first line of the postal address.",
             "type": "optional<string>",
             "validation": {
@@ -8307,6 +8491,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "AmountRange": {
         "docs": "A monetary amount range, supporting inclusive or exclusive endpoints. The value may have the following forms: <ul> <li>\`1200.50\` match the dollar amount 1,200.50 exactly</li> <li>\`[1000.00,1200.00)\` matches items where \`1000.00 <= amount < 1200.00\`</li> <li>\`[1000.00,1199.99]\` matches items where \`1000.00 <= amount <= 1199.99\`</li> <li>\`[999.99,1200.00]\` matches items where \`999.99 < amount < 1200.00\`</li> <li>\`[1200.50,]\` matches items where \`amount >= 1200.50\`</li> <li>\`(1200.50,)\` matches items where \`amount >= 1200.50\`</li> <li>\`[,1200.50]\` matches items where \`amount <= 1200.50\`</li> <li>\`(,1200.50)\` matches items where \`amount < 1200.50\`</li> </ul>",
@@ -8322,50 +8509,32 @@ Account transfers are only allowed between \`internal\` and \`external\` account
         "docs": "API problem or error, as per [RFC 7807 application/problem+json](https://tools.ietf.org/html/rfc7807).",
         "properties": {
           "attributes": {
-            "default": undefined,
             "docs": "Additional optional attributes related to the problem. This data conforms to the schema associated with the error type.",
             "type": "optional<map<string, unknown>>",
-            "validation": undefined,
           },
           "detail": {
-            "default": undefined,
             "docs": "A human-readable explanation specific to this occurrence of the problem.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "The unique identifier for this problem. This is an immutable opaque string.",
             "type": "optional<ReadOnlyResourceId>",
-            "validation": undefined,
           },
           "instance": {
-            "default": undefined,
             "docs": "A URI reference that identifies the specific occurrence of the problem. This is the URI of an API resource that the problem is related to, with a unique error correlation ID URI fragment
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": "uri-reference",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
           },
           "occurredAt": {
-            "default": undefined,
             "docs": "The timestamp when the problem occurred, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC.",
             "type": "optional<ReadOnlyTimestamp>",
-            "validation": undefined,
           },
           "problems": {
-            "default": undefined,
             "docs": "Optional root-causes if there are multiple problems in the request or API call processing.",
             "type": "optional<list<ApiProblem>>",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The [HTTP status code](https://datatracker.ietf.org/doc/html/rfc7231#section-6) for this occurrence of the problem.
 ",
             "type": "optional<integer>",
@@ -8378,37 +8547,32 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "title": {
-            "default": undefined,
             "docs": "A short, human-readable summary of the problem type. The title is usually the same for all problem with the same \`type\`.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "A [URI reference (RFC3986)](https://tools.ietf.org/html/rfc3986) that identifies the problem type. If present, this is the URL of human-readable HTML documentation for the problem type. When this member is not present, its value is assumed to be \`"about:blank"\`.
 ",
             "type": "optional<string>",
-            "validation": {
-              "format": "uri-reference",
-              "maxLength": undefined,
-              "minLength": undefined,
-              "pattern": undefined,
-            },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ChallengeFactor": {
         "docs": "An challenge factor. See [\`requiredIdentityChallenge\`](#schema-requiredIdentityChallenge) for multiple examples.",
         "properties": {
           "labels": {
-            "default": undefined,
             "docs": "A list of text label which identifies the channel(s) though which the user completes the challenge. For an \`sms\` or \`voice\` challenge, the only label item is the last four digits of the corresponding phone number. For an \`email\` challenge, each label is the masked email address.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "securityQuestions": "optional<ChallengeSecurityQuestions>",
           "type": "ChallengeFactorType",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ChallengeFactorType": {
@@ -8452,6 +8616,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "securityQuestions",
           "authenticatorToken",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "ChallengePromptId": {
         "docs": "The unique ID of a prompt (such as a security question) in a challenge factor.",
@@ -8481,6 +8648,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "ChallengeSecurityQuestions": {
         "docs": "Describes a \`securityQuestions\` challenge. This is omitted if the challenge \`type\` is not \`securityQuestions\`.",
@@ -8489,6 +8659,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             "docs": "The array of security questions.",
             "type": "list<ChallengeSecurityQuestion>",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ChallengeToken": {
@@ -8529,6 +8702,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
             },
           },
           "type": "CutoffTimeType",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "CutoffTimeType": {
@@ -8577,6 +8753,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
           "externalTransfer",
           "billPay",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "CutoffTimes": {
         "docs": "A representation of financial institution cutoff times for different money movement processes. A money movement process can have multiple cutoff times. The cutoff times are sorted in ascending chronological order by money movement process.",
@@ -8593,6 +8772,9 @@ Account transfers are only allowed between \`internal\` and \`external\` account
 The client can use this value to localize the \`items[].time\` values to the local time zone of the customer, as well as for formatting to localized names, such as \`EST\` and \`EDT\`.",
             "type": "TimeZoneId",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "DateRange": {
@@ -8640,18 +8822,16 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "nextPage_url": {
-            "default": undefined,
             "docs": "The URL of the next page of eligible accounts. If this URL is omitted, there are no more accounts.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 256,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
           "start": {
-            "default": undefined,
             "docs": "The opaque cursor that specifies the starting location of this page of items.",
             "type": "optional<string>",
             "validation": {
@@ -8661,6 +8841,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ExternalAccountVerificationMethod": {
@@ -8694,6 +8877,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "microDeposits",
           "manual",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "FullAccountNumber": {
         "docs": "A full account number. This is the number that the customer uses to reference the account within the financial institution.",
@@ -8719,6 +8905,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "If \`true\`, the customer can list and manage overdraft account settings.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "IncompleteAccountBalances": {
@@ -8747,6 +8936,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "IncompleteTransactions": {
         "docs": "Response when requesting transactions that are not yet available.",
@@ -8765,6 +8957,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "InstitutionId": {
@@ -8808,6 +9003,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "swiftBicCode",
           "ibanAccountNumber",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "InstitutionLookupResult": {
         "docs": "Successful institution lookup result.",
@@ -8820,17 +9018,16 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "boolean",
           },
           "institution": {
-            "default": undefined,
             "docs": "The name and other information about the financial institution, if found.",
             "type": "optional<SimpleInstitution>",
-            "validation": undefined,
           },
           "intermediaryInstitutions": {
-            "default": undefined,
             "docs": "Optional intermediary institutions, if requested and if intermediary institutions are required for for international wire transfers to the beneficiary institution. This array is omitted if there none are required.",
             "type": "optional<list<SimpleInstitution>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "JointOwnerInvitation": {
@@ -8845,15 +9042,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "ReadOnlyResourceId",
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "JointOwnerInvitationFields": {
         "docs": "Fields used to compose other joint owner invitation schemas.",
         "properties": {
           "disallowDebitCardAccess": {
-            "default": undefined,
+            "default": false,
             "docs": "If \`true\`, the invitee is not allowed to order or manage debit cards for the account.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "emailAddress": {
             "docs": "The invitee's email address.",
@@ -8896,7 +9095,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "taxId": {
-            "default": undefined,
             "docs": "The last 4 digits of the invitee's tax ID number (Social Security Number). This is not sent in the invitation email, but if the invitee enrolls in digital banking, this identification must match the last four digits of the tax ID they use to enroll.",
             "type": "optional<string>",
             "validation": {
@@ -8906,6 +9104,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
               "pattern": "^[0-9]{4}$",
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "MaskedAccountNumber": {
@@ -8932,13 +9133,10 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Fields of an overdraft protection account, used to compose other schemas.",
         "properties": {
           "id": {
-            "default": undefined,
             "docs": "The unique ID of the account resource. Use this as the \`{accountId}\` in [\`getAccount\`](#op-getAccount) or [\`listAccountBalances\`](#op-listAccountBalances).",
             "type": "optional<ResourceId>",
-            "validation": undefined,
           },
           "label": {
-            "default": undefined,
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
             "validation": {
@@ -8949,6 +9147,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "maskedNumber": "optional<MaskedAccountNumber>",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "OverdraftAccountItem": {
@@ -8974,11 +9175,17 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "OverdraftProtectionFields": {
         "docs": "Fields used to compose other overdraft protection schemas.",
         "properties": {
           "accounts": "optional<unknown>",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "PositiveIntegerRange": {
@@ -8998,6 +9205,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "ApiProblem",
         ],
         "properties": {},
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "ProductReference": {
         "docs": "A reference to a banking product.",
@@ -9016,7 +9226,7 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "A human-readable description of this banking product.",
             "type": "string",
             "validation": {
-              "format": "markdown",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -9036,6 +9246,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The type of account.",
             "type": "ProductType",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ProductType": {
@@ -9084,6 +9297,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "loan",
           "creditCard",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "ReadOnlyResourceId": {
         "docs": "The unique, opaque system-assigned identifier for a resource. This case-sensitive ID is also used in URLs as path parameters or in other properties or parameters that reference a resource by ID rather than URL. Resource IDs are immutable.",
@@ -9108,6 +9324,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "The ID of the API operation for which the user must verify their identity. This is passed when starting a challenge factor or when validating the identity challenge responses.",
             "type": "ReadOnlyResourceId",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "ResourceId": {
@@ -9152,6 +9371,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TimeZoneId": {
         "docs": "The identifier of a time zone, as described by [RFC 7808](https://datatracker.ietf.org/doc/html/rfc7808.html#section-3.6). This value corresponds with the \`tzid\` value described in [RFC 5545](https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19) and defined by the [IANA Time Zone Database](https://www.iana.org/time-zones).",
@@ -9167,17 +9389,16 @@ The client can use this value to localize the \`items[].time\` values to the loc
         "docs": "Timestamps which describe when a resource was created or last updated.",
         "properties": {
           "createdAt": {
-            "default": undefined,
             "docs": "The date-time when this resource was created, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "updatedAt": {
-            "default": undefined,
             "docs": "The date-time when the resource was last updated, in [RFC 3339](https://tools.ietf.org/html/rfc3339) date-time \`YYYY-MM-DDThh:mm:ss.sssZ\` format, UTC. This is derived and immutable.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransactionCategories": {
@@ -9187,6 +9408,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "An array containing transaction category items.",
             "type": "list<TransactionCategory>",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransactionCategorization": {
@@ -9204,6 +9428,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           },
           "label": "TransactionCategoryLabel",
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionCategory": {
         "docs": "Representation of transaction category resources.",
@@ -9213,6 +9440,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "type": "TransactionCategoryType",
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransactionCategoryLabel": {
@@ -9251,27 +9481,28 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "credit",
           "debit",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionCheck": {
         "docs": "Describes a check associated with a transaction for a checking account. This object is only present if the transaction \`type\` is \`debit\` and the \`subtype\` is \`check\`.",
         "properties": {
           "imageBack_url": {
-            "default": undefined,
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
           "imageFront_url": {
-            "default": undefined,
             "docs": "The URL for downloading the image of the front of the check.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
@@ -9289,6 +9520,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionFields": {
         "docs": "Common fields of the transaction resource used to build other model schemas.",
@@ -9298,20 +9532,16 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "CreditOrDebitValue",
           },
           "balance": {
-            "default": undefined,
             "docs": "The account's running current balance as of this transaction. The \`balance\` may be omitted if the request includes filters which preclude the inclusion of a running balance.",
             "type": "optional<CreditOrDebitValue>",
-            "validation": undefined,
           },
           "category": {
-            "default": undefined,
             "docs": "The transaction category, if assigned.",
             "type": "optional<TransactionCategorization>",
-            "validation": undefined,
           },
           "check": "optional<TransactionCheck>",
           "createdOn": {
-            "default": undefined,
+            "availability": "deprecated",
             "docs": "The date when the transaction occurred in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived and immutable.<br>**Warning**: The property \`createdOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`createdOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
             "validation": {
@@ -9322,7 +9552,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "description": {
-            "default": undefined,
             "docs": "The transaction description assigned by the transaction cleansing service.",
             "type": "optional<string>",
             "validation": {
@@ -9343,7 +9572,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "memo": {
-            "default": undefined,
             "docs": "The user-settable transaction memo.",
             "type": "optional<string>",
             "validation": {
@@ -9365,13 +9593,11 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "posted": {
-            "default": undefined,
             "docs": "If \`true\`, the transaction has been posted (cleared) and applied to the account. If \`false\`, the transaction is still pending and might be canceled. \`posted\` is only valid for credit and debit transactions and omitted for balance transactions.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "postedOn": {
-            "default": undefined,
+            "availability": "deprecated",
             "docs": "The date when this transaction was posted (cleared and applied to the account balance) in [RFC 3339](https://tools.ietf.org/html/rfc3339) date \`YYYY-MM-DD\` format, UTC. This is derived and immutable and only present if \`posted\` is \`true\`.<br>**Warning**: The property \`postedOn\` was deprecated on version \`v2.1.0\` of the schema. Use the \`occurredOn\` property instead. \`postedOn\` will be removed on version \`v3.0.0\` of the schema.",
             "type": "optional<string>",
             "validation": {
@@ -9390,6 +9616,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "TransactionType",
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionItem": {
         "docs": "Summary representation of a transaction resource in transactions collections.",
@@ -9398,23 +9627,24 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "TransactionFields",
         ],
         "properties": {},
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionMerchant": {
         "docs": "Describes the merchant associated with a transaction.",
         "properties": {
           "logo_url": {
-            "default": undefined,
             "docs": "The optional URL of the merchant's logo. This image must be an image resource (SVG, PNG, GIF, JPEG image) that does not require any authentication. The URL may contain query parameters.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
           "name": {
-            "default": undefined,
             "docs": "The merchant\\'s name.",
             "type": "optional<string>",
             "validation": {
@@ -9425,16 +9655,18 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "website_url": {
-            "default": undefined,
             "docs": "The merchant's website URL.",
             "type": "optional<string>",
             "validation": {
-              "format": "uri-reference",
+              "format": undefined,
               "maxLength": 400,
               "minLength": undefined,
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransactionSubType": {
@@ -9463,6 +9695,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "check",
           "other",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransactionType": {
         "docs": "Distinguishes between balance, debit, or credit transactions.
@@ -9495,6 +9730,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "debit",
           "credit",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "Transactions": {
         "docs": "Collection of transactions. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link.",
@@ -9503,7 +9741,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
         ],
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The total number of transactions which satisfy the request filters. This is optional and only included if the service can calculate it.",
             "type": "optional<integer>",
             "validation": {
@@ -9515,11 +9752,12 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "items": {
-            "default": undefined,
             "docs": "An array containing a page of transaction items.",
             "type": "optional<list<TransactionItem>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "Transfer": {
@@ -9529,6 +9767,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "TransferItem",
         ],
         "properties": {},
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferAccountReference": {
         "docs": "A reference to a banking account used within an account to account transfer. This object may be set from an account's \`account.reference\` object.",
@@ -9538,7 +9779,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "type": "ResourceId",
           },
           "label": {
-            "default": undefined,
             "docs": "The human-readable label for this account. This is either the \`nickname\` (if assigned for the current customer), or the \`product.label\` concatenated with the \`maskedNumber\`.",
             "type": "optional<string>",
             "validation": {
@@ -9549,24 +9789,22 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "location": {
-            "default": undefined,
             "docs": "Indicates where an account is held.",
             "type": "optional<AccountLocation>",
-            "validation": undefined,
           },
           "type": {
-            "default": undefined,
             "docs": "The product type of the account.",
             "type": "optional<ProductType>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferDateRestriction": {
         "docs": "A date where a transfer restriction occurs, and the \`reason\` it is restricted. If the \`reason\` is \`holiday\`, \`closure\` and the transfer is an ACH transfer, the object also contains either a \`debitOn\` or \`creditOn\` date or both.",
         "properties": {
           "creditOn": {
-            "default": undefined,
             "docs": "The date the local financial institution account is credited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level. The credit-on date normally falls one business day after the restricted \`date\`. This property is only returned if the payment \`type\` is \`achDebit\` or \`ach\`.",
             "type": "optional<string>",
             "validation": {
@@ -9577,7 +9815,6 @@ The client can use this value to localize the \`items[].time\` values to the loc
             },
           },
           "debitOn": {
-            "default": undefined,
             "docs": "The date the local financial institution account is debited in [RFC 3339 \`YYYY-MM-DD\`](https://tools.ietf.org/html/rfc3339) date format. This is derived from the \`date\` based on the \`risk\` level and the transfer direction (\`achDebit\` or \`achCredit\`). The debit-on date normally falls one to three business days before the restricted \`date\`. This property is only returned if the payment \`type\` is \`achCredit\` or \`ach\`.",
             "type": "optional<string>",
             "validation": {
@@ -9601,6 +9838,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
             "docs": "Indicates why this date is restricted.",
             "type": "TransferDateRestrictionType",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferDateRestrictionType": {
@@ -9649,6 +9889,9 @@ The client can use this value to localize the \`items[].time\` values to the loc
           "closure",
           "other",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferDateRestrictions": {
         "docs": "A list of the financial institution's transfer date restrictions. This is a list of weekdays and specific dates when the institution cannot perform the requested transfers.
@@ -9658,7 +9901,6 @@ The response may include dates prior to requested the start date, as that is use
         ],
         "properties": {
           "accuracyEndsOn": {
-            "default": undefined,
             "docs": "The service only knows [bank holidays](https://www.federalreserve.gov/aboutthefed/k8.htm) for about two to four years in advance. This date is the end of that known holiday schedule, although the requested dates may extend well beyond this date. Any dates in the response beyond this date may omit holidays but may include other restricted dates based on the financial institution's normal scheduled closures such as Saturdays and Sundays.",
             "type": "optional<string>",
             "validation": {
@@ -9669,24 +9911,22 @@ The response may include dates prior to requested the start date, as that is use
             },
           },
           "restrictedDates": {
-            "default": undefined,
             "docs": "A list of restricted transfer dates as determined by the requested transfer parameters, holidays, and scheduled closures. This includes dates that correspond to normal day-of-week restrictions as listed in \`restrictedDays\`.",
             "type": "optional<list<TransferDateRestriction>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferFields": {
         "docs": "Common fields of the transfer resource used to build other model schemas.",
         "properties": {
           "amount": {
-            "default": undefined,
             "docs": "The amount of money to transfer between accounts.",
             "type": "optional<MonetaryValue>",
-            "validation": undefined,
           },
           "memo": {
-            "default": undefined,
             "docs": "A customer-defined memo to describe the transfer.",
             "type": "optional<string>",
             "validation": {
@@ -9697,17 +9937,16 @@ The response may include dates prior to requested the start date, as that is use
             },
           },
           "sourceAccount": {
-            "default": undefined,
             "docs": "The source account where the funds are withdrawn.",
             "type": "optional<TransferAccountReference>",
-            "validation": undefined,
           },
           "targetAccount": {
-            "default": undefined,
             "docs": "The target account where the funds are deposited.",
             "type": "optional<TransferAccountReference>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferFrequency": {
@@ -9791,6 +10030,9 @@ The response may include dates prior to requested the start date, as that is use
           "semiyearly",
           "yearly",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferItem": {
         "docs": "Summary representation of a transfer resource in transfers collections. To fetch the full representation of this transfer, use the [\`getTransfer\`](#op-getTransfer) operation, passing this item's \`id\` field as the \`transferId\` path parameter.",
@@ -9804,10 +10046,8 @@ The response may include dates prior to requested the start date, as that is use
             "type": "ReadOnlyResourceId",
           },
           "processedAt": {
-            "default": undefined,
             "docs": "The date/time the transfer was processed.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "schedule": {
             "docs": "When the transfer should occur and any recurrence.",
@@ -9818,7 +10058,6 @@ The response may include dates prior to requested the start date, as that is use
             "type": "TransferState",
           },
           "updatedBy": {
-            "default": undefined,
             "docs": "The full name of the banking customer who last updated the transfer.",
             "type": "optional<string>",
             "validation": {
@@ -9829,6 +10068,9 @@ The response may include dates prior to requested the start date, as that is use
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferItemSchedule": {
         "docs": "A transfer's schedule: when the transfer is scheduled, its recurrence properties, and derived credit and debit dates.",
@@ -9837,7 +10079,6 @@ The response may include dates prior to requested the start date, as that is use
         ],
         "properties": {
           "creditsOn": {
-            "default": undefined,
             "docs": "The effective the transfer is scheduled to credit the target account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
             "type": "optional<string>",
             "validation": {
@@ -9848,7 +10089,6 @@ The response may include dates prior to requested the start date, as that is use
             },
           },
           "debitsOn": {
-            "default": undefined,
             "docs": "The effective date the transfer is scheduled to debit the source account, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format. This is derived from the \`scheduledOn\` date, based on the financial institution's transfer rules.",
             "type": "optional<string>",
             "validation": {
@@ -9858,6 +10098,9 @@ The response may include dates prior to requested the start date, as that is use
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferRecurrenceType": {
@@ -9886,6 +10129,9 @@ The response may include dates prior to requested the start date, as that is use
           "fixed",
           "variable",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferSchedule": {
         "docs": "The scheduled date when the transfer should be completed, the recurrence, if any, and other derived dates based on the scheduled date.
@@ -9893,10 +10139,8 @@ The response may include dates prior to requested the start date, as that is use
 For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are mutually exclusive.",
         "properties": {
           "amountLimit": {
-            "default": undefined,
             "docs": "For recurring schedules (\`frequency\` is not \`once\`), this is the total dollar amount limit including the first transfer. No transfers are scheduled if they would exceed this amount. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<MonetaryValue>",
-            "validation": undefined,
           },
           "count": {
             "default": 1,
@@ -9911,7 +10155,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
           },
           "endsOn": {
-            "default": undefined,
             "docs": "The optional date when the recurring transfer schedule ends, in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) date format. Subsequent recurring transfers may be scheduled up to and including this date, but not after. This property is ignored if \`frequency\` is \`once\`.",
             "type": "optional<string>",
             "validation": {
@@ -9924,7 +10167,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "frequency": "TransferFrequency",
           "recurrenceType": "optional<TransferRecurrenceType>",
           "scheduledOn": {
-            "default": undefined,
             "docs": "The date the the customer scheduled the transfer to occur in \`YYYY-MM-DD\` [RFC 3339](https://tools.ietf.org/html/rfc3339) \`date\` format.",
             "type": "optional<string>",
             "validation": {
@@ -9934,6 +10176,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferScheduleDirection": {
@@ -9967,6 +10212,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "credit",
           "both",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferScheduleItem": {
         "docs": "Summary representation of a transfer schedule resource in transfer schedule list.",
@@ -9992,6 +10240,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             },
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferSchedules": {
         "docs": "List of transfer methods. The items in the list are ordered in the \`items\` array.",
@@ -10003,6 +10254,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "docs": "An array containing upcoming transfer schedule items.",
             "type": "list<TransferScheduleItem>",
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
       "TransferState": {
@@ -10056,8 +10310,12 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "failed",
           "other",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "TransferTypeForDateRestrictions": {
+        "default": "internal",
         "docs": "Indicates the type of transfer. This determines what business rules and adjustments to make to the date restrictions.
 
 <strong><code>transferTypeForDateRestrictions</code></strong> strings may have one of the following
@@ -10101,6 +10359,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
           "domesticWireTransfer",
           "internationalWireTransfer",
         ],
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "Transfers": {
         "docs": "Collection of transfers. The items in the collection are ordered in the \`items\` array. The response object may contain the \`nextPage_url\` pagination link..",
@@ -10109,7 +10370,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         ],
         "properties": {
           "count": {
-            "default": undefined,
             "docs": "The number of transfers that meet the filters in the \`listTransfers\` operation. This is optional and only included if the service can calculate it efficiently.",
             "type": "optional<integer>",
             "validation": {
@@ -10125,6 +10385,9 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
             "type": "list<TransferItem>",
           },
         },
+        "source": {
+          "openapi": "apiture/openapi.yml",
+        },
       },
       "WireTransferInstitution": {
         "docs": "A representation of a financial institution used for wire transfers.",
@@ -10133,16 +10396,18 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         ],
         "properties": {
           "localClearingCode": {
-            "default": undefined,
             "docs": "The clearing code used to identify the financial institution for select countries.",
             "type": "optional<string>",
             "validation": {
-              "format": "[a-zA-Z0-9]{3,12}",
+              "format": undefined,
               "maxLength": 12,
               "minLength": 3,
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "apiture/openapi.yml",
         },
       },
     },

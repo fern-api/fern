@@ -11,12 +11,8 @@ export const TestCaseFunction: core.serialization.Schema<
     SeedTrace.v2.v3.TestCaseFunction
 > = core.serialization
     .union("type", {
-        withActualResult: core.serialization.lazyObject(
-            async () => (await import("../../../../../../..")).v2.v3.TestCaseWithActualResultImplementation
-        ),
-        custom: core.serialization.lazyObject(
-            async () => (await import("../../../../../../..")).v2.v3.VoidFunctionDefinition
-        ),
+        withActualResult: core.serialization.lazyObject(() => serializers.v2.v3.TestCaseWithActualResultImplementation),
+        custom: core.serialization.lazyObject(() => serializers.v2.v3.VoidFunctionDefinition),
     })
     .transform<SeedTrace.v2.v3.TestCaseFunction>({
         transform: (value) => value,

@@ -1,34 +1,63 @@
-import { LiteralSchemaValue, OneOfSchemaWithExample, SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import {
+    Availability,
+    Encoding,
+    LiteralSchemaValue,
+    OneOfSchemaWithExample,
+    SchemaWithExample,
+    SdkGroupName,
+    Source
+} from "@fern-api/openapi-ir-sdk";
 import { difference } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { convertEnum } from "./convertEnum";
-import { convertSchema } from "./convertSchemas";
+import { convertReferenceObject, convertSchema } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
 import { getGeneratedTypeName } from "./utils/getSchemaName";
 import { isReferenceObject } from "./utils/isReferenceObject";
 import { isSchemaEqual } from "./utils/isSchemaEqual";
 import { convertNumberToSnakeCase } from "./utils/replaceStartingNumber";
 
+export interface UndiscriminatedOneOfPrefixNotFound {
+    type: "notFound";
+}
+
+export interface UndiscriminatedOneOfPrefixName {
+    type: "name";
+    name: string;
+}
+
+export type UndiscriminatedOneOfPrefix = UndiscriminatedOneOfPrefixName | UndiscriminatedOneOfPrefixNotFound;
+
 export function convertUndiscriminatedOneOf({
     nameOverride,
     generatedName,
     breadcrumbs,
     description,
+    availability,
     wrapAsNullable,
     context,
     subtypes,
-    groupName
+    groupName,
+    encoding,
+    source,
+    subtypePrefixOverrides,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
     breadcrumbs: string[];
     description: string | undefined;
+    availability: Availability | undefined;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[];
     groupName: SdkGroupName | undefined;
+    encoding: Encoding | undefined;
+    source: Source;
+    namespace: string | undefined;
+    subtypePrefixOverrides?: UndiscriminatedOneOfPrefix[];
 }): SchemaWithExample {
-    const subtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
+    const derivedSubtypePrefixes = getUniqueSubTypeNames({ schemas: subtypes });
 
     const convertedSubtypes = subtypes.flatMap((schema, index) => {
         if (!isReferenceObject(schema) && schema.enum != null) {
@@ -38,11 +67,21 @@ export function convertUndiscriminatedOneOf({
                     generatedName: getGeneratedTypeName([generatedName, enumValue]),
                     value: LiteralSchemaValue.string(enumValue),
                     groupName: undefined,
-                    description: undefined
+                    description: undefined,
+                    availability: enumValue.availability
                 });
             });
         }
-        return [convertSchema(schema, false, context, [...breadcrumbs, subtypePrefixes[index] ?? `${index}`])];
+        let subtypePrefix = derivedSubtypePrefixes[index];
+        if (subtypePrefixOverrides != null) {
+            const override = subtypePrefixOverrides[index];
+            if (override != null && "name" in override) {
+                subtypePrefix = override.name;
+            }
+        }
+        return [
+            convertSchema(schema, false, context, [...breadcrumbs, subtypePrefix ?? `${index}`], source, namespace)
+        ];
     });
 
     const uniqueSubtypes: SchemaWithExample[] = [];
@@ -82,11 +121,14 @@ export function convertUndiscriminatedOneOf({
             generatedName,
             wrapAsNullable,
             description,
+            availability,
             fernEnum: enumDescriptions,
             enumVarNames: undefined,
             enumValues,
+            _default: undefined,
             groupName,
-            context
+            context,
+            source
         });
     }
 
@@ -99,8 +141,136 @@ export function convertUndiscriminatedOneOf({
         generatedName,
         wrapAsNullable,
         description,
+        availability,
         subtypes: uniqueSubtypes,
-        groupName
+        groupName,
+        encoding,
+        source
+    });
+}
+
+export function convertUndiscriminatedOneOfWithDiscriminant({
+    nameOverride,
+    generatedName,
+    description,
+    availability,
+    wrapAsNullable,
+    context,
+    groupName,
+    discriminator,
+    encoding,
+    source,
+    namespace
+}: {
+    nameOverride: string | undefined;
+    generatedName: string;
+    description: string | undefined;
+    availability: Availability | undefined;
+    wrapAsNullable: boolean;
+    context: SchemaParserContext;
+    groupName: SdkGroupName | undefined;
+    discriminator: OpenAPIV3.DiscriminatorObject;
+    encoding: Encoding | undefined;
+    source: Source;
+    namespace: string | undefined;
+}): SchemaWithExample {
+    const convertedSubtypes = Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema], index) => {
+        const subtypeReferenceSchema = {
+            $ref: schema
+        };
+        const subtypeReference = convertReferenceObject(
+            subtypeReferenceSchema,
+            false,
+            context,
+            [schema],
+            encoding,
+            source,
+            namespace
+        );
+        context.markSchemaWithDiscriminantValue(subtypeReferenceSchema, discriminator.propertyName, discriminantValue);
+
+        // If the reference is an object (which I think it has to be?), add the discriminant value as a property
+        if (subtypeReference.type === "object") {
+            subtypeReference.properties = {
+                [discriminator.propertyName]: SchemaWithExample.literal({
+                    nameOverride: undefined,
+                    generatedName: getGeneratedTypeName([generatedName, discriminantValue]),
+                    value: LiteralSchemaValue.string(discriminantValue),
+                    groupName: undefined,
+                    description: undefined,
+                    availability: undefined
+                }),
+                ...subtypeReference.properties.filter((objectProperty) => {
+                    return objectProperty.key !== discriminator.propertyName;
+                })
+            };
+        }
+
+        return subtypeReference;
+    });
+
+    const uniqueSubtypes: SchemaWithExample[] = [];
+    for (let i = 0; i < convertedSubtypes.length; ++i) {
+        const a = convertedSubtypes[i];
+        let isDuplicate = false;
+        for (let j = i + 1; j < convertedSubtypes.length; ++j) {
+            const b = convertedSubtypes[j];
+            if (a != null && b != null && isSchemaEqual(a, b)) {
+                isDuplicate = true;
+                break;
+            }
+        }
+        if (a != null && !isDuplicate) {
+            uniqueSubtypes.push(a);
+        }
+    }
+
+    const everySubTypeIsLiteral = Object.entries(uniqueSubtypes).every(([_, schema]) => {
+        return schema.type === "literal";
+    });
+    if (everySubTypeIsLiteral) {
+        const enumDescriptions: Record<string, { description: string }> = {};
+        const enumValues: string[] = [];
+        Object.entries(uniqueSubtypes).forEach(([_, schema]) => {
+            if (schema.type === "literal" && schema.value.type === "string") {
+                enumValues.push(schema.value.value);
+                if (schema.description != null) {
+                    enumDescriptions[schema.value.value] = {
+                        description: schema.description
+                    };
+                }
+            }
+        });
+        return convertEnum({
+            nameOverride,
+            generatedName,
+            wrapAsNullable,
+            description,
+            availability,
+            fernEnum: enumDescriptions,
+            enumVarNames: undefined,
+            enumValues,
+            _default: undefined,
+            groupName,
+            context,
+            source
+        });
+    }
+
+    if (uniqueSubtypes.length === 1 && uniqueSubtypes[0] != null) {
+        return uniqueSubtypes[0];
+    }
+
+    return wrapUndiscriminantedOneOf({
+        nameOverride,
+        generatedName,
+        wrapAsNullable,
+        description,
+        availability,
+        subtypes: uniqueSubtypes,
+        groupName,
+        encoding,
+        source
     });
 }
 
@@ -159,6 +329,7 @@ function getUniqueSubTypeNames({
         }
         ++i;
     }
+
     return prefixes;
 }
 
@@ -167,15 +338,21 @@ export function wrapUndiscriminantedOneOf({
     generatedName,
     wrapAsNullable,
     description,
+    availability,
     subtypes,
-    groupName
+    groupName,
+    encoding,
+    source
 }: {
     wrapAsNullable: boolean;
     nameOverride: string | undefined;
     generatedName: string;
     description: string | undefined;
+    availability: Availability | undefined;
     subtypes: SchemaWithExample[];
     groupName: SdkGroupName | undefined;
+    encoding: Encoding | undefined;
+    source: Source;
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
@@ -184,23 +361,30 @@ export function wrapUndiscriminantedOneOf({
             value: SchemaWithExample.oneOf(
                 OneOfSchemaWithExample.undisciminated({
                     description,
+                    availability,
                     nameOverride,
                     generatedName,
                     schemas: subtypes,
-                    groupName
+                    groupName,
+                    encoding,
+                    source
                 })
             ),
             description,
+            availability,
             groupName
         });
     }
     return SchemaWithExample.oneOf(
         OneOfSchemaWithExample.undisciminated({
             description,
+            availability,
             nameOverride,
             generatedName,
             schemas: subtypes,
-            groupName
+            groupName,
+            encoding,
+            source
         })
     );
 }

@@ -1,11 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedMixedCase.Core;
 
 #nullable enable
 
 namespace SeedMixedCase;
 
-public class Organization
+public record Organization
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

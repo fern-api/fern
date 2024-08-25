@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedTrace;
 using SeedTrace.Core;
 
 #nullable enable
@@ -11,5 +10,5 @@ namespace SeedTrace;
 public enum SubmissionTypeEnum
 {
     [EnumMember(Value = "TEST")]
-    Test
+    Test,
 }

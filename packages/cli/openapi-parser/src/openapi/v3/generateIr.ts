@@ -5,24 +5,29 @@ import {
     EndpointWithExample,
     ErrorExample,
     HttpError,
+    LiteralSchemaValue,
+    ObjectPropertyWithExample,
     ObjectSchema,
     OpenApiIntermediateRepresentation,
     Schema,
     SchemaId,
     SchemaWithExample,
     SecurityScheme,
+    Source,
     Webhook
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { mapValues } from "lodash-es";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../../getExtension";
+import { ParseOpenAPIOptions } from "../../options";
 import { convertSchema } from "../../schema/convertSchemas";
 import { convertToFullExample } from "../../schema/examples/convertToFullExample";
 import { convertSchemaWithExampleToSchema } from "../../schema/utils/convertSchemaWithExampleToSchema";
+import { getGeneratedTypeName } from "../../schema/utils/getSchemaName";
 import { isReferenceObject } from "../../schema/utils/isReferenceObject";
 import { AbstractOpenAPIV3ParserContext } from "./AbstractOpenAPIV3ParserContext";
-import { convertPathItem } from "./converters/convertPathItem";
+import { convertPathItem, convertPathItemToWebhooks } from "./converters/convertPathItem";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
 import { ERROR_NAMES } from "./converters/convertToHttpError";
@@ -31,9 +36,11 @@ import { ConvertedOperation } from "./converters/operation/convertOperation";
 import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getFernBasePath } from "./extensions/getFernBasePath";
 import { getFernGroups } from "./extensions/getFernGroups";
+import { getFernVersion } from "./extensions/getFernVersion";
 import { getGlobalHeaders } from "./extensions/getGlobalHeaders";
 import { getIdempotencyHeaders } from "./extensions/getIdempotencyHeaders";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
+import { getWebhooksPathsObject } from "./getWebhookPathsObject";
 import { hasIncompleteExample } from "./hasIncompleteExample";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { runResolutions } from "./runResolutions";
@@ -41,25 +48,25 @@ import { runResolutions } from "./runResolutions";
 export function generateIr({
     openApi,
     taskContext,
-    disableExamples,
-    audiences,
-    shouldUseTitleAsName
+    options,
+    source,
+    namespace
 }: {
     openApi: OpenAPIV3.Document;
     taskContext: TaskContext;
-    disableExamples: boolean | undefined;
-    audiences: string[];
-    shouldUseTitleAsName: boolean;
+    options: ParseOpenAPIOptions;
+    source: Source;
+    namespace: string | undefined;
 }): OpenApiIntermediateRepresentation {
     openApi = runResolutions({ openapi: openApi });
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
-            const convertedSecurityScheme = convertSecurityScheme(securityScheme);
+            const convertedSecurityScheme = convertSecurityScheme(securityScheme, source);
             if (convertedSecurityScheme == null) {
                 return [];
             }
-            return [key, convertSecurityScheme(securityScheme)];
+            return [key, convertSecurityScheme(securityScheme, source)];
         })
     );
     const authHeaders = new Set(
@@ -72,14 +79,23 @@ export function generateIr({
             return null;
         })
     );
-    const context = new OpenAPIV3ParserContext({ document: openApi, taskContext, authHeaders, shouldUseTitleAsName });
+    const context = new OpenAPIV3ParserContext({
+        document: openApi,
+        taskContext,
+        authHeaders,
+        options,
+        source,
+        namespace
+    });
     const variables = getVariableDefinitions(openApi);
     const globalHeaders = getGlobalHeaders(openApi);
     const idempotencyHeaders = getIdempotencyHeaders(openApi);
 
+    const audiences = options.audiences ?? [];
+
     const endpointsWithExample: EndpointWithExample[] = [];
     const webhooks: Webhook[] = [];
-    Object.entries(openApi.paths).forEach(([path, pathItem]) => {
+    Object.entries(openApi.paths ?? {}).forEach(([path, pathItem]) => {
         if (pathItem == null) {
             return;
         }
@@ -113,6 +129,20 @@ export function generateIr({
             }
         }
     });
+    Object.entries(getWebhooksPathsObject(openApi)).forEach(([path, pathItem]) => {
+        if (pathItem == null) {
+            return;
+        }
+        taskContext.logger.debug(`Converting path ${path}`);
+        const convertedWebhooks = convertPathItemToWebhooks(path, pathItem, openApi, context);
+        for (const webhook of convertedWebhooks) {
+            const webhookAudiences = getAudiences({ operation: webhook });
+            if (audiences.length > 0 && !audiences.some((audience) => webhookAudiences.includes(audience))) {
+                continue;
+            }
+            webhooks.push(webhook.value);
+        }
+    });
 
     const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(
         Object.entries(openApi.components?.schemas ?? {})
@@ -130,19 +160,24 @@ export function generateIr({
                                 { ...schema, "x-fern-type-name": `${key}Body` } as any as OpenAPIV3.SchemaObject,
                                 false,
                                 context,
-                                [key]
+                                [key],
+                                source,
+                                namespace
                             )
                         ];
                     }
                 }
-                return [key, convertSchema(schema, false, context, [key])];
+                return [key, convertSchema(schema, false, context, [key], source, namespace)];
             })
             .filter((entry) => entry.length > 0)
     );
 
-    const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context);
+    // Remove discriminants from discriminated unions since Fern handles this in the IR.
+    const schemasWithoutDiscriminants = maybeRemoveDiscriminantsFromSchemas(schemasWithExample, context, source);
+    // Add them back when declared as union metadata, as that means we're treating discriminated unions as undiscriminated unions.
+    const schemasWithDiscriminants = maybeAddBackDiscriminantsFromSchemas(schemasWithoutDiscriminants, context);
     const schemas: Record<string, Schema> = {};
-    for (const [key, schemaWithExample] of Object.entries(schemasWithoutDiscriminants)) {
+    for (const [key, schemaWithExample] of Object.entries(schemasWithDiscriminants)) {
         const schema = convertSchemaWithExampleToSchema(schemaWithExample);
         if (context.isSchemaExcluded(key)) {
             continue;
@@ -151,12 +186,15 @@ export function generateIr({
         taskContext.logger.debug(`Converted schema ${key}`);
     }
 
-    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithoutDiscriminants, context.logger);
+    const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithDiscriminants, context.logger);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
         // if x-fern-examples is not present, generate an example
         const extensionExamples = endpointWithExample.examples;
         let examples: EndpointExample[] = extensionExamples;
-        if (!disableExamples && (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))) {
+        if (
+            !options.disableExamples &&
+            (extensionExamples.length === 0 || extensionExamples.every(hasIncompleteExample))
+        ) {
             const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
             if (endpointExample.length > 0) {
                 examples = [
@@ -191,7 +229,9 @@ export function generateIr({
                     description: queryParameter.description,
                     name: queryParameter.name,
                     schema: convertSchemaWithExampleToSchema(queryParameter.schema),
-                    parameterNameOverride: queryParameter.parameterNameOverride
+                    parameterNameOverride: queryParameter.parameterNameOverride,
+                    availability: queryParameter.availability,
+                    source: queryParameter.source
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
@@ -199,7 +239,10 @@ export function generateIr({
                     description: pathParameter.description,
                     name: pathParameter.name,
                     schema: convertSchemaWithExampleToSchema(pathParameter.schema),
-                    variableReference: pathParameter.variableReference
+                    parameterNameOverride: pathParameter.parameterNameOverride,
+                    variableReference: pathParameter.variableReference,
+                    availability: pathParameter.availability,
+                    source: pathParameter.source
                 };
             }),
             headers: endpointWithExample.headers.map((header) => {
@@ -208,7 +251,9 @@ export function generateIr({
                     name: header.name,
                     schema: convertSchemaWithExampleToSchema(header.schema),
                     parameterNameOverride: header.parameterNameOverride,
-                    env: header.env
+                    env: header.env,
+                    availability: header.availability,
+                    source: header.source
                 };
             }),
             examples,
@@ -218,6 +263,7 @@ export function generateIr({
                     nameOverride: error.nameOverride,
                     schema: convertSchemaWithExampleToSchema(error.schema),
                     description: error.description,
+                    source: error.source,
                     examples: error.fullExamples
                         ?.map((example): ErrorExample | undefined => {
                             const fullExample = convertToFullExample(example.value);
@@ -241,6 +287,10 @@ export function generateIr({
     const groupInfo = getFernGroups({ document: openApi, context });
 
     const ir: OpenApiIntermediateRepresentation = {
+        apiVersion: getFernVersion({
+            context,
+            document: openApi
+        }),
         basePath: getFernBasePath(openApi),
         title: openApi.info.title,
         description: openApi.info.description,
@@ -275,7 +325,8 @@ export function generateIr({
 
 function maybeRemoveDiscriminantsFromSchemas(
     schemas: Record<string, SchemaWithExample>,
-    context: AbstractOpenAPIV3ParserContext
+    context: AbstractOpenAPIV3ParserContext,
+    source: Source
 ): Record<string, SchemaWithExample> {
     const result: Record<string, SchemaWithExample> = {};
     for (const [schemaId, schema] of Object.entries(schemas)) {
@@ -300,7 +351,8 @@ function maybeRemoveDiscriminantsFromSchemas(
             }),
             allOfPropertyConflicts: schema.allOfPropertyConflicts.filter((allOfPropertyConflict) => {
                 return !discriminatedUnionReference.discriminants.has(allOfPropertyConflict.propertyKey);
-            })
+            }),
+            source
         };
         result[schemaId] = schemaWithoutDiscriminants;
 
@@ -321,6 +373,57 @@ function maybeRemoveDiscriminantsFromSchemas(
                 })
             };
         }
+    }
+    return result;
+}
+
+function maybeAddBackDiscriminantsFromSchemas(
+    schemas: Record<string, SchemaWithExample>,
+    context: AbstractOpenAPIV3ParserContext
+): Record<string, SchemaWithExample> {
+    const result: Record<string, SchemaWithExample> = {};
+    for (const [schemaId, schema] of Object.entries(schemas)) {
+        if (schema.type !== "object") {
+            result[schemaId] = schema;
+            continue;
+        }
+        const referenceToSchema: OpenAPIV3.ReferenceObject = {
+            $ref: `#/components/schemas/${schemaId}`
+        };
+        const metadata = context.getDiscriminatedUnionMetadata(referenceToSchema);
+        if (metadata == null) {
+            result[schemaId] = schema;
+            continue;
+        }
+
+        const propertiesWithDiscriminants: ObjectPropertyWithExample[] = [];
+        for (const property of schema.properties) {
+            if (metadata.discriminants.has(property.key)) {
+                const discriminantValue = metadata.discriminants.get(property.key);
+                if (discriminantValue != null) {
+                    propertiesWithDiscriminants.push({
+                        ...property,
+                        schema: SchemaWithExample.literal({
+                            nameOverride: undefined,
+                            generatedName: getGeneratedTypeName([schema.generatedName, discriminantValue]),
+                            value: LiteralSchemaValue.string(discriminantValue),
+                            groupName: undefined,
+                            description: undefined,
+                            availability: schema.availability
+                        })
+                    });
+                }
+            } else {
+                propertiesWithDiscriminants.push(property);
+            }
+        }
+
+        const schemaWithoutDiscriminants: SchemaWithExample.Object_ = {
+            ...schema,
+            type: "object",
+            properties: propertiesWithDiscriminants
+        };
+        result[schemaId] = schemaWithoutDiscriminants;
     }
     return result;
 }

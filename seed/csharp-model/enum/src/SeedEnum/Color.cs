@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedEnum;
 using SeedEnum.Core;
 
 #nullable enable
@@ -14,5 +13,5 @@ public enum Color
     Red,
 
     [EnumMember(Value = "blue")]
-    Blue
+    Blue,
 }

@@ -1,6 +1,10 @@
-import qs from "qs";
-import { RUNTIME } from "../runtime";
 import { APIResponse } from "./APIResponse";
+import { createRequestUrl } from "./createRequestUrl";
+import { getFetchFn } from "./getFetchFn";
+import { getRequestBody } from "./getRequestBody";
+import { getResponseBody } from "./getResponseBody";
+import { makeRequest } from "./makeRequest";
+import { requestWithRetries } from "./requestWithRetries";
 
 export type FetchFunction = <R = unknown>(args: Fetcher.Args) => Promise<APIResponse<R, Fetcher.Error>>;
 
@@ -16,7 +20,9 @@ export declare namespace Fetcher {
         maxRetries?: number;
         withCredentials?: boolean;
         abortSignal?: AbortSignal;
-        responseType?: "json" | "blob" | "streaming" | "text";
+        requestType?: "json" | "file" | "bytes";
+        responseType?: "json" | "blob" | "sse" | "streaming" | "text";
+        duplex?: "half";
     }
 
     export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
@@ -43,11 +49,7 @@ export declare namespace Fetcher {
     }
 }
 
-const INITIAL_RETRY_DELAY = 1;
-const MAX_RETRY_DELAY = 60;
-const DEFAULT_MAX_RETRIES = 2;
-
-async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
+export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse<R, Fetcher.Error>> {
     const headers: Record<string, string> = {};
     if (args.body !== undefined && args.contentType != null) {
         headers["Content-Type"] = args.contentType;
@@ -61,128 +63,35 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
         }
     }
 
-    const url =
-        Object.keys(args.queryParameters ?? {}).length > 0
-            ? `${args.url}?${qs.stringify(args.queryParameters, { arrayFormat: "repeat" })}`
-            : args.url;
-
-    let body: BodyInit | undefined = undefined;
-    const maybeStringifyBody = (body: any) => {
-        if (body instanceof Uint8Array) {
-            return body;
-        } else if (args.contentType === "application/x-www-form-urlencoded" && typeof args.body === "string") {
-            return args.body;
-        } else {
-            return JSON.stringify(body);
-        }
-    };
-
-    if (RUNTIME.type === "node") {
-        if (args.body instanceof (await import("formdata-node")).FormData) {
-            // @ts-expect-error
-            body = args.body;
-        } else {
-            body = maybeStringifyBody(args.body);
-        }
-    } else {
-        if (args.body instanceof (await import("form-data")).default) {
-            // @ts-expect-error
-            body = args.body;
-        } else {
-            body = maybeStringifyBody(args.body);
-        }
-    }
-
-    // In Node.js environments, the SDK always uses`node-fetch`.
-    // If not in Node.js the SDK uses global fetch if available,
-    // and falls back to node-fetch.
-    const fetchFn =
-        RUNTIME.type === "node"
-            ? // `.default` is required due to this issue:
-              // https://github.com/node-fetch/node-fetch/issues/450#issuecomment-387045223
-              ((await import("node-fetch")).default as any)
-            : typeof fetch == "function"
-            ? fetch
-            : ((await import("node-fetch")).default as any);
-
-    const makeRequest = async (): Promise<Response> => {
-        const signals: AbortSignal[] = [];
-
-        // Add timeout signal
-        let timeoutAbortId: NodeJS.Timeout | undefined = undefined;
-        if (args.timeoutMs != null) {
-            const { signal, abortId } = getTimeoutSignal(args.timeoutMs);
-            timeoutAbortId = abortId;
-            signals.push(signal);
-        }
-
-        // Add arbitrary signal
-        if (args.abortSignal != null) {
-            signals.push(args.abortSignal);
-        }
-
-        const response = await fetchFn(url, {
-            method: args.method,
-            headers,
-            body,
-            signal: anySignal(signals),
-            credentials: args.withCredentials ? "include" : undefined,
-        });
-
-        if (timeoutAbortId != null) {
-            clearTimeout(timeoutAbortId);
-        }
-
-        return response;
-    };
+    const url = createRequestUrl(args.url, args.queryParameters);
+    let requestBody: BodyInit | undefined = await getRequestBody({
+        body: args.body,
+        type: args.requestType === "json" ? "json" : "other",
+    });
+    const fetchFn = await getFetchFn();
 
     try {
-        let response = await makeRequest();
-
-        for (let i = 0; i < (args.maxRetries ?? DEFAULT_MAX_RETRIES); ++i) {
-            if (
-                response.status === 408 ||
-                response.status === 409 ||
-                response.status === 429 ||
-                response.status >= 500
-            ) {
-                const delay = Math.min(INITIAL_RETRY_DELAY * Math.pow(i, 2), MAX_RETRY_DELAY);
-                await new Promise((resolve) => setTimeout(resolve, delay));
-                response = await makeRequest();
-            } else {
-                break;
-            }
-        }
-
-        let body: unknown;
-        if (response.body != null && args.responseType === "blob") {
-            body = await response.blob();
-        } else if (response.body != null && args.responseType === "streaming") {
-            body = response.body;
-        } else if (response.body != null && args.responseType === "text") {
-            body = await response.text();
-        } else {
-            const text = await response.text();
-            if (text.length > 0) {
-                try {
-                    body = JSON.parse(text);
-                } catch (err) {
-                    return {
-                        ok: false,
-                        error: {
-                            reason: "non-json",
-                            statusCode: response.status,
-                            rawBody: text,
-                        },
-                    };
-                }
-            }
-        }
+        const response = await requestWithRetries(
+            async () =>
+                makeRequest(
+                    fetchFn,
+                    url,
+                    args.method,
+                    headers,
+                    requestBody,
+                    args.timeoutMs,
+                    args.abortSignal,
+                    args.withCredentials,
+                    args.duplex
+                ),
+            args.maxRetries
+        );
+        let responseBody = await getResponseBody(response, args.responseType);
 
         if (response.status >= 200 && response.status < 400) {
             return {
                 ok: true,
-                body: body as R,
+                body: responseBody as R,
                 headers: response.headers,
             };
         } else {
@@ -191,7 +100,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
                 error: {
                     reason: "status-code",
                     statusCode: response.status,
-                    body,
+                    body: responseBody,
                 },
             };
         }
@@ -229,45 +138,6 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             },
         };
     }
-}
-
-const TIMEOUT = "timeout";
-
-function getTimeoutSignal(timeoutMs: number): { signal: AbortSignal; abortId: NodeJS.Timeout } {
-    const controller = new AbortController();
-    const abortId = setTimeout(() => controller.abort(TIMEOUT), timeoutMs);
-    return { signal: controller.signal, abortId };
-}
-
-/**
- * Returns an abort signal that is getting aborted when
- * at least one of the specified abort signals is aborted.
- *
- * Requires at least node.js 18.
- */
-function anySignal(...args: AbortSignal[] | [AbortSignal[]]): AbortSignal {
-    // Allowing signals to be passed either as array
-    // of signals or as multiple arguments.
-    const signals = <AbortSignal[]>(args.length === 1 && Array.isArray(args[0]) ? args[0] : args);
-
-    const controller = new AbortController();
-
-    for (const signal of signals) {
-        if (signal.aborted) {
-            // Exiting early if one of the signals
-            // is already aborted.
-            controller.abort((signal as any)?.reason);
-            break;
-        }
-
-        // Listening for signals and removing the listeners
-        // when at least one symbol is aborted.
-        signal.addEventListener("abort", () => controller.abort((signal as any)?.reason), {
-            signal: controller.signal,
-        });
-    }
-
-    return controller.signal;
 }
 
 export const fetcher: FetchFunction = fetcherImpl;

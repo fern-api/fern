@@ -1,5 +1,5 @@
+import { Arguments, isNamedArgument, NamedArgument, UnnamedArgument } from "./Argument";
 import { ClassReference } from "./ClassReference";
-import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
 import { Writer } from "./core/Writer";
 
@@ -8,36 +8,36 @@ export declare namespace ClassInstantiation {
         classReference: ClassReference;
         // A map of the field for the class and the value to be assigned to it.
         arguments_: Arguments;
+        // lets you use constructor (rather than object initializer syntax) even if you pass in named arguments
+        forceUseConstructor?: boolean;
     }
-
-    type Arguments = NamedArgument[] | UnnamedArgument[];
-
-    interface NamedArgument {
-        name: string;
-        assignment: CodeBlock;
-    }
-
-    type UnnamedArgument = CodeBlock;
 }
 
 export class ClassInstantiation extends AstNode {
     public readonly classReference: ClassReference;
-    public readonly arguments_: ClassInstantiation.NamedArgument[] | ClassInstantiation.UnnamedArgument[];
+    public readonly arguments_: NamedArgument[] | UnnamedArgument[];
+    private readonly forceUseConstructor: boolean;
 
-    constructor({ classReference, arguments_ }: ClassInstantiation.Args) {
+    constructor({ classReference, arguments_, forceUseConstructor }: ClassInstantiation.Args) {
         super();
         this.classReference = classReference;
         this.arguments_ = arguments_;
+        this.forceUseConstructor = forceUseConstructor ?? false;
     }
 
     public write(writer: Writer): void {
+        if (this.classReference.namespaceAlias != null) {
+            writer.write(`new ${this.classReference.namespaceAlias}.${this.classReference.name}`);
+        } else {
+            writer.write("new ");
+            writer.writeNode(this.classReference);
+        }
+
         const hasNamedArguments =
             this.arguments_.length > 0 && this.arguments_[0] != null && isNamedArgument(this.arguments_[0]);
 
-        writer.write(`new ${this.classReference.name}`);
-
-        if (hasNamedArguments) {
-            writer.write("{");
+        if (hasNamedArguments && !this.forceUseConstructor) {
+            writer.write("{ ");
         } else {
             writer.write("(");
         }
@@ -55,18 +55,13 @@ export class ClassInstantiation extends AstNode {
                 writer.write(", ");
             }
         });
+        writer.writeLine();
         writer.dedent();
 
-        if (hasNamedArguments) {
+        if (hasNamedArguments && !this.forceUseConstructor) {
             writer.write("}");
         } else {
             writer.write(")");
         }
     }
-}
-
-function isNamedArgument(
-    argument: ClassInstantiation.NamedArgument | ClassInstantiation.UnnamedArgument
-): argument is ClassInstantiation.NamedArgument {
-    return (argument as ClassInstantiation.NamedArgument)?.name != null;
 }

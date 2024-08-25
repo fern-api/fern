@@ -1,4 +1,4 @@
-import { SchemaWithExample, SdkGroupName } from "@fern-api/openapi-ir-sdk";
+import { Availability, SchemaWithExample, SdkGroupName, Source } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
 import { convertSchema } from "./convertSchemas";
 import { SchemaParserContext } from "./SchemaParserContext";
@@ -9,20 +9,26 @@ export function convertArray({
     breadcrumbs,
     item,
     description,
+    availability,
     wrapAsNullable,
     context,
     groupName,
-    example
+    example,
+    source,
+    namespace
 }: {
     nameOverride: string | undefined;
     generatedName: string;
     breadcrumbs: string[];
     item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     description: string | undefined;
+    availability: Availability | undefined;
     wrapAsNullable: boolean;
     context: SchemaParserContext;
     groupName: SdkGroupName | undefined;
     example: unknown[] | undefined;
+    source: Source;
+    namespace: string | undefined;
 }): SchemaWithExample {
     const itemSchema =
         item == null
@@ -30,10 +36,11 @@ export function convertArray({
                   nameOverride,
                   generatedName,
                   description: undefined,
+                  availability: undefined,
                   example: undefined,
                   groupName
               })
-            : convertSchema(item, false, context, [...breadcrumbs, "Item"]);
+            : convertSchema(item, false, context, [...breadcrumbs, "Item"], source, namespace);
     return wrapArray({
         nameOverride,
         generatedName,
@@ -41,6 +48,7 @@ export function convertArray({
         itemSchema,
         wrapAsNullable,
         description,
+        availability,
         example
     });
 }
@@ -51,6 +59,7 @@ export function wrapArray({
     itemSchema,
     wrapAsNullable,
     description,
+    availability,
     groupName,
     example
 }: {
@@ -59,6 +68,7 @@ export function wrapArray({
     itemSchema: SchemaWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
+    availability: Availability | undefined;
     groupName: SdkGroupName | undefined;
     example: unknown[] | undefined;
 }): SchemaWithExample {
@@ -71,10 +81,13 @@ export function wrapArray({
                 generatedName,
                 value: itemSchema,
                 description,
+                // TODO: maybe undefined?
+                availability,
                 groupName,
                 example
             }),
             description,
+            availability,
             groupName
         });
     }
@@ -83,6 +96,7 @@ export function wrapArray({
         generatedName,
         value: itemSchema,
         description,
+        availability,
         groupName,
         example
     });

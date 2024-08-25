@@ -1,9 +1,9 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`migrateFromV34ToV33 snapshot 1`] = `
+exports[`migrateFromV34ToV33 > snapshot 1`] = `
 {
-  "apiDisplayName": undefined,
-  "apiDocs": undefined,
+  "apiDisplayName": null,
+  "apiDocs": null,
   "apiName": {
     "camelCase": {
       "safeName": "simpleAPI",
@@ -24,11 +24,11 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
     },
   },
   "auth": {
-    "docs": undefined,
+    "docs": null,
     "requirement": "ALL",
     "schemes": [],
   },
-  "basePath": undefined,
+  "basePath": null,
   "constants": {
     "errorInstanceIdKey": {
       "name": {
@@ -53,9 +53,8 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
       "wireValue": "errorInstanceId",
     },
   },
-  "environments": undefined,
+  "environments": null,
   "errorDiscriminationStrategy": {
-    "_visit": [Function],
     "type": "statusCode",
   },
   "errors": {},
@@ -63,26 +62,25 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
   "idempotencyHeaders": [],
   "pathParameters": [],
   "rootPackage": {
-    "docs": undefined,
+    "docs": null,
     "errors": [],
     "fernFilepath": {
       "allParts": [],
-      "file": undefined,
+      "file": null,
       "packagePath": [],
     },
     "hasEndpointsInTree": true,
-    "navigationConfig": undefined,
-    "service": undefined,
+    "navigationConfig": null,
+    "service": null,
     "subpackages": [
       "subpackage_service",
     ],
     "types": [],
-    "webhooks": undefined,
-    "websocket": undefined,
+    "webhooks": null,
+    "websocket": null,
   },
   "sdkConfig": {
     "hasFileDownloadEndpoints": false,
-    "hasPaginatedEndpoints": false,
     "hasStreamingEndpoints": false,
     "isAuthMandatory": false,
     "platformHeaders": {
@@ -97,18 +95,17 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
   },
   "services": {
     "service_service": {
-      "availability": undefined,
+      "availability": null,
       "basePath": {
         "head": "/",
         "parts": [],
       },
-      "displayName": undefined,
+      "displayName": null,
       "endpoints": [
         {
           "allPathParameters": [
             {
-              "availability": undefined,
-              "docs": undefined,
+              "docs": null,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -130,18 +127,17 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
                 },
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
-              "variable": undefined,
+              "variable": null,
             },
           ],
           "auth": false,
-          "availability": undefined,
-          "baseUrl": undefined,
-          "displayName": undefined,
-          "docs": undefined,
+          "availability": null,
+          "baseUrl": null,
+          "displayName": null,
+          "docs": null,
           "errors": [],
           "examples": [],
           "fullPath": {
@@ -187,8 +183,7 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
           },
           "pathParameters": [
             {
-              "availability": undefined,
-              "docs": undefined,
+              "docs": null,
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
@@ -210,16 +205,14 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
                 },
               },
               "valueType": {
-                "_visit": [Function],
+                "_type": "primitive",
                 "primitive": "STRING",
-                "type": "primitive",
               },
-              "variable": undefined,
+              "variable": null,
             },
           ],
           "queryParameters": [],
           "requestBody": {
-            "_visit": [Function],
             "name": {
               "camelCase": {
                 "safeName": "checkRequest",
@@ -241,7 +234,6 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
             },
             "properties": [
               {
-                "_visit": [Function],
                 "isOptional": false,
                 "key": {
                   "name": {
@@ -268,7 +260,6 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
                 "type": "file",
               },
               {
-                "_visit": [Function],
                 "isOptional": false,
                 "key": {
                   "name": {
@@ -295,7 +286,6 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
                 "type": "file",
               },
               {
-                "_visit": [Function],
                 "isOptional": true,
                 "key": {
                   "name": {
@@ -322,7 +312,6 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
                 "type": "file",
               },
               {
-                "_visit": [Function],
                 "isOptional": true,
                 "key": {
                   "name": {
@@ -351,7 +340,7 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
             ],
             "type": "fileUpload",
           },
-          "response": undefined,
+          "response": null,
           "sdkRequest": {
             "requestParameterName": {
               "camelCase": {
@@ -373,7 +362,6 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
               },
             },
             "shape": {
-              "_visit": [Function],
               "bodyKey": {
                 "camelCase": {
                   "safeName": "body",
@@ -468,7 +456,7 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
   },
   "subpackages": {
     "subpackage_service": {
-      "docs": undefined,
+      "docs": null,
       "errors": [],
       "fernFilepath": {
         "allParts": [
@@ -533,12 +521,12 @@ exports[`migrateFromV34ToV33 snapshot 1`] = `
           "unsafeName": "service",
         },
       },
-      "navigationConfig": undefined,
+      "navigationConfig": null,
       "service": "service_service",
       "subpackages": [],
       "types": [],
-      "webhooks": undefined,
-      "websocket": undefined,
+      "webhooks": null,
+      "websocket": null,
     },
   },
   "types": {},

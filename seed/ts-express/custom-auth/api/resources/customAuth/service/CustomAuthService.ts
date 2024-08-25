@@ -52,7 +52,7 @@ export class CustomAuthService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.customAuth.getWithCustomAuth.Response.jsonOrThrow(responseBody, {
+                                serializers.customAuth.getWithCustomAuth.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -89,7 +89,7 @@ export class CustomAuthService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.customAuth.postWithCustomAuth.Response.jsonOrThrow(responseBody, {
+                                serializers.customAuth.postWithCustomAuth.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

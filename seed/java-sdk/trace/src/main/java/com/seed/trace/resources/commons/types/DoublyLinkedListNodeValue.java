@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = DoublyLinkedListNodeValue.Builder.class)
 public final class DoublyLinkedListNodeValue {
     private final String nodeId;
@@ -154,7 +154,7 @@ public final class DoublyLinkedListNodeValue {
 
         @java.lang.Override
         public _FinalStage prev(String prev) {
-            this.prev = Optional.of(prev);
+            this.prev = Optional.ofNullable(prev);
             return this;
         }
 
@@ -167,7 +167,7 @@ public final class DoublyLinkedListNodeValue {
 
         @java.lang.Override
         public _FinalStage next(String next) {
-            this.next = Optional.of(next);
+            this.next = Optional.ofNullable(next);
             return this;
         }
 

@@ -11,6 +11,7 @@ export declare namespace ExpressServiceGenerator {
         includeSerdeLayer: boolean;
         skipRequestValidation: boolean;
         skipResponseValidation: boolean;
+        requestValidationStatusCode: number;
     }
 
     export namespace generateService {
@@ -28,19 +29,22 @@ export class ExpressServiceGenerator {
     private includeSerdeLayer: boolean;
     private skipRequestValidation: boolean;
     private skipResponseValidation: boolean;
+    private requestValidationStatusCode: number;
 
     constructor({
         packageResolver,
         doNotHandleUnrecognizedErrors,
         includeSerdeLayer,
         skipRequestValidation,
-        skipResponseValidation
+        skipResponseValidation,
+        requestValidationStatusCode
     }: ExpressServiceGenerator.Init) {
         this.doNotHandleUnrecognizedErrors = doNotHandleUnrecognizedErrors;
         this.packageResolver = packageResolver;
         this.includeSerdeLayer = includeSerdeLayer;
         this.skipRequestValidation = skipRequestValidation;
         this.skipResponseValidation = skipResponseValidation;
+        this.requestValidationStatusCode = requestValidationStatusCode;
     }
 
     public generateService({
@@ -57,7 +61,8 @@ export class ExpressServiceGenerator {
             doNotHandleUnrecognizedErrors: this.doNotHandleUnrecognizedErrors,
             includeSerdeLayer: this.includeSerdeLayer,
             skipRequestValidation: this.skipRequestValidation,
-            skipResponseValidation: this.skipResponseValidation
+            skipResponseValidation: this.skipResponseValidation,
+            requestValidationStatusCode: this.requestValidationStatusCode
         });
     }
 }

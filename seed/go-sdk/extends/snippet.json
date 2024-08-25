@@ -1,0 +1,15 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/extends/extended-inline-request-body",
+                "method": "POST",
+                "identifier_override": "endpoint_.extendedInlineRequestBody"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tfern \"github.com/extends/fern\"\n\tfernclient \"github.com/extends/fern/client\"\n)\n\nclient := fernclient.NewClient()\nerr := client.ExtendedInlineRequestBody(\n\tcontext.TODO(),\n\t\u0026fern.Inlined{\n\t\tUnique: \"string\",\n\t\tName:   \"string\",\n\t\tDocs:   \"string\",\n\t},\n)\n"
+            }
+        }
+    ]
+}

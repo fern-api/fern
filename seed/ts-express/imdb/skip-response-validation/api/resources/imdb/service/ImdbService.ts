@@ -54,7 +54,7 @@ export class ImdbService {
 
     public toRouter(): express.Router {
         this.router.post("/create-movie", async (req, res, next) => {
-            const request = await serializers.CreateMovieRequest.parse(req.body);
+            const request = serializers.CreateMovieRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -63,7 +63,7 @@ export class ImdbService {
                         {
                             send: async (responseBody) => {
                                 res.status(201).json(
-                                    await serializers.MovieId.jsonOrThrow(responseBody, {
+                                    serializers.MovieId.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                         skipValidation: true,
                                     })
@@ -104,7 +104,7 @@ export class ImdbService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.Movie.jsonOrThrow(responseBody, {
+                                serializers.Movie.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                     skipValidation: true,
                                 })

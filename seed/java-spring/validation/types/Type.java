@@ -14,7 +14,7 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Type.Builder.class
 )
@@ -25,10 +25,13 @@ public final class Type {
 
   private final String name;
 
-  private Type(double decimal, int even, String name) {
+  private final Shape shape;
+
+  private Type(double decimal, int even, String name, Shape shape) {
     this.decimal = decimal;
     this.even = even;
     this.name = name;
+    this.shape = shape;
   }
 
   @JsonProperty("decimal")
@@ -46,6 +49,11 @@ public final class Type {
     return name;
   }
 
+  @JsonProperty("shape")
+  public Shape getShape() {
+    return shape;
+  }
+
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
@@ -53,12 +61,12 @@ public final class Type {
   }
 
   private boolean equalTo(Type other) {
-    return decimal == other.decimal && even == other.even && name.equals(other.name);
+    return decimal == other.decimal && even == other.even && name.equals(other.name) && shape.equals(other.shape);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.decimal, this.even, this.name);
+    return Objects.hash(this.decimal, this.even, this.name, this.shape);
   }
 
   @java.lang.Override
@@ -81,7 +89,11 @@ public final class Type {
   }
 
   public interface NameStage {
-    _FinalStage name(String name);
+    ShapeStage name(String name);
+  }
+
+  public interface ShapeStage {
+    _FinalStage shape(Shape shape);
   }
 
   public interface _FinalStage {
@@ -91,12 +103,14 @@ public final class Type {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements DecimalStage, EvenStage, NameStage, _FinalStage {
+  public static final class Builder implements DecimalStage, EvenStage, NameStage, ShapeStage, _FinalStage {
     private double decimal;
 
     private int even;
 
     private String name;
+
+    private Shape shape;
 
     private Builder() {
     }
@@ -106,6 +120,7 @@ public final class Type {
       decimal(other.getDecimal());
       even(other.getEven());
       name(other.getName());
+      shape(other.getShape());
       return this;
     }
 
@@ -125,14 +140,21 @@ public final class Type {
 
     @java.lang.Override
     @JsonSetter("name")
-    public _FinalStage name(String name) {
+    public ShapeStage name(String name) {
       this.name = name;
       return this;
     }
 
     @java.lang.Override
+    @JsonSetter("shape")
+    public _FinalStage shape(Shape shape) {
+      this.shape = shape;
+      return this;
+    }
+
+    @java.lang.Override
     public Type build() {
-      return new Type(decimal, even, name);
+      return new Type(decimal, even, name, shape);
     }
   }
 }

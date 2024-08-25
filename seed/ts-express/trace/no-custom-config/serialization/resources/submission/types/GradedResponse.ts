@@ -8,10 +8,10 @@ import * as core from "../../../../core";
 
 export const GradedResponse: core.serialization.ObjectSchema<serializers.GradedResponse.Raw, SeedTrace.GradedResponse> =
     core.serialization.object({
-        submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+        submissionId: core.serialization.lazy(() => serializers.SubmissionId),
         testCases: core.serialization.record(
             core.serialization.string(),
-            core.serialization.lazyObject(async () => (await import("../../..")).TestCaseResultWithStdout)
+            core.serialization.lazyObject(() => serializers.TestCaseResultWithStdout)
         ),
     });
 

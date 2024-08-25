@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser uploadcare docs 1`] = `
+exports[`open api parser > uploadcare > docs 1`] = `
 {
   "definitionFiles": {
     "groups.yml": {
@@ -139,10 +139,10 @@ Log.d("TAG", group.toString())
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "dpi": {
-                              "0": 72,
-                              "1": 72,
-                            },
+                            "dpi": [
+                              72,
+                              72,
+                            ],
                             "format": "JPEG",
                             "geo_location": {
                               "latitude": 55.62013611111111,
@@ -165,10 +165,10 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "dpi": {
-                            "0": 72,
-                            "1": 72,
-                          },
+                          "dpi": [
+                            72,
+                            72,
+                          ],
                           "format": "JPEG",
                           "geo_location": {
                             "latitude": 55.62013611111111,
@@ -324,7 +324,7 @@ Log.d("TAG", group.toString())
                   },
                 ],
                 "query-parameters": {
-                  "group_id": "group_id",
+                  "group_id": "d52d7136-a2e5-4338-9f45-affbf83b857d~2",
                   "pub_key": "caa9d29da887ee88ffe6",
                 },
                 "response": {
@@ -337,10 +337,10 @@ Log.d("TAG", group.toString())
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "dpi": {
-                              "0": 72,
-                              "1": 72,
-                            },
+                            "dpi": [
+                              72,
+                              72,
+                            ],
                             "format": "JPEG",
                             "geo_location": {
                               "latitude": 55.62013611111111,
@@ -363,10 +363,10 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "dpi": {
-                            "0": 72,
-                            "1": 72,
-                          },
+                          "dpi": [
+                            72,
+                            72,
+                          ],
                           "format": "JPEG",
                           "geo_location": {
                             "latitude": 55.62013611111111,
@@ -417,6 +417,9 @@ Log.d("TAG", group.toString())
               "type": "root.GroupInfo",
             },
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
     },
@@ -681,7 +684,7 @@ Log.d("TAG", file.toString())
                   },
                 ],
                 "query-parameters": {
-                  "file_id": "file_id",
+                  "file_id": "67947755-1584-4e3f-902b-d4e2bf76a841",
                   "pub_key": "caa9d29da887ee88ffe6",
                 },
                 "response": {
@@ -1166,17 +1169,15 @@ Log.d("TAG", file.toString())
               "body": {
                 "properties": {
                   "check_URL_duplicates": {
-                    "default": undefined,
+                    "default": "0",
                     "docs": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
 ",
                     "type": "optional<FromUrlUploadRequestCheckUrlDuplicates>",
-                    "validation": undefined,
                   },
                   "expire": "optional<root.ExpireType>",
                   "filename": {
-                    "default": undefined,
                     "docs": "Sets the file name of the resource fetched from the source URL.
 If not defined, the file name is obtained from either HTTP
 response headers or the \`source_url\`'s path.
@@ -1185,18 +1186,15 @@ response headers or the \`source_url\`'s path.
 \`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._\`.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "pub_key": "root.ProjectPublicKeyType",
                   "save_URL_duplicates": {
-                    "default": undefined,
                     "docs": "Determines if the requested \`source_url\` should be kept in the history of
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
 to the value of the \`check_URL_duplicates\` parameter.
 ",
                     "type": "optional<FromUrlUploadRequestSaveUrlDuplicates>",
-                    "validation": undefined,
                   },
                   "signature": "optional<root.SignatureType>",
                   "source_url": {
@@ -1324,7 +1322,7 @@ Log.d("TAG", status.toString())
                 ],
                 "name": "status-waiting",
                 "query-parameters": {
-                  "token": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                 },
                 "response": {
                   "body": {
@@ -1416,7 +1414,7 @@ Log.d("TAG", status.toString())
                 ],
                 "name": "status-progress",
                 "query-parameters": {
-                  "token": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                 },
                 "response": {
                   "body": {
@@ -1510,7 +1508,7 @@ Log.d("TAG", status.toString())
                 ],
                 "name": "status-success",
                 "query-parameters": {
-                  "token": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                 },
                 "response": {
                   "body": {
@@ -1699,7 +1697,7 @@ Log.d("TAG", status.toString())
                 ],
                 "name": "status-error",
                 "query-parameters": {
-                  "token": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                 },
                 "response": {
                   "body": {
@@ -1793,7 +1791,7 @@ Log.d("TAG", status.toString())
                 ],
                 "name": "status-unknown",
                 "query-parameters": {
-                  "token": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                 },
                 "response": {
                   "body": {
@@ -2378,7 +2376,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
-                      "max": 5368709120,
+                      "max": undefined,
                       "min": 5242880,
                       "multipleOf": undefined,
                     },
@@ -2403,6 +2401,9 @@ to us as a value of the \`part_size\` parameter (in bytes).
             },
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "types": {
         "BaseUploadResponse": {
@@ -2411,8 +2412,6 @@ the value is the unique ID of the file on our systems.
 ",
           "properties": {
             "filename": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uuid",
@@ -2422,8 +2421,12 @@ the value is the unique ID of the file on our systems.
               },
             },
           },
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
         },
         "FromUrlUploadRequestCheckUrlDuplicates": {
+          "default": "0",
           "docs": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
@@ -2438,6 +2441,9 @@ this request will return information about the already uploaded file.
               "value": "1",
             },
           ],
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
         },
         "FromUrlUploadRequestSaveUrlDuplicates": {
           "docs": "Determines if the requested \`source_url\` should be kept in the history of
@@ -2454,10 +2460,17 @@ to the value of the \`check_URL_duplicates\` parameter.
               "value": "1",
             },
           ],
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
         },
         "FromUrlUploadResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
           "union": [
             "root.FromUrlUploadResponseSchema",
             "root.FileUploadInfoFromUrl",
@@ -2466,6 +2479,10 @@ to the value of the \`check_URL_duplicates\` parameter.
         "FromUrlUploadStatusResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
           "union": [
             "root.FileUploadInfoWaitingStatus",
             "root.FileUploadInfoProgressStatus",
@@ -2488,6 +2505,9 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "pattern": undefined,
               },
             },
+          },
+          "source": {
+            "openapi": "uploadcare/openapi.json",
           },
         },
       },
@@ -3366,6 +3386,10 @@ to the value of the \`check_URL_duplicates\` parameter.
       "BaseUploadRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -3390,6 +3414,10 @@ to the value of the \`check_URL_duplicates\` parameter.
       "BaseUploadRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "UploadcarePublicKeyRequiredError",
           "UploadcarePublicKeyInvalidError",
@@ -3408,12 +3436,13 @@ to the value of the \`check_URL_duplicates\` parameter.
         "properties": {
           "image": "optional<SchemasImageInfo>",
           "mime": {
-            "default": undefined,
             "docs": "MIME type.",
             "type": "optional<ContentInfoMime>",
-            "validation": undefined,
           },
           "video": "optional<VideoInfo>",
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "ContentInfoMime": {
@@ -3432,10 +3461,17 @@ to the value of the \`check_URL_duplicates\` parameter.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "CreateFilesGroupRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -3451,6 +3487,10 @@ to the value of the \`check_URL_duplicates\` parameter.
       "CreateFilesGroupRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3557,10 +3597,8 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "type": "string",
           },
           "s3_bucket": {
-            "default": undefined,
             "docs": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "size": {
             "docs": "File's size in bytes.",
@@ -3582,34 +3620,34 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           },
           "video_info": "optional<LegacyVideoInfo>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoErrorStatus": {
         "docs": undefined,
         "properties": {
           "error": {
-            "default": undefined,
             "docs": "Human readable description of the issue with the fetch/upload task.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "error_code": {
-            "default": undefined,
             "docs": "Machine readable error code.
 
 Note: See the [Errors > FromURL upload errors](#tag/Errors) section of this
 page for a full list of all possible error codes.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The system failed to fetch and/or upload the file.
 ",
             "type": "optional<literal<"error">>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoFromUrl": {
@@ -3620,26 +3658,24 @@ page for a full list of all possible error codes.
         "properties": {
           "type": "optional<literal<"file_info">>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoProgressStatus": {
         "docs": undefined,
         "properties": {
           "done": {
-            "default": undefined,
             "docs": "How many bytes of the file have been fetched so far.
 ",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The system is fetching/uploading the file.
 ",
             "type": "optional<literal<"progress">>",
-            "validation": undefined,
           },
           "total": {
-            "default": undefined,
             "docs": "The expected size of the fetched file (in bytes).
 
 **Note:** the value can be missing if the server we are fetching the file from
@@ -3647,13 +3683,19 @@ does not provide the information or if the server is returning the file in, for
 example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).
 ",
             "type": "optional<double>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "NullCharactersForbiddenError",
           "FileIdRequiredError",
@@ -3663,6 +3705,10 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
       "FileUploadInfoRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3675,18 +3721,18 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         ],
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The file has been fetched/uploaded successfully.",
             "type": "optional<literal<"success">>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoUnknownStatus": {
         "docs": undefined,
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The system does not have information about the task.
 
 Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
@@ -3694,25 +3740,32 @@ period of time only. The endpoint can return the status \`unknown\` for the task
 that are tool old (or that have not been created at all).
 ",
             "type": "optional<literal<"unknown">>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoWaitingStatus": {
         "docs": undefined,
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The system is preparing to handle the request.
 ",
             "type": "optional<literal<"waiting">>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FilesGroupInfoRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "NullCharactersForbiddenError",
           "GroupIdRequiredError",
@@ -3721,6 +3774,10 @@ that are tool old (or that have not been created at all).
       "FilesGroupInfoRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3732,6 +3789,10 @@ that are tool old (or that have not been created at all).
       "FromUrlUploadRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -3761,6 +3822,10 @@ that are tool old (or that have not been created at all).
       "FromUrlUploadRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -3778,7 +3843,6 @@ that are tool old (or that have not been created at all).
         "docs": "\`/from_url/\` upload response.",
         "properties": {
           "token": {
-            "default": undefined,
             "docs": "Token to identify a \`/from_url/\` request.",
             "type": "optional<string>",
             "validation": {
@@ -3789,6 +3853,9 @@ that are tool old (or that have not been created at all).
             },
           },
           "type": "optional<literal<"token">>",
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "GroupFileUrlParsingFailedError": {
@@ -3807,7 +3874,6 @@ that are tool old (or that have not been created at all).
         "docs": "File group information object.",
         "properties": {
           "cdn_url": {
-            "default": undefined,
             "docs": "Group's CDN URL.",
             "type": "optional<string>",
             "validation": {
@@ -3818,38 +3884,28 @@ that are tool old (or that have not been created at all).
             },
           },
           "datetime_created": {
-            "default": undefined,
             "docs": "ISO-8601 date and time when the group was created.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "datetime_stored": {
-            "default": undefined,
+            "availability": "deprecated",
             "docs": "ISO-8601 date and time when the group was marked as stored.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "files": {
-            "default": undefined,
             "docs": "The list of files in the group. An array may contain null values if a file has been removed.
 ",
             "type": "optional<list<unknown>>",
-            "validation": undefined,
           },
           "files_count": {
-            "default": undefined,
             "docs": "Number of the files in the group.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Group's unique ID.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details.",
             "type": "optional<string>",
             "validation": {
@@ -3859,6 +3915,9 @@ that are tool old (or that have not been created at all).
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "GroupNotFoundError": {
@@ -3875,33 +3934,26 @@ that are tool old (or that have not been created at all).
             "type": "ImageInfoColorMode",
           },
           "datetime_original": {
-            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "dpi": {
-            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
-            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<ImageInfoGeoLocation>",
-            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
-            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
             "validation": {
@@ -3921,6 +3973,9 @@ that are tool old (or that have not been created at all).
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "ImageInfoColorMode": {
         "docs": "Image color mode.",
@@ -3937,6 +3992,9 @@ that are tool old (or that have not been created at all).
           "HSV",
           "LAB",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "ImageInfoGeoLocation": {
         "docs": "Geo-location of image from EXIF.",
@@ -3950,111 +4008,93 @@ that are tool old (or that have not been created at all).
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "LegacyVideoInfo": {
         "docs": "Video metadata.",
         "properties": {
           "audio": {
-            "default": undefined,
             "docs": "Audio stream's metadata.",
             "type": "optional<LegacyVideoInfoAudio>",
-            "validation": undefined,
           },
           "bitrate": {
-            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "duration": {
-            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Video file's format.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "video": {
-            "default": undefined,
             "docs": "Video stream's metadata.",
             "type": "optional<LegacyVideoInfoVideo>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "LegacyVideoInfoAudio": {
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "channels": {
-            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "sample_rate": {
-            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "LegacyVideoInfoVideo": {
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Video stream codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "frame_rate": {
-            "default": undefined,
             "docs": "Video stream's frame rate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "height": {
-            "default": undefined,
             "docs": "Video stream's image height.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "width": {
-            "default": undefined,
             "docs": "Video stream's image width.",
             "type": "optional<double>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "Metadata": {
-        "default": undefined,
         "docs": "Arbitrary metadata associated with a file.",
         "type": "optional<map<string, unknown>>",
-        "validation": undefined,
       },
       "MetadataValue": {
         "docs": "Arbitrary metadata associated with the file.
@@ -4086,6 +4126,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadCompleteRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -4103,6 +4147,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadCompleteRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "UploadcarePublicKeyRequiredError",
           "UploadcarePublicKeyInvalidError",
@@ -4111,6 +4159,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadStartRequestBadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "RequestFiledsNumberLimitExceededError",
           "PostRequestParserFailedError",
@@ -4138,6 +4190,10 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
       "MultipartFileUploadStartRequestForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "UploadcarePublicKeyRequiredError",
           "UploadcarePublicKeyInvalidError",
@@ -4202,33 +4258,26 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "SchemasImageInfoColorMode",
           },
           "datetime_original": {
-            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "dpi": {
-            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
-            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<SchemasImageInfoGeoLocation>",
-            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
-            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
             "validation": {
@@ -4248,6 +4297,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "SchemasImageInfoColorMode": {
         "docs": "Image color mode.",
@@ -4264,6 +4316,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "HSV",
           "LAB",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "SchemasImageInfoGeoLocation": {
         "docs": "Geo-location of image from EXIF.",
@@ -4276,6 +4331,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "docs": "Location longitude.",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "SignatureExpirationError": {
@@ -4305,6 +4363,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         "type": "string",
       },
       "StoreType": {
+        "default": "auto",
         "docs": "Determines if an uploaded file should be marked as temporary or permanent.
 
 The parameter can have the following values:
@@ -4334,6 +4393,9 @@ change the value to \`auto\`.
           },
           "auto",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "TokenRequiredError": {
         "type": "string",
@@ -4376,16 +4438,12 @@ change the value to \`auto\`.
         "properties": {
           "audio": "list<VideoInfoAudioItem>",
           "bitrate": {
-            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "duration": {
-            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Video file's format.",
@@ -4393,50 +4451,44 @@ change the value to \`auto\`.
           },
           "video": "list<VideoInfoVideoItem>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "VideoInfoAudioItem": {
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "channels": {
-            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "sample_rate": {
-            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "VideoInfoVideoItem": {
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Video stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "frame_rate": {
             "docs": "Video stream's frame rate.",
@@ -4450,6 +4502,9 @@ change the value to \`auto\`.
             "docs": "Video stream's image width.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
     },
@@ -4468,7 +4523,7 @@ change the value to \`auto\`.
 }
 `;
 
-exports[`open api parser uploadcare simple 1`] = `
+exports[`open api parser > uploadcare > simple 1`] = `
 {
   "definitionFiles": {
     "groups.yml": {
@@ -4607,10 +4662,10 @@ Log.d("TAG", group.toString())
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "dpi": {
-                              "0": 72,
-                              "1": 72,
-                            },
+                            "dpi": [
+                              72,
+                              72,
+                            ],
                             "format": "JPEG",
                             "geo_location": {
                               "latitude": 55.62013611111111,
@@ -4633,10 +4688,10 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "dpi": {
-                            "0": 72,
-                            "1": 72,
-                          },
+                          "dpi": [
+                            72,
+                            72,
+                          ],
                           "format": "JPEG",
                           "geo_location": {
                             "latitude": 55.62013611111111,
@@ -4792,7 +4847,7 @@ Log.d("TAG", group.toString())
                   },
                 ],
                 "query-parameters": {
-                  "group_id": "group_id",
+                  "group_id": "d52d7136-a2e5-4338-9f45-affbf83b857d~2",
                   "pub_key": "caa9d29da887ee88ffe6",
                 },
                 "response": {
@@ -4805,10 +4860,10 @@ Log.d("TAG", group.toString())
                         "content_info": {
                           "image": {
                             "color_mode": "RGB",
-                            "dpi": {
-                              "0": 72,
-                              "1": 72,
-                            },
+                            "dpi": [
+                              72,
+                              72,
+                            ],
                             "format": "JPEG",
                             "geo_location": {
                               "latitude": 55.62013611111111,
@@ -4831,10 +4886,10 @@ Log.d("TAG", group.toString())
                         "filename": "IMG0412_123.JPG",
                         "image_info": {
                           "color_mode": "RGB",
-                          "dpi": {
-                            "0": 72,
-                            "1": 72,
-                          },
+                          "dpi": [
+                            72,
+                            72,
+                          ],
                           "format": "JPEG",
                           "geo_location": {
                             "latitude": 55.62013611111111,
@@ -4885,6 +4940,9 @@ Log.d("TAG", group.toString())
               "type": "root.GroupInfo",
             },
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
     },
@@ -5149,7 +5207,7 @@ Log.d("TAG", file.toString())
                   },
                 ],
                 "query-parameters": {
-                  "file_id": "file_id",
+                  "file_id": "67947755-1584-4e3f-902b-d4e2bf76a841",
                   "pub_key": "caa9d29da887ee88ffe6",
                 },
                 "response": {
@@ -5634,17 +5692,15 @@ Log.d("TAG", file.toString())
               "body": {
                 "properties": {
                   "check_URL_duplicates": {
-                    "default": undefined,
+                    "default": "0",
                     "docs": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
 ",
                     "type": "optional<FromUrlUploadRequestCheckUrlDuplicates>",
-                    "validation": undefined,
                   },
                   "expire": "optional<root.ExpireType>",
                   "filename": {
-                    "default": undefined,
                     "docs": "Sets the file name of the resource fetched from the source URL.
 If not defined, the file name is obtained from either HTTP
 response headers or the \`source_url\`'s path.
@@ -5653,18 +5709,15 @@ response headers or the \`source_url\`'s path.
 \`abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._\`.
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                   "metadata[{key}]": "optional<root.MetadataValue>",
                   "pub_key": "root.ProjectPublicKeyType",
                   "save_URL_duplicates": {
-                    "default": undefined,
                     "docs": "Determines if the requested \`source_url\` should be kept in the history of
 fetched/uploaded URLs. If the value is not defined explicitly, it is set
 to the value of the \`check_URL_duplicates\` parameter.
 ",
                     "type": "optional<FromUrlUploadRequestSaveUrlDuplicates>",
-                    "validation": undefined,
                   },
                   "signature": "optional<root.SignatureType>",
                   "source_url": {
@@ -5792,7 +5845,7 @@ Log.d("TAG", status.toString())
                 ],
                 "name": "status-waiting",
                 "query-parameters": {
-                  "token": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                 },
                 "response": {
                   "body": {
@@ -5884,7 +5937,7 @@ Log.d("TAG", status.toString())
                 ],
                 "name": "status-progress",
                 "query-parameters": {
-                  "token": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                 },
                 "response": {
                   "body": {
@@ -5978,7 +6031,7 @@ Log.d("TAG", status.toString())
                 ],
                 "name": "status-success",
                 "query-parameters": {
-                  "token": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                 },
                 "response": {
                   "body": {
@@ -6167,7 +6220,7 @@ Log.d("TAG", status.toString())
                 ],
                 "name": "status-error",
                 "query-parameters": {
-                  "token": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                 },
                 "response": {
                   "body": {
@@ -6261,7 +6314,7 @@ Log.d("TAG", status.toString())
                 ],
                 "name": "status-unknown",
                 "query-parameters": {
-                  "token": "token",
+                  "token": "945ebb27-1fd6-46c6-a859-b9893712d650",
                 },
                 "response": {
                   "body": {
@@ -6846,7 +6899,7 @@ to us as a value of the \`part_size\` parameter (in bytes).
                     "validation": {
                       "exclusiveMax": undefined,
                       "exclusiveMin": undefined,
-                      "max": 5368709120,
+                      "max": undefined,
                       "min": 5242880,
                       "multipleOf": undefined,
                     },
@@ -6871,6 +6924,9 @@ to us as a value of the \`part_size\` parameter (in bytes).
             },
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "types": {
         "BaseUploadResponse": {
@@ -6879,8 +6935,6 @@ the value is the unique ID of the file on our systems.
 ",
           "properties": {
             "filename": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uuid",
@@ -6890,8 +6944,12 @@ the value is the unique ID of the file on our systems.
               },
             },
           },
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
         },
         "FromUrlUploadRequestCheckUrlDuplicates": {
+          "default": "0",
           "docs": "If set to "1", enables the \`source_url\` duplicates prevention.
 Specifically, if the \`source_url\` had already been fetched and uploaded previously,
 this request will return information about the already uploaded file.
@@ -6906,6 +6964,9 @@ this request will return information about the already uploaded file.
               "value": "1",
             },
           ],
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
         },
         "FromUrlUploadRequestSaveUrlDuplicates": {
           "docs": "Determines if the requested \`source_url\` should be kept in the history of
@@ -6922,10 +6983,17 @@ to the value of the \`check_URL_duplicates\` parameter.
               "value": "1",
             },
           ],
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
         },
         "FromUrlUploadResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
           "union": [
             "root.FromUrlUploadResponseSchema",
             "root.FileUploadInfoFromUrl",
@@ -6934,6 +7002,10 @@ to the value of the \`check_URL_duplicates\` parameter.
         "FromUrlUploadStatusResponse": {
           "discriminated": false,
           "docs": undefined,
+          "encoding": undefined,
+          "source": {
+            "openapi": "uploadcare/openapi.json",
+          },
           "union": [
             "root.FileUploadInfoWaitingStatus",
             "root.FileUploadInfoProgressStatus",
@@ -6956,6 +7028,9 @@ to the value of the \`check_URL_duplicates\` parameter.
                 "pattern": undefined,
               },
             },
+          },
+          "source": {
+            "openapi": "uploadcare/openapi.json",
           },
         },
       },
@@ -7098,6 +7173,10 @@ to the value of the \`check_URL_duplicates\` parameter.
       "BadRequestErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "NullCharactersForbiddenError",
           "GroupIdRequiredError",
@@ -7108,12 +7187,13 @@ to the value of the \`check_URL_duplicates\` parameter.
         "properties": {
           "image": "optional<SchemasImageInfo>",
           "mime": {
-            "default": undefined,
             "docs": "MIME type.",
             "type": "optional<ContentInfoMime>",
-            "validation": undefined,
           },
           "video": "optional<VideoInfo>",
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "ContentInfoMime": {
@@ -7131,6 +7211,9 @@ to the value of the \`check_URL_duplicates\` parameter.
             "docs": "Type of MIME type.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "ExpireType": {
@@ -7227,10 +7310,8 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
             "type": "string",
           },
           "s3_bucket": {
-            "default": undefined,
             "docs": "Name of an AWS S3 bucket where the file is stored. Only available if you associate a Foreign Storage Bucket with your project.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "size": {
             "docs": "File's size in bytes.",
@@ -7252,34 +7333,34 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
           },
           "video_info": "optional<LegacyVideoInfo>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoErrorStatus": {
         "docs": undefined,
         "properties": {
           "error": {
-            "default": undefined,
             "docs": "Human readable description of the issue with the fetch/upload task.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "error_code": {
-            "default": undefined,
             "docs": "Machine readable error code.
 
 Note: See the [Errors > FromURL upload errors](#tag/Errors) section of this
 page for a full list of all possible error codes.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The system failed to fetch and/or upload the file.
 ",
             "type": "optional<literal<"error">>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoFromUrl": {
@@ -7290,26 +7371,24 @@ page for a full list of all possible error codes.
         "properties": {
           "type": "optional<literal<"file_info">>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "FileUploadInfoProgressStatus": {
         "docs": undefined,
         "properties": {
           "done": {
-            "default": undefined,
             "docs": "How many bytes of the file have been fetched so far.
 ",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "status": {
-            "default": undefined,
             "docs": "The system is fetching/uploading the file.
 ",
             "type": "optional<literal<"progress">>",
-            "validation": undefined,
           },
           "total": {
-            "default": undefined,
             "docs": "The expected size of the fetched file (in bytes).
 
 **Note:** the value can be missing if the server we are fetching the file from
@@ -7317,8 +7396,10 @@ does not provide the information or if the server is returning the file in, for
 example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding).
 ",
             "type": "optional<double>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoSuccessStatus": {
@@ -7328,18 +7409,18 @@ example, [compressed form](https://developer.mozilla.org/en-US/docs/Web/HTTP/Hea
         ],
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The file has been fetched/uploaded successfully.",
             "type": "optional<literal<"success">>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoUnknownStatus": {
         "docs": undefined,
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The system does not have information about the task.
 
 Note: Uploadcare stores information about the \`/from_url/\` tasks for a limited
@@ -7347,20 +7428,23 @@ period of time only. The endpoint can return the status \`unknown\` for the task
 that are tool old (or that have not been created at all).
 ",
             "type": "optional<literal<"unknown">>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FileUploadInfoWaitingStatus": {
         "docs": undefined,
         "properties": {
           "status": {
-            "default": undefined,
             "docs": "The system is preparing to handle the request.
 ",
             "type": "optional<literal<"waiting">>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "FilesRequiredError": {
@@ -7369,6 +7453,10 @@ that are tool old (or that have not been created at all).
       "ForbiddenErrorBody": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
         "union": [
           "PublicKeyRequiredError",
           "PublicKeyInvalidError",
@@ -7378,7 +7466,6 @@ that are tool old (or that have not been created at all).
         "docs": "\`/from_url/\` upload response.",
         "properties": {
           "token": {
-            "default": undefined,
             "docs": "Token to identify a \`/from_url/\` request.",
             "type": "optional<string>",
             "validation": {
@@ -7389,6 +7476,9 @@ that are tool old (or that have not been created at all).
             },
           },
           "type": "optional<literal<"token">>",
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "GroupFileUrlParsingFailedError": {
@@ -7407,7 +7497,6 @@ that are tool old (or that have not been created at all).
         "docs": "File group information object.",
         "properties": {
           "cdn_url": {
-            "default": undefined,
             "docs": "Group's CDN URL.",
             "type": "optional<string>",
             "validation": {
@@ -7418,38 +7507,28 @@ that are tool old (or that have not been created at all).
             },
           },
           "datetime_created": {
-            "default": undefined,
             "docs": "ISO-8601 date and time when the group was created.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "datetime_stored": {
-            "default": undefined,
+            "availability": "deprecated",
             "docs": "ISO-8601 date and time when the group was marked as stored.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "files": {
-            "default": undefined,
             "docs": "The list of files in the group. An array may contain null values if a file has been removed.
 ",
             "type": "optional<list<unknown>>",
-            "validation": undefined,
           },
           "files_count": {
-            "default": undefined,
             "docs": "Number of the files in the group.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "id": {
-            "default": undefined,
             "docs": "Group's unique ID.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "url": {
-            "default": undefined,
             "docs": "Group's API resource URL. See the [REST API](/api-refs/rest-api/) documentation for details.",
             "type": "optional<string>",
             "validation": {
@@ -7459,6 +7538,9 @@ that are tool old (or that have not been created at all).
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "GroupNotFoundError": {
@@ -7475,33 +7557,26 @@ that are tool old (or that have not been created at all).
             "type": "ImageInfoColorMode",
           },
           "datetime_original": {
-            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "dpi": {
-            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
-            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<ImageInfoGeoLocation>",
-            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
-            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
             "validation": {
@@ -7521,6 +7596,9 @@ that are tool old (or that have not been created at all).
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "ImageInfoColorMode": {
         "docs": "Image color mode.",
@@ -7537,6 +7615,9 @@ that are tool old (or that have not been created at all).
           "HSV",
           "LAB",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "ImageInfoGeoLocation": {
         "docs": "Geo-location of image from EXIF.",
@@ -7550,111 +7631,93 @@ that are tool old (or that have not been created at all).
             "type": "double",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "LegacyVideoInfo": {
         "docs": "Video metadata.",
         "properties": {
           "audio": {
-            "default": undefined,
             "docs": "Audio stream's metadata.",
             "type": "optional<LegacyVideoInfoAudio>",
-            "validation": undefined,
           },
           "bitrate": {
-            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "duration": {
-            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "format": {
-            "default": undefined,
             "docs": "Video file's format.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "video": {
-            "default": undefined,
             "docs": "Video stream's metadata.",
             "type": "optional<LegacyVideoInfoVideo>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "LegacyVideoInfoAudio": {
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "channels": {
-            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "sample_rate": {
-            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "LegacyVideoInfoVideo": {
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Video stream codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "frame_rate": {
-            "default": undefined,
             "docs": "Video stream's frame rate.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "height": {
-            "default": undefined,
             "docs": "Video stream's image height.",
             "type": "optional<double>",
-            "validation": undefined,
           },
           "width": {
-            "default": undefined,
             "docs": "Video stream's image width.",
             "type": "optional<double>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "Metadata": {
-        "default": undefined,
         "docs": "Arbitrary metadata associated with a file.",
         "type": "optional<map<string, unknown>>",
-        "validation": undefined,
       },
       "MetadataValue": {
         "docs": "Arbitrary metadata associated with the file.
@@ -7734,33 +7797,26 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "SchemasImageInfoColorMode",
           },
           "datetime_original": {
-            "default": undefined,
             "docs": "Image date and time from EXIF. Please be aware that this data is not always formatted and displayed exactly as it appears in the EXIF.",
             "type": "optional<datetime>",
-            "validation": undefined,
           },
           "dpi": {
-            "default": undefined,
             "docs": "Image DPI for two dimensions.",
             "type": "optional<list<double>>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Image format.",
             "type": "string",
           },
           "geo_location": {
-            "default": undefined,
             "docs": "Geo-location of image from EXIF.",
             "type": "optional<SchemasImageInfoGeoLocation>",
-            "validation": undefined,
           },
           "height": {
             "docs": "Image height in pixels.",
             "type": "integer",
           },
           "orientation": {
-            "default": undefined,
             "docs": "Image orientation from EXIF.",
             "type": "optional<integer>",
             "validation": {
@@ -7780,6 +7836,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "SchemasImageInfoColorMode": {
         "docs": "Image color mode.",
@@ -7796,6 +7855,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
           "HSV",
           "LAB",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "SchemasImageInfoGeoLocation": {
         "docs": "Geo-location of image from EXIF.",
@@ -7808,6 +7870,9 @@ See [docs](https://uploadcare.com/docs/file-metadata/) and [REST API v0.7](/api-
             "docs": "Location longitude.",
             "type": "double",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "SignatureExpirationError": {
@@ -7837,6 +7902,7 @@ See [signed uploads](https://uploadcare.com/docs/security/secure-uploads/) for d
         "type": "string",
       },
       "StoreType": {
+        "default": "auto",
         "docs": "Determines if an uploaded file should be marked as temporary or permanent.
 
 The parameter can have the following values:
@@ -7866,6 +7932,9 @@ change the value to \`auto\`.
           },
           "auto",
         ],
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "TokenRequiredError": {
         "type": "string",
@@ -7908,16 +7977,12 @@ change the value to \`auto\`.
         "properties": {
           "audio": "list<VideoInfoAudioItem>",
           "bitrate": {
-            "default": undefined,
             "docs": "Video file's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "duration": {
-            "default": undefined,
             "docs": "Video file's duration in milliseconds.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "format": {
             "docs": "Video file's format.",
@@ -7925,50 +7990,44 @@ change the value to \`auto\`.
           },
           "video": "list<VideoInfoVideoItem>",
         },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
+        },
       },
       "VideoInfoAudioItem": {
         "docs": "Audio stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Audio stream's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "channels": {
-            "default": undefined,
             "docs": "Audio stream's number of channels.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Audio stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "sample_rate": {
-            "default": undefined,
             "docs": "Audio stream's sample rate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
       "VideoInfoVideoItem": {
         "docs": "Video stream's metadata.",
         "properties": {
           "bitrate": {
-            "default": undefined,
             "docs": "Video stream's bitrate.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "codec": {
-            "default": undefined,
             "docs": "Video stream's codec.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "frame_rate": {
             "docs": "Video stream's frame rate.",
@@ -7982,6 +8041,9 @@ change the value to \`auto\`.
             "docs": "Video stream's image width.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "uploadcare/openapi.json",
         },
       },
     },

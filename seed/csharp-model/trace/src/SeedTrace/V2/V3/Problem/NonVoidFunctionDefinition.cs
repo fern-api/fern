@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2.V3;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2.V3;
 
-public class NonVoidFunctionDefinition
+public record NonVoidFunctionDefinition
 {
     [JsonPropertyName("signature")]
-    public NonVoidFunctionSignature Signature { get; init; }
+    public required NonVoidFunctionSignature Signature { get; set; }
 
     [JsonPropertyName("code")]
-    public FunctionImplementationForMultipleLanguages Code { get; init; }
+    public required FunctionImplementationForMultipleLanguages Code { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

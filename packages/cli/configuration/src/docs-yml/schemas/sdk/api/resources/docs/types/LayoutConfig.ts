@@ -57,7 +57,7 @@ export interface LayoutConfig {
      *
      * Note: this setting is ignored when `disable-header` is set to true.
      */
-    searchbarPlacement?: FernDocsConfig.SidebarOrHeaderPlacement;
+    searchbarPlacement?: FernDocsConfig.SearchbarPlacement;
     /**
      * Set the placement of the tabs
      *
@@ -65,7 +65,7 @@ export interface LayoutConfig {
      *
      * Note: this setting is ignored when `disable-header` is set to true.
      */
-    tabsPlacement?: FernDocsConfig.SidebarOrHeaderPlacement;
+    tabsPlacement?: FernDocsConfig.TabsPlacement;
     /**
      * Set the alignment of the mardown content.
      *

@@ -1,5 +1,5 @@
-using System.Text.Json;
-using SeedExhaustive;
+using System.Net.Http;
+using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
 #nullable enable
@@ -20,17 +20,18 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/list-of-primitives",
+                Path = "/container/list-of-primitives",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<string>>(responseBody);
+            return JsonUtils.Deserialize<IEnumerable<string>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -40,17 +41,18 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/list-of-objects",
+                Path = "/container/list-of-objects",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<ObjectWithRequiredField>>(responseBody);
+            return JsonUtils.Deserialize<IEnumerable<ObjectWithRequiredField>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -58,17 +60,18 @@ public class ContainerClient
     public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(HashSet<string> request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/set-of-primitives",
+                Path = "/container/set-of-primitives",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<HashSet<string>>(responseBody);
+            return JsonUtils.Deserialize<HashSet<string>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -78,17 +81,18 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/set-of-objects",
+                Path = "/container/set-of-objects",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<HashSet<ObjectWithRequiredField>>(responseBody);
+            return JsonUtils.Deserialize<HashSet<ObjectWithRequiredField>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -98,17 +102,18 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/map-prim-to-prim",
+                Path = "/container/map-prim-to-prim",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Dictionary<string, string>>(responseBody);
+            return JsonUtils.Deserialize<Dictionary<string, string>>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -118,19 +123,20 @@ public class ContainerClient
     > GetAndReturnMapOfPrimToObjectAsync(Dictionary<string, ObjectWithRequiredField> request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/map-prim-to-object",
+                Path = "/container/map-prim-to-object",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Dictionary<string, ObjectWithRequiredField>>(
+            return JsonUtils.Deserialize<Dictionary<string, ObjectWithRequiredField>>(
                 responseBody
-            );
+            )!;
         }
         throw new Exception(responseBody);
     }
@@ -140,17 +146,18 @@ public class ContainerClient
     )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/opt-objects",
+                Path = "/container/opt-objects",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ObjectWithRequiredField?>(responseBody);
+            return JsonUtils.Deserialize<ObjectWithRequiredField?>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

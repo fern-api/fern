@@ -33,7 +33,7 @@ public final class CoreMediaTypesGenerator extends AbstractFileGenerator {
 
     @Override
     public GeneratedResourcesJavaFile generateFile() {
-        try (InputStream is = RetryInterceptorGenerator.class.getResourceAsStream("/MediaTypes.java")) {
+        try (InputStream is = CoreMediaTypesGenerator.class.getResourceAsStream("/MediaTypes.java")) {
             String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
             return GeneratedResourcesJavaFile.builder()
                     .className(className)

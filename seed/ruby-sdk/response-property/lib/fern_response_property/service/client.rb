@@ -22,10 +22,20 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_movie(request: "string")
     def get_movie(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -37,10 +47,20 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_movie_docs(request: "string")
     def get_movie_docs(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -52,10 +72,20 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::StringResponse]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_movie_name(request: "string")
     def get_movie_name(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -67,10 +97,20 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_movie_metadata(request: "string")
     def get_movie_metadata(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -82,10 +122,20 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_optional_movie(request: "string")
     def get_optional_movie(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -97,10 +147,20 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::OPTIONAL_WITH_DOCS]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_optional_movie_docs(request: "string")
     def get_optional_movie_docs(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -112,10 +172,20 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::OPTIONAL_STRING_RESPONSE]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_optional_movie_name(request: "string")
     def get_optional_movie_name(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/movie"
       end
@@ -138,11 +208,21 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_movie(request: "string")
     def get_movie(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -155,11 +235,21 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_movie_docs(request: "string")
     def get_movie_docs(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -172,11 +262,21 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::StringResponse]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_movie_name(request: "string")
     def get_movie_name(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -189,11 +289,21 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_movie_metadata(request: "string")
     def get_movie_metadata(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -206,11 +316,21 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::Response]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_optional_movie(request: "string")
     def get_optional_movie(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -223,11 +343,21 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::Service::OPTIONAL_WITH_DOCS]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_optional_movie_docs(request: "string")
     def get_optional_movie_docs(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end
@@ -240,11 +370,21 @@ module SeedResponsePropertyClient
     # @param request [String]
     # @param request_options [SeedResponsePropertyClient::RequestOptions]
     # @return [SeedResponsePropertyClient::OPTIONAL_STRING_RESPONSE]
+    # @example
+    #  response_property = SeedResponsePropertyClient::Client.new(base_url: "https://api.example.com")
+    #  response_property.service.get_optional_movie_name(request: "string")
     def get_optional_movie_name(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/movie"
         end

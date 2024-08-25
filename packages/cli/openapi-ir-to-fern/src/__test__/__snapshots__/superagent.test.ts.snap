@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser superagent docs 1`] = `
+exports[`open api parser > superagent > docs 1`] = `
 {
   "definitionFiles": {
     "agent.yml": {
@@ -38,7 +38,10 @@ exports[`open api parser superagent docs 1`] = `
               "body": {
                 "properties": {
                   "documentId": "optional<string>",
-                  "has_memory": "optional<boolean>",
+                  "has_memory": {
+                    "default": false,
+                    "type": "optional<boolean>",
+                  },
                   "llm": "optional<map<string, unknown>>",
                   "name": "string",
                   "promptId": "optional<string>",
@@ -148,7 +151,9 @@ exports[`open api parser superagent docs 1`] = `
                 "path-parameters": {
                   "agentId": "agentId",
                 },
-                "request": {},
+                "request": {
+                  "key": "value",
+                },
                 "response": {
                   "body": {
                     "key": "value",
@@ -183,7 +188,9 @@ exports[`open api parser superagent docs 1`] = `
                   "agentId": "agentId",
                 },
                 "request": {
-                  "input": {},
+                  "input": {
+                    "key": "value",
+                  },
                 },
                 "response": {
                   "body": {
@@ -201,7 +208,10 @@ exports[`open api parser superagent docs 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "has_streaming": "optional<boolean>",
+                  "has_streaming": {
+                    "default": false,
+                    "type": "optional<boolean>",
+                  },
                   "input": "map<string, unknown>",
                 },
               },
@@ -214,6 +224,9 @@ exports[`open api parser superagent docs 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -344,6 +357,9 @@ exports[`open api parser superagent docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "auth.yml": {
@@ -435,6 +451,9 @@ exports[`open api parser superagent docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "documents.yml": {
@@ -473,7 +492,12 @@ exports[`open api parser superagent docs 1`] = `
               "body": {
                 "properties": {
                   "authorization": "optional<map<string, unknown>>",
-                  "from_page": "optional<integer>",
+                  "from_page": {
+                    "default": [
+                      1,
+                    ],
+                    "type": "optional<integer>",
+                  },
                   "name": "string",
                   "splitter": "optional<map<string, unknown>>",
                   "to_page": "optional<integer>",
@@ -571,6 +595,9 @@ exports[`open api parser superagent docs 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -716,7 +743,9 @@ exports[`open api parser superagent docs 1`] = `
                 "path-parameters": {
                   "promptId": "promptId",
                 },
-                "request": {},
+                "request": {
+                  "key": "value",
+                },
                 "response": {
                   "body": {
                     "key": "value",
@@ -738,6 +767,9 @@ exports[`open api parser superagent docs 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -871,6 +903,9 @@ exports[`open api parser superagent docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "traces.yml": {
@@ -899,6 +934,9 @@ exports[`open api parser superagent docs 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -961,6 +999,9 @@ exports[`open api parser superagent docs 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -1079,6 +1120,9 @@ exports[`open api parser superagent docs 1`] = `
         "properties": {
           "detail": "optional<list<ValidationError>>",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -1087,10 +1131,17 @@ exports[`open api parser superagent docs 1`] = `
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
         "union": [
           "string",
           "integer",
@@ -1121,7 +1172,7 @@ exports[`open api parser superagent docs 1`] = `
 }
 `;
 
-exports[`open api parser superagent simple 1`] = `
+exports[`open api parser > superagent > simple 1`] = `
 {
   "definitionFiles": {
     "agent.yml": {
@@ -1159,7 +1210,10 @@ exports[`open api parser superagent simple 1`] = `
               "body": {
                 "properties": {
                   "documentId": "optional<string>",
-                  "has_memory": "optional<boolean>",
+                  "has_memory": {
+                    "default": false,
+                    "type": "optional<boolean>",
+                  },
                   "llm": "optional<map<string, unknown>>",
                   "name": "string",
                   "promptId": "optional<string>",
@@ -1269,7 +1323,9 @@ exports[`open api parser superagent simple 1`] = `
                 "path-parameters": {
                   "agentId": "agentId",
                 },
-                "request": {},
+                "request": {
+                  "key": "value",
+                },
                 "response": {
                   "body": {
                     "key": "value",
@@ -1304,7 +1360,9 @@ exports[`open api parser superagent simple 1`] = `
                   "agentId": "agentId",
                 },
                 "request": {
-                  "input": {},
+                  "input": {
+                    "key": "value",
+                  },
                 },
                 "response": {
                   "body": {
@@ -1322,7 +1380,10 @@ exports[`open api parser superagent simple 1`] = `
             "request": {
               "body": {
                 "properties": {
-                  "has_streaming": "optional<boolean>",
+                  "has_streaming": {
+                    "default": false,
+                    "type": "optional<boolean>",
+                  },
                   "input": "map<string, unknown>",
                 },
               },
@@ -1335,6 +1396,9 @@ exports[`open api parser superagent simple 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -1465,6 +1529,9 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "auth.yml": {
@@ -1556,6 +1623,9 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "documents.yml": {
@@ -1594,7 +1664,12 @@ exports[`open api parser superagent simple 1`] = `
               "body": {
                 "properties": {
                   "authorization": "optional<map<string, unknown>>",
-                  "from_page": "optional<integer>",
+                  "from_page": {
+                    "default": [
+                      1,
+                    ],
+                    "type": "optional<integer>",
+                  },
                   "name": "string",
                   "splitter": "optional<map<string, unknown>>",
                   "to_page": "optional<integer>",
@@ -1692,6 +1767,9 @@ exports[`open api parser superagent simple 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -1837,7 +1915,9 @@ exports[`open api parser superagent simple 1`] = `
                 "path-parameters": {
                   "promptId": "promptId",
                 },
-                "request": {},
+                "request": {
+                  "key": "value",
+                },
                 "response": {
                   "body": {
                     "key": "value",
@@ -1859,6 +1939,9 @@ exports[`open api parser superagent simple 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -1992,6 +2075,9 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
     "traces.yml": {
@@ -2020,6 +2106,9 @@ exports[`open api parser superagent simple 1`] = `
               "type": "unknown",
             },
           },
+        },
+        "source": {
+          "openapi": "superagent/openapi.yml",
         },
       },
     },
@@ -2083,6 +2172,9 @@ exports[`open api parser superagent simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
     },
   },
@@ -2100,6 +2192,9 @@ exports[`open api parser superagent simple 1`] = `
         "properties": {
           "detail": "optional<list<ValidationError>>",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationError": {
         "docs": undefined,
@@ -2108,10 +2203,17 @@ exports[`open api parser superagent simple 1`] = `
           "msg": "string",
           "type": "string",
         },
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
       },
       "ValidationErrorLocItem": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "superagent/openapi.yml",
+        },
         "union": [
           "string",
           "integer",

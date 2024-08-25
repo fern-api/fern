@@ -1,7 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
+exports[`x-fern-ignore-schema > x-fern-ignore-schema > parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -16,27 +17,31 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "SchemaToKeep",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaToKeepId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schemaToKeepId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SchemaToKeepId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -51,6 +56,10 @@ exports[`x-fern-ignore-schema x-fern-ignore-schema parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-ignore-schema/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

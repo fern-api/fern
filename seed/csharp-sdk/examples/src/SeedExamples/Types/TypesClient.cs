@@ -1,14 +1,14 @@
-using SeedExamples;
+using SeedExamples.Core;
 
 #nullable enable
 
 namespace SeedExamples;
 
-public class TypesClient
+public partial class TypesClient
 {
     private RawClient _client;
 
-    public TypesClient(RawClient client)
+    internal TypesClient(RawClient client)
     {
         _client = client;
     }

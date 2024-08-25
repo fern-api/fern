@@ -12,5 +12,80 @@
     }
   ],
   "auth": null,
-  "item": []
+  "item": [
+    {
+      "_type": "endpoint",
+      "name": "Get",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}/:typeId",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            ":typeId"
+          ],
+          "query": [],
+          "variable": [
+            {
+              "key": "typeId",
+              "description": null,
+              "value": "type-kaljhv87"
+            }
+          ]
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "GET",
+        "auth": null,
+        "body": null
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/:typeId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ":typeId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "typeId",
+                  "description": null,
+                  "value": "type-kaljhv87"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "description": null,
+          "body": "",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    }
+  ]
 }

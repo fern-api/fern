@@ -45,10 +45,11 @@ module SeedTraceClient
           # @return [SeedTraceClient::V2::V3::Problem::FileInfoV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            filename = struct["filename"]
-            directory = struct["directory"]
-            contents = struct["contents"]
-            editable = struct["editable"]
+            parsed_json = JSON.parse(json_object)
+            filename = parsed_json["filename"]
+            directory = parsed_json["directory"]
+            contents = parsed_json["contents"]
+            editable = parsed_json["editable"]
             new(
               filename: filename,
               directory: directory,

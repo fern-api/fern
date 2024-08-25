@@ -1,122 +1,145 @@
+using System.Net.Http;
 using System.Text;
-using System.Text.Json;
+using System.Threading;
 
-namespace SeedResponseProperty;
+namespace SeedResponseProperty.Core;
 
 #nullable enable
 
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
-public class RawClient
+internal class RawClient(ClientOptions clientOptions)
 {
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
-    private readonly ClientOptions _clientOptions;
+    public readonly ClientOptions Options = clientOptions;
 
-    /// <summary>
-    /// Global headers to be sent with every request.
-    /// </summary>
-    private readonly Dictionary<String, String> _headers;
-
-    public RawClient(Dictionary<String, String> headers, ClientOptions clientOptions)
+    public async Task<ApiResponse> MakeRequestAsync(
+        BaseApiRequest request,
+        CancellationToken cancellationToken = default
+    )
     {
-        _clientOptions = clientOptions;
-        _headers = headers;
-    }
-
-    public async Task<ApiResponse> MakeRequestAsync(ApiRequest request)
-    {
-        var httpRequest = new HttpRequestMessage(
-            request.Method,
-            this.BuildUrl(request.Path, request.Query)
-        );
+        var url = BuildUrl(request);
+        var httpRequest = new HttpRequestMessage(request.Method, url);
         if (request.ContentType != null)
         {
             request.Headers.Add("Content-Type", request.ContentType);
         }
-        // Add global headers to the request
-        foreach (var (key, value) in _headers)
-        {
-            httpRequest.Headers.Add(key, value);
-        }
-        // Add request headers to the request
-        foreach (var (key, value) in request.Headers)
-        {
-            httpRequest.Headers.Add(key, value);
-        }
+        SetHeaders(httpRequest, Options.Headers);
+        SetHeaders(httpRequest, request.Headers);
+        SetHeaders(httpRequest, request.Options?.Headers ?? new());
+
         // Add the request body to the request
-        if (request.Body != null)
+        if (request is JsonApiRequest jsonRequest)
         {
-            var serializerOptions = new JsonSerializerOptions { WriteIndented = true, };
-            httpRequest.Content = new StringContent(
-                JsonSerializer.Serialize(request.Body, serializerOptions),
-                Encoding.UTF8,
-                "application/json"
-            );
+            if (jsonRequest.Body != null)
+            {
+                httpRequest.Content = new StringContent(
+                    JsonUtils.Serialize(jsonRequest.Body),
+                    Encoding.UTF8,
+                    "application/json"
+                );
+            }
+        }
+        else if (request is StreamApiRequest { Body: not null } streamRequest)
+        {
+            httpRequest.Content = new StreamContent(streamRequest.Body);
         }
         // Send the request
-        HttpResponseMessage response = await _clientOptions.HttpClient.SendAsync(httpRequest);
+        var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
-    /// <summary>
-    /// The request object to be sent to the API.
-    /// </summary>
-    public class ApiRequest
+    public record BaseApiRequest
     {
-        public HttpMethod Method;
+        public required string BaseUrl { get; init; }
 
-        public string Path;
+        public required HttpMethod Method { get; init; }
 
-        public string? ContentType = null;
+        public required string Path { get; init; }
 
-        public object? Body { get; init; } = null;
+        public string? ContentType { get; init; }
 
         public Dictionary<string, object> Query { get; init; } = new();
 
-        public Dictionary<string, string> Headers { get; init; } = new();
+        public Headers Headers { get; init; } = new();
 
-        public object RequestOptions { get; init; }
+        public RequestOptions? Options { get; init; }
+    }
+
+    /// <summary>
+    /// The request object to be sent for streaming uploads.
+    /// </summary>
+    public record StreamApiRequest : BaseApiRequest
+    {
+        public Stream? Body { get; init; }
+    }
+
+    /// <summary>
+    /// The request object to be sent for JSON APIs.
+    /// </summary>
+    public record JsonApiRequest : BaseApiRequest
+    {
+        public object? Body { get; init; }
     }
 
     /// <summary>
     /// The response object returned from the API.
     /// </summary>
-    public class ApiResponse
+    public record ApiResponse
     {
-        public int StatusCode;
+        public required int StatusCode { get; init; }
 
-        public HttpResponseMessage Raw;
+        public required HttpResponseMessage Raw { get; init; }
     }
 
-    private Dictionary<string, string> GetHeaders(ApiRequest request)
+    private void SetHeaders(HttpRequestMessage httpRequest, Headers headers)
     {
-        var headers = new Dictionary<string, string>();
-        foreach (var (key, value) in request.Headers)
+        foreach (var header in headers)
         {
-            headers.Add(key, value);
-        }
-        foreach (var (key, value) in _headers)
-        {
-            headers.Add(key, value);
-        }
-        return headers;
-    }
-
-    private string BuildUrl(string path, Dictionary<string, object> query)
-    {
-        var url = $"{_clientOptions.BaseUrl}{path}";
-        if (query.Count > 0)
-        {
-            url += "?";
-            foreach (var (key, value) in query)
+            var value = header.Value?.Match(str => str, func => func.Invoke());
+            if (value != null)
             {
-                url += $"{key}={value}&";
+                httpRequest.Headers.TryAddWithoutValidation(header.Key, value);
             }
-            url = url.Substring(0, url.Length - 1);
         }
+    }
+
+    private string BuildUrl(BaseApiRequest request)
+    {
+        var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
+        var trimmedBaseUrl = baseUrl.TrimEnd('/');
+        var trimmedBasePath = request.Path.TrimStart('/');
+        var url = $"{trimmedBaseUrl}/{trimmedBasePath}";
+        if (request.Query.Count <= 0)
+            return url;
+        url += "?";
+        url = request.Query.Aggregate(
+            url,
+            (current, queryItem) =>
+            {
+                if (queryItem.Value is System.Collections.IEnumerable collection and not string)
+                {
+                    var items = collection
+                        .Cast<object>()
+                        .Select(value => $"{queryItem.Key}={value}")
+                        .ToList();
+                    if (items.Any())
+                    {
+                        current += string.Join("&", items) + "&";
+                    }
+                }
+                else
+                {
+                    current += $"{queryItem.Key}={queryItem.Value}&";
+                }
+                return current;
+            }
+        );
+        url = url.Substring(0, url.Length - 1);
         return url;
     }
 }

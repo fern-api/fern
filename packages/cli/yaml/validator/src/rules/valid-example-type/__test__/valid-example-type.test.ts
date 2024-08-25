@@ -55,6 +55,24 @@ describe("valid-example-type", () => {
             {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be a date. Example is: "2024-01-35"',
+                nodePath: ["types", "DateAlias", { key: "examples", arrayIndex: 1 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be a date. Example is: "2024-01-01T00:00:00Z"',
+                nodePath: ["types", "DateAlias", { key: "examples", arrayIndex: 2 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
+                message: 'Expected example to be a date. Example is: "2024-1-1"',
+                nodePath: ["types", "DateAlias", { key: "examples", arrayIndex: 3 }]
+            },
+            {
+                severity: "error",
+                relativeFilepath: RelativeFilePath.of("alias.yml"),
                 message: 'Expected example to be an ISO 8601 timestamp. Example is: "4/13/2002"',
                 nodePath: ["types", "DateTimeAlias", { key: "examples", arrayIndex: 0 }]
             },
@@ -198,15 +216,13 @@ describe("valid-example-type", () => {
             {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("object.yml"),
-                message:
-                    'Example is missing required property "foo". Object1 -> (extends) commons.ObjectWithFooAndBar -> foo',
+                message: 'Example is missing required property "foo"',
                 nodePath: ["types", "Object1", { key: "examples", arrayIndex: 2 }]
             },
             {
                 severity: "error",
                 relativeFilepath: RelativeFilePath.of("object.yml"),
-                message:
-                    'Example is missing required property "bar". Object1 -> (extends) commons.ObjectWithFooAndBar -> (extends) ObjectWithBar -> bar',
+                message: 'Example is missing required property "bar"',
                 nodePath: ["types", "Object1", { key: "examples", arrayIndex: 3 }]
             },
             {

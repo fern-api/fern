@@ -3,10 +3,14 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src/**/*"],
   "references": [
+    { "path": "../../../commons/core-utils" },
     { "path": "../../../commons/fs-utils" },
     { "path": "../../configuration" },
+    { "path": "../../docs-markdown-utils" },
     { "path": "../../logger" },
+    { "path": "../../task-context" },
     { "path": "../../workspace-loader" },
+    { "path": "../../project-loader" },
     { "path": "../yaml-schema" }
   ]
 }

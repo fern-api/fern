@@ -10,6 +10,7 @@ export interface ExpressCustomConfig {
     noSerdeLayer: boolean;
     skipRequestValidation: boolean;
     skipResponseValidation: boolean;
+    requestValidationStatusCode: number;
     outputEsm: boolean;
     outputSourceFiles: boolean;
     retainOriginalCasing: boolean;

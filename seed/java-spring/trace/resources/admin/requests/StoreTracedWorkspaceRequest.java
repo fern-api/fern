@@ -19,7 +19,7 @@ import java.util.Objects;
 import resources.submission.types.TraceResponse;
 import resources.submission.types.WorkspaceRunDetails;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = StoreTracedWorkspaceRequest.Builder.class
 )

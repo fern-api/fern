@@ -10,8 +10,8 @@ export const DoublyLinkedListNodeAndListValue: core.serialization.ObjectSchema<
     serializers.DoublyLinkedListNodeAndListValue.Raw,
     SeedTrace.DoublyLinkedListNodeAndListValue
 > = core.serialization.object({
-    nodeId: core.serialization.lazy(async () => (await import("../../..")).NodeId),
-    fullList: core.serialization.lazyObject(async () => (await import("../../..")).DoublyLinkedListValue),
+    nodeId: core.serialization.lazy(() => serializers.NodeId),
+    fullList: core.serialization.lazyObject(() => serializers.DoublyLinkedListValue),
 });
 
 export declare namespace DoublyLinkedListNodeAndListValue {

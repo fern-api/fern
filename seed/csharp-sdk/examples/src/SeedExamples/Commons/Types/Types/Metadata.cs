@@ -1,17 +1,23 @@
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 #nullable enable
 
 namespace SeedExamples.Commons;
 
-public class Metadata
+public record Metadata
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("data")]
-    public Dictionary<string, string>? Data { get; init; }
+    public Dictionary<string, string>? Data { get; set; }
 
     [JsonPropertyName("jsonString")]
-    public string? JsonString { get; init; }
+    public string? JsonString { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

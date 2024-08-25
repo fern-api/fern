@@ -7,6 +7,9 @@ import fern.ir.resources as ir_types
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import HttpX
+from fern_python.generators.sdk.client_generator.endpoint_metadata_collector import (
+    EndpointMetadataCollector,
+)
 from fern_python.generators.sdk.client_generator.endpoint_response_code_writer import (
     EndpointResponseCodeWriter,
 )
@@ -15,7 +18,6 @@ from fern_python.generators.sdk.core_utilities.client_wrapper_generator import (
     ConstructorParameter,
 )
 from fern_python.snippet import SnippetRegistry, SnippetWriter
-from fern_python.source_file_factory.source_file_factory import SourceFileFactory
 
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import (
@@ -69,6 +71,7 @@ class RootClientGenerator:
         snippet_registry: SnippetRegistry,
         snippet_writer: SnippetWriter,
         oauth_scheme: Optional[ir_types.OAuthScheme],
+        endpoint_metadata_collector: EndpointMetadataCollector,
     ):
         self._context = context
         self._package = package
@@ -80,6 +83,7 @@ class RootClientGenerator:
         self._snippet_registry = snippet_registry
         self._snippet_writer = snippet_writer
         self._oauth_scheme = oauth_scheme
+        self._endpoint_metadata_collector = endpoint_metadata_collector
 
         client_wrapper_generator = ClientWrapperGenerator(
             context=self._context,
@@ -103,24 +107,48 @@ class RootClientGenerator:
         if self._oauth_scheme is not None:
             oauth = self._oauth_scheme.configuration.get_as_union()
             if oauth.type == "clientCredentials":
-                if oauth.client_id_env_var is None:
-                    self._root_client_constructor_params.append(
-                        ConstructorParameter(
-                            constructor_parameter_name="client_id",
-                            type_hint=AST.TypeHint.str_(),
-                            private_member_name="client_id",
-                            instantiation=AST.Expression(f'client_id="YOUR_CLIENT_ID"'),
-                        )
+                self._root_client_constructor_params.append(
+                    ConstructorParameter(
+                        constructor_parameter_name="client_id",
+                        type_hint=AST.TypeHint.str_(),
+                        private_member_name="client_id",
+                        instantiation=AST.Expression(f'client_id="YOUR_CLIENT_ID"'),
+                        # TODO: support OAuth credentials in templates
+                        # template=TemplateGenerator.string_template(
+                        #     is_optional=False,
+                        #     template_string_prefix="client_id",
+                        #     inputs=[
+                        #         TemplateInput.factory.payload(
+                        #             PayloadInput(
+                        #                 location="AUTH",
+                        #                 path="client_id",
+                        #             )
+                        #         )
+                        #     ]
+                        # )
                     )
-                if oauth.client_secret_env_var is None:
-                    self._root_client_constructor_params.append(
-                        ConstructorParameter(
-                            constructor_parameter_name="client_secret",
-                            type_hint=AST.TypeHint.str_(),
-                            private_member_name="client_secret",
-                            instantiation=AST.Expression(f'client_secret="YOUR_CLIENT_SECRET"'),
-                        )
+                )
+                self._root_client_constructor_params.append(
+                    ConstructorParameter(
+                        constructor_parameter_name="client_secret",
+                        type_hint=AST.TypeHint.str_(),
+                        private_member_name="client_secret",
+                        instantiation=AST.Expression(f'client_secret="YOUR_CLIENT_SECRET"'),
+                        # TODO: support OAuth credentials in templates
+                        # template=TemplateGenerator.string_template(
+                        #     is_optional=False,
+                        #     template_string_prefix="client_secret",
+                        #     inputs=[
+                        #         TemplateInput.factory.payload(
+                        #             PayloadInput(
+                        #                 location="AUTH",
+                        #                 path="client_secret",
+                        #             )
+                        #         )
+                        #     ]
+                        # )
                     )
+                )
             self._root_client_constructor_params.append(
                 ConstructorParameter(
                     constructor_parameter_name=self.TOKEN_GETTER_PARAM_NAME,
@@ -134,9 +162,8 @@ class RootClientGenerator:
     def generate(self, source_file: SourceFile) -> GeneratedRootClient:
         exported_client_class_name = self._context.get_class_name_for_exported_root_client()
         builder = RootClientGenerator.GeneratedRootClientBuilder(
-            module_path=self._context.get_module_path_in_project(
-                self._context.get_filepath_for_exported_root_client().to_module().path
-            ),
+            # HACK: This is a hack to get the module path for the root client to be from the root of the project
+            module_path=self._context.get_module_path_in_project(()),
             class_name=self._context.get_class_name_for_exported_root_client(),
             async_class_name="Async" + exported_client_class_name,
             constructor_parameters=self._root_client_constructor_params,
@@ -213,7 +240,7 @@ class RootClientGenerator:
             for param in constructor_parameters
         ]
 
-        snippet = SourceFileFactory.create_snippet()
+        snippet = self._context.source_file_factory.create_snippet()
         snippet.add_expression(
             generated_root_client.async_instantiation if is_async else generated_root_client.sync_instantiation
         )
@@ -248,24 +275,26 @@ class RootClientGenerator:
                     is_async=is_async,
                     generated_root_client=generated_root_client,
                     snippet_writer=self._snippet_writer,
+                    endpoint_metadata_collector=self._endpoint_metadata_collector,
                 )
-                generated_endpoint_function = endpoint_function_generator.generate()
-                class_declaration.add_method(generated_endpoint_function.function)
-                if (
-                    not self._is_default_body_parameter_used
-                    and generated_endpoint_function.is_default_body_parameter_used
-                ):
-                    self._is_default_body_parameter_used = True
+                generated_endpoint_functions = endpoint_function_generator.generate()
+                for generated_endpoint_function in generated_endpoint_functions:
+                    class_declaration.add_method(generated_endpoint_function.function)
+                    if (
+                        not self._is_default_body_parameter_used
+                        and generated_endpoint_function.is_default_body_parameter_used
+                    ):
+                        self._is_default_body_parameter_used = True
 
-                for val in generated_endpoint_function.snippets or []:
-                    if is_async:
-                        self._snippet_registry.register_async_client_endpoint_snippet(
-                            endpoint=endpoint, expr=val.snippet, example_id=val.example_id
-                        )
-                    else:
-                        self._snippet_registry.register_sync_client_endpoint_snippet(
-                            endpoint=endpoint, expr=val.snippet, example_id=val.example_id
-                        )
+                    for val in generated_endpoint_function.snippets or []:
+                        if is_async:
+                            self._snippet_registry.register_async_client_endpoint_snippet(
+                                endpoint=endpoint, expr=val.snippet, example_id=val.example_id
+                            )
+                        else:
+                            self._snippet_registry.register_sync_client_endpoint_snippet(
+                                endpoint=endpoint, expr=val.snippet, example_id=val.example_id
+                            )
 
         return class_declaration
 
@@ -312,7 +341,7 @@ class RootClientGenerator:
             )
             environment_docs = f"{RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS}"
             if default_environment is not None:
-                snippet = SourceFileFactory.create_snippet()
+                snippet = self._context.source_file_factory.create_snippet()
 
                 def write_default_environment(writer: AST.NodeWriter) -> None:
                     writer.write("Defaults to ")
@@ -350,7 +379,7 @@ class RootClientGenerator:
             )
             environment_docs = f"{RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_DOCS}"
             if default_environment is not None:
-                snippet = SourceFileFactory.create_snippet()
+                snippet = self._context.source_file_factory.create_snippet()
 
                 def write_default_environment(writer: AST.NodeWriter) -> None:
                     writer.write("Defaults to ")
@@ -361,9 +390,7 @@ class RootClientGenerator:
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME,
-                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class())
-                    if environments_config.default_environment is not None
-                    else AST.TypeHint.optional(AST.TypeHint(self._context.get_reference_to_environments_class())),
+                    type_hint=AST.TypeHint(self._context.get_reference_to_environments_class()),
                     private_member_name=None,
                     initializer=default_environment if default_environment is not None else None,
                     docs=environment_docs,
@@ -427,7 +454,7 @@ class RootClientGenerator:
                                     import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                                     qualified_name_excluding_import=("getenv",),
                                 ),
-                                args=[AST.Expression(f'"{oauth.client_id_env_var.get_as_str()}"')],
+                                args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
                             )
                         )
                         if oauth.client_id_env_var is not None
@@ -436,7 +463,7 @@ class RootClientGenerator:
                             AST.CodeWriter(
                                 self._get_paramter_validation_writer(
                                     param_name="client_id",
-                                    environment_variable=oauth.client_id_env_var.get_as_str(),
+                                    environment_variable=oauth.client_id_env_var,
                                 )
                             )
                         )
@@ -460,7 +487,7 @@ class RootClientGenerator:
                                     import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                                     qualified_name_excluding_import=("getenv",),
                                 ),
-                                args=[AST.Expression(f'"{oauth.client_secret_env_var.get_as_str()}"')],
+                                args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
                             )
                         )
                         if oauth.client_secret_env_var is not None
@@ -469,7 +496,7 @@ class RootClientGenerator:
                             AST.CodeWriter(
                                 self._get_paramter_validation_writer(
                                     param_name="client_secret",
-                                    environment_variable=oauth.client_secret_env_var.get_as_str(),
+                                    environment_variable=oauth.client_secret_env_var,
                                 )
                             )
                         )
@@ -487,11 +514,16 @@ class RootClientGenerator:
                 ),
             )
 
+        timeout_phrase = (
+            f"the timeout is {self._context.custom_config.timeout_in_seconds} seconds"
+            if isinstance(self._context.custom_config.timeout_in_seconds, int)
+            else "there is no timeout set"
+        )
         parameters.append(
             RootClientConstructorParameter(
                 constructor_parameter_name=self._timeout_constructor_parameter_name,
                 type_hint=AST.TypeHint.optional(AST.TypeHint.float_()),
-                docs="The timeout to be used, in seconds, for requests by default the timeout is 60 seconds, unless a custom httpx client is used, in which case a default is not set.",
+                docs=f"The timeout to be used, in seconds, for requests. By default {timeout_phrase}, unless a custom httpx client is used, in which case this default is not enforced.",
             )
         )
 
@@ -852,7 +884,7 @@ class RootClientGenerator:
             self._module_path = module_path
             self._class_name = class_name
             self._async_class_name = async_class_name
-            self._consrtructor_parameters = constructor_parameters
+            self._constructor_parameters = constructor_parameters
 
         def build(self) -> GeneratedRootClient:
             def client_snippet_writer(class_name: str) -> typing.Tuple[AST.ClassReference, CodeWriterFunction]:
@@ -871,7 +903,7 @@ class RootClientGenerator:
                         class_=client_class_reference,
                         args=[
                             param.instantiation
-                            for param in self._consrtructor_parameters
+                            for param in self._constructor_parameters
                             if param.instantiation is not None
                         ],
                     )
@@ -886,9 +918,7 @@ class RootClientGenerator:
             sync_class_reference, sync_class_snippet_writer = client_snippet_writer(self._class_name)
             return GeneratedRootClient(
                 async_instantiation=AST.Expression(AST.CodeWriter(async_class_snippet_writer)),
-                async_client=RootClient(
-                    class_reference=async_class_reference, parameters=self._consrtructor_parameters
-                ),
+                async_client=RootClient(class_reference=async_class_reference, parameters=self._constructor_parameters),
                 sync_instantiation=AST.Expression(AST.CodeWriter(sync_class_snippet_writer)),
-                sync_client=RootClient(class_reference=sync_class_reference, parameters=self._consrtructor_parameters),
+                sync_client=RootClient(class_reference=sync_class_reference, parameters=self._constructor_parameters),
             )

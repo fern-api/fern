@@ -16,6 +16,10 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
         };
     }
 
+    public getType(context: SdkContext): ts.TypeNode {
+        return context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name);
+    }
+
     public getInitialStatements(): ts.Statement[] {
         return [];
     }

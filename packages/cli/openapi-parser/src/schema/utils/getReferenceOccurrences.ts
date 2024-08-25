@@ -60,7 +60,7 @@ function removeApplicationJsonAndMultipartConflictsFromDocument(document: OpenAP
     return {
         ...document,
         paths: Object.fromEntries(
-            Object.entries(document.paths).map(([path, pathItem]) => {
+            Object.entries(document.paths ?? {}).map(([path, pathItem]) => {
                 return [
                     path,
                     {

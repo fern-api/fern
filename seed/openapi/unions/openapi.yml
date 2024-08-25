@@ -282,6 +282,20 @@ components:
               nullable: true
           required:
             - type
+    UnionWithSingleElement:
+      title: UnionWithSingleElement
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - foo
+            - $ref: '#/components/schemas/Foo'
+          required:
+            - type
     Foo:
       title: Foo
       type: object

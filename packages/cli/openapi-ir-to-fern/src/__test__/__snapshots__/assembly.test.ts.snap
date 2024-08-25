@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser assembly docs 1`] = `
+exports[`open api parser > assembly > docs 1`] = `
 {
   "definitionFiles": {
     "files.yml": {
@@ -36,6 +36,9 @@ exports[`open api parser assembly docs 1`] = `
               "type": "root.UploadedFile",
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
     },
@@ -231,11 +234,9 @@ The LLM response data, as well as any context provided in the original request w
                 ],
                 "properties": {
                   "answer_format": {
-                    "default": undefined,
                     "docs": "How you want the summary to be returned. This can be any text. Examples: "TLDR", "bullet points"
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -301,6 +302,9 @@ The LLM response data, as well as any context provided in the original request w
               "type": "root.LemurTaskResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
     },
@@ -436,11 +440,18 @@ The parameter should map to a JSON encoded list of strings.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "types": {
         "receiveMessage": {
           "discriminated": false,
           "docs": "Receive messages from the WebSocket",
+          "encoding": undefined,
+          "source": {
+            "openapi": "assembly/asyncapi.yml",
+          },
           "union": [
             "root.SessionBegins",
             "root.PartialTranscript",
@@ -452,6 +463,10 @@ The parameter should map to a JSON encoded list of strings.
         "sendMessage": {
           "discriminated": false,
           "docs": "Send messages to the WebSocket",
+          "encoding": undefined,
+          "source": {
+            "openapi": "assembly/asyncapi.yml",
+          },
           "union": [
             "root.AudioData",
             "root.TerminateSession",
@@ -536,14 +551,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -586,7 +601,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -754,14 +769,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -804,7 +819,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -962,14 +977,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -1012,7 +1027,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -1355,7 +1370,7 @@ The parameter should map to a JSON encoded list of strings.
                 },
                 "limit": {
                   "docs": "Maximum amount of transcripts to retrieve",
-                  "type": "optional<integer>",
+                  "type": "optional<long>",
                 },
                 "status": {
                   "docs": "Filter by transcript status",
@@ -1410,6 +1425,9 @@ The parameter should map to a JSON encoded list of strings.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "types": {
         "TranscriptListRequestStatus": {
@@ -1432,6 +1450,9 @@ The parameter should map to a JSON encoded list of strings.
               "value": "error",
             },
           ],
+          "source": {
+            "openapi": "assembly/openapi.yml",
+          },
         },
       },
     },
@@ -2008,6 +2029,9 @@ The parameter should map to a JSON encoded list of strings.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "AudioIntelligenceModelStatus": {
         "docs": "Will be either success, or unavailable in the rare case that the model failed.",
@@ -2015,6 +2039,9 @@ The parameter should map to a JSON encoded list of strings.
           "success",
           "unavailable",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "AutoHighlightResult": {
         "docs": undefined,
@@ -2025,7 +2052,7 @@ The parameter should map to a JSON encoded list of strings.
           },
           "rank": {
             "docs": "The total relevancy to the overall audio file of this key phrase - a greater number means more relevant",
-            "type": "double",
+            "type": "float",
           },
           "text": {
             "docs": "The text itself of the key phrase",
@@ -2035,6 +2062,9 @@ The parameter should map to a JSON encoded list of strings.
             "docs": "The timestamp of the of the key phrase",
             "type": "list<Timestamp>",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "AutoHighlightsResult": {
@@ -2046,6 +2076,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "docs": "A temporally-sequential array of Key Phrases",
             "type": "list<AutoHighlightResult>",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Chapter": {
@@ -2071,6 +2104,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "docs": "A one paragraph summary of the content spoken during the chapter",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ContentSafetyLabel": {
@@ -2102,6 +2138,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ContentSafetyLabelResult": {
@@ -2136,218 +2175,157 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "type": "Timestamp",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "CreateTranscriptOptionalParameters": {
         "docs": "The parameters for creating a transcript",
         "properties": {
           "audio_end_at": {
-            "default": undefined,
             "docs": "The point in time, in milliseconds, to stop transcribing in your media file",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "audio_start_from": {
-            "default": undefined,
             "docs": "The point in time, in milliseconds, to begin transcription from in your media file",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "auto_chapters": {
-            "default": undefined,
             "docs": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "auto_highlights": {
-            "default": undefined,
             "docs": "Whether Key Phrases was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "boost_param": {
-            "default": undefined,
             "docs": "The word boost parameter value, if provided in the transcription request.",
             "type": "optional<TranscriptBoostParam>",
-            "validation": undefined,
           },
           "content_safety": {
-            "default": undefined,
             "docs": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "custom_spelling": {
-            "default": undefined,
             "docs": "Customize how words are spelled and formatted using to and from values",
             "type": "optional<list<TranscriptCustomSpelling>>",
-            "validation": undefined,
           },
           "custom_topics": {
-            "default": undefined,
             "docs": "Whether custom topics was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "disfluencies": {
-            "default": undefined,
             "docs": "Transcribe Filler Words, like "umm", in your media file; can be true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "dual_channel": {
-            "default": undefined,
             "docs": "Enable [Dual Channel](https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) transcription, can be true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "entity_detection": {
-            "default": undefined,
             "docs": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "filter_profanity": {
-            "default": undefined,
             "docs": "Filter profanity from the transcribed text, can be true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "format_text": {
-            "default": undefined,
             "docs": "Enable Text Formatting, can be true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "iab_categories": {
-            "default": undefined,
             "docs": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "language_code": {
-            "default": undefined,
             "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
             "type": "optional<TranscriptLanguageCode>",
-            "validation": undefined,
           },
           "language_detection": {
-            "default": undefined,
             "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "punctuate": {
-            "default": undefined,
             "docs": "Enable Automatic Punctuation, can be true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "redact_pii": {
-            "default": undefined,
             "docs": "Redact PII from the transcribed text using the Redact PII model, can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "redact_pii_audio": {
-            "default": undefined,
             "docs": "Generate a copy of the original media file with spoken PII "beeped" out, can be true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "redact_pii_audio_quality": {
             "default": "mp3",
             "docs": "Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "redact_pii_policies": {
-            "default": undefined,
             "docs": "The list of PII Redaction policies to enable. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
             "type": "optional<list<PiiPolicy>>",
-            "validation": undefined,
           },
           "redact_pii_sub": {
-            "default": undefined,
             "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
             "type": "optional<SubstitutionPolicy>",
-            "validation": undefined,
           },
           "sentiment_analysis": {
-            "default": undefined,
             "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "speaker_labels": {
-            "default": undefined,
             "docs": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "speakers_expected": {
-            "default": undefined,
             "docs": "Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "speech_threshold": {
-            "default": undefined,
             "docs": "Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-            "type": "optional<double>",
-            "validation": undefined,
+            "type": "optional<float>",
           },
           "summarization": {
-            "default": undefined,
             "docs": "Enable [Summarization](https://www.assemblyai.com/docs/Models/summarization), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "summary_model": {
-            "default": undefined,
             "docs": "The model to summarize the transcript",
             "type": "optional<SummaryModel>",
-            "validation": undefined,
           },
           "summary_type": {
-            "default": undefined,
             "docs": "The type of summary",
             "type": "optional<SummaryType>",
-            "validation": undefined,
           },
           "topics": {
-            "default": undefined,
             "docs": "The list of custom topics provided if custom topics was enabled in the transcription request",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "webhook_auth_header_name": {
-            "default": undefined,
             "docs": "The header name which should be sent back with webhook calls, if provided in the transcription request.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "webhook_auth_header_value": {
-            "default": undefined,
             "docs": "Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "webhook_url": {
-            "default": undefined,
             "docs": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "word_boost": {
-            "default": undefined,
             "docs": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Entity": {
@@ -2369,6 +2347,9 @@ Valid values are in the range [0, 1] inclusive.
             "docs": "The text for the detected entity",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "EntityType": {
@@ -2494,6 +2475,9 @@ Valid values are in the range [0, 1] inclusive.
             "value": "us_social_security_number",
           },
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Error": {
         "docs": undefined,
@@ -2503,6 +2487,9 @@ Valid values are in the range [0, 1] inclusive.
             "type": "string",
           },
           "status": "optional<literal<"error">>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "FinalTranscript": {
@@ -2524,6 +2511,9 @@ Valid values are in the range [0, 1] inclusive.
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "LemurActionItemsParameters": "LemurBaseParameters",
       "LemurActionItemsResponse": {
@@ -2537,41 +2527,45 @@ Valid values are in the range [0, 1] inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurBaseParameters": {
         "docs": undefined,
         "properties": {
           "context": {
-            "default": undefined,
             "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
             "type": "optional<LemurBaseParametersContext>",
-            "validation": undefined,
           },
           "final_model": "optional<LemurModel>",
           "max_output_size": {
-            "default": undefined,
             "docs": "Max output size in tokens. Up to 4000 allowed.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "temperature": {
-            "default": undefined,
             "docs": "The temperature to use for the model.
 Higher values result in answers that are more creative, lower values are more conservative.
 Can be any value between 0.0 and 1.0 inclusive.
 ",
-            "type": "optional<double>",
-            "validation": undefined,
+            "type": "optional<float>",
           },
           "transcript_ids": {
             "docs": "A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.",
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurBaseParametersContext": {
         "discriminated": false,
         "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
         "union": [
           "string",
           "map<string, unknown>",
@@ -2585,6 +2579,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurModel": {
         "docs": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").
@@ -2593,34 +2590,34 @@ Can be any value between 0.0 and 1.0 inclusive.
           "default",
           "basic",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestion": {
         "docs": undefined,
         "properties": {
           "answer_format": {
-            "default": undefined,
             "docs": "How you want the answer to be returned. This can be any text. Can't be used with answer_options. Examples: "short sentence", "bullet points"
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "answer_options": {
-            "default": undefined,
             "docs": "What discrete options to return. Useful for precise responses. Can't be used with answer_format. Example: ["Yes", "No"]
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "context": {
-            "default": undefined,
             "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
             "type": "optional<LemurQuestionContext>",
-            "validation": undefined,
           },
           "question": {
             "docs": "The question you wish to ask. For more complex questions use default model.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "LemurQuestionAnswer": {
@@ -2635,6 +2632,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestionAnswerResponse": {
         "docs": undefined,
@@ -2647,10 +2647,17 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "list<LemurQuestionAnswer>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestionContext": {
         "discriminated": false,
         "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
         "union": [
           "string",
           "map<string, unknown>",
@@ -2667,6 +2674,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurTaskResponse": {
         "docs": undefined,
@@ -2679,6 +2689,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "MessageType": {
         "enum": [
@@ -2687,6 +2700,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "FinalTranscript",
           "SessionTerminated",
         ],
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "PageDetails": {
         "docs": undefined,
@@ -2696,6 +2712,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "next_url": "optional<string>",
           "prev_url": "string",
           "result_count": "integer",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ParagraphsResponse": {
@@ -2715,6 +2734,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "id": "string",
           "paragraphs": "list<TranscriptParagraph>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "PartialTranscript": {
         "docs": undefined,
@@ -2726,6 +2748,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of message.",
             "type": "literal<"PartialTranscript">",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "PiiPolicy": {
@@ -2758,6 +2783,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "drivers_license",
           "banking_information",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "PurgeLemurRequestDataResponse": {
         "docs": undefined,
@@ -2775,6 +2803,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "RealtimeBaseMessage": {
         "docs": undefined,
@@ -2783,6 +2814,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of the message.",
             "type": "MessageType",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "RealtimeBaseTranscript": {
@@ -2820,16 +2854,26 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "list<Word>",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RealtimeError": {
         "docs": undefined,
         "properties": {
           "error": "string",
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RealtimeMessage": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
         "union": [
           "SessionBegins",
           "PartialTranscript",
@@ -2846,10 +2890,17 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "RealtimeTranscript": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
         "union": [
           "PartialTranscript",
           "FinalTranscript",
@@ -2860,6 +2911,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "PartialTranscript",
           "FinalTranscript",
         ],
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RedactedAudioResponse": {
         "docs": undefined,
@@ -2872,6 +2926,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "The status of the redacted audio",
             "type": "RedactedAudioStatus",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "RedactedAudioStatus": {
@@ -2895,6 +2952,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "id": "string",
           "sentences": "list<TranscriptSentence>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Sentiment": {
         "enum": [
@@ -2902,6 +2962,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "NEUTRAL",
           "NEGATIVE",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SentimentAnalysisResult": {
         "docs": "The result of the sentiment analysis model.",
@@ -2926,10 +2989,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "Sentiment",
           },
           "speaker": {
-            "default": undefined,
             "docs": "The speaker of the sentence if Speaker Diarization is enabled, else null",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "start": {
             "docs": "The starting time, in milliseconds, of the sentence",
@@ -2939,6 +3000,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "The transcript of the sentence",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "SessionBegins": {
@@ -2957,6 +3021,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "SessionTerminated": {
         "docs": undefined,
@@ -2965,6 +3032,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of the message.",
             "type": "literal<"SessionTerminated">",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "SeverityScoreSummary": {
@@ -3001,6 +3071,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SubstitutionPolicy": {
         "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
@@ -3008,6 +3081,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "entity_type",
           "hash",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SubtitleFormat": {
         "docs": "Format of the subtitles",
@@ -3015,16 +3091,24 @@ Can be any value between 0.0 and 1.0 inclusive.
           "srt",
           "vtt",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SummaryModel": {
+        "default": "informative",
         "docs": "The model to summarize the transcript",
         "enum": [
           "informative",
           "conversational",
           "catchy",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SummaryType": {
+        "default": "bullets",
         "docs": "The type of summary",
         "enum": [
           "bullets",
@@ -3033,6 +3117,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "headline",
           "paragraph",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TerminateSession": {
         "docs": undefined,
@@ -3044,6 +3131,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "A boolean value to communicate that you wish to end your real-time session forever.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "Timestamp": {
@@ -3058,6 +3148,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TopicDetectionResult": {
         "docs": "THe result of the topic detection model.",
@@ -3068,6 +3161,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
           "timestamp": "optional<Timestamp>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TopicDetectionResultLabelsItem": {
@@ -3089,68 +3185,57 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Transcript": {
         "docs": "A transcript object",
         "properties": {
           "acoustic_model": {
+            "availability": "deprecated",
             "docs": "The acoustic model that was used for the transcription",
             "type": "string",
           },
           "audio_duration": {
-            "default": undefined,
             "docs": "The duration of this transcript object's media file, in seconds",
-            "type": "optional<double>",
-            "validation": undefined,
+            "type": "optional<float>",
           },
           "audio_end_at": {
-            "default": undefined,
             "docs": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "audio_start_from": {
-            "default": undefined,
             "docs": "The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "audio_url": {
             "docs": "The URL of the media that was transcribed",
             "type": "string",
           },
           "auto_chapters": {
-            "default": undefined,
             "docs": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "auto_highlights": {
             "docs": "Whether Key Phrases was enabled in the transcription request, either true or false",
             "type": "boolean",
           },
           "auto_highlights_result": {
-            "default": undefined,
             "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
             "type": "optional<AutoHighlightsResult>",
-            "validation": undefined,
           },
           "boost_param": {
-            "default": undefined,
             "docs": "The word boost parameter value, if provided in the transcription request",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "chapters": {
-            "default": undefined,
             "docs": "An array of temporally sequential chapters for the audio file",
             "type": "optional<list<Chapter>>",
-            "validation": undefined,
           },
           "confidence": {
-            "default": undefined,
             "docs": "The confidence score for the transcript, between 0.0 (low confidence) and 1.0 (high confidence)",
             "type": "optional<double>",
             "validation": {
@@ -3162,191 +3247,141 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             },
           },
           "content_safety": {
-            "default": undefined,
             "docs": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "content_safety_labels": {
-            "default": undefined,
             "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
 See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
 ",
             "type": "optional<TranscriptContentSafetyLabels>",
-            "validation": undefined,
           },
           "custom_spelling": {
-            "default": undefined,
             "docs": "Customize how words are spelled and formatted using to and from values",
             "type": "optional<list<TranscriptCustomSpelling>>",
-            "validation": undefined,
           },
           "custom_topics": {
-            "default": undefined,
             "docs": "Whether custom topics was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "disfluencies": {
-            "default": undefined,
             "docs": "Transcribe Filler Words, like "umm", in your media file; can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "dual_channel": {
-            "default": undefined,
             "docs": "Whether [Dual channel transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "entities": {
-            "default": undefined,
             "docs": "An array of results for the Entity Detection model, if it was enabled during the transcription request.
 See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.
 ",
             "type": "optional<list<Entity>>",
-            "validation": undefined,
           },
           "entity_detection": {
-            "default": undefined,
             "docs": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "error": {
-            "default": undefined,
             "docs": "Error message of why the transcript failed",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "filter_profanity": {
-            "default": undefined,
             "docs": "Whether [Profanity Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering) was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "format_text": {
-            "default": undefined,
             "docs": "Whether Text Formatting was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "iab_categories": {
-            "default": undefined,
             "docs": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "iab_categories_result": {
-            "default": undefined,
             "docs": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
 See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
 ",
             "type": "optional<TranscriptIabCategoriesResult>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The unique identifier of your transcription",
             "type": "string",
           },
           "language_code": {
-            "default": undefined,
             "docs": "The language of your audio file.
 Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
             "type": "optional<TranscriptLanguageCode>",
-            "validation": undefined,
           },
           "language_detection": {
-            "default": undefined,
             "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "language_model": {
+            "availability": "deprecated",
             "docs": "The language model that was used for the transcription",
             "type": "string",
           },
           "punctuate": {
-            "default": undefined,
             "docs": "Whether Automatic Punctuation was enabled in the transcription request, either true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "redact_pii": {
             "docs": "Whether [PII Redaction](https://www.assemblyai.com/docs/Models/pii_redaction) was enabled in the transcription request, either true or false",
             "type": "boolean",
           },
           "redact_pii_audio": {
-            "default": undefined,
             "docs": "Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),
 either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "redact_pii_audio_quality": {
-            "default": undefined,
             "docs": "The audio quality of the PII-redacted audio file, if enabled in the transcription request.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "redact_pii_policies": {
-            "default": undefined,
             "docs": "The list of PII Redaction policies that were enabled, if PII Redaction is enabled.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
             "type": "optional<list<PiiPolicy>>",
-            "validation": undefined,
           },
           "redact_pii_sub": {
-            "default": undefined,
             "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
             "type": "optional<SubstitutionPolicy>",
-            "validation": undefined,
           },
           "sentiment_analysis": {
-            "default": undefined,
             "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "sentiment_analysis_results": {
-            "default": undefined,
             "docs": "An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.
 See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.
 ",
             "type": "optional<list<SentimentAnalysisResult>>",
-            "validation": undefined,
           },
           "speaker_labels": {
-            "default": undefined,
             "docs": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "speakers_expected": {
-            "default": undefined,
             "docs": "Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "speech_threshold": {
-            "default": undefined,
             "docs": "Defaults to null. Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-            "type": "optional<double>",
-            "validation": undefined,
+            "type": "optional<float>",
           },
           "speed_boost": {
-            "default": undefined,
+            "availability": "deprecated",
             "docs": "Whether speed boost was enabled in the transcription request",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "status": {
             "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
@@ -3357,87 +3392,66 @@ Valid values are in the range [0, 1] inclusive.
             "type": "boolean",
           },
           "summary": {
-            "default": undefined,
             "docs": "The generated summary of the media file, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "summary_model": {
-            "default": undefined,
             "docs": "The Summarization model used to generate the summary,
 if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "summary_type": {
-            "default": undefined,
             "docs": "The type of summary generated, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The textual transcript of your media file",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "throttled": {
-            "default": undefined,
             "docs": "True while a request is throttled and false when a request is no longer throttled",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "topics": {
-            "default": undefined,
             "docs": "The list of custom topics provided if custom topics was enabled in the transcription request",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "utterances": {
-            "default": undefined,
             "docs": "When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
 See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.
 ",
             "type": "optional<list<TranscriptUtterance>>",
-            "validation": undefined,
           },
           "webhook_auth": {
             "docs": "Whether webhook authentication details were provided in the transcription request",
             "type": "boolean",
           },
           "webhook_auth_header_name": {
-            "default": undefined,
             "docs": "The header name which should be sent back with webhook calls, if provided in the transcription request",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "webhook_status_code": {
-            "default": undefined,
             "docs": "The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "webhook_url": {
-            "default": undefined,
             "docs": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "word_boost": {
-            "default": undefined,
             "docs": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "words": {
-            "default": undefined,
             "docs": "An array of temporally-sequential word objects, one for each word in the transcript.
 See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.
 ",
             "type": "optional<list<TranscriptWord>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptBoostParam": {
@@ -3447,6 +3461,9 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
           "default",
           "high",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptContentSafetyLabels": {
         "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
@@ -3458,6 +3475,9 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
             "docs": "Will be either success, or unavailable in the rare case that the Content Safety Labels model failed.",
             "type": "AudioIntelligenceModelStatus",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptCustomSpelling": {
@@ -3471,6 +3491,9 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
             "docs": "Word or phrase to replace with",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptIabCategoriesResult": {
@@ -3491,8 +3514,12 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
             "type": "map<string, double>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptLanguageCode": {
+        "default": "en_us",
         "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
@@ -3518,12 +3545,18 @@ The default value is 'en_us'.
           "uk",
           "vi",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptList": {
         "docs": undefined,
         "properties": {
           "page_details": "PageDetails",
           "transcripts": "list<TranscriptListItem>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptListItem": {
@@ -3536,24 +3569,22 @@ The default value is 'en_us'.
           "resource_url": "string",
           "status": "TranscriptStatus",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptListParameters": {
         "docs": undefined,
         "properties": {
           "after_id": {
-            "default": undefined,
             "docs": "Get transcripts that were created after this transcript ID",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "before_id": {
-            "default": undefined,
             "docs": "Get transcripts that were created before this transcript ID",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "created_on": {
-            "default": undefined,
             "docs": "Only get transcripts created on this date",
             "type": "optional<string>",
             "validation": {
@@ -3566,27 +3597,19 @@ The default value is 'en_us'.
           "limit": {
             "default": 10,
             "docs": "Maximum amount of transcripts to retrieve",
-            "type": "optional<integer>",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": 200,
-              "min": 1,
-              "multipleOf": undefined,
-            },
+            "type": "optional<long>",
           },
           "status": {
-            "default": undefined,
             "docs": "Filter by transcript status",
             "type": "optional<TranscriptStatus>",
-            "validation": undefined,
           },
           "throttled_only": {
-            "default": undefined,
             "docs": "Only get throttled transcripts, overrides the status filter",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptParagraph": {
@@ -3607,6 +3630,9 @@ The default value is 'en_us'.
           "text": "string",
           "words": "list<TranscriptWord>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptSentence": {
         "docs": undefined,
@@ -3625,6 +3651,9 @@ The default value is 'en_us'.
           "start": "integer",
           "text": "string",
           "words": "list<TranscriptWord>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptStatus": {
@@ -3647,6 +3676,9 @@ The default value is 'en_us'.
             "value": "error",
           },
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptUtterance": {
         "docs": undefined,
@@ -3667,6 +3699,9 @@ The default value is 'en_us'.
           "text": "string",
           "words": "list<TranscriptWord>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptWord": {
         "docs": undefined,
@@ -3686,6 +3721,9 @@ The default value is 'en_us'.
           "start": "integer",
           "text": "string",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "UploadedFile": {
         "docs": undefined,
@@ -3694,6 +3732,9 @@ The default value is 'en_us'.
             "docs": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Word": {
@@ -3723,6 +3764,9 @@ The default value is 'en_us'.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "WordSearchMatch": {
         "docs": undefined,
@@ -3744,6 +3788,9 @@ The default value is 'en_us'.
             "type": "list<WordSearchTimestamp>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "WordSearchResponse": {
         "docs": undefined,
@@ -3760,6 +3807,9 @@ The default value is 'en_us'.
             "docs": "The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, \`total_count\` will equal 5.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "WordSearchTimestamp": {
@@ -3790,7 +3840,7 @@ The default value is 'en_us'.
 }
 `;
 
-exports[`open api parser assembly simple 1`] = `
+exports[`open api parser > assembly > simple 1`] = `
 {
   "definitionFiles": {
     "files.yml": {
@@ -3826,6 +3876,9 @@ exports[`open api parser assembly simple 1`] = `
               "type": "root.UploadedFile",
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
     },
@@ -4021,11 +4074,9 @@ The LLM response data, as well as any context provided in the original request w
                 ],
                 "properties": {
                   "answer_format": {
-                    "default": undefined,
                     "docs": "How you want the summary to be returned. This can be any text. Examples: "TLDR", "bullet points"
 ",
                     "type": "optional<string>",
-                    "validation": undefined,
                   },
                 },
               },
@@ -4091,6 +4142,9 @@ The LLM response data, as well as any context provided in the original request w
               "type": "root.LemurTaskResponse",
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
     },
@@ -4226,11 +4280,18 @@ The parameter should map to a JSON encoded list of strings.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "types": {
         "receiveMessage": {
           "discriminated": false,
           "docs": "Receive messages from the WebSocket",
+          "encoding": undefined,
+          "source": {
+            "openapi": "assembly/asyncapi.yml",
+          },
           "union": [
             "root.SessionBegins",
             "root.PartialTranscript",
@@ -4242,6 +4303,10 @@ The parameter should map to a JSON encoded list of strings.
         "sendMessage": {
           "discriminated": false,
           "docs": "Send messages to the WebSocket",
+          "encoding": undefined,
+          "source": {
+            "openapi": "assembly/asyncapi.yml",
+          },
           "union": [
             "root.AudioData",
             "root.TerminateSession",
@@ -4326,14 +4391,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -4376,7 +4441,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -4544,14 +4609,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -4594,7 +4659,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -4752,14 +4817,14 @@ The parameter should map to a JSON encoded list of strings.
                           "sentences_idx_end": 1,
                           "sentences_idx_start": 1,
                           "severity_score_summary": {
-                            "severity_score_summary": {
+                            "key": {
                               "high": 1.1,
                               "low": 1.1,
                               "medium": 1.1,
                             },
                           },
                           "summary": {
-                            "summary": 1.1,
+                            "key": 1.1,
                           },
                           "text": "text",
                           "timestamp": {
@@ -4802,7 +4867,7 @@ The parameter should map to a JSON encoded list of strings.
                       ],
                       "status": "success",
                       "summary": {
-                        "summary": 1.1,
+                        "key": 1.1,
                       },
                     },
                     "id": "id",
@@ -5145,7 +5210,7 @@ The parameter should map to a JSON encoded list of strings.
                 },
                 "limit": {
                   "docs": "Maximum amount of transcripts to retrieve",
-                  "type": "optional<integer>",
+                  "type": "optional<long>",
                 },
                 "status": {
                   "docs": "Filter by transcript status",
@@ -5200,6 +5265,9 @@ The parameter should map to a JSON encoded list of strings.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "types": {
         "TranscriptListRequestStatus": {
@@ -5222,6 +5290,9 @@ The parameter should map to a JSON encoded list of strings.
               "value": "error",
             },
           ],
+          "source": {
+            "openapi": "assembly/openapi.yml",
+          },
         },
       },
     },
@@ -5273,6 +5344,9 @@ The parameter should map to a JSON encoded list of strings.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "AudioIntelligenceModelStatus": {
         "docs": "Will be either success, or unavailable in the rare case that the model failed.",
@@ -5280,6 +5354,9 @@ The parameter should map to a JSON encoded list of strings.
           "success",
           "unavailable",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "AutoHighlightResult": {
         "docs": undefined,
@@ -5290,7 +5367,7 @@ The parameter should map to a JSON encoded list of strings.
           },
           "rank": {
             "docs": "The total relevancy to the overall audio file of this key phrase - a greater number means more relevant",
-            "type": "double",
+            "type": "float",
           },
           "text": {
             "docs": "The text itself of the key phrase",
@@ -5300,6 +5377,9 @@ The parameter should map to a JSON encoded list of strings.
             "docs": "The timestamp of the of the key phrase",
             "type": "list<Timestamp>",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "AutoHighlightsResult": {
@@ -5311,6 +5391,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "docs": "A temporally-sequential array of Key Phrases",
             "type": "list<AutoHighlightResult>",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Chapter": {
@@ -5336,6 +5419,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "docs": "A one paragraph summary of the content spoken during the chapter",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ContentSafetyLabel": {
@@ -5367,6 +5453,9 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
               "multipleOf": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ContentSafetyLabelResult": {
@@ -5401,218 +5490,157 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             "type": "Timestamp",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "CreateTranscriptOptionalParameters": {
         "docs": "The parameters for creating a transcript",
         "properties": {
           "audio_end_at": {
-            "default": undefined,
             "docs": "The point in time, in milliseconds, to stop transcribing in your media file",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "audio_start_from": {
-            "default": undefined,
             "docs": "The point in time, in milliseconds, to begin transcription from in your media file",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "auto_chapters": {
-            "default": undefined,
             "docs": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "auto_highlights": {
-            "default": undefined,
             "docs": "Whether Key Phrases was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "boost_param": {
-            "default": undefined,
             "docs": "The word boost parameter value, if provided in the transcription request.",
             "type": "optional<TranscriptBoostParam>",
-            "validation": undefined,
           },
           "content_safety": {
-            "default": undefined,
             "docs": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "custom_spelling": {
-            "default": undefined,
             "docs": "Customize how words are spelled and formatted using to and from values",
             "type": "optional<list<TranscriptCustomSpelling>>",
-            "validation": undefined,
           },
           "custom_topics": {
-            "default": undefined,
             "docs": "Whether custom topics was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "disfluencies": {
-            "default": undefined,
             "docs": "Transcribe Filler Words, like "umm", in your media file; can be true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "dual_channel": {
-            "default": undefined,
             "docs": "Enable [Dual Channel](https://assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) transcription, can be true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "entity_detection": {
-            "default": undefined,
             "docs": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "filter_profanity": {
-            "default": undefined,
             "docs": "Filter profanity from the transcribed text, can be true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "format_text": {
-            "default": undefined,
             "docs": "Enable Text Formatting, can be true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "iab_categories": {
-            "default": undefined,
             "docs": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "language_code": {
-            "default": undefined,
             "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
             "type": "optional<TranscriptLanguageCode>",
-            "validation": undefined,
           },
           "language_detection": {
-            "default": undefined,
             "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "punctuate": {
-            "default": undefined,
             "docs": "Enable Automatic Punctuation, can be true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "redact_pii": {
-            "default": undefined,
             "docs": "Redact PII from the transcribed text using the Redact PII model, can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "redact_pii_audio": {
-            "default": undefined,
             "docs": "Generate a copy of the original media file with spoken PII "beeped" out, can be true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "redact_pii_audio_quality": {
             "default": "mp3",
             "docs": "Controls the filetype of the audio created by redact_pii_audio. Currently supports mp3 (default) and wav. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "redact_pii_policies": {
-            "default": undefined,
             "docs": "The list of PII Redaction policies to enable. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
             "type": "optional<list<PiiPolicy>>",
-            "validation": undefined,
           },
           "redact_pii_sub": {
-            "default": undefined,
             "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
             "type": "optional<SubstitutionPolicy>",
-            "validation": undefined,
           },
           "sentiment_analysis": {
-            "default": undefined,
             "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "speaker_labels": {
-            "default": undefined,
             "docs": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "speakers_expected": {
-            "default": undefined,
             "docs": "Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "speech_threshold": {
-            "default": undefined,
             "docs": "Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-            "type": "optional<double>",
-            "validation": undefined,
+            "type": "optional<float>",
           },
           "summarization": {
-            "default": undefined,
             "docs": "Enable [Summarization](https://www.assemblyai.com/docs/Models/summarization), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "summary_model": {
-            "default": undefined,
             "docs": "The model to summarize the transcript",
             "type": "optional<SummaryModel>",
-            "validation": undefined,
           },
           "summary_type": {
-            "default": undefined,
             "docs": "The type of summary",
             "type": "optional<SummaryType>",
-            "validation": undefined,
           },
           "topics": {
-            "default": undefined,
             "docs": "The list of custom topics provided if custom topics was enabled in the transcription request",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "webhook_auth_header_name": {
-            "default": undefined,
             "docs": "The header name which should be sent back with webhook calls, if provided in the transcription request.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "webhook_auth_header_value": {
-            "default": undefined,
             "docs": "Defaults to null. Optionally allows a user to specify a header name and value to send back with a webhook call for added security.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "webhook_url": {
-            "default": undefined,
             "docs": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request.",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "word_boost": {
-            "default": undefined,
             "docs": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request.",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Entity": {
@@ -5634,6 +5662,9 @@ Valid values are in the range [0, 1] inclusive.
             "docs": "The text for the detected entity",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "EntityType": {
@@ -5759,6 +5790,9 @@ Valid values are in the range [0, 1] inclusive.
             "value": "us_social_security_number",
           },
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Error": {
         "docs": undefined,
@@ -5768,6 +5802,9 @@ Valid values are in the range [0, 1] inclusive.
             "type": "string",
           },
           "status": "optional<literal<"error">>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "FinalTranscript": {
@@ -5789,6 +5826,9 @@ Valid values are in the range [0, 1] inclusive.
             "type": "boolean",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "LemurActionItemsParameters": "LemurBaseParameters",
       "LemurActionItemsResponse": {
@@ -5802,41 +5842,45 @@ Valid values are in the range [0, 1] inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurBaseParameters": {
         "docs": undefined,
         "properties": {
           "context": {
-            "default": undefined,
             "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
             "type": "optional<LemurBaseParametersContext>",
-            "validation": undefined,
           },
           "final_model": "optional<LemurModel>",
           "max_output_size": {
-            "default": undefined,
             "docs": "Max output size in tokens. Up to 4000 allowed.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "temperature": {
-            "default": undefined,
             "docs": "The temperature to use for the model.
 Higher values result in answers that are more creative, lower values are more conservative.
 Can be any value between 0.0 and 1.0 inclusive.
 ",
-            "type": "optional<double>",
-            "validation": undefined,
+            "type": "optional<float>",
           },
           "transcript_ids": {
             "docs": "A list of completed transcripts with text. Up to 100 files max, or 100 hours max. Whichever is lower.",
             "type": "list<string>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurBaseParametersContext": {
         "discriminated": false,
         "docs": "Context to provide the model. This can be a string or a free-form JSON value.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
         "union": [
           "string",
           "map<string, unknown>",
@@ -5850,6 +5894,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurModel": {
         "docs": "The model that is used for the final prompt after compression is performed (options: "basic" and "default").
@@ -5858,34 +5905,34 @@ Can be any value between 0.0 and 1.0 inclusive.
           "default",
           "basic",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestion": {
         "docs": undefined,
         "properties": {
           "answer_format": {
-            "default": undefined,
             "docs": "How you want the answer to be returned. This can be any text. Can't be used with answer_options. Examples: "short sentence", "bullet points"
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "answer_options": {
-            "default": undefined,
             "docs": "What discrete options to return. Useful for precise responses. Can't be used with answer_format. Example: ["Yes", "No"]
 ",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "context": {
-            "default": undefined,
             "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
             "type": "optional<LemurQuestionContext>",
-            "validation": undefined,
           },
           "question": {
             "docs": "The question you wish to ask. For more complex questions use default model.",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "LemurQuestionAnswer": {
@@ -5900,6 +5947,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestionAnswerResponse": {
         "docs": undefined,
@@ -5912,10 +5962,17 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "list<LemurQuestionAnswer>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurQuestionContext": {
         "discriminated": false,
         "docs": "Any context about the transcripts you wish to provide. This can be a string, or free-form JSON.",
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
         "union": [
           "string",
           "map<string, unknown>",
@@ -5932,6 +5989,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "LemurTaskResponse": {
         "docs": undefined,
@@ -5944,6 +6004,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "MessageType": {
         "enum": [
@@ -5952,6 +6015,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "FinalTranscript",
           "SessionTerminated",
         ],
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "PageDetails": {
         "docs": undefined,
@@ -5961,6 +6027,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "next_url": "optional<string>",
           "prev_url": "string",
           "result_count": "integer",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "ParagraphsResponse": {
@@ -5980,6 +6049,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "id": "string",
           "paragraphs": "list<TranscriptParagraph>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "PartialTranscript": {
         "docs": undefined,
@@ -5991,6 +6063,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of message.",
             "type": "literal<"PartialTranscript">",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "PiiPolicy": {
@@ -6023,6 +6098,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "drivers_license",
           "banking_information",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "PurgeLemurRequestDataResponse": {
         "docs": undefined,
@@ -6040,6 +6118,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "RealtimeBaseMessage": {
         "docs": undefined,
@@ -6048,6 +6129,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of the message.",
             "type": "MessageType",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "RealtimeBaseTranscript": {
@@ -6085,16 +6169,26 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "list<Word>",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RealtimeError": {
         "docs": undefined,
         "properties": {
           "error": "string",
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RealtimeMessage": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
         "union": [
           "SessionBegins",
           "PartialTranscript",
@@ -6111,10 +6205,17 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "RealtimeTranscript": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
         "union": [
           "PartialTranscript",
           "FinalTranscript",
@@ -6125,6 +6226,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "PartialTranscript",
           "FinalTranscript",
         ],
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "RedactedAudioResponse": {
         "docs": undefined,
@@ -6137,6 +6241,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "The status of the redacted audio",
             "type": "RedactedAudioStatus",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "RedactedAudioStatus": {
@@ -6160,6 +6267,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "id": "string",
           "sentences": "list<TranscriptSentence>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Sentiment": {
         "enum": [
@@ -6167,6 +6277,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "NEUTRAL",
           "NEGATIVE",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SentimentAnalysisResult": {
         "docs": "The result of the sentiment analysis model.",
@@ -6191,10 +6304,8 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "Sentiment",
           },
           "speaker": {
-            "default": undefined,
             "docs": "The speaker of the sentence if Speaker Diarization is enabled, else null",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "start": {
             "docs": "The starting time, in milliseconds, of the sentence",
@@ -6204,6 +6315,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "The transcript of the sentence",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "SessionBegins": {
@@ -6222,6 +6336,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "SessionTerminated": {
         "docs": undefined,
@@ -6230,6 +6347,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "Describes the type of the message.",
             "type": "literal<"SessionTerminated">",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "SeverityScoreSummary": {
@@ -6266,6 +6386,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SubstitutionPolicy": {
         "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
@@ -6273,6 +6396,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "entity_type",
           "hash",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SubtitleFormat": {
         "docs": "Format of the subtitles",
@@ -6280,16 +6406,24 @@ Can be any value between 0.0 and 1.0 inclusive.
           "srt",
           "vtt",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SummaryModel": {
+        "default": "informative",
         "docs": "The model to summarize the transcript",
         "enum": [
           "informative",
           "conversational",
           "catchy",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "SummaryType": {
+        "default": "bullets",
         "docs": "The type of summary",
         "enum": [
           "bullets",
@@ -6298,6 +6432,9 @@ Can be any value between 0.0 and 1.0 inclusive.
           "headline",
           "paragraph",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TerminateSession": {
         "docs": undefined,
@@ -6309,6 +6446,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "docs": "A boolean value to communicate that you wish to end your real-time session forever.",
             "type": "boolean",
           },
+        },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
         },
       },
       "Timestamp": {
@@ -6323,6 +6463,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "integer",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TopicDetectionResult": {
         "docs": "THe result of the topic detection model.",
@@ -6333,6 +6476,9 @@ Can be any value between 0.0 and 1.0 inclusive.
             "type": "string",
           },
           "timestamp": "optional<Timestamp>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TopicDetectionResultLabelsItem": {
@@ -6354,68 +6500,57 @@ Can be any value between 0.0 and 1.0 inclusive.
             },
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "Transcript": {
         "docs": "A transcript object",
         "properties": {
           "acoustic_model": {
+            "availability": "deprecated",
             "docs": "The acoustic model that was used for the transcription",
             "type": "string",
           },
           "audio_duration": {
-            "default": undefined,
             "docs": "The duration of this transcript object's media file, in seconds",
-            "type": "optional<double>",
-            "validation": undefined,
+            "type": "optional<float>",
           },
           "audio_end_at": {
-            "default": undefined,
             "docs": "The point in time, in milliseconds, in the file at which the transcription was terminated, if provided in the transcription request",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "audio_start_from": {
-            "default": undefined,
             "docs": "The point in time, in milliseconds, in the file at which the transcription was started, if provided in the transcription request",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "audio_url": {
             "docs": "The URL of the media that was transcribed",
             "type": "string",
           },
           "auto_chapters": {
-            "default": undefined,
             "docs": "Enable [Auto Chapters](https://www.assemblyai.com/docs/Models/auto_chapters), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "auto_highlights": {
             "docs": "Whether Key Phrases was enabled in the transcription request, either true or false",
             "type": "boolean",
           },
           "auto_highlights_result": {
-            "default": undefined,
             "docs": "An array of results for the Key Phrases model, if it was enabled during the transcription request.
 See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more information.
 ",
             "type": "optional<AutoHighlightsResult>",
-            "validation": undefined,
           },
           "boost_param": {
-            "default": undefined,
             "docs": "The word boost parameter value, if provided in the transcription request",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "chapters": {
-            "default": undefined,
             "docs": "An array of temporally sequential chapters for the audio file",
             "type": "optional<list<Chapter>>",
-            "validation": undefined,
           },
           "confidence": {
-            "default": undefined,
             "docs": "The confidence score for the transcript, between 0.0 (low confidence) and 1.0 (high confidence)",
             "type": "optional<double>",
             "validation": {
@@ -6427,191 +6562,141 @@ See [Key phrases](https://www.assemblyai.com/docs/Models/key_phrases) for more i
             },
           },
           "content_safety": {
-            "default": undefined,
             "docs": "Enable [Content Moderation](https://www.assemblyai.com/docs/Models/content_moderation), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "content_safety_labels": {
-            "default": undefined,
             "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
 See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderation) for more information.
 ",
             "type": "optional<TranscriptContentSafetyLabels>",
-            "validation": undefined,
           },
           "custom_spelling": {
-            "default": undefined,
             "docs": "Customize how words are spelled and formatted using to and from values",
             "type": "optional<list<TranscriptCustomSpelling>>",
-            "validation": undefined,
           },
           "custom_topics": {
-            "default": undefined,
             "docs": "Whether custom topics was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "disfluencies": {
-            "default": undefined,
             "docs": "Transcribe Filler Words, like "umm", in your media file; can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "dual_channel": {
-            "default": undefined,
             "docs": "Whether [Dual channel transcription](https://www.assemblyai.com/docs/Models/speech_recognition#dual-channel-transcription) was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "entities": {
-            "default": undefined,
             "docs": "An array of results for the Entity Detection model, if it was enabled during the transcription request.
 See [Entity detection](https://www.assemblyai.com/docs/Models/entity_detection) for more information.
 ",
             "type": "optional<list<Entity>>",
-            "validation": undefined,
           },
           "entity_detection": {
-            "default": undefined,
             "docs": "Enable [Entity Detection](https://www.assemblyai.com/docs/Models/entity_detection), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "error": {
-            "default": undefined,
             "docs": "Error message of why the transcript failed",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "filter_profanity": {
-            "default": undefined,
             "docs": "Whether [Profanity Filtering](https://www.assemblyai.com/docs/Models/speech_recognition#profanity-filtering) was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "format_text": {
-            "default": undefined,
             "docs": "Whether Text Formatting was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "iab_categories": {
-            "default": undefined,
             "docs": "Enable [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "iab_categories_result": {
-            "default": undefined,
             "docs": "An array of results for the Topic Detection model, if it was enabled during the transcription request.
 See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification) for more information.
 ",
             "type": "optional<TranscriptIabCategoriesResult>",
-            "validation": undefined,
           },
           "id": {
             "docs": "The unique identifier of your transcription",
             "type": "string",
           },
           "language_code": {
-            "default": undefined,
             "docs": "The language of your audio file.
 Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
             "type": "optional<TranscriptLanguageCode>",
-            "validation": undefined,
           },
           "language_detection": {
-            "default": undefined,
             "docs": "Whether [Automatic language detection](https://www.assemblyai.com/docs/Models/speech_recognition#automatic-language-detection) was enabled in the transcription request, either true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "language_model": {
+            "availability": "deprecated",
             "docs": "The language model that was used for the transcription",
             "type": "string",
           },
           "punctuate": {
-            "default": undefined,
             "docs": "Whether Automatic Punctuation was enabled in the transcription request, either true or false.",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "redact_pii": {
             "docs": "Whether [PII Redaction](https://www.assemblyai.com/docs/Models/pii_redaction) was enabled in the transcription request, either true or false",
             "type": "boolean",
           },
           "redact_pii_audio": {
-            "default": undefined,
             "docs": "Whether a redacted version of the audio file was generated (enabled or disabled in the transcription request),
 either true or false. See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "redact_pii_audio_quality": {
-            "default": undefined,
             "docs": "The audio quality of the PII-redacted audio file, if enabled in the transcription request.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "redact_pii_policies": {
-            "default": undefined,
             "docs": "The list of PII Redaction policies that were enabled, if PII Redaction is enabled.
 See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more information.
 ",
             "type": "optional<list<PiiPolicy>>",
-            "validation": undefined,
           },
           "redact_pii_sub": {
-            "default": undefined,
             "docs": "The replacement logic for detected PII, can be "entity_type" or "hash". See [PII redaction](https://www.assemblyai.com/docs/Models/pii_redaction) for more details.",
             "type": "optional<SubstitutionPolicy>",
-            "validation": undefined,
           },
           "sentiment_analysis": {
-            "default": undefined,
             "docs": "Enable [Sentiment Analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "sentiment_analysis_results": {
-            "default": undefined,
             "docs": "An array of results for the Sentiment Analysis model, if it was enabled during the transcription request.
 See [Sentiment analysis](https://www.assemblyai.com/docs/Models/sentiment_analysis) for more information.
 ",
             "type": "optional<list<SentimentAnalysisResult>>",
-            "validation": undefined,
           },
           "speaker_labels": {
-            "default": undefined,
             "docs": "Enable [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization), can be true or false",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "speakers_expected": {
-            "default": undefined,
             "docs": "Defaults to null. Tells the speaker label model how many speakers it should attempt to identify, up to 10. See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more details.",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "speech_threshold": {
-            "default": undefined,
             "docs": "Defaults to null. Reject audio files that contain less than this fraction of speech.
 Valid values are in the range [0, 1] inclusive.
 ",
-            "type": "optional<double>",
-            "validation": undefined,
+            "type": "optional<float>",
           },
           "speed_boost": {
-            "default": undefined,
+            "availability": "deprecated",
             "docs": "Whether speed boost was enabled in the transcription request",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "status": {
             "docs": "The status of your transcription. Possible values are queued, processing, completed, or error.",
@@ -6622,87 +6707,66 @@ Valid values are in the range [0, 1] inclusive.
             "type": "boolean",
           },
           "summary": {
-            "default": undefined,
             "docs": "The generated summary of the media file, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "summary_model": {
-            "default": undefined,
             "docs": "The Summarization model used to generate the summary,
 if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request
 ",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "summary_type": {
-            "default": undefined,
             "docs": "The type of summary generated, if [Summarization](https://www.assemblyai.com/docs/Models/summarization) was enabled in the transcription request",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "text": {
-            "default": undefined,
             "docs": "The textual transcript of your media file",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "throttled": {
-            "default": undefined,
             "docs": "True while a request is throttled and false when a request is no longer throttled",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
           "topics": {
-            "default": undefined,
             "docs": "The list of custom topics provided if custom topics was enabled in the transcription request",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "utterances": {
-            "default": undefined,
             "docs": "When dual_channel or speaker_labels is enabled, a list of turn-by-turn utterance objects.
 See [Speaker diarization](https://www.assemblyai.com/docs/Models/speaker_diarization) for more information.
 ",
             "type": "optional<list<TranscriptUtterance>>",
-            "validation": undefined,
           },
           "webhook_auth": {
             "docs": "Whether webhook authentication details were provided in the transcription request",
             "type": "boolean",
           },
           "webhook_auth_header_name": {
-            "default": undefined,
             "docs": "The header name which should be sent back with webhook calls, if provided in the transcription request",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "webhook_status_code": {
-            "default": undefined,
             "docs": "The status code we received from your server when delivering your webhook, if a webhook URL was provided in the transcription request",
             "type": "optional<integer>",
-            "validation": undefined,
           },
           "webhook_url": {
-            "default": undefined,
             "docs": "The URL to which we send webhooks upon trancription completion, if provided in the transcription request",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "word_boost": {
-            "default": undefined,
             "docs": "The list of custom vocabulary to boost transcription probability for, if provided in the transcription request",
             "type": "optional<list<string>>",
-            "validation": undefined,
           },
           "words": {
-            "default": undefined,
             "docs": "An array of temporally-sequential word objects, one for each word in the transcript.
 See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recognition) for more information.
 ",
             "type": "optional<list<TranscriptWord>>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptBoostParam": {
@@ -6712,6 +6776,9 @@ See [Speech recognition](https://www.assemblyai.com/docs/Models/speech_recogniti
           "default",
           "high",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptContentSafetyLabels": {
         "docs": "An array of results for the Content Moderation model, if it was enabled during the transcription request.
@@ -6723,6 +6790,9 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
             "docs": "Will be either success, or unavailable in the rare case that the Content Safety Labels model failed.",
             "type": "AudioIntelligenceModelStatus",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptCustomSpelling": {
@@ -6736,6 +6806,9 @@ See [Content moderation](https://www.assemblyai.com/docs/Models/content_moderati
             "docs": "Word or phrase to replace with",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptIabCategoriesResult": {
@@ -6756,8 +6829,12 @@ See [Topic Detection](https://www.assemblyai.com/docs/Models/iab_classification)
             "type": "map<string, double>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptLanguageCode": {
+        "default": "en_us",
         "docs": "The language of your audio file. Possible values are found in [Supported Languages](https://www.assemblyai.com/docs/Concepts/supported_languages).
 The default value is 'en_us'.
 ",
@@ -6783,12 +6860,18 @@ The default value is 'en_us'.
           "uk",
           "vi",
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptList": {
         "docs": undefined,
         "properties": {
           "page_details": "PageDetails",
           "transcripts": "list<TranscriptListItem>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptListItem": {
@@ -6801,24 +6884,22 @@ The default value is 'en_us'.
           "resource_url": "string",
           "status": "TranscriptStatus",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptListParameters": {
         "docs": undefined,
         "properties": {
           "after_id": {
-            "default": undefined,
             "docs": "Get transcripts that were created after this transcript ID",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "before_id": {
-            "default": undefined,
             "docs": "Get transcripts that were created before this transcript ID",
             "type": "optional<string>",
-            "validation": undefined,
           },
           "created_on": {
-            "default": undefined,
             "docs": "Only get transcripts created on this date",
             "type": "optional<string>",
             "validation": {
@@ -6831,27 +6912,19 @@ The default value is 'en_us'.
           "limit": {
             "default": 10,
             "docs": "Maximum amount of transcripts to retrieve",
-            "type": "optional<integer>",
-            "validation": {
-              "exclusiveMax": undefined,
-              "exclusiveMin": undefined,
-              "max": 200,
-              "min": 1,
-              "multipleOf": undefined,
-            },
+            "type": "optional<long>",
           },
           "status": {
-            "default": undefined,
             "docs": "Filter by transcript status",
             "type": "optional<TranscriptStatus>",
-            "validation": undefined,
           },
           "throttled_only": {
-            "default": undefined,
             "docs": "Only get throttled transcripts, overrides the status filter",
             "type": "optional<boolean>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptParagraph": {
@@ -6872,6 +6945,9 @@ The default value is 'en_us'.
           "text": "string",
           "words": "list<TranscriptWord>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptSentence": {
         "docs": undefined,
@@ -6890,6 +6966,9 @@ The default value is 'en_us'.
           "start": "integer",
           "text": "string",
           "words": "list<TranscriptWord>",
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "TranscriptStatus": {
@@ -6912,6 +6991,9 @@ The default value is 'en_us'.
             "value": "error",
           },
         ],
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptUtterance": {
         "docs": undefined,
@@ -6932,6 +7014,9 @@ The default value is 'en_us'.
           "text": "string",
           "words": "list<TranscriptWord>",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "TranscriptWord": {
         "docs": undefined,
@@ -6951,6 +7036,9 @@ The default value is 'en_us'.
           "start": "integer",
           "text": "string",
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "UploadedFile": {
         "docs": undefined,
@@ -6959,6 +7047,9 @@ The default value is 'en_us'.
             "docs": "A URL that points to your audio file, accessible only by AssemblyAI's servers",
             "type": "string",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "Word": {
@@ -6988,6 +7079,9 @@ The default value is 'en_us'.
             "type": "string",
           },
         },
+        "source": {
+          "openapi": "assembly/asyncapi.yml",
+        },
       },
       "WordSearchMatch": {
         "docs": undefined,
@@ -7009,6 +7103,9 @@ The default value is 'en_us'.
             "type": "list<WordSearchTimestamp>",
           },
         },
+        "source": {
+          "openapi": "assembly/openapi.yml",
+        },
       },
       "WordSearchResponse": {
         "docs": undefined,
@@ -7025,6 +7122,9 @@ The default value is 'en_us'.
             "docs": "The total count of all matched instances. For e.g., word 1 matched 2 times, and word 2 matched 3 times, \`total_count\` will equal 5.",
             "type": "integer",
           },
+        },
+        "source": {
+          "openapi": "assembly/openapi.yml",
         },
       },
       "WordSearchTimestamp": {

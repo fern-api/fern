@@ -1,13 +1,14 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
 imports:
-  types: types.yml
-  errors: errors.yml
   auth: auth.yml
-  http: http.yml
+  commons: commons.yml
   constants: constants.yml
   environment: environment.yml
-  commons: commons.yml
+  errors: errors.yml
+  http: http.yml
+  proto: proto.yml
+  types: types.yml
   variables: variables.yml
   webhooks: webhooks.yml
   websocket: websocket.yml
@@ -15,6 +16,10 @@ types:
   IntermediateRepresentation:
     docs: "Complete representation of the API schema"
     properties:
+      fdrApiDefinitionId:
+        type: optional<string>
+        docs: The unique identifier for the API definition used within FDR. This is retrieved once a definition has been registered.
+      apiVersion: optional<ApiVersionScheme>
       apiName:
         type: commons.Name
         docs: This is the human readable unique id for the API.
@@ -50,6 +55,49 @@ types:
       sdkConfig: SdkConfig
       variables: list<variables.VariableDeclaration>
       serviceTypeReferenceInfo: ServiceTypeReferenceInfo
+      readmeConfig: optional<ReadmeConfig>
+      sourceConfig: optional<SourceConfig>
+  ReadmeConfig:
+    docs: |
+      The configuration used to generate a README.md file. If present, the generator
+      should call the generator-cli to produce a README.md.
+    properties:
+      defaultEndpoint:
+        docs: |
+          If specified, this enpdoint should be used in every snippet (if possible).
+          Note that some endpoints aren't suitable for every feature (e.g. a non-list
+          endpoint for pagination), so the default is a no-op in those cases.
+        type: optional<commons.EndpointId>
+      bannerLink: optional<string>
+      introduction: optional<string>
+      apiReferenceLink: optional<string>
+      features:
+        docs: |
+          If specified, configures the list of endpoints to associate
+          with each feature.
+        type: optional<map<commons.FeatureId, list<commons.EndpointId>>>
+  SourceConfig:
+    properties: 
+      sources:
+        docs: The raw API definitions that produced the IR.
+        type: list<ApiDefinitionSource> 
+  ApiDefinitionSourceId:
+    docs: |
+      Uniquely identifies a specific API definition source. This allows us to clearly identify
+      what source a given type, endpoint, etc was derived from.
+    type: string
+  ApiDefinitionSource:
+    union:
+      proto: ProtoSource
+      openapi: {}
+  ProtoSource:
+    properties:
+      id: ApiDefinitionSourceId
+      protoRootUrl:
+        docs: |
+          The URL containing the `.proto` root directory source. This can be used
+          to pull down the original `.proto` source files during code generation.
+        type: string
   SdkConfig:
     properties:
       isAuthMandatory: boolean
@@ -62,6 +110,32 @@ types:
       language: string
       sdkName: string
       sdkVersion: string
+      userAgent: optional<UserAgent>
+  UserAgent: 
+    properties: 
+      header: 
+        type: literal<"User-Agent">
+        docs: The user agent header for ease of access to generators. 
+      value: 
+        type: string
+        docs: Formatted as "<package>/<version>"
+
+  ApiVersionScheme:
+    docs: |
+      The available set of versions for the API. This is used to generate a special
+      enum that can be used to specify the version of the API to use.
+    union:
+      header: HeaderApiVersionScheme
+  HeaderApiVersionScheme:
+    docs: |
+      The version information is sent as an HTTP header (e.g. X-API-Version) on every request.
+
+      If the enum does _not_ define a default value, the version should be treated like
+      a required global header parameter. The version header should also support any
+      environment variable scanning specified by the header.
+    properties:
+      header: http.HttpHeader
+      value: types.EnumTypeDeclaration
   ErrorDiscriminationStrategy:
     union:
       statusCode: {}

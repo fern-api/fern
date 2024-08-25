@@ -14,8 +14,11 @@ export declare namespace User {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,9 +31,7 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedExtraProperties.user.createUser({
-     *         type: "CreateUserRequest",
-     *         version: "v1",
+     *     await client.user.createUser({
      *         name: "string"
      *     })
      */
@@ -45,12 +46,14 @@ export class User {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/extra-properties",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/extra-properties/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
-                ...(await serializers.CreateUserRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.CreateUserRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 _type: "CreateUserRequest",
                 _version: "v1",
             },
@@ -59,7 +62,7 @@ export class User {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.User.parseOrThrow(_response.body, {
+            return serializers.User.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

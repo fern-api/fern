@@ -1,12 +1,17 @@
 using System.Text.Json.Serialization;
-using SeedPagination;
+using SeedPagination.Core;
 
 #nullable enable
 
 namespace SeedPagination;
 
-public class UsernameCursor
+public record UsernameCursor
 {
     [JsonPropertyName("cursor")]
-    public UsernamePage Cursor { get; init; }
+    public required UsernamePage Cursor { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

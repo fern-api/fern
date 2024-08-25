@@ -4,6 +4,7 @@ export { dirname } from "./dirname";
 export { doesPathExist, doesPathExistSync } from "./doesPathExist";
 export { getDirectoryContents, type Directory, type File, type FileOrDirectory } from "./getDirectoryContents";
 export { join } from "./join";
+export { listFiles } from "./listFiles";
 export { moveFile } from "./moveFile";
 export { moveFolder } from "./moveFolder";
 export { relative } from "./relative";

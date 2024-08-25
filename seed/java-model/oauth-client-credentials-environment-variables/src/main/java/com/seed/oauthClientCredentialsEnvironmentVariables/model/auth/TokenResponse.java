@@ -13,7 +13,7 @@ import com.seed.oauthClientCredentialsEnvironmentVariables.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TokenResponse.Builder.class)
 public final class TokenResponse {
     private final String accessToken;
@@ -121,7 +121,7 @@ public final class TokenResponse {
 
         @java.lang.Override
         public _FinalStage refreshToken(String refreshToken) {
-            this.refreshToken = Optional.of(refreshToken);
+            this.refreshToken = Optional.ofNullable(refreshToken);
             return this;
         }
 

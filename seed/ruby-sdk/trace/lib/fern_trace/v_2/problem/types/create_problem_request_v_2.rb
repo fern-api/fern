@@ -71,7 +71,7 @@ module SeedTraceClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          problem_name = struct["problemName"]
+          problem_name = parsed_json["problemName"]
           if parsed_json["problemDescription"].nil?
             problem_description = nil
           else
@@ -84,13 +84,13 @@ module SeedTraceClient
             custom_files = parsed_json["customFiles"].to_json
             custom_files = SeedTraceClient::V2::Problem::CustomFiles.from_json(json_object: custom_files)
           end
-          custom_test_case_templates = parsed_json["customTestCaseTemplates"]&.map do |v|
-            v = v.to_json
-            SeedTraceClient::V2::Problem::TestCaseTemplate.from_json(json_object: v)
+          custom_test_case_templates = parsed_json["customTestCaseTemplates"]&.map do |item|
+            item = item.to_json
+            SeedTraceClient::V2::Problem::TestCaseTemplate.from_json(json_object: item)
           end
-          testcases = parsed_json["testcases"]&.map do |v|
-            v = v.to_json
-            SeedTraceClient::V2::Problem::TestCaseV2.from_json(json_object: v)
+          testcases = parsed_json["testcases"]&.map do |item|
+            item = item.to_json
+            SeedTraceClient::V2::Problem::TestCaseV2.from_json(json_object: item)
           end
           if parsed_json["supportedLanguages"].nil?
             supported_languages = nil
@@ -98,7 +98,7 @@ module SeedTraceClient
             supported_languages = parsed_json["supportedLanguages"].to_json
             supported_languages = Set.new(supported_languages)
           end
-          is_public = struct["isPublic"]
+          is_public = parsed_json["isPublic"]
           new(
             problem_name: problem_name,
             problem_description: problem_description,

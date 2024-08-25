@@ -1,18 +1,23 @@
 using System.Text.Json.Serialization;
-using SeedExamples;
+using SeedExamples.Core;
 
 #nullable enable
 
 namespace SeedExamples;
 
-public class Directory
+public record Directory
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("files")]
-    public IEnumerable<File>? Files { get; init; }
+    public IEnumerable<File>? Files { get; set; }
 
     [JsonPropertyName("directories")]
-    public IEnumerable<Directory>? Directories { get; init; }
+    public IEnumerable<Directory>? Directories { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

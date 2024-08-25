@@ -1,18 +1,22 @@
 using System.Text.Json.Serialization;
 using OneOf;
-using SeedExamples;
 using SeedExamples.Core;
 
 #nullable enable
 
 namespace SeedExamples;
 
-public class Entity
+public record Entity
 {
     [JsonPropertyName("type")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<BasicType, ComplexType>>))]
-    public OneOf<BasicType, ComplexType> Type { get; init; }
+    public required OneOf<BasicType, ComplexType> Type { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

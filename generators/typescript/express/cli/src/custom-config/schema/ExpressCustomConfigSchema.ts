@@ -9,6 +9,8 @@ export const ExpressCustomConfigSchema = z.strictObject({
     skipRequestValidation: z.optional(z.boolean()),
     skipResponseValidation: z.optional(z.boolean()),
     outputEsm: z.optional(z.boolean()),
+    requestValidationStatusCode: z.optional(z.number()),
+
     // beta (not in docs)
     outputSourceFiles: z.optional(z.boolean()),
     includeUtilsOnUnionMembers: z.optional(z.boolean()),

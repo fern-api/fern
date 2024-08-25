@@ -16,13 +16,13 @@
 
 package com.fern.java.client.generators;
 
-import com.fern.irV42.model.auth.AuthScheme;
-import com.fern.irV42.model.auth.BasicAuthScheme;
-import com.fern.irV42.model.auth.BearerAuthScheme;
-import com.fern.irV42.model.auth.HeaderAuthScheme;
-import com.fern.irV42.model.auth.OAuthScheme;
-import com.fern.irV42.model.commons.NameAndWireValue;
-import com.fern.irV42.model.http.HttpHeader;
+import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.BasicAuthScheme;
+import com.fern.ir.model.auth.BearerAuthScheme;
+import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.auth.OAuthScheme;
+import com.fern.ir.model.commons.NameAndWireValue;
+import com.fern.ir.model.http.HttpHeader;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
@@ -84,7 +84,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
         AuthSchemeHandler authSchemeHandler =
                 new AuthSchemeHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock, headerHandler);
         List<RequestOption> fields = new ArrayList<>();
-        for (AuthScheme authScheme : generatorContext.getIr().getAuth().getSchemes()) {
+        for (AuthScheme authScheme : generatorContext.getResolvedAuthSchemes()) {
             RequestOption fieldAndMethods = authScheme.visit(authSchemeHandler);
             // TODO(dsinghvi): Support basic auth and remove null check
             if (fieldAndMethods != null) {
@@ -113,11 +113,16 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
 
         // Add in the other (static) fields for request options
         createRequestOptionField(
-                "getTimeout", timeoutFieldBuilder, "null", requestOptionsTypeSpec, builderTypeSpec, fields);
+                "getTimeout",
+                timeoutFieldBuilder,
+                CodeBlock.of("$T.empty()", Optional.class),
+                requestOptionsTypeSpec,
+                builderTypeSpec,
+                fields);
         createRequestOptionField(
                 "getTimeoutTimeUnit",
                 timeoutTimeUnitFieldBuilder,
-                "TimeUnit.SECONDS",
+                CodeBlock.of("$T.SECONDS", TimeUnit.class),
                 requestOptionsTypeSpec,
                 builderTypeSpec,
                 fields);
@@ -185,7 +190,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
     private void createRequestOptionField(
             String getterFunctionName,
             FieldSpec.Builder fieldSpecBuilder,
-            String initializer,
+            CodeBlock initializer,
             TypeSpec.Builder requestOptionsTypeSpec,
             TypeSpec.Builder builderTypeSpec,
             List<RequestOption> fields) {

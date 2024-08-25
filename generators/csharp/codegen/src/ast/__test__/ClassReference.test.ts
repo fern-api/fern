@@ -17,6 +17,14 @@ describe("class reference", () => {
                 )
             ]
         });
-        expect(clazz.toString()).toContain("OneOf<string, bool, List<string>>");
+        expect(
+            clazz.toString({
+                namespace: "",
+                allNamespaceSegments: new Set<string>(),
+                allTypeClassReferences: new Map<string, Set<string>>(),
+                rootNamespace: "",
+                customConfig: {}
+            })
+        ).toContain("OneOf<string, bool, List<string>>");
     });
 });

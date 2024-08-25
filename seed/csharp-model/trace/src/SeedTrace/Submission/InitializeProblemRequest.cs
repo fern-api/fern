@@ -1,14 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class InitializeProblemRequest
+public record InitializeProblemRequest
 {
     [JsonPropertyName("problemId")]
-    public string ProblemId { get; init; }
+    public required string ProblemId { get; set; }
 
     [JsonPropertyName("problemVersion")]
-    public int? ProblemVersion { get; init; }
+    public int? ProblemVersion { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

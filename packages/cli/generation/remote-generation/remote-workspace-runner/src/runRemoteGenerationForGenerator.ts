@@ -1,13 +1,17 @@
 import { FernToken } from "@fern-api/auth";
 import { Audiences, fernConfigJson, generatorsYml } from "@fern-api/configuration";
+import { createFdrService } from "@fern-api/core";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
+import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, IdentifiableSource } from "@fern-api/workspace-loader";
+import { FernRegistry as FdrAPI, FernRegistryClient as FdrClient } from "@fern-fern/fdr-cjs-sdk";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { createAndStartJob } from "./createAndStartJob";
 import { pollJobAndReportStatus } from "./pollJobAndReportStatus";
 import { RemoteTaskHandler } from "./RemoteTaskHandler";
+import { SourceUploader } from "./SourceUploader";
 
 export async function runRemoteGenerationForGenerator({
     projectConfig,
@@ -21,7 +25,8 @@ export async function runRemoteGenerationForGenerator({
     token,
     whitelabel,
     irVersionOverride,
-    absolutePathToPreview
+    absolutePathToPreview,
+    readme
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -35,14 +40,55 @@ export async function runRemoteGenerationForGenerator({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    readme: generatorsYml.ReadmeSchema | undefined;
 }): Promise<RemoteTaskHandler.Response | undefined> {
-    const intermediateRepresentation = await generateIntermediateRepresentation({
+    const fdr = createFdrService({ token: token.value });
+
+    const packageName = generatorsYml.getPackageName({ generatorInvocation });
+
+    const ir = await generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
+        keywords: generatorInvocation.keywords,
         smartCasing: generatorInvocation.smartCasing,
         disableExamples: generatorInvocation.disableExamples,
-        audiences
+        audiences,
+        readme,
+        packageName,
+        version: version ?? (await computeSemanticVersion({ fdr, packageName, generatorInvocation })),
+        context: interactiveTaskContext
     });
+
+    const sources = workspace.getSources();
+    const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig: {} });
+    const response = await fdr.api.v1.register.registerApiDefinition({
+        orgId: organization,
+        apiId: ir.apiName.originalName,
+        definition: apiDefinition,
+        sources: sources.length > 0 ? convertToFdrApiDefinitionSources(sources) : undefined
+    });
+
+    let fdrApiDefinitionId;
+    let sourceUploads;
+    if (response.ok) {
+        fdrApiDefinitionId = response.body.apiDefinitionId;
+        sourceUploads = response.body.sources;
+    }
+
+    const sourceUploader = new SourceUploader(interactiveTaskContext, sources);
+    if (sourceUploads == null && sourceUploader.sourceTypes.has("protobuf")) {
+        // We only fail hard if we need to upload Protobuf source files. Unlike OpenAPI, these
+        // files are required for successful code generation.
+        interactiveTaskContext.failAndThrow("Did not successfully upload Protobuf source files.");
+    }
+
+    if (sourceUploads != null) {
+        interactiveTaskContext.logger.debug("Uploading source files ...");
+        const sourceConfig = await sourceUploader.uploadSources(sourceUploads);
+
+        interactiveTaskContext.logger.debug("Setting IR source configuration ...");
+        ir.sourceConfig = sourceConfig;
+    }
 
     const job = await createAndStartJob({
         projectConfig,
@@ -51,7 +97,10 @@ export async function runRemoteGenerationForGenerator({
         generatorInvocation,
         context: interactiveTaskContext,
         version,
-        intermediateRepresentation,
+        intermediateRepresentation: {
+            ...ir,
+            fdrApiDefinitionId
+        },
         shouldLogS3Url,
         token,
         whitelabel,
@@ -81,4 +130,69 @@ export async function runRemoteGenerationForGenerator({
         taskId,
         context: interactiveTaskContext
     });
+}
+
+async function computeSemanticVersion({
+    fdr,
+    packageName,
+    generatorInvocation
+}: {
+    fdr: FdrClient;
+    packageName: string | undefined;
+    generatorInvocation: generatorsYml.GeneratorInvocation;
+}): Promise<string | undefined> {
+    if (generatorInvocation.language == null) {
+        return undefined;
+    }
+    let language: FdrAPI.sdks.Language;
+    switch (generatorInvocation.language) {
+        case "csharp":
+            language = "Csharp";
+            break;
+        case "go":
+            language = "Go";
+            break;
+        case "java":
+            language = "Java";
+            break;
+        case "python":
+            language = "Python";
+            break;
+        case "ruby":
+            language = "Ruby";
+            break;
+        case "typescript":
+            language = "TypeScript";
+            break;
+        default:
+            return undefined;
+    }
+    if (packageName == null) {
+        return undefined;
+    }
+    const response = await fdr.sdks.versions.computeSemanticVersion({
+        githubRepository:
+            generatorInvocation.outputMode.type === "githubV2"
+                ? `${generatorInvocation.outputMode.githubV2.owner}/${generatorInvocation.outputMode.githubV2.repo}`
+                : undefined,
+        language,
+        package: packageName
+    });
+    if (!response.ok) {
+        return undefined;
+    }
+    return response.body.version;
+}
+
+function convertToFdrApiDefinitionSources(
+    sources: IdentifiableSource[]
+): Record<FdrAPI.api.v1.register.SourceId, FdrAPI.api.v1.register.Source> {
+    return Object.fromEntries(
+        Object.values(sources).map((source) => [
+            source.id,
+            {
+                type: source.type === "protobuf" ? "proto" : source.type
+            }
+        ])
+    );
 }

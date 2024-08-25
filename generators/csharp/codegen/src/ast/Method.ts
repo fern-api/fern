@@ -1,4 +1,5 @@
 import { Access } from "./Access";
+import { Annotation } from "./Annotation";
 import { ClassReference } from "./ClassReference";
 import { CodeBlock } from "./CodeBlock";
 import { AstNode } from "./core/AstNode";
@@ -21,6 +22,8 @@ export declare namespace Method {
         isAsync: boolean;
         /* The parameters of the method */
         parameters: Parameter[];
+        /* Whether the method overrides a method in it's base class */
+        override?: boolean;
         /* The return type of the method */
         return_?: Type;
         /* The body of the method */
@@ -31,6 +34,10 @@ export declare namespace Method {
         type?: MethodType;
         /* The class this method belongs to, if any */
         classReference?: ClassReference;
+        /* Any annotations to add to the method */
+        annotations?: Annotation[];
+        /* Any code example to add to the method */
+        codeExample?: AstNode;
     }
 }
 
@@ -43,12 +50,29 @@ export class Method extends AstNode {
     public readonly summary: string | undefined;
     public readonly type: MethodType;
     public readonly reference: ClassReference | undefined;
-    private parameters: Parameter[];
+    public readonly override: boolean;
+    private readonly parameters: Parameter[];
+    private readonly annotations: Annotation[];
+    private readonly codeExample: AstNode | undefined;
 
-    constructor({ name, isAsync, access, return_, body, summary, type, classReference, parameters }: Method.Args) {
+    constructor({
+        name,
+        isAsync,
+        override,
+        access,
+        return_,
+        body,
+        summary,
+        type,
+        classReference,
+        parameters,
+        annotations,
+        codeExample
+    }: Method.Args) {
         super();
         this.name = name;
         this.isAsync = isAsync;
+        this.override = override ?? false;
         this.access = access;
         this.return = return_;
         this.body = body;
@@ -56,6 +80,8 @@ export class Method extends AstNode {
         this.type = type ?? MethodType.INSTANCE;
         this.reference = classReference;
         this.parameters = parameters;
+        this.annotations = annotations ?? [];
+        this.codeExample = codeExample;
     }
 
     public addParameter(parameter: Parameter): void {
@@ -68,7 +94,39 @@ export class Method extends AstNode {
             this.summary.split("\n").forEach((line) => {
                 writer.writeLine(`/// ${line}`);
             });
+
             writer.writeLine("/// </summary>");
+        }
+        if (this.codeExample != null) {
+            writer.writeLine("/// <example>");
+            writer.writeLine("/// <code>");
+            this.codeExample
+                .toString({
+                    namespace: writer.getNamespace(),
+                    allNamespaceSegments: writer.getAllNamespaceSegments(),
+                    allTypeClassReferences: writer.getAllTypeClassReferences(),
+                    rootNamespace: writer.getRootNamespace(),
+                    customConfig: writer.getCustomConfig(),
+                    format: true,
+                    skipImports: true
+                })
+                .split("\n")
+                .forEach((line) => {
+                    if (line !== "") {
+                        writer.writeLine(`/// ${line}`);
+                    }
+                });
+            writer.writeLine("/// </code>");
+            writer.writeLine("/// </example>");
+        }
+
+        if (this.annotations.length > 0) {
+            writer.write("[");
+            this.annotations.forEach((annotation) => {
+                annotation.write(writer);
+            });
+            writer.write("]");
+            writer.writeNewLineIfLastLineNot();
         }
 
         writer.write(`${this.access} `);
@@ -78,8 +136,21 @@ export class Method extends AstNode {
         if (this.isAsync) {
             writer.write("async ");
         }
+        if (this.override) {
+            writer.write("override ");
+        }
         if (this.return == null) {
-            writer.write("void ");
+            if (this.isAsync) {
+                writer.writeNode(
+                    new ClassReference({
+                        name: "Task",
+                        namespace: "System.Threading.Tasks"
+                    })
+                );
+                writer.write(" ");
+            } else {
+                writer.write("void ");
+            }
         } else {
             if (this.isAsync) {
                 writer.write("Task<");

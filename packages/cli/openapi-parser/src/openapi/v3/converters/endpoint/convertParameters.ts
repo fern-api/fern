@@ -5,9 +5,11 @@ import {
     PathParameterWithExample,
     PrimitiveSchemaValueWithExample,
     QueryParameterWithExample,
-    SchemaWithExample
+    SchemaWithExample,
+    Source
 } from "@fern-api/openapi-ir-sdk";
 import { OpenAPIV3 } from "openapi-types";
+import { convertAvailability } from "../../../../schema/convertAvailability";
 import { convertSchema } from "../../../../schema/convertSchemas";
 import { getExamplesString } from "../../../../schema/examples/getExample";
 import { getGeneratedTypeName } from "../../../../schema/utils/getSchemaName";
@@ -27,13 +29,15 @@ export function convertParameters({
     httpMethod,
     parameters,
     context,
-    requestBreadcrumbs
+    requestBreadcrumbs,
+    source
 }: {
     path: string;
     httpMethod: HttpMethod;
     parameters: (OpenAPIV3.ReferenceObject | OpenAPIV3.ParameterObject)[];
     context: AbstractOpenAPIV3ParserContext;
     requestBreadcrumbs: string[];
+    source: Source;
 }): ConvertedParameters {
     const convertedParameters: ConvertedParameters = {
         pathParameters: [],
@@ -46,13 +50,33 @@ export function convertParameters({
             : parameter;
 
         const isRequired = resolvedParameter.required ?? false;
+        const availability = convertAvailability(resolvedParameter);
 
         const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
         const generatedName = getGeneratedTypeName(parameterBreadcrumbs);
 
+        if (getExamplesString({ schema: resolvedParameter, logger: context.logger })?.includes(" ")) {
+            context.logger.warn(
+                "Parameter example contains a space, which is ambiguous. Consider using enums for multiple examples, or use an encoding if a space is part of the parameter."
+            );
+        }
+
         let schema =
             resolvedParameter.schema != null
-                ? convertSchema(resolvedParameter.schema, !isRequired, context, parameterBreadcrumbs)
+                ? convertSchema(
+                      resolvedParameter.schema,
+                      !isRequired,
+                      context,
+                      parameterBreadcrumbs,
+                      source,
+                      context.namespace,
+                      false,
+                      new Set(),
+                      getExamplesString({
+                          schema: resolvedParameter,
+                          logger: context.logger
+                      })
+                  )
                 : isRequired
                 ? SchemaWithExample.primitive({
                       nameOverride: undefined,
@@ -63,9 +87,13 @@ export function convertParameters({
                           format: undefined,
                           minLength: undefined,
                           maxLength: undefined,
-                          example: getExamplesString(resolvedParameter.example)
+                          example: getExamplesString({
+                              schema: resolvedParameter,
+                              logger: context.logger
+                          })
                       }),
                       description: undefined,
+                      availability,
                       groupName: undefined
                   })
                 : SchemaWithExample.optional({
@@ -80,12 +108,17 @@ export function convertParameters({
                               format: undefined,
                               minLength: undefined,
                               maxLength: undefined,
-                              example: getExamplesString(resolvedParameter.example)
+                              example: getExamplesString({
+                                  schema: resolvedParameter,
+                                  logger: context.logger
+                              })
                           }),
                           description: undefined,
+                          availability: undefined,
                           groupName: undefined
                       }),
                       description: undefined,
+                      availability,
                       groupName: undefined
                   });
         if (
@@ -103,6 +136,7 @@ export function convertParameters({
                     generatedName,
                     value: LiteralSchemaValue.string(defaultValue),
                     description: undefined,
+                    availability,
                     groupName: undefined
                 });
             }
@@ -112,7 +146,9 @@ export function convertParameters({
             name: resolvedParameter.name,
             schema,
             description: resolvedParameter.description,
-            parameterNameOverride: getParameterName(resolvedParameter)
+            parameterNameOverride: getParameterName(resolvedParameter),
+            availability,
+            source
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);
@@ -137,6 +173,7 @@ export function convertParameters({
             );
         }
     }
+
     return convertedParameters;
 }
 

@@ -1,74 +1,177 @@
-import { Readable } from "stream";
 import { RUNTIME } from "../runtime";
 
-interface CrossPlatformFormData {
-    append(key: string, value: any): void;
+export type MaybePromise<T> = Promise<T> | T;
+
+type FormDataRequest<Body> = {
+    body: Body;
+    headers: Record<string, string>;
+    duplex?: "half";
+};
+
+function isNamedValue(value: unknown): value is { name: string } {
+    return typeof value === "object" && value != null && "name" in value;
 }
 
-class FormDataRequestBody {
-    private fd: any;
-    private encoder: any;
+export interface CrossPlatformFormData {
+    setup(): Promise<void>;
 
-    constructor(fd: any) {
-        this.fd = fd;
-    }
+    append(key: string, value: unknown): void;
 
-    async setup(): Promise<void> {
-        if (this.encoder == null && RUNTIME.type === "node") {
-            this.encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd);
-        }
-    }
+    appendFile(key: string, value: unknown, fileName?: string): Promise<void>;
 
-    /**
-     * @returns the multipart form data request
-     */
-    public async getBody(): Promise<any> {
-        if (RUNTIME.type !== "node") {
-            return this.fd;
-        } else {
-            if (this.encoder == null) {
-                await this.setup();
-            }
-            return Readable.from(this.encoder);
-        }
-    }
-
-    /**
-     * @returns headers that need to be added to the multipart form data request
-     */
-    public async getHeaders(): Promise<Record<string, string>> {
-        if (RUNTIME.type !== "node") {
-            return {};
-        } else {
-            if (this.encoder == null) {
-                await this.setup();
-            }
-            return {
-                "Content-Length": this.encoder.length,
-            };
-        }
-    }
+    getRequest(): MaybePromise<FormDataRequest<unknown>>;
 }
+
+export async function newFormData(): Promise<CrossPlatformFormData> {
+    let formdata: CrossPlatformFormData;
+    if (RUNTIME.type === "node" && RUNTIME.parsedVersion != null && RUNTIME.parsedVersion >= 18) {
+        formdata = new Node18FormData();
+    } else if (RUNTIME.type === "node") {
+        formdata = new Node16FormData();
+    } else {
+        formdata = new WebFormData();
+    }
+    await formdata.setup();
+    return formdata;
+}
+
+export type Node18FormDataFd =
+    | {
+          append(name: string, value: unknown, fileName?: string): void;
+      }
+    | undefined;
 
 /**
- * FormDataWrapper is a utility to make form data
- * requests across both Browser and Node.js runtimes.
+ * Form Data Implementation for Node.js 18+
  */
-export class FormDataWrapper {
-    private fd: CrossPlatformFormData | undefined;
+export class Node18FormData implements CrossPlatformFormData {
+    private fd: Node18FormDataFd;
 
-    public async append(name: string, value: any): Promise<void> {
-        if (this.fd == null) {
-            if (RUNTIME.type === "node") {
-                this.fd = new (await import("formdata-node")).FormData();
-            } else {
-                this.fd = new (await import("form-data")).default();
-            }
-        }
-        this.fd.append(name, value);
+    public async setup() {
+        this.fd = new (await import("formdata-node")).FormData();
     }
 
-    public getRequest(): FormDataRequestBody {
-        return new FormDataRequestBody(this.fd);
+    public append(key: string, value: any): void {
+        this.fd?.append(key, value);
+    }
+
+    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
+        if (fileName == null && isNamedValue(value)) {
+            fileName = value.name;
+        }
+
+        if (value instanceof (await import("stream")).Readable) {
+            this.fd?.append(key, {
+                type: undefined,
+                name: fileName,
+                [Symbol.toStringTag]: "File",
+                stream() {
+                    return value;
+                },
+            });
+        } else {
+            this.fd?.append(key, value, fileName);
+        }
+    }
+
+    public async getRequest(): Promise<FormDataRequest<unknown>> {
+        const encoder = new (await import("form-data-encoder")).FormDataEncoder(this.fd as any);
+        return {
+            body: await (await import("stream")).Readable.from(encoder),
+            headers: encoder.headers,
+            duplex: "half",
+        };
+    }
+}
+
+export type Node16FormDataFd =
+    | {
+          append(
+              name: string,
+              value: unknown,
+              options?:
+                  | string
+                  | {
+                        header?: string | Headers;
+                        knownLength?: number;
+                        filename?: string;
+                        filepath?: string;
+                        contentType?: string;
+                    }
+          ): void;
+
+          getHeaders(): Record<string, string>;
+      }
+    | undefined;
+
+/**
+ * Form Data Implementation for Node.js 16-18
+ */
+export class Node16FormData implements CrossPlatformFormData {
+    private fd: Node16FormDataFd;
+
+    public async setup(): Promise<void> {
+        this.fd = new (await import("form-data")).default();
+    }
+
+    public append(key: string, value: any): void {
+        this.fd?.append(key, value);
+    }
+
+    public async appendFile(key: string, value: unknown, fileName?: string): Promise<void> {
+        if (fileName == null && isNamedValue(value)) {
+            fileName = value.name;
+        }
+
+        let bufferedValue;
+        if (!(value instanceof (await import("stream")).Readable)) {
+            bufferedValue = Buffer.from(await (value as any).arrayBuffer());
+        } else {
+            bufferedValue = value;
+        }
+
+        if (fileName == null) {
+            this.fd?.append(key, bufferedValue);
+        } else {
+            this.fd?.append(key, bufferedValue, { filename: fileName });
+        }
+    }
+
+    public getRequest(): FormDataRequest<Node16FormDataFd> {
+        return {
+            body: this.fd,
+            headers: this.fd ? this.fd.getHeaders() : {},
+        };
+    }
+}
+
+export type WebFormDataFd = { append(name: string, value: string | Blob, fileName?: string): void } | undefined;
+
+/**
+ * Form Data Implementation for Web
+ */
+export class WebFormData implements CrossPlatformFormData {
+    protected fd: WebFormDataFd;
+
+    public async setup(): Promise<void> {
+        this.fd = new FormData();
+    }
+
+    public append(key: string, value: any): void {
+        this.fd?.append(key, value);
+    }
+
+    public async appendFile(key: string, value: any, fileName?: string): Promise<void> {
+        if (fileName == null && isNamedValue(value)) {
+            fileName = value.name;
+        }
+        this.fd?.append(key, new Blob([value]), fileName);
+    }
+
+    public getRequest(): FormDataRequest<WebFormDataFd> {
+        return {
+            body: this.fd,
+            headers: {},
+        };
     }
 }

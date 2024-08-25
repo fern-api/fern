@@ -70,9 +70,10 @@ class OAuthTokenProviderGenerator:
                 initializer=AST.Expression("2"),
             ),
         )
-        class_declaration.add_method(self._get_token_function_declaration())
+        class_declaration.add_method(self._get_token_function_declaration(client_credentials=client_credentials))
         class_declaration.add_method(self._get_refresh_function_declaration(client_credentials=client_credentials))
-        class_declaration.add_method(self._get_expires_at_function_declaration())
+        if self._has_expires_in_property(client_credentials):
+            class_declaration.add_method(self._get_expires_at_function_declaration())
 
         return class_declaration
 
@@ -182,7 +183,7 @@ class OAuthTokenProviderGenerator:
             )
 
         token_subpackage_id = self._get_subpackage_id_for_endpoint_id(
-            endpoint_id=client_credentials.token_endpoint.endpoint_reference,
+            endpoint_id=client_credentials.token_endpoint.endpoint_reference.endpoint_id,
         )
 
         result.append(
@@ -197,7 +198,9 @@ class OAuthTokenProviderGenerator:
         )
 
         refresh_subpackage_id = (
-            self._get_subpackage_id_for_endpoint_id(endpoint_id=client_credentials.refresh_endpoint.endpoint_reference)
+            self._get_subpackage_id_for_endpoint_id(
+                endpoint_id=client_credentials.refresh_endpoint.endpoint_reference.endpoint_id
+            )
             if client_credentials.refresh_endpoint is not None
             else None
         )
@@ -232,6 +235,12 @@ class OAuthTokenProviderGenerator:
 
         return _write_member_initialization
 
+    def _has_expires_in_property(self, client_credentials: ir_types.OAuthClientCredentials) -> bool:
+        return client_credentials.token_endpoint.response_properties.expires_in is not None or (
+            client_credentials.refresh_endpoint is not None
+            and client_credentials.refresh_endpoint.response_properties.expires_in is not None
+        )
+
     def _get_write_auth_client_initialization(
         self,
         subpackage_id: ir_types.SubpackageId,
@@ -254,12 +263,17 @@ class OAuthTokenProviderGenerator:
 
         return _write_auth_client_initialization
 
-    def _get_token_function_declaration(self) -> AST.FunctionDeclaration:
+    def _get_token_function_declaration(
+        self, client_credentials: ir_types.OAuthClientCredentials
+    ) -> AST.FunctionDeclaration:
         def _write_get_token_body(writer: AST.NodeWriter) -> None:
-            writer.write(
-                f"if self.{self._get_access_token_member_name()} and self.{self._get_expires_at_member_name()} > "
-            )
-            writer.write_node(AST.Expression(self._get_datetime_now_invocation()))
+            if self._has_expires_in_property(client_credentials):
+                writer.write(
+                    f"if self.{self._get_access_token_member_name()} and self.{self._get_expires_at_member_name()} > "
+                )
+                writer.write_node(AST.Expression(self._get_datetime_now_invocation()))
+            else:
+                writer.write(f"if self.{self._get_access_token_member_name()}")
             writer.write_line(":")
             with writer.indent():
                 writer.write_line(f"return self.{self._get_access_token_member_name()}")
@@ -396,19 +410,19 @@ class OAuthTokenProviderGenerator:
         ]
         if client_credentials.refresh_endpoint is None:
             token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(
-                client_credentials.token_endpoint.endpoint_reference
+                client_credentials.token_endpoint.endpoint_reference.endpoint_id
             )
             return AST.FunctionInvocation(
                 function_definition=AST.Reference(
                     qualified_name_excluding_import=(
-                        f"self.{self._get_auth_client_member_name()}.{token_endpoint.name.get_as_name().snake_case.safe_name}",
+                        f"self.{self._get_auth_client_member_name()}.{token_endpoint.name.snake_case.safe_name}",
                     ),
                 ),
                 kwargs=kwargs,
             )
 
         refresh_token_endpoint: ir_types.HttpEndpoint = self._get_endpoint_for_id(
-            client_credentials.refresh_endpoint.endpoint_reference
+            client_credentials.refresh_endpoint.endpoint_reference.endpoint_id
         )
         kwargs.append(
             (
@@ -419,7 +433,7 @@ class OAuthTokenProviderGenerator:
         return AST.FunctionInvocation(
             function_definition=AST.Reference(
                 qualified_name_excluding_import=(
-                    f"self.{self._get_refresh_client_member_name()}.{refresh_token_endpoint.name.get_as_name().snake_case.safe_name}",
+                    f"self.{self._get_refresh_client_member_name()}.{refresh_token_endpoint.name.snake_case.safe_name}",
                 ),
             ),
             kwargs=kwargs,

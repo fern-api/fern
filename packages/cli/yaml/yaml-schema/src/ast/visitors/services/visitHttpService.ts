@@ -50,7 +50,9 @@ export async function visitHttpService({
                 await visitEndpoint({ endpointId, endpoint, service, visitor, nodePathForEndpoint });
             }
         },
-        idempotent: noop
+        idempotent: noop,
+        transport: noop,
+        source: noop
     });
 }
 
@@ -129,6 +131,7 @@ async function visitEndpoint({
                                 },
                                 "allow-multiple": noop,
                                 audiences: noop,
+                                encoding: noop,
                                 default: noop,
                                 validation: noop
                             });
@@ -194,6 +197,7 @@ async function visitEndpoint({
                                                 });
                                             },
                                             audiences: noop,
+                                            encoding: noop,
                                             default: noop,
                                             validation: noop
                                         });
@@ -212,6 +216,12 @@ async function visitEndpoint({
         audiences: noop,
         method: noop,
         auth: noop,
+        "stream-condition": async (streamCondition) => {
+            await visitor.streamCondition?.({ streamCondition, endpoint }, [
+                ...nodePathForEndpoint,
+                "stream-condition"
+            ]);
+        },
         "response-stream": async (responseStream) => {
             if (responseStream == null) {
                 return;
@@ -299,6 +309,19 @@ async function visitExampleEndpointCall({
     endpoint: RawSchemas.HttpEndpointSchema;
     example: RawSchemas.ExampleEndpointCallSchema;
 }): Promise<void> {
+    // if an example is entirely empty and has code samples, dont validate against the
+    // request or response schemas
+    if (
+        example.headers == null &&
+        example["path-parameters"] == null &&
+        example["query-parameters"] == null &&
+        example.request == null &&
+        example.response == null &&
+        example["code-samples"] != null
+    ) {
+        return;
+    }
+
     await visitor.exampleHttpEndpointCall?.(
         {
             service,
@@ -466,7 +489,8 @@ export async function visitPathParameters({
                 await visitObject(pathParameter, {
                     docs: createDocsVisitor(visitor, nodePathForPathParameter),
                     variable: async (variable) =>
-                        await visitor.variableReference?.(variable, [...nodePathForPathParameter, "variable"])
+                        await visitor.variableReference?.(variable, [...nodePathForPathParameter, "variable"]),
+                    availability: noop
                 });
             }
         } else {
@@ -481,6 +505,8 @@ export async function visitPathParameters({
                             validation: pathParameter.validation
                         });
                     },
+                    availability: noop,
+                    encoding: noop,
                     default: noop,
                     validation: noop
                 });
@@ -523,6 +549,7 @@ async function visitHeaders({
                 },
                 docs: createDocsVisitor(visitor, nodePathForHeader),
                 audiences: noop,
+                encoding: noop,
                 env: noop,
                 default: noop,
                 validation: noop

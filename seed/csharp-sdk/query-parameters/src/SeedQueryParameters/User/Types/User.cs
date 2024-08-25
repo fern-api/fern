@@ -1,14 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedQueryParameters.Core;
 
 #nullable enable
 
 namespace SeedQueryParameters;
 
-public class User
+public record User
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("tags")]
-    public IEnumerable<string> Tags { get; init; }
+    public IEnumerable<string> Tags { get; set; } = new List<string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

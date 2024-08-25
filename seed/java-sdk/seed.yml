@@ -1,4 +1,4 @@
-irVersion: v42
+irVersion: v46
 docker: fernapi/fern-java-sdk:latest
 dockerCommand: 
   - cd generators/java
@@ -25,8 +25,18 @@ fixtures:
           - "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
       outputFolder: custom-dependency
     - customConfig:
+        json-include: non-empty
+      outputFolder: json-include-non-empty
+    - customConfig:
         enable-forward-compatible-enums: true
       outputFolder: forward-compatible-enums
+    - customConfig:
+        base-api-exception-class-name: CustomApiException
+        base-exception-class-name: CustomException
+      outputFolder: custom-error-names
+    - customConfig:
+        client-class-name: Best
+      outputFolder: custom-client-class-name
     - customConfig:
         package-prefix: com.fern.sdk
       outputMode: local_files
@@ -54,9 +64,9 @@ scripts:
 allowedFailures:
   - enum
   - extends
-  - response-property
   - examples
   - exhaustive:local-files
   - trace
   - unions
   - query-parameters
+  - alias-extends

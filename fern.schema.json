@@ -1,5 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
   "$ref": "#/definitions/Fern Definition",
   "definitions": {
     "Fern Definition": {
@@ -28,7 +27,7 @@
                             "type": "object",
                             "properties": {
                               "status": {
-                                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability/anyOf/0"
+                                "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability/anyOf/0"
                               },
                               "message": { "type": "string" }
                             },
@@ -45,12 +44,55 @@
                           "properties": {
                             "name": { "type": "string" },
                             "docs": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
                             "value": {}
                           },
                           "additionalProperties": false
                         }
+                      },
+                      "encoding": {
+                        "type": "object",
+                        "properties": {
+                          "proto": {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "description": "The name of the Protobuf type (e.g. google.protobuf.Struct)."
+                              }
+                            },
+                            "required": ["type"],
+                            "additionalProperties": false
+                          }
+                        },
+                        "additionalProperties": false
+                      },
+                      "source": {
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "properties": {
+                              "proto": {
+                                "type": "string",
+                                "description": "The Protobuf filepath that defined this node."
+                              }
+                            },
+                            "required": ["proto"],
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "openapi": {
+                                "type": "string",
+                                "description": "The OpenAPI filepath that defined this node."
+                              }
+                            },
+                            "required": ["openapi"],
+                            "additionalProperties": false
+                          }
+                        ]
                       },
                       "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
@@ -66,6 +108,9 @@
                               "properties": {
                                 "type": { "type": "string" },
                                 "default": {},
+                                "encoding": {
+                                  "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                                },
                                 "validation": {
                                   "anyOf": [
                                     {
@@ -92,16 +137,16 @@
                                   ]
                                 },
                                 "docs": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                  "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                 },
                                 "availability": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                                  "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                                 },
                                 "audiences": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                                  "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                                 },
                                 "name": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                  "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                                 }
                               },
                               "required": ["type"],
@@ -118,24 +163,32 @@
                   {
                     "type": "object",
                     "properties": {
-                      "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                      "docs": {
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                      },
                       "availability": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                       },
                       "audiences": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                       },
                       "examples": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
+                      },
+                      "encoding": {
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                      },
+                      "source": {
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source"
                       },
                       "extensions": { "type": "object", "additionalProperties": {} },
                       "extends": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                       },
                       "properties": {
                         "type": "object",
                         "additionalProperties": {
-                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                          "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                         }
                       },
                       "extra-properties": { "type": "boolean" }
@@ -148,21 +201,33 @@
               {
                 "type": "object",
                 "properties": {
-                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "docs": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                  },
                   "availability": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                   },
                   "audiences": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
-                  "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
+                  "examples": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
+                  },
+                  "encoding": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                  },
+                  "source": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source"
+                  },
                   "base-properties": {
                     "type": "object",
                     "additionalProperties": {
-                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                      "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                     }
                   },
-                  "extends": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends" },
+                  "extends": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                  },
                   "union": {
                     "type": "object",
                     "additionalProperties": {
@@ -172,10 +237,10 @@
                           "type": "object",
                           "properties": {
                             "name": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                             },
                             "docs": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
                             "type": {
                               "anyOf": [
@@ -190,7 +255,7 @@
                                   "type": "object",
                                   "properties": {
                                     "name": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                      "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                                     },
                                     "value": { "type": "string" }
                                   },
@@ -212,7 +277,7 @@
                         "type": "object",
                         "properties": {
                           "name": {
-                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                           },
                           "value": { "type": "string" }
                         },
@@ -228,17 +293,27 @@
               {
                 "type": "object",
                 "properties": {
-                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "docs": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                  },
                   "availability": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                   },
                   "audiences": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
-                  "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
+                  "examples": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
+                  },
+                  "encoding": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                  },
+                  "source": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source"
+                  },
                   "type": { "type": "string" },
                   "validation": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
                   }
                 },
                 "required": ["type"],
@@ -247,14 +322,25 @@
               {
                 "type": "object",
                 "properties": {
-                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "docs": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                  },
                   "availability": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                   },
                   "audiences": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
-                  "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
+                  "examples": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
+                  },
+                  "encoding": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                  },
+                  "source": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source"
+                  },
+                  "default": { "type": "string" },
                   "enum": {
                     "type": "array",
                     "items": {
@@ -264,10 +350,10 @@
                           "type": "object",
                           "properties": {
                             "name": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                             },
                             "docs": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
                             "value": { "type": "string" },
                             "casing": {
@@ -294,14 +380,24 @@
               {
                 "type": "object",
                 "properties": {
-                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "docs": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                  },
                   "availability": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                   },
                   "audiences": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
-                  "examples": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples" },
+                  "examples": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples"
+                  },
+                  "encoding": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                  },
+                  "source": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source"
+                  },
                   "union": {
                     "type": "array",
                     "items": {
@@ -311,7 +407,7 @@
                           "type": "object",
                           "properties": {
                             "docs": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
                             "type": { "type": "string" }
                           },
@@ -333,9 +429,11 @@
           "type": "object",
           "properties": {
             "availability": {
-              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
             },
-            "audiences": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences" },
+            "audiences": {
+              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+            },
             "auth": { "type": "boolean" },
             "url": { "type": "string" },
             "display-name": { "type": "string" },
@@ -352,10 +450,18 @@
                         "properties": {
                           "type": { "type": "string" },
                           "default": {},
-                          "validation": {
-                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                          "encoding": {
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
                           },
-                          "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" }
+                          "validation": {
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                          },
+                          "availability": {
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                          },
+                          "docs": {
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                          }
                         },
                         "required": ["type"],
                         "additionalProperties": false
@@ -366,8 +472,13 @@
                   {
                     "type": "object",
                     "properties": {
-                      "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-                      "variable": { "type": "string" }
+                      "docs": {
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                      },
+                      "variable": { "type": "string" },
+                      "availability": {
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                      }
                     },
                     "required": ["variable"],
                     "additionalProperties": false
@@ -386,18 +497,23 @@
                     "properties": {
                       "type": { "type": "string" },
                       "default": {},
-                      "validation": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                      "encoding": {
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
                       },
-                      "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                      "validation": {
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                      },
+                      "docs": {
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                      },
                       "availability": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                       },
                       "audiences": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                       },
                       "name": {
-                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                       },
                       "env": { "type": "string" }
                     },
@@ -407,17 +523,33 @@
                 ]
               }
             },
+            "transport": {
+              "type": "object",
+              "properties": {
+                "grpc": {
+                  "type": "object",
+                  "properties": {
+                    "service-name": { "type": "string", "description": "The name of the gRPC service." }
+                  },
+                  "required": ["service-name"],
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
             "endpoints": {
               "type": "object",
               "additionalProperties": {
                 "type": "object",
                 "properties": {
-                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "docs": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                  },
                   "availability": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                   },
                   "audiences": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "method": { "type": "string", "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"] },
                   "display-name": { "type": "string" },
@@ -426,11 +558,12 @@
                   "path-parameters": {
                     "type": "object",
                     "additionalProperties": {
-                      "$ref": "#/properties/service/properties/path-parameters/additionalProperties"
+                      "$ref": "#/definitions/Fern Definition/properties/service/properties/path-parameters/additionalProperties"
                     }
                   },
                   "auth": { "type": "boolean" },
                   "idempotent": { "type": "boolean" },
+                  "stream-condition": { "type": "string" },
                   "request": {
                     "anyOf": [
                       { "type": "string" },
@@ -438,7 +571,7 @@
                         "type": "object",
                         "properties": {
                           "name": {
-                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                           },
                           "content-type": { "type": "string" },
                           "query-parameters": {
@@ -451,20 +584,23 @@
                                   "properties": {
                                     "type": { "type": "string" },
                                     "default": {},
+                                    "encoding": {
+                                      "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/encoding"
+                                    },
                                     "validation": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
+                                      "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties/anyOf/1/properties/validation"
                                     },
                                     "docs": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                      "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                     },
                                     "availability": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                                      "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                                     },
                                     "audiences": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                                      "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                                     },
                                     "name": {
-                                      "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                      "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                                     },
                                     "allow-multiple": { "type": "boolean" }
                                   },
@@ -477,7 +613,7 @@
                           "headers": {
                             "type": "object",
                             "additionalProperties": {
-                              "$ref": "#/properties/service/properties/headers/additionalProperties"
+                              "$ref": "#/definitions/Fern Definition/properties/service/properties/headers/additionalProperties"
                             }
                           },
                           "body": {
@@ -487,7 +623,7 @@
                                 "type": "object",
                                 "properties": {
                                   "docs": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                   },
                                   "type": { "type": "string" }
                                 },
@@ -500,12 +636,12 @@
                                     "type": "object",
                                     "properties": {
                                       "extends": {
-                                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                                       },
                                       "properties": {
                                         "type": "object",
                                         "additionalProperties": {
-                                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                                          "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                                         }
                                       },
                                       "extra-properties": { "type": "boolean" }
@@ -517,12 +653,12 @@
                                     "type": "object",
                                     "properties": {
                                       "extends": {
-                                        "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                                       },
                                       "properties": {
                                         "type": "object",
                                         "additionalProperties": {
-                                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                                          "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                                         }
                                       },
                                       "extra-properties": { "type": "boolean" }
@@ -545,7 +681,9 @@
                       {
                         "type": "object",
                         "properties": {
-                          "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                          "docs": {
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                          },
                           "type": { "type": "string" },
                           "property": { "type": "string" },
                           "status-code": { "type": "number" }
@@ -561,7 +699,9 @@
                       {
                         "type": "object",
                         "properties": {
-                          "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                          "docs": {
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                          },
                           "type": { "type": "string" },
                           "format": { "type": "string", "enum": ["sse", "json"] },
                           "terminator": { "type": "string" }
@@ -580,7 +720,7 @@
                           "type": "object",
                           "properties": {
                             "docs": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                             },
                             "error": { "type": "string" }
                           },
@@ -596,24 +736,27 @@
                       "type": "object",
                       "properties": {
                         "name": {
-                          "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                          "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                         },
-                        "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                        "docs": {
+                          "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                        },
+                        "id": { "type": "string" },
                         "path-parameters": { "type": "object", "additionalProperties": {} },
                         "query-parameters": {
                           "type": "object",
                           "additionalProperties": {
-                            "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                            "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
                           }
                         },
                         "headers": {
                           "type": "object",
                           "additionalProperties": {
-                            "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                            "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
                           }
                         },
                         "request": {
-                          "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                          "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
                         },
                         "response": {
                           "anyOf": [
@@ -622,7 +765,7 @@
                               "properties": {
                                 "error": { "type": "string" },
                                 "body": {
-                                  "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                                  "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
                                 }
                               },
                               "additionalProperties": false
@@ -633,7 +776,7 @@
                                 "stream": {
                                   "type": "array",
                                   "items": {
-                                    "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                                    "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
                                   }
                                 }
                               },
@@ -650,7 +793,7 @@
                                     "properties": {
                                       "event": { "type": "string" },
                                       "data": {
-                                        "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                                        "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
                                       }
                                     },
                                     "required": ["event"],
@@ -671,10 +814,10 @@
                                 "type": "object",
                                 "properties": {
                                   "name": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                                   },
                                   "docs": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                   },
                                   "sdk": {
                                     "type": "string",
@@ -706,10 +849,10 @@
                                 "type": "object",
                                 "properties": {
                                   "name": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                                   },
                                   "docs": {
-                                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
                                   },
                                   "language": { "type": "string" },
                                   "code": { "type": "string" },
@@ -758,6 +901,14 @@
                               "results": {
                                 "type": "string",
                                 "description": "The path to the response property for the page elements."
+                              },
+                              "step": {
+                                "type": "string",
+                                "description": "The path to the request property for the page step."
+                              },
+                              "has-next-page": {
+                                "type": "string",
+                                "description": "The path to the response property indicating next page presence."
                               }
                             },
                             "required": ["offset", "results"],
@@ -772,6 +923,9 @@
                 "required": ["path"],
                 "additionalProperties": false
               }
+            },
+            "source": {
+              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/source"
             }
           },
           "required": ["auth", "base-path", "endpoints"],
@@ -782,16 +936,22 @@
           "additionalProperties": {
             "type": "object",
             "properties": {
-              "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-              "availability": {
-                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+              "docs": {
+                "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
               },
-              "audiences": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences" },
+              "availability": {
+                "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+              },
+              "audiences": {
+                "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+              },
               "method": { "type": "string", "enum": ["GET", "POST"] },
               "display-name": { "type": "string" },
               "headers": {
                 "type": "object",
-                "additionalProperties": { "$ref": "#/properties/service/properties/headers/additionalProperties" }
+                "additionalProperties": {
+                  "$ref": "#/definitions/Fern Definition/properties/service/properties/headers/additionalProperties"
+                }
               },
               "payload": {
                 "anyOf": [
@@ -799,7 +959,9 @@
                   {
                     "type": "object",
                     "properties": {
-                      "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                      "docs": {
+                        "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                      },
                       "type": { "type": "string" }
                     },
                     "required": ["type"],
@@ -812,12 +974,12 @@
                         "properties": {
                           "name": { "type": "string" },
                           "extends": {
-                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                           },
                           "properties": {
                             "type": "object",
                             "additionalProperties": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                             }
                           }
                         },
@@ -829,12 +991,12 @@
                         "properties": {
                           "name": { "type": "string" },
                           "extends": {
-                            "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                           },
                           "properties": {
                             "type": "object",
                             "additionalProperties": {
-                              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                             }
                           }
                         },
@@ -844,6 +1006,25 @@
                     ]
                   }
                 ]
+              },
+              "examples": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                    },
+                    "docs": {
+                      "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                    },
+                    "id": { "type": "string" },
+                    "payload": {
+                      "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                    }
+                  },
+                  "additionalProperties": false
+                }
               }
             },
             "required": ["method", "payload"],
@@ -853,26 +1034,34 @@
         "channel": {
           "type": "object",
           "properties": {
-            "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
-            "availability": {
-              "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+            "docs": {
+              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
             },
-            "audiences": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences" },
+            "availability": {
+              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+            },
+            "audiences": {
+              "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+            },
             "auth": { "type": "boolean" },
             "path": { "type": "string" },
             "display-name": { "type": "string" },
             "headers": {
               "type": "object",
-              "additionalProperties": { "$ref": "#/properties/service/properties/headers/additionalProperties" }
+              "additionalProperties": {
+                "$ref": "#/definitions/Fern Definition/properties/service/properties/headers/additionalProperties"
+              }
             },
             "path-parameters": {
               "type": "object",
-              "additionalProperties": { "$ref": "#/properties/service/properties/path-parameters/additionalProperties" }
+              "additionalProperties": {
+                "$ref": "#/definitions/Fern Definition/properties/service/properties/path-parameters/additionalProperties"
+              }
             },
             "query-parameters": {
               "type": "object",
               "additionalProperties": {
-                "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/request/anyOf/1/properties/query-parameters/additionalProperties"
+                "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/request/anyOf/1/properties/query-parameters/additionalProperties"
               }
             },
             "messages": {
@@ -880,12 +1069,14 @@
               "additionalProperties": {
                 "type": "object",
                 "properties": {
-                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "docs": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                  },
                   "availability": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/availability"
                   },
                   "audiences": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/audiences"
                   },
                   "origin": { "type": "string", "enum": ["client", "server"] },
                   "body": {
@@ -894,7 +1085,9 @@
                       {
                         "type": "object",
                         "properties": {
-                          "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                          "docs": {
+                            "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                          },
                           "type": { "type": "string" }
                         },
                         "required": ["type"],
@@ -907,12 +1100,12 @@
                             "properties": {
                               "name": { "type": "string" },
                               "extends": {
-                                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                                "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                               },
                               "properties": {
                                 "type": "object",
                                 "additionalProperties": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                                  "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                                 }
                               }
                             },
@@ -924,12 +1117,12 @@
                             "properties": {
                               "name": { "type": "string" },
                               "extends": {
-                                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
+                                "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/extends"
                               },
                               "properties": {
                                 "type": "object",
                                 "additionalProperties": {
-                                  "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
+                                  "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/properties/additionalProperties"
                                 }
                               }
                             },
@@ -952,25 +1145,27 @@
                 "type": "object",
                 "properties": {
                   "name": {
-                    "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
                   },
-                  "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+                  "docs": {
+                    "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                  },
                   "path-parameters": {
                     "type": "object",
                     "additionalProperties": {
-                      "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                      "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
                     }
                   },
                   "query-parameters": {
                     "type": "object",
                     "additionalProperties": {
-                      "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                      "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
                     }
                   },
                   "headers": {
                     "type": "object",
                     "additionalProperties": {
-                      "$ref": "#/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
+                      "$ref": "#/definitions/Fern Definition/properties/service/properties/endpoints/additionalProperties/properties/examples/items/properties/path-parameters/additionalProperties"
                     }
                   },
                   "messages": {
@@ -996,12 +1191,16 @@
           "additionalProperties": {
             "type": "object",
             "properties": {
-              "docs": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs" },
+              "docs": {
+                "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+              },
               "status-code": { "type": "number" },
               "type": { "type": "string" },
               "examples": {
                 "type": "array",
-                "items": { "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items" }
+                "items": {
+                  "$ref": "#/definitions/Fern Definition/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items"
+                }
               }
             },
             "required": ["status-code"],
@@ -1011,5 +1210,6 @@
       },
       "additionalProperties": false
     }
-  }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
 }

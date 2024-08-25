@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2.V3;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2.V3;
 
-public class GetBasicSolutionFileRequest
+public record GetBasicSolutionFileRequest
 {
     [JsonPropertyName("methodName")]
-    public string MethodName { get; init; }
+    public required string MethodName { get; set; }
 
     [JsonPropertyName("signature")]
-    public NonVoidFunctionSignature Signature { get; init; }
+    public required NonVoidFunctionSignature Signature { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

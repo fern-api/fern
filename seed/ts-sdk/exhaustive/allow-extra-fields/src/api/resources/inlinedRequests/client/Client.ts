@@ -15,8 +15,11 @@ export declare namespace InlinedRequests {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -33,7 +36,7 @@ export class InlinedRequests {
      * @throws {@link SeedExhaustive.BadRequestBody}
      *
      * @example
-     *     await seedExhaustive.inlinedRequests.postWithObjectBodyandResponse({
+     *     await client.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",
      *         integer: 1,
      *         nestedObject: {
@@ -42,7 +45,7 @@ export class InlinedRequests {
      *             long: 1000000,
      *             double: 1.1,
      *             bool: true,
-     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
+     *             datetime: "2024-01-15T09:30:00Z",
      *             date: "2023-01-15",
      *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             base64: "SGVsbG8gd29ybGQh",
@@ -50,7 +53,8 @@ export class InlinedRequests {
      *             set: new Set(["string"]),
      *             map: {
      *                 1: "string"
-     *             }
+     *             },
+     *             bigint: "123456789123456789"
      *         }
      *     })
      */
@@ -66,11 +70,13 @@ export class InlinedRequests {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.PostWithObjectBody.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.PostWithObjectBody.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -80,7 +86,7 @@ export class InlinedRequests {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+            return serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -92,7 +98,7 @@ export class InlinedRequests {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new SeedExhaustive.BadRequestBody(
-                        await serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
+                        serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

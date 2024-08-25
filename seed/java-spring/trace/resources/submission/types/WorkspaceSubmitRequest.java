@@ -19,7 +19,7 @@ import java.util.Objects;
 import java.util.Optional;
 import resources.commons.types.Language;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = WorkspaceSubmitRequest.Builder.class
 )
@@ -148,7 +148,7 @@ public final class WorkspaceSubmitRequest {
 
     @java.lang.Override
     public _FinalStage userId(String userId) {
-      this.userId = Optional.of(userId);
+      this.userId = Optional.ofNullable(userId);
       return this;
     }
 

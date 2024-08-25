@@ -1,4 +1,27 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/{endpointParam}",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.post"
+            },
+            "snippet": {
+                "client": "require \"fern_variables\"\n\nvariables = SeedVariablesClient::Client.new(base_url: \"https://api.example.com\")\nvariables.service.post(endpoint_param: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/{endpointParam}",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.post"
+            },
+            "snippet": {
+                "client": "require \"fern_variables\"\n\nvariables = SeedVariablesClient::Client.new(base_url: \"https://api.example.com\")\nvariables.service.post(endpoint_param: \"string\")",
+                "type": "ruby"
+            }
+        }
+    ],
     "types": {}
 }

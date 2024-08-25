@@ -13,8 +13,11 @@ export declare namespace QueryParam {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -27,7 +30,7 @@ export class QueryParam {
      * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedEnum.queryParam.send({
+     *     await client.queryParam.send({
      *         operand: SeedEnum.Operand.GreaterThan,
      *         operandOrColor: SeedEnum.Color.Red
      *     })
@@ -57,11 +60,13 @@ export class QueryParam {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/enum",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/enum/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -97,7 +102,7 @@ export class QueryParam {
      * @param {QueryParam.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedEnum.queryParam.sendList({
+     *     await client.queryParam.sendList({
      *         operand: SeedEnum.Operand.GreaterThan,
      *         maybeOperand: SeedEnum.Operand.GreaterThan,
      *         operandOrColor: SeedEnum.Color.Red,
@@ -151,11 +156,13 @@ export class QueryParam {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/enum",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/enum/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

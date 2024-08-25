@@ -1,4 +1,4 @@
-using SeedObject;
+using SeedObject.Core;
 
 #nullable enable
 
@@ -8,21 +8,23 @@ public partial class SeedObjectClient
 {
     private RawClient _client;
 
-    public SeedObjectClient(ClientOptions clientOptions = null)
+    public SeedObjectClient(ClientOptions? clientOptions = null)
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "User-Agent", "Fernobject/0.0.1" },
+            }
         );
-    }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
         {
-            throw new Exception(message);
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
         }
-        return value;
+        _client = new RawClient(clientOptions);
     }
 }

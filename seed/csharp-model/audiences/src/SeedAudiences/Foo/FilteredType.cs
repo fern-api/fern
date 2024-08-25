@@ -1,14 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedAudiences.Core;
 
 #nullable enable
 
 namespace SeedAudiences;
 
-public class FilteredType
+public record FilteredType
 {
     [JsonPropertyName("public_property")]
-    public string? PublicProperty { get; init; }
+    public string? PublicProperty { get; set; }
 
     [JsonPropertyName("private_property")]
-    public int PrivateProperty { get; init; }
+    public required int PrivateProperty { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

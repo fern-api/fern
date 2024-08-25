@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_service.getResource"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedMixedCase = new SeedMixedCaseClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedMixedCaseClient } from \"@fern/mixed-case\";"
+                ],
+                "templateString": "const client = new SeedMixedCaseClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedMixedCase.service.getResource(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getResource(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -64,10 +95,41 @@
             "identifierOverride": "endpoint_service.listResources"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedMixedCase = new SeedMixedCaseClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedMixedCaseClient } from \"@fern/mixed-case\";"
+                ],
+                "templateString": "const client = new SeedMixedCaseClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedMixedCase.service.listResources(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.listResources(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

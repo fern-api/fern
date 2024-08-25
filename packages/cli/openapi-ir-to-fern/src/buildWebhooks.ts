@@ -6,6 +6,7 @@ import { camelCase, isEqual } from "lodash-es";
 import { buildHeader } from "./buildHeader";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertFullExample } from "./utils/convertFullExample";
 import { tokenizeString } from "./utils/getEndpointLocation";
 
 export function buildWebhooks(context: OpenApiIrConverterContext): void {
@@ -27,7 +28,17 @@ export function buildWebhooks(context: OpenApiIrConverterContext): void {
                 schema: webhook.payload,
                 context,
                 fileContainingReference: webhookLocation.file
-            })
+            }),
+            examples:
+                webhook.examples != null
+                    ? webhook.examples.map((exampleWebhookCall) => {
+                          return {
+                              docs: exampleWebhookCall.description,
+                              name: exampleWebhookCall.name,
+                              payload: convertFullExample(exampleWebhookCall.payload)
+                          };
+                      })
+                    : undefined
         };
         context.builder.addWebhook(webhookLocation.file, {
             name: webhookLocation.endpointId,

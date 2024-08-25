@@ -46,7 +46,7 @@ class MovieDoesNotExistError extends errors.SeedApiError {
     }
     send(res) {
         return __awaiter(this, void 0, void 0, function* () {
-            res.status(404).json(yield serializers.MovieId.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }));
+            res.status(404).json(serializers.MovieId.jsonOrThrow(this.body, { unrecognizedObjectKeys: "strip" }));
         });
     }
 }

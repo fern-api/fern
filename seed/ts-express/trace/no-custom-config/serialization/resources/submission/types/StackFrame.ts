@@ -10,7 +10,7 @@ export const StackFrame: core.serialization.ObjectSchema<serializers.StackFrame.
     core.serialization.object({
         methodName: core.serialization.string(),
         lineNumber: core.serialization.number(),
-        scopes: core.serialization.list(core.serialization.lazyObject(async () => (await import("../../..")).Scope)),
+        scopes: core.serialization.list(core.serialization.lazyObject(() => serializers.Scope)),
     });
 
 export declare namespace StackFrame {

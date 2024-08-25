@@ -39,6 +39,10 @@ export const IdGenerator = {
         const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
         return `webhooks_${joinedFernFilePath}`;
     },
+    generateWebhookId: (fernFilepath: FernFilepath, webhookId: string): string => {
+        const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
+        return `webhooks_${joinedFernFilePath}.${webhookId}`;
+    },
     generateWebSocketChannelId: (fernFilepath: FernFilepath): string => {
         const joinedFernFilePath = stringifyFernFilepath(fernFilepath);
         return `channel_${joinedFernFilePath}`;

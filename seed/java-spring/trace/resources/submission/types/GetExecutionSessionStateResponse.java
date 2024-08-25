@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = GetExecutionSessionStateResponse.Builder.class
 )
@@ -128,7 +128,7 @@ public final class GetExecutionSessionStateResponse {
     }
 
     public Builder numWarmingInstances(Integer numWarmingInstances) {
-      this.numWarmingInstances = Optional.of(numWarmingInstances);
+      this.numWarmingInstances = Optional.ofNullable(numWarmingInstances);
       return this;
     }
 

@@ -1,7 +1,9 @@
 import { ClassReference } from "..";
 import { csharp } from "../..";
+import { BaseCsharpCustomConfigSchema } from "../../custom-config";
 import { AstNode } from "./AstNode";
 
+type Alias = string;
 type Namespace = string;
 
 const TAB_SIZE = 4;
@@ -9,7 +11,15 @@ const TAB_SIZE = 4;
 export declare namespace Writer {
     interface Args {
         /* The namespace that is being written to */
-        namespace?: string;
+        namespace: string;
+        /* All base namespaces in the project */
+        allNamespaceSegments: Set<string>;
+        /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        /* The root namespace of the project */
+        rootNamespace: string;
+        /* Custom generator config */
+        customConfig: BaseCsharpCustomConfigSchema;
     }
 }
 
@@ -22,13 +32,27 @@ export class Writer {
     private hasWrittenAnything = false;
     /* Whether the last character written was a newline */
     private lastCharacterIsNewline = false;
-    /* The current line number */
+    /* Import statements */
     private references: Record<Namespace, ClassReference[]> = {};
     /* The namespace that is being written to */
-    private namespace: string | undefined;
+    private namespace: string;
+    /* The set of namespace aliases */
+    private namespaceAliases: Record<Alias, Namespace> = {};
+    /* All base namespaces in the project */
+    private allNamespaceSegments: Set<string>;
+    /* The name of every type in the project mapped to the namespaces a type of that name belongs to */
+    private allTypeClassReferences: Map<string, Set<Namespace>>;
+    /* The root namespace of the project */
+    private rootNamespace: string;
+    /* Whether or not dictionary<string, object?> should be simplified to just objects */
+    private customConfig: BaseCsharpCustomConfigSchema;
 
-    constructor({ namespace }: Writer.Args) {
+    constructor({ namespace, allNamespaceSegments, allTypeClassReferences, rootNamespace, customConfig }: Writer.Args) {
         this.namespace = namespace;
+        this.allNamespaceSegments = allNamespaceSegments;
+        this.allTypeClassReferences = allTypeClassReferences;
+        this.rootNamespace = rootNamespace;
+        this.customConfig = customConfig;
     }
 
     public write(text: string): void {
@@ -37,7 +61,7 @@ export class Writer {
         const textWithoutNewline = textEndsInNewline ? text.substring(0, text.length - 1) : text;
 
         const indent = this.getIndentString();
-        let indentedText = textWithoutNewline.replace("\n", `\n${indent}`);
+        let indentedText = textWithoutNewline.replaceAll("\n", `\n${indent}`);
         if (this.isAtStartOfLine()) {
             indentedText = indent + indentedText;
         }
@@ -76,11 +100,11 @@ export class Writer {
      * Writes text but then suffixes with a `;`
      * @param node
      */
-    public controlFlow(prefix: string, statement: string): void {
+    public controlFlow(prefix: string, statement: AstNode): void {
         const codeBlock = csharp.codeblock(prefix);
         codeBlock.write(this);
         this.write(" (");
-        this.write(statement);
+        this.writeNode(statement);
         this.write(") {");
         this.writeNewLineIfLastLineNot();
         this.indent();
@@ -132,16 +156,56 @@ export class Writer {
         }
     }
 
-    public toString(): string {
-        const imports = this.stringifyImports();
-        if (imports.length > 0) {
-            return `${imports}
+    public addNamespace(namespace: string): void {
+        const foundNamespace = this.references[namespace];
+        if (foundNamespace == null) {
+            this.references[namespace] = [];
+        }
+    }
 
-#nullable enable
+    public addNamespaceAlias(alias: string, namespace: string): void {
+        this.namespaceAliases[alias] = namespace;
+    }
 
-${this.buffer}`;
+    public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
+        return this.allTypeClassReferences;
+    }
+
+    public getAllNamespaceSegments(): Set<string> {
+        return this.allNamespaceSegments;
+    }
+
+    public getRootNamespace(): string {
+        return this.rootNamespace;
+    }
+
+    public getNamespace(): string {
+        return this.namespace;
+    }
+
+    public getCustomConfig(): BaseCsharpCustomConfigSchema {
+        return this.customConfig;
+    }
+
+    public getSimplifyObjectDictionaries(): boolean {
+        return this.customConfig["simplify-object-dictionaries"] ?? true;
+    }
+
+    public toString(skipImports = false): string {
+        if (!skipImports) {
+            const imports = this.stringifyImports();
+            if (imports.length > 0) {
+                return `${imports}
+    #nullable enable
+    
+    ${this.buffer}`;
+            }
         }
         return this.buffer;
+    }
+
+    public isReadOnlyMemoryType(type: string): boolean {
+        return this.customConfig["read-only-memory-types"]?.includes(type) ?? false;
     }
 
     /*******************************
@@ -165,12 +229,26 @@ ${this.buffer}`;
     }
 
     private stringifyImports(): string {
-        return (
-            Object.keys(this.references)
-                // filter out the current namespace
-                .filter((referenceNamespace) => referenceNamespace !== this.namespace)
-                .map((ref) => `using ${ref};`)
-                .join("\n")
-        );
+        const referenceKeys = Object.keys(this.references);
+        const namespaceAliasEntries = Object.entries(this.namespaceAliases);
+        if (referenceKeys.length === 0 && namespaceAliasEntries.length === 0) {
+            return "";
+        }
+
+        let result = referenceKeys
+            // Filter out the current namespace.
+            .filter((referenceNamespace) => referenceNamespace !== this.namespace)
+            .map((ref) => `using ${ref};`)
+            .join("\n");
+
+        if (result.length > 0) {
+            result += "\n";
+        }
+
+        for (const [alias, namespace] of namespaceAliasEntries) {
+            result += `using ${alias} = ${namespace};\n`;
+        }
+
+        return result;
     }
 }

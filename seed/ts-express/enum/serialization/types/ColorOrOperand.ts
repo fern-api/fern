@@ -8,8 +8,8 @@ import * as core from "../../core";
 
 export const ColorOrOperand: core.serialization.Schema<serializers.ColorOrOperand.Raw, SeedEnum.ColorOrOperand> =
     core.serialization.undiscriminatedUnion([
-        core.serialization.lazy(async () => (await import("..")).Color),
-        core.serialization.lazy(async () => (await import("..")).Operand),
+        core.serialization.lazy(() => serializers.Color),
+        core.serialization.lazy(() => serializers.Operand),
     ]);
 
 export declare namespace ColorOrOperand {

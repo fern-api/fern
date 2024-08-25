@@ -1,11 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedUnions.Core;
 
 #nullable enable
 
 namespace SeedUnions;
 
-public class GetShapeRequest
+public record GetShapeRequest
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

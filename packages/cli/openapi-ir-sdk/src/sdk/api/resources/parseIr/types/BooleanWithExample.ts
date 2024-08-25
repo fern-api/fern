@@ -3,5 +3,6 @@
  */
 
 export interface BooleanWithExample {
+    default: boolean | undefined;
     example: boolean | undefined;
 }

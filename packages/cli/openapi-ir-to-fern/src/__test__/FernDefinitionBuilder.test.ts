@@ -5,6 +5,7 @@ describe("Fern Definition Builder", () => {
     it("removes base path from environment", async () => {
         const builder = new FernDefinitionBuilderImpl(
             {
+                apiVersion: undefined,
                 title: undefined,
                 description: undefined,
                 basePath: undefined,
@@ -44,7 +45,8 @@ describe("Fern Definition Builder", () => {
             schema: {
                 method: "GET",
                 path: "/users"
-            }
+            },
+            source: undefined
         });
         const definition = builder.build();
         expect(definition.rootApiFile.environments != null).toEqual(true);

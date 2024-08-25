@@ -37,7 +37,7 @@ export class OptionalService {
 
     public toRouter(): express.Router {
         this.router.post("/send-optional-body", async (req, res, next) => {
-            const request = await serializers.optional.sendOptionalBody.Request.parse(req.body);
+            const request = serializers.optional.sendOptionalBody.Request.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -46,7 +46,7 @@ export class OptionalService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.optional.sendOptionalBody.Response.jsonOrThrow(responseBody, {
+                                    serializers.optional.sendOptionalBody.Response.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

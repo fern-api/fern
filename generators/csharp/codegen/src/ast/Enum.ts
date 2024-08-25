@@ -55,6 +55,10 @@ export class Enum extends AstNode {
         });
     }
 
+    public getNamespace(): string {
+        return this.namespace;
+    }
+
     public addMember(field: Enum.Member): void {
         this.fields.push({
             name: field.name,

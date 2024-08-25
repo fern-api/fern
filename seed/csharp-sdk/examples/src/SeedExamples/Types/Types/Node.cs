@@ -1,18 +1,23 @@
 using System.Text.Json.Serialization;
-using SeedExamples;
+using SeedExamples.Core;
 
 #nullable enable
 
 namespace SeedExamples;
 
-public class Node
+public record Node
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("nodes")]
-    public IEnumerable<Node>? Nodes { get; init; }
+    public IEnumerable<Node>? Nodes { get; set; }
 
     [JsonPropertyName("trees")]
-    public IEnumerable<Tree>? Trees { get; init; }
+    public IEnumerable<Tree>? Trees { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

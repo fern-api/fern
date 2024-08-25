@@ -20,6 +20,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             noSerdeLayer,
+            requestValidationStatusCode: parsed?.requestValidationStatusCode ?? 422,
             outputEsm: parsed?.outputEsm ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
@@ -61,14 +62,16 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 retainOriginalCasing: customConfig.retainOriginalCasing,
                 allowExtraFields: customConfig.allowExtraFields,
                 skipRequestValidation: customConfig.skipRequestValidation,
-                skipResponseValidation: customConfig.skipResponseValidation
+                skipResponseValidation: customConfig.skipResponseValidation,
+                requestValidationStatusCode: customConfig.requestValidationStatusCode
             }
         });
 
         const typescriptProject = await expressGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
         await expressGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory()
+            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
+            pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
 
         return persistedTypescriptProject;
@@ -83,6 +86,10 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
     }
 
     protected shouldTolerateRepublish(customConfig: ExpressCustomConfig): boolean {
+        return false;
+    }
+
+    protected publishToJsr(customConfig: ExpressCustomConfig): boolean {
         return false;
     }
 }

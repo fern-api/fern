@@ -1,5 +1,5 @@
-using System.Text.Json;
-using SeedExhaustive;
+using System.Net.Http;
+using SeedExhaustive.Core;
 using SeedExhaustive.Endpoints;
 
 #nullable enable
@@ -21,12 +21,17 @@ public class ParamsClient
     public async Task<string> GetWithPathAsync(string param)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/path/{param}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"/params/path/{param}"
+            }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }
@@ -34,18 +39,19 @@ public class ParamsClient
     /// <summary>
     /// GET with query param
     /// </summary>
-    public async void GetWithQueryAsync(GetWithQuery request)
+    public async Task GetWithQueryAsync(GetWithQuery request)
     {
         var _query = new Dictionary<string, object>()
         {
             { "query", request.Query },
             { "number", request.Number.ToString() },
         };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+        await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/params",
                 Query = _query
             }
         );
@@ -54,18 +60,19 @@ public class ParamsClient
     /// <summary>
     /// GET with multiple of same query param
     /// </summary>
-    public async void GetWithAllowMultipleQueryAsync(GetWithMultipleQuery request)
+    public async Task GetWithAllowMultipleQueryAsync(GetWithMultipleQuery request)
     {
         var _query = new Dictionary<string, object>()
         {
             { "query", request.Query },
             { "numer", request.Numer.ToString() },
         };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+        await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "",
+                Path = "/params",
                 Query = _query
             }
         );
@@ -74,14 +81,15 @@ public class ParamsClient
     /// <summary>
     /// GET with path and query params
     /// </summary>
-    public async void GetWithPathAndQueryAsync(string param, GetWithPathAndQuery request)
+    public async Task GetWithPathAndQueryAsync(string param, GetWithPathAndQuery request)
     {
         var _query = new Dictionary<string, object>() { { "query", request.Query }, };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+        await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/path-query/{param}",
+                Path = $"/params/path-query/{param}",
                 Query = _query
             }
         );
@@ -93,17 +101,18 @@ public class ParamsClient
     public async Task<string> ModifyWithPathAsync(string param, string request)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Put,
-                Path = $"/path/{param}",
+                Path = $"/params/path/{param}",
                 Body = request
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            return JsonUtils.Deserialize<string>(responseBody)!;
         }
         throw new Exception(responseBody);
     }

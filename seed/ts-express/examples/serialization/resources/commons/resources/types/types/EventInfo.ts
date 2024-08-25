@@ -9,9 +9,9 @@ import * as core from "../../../../../../core";
 export const EventInfo: core.serialization.Schema<serializers.commons.EventInfo.Raw, SeedExamples.commons.EventInfo> =
     core.serialization
         .union("type", {
-            metadata: core.serialization.lazyObject(async () => (await import("../../../../..")).commons.Metadata),
+            metadata: core.serialization.lazyObject(() => serializers.commons.Metadata),
             tag: core.serialization.object({
-                value: core.serialization.lazy(async () => (await import("../../../../..")).commons.Tag),
+                value: core.serialization.lazy(() => serializers.commons.Tag),
             }),
         })
         .transform<SeedExamples.commons.EventInfo>({

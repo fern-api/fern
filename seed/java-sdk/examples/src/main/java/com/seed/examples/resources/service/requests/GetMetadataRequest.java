@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetMetadataRequest.Builder.class)
 public final class GetMetadataRequest {
     private final String xApiVersion;
@@ -131,7 +131,7 @@ public final class GetMetadataRequest {
 
         @java.lang.Override
         public _FinalStage tag(String tag) {
-            this.tag = Optional.of(tag);
+            this.tag = Optional.ofNullable(tag);
             return this;
         }
 
@@ -144,7 +144,7 @@ public final class GetMetadataRequest {
 
         @java.lang.Override
         public _FinalStage shallow(Boolean shallow) {
-            this.shallow = Optional.of(shallow);
+            this.shallow = Optional.ofNullable(shallow);
             return this;
         }
 

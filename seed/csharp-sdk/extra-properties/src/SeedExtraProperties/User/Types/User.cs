@@ -1,11 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedExtraProperties.Core;
 
 #nullable enable
 
 namespace SeedExtraProperties;
 
-public class User
+public record User
 {
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

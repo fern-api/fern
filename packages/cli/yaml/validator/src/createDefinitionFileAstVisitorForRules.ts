@@ -56,6 +56,7 @@ export function createDefinitionFileAstVisitorForRules({
         ...createAstNodeVisitor("httpEndpoint"),
         ...createAstNodeVisitor("pathParameter"),
         ...createAstNodeVisitor("queryParameter"),
+        ...createAstNodeVisitor("streamCondition"),
         ...createAstNodeVisitor("header"),
         ...createAstNodeVisitor("errorDeclaration"),
         ...createAstNodeVisitor("errorReference"),

@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = SubmitRequestV2.Builder.class)
 public final class SubmitRequestV2 {
     private final UUID submissionId;
@@ -210,7 +210,7 @@ public final class SubmitRequestV2 {
 
         @java.lang.Override
         public _FinalStage userId(String userId) {
-            this.userId = Optional.of(userId);
+            this.userId = Optional.ofNullable(userId);
             return this;
         }
 
@@ -223,7 +223,7 @@ public final class SubmitRequestV2 {
 
         @java.lang.Override
         public _FinalStage problemVersion(Integer problemVersion) {
-            this.problemVersion = Optional.of(problemVersion);
+            this.problemVersion = Optional.ofNullable(problemVersion);
             return this;
         }
 

@@ -25,13 +25,16 @@ const ISO_8601_REGEX =
 // https://ihateregex.io/expr/uuid/
 const UUID_REGEX = /^[0-9a-fA-F]{8}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{4}\b-[0-9a-fA-F]{12}$/;
 
+const RFC_3339_DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+
 export function validateTypeReferenceExample({
     rawTypeReference,
     example,
     typeResolver,
     exampleResolver,
     file,
-    workspace
+    workspace,
+    breadcrumbs
 }: {
     rawTypeReference: string;
     example: RawSchemas.ExampleTypeReferenceSchema;
@@ -39,6 +42,7 @@ export function validateTypeReferenceExample({
     exampleResolver: ExampleResolver;
     file: FernFileContext;
     workspace: FernWorkspace;
+    breadcrumbs: string[];
 }): ExampleViolation[] {
     if (typeof example === "string" && example.startsWith(EXAMPLE_REFERENCE_PREFIX)) {
         // if it's a reference to another example, we just need to compare the
@@ -102,7 +106,8 @@ export function validateTypeReferenceExample({
                     example,
                     typeResolver,
                     exampleResolver,
-                    workspace
+                    workspace,
+                    breadcrumbs
                 });
             },
             map: ({ keyType, valueType }) => {
@@ -116,7 +121,8 @@ export function validateTypeReferenceExample({
                         typeResolver,
                         exampleResolver,
                         file,
-                        workspace
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, exampleKey]
                     }),
                     ...validateTypeReferenceExample({
                         rawTypeReference: valueType,
@@ -124,7 +130,8 @@ export function validateTypeReferenceExample({
                         typeResolver,
                         exampleResolver,
                         file,
-                        workspace
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, exampleKey]
                     })
                 ]);
             },
@@ -132,14 +139,15 @@ export function validateTypeReferenceExample({
                 if (!Array.isArray(example)) {
                     return getViolationsForMisshapenExample(example, "a list");
                 }
-                return example.flatMap((exampleItem) =>
+                return example.flatMap((exampleItem, idx) =>
                     validateTypeReferenceExample({
                         rawTypeReference: itemType,
                         example: exampleItem,
                         typeResolver,
                         exampleResolver,
                         file,
-                        workspace
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, `${idx}`]
                     })
                 );
             },
@@ -160,14 +168,15 @@ export function validateTypeReferenceExample({
                     ];
                 }
 
-                return example.flatMap((exampleItem) =>
+                return example.flatMap((exampleItem, idx) =>
                     validateTypeReferenceExample({
                         rawTypeReference: itemType,
                         example: exampleItem,
                         typeResolver,
                         exampleResolver,
                         file,
-                        workspace
+                        workspace,
+                        breadcrumbs: [...breadcrumbs, `${idx}`]
                     })
                 );
             },
@@ -181,7 +190,8 @@ export function validateTypeReferenceExample({
                     typeResolver,
                     exampleResolver,
                     file,
-                    workspace
+                    workspace,
+                    breadcrumbs
                 });
             },
             unknown: () => {
@@ -221,30 +231,43 @@ function validatePrimitiveExample({
                     example,
                     rules: v2.validation
                 }),
+            long: () => validateLong(example),
+            uint: () => validateUint(example),
+            uint64: () => validateUint64(example),
             double: (v2) =>
                 validateDoubleWithRules({
                     example,
                     rules: v2.validation
                 }),
+            float: () => validateFloat(example),
+            boolean: () => validateBoolean(example),
             string: (v2) =>
                 validateStringWithRules({
                     example,
                     rules: v2.validation
                 }),
+            uuid: () => validateUuid(example),
+            date: () => validateDate(example),
+            dateTime: () => validateDateTime(example),
+            base64: () => validateString(example),
+            bigInteger: () => validateString(example),
             _other: () => {
                 throw new Error("Unknown primitive type v2: " + primitiveType.v2);
             }
         });
     }
     return PrimitiveTypeV1._visit<ExampleViolation[]>(primitiveType.v1, {
-        string: () => validateString(example),
         integer: () => validateInteger(example),
-        double: () => validateDouble(example),
         long: () => validateLong(example),
+        uint: () => validateUint(example),
+        uint64: () => validateUint64(example),
+        double: () => validateDouble(example),
+        float: () => validateFloat(example),
         boolean: () => validateBoolean(example),
+        string: () => validateString(example),
         uuid: () => validateUuid(example),
         dateTime: () => validateDateTime(example),
-        date: () => validateString(example),
+        date: () => validateDate(example),
         base64: () => validateString(example),
         bigInteger: () => validateString(example),
         _other: () => {
@@ -383,6 +406,15 @@ function validateStringWithRules({
 
 const validateString = createValidator((example) => typeof example === "string", "a string");
 const validateInteger = createValidator((example) => Number.isInteger(example), "an integer");
+const validateUint = createValidator(
+    (example) => Number.isInteger(example) && typeof example === "number" && example >= 0,
+    "a uint"
+);
+const validateUint64 = createValidator(
+    (example) => Number.isInteger(example) && typeof example === "number" && example >= 0,
+    "a uint64"
+);
+const validateFloat = createValidator((example) => typeof example === "number", "a float");
 const validateDouble = createValidator((example) => typeof example === "number", "a double");
 const validateLong = createValidator((example) => Number.isInteger(example), "an integer");
 const validateBoolean = createValidator((example) => typeof example === "boolean", "a boolean");
@@ -390,6 +422,10 @@ const validateUuid = createValidator((example) => typeof example === "string" &&
 const validateDateTime = createValidator(
     (example) => typeof example === "string" && ISO_8601_REGEX.test(example),
     "an ISO 8601 timestamp"
+);
+const validateDate = createValidator(
+    (example) => typeof example === "string" && RFC_3339_DATE_REGEX.test(example) && ISO_8601_REGEX.test(example),
+    "a date"
 );
 
 function createValidator(

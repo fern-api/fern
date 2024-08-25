@@ -11,7 +11,16 @@
             "identifierOverride": "endpoint_service.getResource"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedMixedCase\n\nclient = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedMixedCase"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -41,7 +50,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedMixedCase\n\nclient = AsyncSeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedMixedCase"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -83,7 +101,16 @@
             "identifierOverride": "endpoint_service.listResources"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedMixedCase\n\nclient = SeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedMixedCase"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -129,7 +156,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedMixedCase\n\nclient = AsyncSeedMixedCase(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedMixedCase"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedMixedCase(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,

@@ -12,7 +12,7 @@ import com.seed.trace.core.ObjectMappers;
 import java.util.HashMap;
 import java.util.Map;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = TerminatedResponse.Builder.class)
 public final class TerminatedResponse {
     private final Map<String, Object> additionalProperties;

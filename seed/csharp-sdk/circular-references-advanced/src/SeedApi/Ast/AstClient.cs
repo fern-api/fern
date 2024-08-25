@@ -1,14 +1,14 @@
-using SeedApi;
+using SeedApi.Core;
 
 #nullable enable
 
 namespace SeedApi;
 
-public class AstClient
+public partial class AstClient
 {
     private RawClient _client;
 
-    public AstClient(RawClient client)
+    internal AstClient(RawClient client)
     {
         _client = client;
     }

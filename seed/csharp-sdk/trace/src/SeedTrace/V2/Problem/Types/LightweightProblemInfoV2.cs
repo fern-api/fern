@@ -1,21 +1,26 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2;
 
-public class LightweightProblemInfoV2
+public record LightweightProblemInfoV2
 {
     [JsonPropertyName("problemId")]
-    public string ProblemId { get; init; }
+    public required string ProblemId { get; set; }
 
     [JsonPropertyName("problemName")]
-    public string ProblemName { get; init; }
+    public required string ProblemName { get; set; }
 
     [JsonPropertyName("problemVersion")]
-    public int ProblemVersion { get; init; }
+    public required int ProblemVersion { get; set; }
 
     [JsonPropertyName("variableTypes")]
-    public HashSet<VariableType> VariableTypes { get; init; }
+    public HashSet<object> VariableTypes { get; set; } = new HashSet<object>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

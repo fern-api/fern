@@ -38,6 +38,40 @@ func (w WeatherReport) Ptr() *WeatherReport {
 	return &w
 }
 
+type DoubleOptional struct {
+	OptionalAlias *OptionalAlias `json:"optionalAlias,omitempty" url:"optionalAlias,omitempty"`
+
+	extraProperties map[string]interface{}
+}
+
+func (d *DoubleOptional) GetExtraProperties() map[string]interface{} {
+	return d.extraProperties
+}
+
+func (d *DoubleOptional) UnmarshalJSON(data []byte) error {
+	type unmarshaler DoubleOptional
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*d = DoubleOptional(value)
+
+	extraProperties, err := core.ExtractExtraProperties(data, *d)
+	if err != nil {
+		return err
+	}
+	d.extraProperties = extraProperties
+
+	return nil
+}
+
+func (d *DoubleOptional) String() string {
+	if value, err := core.StringifyJSON(d); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", d)
+}
+
 type NestedObjectWithOptionalField struct {
 	String       *string                  `json:"string,omitempty" url:"string,omitempty"`
 	NestedObject *ObjectWithOptionalField `json:"NestedObject,omitempty" url:"NestedObject,omitempty"`
@@ -143,6 +177,7 @@ func (o *ObjectWithMapOfMap) String() string {
 }
 
 type ObjectWithOptionalField struct {
+	// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
 	String   *string        `json:"string,omitempty" url:"string,omitempty"`
 	Integer  *int           `json:"integer,omitempty" url:"integer,omitempty"`
 	Long     *int64         `json:"long,omitempty" url:"long,omitempty"`
@@ -155,6 +190,7 @@ type ObjectWithOptionalField struct {
 	List     []string       `json:"list,omitempty" url:"list,omitempty"`
 	Set      []string       `json:"set,omitempty" url:"set,omitempty"`
 	Map      map[int]string `json:"map,omitempty" url:"map,omitempty"`
+	Bigint   *string        `json:"bigint,omitempty" url:"bigint,omitempty"`
 
 	extraProperties map[string]interface{}
 }
@@ -243,6 +279,8 @@ func (o *ObjectWithRequiredField) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+type OptionalAlias = *string
+
 type Animal struct {
 	Animal string
 	Dog    *Dog
@@ -265,6 +303,9 @@ func (a *Animal) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.Animal = unmarshaler.Animal
+	if unmarshaler.Animal == "" {
+		return fmt.Errorf("%T did not include discriminant animal", a)
+	}
 	switch unmarshaler.Animal {
 	case "dog":
 		value := new(Dog)

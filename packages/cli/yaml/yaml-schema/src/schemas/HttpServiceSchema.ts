@@ -3,6 +3,8 @@ import { DeclarationWithoutDocsSchema } from "./DeclarationSchema";
 import { HttpEndpointSchema } from "./HttpEndpointSchema";
 import { HttpHeaderSchema } from "./HttpHeaderSchema";
 import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
+import { SourceSchema } from "./SourceSchema";
+import { TransportSchema } from "./TransportSchema";
 
 export const HttpServiceSchema = DeclarationWithoutDocsSchema.extend({
     auth: z.boolean(),
@@ -12,7 +14,9 @@ export const HttpServiceSchema = DeclarationWithoutDocsSchema.extend({
     "path-parameters": z.optional(z.record(z.string(), HttpPathParameterSchema)),
     idempotent: z.optional(z.boolean()),
     headers: z.optional(z.record(HttpHeaderSchema)),
-    endpoints: z.record(HttpEndpointSchema)
+    transport: z.optional(TransportSchema),
+    endpoints: z.record(HttpEndpointSchema),
+    source: z.optional(SourceSchema)
 });
 
 export type HttpServiceSchema = z.infer<typeof HttpServiceSchema>;

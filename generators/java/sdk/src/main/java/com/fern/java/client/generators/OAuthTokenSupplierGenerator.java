@@ -1,19 +1,19 @@
 package com.fern.java.client.generators;
 
-import com.fern.irV42.model.auth.OAuthAccessTokenRequestProperties;
-import com.fern.irV42.model.auth.OAuthClientCredentials;
-import com.fern.irV42.model.commons.EndpointId;
-import com.fern.irV42.model.commons.EndpointReference;
-import com.fern.irV42.model.http.HttpEndpoint;
-import com.fern.irV42.model.http.HttpResponse;
-import com.fern.irV42.model.http.HttpService;
-import com.fern.irV42.model.http.JsonResponseBody;
-import com.fern.irV42.model.http.ResponseProperty;
-import com.fern.irV42.model.http.SdkRequestBodyType;
-import com.fern.irV42.model.http.SdkRequestShape.Visitor;
-import com.fern.irV42.model.http.SdkRequestWrapper;
-import com.fern.irV42.model.ir.Subpackage;
-import com.fern.irV42.model.types.TypeReference;
+import com.fern.ir.model.auth.OAuthAccessTokenRequestProperties;
+import com.fern.ir.model.auth.OAuthClientCredentials;
+import com.fern.ir.model.commons.EndpointId;
+import com.fern.ir.model.commons.EndpointReference;
+import com.fern.ir.model.http.HttpEndpoint;
+import com.fern.ir.model.http.HttpResponseBody;
+import com.fern.ir.model.http.HttpService;
+import com.fern.ir.model.http.JsonResponseBody;
+import com.fern.ir.model.http.ResponseProperty;
+import com.fern.ir.model.http.SdkRequestBodyType;
+import com.fern.ir.model.http.SdkRequestShape.Visitor;
+import com.fern.ir.model.http.SdkRequestWrapper;
+import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
@@ -95,8 +95,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getUnsafeName();
         TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
         // todo: handle other response types
-        HttpResponse tokenHttpResponse = httpEndpoint.getResponse().get();
-        JsonResponseBody jsonResponseBody = tokenHttpResponse
+        HttpResponseBody tokenHttpResponseBody =
+                httpEndpoint.getResponse().get().getBody().get();
+        JsonResponseBody jsonResponseBody = tokenHttpResponseBody
                 .getJson()
                 .orElseThrow(() -> new RuntimeException("Unexpected non json response type for token endpoint"))
                 .getResponse()
@@ -120,7 +121,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         boolean refreshRequired = expiryResponseProperty.isPresent();
         MethodSpec.Builder getMethodSpecBuilder = MethodSpec.methodBuilder(GET_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
-                .addAnnotation(Override.class)
+                .addAnnotation(ClassName.get("", "java.lang.Override"))
                 .returns(String.class)
                 .beginControlFlow(
                         refreshRequired

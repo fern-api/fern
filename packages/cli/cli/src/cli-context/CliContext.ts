@@ -135,7 +135,7 @@ export class CliContext {
     private longestWorkspaceName: string | undefined;
     public registerWorkspaces(workspaces: readonly Workspace[]): void {
         const longestWorkspaceName = maxBy(
-            workspaces.map((workspace) => (workspace.type === "docs" ? "docs" : workspace.name)),
+            workspaces.map((workspace) => (workspace.type === "docs" ? "docs" : workspace.workspaceName ?? "api")),
             (name) => name.length
         );
         if (longestWorkspaceName != null) {
@@ -192,7 +192,9 @@ export class CliContext {
     public readonly logger = createLogger(this.log.bind(this));
 
     private constructTaskInitForWorkspace(workspace: Workspace): TaskContextImpl.Init {
-        const prefixWithoutPadding = wrapWorkspaceNameForPrefix(workspace.type === "docs" ? "docs" : workspace.name);
+        const prefixWithoutPadding = wrapWorkspaceNameForPrefix(
+            workspace.type === "docs" ? "docs" : workspace.workspaceName ?? "api"
+        );
 
         // we want all the prefixes to be the same length, so use this.longestWorkspaceName
         // if it's defined. (+1 so there's a space after the prefix)

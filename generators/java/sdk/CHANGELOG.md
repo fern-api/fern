@@ -5,6 +5,131 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2024-07-26
+
+* Fix: Fixed a bug where local generation custom config doesn't pick up some values, including exception naming. 
+
+## [1.0.4] - 2024-07-24
+
+* Fix: Fixed a bug where OkHttp responses could be closed prematurely.
+
+## [1.0.3] - 2024-07-23
+
+* Improvement: Generated builder methods for optional fields can now accept null directly.
+
+## [1.0.2-rc0] - 2024-07-02
+
+* Improvement: The SDK generator now adds a class-level `@JsonInclude(JsonInclude.Include.NON_ABSENT)` annotation to 
+  each generated type in place of the previous `@JsonInclude(JsonInclude.Include.NON_EMPTY)` by default. This ensures 
+  that required empty collection fields are not removed from request or response json. This is configurable in the 
+  `generators.yml` file:
+    ```yaml
+  generators:
+    - name: fernapi/fern-java-sdk
+      config:
+        json-include: non-empty # default non-absent
+  ```
+
+## [1.0.1] - 2024-06-26
+
+- Break: The Java SDK is now on major version 1. To take this upgrade without any breaks, please add the below 
+  configuration to your `generators.yml` file:
+  ```yaml
+  generators:
+  - name: fernapi/fern-java-sdk
+    config:
+      base-api-exception-class-name: ApiError
+      base-exception-class-name: CompanyException # Optional: This should only be set if default naming is undesirable
+  ```
+- Improvement: We now generate Exception types for all errors that are defined in the IR. Generated clients with an
+  error discrimination strategy of "status code" will throw one of these typed Exceptions based on the status code of
+  error responses. Example error type:
+  ```java
+  public final class BadRequest extends MyCompanyApiError {
+    public BadRequest(Object body) {
+        super("BadRequest", 400, body);
+    }
+  }
+  ```
+
+## [0.10.1] - 2024-06-13
+
+- Feature: Add support for cursor and offset pagination. 
+
+  For example, consider the following endpoint `/users` endpoint:
+
+  ```yaml
+  types:
+    User:
+      properties:
+        name: string
+
+    ListUserResponse:
+      properties:
+        next: optional<string>
+        data: list<User>
+
+  service:
+    auth: false
+    base-path: /users
+    endpoints:
+      list:
+        path: ""
+        method: GET
+        pagination:
+          cursor: $request.starting_after
+          next_cursor: $response.next
+          results: $response.data
+        request:
+          name: ListUsersRequest
+          query-parameters:
+            starting_after: optional<string>
+        response: ListUsersResponse
+  ```
+  
+  The generated `SyncPagingIterable<User>` can then be used to traverse through the `User` objects:
+  ```java
+  for (User user : client.users.list(...)) {
+      System.out.println(user);
+  }
+  ```
+  
+  Or stream them:
+  ```java
+  client.users.list(...).streamItems().map(user -> ...);
+  ```
+  
+  Or statically calling `nextPage()` to perform the pagination manually:
+  ```java
+  SyncPagingIterable<User> pager = client.users.list(...);
+  // First page
+  System.out.println(pager.getItems());
+  // Second page
+  pager = pager.nextPage();
+  System.out.println(pager.getItems());
+  ```
+
+## [0.10.0] - 2024-06-07
+
+- Feature: The generator now supports BigInteger types.
+- Chore: Bump intermediate representation to v46
+
+## [0.9.8] - 2024-06-06
+
+- Fix: `RequestOptions` are now generated with the `timeout` field initialized to `Optional.empty()` instead of `null` 
+  to avoid NPEs if `timeout` is not set in the builder.
+
+## [0.9.7] - 2024-06-06
+
+- Feature: The SDK generator now generates `@java.lang.Override` over `@Override` in all files to avoid clashes with any
+  `Override.java` class that may have been generated in the same package. The former was used most places, but not all, 
+  until this release.
+
+## [0.9.6] - 2024-06-05
+
+- Feature: The SDK generator now supports returning response properties from client methods rather than just the 
+  responses themselves.
+
 ## [0.9.5] - 2024-05-30
 
 - Fix: Types without fields are now generated with builders. Previously, they were not, which made them impossible to

@@ -7,6 +7,14 @@ types:
       - asc
       - desc
 
+  WithPage:
+    properties:
+      page: optional<integer>
+
+  WithCursor:
+    properties:
+      cursor: optional<string>
+
   UserListContainer: 
     properties: 
       users: list<User>
@@ -30,6 +38,7 @@ types:
  
   ListUsersPaginationResponse: 
     properties: 
+      hasNextPage: optional<boolean>
       page: optional<Page>
       total_count: 
         type: integer
@@ -84,6 +93,24 @@ service:
               the next page of results.
       response: ListUsersPaginationResponse
 
+    listWithBodyCursorPagination:
+      pagination: 
+        cursor: $request.pagination.cursor
+        next_cursor: $response.page.next.starting_after
+        results: $response.data
+      method: POST
+      path: ""
+      request: 
+        name: ListUsersBodyCursorPaginationRequest
+        body: 
+          properties:
+            pagination: 
+              type: optional<WithCursor>
+              docs: | 
+                The object that contains the cursor used for pagination
+                in order to fetch the next page of results.
+      response: ListUsersPaginationResponse
+
     listWithOffsetPagination:
       pagination: 
         offset: $request.page
@@ -106,6 +133,70 @@ service:
             docs: | 
               The cursor used for pagination in order to fetch 
               the next page of results.
+      response: ListUsersPaginationResponse
+
+    listWithBodyOffsetPagination:
+      pagination: 
+        offset: $request.pagination.page
+        results: $response.data
+      method: POST
+      path: ""
+      request: 
+        name: ListUsersBodyOffsetPaginationRequest
+        body: 
+          properties:
+            pagination: 
+              type: optional<WithPage>
+              docs: | 
+                The object that contains the offset used for pagination
+                in order to fetch the next page of results.
+      response: ListUsersPaginationResponse
+
+    listWithOffsetStepPagination:
+      pagination:
+        offset: $request.page
+        results: $response.data
+        step: $request.limit
+      method: GET
+      path: ""
+      request:
+        name: ListUsersOffsetStepPaginationRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: Defaults to first page
+          limit:
+            type: optional<integer>
+            docs: |
+              The maxiumum number of elements to return.
+              This is also used as the step size in this
+              paginated endpoint.
+          order:
+            type: optional<Order>
+      response: ListUsersPaginationResponse
+    
+    listWithOffsetPaginationHasNextPage: 
+      pagination:
+        offset: $request.page
+        results: $response.data
+        step: $request.limit
+        has-next-page: $response.hasNextPage
+      method: GET
+      path: ""
+      request:
+        name: ListWithOffsetPaginationHasNextPageRequest
+        query-parameters:
+          page:
+            type: optional<integer>
+            docs: Defaults to first page
+          limit:
+            type: optional<integer>
+            docs: |
+              The maxiumum number of elements to return.
+              This is also used as the step size in this
+              paginated endpoint.
+          order:
+            type: optional<Order>
       response: ListUsersPaginationResponse
 
     listWithExtendedResults:

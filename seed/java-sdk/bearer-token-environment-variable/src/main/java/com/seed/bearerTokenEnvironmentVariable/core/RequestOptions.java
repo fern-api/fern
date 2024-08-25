@@ -44,7 +44,7 @@ public final class RequestOptions {
     public static final class Builder {
         private String apiKey = null;
 
-        private Optional<Integer> timeout = null;
+        private Optional<Integer> timeout = Optional.empty();
 
         private TimeUnit timeoutTimeUnit = TimeUnit.SECONDS;
 

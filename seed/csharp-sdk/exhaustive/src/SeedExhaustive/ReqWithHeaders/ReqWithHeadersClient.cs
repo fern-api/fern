@@ -1,4 +1,6 @@
+using System.Net.Http;
 using SeedExhaustive;
+using SeedExhaustive.Core;
 
 #nullable enable
 
@@ -13,17 +15,18 @@ public class ReqWithHeadersClient
         _client = client;
     }
 
-    public async void GetWithCustomHeaderAsync(ReqWithHeaders request)
+    public async Task GetWithCustomHeaderAsync(ReqWithHeaders request)
     {
         var _headers = new Dictionary<string, string>()
         {
             { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
         };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+        await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/custom-header",
+                Path = "/test-headers/custom-header",
                 Body = request.Body,
                 Headers = _headers
             }

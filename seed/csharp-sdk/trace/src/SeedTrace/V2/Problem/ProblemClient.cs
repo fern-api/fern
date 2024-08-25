@@ -1,16 +1,18 @@
+using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedTrace;
-using SeedTrace.V2;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2;
 
-public class ProblemClient
+public partial class ProblemClient
 {
     private RawClient _client;
 
-    public ProblemClient(RawClient client)
+    internal ProblemClient(RawClient client)
     {
         _client = client;
     }
@@ -18,72 +20,175 @@ public class ProblemClient
     /// <summary>
     /// Returns lightweight versions of all problems
     /// </summary>
-    public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync()
+    /// <example>
+    /// <code>
+    /// await client.V2.Problem.GetLightweightProblemsAsync();
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/lightweight-problem-info" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/problems-v2/lightweight-problem-info",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<LightweightProblemInfoV2>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns latest versions of all problems
     /// </summary>
-    public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync()
+    /// <example>
+    /// <code>
+    /// await client.V2.Problem.GetProblemsAsync();
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "/problem-info" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/problems-v2/problem-info",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<ProblemInfoV2>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns latest version of a problem
     /// </summary>
-    public async Task<ProblemInfoV2> GetLatestProblemAsync(string problemId)
+    /// <example>
+    /// <code>
+    /// await client.V2.Problem.GetLatestProblemAsync("string");
+    /// </code>
+    /// </example>
+    public async Task<ProblemInfoV2> GetLatestProblemAsync(
+        string problemId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/problem-info/{problemId}"
-            }
+                Path = $"/problems-v2/problem-info/{problemId}",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
     /// <summary>
     /// Returns requested version of a problem
     /// </summary>
-    public async Task<ProblemInfoV2> GetProblemVersionAsync(string problemId, int problemVersion)
+    /// <example>
+    /// <code>
+    /// await client.V2.Problem.GetProblemVersionAsync("string", 1);
+    /// </code>
+    /// </example>
+    public async Task<ProblemInfoV2> GetProblemVersionAsync(
+        string problemId,
+        int problemVersion,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = $"/problem-info/{problemId}/version/{problemVersion}"
-            }
+                Path = $"/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<ProblemInfoV2>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<ProblemInfoV2>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

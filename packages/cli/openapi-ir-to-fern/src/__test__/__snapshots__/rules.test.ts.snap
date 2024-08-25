@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`rules rules docs 1`] = `
+exports[`rules > rules > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -16,6 +16,7 @@ exports[`rules rules docs 1`] = `
             {
               "response": {
                 "body": {
+                  "age": 1,
                   "id": 1,
                   "name": "name",
                   "value": 1.1,
@@ -32,11 +33,18 @@ exports[`rules rules docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "rules/openapi.yml",
+      },
     },
     "types": {
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
         "union": [
           "Schema",
           "GetExampleResponseMessage",
@@ -47,10 +55,25 @@ exports[`rules rules docs 1`] = `
         "properties": {
           "message": "optional<string>",
         },
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
       },
       "Schema": {
         "docs": undefined,
         "properties": {
+          "age": {
+            "default": 50,
+            "docs": "The age of the type.",
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": false,
+              "exclusiveMin": true,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": 10,
+            },
+          },
           "id": {
             "default": 50,
             "docs": "The unique ID of the type.",
@@ -68,7 +91,7 @@ exports[`rules rules docs 1`] = `
             "docs": "The unique name of the type.",
             "type": "optional<string>",
             "validation": {
-              "format": "custom",
+              "format": undefined,
               "maxLength": 10,
               "minLength": 3,
               "pattern": "^[a-zA-Z0-9]*$",
@@ -87,11 +110,14 @@ exports[`rules rules docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
       },
       "String": {
         "type": "string",
         "validation": {
-          "format": "custom",
+          "format": undefined,
           "maxLength": 10,
           "minLength": 3,
           "pattern": "^[a-zA-Z0-9]*$",
@@ -109,7 +135,7 @@ exports[`rules rules docs 1`] = `
 }
 `;
 
-exports[`rules rules simple 1`] = `
+exports[`rules > rules > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -125,6 +151,7 @@ exports[`rules rules simple 1`] = `
             {
               "response": {
                 "body": {
+                  "age": 1,
                   "id": 1,
                   "name": "name",
                   "value": 1.1,
@@ -141,11 +168,18 @@ exports[`rules rules simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "rules/openapi.yml",
+      },
     },
     "types": {
       "GetExampleResponse": {
         "discriminated": false,
         "docs": undefined,
+        "encoding": undefined,
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
         "union": [
           "Schema",
           "GetExampleResponseMessage",
@@ -156,10 +190,25 @@ exports[`rules rules simple 1`] = `
         "properties": {
           "message": "optional<string>",
         },
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
       },
       "Schema": {
         "docs": undefined,
         "properties": {
+          "age": {
+            "default": 50,
+            "docs": "The age of the type.",
+            "type": "optional<integer>",
+            "validation": {
+              "exclusiveMax": false,
+              "exclusiveMin": true,
+              "max": undefined,
+              "min": undefined,
+              "multipleOf": 10,
+            },
+          },
           "id": {
             "default": 50,
             "docs": "The unique ID of the type.",
@@ -177,7 +226,7 @@ exports[`rules rules simple 1`] = `
             "docs": "The unique name of the type.",
             "type": "optional<string>",
             "validation": {
-              "format": "custom",
+              "format": undefined,
               "maxLength": 10,
               "minLength": 3,
               "pattern": "^[a-zA-Z0-9]*$",
@@ -196,11 +245,14 @@ exports[`rules rules simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "rules/openapi.yml",
+        },
       },
       "String": {
         "type": "string",
         "validation": {
-          "format": "custom",
+          "format": undefined,
           "maxLength": 10,
           "minLength": 3,
           "pattern": "^[a-zA-Z0-9]*$",

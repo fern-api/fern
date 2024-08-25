@@ -3,7 +3,7 @@ import { getEndpointLocation } from "@fern-api/openapi-ir-to-fern";
 import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import { OSSWorkspace } from "@fern-api/workspace-loader";
+import { getAllOpenAPISpecs, OSSWorkspace } from "@fern-api/workspace-loader";
 import { readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { CliContext } from "../../cli-context/CliContext";
@@ -20,7 +20,7 @@ export async function writeOverridesForWorkspaces({
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "oss") {
+                if (workspace instanceof OSSWorkspace) {
                     await writeDefinitionForOpenAPIWorkspace({
                         workspace,
                         context,
@@ -58,11 +58,11 @@ async function writeDefinitionForOpenAPIWorkspace({
     includeModels: boolean;
     context: TaskContext;
 }): Promise<void> {
-    for (const spec of workspace.specs) {
+    const specs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
+    for (const spec of specs) {
         const ir = await parse({
-            workspace: {
-                specs: [spec]
-            },
+            absoluteFilePathToWorkspace: workspace.absoluteFilepath,
+            specs: [spec],
             taskContext: context
         });
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

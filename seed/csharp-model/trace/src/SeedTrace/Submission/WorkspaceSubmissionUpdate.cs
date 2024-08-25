@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class WorkspaceSubmissionUpdate
+public record WorkspaceSubmissionUpdate
 {
     [JsonPropertyName("updateTime")]
-    public DateTime UpdateTime { get; init; }
+    public required DateTime UpdateTime { get; set; }
 
     [JsonPropertyName("updateInfo")]
-    public WorkspaceSubmissionUpdateInfo UpdateInfo { get; init; }
+    public required object UpdateInfo { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

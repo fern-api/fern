@@ -13,7 +13,7 @@ import com.seed.audiences.core.ObjectMappers;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = FilteredType.Builder.class)
 public final class FilteredType {
     private final Optional<String> publicProperty;
@@ -97,7 +97,7 @@ public final class FilteredType {
 
         @java.lang.Override
         public _FinalStage publicProperty(String publicProperty) {
-            this.publicProperty = Optional.of(publicProperty);
+            this.publicProperty = Optional.ofNullable(publicProperty);
             return this;
         }
 

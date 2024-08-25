@@ -1,1 +1,13 @@
-{ "ignores": ["@types/jest", "@types/node"], "ignore-patterns": ["lib"] }
+{
+  "ignores": [
+    "@types/jest",
+    "globals",
+    "globals",
+    "@types/node",
+    "@babel/preset-env",
+    "@babel/preset-typescript"
+  ],
+  "ignore-patterns": [
+    "lib"
+  ]
+}

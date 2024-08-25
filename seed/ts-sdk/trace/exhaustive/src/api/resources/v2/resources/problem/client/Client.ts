@@ -12,13 +12,19 @@ export declare namespace Problem {
     interface Options {
         environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
         token?: core.Supplier<core.BearerToken | undefined>;
+        /** Override the X-Random-Header header */
         xRandomHeader?: core.Supplier<string | undefined>;
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
+        /** Override the X-Random-Header header */
+        xRandomHeader?: string | undefined;
     }
 }
 
@@ -31,7 +37,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.problem.getLightweightProblems()
+     *     await client.v2.problem.getLightweightProblems()
      */
     public async getLightweightProblems(
         requestOptions?: Problem.RequestOptions
@@ -53,10 +59,12 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -65,7 +73,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.problem.getLightweightProblems.Response.parseOrThrow(_response.body, {
+                body: serializers.v2.problem.getLightweightProblems.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -86,7 +94,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.problem.getProblems()
+     *     await client.v2.problem.getProblems()
      */
     public async getProblems(
         requestOptions?: Problem.RequestOptions
@@ -106,10 +114,12 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -118,7 +128,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.problem.getProblems.Response.parseOrThrow(_response.body, {
+                body: serializers.v2.problem.getProblems.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -140,7 +150,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.problem.getLatestProblem(SeedTrace.ProblemId("string"))
+     *     await client.v2.problem.getLatestProblem(SeedTrace.ProblemId("string"))
      */
     public async getLatestProblem(
         problemId: SeedTrace.ProblemId,
@@ -149,7 +159,7 @@ export class Problem {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${encodeURIComponent(await serializers.ProblemId.jsonOrThrow(problemId))}`
+                `/problems-v2/problem-info/${encodeURIComponent(serializers.ProblemId.jsonOrThrow(problemId))}`
             ),
             method: "GET",
             headers: {
@@ -161,10 +171,12 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -173,7 +185,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
+                body: serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -196,7 +208,7 @@ export class Problem {
      * @param {Problem.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedTrace.v2.problem.getProblemVersion(SeedTrace.ProblemId("string"), 1)
+     *     await client.v2.problem.getProblemVersion(SeedTrace.ProblemId("string"), 1)
      */
     public async getProblemVersion(
         problemId: SeedTrace.ProblemId,
@@ -207,7 +219,7 @@ export class Problem {
             url: urlJoin(
                 (await core.Supplier.get(this._options.environment)) ?? environments.SeedTraceEnvironment.Prod,
                 `/problems-v2/problem-info/${encodeURIComponent(
-                    await serializers.ProblemId.jsonOrThrow(problemId)
+                    serializers.ProblemId.jsonOrThrow(problemId)
                 )}/version/${encodeURIComponent(problemVersion)}`
             ),
             method: "GET",
@@ -220,10 +232,12 @@ export class Problem {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/trace",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/trace/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : undefined,
             maxRetries: requestOptions?.maxRetries,
             withCredentials: true,
@@ -232,7 +246,7 @@ export class Problem {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
+                body: serializers.v2.ProblemInfoV2.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

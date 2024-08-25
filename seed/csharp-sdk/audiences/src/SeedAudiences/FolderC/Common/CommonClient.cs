@@ -1,14 +1,14 @@
-using SeedAudiences;
+using SeedAudiences.Core;
 
 #nullable enable
 
 namespace SeedAudiences.FolderC;
 
-public class CommonClient
+public partial class CommonClient
 {
     private RawClient _client;
 
-    public CommonClient(RawClient client)
+    internal CommonClient(RawClient client)
     {
         _client = client;
     }

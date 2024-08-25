@@ -17,10 +17,20 @@ module SeedBytesClient
     # @param request [String, IO] Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)
     # @param request_options [SeedBytesClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  bytes = SeedBytesClient::Client.new(base_url: "https://api.example.com")
+    #  bytes.service.upload
     def upload(request:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.headers["Content-Type"] = "application/octet-stream"
         req.body = request
         req.url "#{@request_client.get_url(request_options: request_options)}/upload-content"
@@ -41,11 +51,21 @@ module SeedBytesClient
     # @param request [String, IO] Base64 encoded bytes, or an IO object (e.g. Faraday::UploadIO, etc.)
     # @param request_options [SeedBytesClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  bytes = SeedBytesClient::Client.new(base_url: "https://api.example.com")
+    #  bytes.service.upload
     def upload(request:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.headers["Content-Type"] = "application/octet-stream"
           req.body = request
           req.url "#{@request_client.get_url(request_options: request_options)}/upload-content"

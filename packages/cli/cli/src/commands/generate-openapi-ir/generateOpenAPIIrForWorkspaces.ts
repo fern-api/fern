@@ -1,7 +1,9 @@
+import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, stringifyLargeObject } from "@fern-api/fs-utils";
 import { serialization } from "@fern-api/openapi-ir-sdk";
 import { parse } from "@fern-api/openapi-parser";
 import { Project } from "@fern-api/project-loader";
+import { getAllOpenAPISpecs, LazyFernWorkspace } from "@fern-api/workspace-loader";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
@@ -9,22 +11,25 @@ import { CliContext } from "../../cli-context/CliContext";
 export async function generateOpenAPIIrForWorkspaces({
     project,
     irFilepath,
-    cliContext
+    cliContext,
+    sdkLanguage
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
     cliContext: CliContext;
+    sdkLanguage: generatorsYml.GenerationLanguage | undefined;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
-                if (workspace.type === "fern") {
+                if (workspace instanceof LazyFernWorkspace) {
                     context.logger.info("Skipping, API is specified as a Fern Definition.");
                     return;
                 }
-
+                const openAPISpecs = await getAllOpenAPISpecs({ context, specs: workspace.specs });
                 const openAPIIr = await parse({
-                    workspace,
+                    absoluteFilePathToWorkspace: workspace.absoluteFilepath,
+                    specs: openAPISpecs,
                     taskContext: context
                 });
 

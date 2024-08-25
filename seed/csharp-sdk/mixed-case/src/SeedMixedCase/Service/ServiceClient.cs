@@ -1,52 +1,106 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedMixedCase;
+using System.Threading;
+using SeedMixedCase.Core;
 
 #nullable enable
 
 namespace SeedMixedCase;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<Resource> GetResourceAsync(string resourceId)
+    /// <example>
+    /// <code>
+    /// await client.Service.GetResourceAsync("rsc-xyz");
+    /// </code>
+    /// </example>
+    public async Task<object> GetResourceAsync(
+        string resourceId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = $"/{resourceId}" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = $"/resource/{resourceId}",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Resource>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<object>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedMixedCaseException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedMixedCaseApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 
-    public async Task<IEnumerable<Resource>> ListResourcesAsync(ListResourcesRequest request)
+    /// <example>
+    /// <code>
+    /// await client.Service.ListResourcesAsync(
+    ///     new ListResourcesRequest { PageLimit = 10, BeforeDate = new DateOnly(2023, 1, 1) }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<object>> ListResourcesAsync(
+        ListResourcesRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
-        var _query = new Dictionary<string, object>()
-        {
-            { "page_limit", request.PageLimit.ToString() },
-            { "beforeDate", request.BeforeDate.ToString() },
-        };
+        var _query = new Dictionary<string, object>();
+        _query["page_limit"] = request.PageLimit.ToString();
+        _query["beforeDate"] = request.BeforeDate.ToString(Constants.DateFormat);
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
-                Path = "",
-                Query = _query
-            }
+                Path = "/resource",
+                Query = _query,
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<Resource>>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<object>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedMixedCaseException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedMixedCaseApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

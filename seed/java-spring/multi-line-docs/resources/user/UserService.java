@@ -17,7 +17,10 @@ import resources.user.types.User;
     path = "/"
 )
 public interface UserService {
-  @GetMapping("/users/{userId}")
+  @GetMapping(
+      value = "/users/{userId}",
+      produces = "application/json"
+  )
   void getUser(@PathVariable("userId") String userId);
 
   @PostMapping(

@@ -16,7 +16,7 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = RefreshTokenRequest.Builder.class
 )
@@ -160,7 +160,7 @@ public final class RefreshTokenRequest {
 
     @java.lang.Override
     public _FinalStage scope(String scope) {
-      this.scope = Optional.of(scope);
+      this.scope = Optional.ofNullable(scope);
       return this;
     }
 

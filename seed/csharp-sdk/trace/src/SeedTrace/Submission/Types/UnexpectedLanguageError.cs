@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class UnexpectedLanguageError
+public record UnexpectedLanguageError
 {
     [JsonPropertyName("expectedLanguage")]
-    public Language ExpectedLanguage { get; init; }
+    public required Language ExpectedLanguage { get; set; }
 
     [JsonPropertyName("actualLanguage")]
-    public Language ActualLanguage { get; init; }
+    public required Language ActualLanguage { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

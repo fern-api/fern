@@ -28,7 +28,13 @@ describe("valid-default-and-validation-type-reference", () => {
 
         expect(violations).toEqual([
             {
-                message: "Default values are not supported for the boolean type",
+                message: "Default value 'BOOLEAN' is not a valid enum value",
+                nodePath: ["types", "Primitive"],
+                relativeFilepath: "__package__.yml",
+                severity: "error"
+            },
+            {
+                message: 'Validation rules \'{"min":26.2,"max":26.2}\' are not compatible with the boolean type',
                 nodePath: ["types", "Object", "properties", "enabled", "type"],
                 relativeFilepath: "__package__.yml",
                 severity: "error"
@@ -58,8 +64,26 @@ describe("valid-default-and-validation-type-reference", () => {
                 severity: "error"
             },
             {
-                message: "Default values are not supported for the boolean type",
-                nodePath: ["service", "endpoints", "create", "request", "body", "properties", "decimal", "type"],
+                message: 'Validation rules \'{"min":42,"max":42}\' are not compatible with the long type',
+                nodePath: ["types", "Object", "properties", "longNumber", "type"],
+                relativeFilepath: "__package__.yml",
+                severity: "error"
+            },
+            {
+                message: 'Validation rules \'{"min":42,"max":42}\' are not compatible with the bigint type',
+                nodePath: ["types", "Object", "properties", "bigInteger", "type"],
+                relativeFilepath: "__package__.yml",
+                severity: "error"
+            },
+            {
+                message: "Default value 'hello' is not a valid bigint",
+                nodePath: ["types", "Object", "properties", "bigIntegerWithInvalidDefault", "type"],
+                relativeFilepath: "__package__.yml",
+                severity: "error"
+            },
+            {
+                message: "Default value 'INVALID' is not a valid enum value",
+                nodePath: ["types", "Object", "properties", "enumWithInvalidDefault", "type"],
                 relativeFilepath: "__package__.yml",
                 severity: "error"
             }

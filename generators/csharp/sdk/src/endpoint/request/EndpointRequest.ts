@@ -1,8 +1,7 @@
 import { csharp } from "@fern-api/csharp-codegen";
-import { HttpEndpoint, SdkRequest, ServiceId } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, SdkRequest } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
-import { ReferencedEndpointRequest } from "./ReferencedEndpointRequest";
-import { WrappedEndpointRequest } from "./WrappedEndpointRequest";
+import { RawClient } from "../http/RawClient";
 
 export interface QueryParameterCodeBlock {
     code: csharp.CodeBlock;
@@ -30,6 +29,10 @@ export abstract class EndpointRequest {
         return this.sdkRequest.requestParameterName.camelCase.safeName;
     }
 
+    public getRequestBodyVariableName(): string {
+        return "requestBody";
+    }
+
     public abstract getParameterType(): csharp.Type;
 
     public abstract getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined;
@@ -37,4 +40,6 @@ export abstract class EndpointRequest {
     public abstract getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined;
 
     public abstract getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined;
+
+    public abstract getRequestType(): RawClient.RequestBodyType | undefined;
 }

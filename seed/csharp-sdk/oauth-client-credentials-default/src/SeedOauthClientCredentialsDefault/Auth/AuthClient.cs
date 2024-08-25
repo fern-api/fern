@@ -1,34 +1,70 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedOauthClientCredentialsDefault;
+using System.Threading;
+using SeedOauthClientCredentialsDefault.Core;
 
 #nullable enable
 
 namespace SeedOauthClientCredentialsDefault;
 
-public class AuthClient
+public partial class AuthClient
 {
     private RawClient _client;
 
-    public AuthClient(RawClient client)
+    internal AuthClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<TokenResponse> GetTokenAsync(GetTokenRequest request)
+    /// <example>
+    /// <code>
+    /// await client.Auth.GetTokenAsync(
+    ///     new GetTokenRequest
+    ///     {
+    ///         ClientId = "string",
+    ///         ClientSecret = "string",
+    ///         GrantType = "client_credentials",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<TokenResponse> GetTokenAsync(
+        GetTokenRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
                 Path = "/token",
-                Body = request
-            }
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<TokenResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<TokenResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedOauthClientCredentialsDefaultException(
+                    "Failed to deserialize response",
+                    e
+                );
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedOauthClientCredentialsDefaultApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

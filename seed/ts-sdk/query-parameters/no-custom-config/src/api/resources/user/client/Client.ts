@@ -14,8 +14,11 @@ export declare namespace User {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,16 +31,21 @@ export class User {
      * @param {User.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedQueryParameters.user.getUsername({
+     *     await client.user.getUsername({
      *         limit: 1,
      *         id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         date: "2023-01-15",
-     *         deadline: new Date("2024-01-15T09:30:00.000Z"),
+     *         deadline: "2024-01-15T09:30:00Z",
      *         bytes: "SGVsbG8gd29ybGQh",
      *         user: {
      *             name: "string",
      *             tags: ["string"]
      *         },
+     *         userList: [{
+     *                 name: "string",
+     *                 tags: ["string"]
+     *             }],
+     *         optionalDeadline: "2024-01-15T09:30:00Z",
      *         keyValue: {
      *             "string": "string"
      *         },
@@ -71,6 +79,8 @@ export class User {
             deadline,
             bytes,
             user,
+            userList,
+            optionalDeadline,
             keyValue,
             optionalString,
             nestedUser,
@@ -84,25 +94,30 @@ export class User {
         _queryParams["date"] = date;
         _queryParams["deadline"] = deadline.toISOString();
         _queryParams["bytes"] = bytes;
-        _queryParams["user"] = await serializers.User.jsonOrThrow(user, {
+        _queryParams["user"] = serializers.User.jsonOrThrow(user, {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
             breadcrumbsPrefix: ["request", "user"],
         });
+        _queryParams["userList"] = JSON.stringify(userList);
+        if (optionalDeadline != null) {
+            _queryParams["optionalDeadline"] = optionalDeadline.toISOString();
+        }
+
         _queryParams["keyValue"] = JSON.stringify(keyValue);
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
         }
 
-        _queryParams["nestedUser"] = await serializers.NestedUser.jsonOrThrow(nestedUser, {
+        _queryParams["nestedUser"] = serializers.NestedUser.jsonOrThrow(nestedUser, {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
             breadcrumbsPrefix: ["request", "nestedUser"],
         });
         if (optionalUser != null) {
-            _queryParams["optionalUser"] = await serializers.User.jsonOrThrow(optionalUser, {
+            _queryParams["optionalUser"] = serializers.User.jsonOrThrow(optionalUser, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -112,18 +127,17 @@ export class User {
 
         if (Array.isArray(excludeUser)) {
             _queryParams["excludeUser"] = await Promise.all(
-                excludeUser.map(
-                    async (item) =>
-                        await serializers.User.jsonOrThrow(item, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["request", "excludeUser"],
-                        })
+                excludeUser.map(async (item) =>
+                    serializers.User.jsonOrThrow(item, {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        breadcrumbsPrefix: ["request", "excludeUser"],
+                    })
                 )
             );
         } else {
-            _queryParams["excludeUser"] = await serializers.User.jsonOrThrow(excludeUser, {
+            _queryParams["excludeUser"] = serializers.User.jsonOrThrow(excludeUser, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -144,17 +158,19 @@ export class User {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/query-parameters",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/query-parameters/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.User.parseOrThrow(_response.body, {
+            return serializers.User.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

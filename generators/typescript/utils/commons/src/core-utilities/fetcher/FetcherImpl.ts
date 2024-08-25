@@ -10,10 +10,34 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         repoInfoForTesting: {
             path: RelativeFilePath.of("generators/typescript/utils/core-utilities/fetcher/src/fetcher")
         },
+        unitTests: {
+            fromDirectory: RelativeFilePath.of("__test__"),
+            findAndReplace: {
+                "../createRequestUrl": "../../../src/core/fetcher/createRequestUrl",
+                "../Fetcher": "../../../src/core/fetcher/Fetcher",
+                "../../runtime": "../../../src/core/runtime",
+                "../getFetchFn": "../../../src/core/fetcher/getFetchFn",
+                "../getRequestBody": "../../../src/core/fetcher/getRequestBody",
+                "../getResponseBody": "../../../src/core/fetcher/getResponseBody",
+                "../makeRequest": "../../../src/core/fetcher/makeRequest",
+                "../requestWithRetries": "../../../src/core/fetcher/requestWithRetries",
+                "../signals": "../../../src/core/fetcher/signals",
+                "../../stream-wrappers/Node18UniversalStreamWrapper":
+                    "../../../../src/core/fetcher/stream-wrappers/Node18UniversalStreamWrapper",
+                "../../stream-wrappers/NodePre18StreamWrapper":
+                    "../../../../src/core/fetcher/stream-wrappers/NodePre18StreamWrapper",
+                "../../stream-wrappers/UndiciStreamWrapper":
+                    "../../../../src/core/fetcher/stream-wrappers/UndiciStreamWrapper",
+                "../../stream-wrappers/chooseStreamWrapper":
+                    "../../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper",
+                "../stream-wrappers/chooseStreamWrapper":
+                    "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper"
+            }
+        },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher/fetcher"),
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
-            dependencyManager.addDependency("form-data", "4.0.0");
+            dependencyManager.addDependency("form-data", "^4.0.0");
             dependencyManager.addDependency("formdata-node", "^6.0.3");
             dependencyManager.addDependency("node-fetch", "2.7.0");
             dependencyManager.addDependency("qs", "6.11.2");
@@ -23,9 +47,11 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             dependencyManager.addDependency("@types/node-fetch", "2.6.9", {
                 type: DependencyType.DEV
             });
+            dependencyManager.addDependency("fetch-mock-jest", "^1.5.1", {
+                type: DependencyType.DEV
+            });
         }
     };
-
     public readonly Fetcher: Fetcher["Fetcher"] = {
         Args: {
             properties: {
@@ -38,8 +64,10 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 body: "body",
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
+                requestType: "requestType",
                 responseType: "responseType",
-                abortSignal: "abortSignal"
+                abortSignal: "abortSignal",
+                duplex: "duplex"
             },
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
@@ -105,6 +133,17 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                         args.queryParameters
                     )
                 );
+            }
+            if (args.requestType != null && args.responseType !== "json") {
+                properties.push(
+                    ts.factory.createPropertyAssignment(
+                        this.Fetcher.Args.properties.requestType,
+                        ts.factory.createStringLiteral(args.requestType)
+                    )
+                );
+            }
+            if (args.duplex != null) {
+                properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.duplex, args.duplex));
             }
             if (args.body != null) {
                 properties.push(ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.body, args.body));

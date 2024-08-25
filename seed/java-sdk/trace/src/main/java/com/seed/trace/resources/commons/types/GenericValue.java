@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GenericValue.Builder.class)
 public final class GenericValue {
     private final Optional<String> stringifiedType;
@@ -113,7 +113,7 @@ public final class GenericValue {
 
         @java.lang.Override
         public _FinalStage stringifiedType(String stringifiedType) {
-            this.stringifiedType = Optional.of(stringifiedType);
+            this.stringifiedType = Optional.ofNullable(stringifiedType);
             return this;
         }
 

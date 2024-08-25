@@ -55,8 +55,8 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         time_submitted = (DateTime.parse(parsed_json["timeSubmitted"]) unless parsed_json["timeSubmitted"].nil?)
-        submission = struct["submission"]
-        language = struct["language"]
+        submission = parsed_json["submission"]
+        language = parsed_json["language"]
         if parsed_json["submissionTypeState"].nil?
           submission_type_state = nil
         else

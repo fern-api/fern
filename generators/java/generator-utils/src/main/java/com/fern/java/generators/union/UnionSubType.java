@@ -1,7 +1,7 @@
 package com.fern.java.generators.union;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import com.fern.irV42.model.commons.NameAndWireValue;
+import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.java.ObjectMethodFactory;
 import com.fern.java.ObjectMethodFactory.EqualsMethod;
 import com.squareup.javapoet.AnnotationSpec;
@@ -100,7 +100,7 @@ public abstract class UnionSubType {
     }
 
     public final MethodSpec getToStringMethod() {
-        return ObjectMethodFactory.createToStringMethod(unionClassName, getFieldSpecs());
+        return ObjectMethodFactory.createToStringMethodFromFieldSpecs(unionClassName, getFieldSpecs());
     }
 
     public final TypeSpec getUnionSubTypeWrapper(ClassName unionWrapperInterface) {

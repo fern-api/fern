@@ -7,6 +7,78 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.8.2] - 2024-08-05
+
+- Fix: The generated endpoint functions no long include object utilities such as `_field_set` or `additional_properties`.
+
+## [0.8.1] - 2024-07-22
+
+- Fix: Nested `hash` types are recursively resolved in `from_json` such that they come back as true hashes, as opposed to structs
+
+- Fix: Pass through additional params from request options even if the original request did not have those types of params (ex: query parameters)
+
+## [0.8.0] - 2024-07-03
+
+- Fix: Date snippets now wrap their examples in quotation marks to correctly use `.parse`
+
+## [0.8.0-rc0] - 2024-07-01
+
+- Improvement: allow users to specify additional dependencies and dev dependencies for Ruby SDKs.
+  Example config:
+  ```yaml
+  generators:
+    - name: fernapi/fern-ruby-sdk
+      config:
+        extraDependencies:
+          faraday-multipart:
+            upperBound:
+              version: "1.0.4"
+              specifier: ">="
+            lowerBound:
+              version: "1.0"
+              specifier: "~>"
+        extraDevDependencies:
+          dotenv: "2.1"
+          faraday:
+            upperBound:
+              version: "0.17.3"
+              specifier: ">"
+            lowerBound:
+              version: "0.20.0"
+  ```
+
+## [0.7.0-rc5] - 2024-06-24
+
+- Fix: additional fix for the same issue within 0.7.0-rc4 (regression introduced within the 0.7.0 RCs where the token prefix was dropped from requests).
+
+## [0.7.0-rc4] - 2024-06-24
+
+- Fix: fixes regression introduced within the 0.7.0 RCs where the token prefix was dropped from requests.
+
+## [0.7.0-rc3] - 2024-06-20
+
+- Fix: service module path matches across LocationGenerator functions, this fixes a bug in the new `flattenModuleStructure` below where top level services module paths do not match between the class reference and the class definition.
+
+## [0.7.0-rc2] - 2024-06-20
+
+- Fix: the ruby generator now nests types under a type module to avoid naming conflicts, this is behind a configuration flag
+  ```yaml
+  generators:
+    - name: fernapi/fern-ruby-sdk
+      config:
+        flattenModuleStructure: true
+  ```
+
+## [0.7.0-rc1] - 2024-06-13
+
+- Fix: nested loops leverage different variable names to deconflict
+- Fix: nested loops do not call to_json prior to the subsequent loop
+
+## [0.7.0-rc0] - 2024-06-13
+
+- Feature: The Ruby SDK now generates an OAuth client to automate token refresh.
+- Fix: The Ruby SDK now no longer requires users specify literals in method signatures
+
 ## [0.6.3] - 2024-05-27
 
 - Fix: Generated SDK snippets now leverage the full function module path.

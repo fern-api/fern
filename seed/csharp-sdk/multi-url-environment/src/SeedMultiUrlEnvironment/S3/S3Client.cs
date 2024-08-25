@@ -1,34 +1,52 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedMultiUrlEnvironment;
+using SeedMultiUrlEnvironment.Core;
 
 #nullable enable
 
 namespace SeedMultiUrlEnvironment;
 
-public class S3Client
+public partial class S3Client
 {
     private RawClient _client;
 
-    public S3Client(RawClient client)
+    internal S3Client(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<string> GetPresignedUrlAsync(GetPresignedUrlRequest request)
+    public async Task<string> GetPresignedUrlAsync(
+        GetPresignedUrlRequest request,
+        RequestOptions? options = null
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.Environment.S3,
                 Method = HttpMethod.Post,
-                Path = "/presigned-url",
-                Body = request
+                Path = "/s3/presigned-url",
+                Body = request,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedMultiUrlEnvironmentException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedMultiUrlEnvironmentApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

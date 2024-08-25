@@ -3,6 +3,7 @@
  */
 
 import * as core from "./core";
+import * as SeedPackageYml from "./api/index";
 import * as serializers from "./serialization/index";
 import urlJoin from "url-join";
 import * as errors from "./errors/index";
@@ -15,8 +16,11 @@ export declare namespace SeedPackageYmlClient {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -25,13 +29,19 @@ export class SeedPackageYmlClient {
     constructor(protected readonly _options: SeedPackageYmlClient.Options) {}
 
     /**
-     * @param {string} request
+     * @param {SeedPackageYml.EchoRequest} request
      * @param {SeedPackageYmlClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedPackageYml.echo("Hello world!")
+     *     await client.echo({
+     *         name: "Hello world!",
+     *         size: 20
+     *     })
      */
-    public async echo(request: string, requestOptions?: SeedPackageYmlClient.RequestOptions): Promise<string> {
+    public async echo(
+        request: SeedPackageYml.EchoRequest,
+        requestOptions?: SeedPackageYmlClient.RequestOptions
+    ): Promise<string> {
         const _response = await core.fetcher({
             url: urlJoin(
                 await core.Supplier.get(this._options.environment),
@@ -42,17 +52,19 @@ export class SeedPackageYmlClient {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/package-yml",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/package-yml/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.echo.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.EchoRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.echo.Response.parseOrThrow(_response.body, {
+            return serializers.echo.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

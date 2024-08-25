@@ -4,6 +4,7 @@ import {
     Literal,
     MapType,
     PrimitiveType,
+    PrimitiveTypeV1,
     ShapeType,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
@@ -66,18 +67,22 @@ export abstract class AbstractTypeReferenceConverter<T> {
     protected abstract any(): T;
 
     protected primitive(primitive: PrimitiveType): T {
-        return PrimitiveType._visit<T>(primitive, {
+        return PrimitiveTypeV1._visit<T>(primitive.v1, {
             boolean: this.boolean.bind(this),
             double: this.number.bind(this),
             integer: this.number.bind(this),
             long: this.number.bind(this),
+            float: this.number.bind(this),
+            uint: this.number.bind(this),
+            uint64: this.number.bind(this),
             string: this.string.bind(this),
             uuid: this.string.bind(this),
             dateTime: this.dateTime.bind(this),
             date: this.string.bind(this),
             base64: this.string.bind(this),
+            bigInteger: this.string.bind(this),
             _other: () => {
-                throw new Error("Unexpected primitive type: " + primitive);
+                throw new Error("Unexpected primitive type: " + primitive.v1);
             }
         });
     }

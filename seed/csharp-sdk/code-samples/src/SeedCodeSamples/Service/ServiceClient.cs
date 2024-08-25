@@ -1,34 +1,55 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedCodeSamples;
+using System.Threading;
+using SeedCodeSamples.Core;
 
 #nullable enable
 
 namespace SeedCodeSamples;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<MyResponse> HelloAsync(MyRequest request)
+    public async Task<MyResponse> HelloAsync(
+        MyRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/hello",
-                Body = request
-            }
+                Path = "hello",
+                Body = request,
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<MyResponse>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<MyResponse>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedCodeSamplesException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedCodeSamplesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

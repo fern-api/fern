@@ -1,10 +1,9 @@
 import { z } from "zod";
-import { AvailabilitySchema } from "./AvailabilitySchema";
-import { AvailabilityStatusSchema } from "./AvailabilityStatusSchema";
+import { AvailabilityUnionSchema } from "./AvailabilityUnionSchema";
 import { WithDocsSchema } from "./WithDocsSchema";
 
 export const DeclarationWithoutDocsSchema = z.strictObject({
-    availability: z.optional(z.union([AvailabilityStatusSchema, AvailabilitySchema])),
+    availability: AvailabilityUnionSchema,
     audiences: z.optional(z.array(z.string()))
 });
 

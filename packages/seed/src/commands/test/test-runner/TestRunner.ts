@@ -48,6 +48,7 @@ export declare namespace TestRunner {
         outputFolder: string;
         keepDocker: boolean | undefined;
         publishMetadata: unknown;
+        readme: generatorsYml.ReadmeSchema | undefined;
     }
 
     type TestResult = TestSuccess | TestFailure;
@@ -103,7 +104,7 @@ export abstract class TestRunner {
      * Runs the generator.
      */
     public async run({ fixture, configuration }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
-        if (this.buildInvocation == undefined) {
+        if (this.buildInvocation == null) {
             this.buildInvocation = this.build();
         }
         await this.buildInvocation;
@@ -125,7 +126,7 @@ export abstract class TestRunner {
                       RelativeFilePath.of(configuration.outputFolder)
                   );
         const language = this.generator.workspaceConfig.language;
-        const outputVersion = configuration?.outputVersion;
+        const outputVersion = configuration?.outputVersion ?? "0.0.1";
         const customConfig =
             this.generator.workspaceConfig.defaultCustomConfig != null || configuration?.customConfig != null
                 ? {
@@ -137,6 +138,7 @@ export abstract class TestRunner {
         const outputMode = configuration?.outputMode ?? this.generator.workspaceConfig.defaultOutputMode;
         const irVersion = this.generator.workspaceConfig.irVersion;
         const publishMetadata = configuration?.publishMetadata ?? undefined;
+        const readme = configuration?.readmeConfig ?? undefined;
         const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
             absolutePathToAPIDefinition,
             taskContext,
@@ -177,7 +179,8 @@ export abstract class TestRunner {
                     outputMode,
                     outputFolder,
                     keepDocker: this.keepDocker,
-                    publishMetadata
+                    publishMetadata,
+                    readme
                 });
                 generationStopwatch.stop();
                 metrics.generationTime = generationStopwatch.duration();
@@ -238,7 +241,7 @@ export abstract class TestRunner {
     /**
      *
      */
-    public abstract runGenerator({}: TestRunner.DoRunArgs): Promise<void>;
+    public abstract runGenerator(args: TestRunner.DoRunArgs): Promise<void>;
 
     protected getParsedDockerName(): ParsedDockerName {
         return parseDockerOrThrow(this.generator.workspaceConfig.docker);

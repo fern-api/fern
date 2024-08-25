@@ -39,6 +39,7 @@ export function pollJobAndReportStatus({
                     if (numConsecutiveFailed === MAX_UNSUCCESSFUL_ATTEMPTS) {
                         context.failAndThrow(`Failed to get job status after ${numConsecutiveFailed} attempts.`);
                     }
+                    // eslint-disable-next-line @typescript-eslint/no-misused-promises
                     setTimeout(pollForStatus, 2_000 + 1_000 * numConsecutiveFailed);
                 } else {
                     numConsecutiveFailed = 0;
@@ -46,6 +47,7 @@ export function pollJobAndReportStatus({
                     if (taskHandler.isFinished) {
                         resolve(response);
                     } else {
+                        // eslint-disable-next-line @typescript-eslint/no-misused-promises
                         setTimeout(pollForStatus, 2_000);
                     }
                 }

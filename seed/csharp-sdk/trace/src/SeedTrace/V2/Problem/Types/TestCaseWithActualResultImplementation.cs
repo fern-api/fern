@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2;
 
-public class TestCaseWithActualResultImplementation
+public record TestCaseWithActualResultImplementation
 {
     [JsonPropertyName("getActualResult")]
-    public NonVoidFunctionDefinition GetActualResult { get; init; }
+    public required NonVoidFunctionDefinition GetActualResult { get; set; }
 
     [JsonPropertyName("assertCorrectnessCheck")]
-    public AssertCorrectnessCheck AssertCorrectnessCheck { get; init; }
+    public required object AssertCorrectnessCheck { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

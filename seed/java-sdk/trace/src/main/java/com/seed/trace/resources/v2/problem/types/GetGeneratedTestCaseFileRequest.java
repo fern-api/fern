@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = GetGeneratedTestCaseFileRequest.Builder.class)
 public final class GetGeneratedTestCaseFileRequest {
     private final Optional<TestCaseTemplate> template;
@@ -113,7 +113,7 @@ public final class GetGeneratedTestCaseFileRequest {
 
         @java.lang.Override
         public _FinalStage template(TestCaseTemplate template) {
-            this.template = Optional.of(template);
+            this.template = Optional.ofNullable(template);
             return this;
         }
 

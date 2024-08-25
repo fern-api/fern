@@ -11,7 +11,16 @@
             "identifierOverride": "endpoint_folder-a/service.getDirectThread"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedAudiences\n\nclient = SeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -24,11 +33,76 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedAudiences\n\nclient = AsyncSeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
                     "templateString": "await client.folder_a.service.get_direct_thread(\n\t$FERN_INPUT\n)",
+                    "templateInputs": [],
+                    "inputDelimiter": ",\n\t",
+                    "type": "generic"
+                },
+                "type": "v1"
+            }
+        }
+    },
+    {
+        "sdk": {
+            "package": "fern_audiences",
+            "version": "0.0.1",
+            "type": "python"
+        },
+        "endpointId": {
+            "path": "/partner-path",
+            "method": "GET",
+            "identifierOverride": "endpoint_folder-d/service.getDirectThread"
+        },
+        "snippetTemplate": {
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
+            "functionInvocation": {
+                "imports": [],
+                "isOptional": true,
+                "templateString": "client.folder_d.service.get_direct_thread(\n\t$FERN_INPUT\n)",
+                "templateInputs": [],
+                "inputDelimiter": ",\n\t",
+                "type": "generic"
+            },
+            "type": "v1"
+        },
+        "additionalTemplates": {
+            "async": {
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
+                "functionInvocation": {
+                    "imports": [],
+                    "isOptional": true,
+                    "templateString": "await client.folder_d.service.get_direct_thread(\n\t$FERN_INPUT\n)",
                     "templateInputs": [],
                     "inputDelimiter": ",\n\t",
                     "type": "generic"
@@ -49,7 +123,16 @@
             "identifierOverride": "endpoint_foo.find"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedAudiences\n\nclient = SeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -111,7 +194,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedAudiences\n\nclient = AsyncSeedAudiences(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedAudiences\nfrom seed.environment import SeedAudiencesEnvironment"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedAudiences(environment=SeedAudiencesEnvironment.ENVIRONMENT_A, )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,

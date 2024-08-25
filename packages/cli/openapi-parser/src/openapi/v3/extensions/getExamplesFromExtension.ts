@@ -7,6 +7,7 @@ import { OperationContext } from "../converters/contexts";
 import { RedoclyCodeSampleArraySchema, RedoclyCodeSampleSchema } from "../schemas/RedoclyCodeSampleSchema";
 import { OpenAPIExtension } from "./extensions";
 import { FernOpenAPIExtension } from "./fernExtensions";
+import { getRawReadmeCodeSamples } from "./getReadmeCodeSamples";
 
 export function getExamplesFromExtension(
     operationContext: OperationContext,
@@ -18,7 +19,7 @@ export function getExamplesFromExtension(
             operationObject,
             FernOpenAPIExtension.EXAMPLES,
             RawSchemas.ExampleEndpointCallArraySchema,
-            context,
+            context.logger,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 
@@ -27,7 +28,7 @@ export function getExamplesFromExtension(
             operationObject,
             OpenAPIExtension.REDOCLY_CODE_SAMPLES_KEBAB,
             RedoclyCodeSampleArraySchema,
-            context,
+            context.logger,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 
@@ -36,7 +37,7 @@ export function getExamplesFromExtension(
             operationObject,
             OpenAPIExtension.REDOCLY_CODE_SAMPLES_CAMEL,
             RedoclyCodeSampleArraySchema,
-            context,
+            context.logger,
             [...operationContext.baseBreadcrumbs, `${operationContext.method} ${operationContext.path}`]
         ) ?? [];
 
@@ -58,5 +59,13 @@ export function getExamplesFromExtension(
             )
         });
     }
+
+    const readmeCodeSamples = getRawReadmeCodeSamples(operationObject);
+    if (readmeCodeSamples.length > 0) {
+        exampleEndpointCalls.push({
+            "code-samples": readmeCodeSamples
+        });
+    }
+
     return exampleEndpointCalls.map(EndpointExample.unknown);
 }

@@ -1,17 +1,26 @@
 using System.Text.Json.Serialization;
+using SeedValidation.Core;
 
 #nullable enable
 
 namespace SeedValidation;
 
-public class Type
+public record Type
 {
     [JsonPropertyName("decimal")]
-    public double Decimal { get; init; }
+    public required double Decimal { get; set; }
 
     [JsonPropertyName("even")]
-    public int Even { get; init; }
+    public required int Even { get; set; }
 
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
+
+    [JsonPropertyName("shape")]
+    public required Shape Shape { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

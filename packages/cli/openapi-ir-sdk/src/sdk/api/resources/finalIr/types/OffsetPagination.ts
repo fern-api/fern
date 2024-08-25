@@ -5,4 +5,6 @@
 export interface OffsetPagination {
     offset: string;
     results: string;
+    step: string | undefined;
+    hasNextPage: string | undefined;
 }

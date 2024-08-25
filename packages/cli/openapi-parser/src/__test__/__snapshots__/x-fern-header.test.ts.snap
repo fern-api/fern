@@ -1,7 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-header x-fern-header parse open api 1`] = `
+exports[`x-fern-header > x-fern-header > parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -23,12 +24,15 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "path": "/user/{userId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "userId",
+          "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UserGetStreamRequestUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -39,6 +43,10 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "x-fern-header/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -52,23 +60,26 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserGetStreamRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
               "audiences": [
                 "public",
               ],
+              "availability": null,
               "conflict": {},
               "generatedName": "userGetStreamRequestStream",
               "key": "stream",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "UserGetStreamRequestStream",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -78,7 +89,15 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "x-fern-header/openapi.yml",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "x-fern-header/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -87,12 +106,21 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "UserGetStreamResponse",
           "groupName": null,
           "nameOverride": null,
           "schema": "StreamUser",
+          "source": {
+            "file": "x-fern-header/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "x-fern-header/openapi.yml",
+          "type": "openapi",
         },
         "type": "streamingJson",
       },
@@ -103,6 +131,10 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         "methodName": "get_stream",
       },
       "server": [],
+      "source": {
+        "file": "x-fern-header/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -121,6 +153,7 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "pathParameters": [
             {
               "name": "userId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -175,12 +208,15 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "path": "/user/{userId}",
       "pathParameters": [
         {
+          "availability": null,
           "description": null,
           "name": "userId",
+          "parameterNameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "UserGetRequestUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schema": {
               "default": null,
@@ -191,6 +227,10 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               "type": "string",
             },
             "type": "primitive",
+          },
+          "source": {
+            "file": "x-fern-header/openapi.yml",
+            "type": "openapi",
           },
           "variableReference": null,
         },
@@ -204,23 +244,26 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           "additionalProperties": false,
           "allOf": [],
           "allOfPropertyConflicts": [],
+          "availability": null,
           "description": null,
           "generatedName": "UserGetRequest",
-          "groupName": null,
+          "groupName": [],
           "nameOverride": null,
           "properties": [
             {
               "audiences": [
                 "public",
               ],
+              "availability": null,
               "conflict": {},
               "generatedName": "userGetRequestStream",
               "key": "stream",
               "nameOverride": null,
               "schema": {
+                "availability": null,
                 "description": null,
                 "generatedName": "UserGetRequestStream",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "type": "literal",
                 "value": {
@@ -230,7 +273,15 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
               },
             },
           ],
+          "source": {
+            "file": "x-fern-header/openapi.yml",
+            "type": "openapi",
+          },
           "type": "object",
+        },
+        "source": {
+          "file": "x-fern-header/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -239,12 +290,21 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         "description": "",
         "responseProperty": null,
         "schema": {
+          "availability": null,
           "description": null,
           "generatedName": "UserGetResponse",
           "groupName": null,
           "nameOverride": null,
           "schema": "User",
+          "source": {
+            "file": "x-fern-header/openapi.yml",
+            "type": "openapi",
+          },
           "type": "reference",
+        },
+        "source": {
+          "file": "x-fern-header/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
@@ -255,6 +315,10 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         "methodName": "get",
       },
       "server": [],
+      "source": {
+        "file": "x-fern-header/openapi.yml",
+        "type": "openapi",
+      },
       "summary": null,
       "tags": [],
     },
@@ -272,27 +336,31 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "StreamUser",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "streamUserId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "streamUserId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "StreamUserId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -308,17 +376,20 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "streamUserStreamed",
           "key": "streamed",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "streamUserStreamed",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "StreamUserStreamed",
               "groupName": null,
@@ -332,33 +403,41 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-header/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
     "User": {
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "User",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "userId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UserId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": null,
@@ -374,17 +453,20 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "userStreamed",
           "key": "streamed",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "userStreamed",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "UserStreamed",
               "groupName": null,
@@ -398,6 +480,10 @@ exports[`x-fern-header x-fern-header parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "x-fern-header/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

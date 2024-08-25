@@ -9,10 +9,10 @@ import * as core from "../../../../core";
 export const Union: core.serialization.Schema<serializers.Union.Raw, SeedUnions.Union> = core.serialization
     .union("type", {
         foo: core.serialization.object({
-            foo: core.serialization.lazyObject(async () => (await import("../../..")).Foo),
+            foo: core.serialization.lazyObject(() => serializers.Foo),
         }),
         bar: core.serialization.object({
-            bar: core.serialization.lazyObject(async () => (await import("../../..")).Bar),
+            bar: core.serialization.lazyObject(() => serializers.Bar),
         }),
     })
     .transform<SeedUnions.Union>({

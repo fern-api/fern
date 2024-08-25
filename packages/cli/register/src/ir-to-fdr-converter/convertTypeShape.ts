@@ -1,9 +1,9 @@
-import { APIV1Write } from "@fern-api/fdr-sdk";
+import { FernRegistry as FdrCjsSdk } from "@fern-fern/fdr-cjs-sdk";
 import { FernIr as Ir } from "@fern-api/ir-sdk";
 import { convertIrAvailability } from "./convertPackage";
 
-export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
-    return irType._visit<APIV1Write.TypeShape>({
+export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.register.TypeShape {
+    return irType._visit<FdrCjsSdk.api.v1.register.TypeShape>({
         alias: (alias) => {
             return {
                 type: "alias",
@@ -13,8 +13,9 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
         enum: (enum_) => {
             return {
                 type: "enum",
+                default: enum_.default != null ? enum_.default.name.wireValue : undefined,
                 values: enum_.values.map(
-                    (value): APIV1Write.EnumValue => ({
+                    (value): FdrCjsSdk.api.v1.register.EnumValue => ({
                         description: value.docs ?? undefined,
                         value: value.name.wireValue,
                         availability: convertIrAvailability(value.availability)
@@ -27,7 +28,7 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
                 type: "object",
                 extends: object.extends.map((extension) => extension.typeId),
                 properties: object.properties.map(
-                    (property): APIV1Write.ObjectProperty => ({
+                    (property): FdrCjsSdk.api.v1.register.ObjectProperty => ({
                         description: property.docs ?? undefined,
                         key: property.name.wireValue,
                         valueType: convertTypeReference(property.valueType),
@@ -37,8 +38,8 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
             };
         },
         union: (union) => {
-            const baseProperties: APIV1Write.ObjectProperty[] = union.baseProperties.map(
-                (baseProperty): APIV1Write.ObjectProperty => {
+            const baseProperties: FdrCjsSdk.api.v1.register.ObjectProperty[] = union.baseProperties.map(
+                (baseProperty): FdrCjsSdk.api.v1.register.ObjectProperty => {
                     return {
                         key: baseProperty.name.wireValue,
                         valueType: convertTypeReference(baseProperty.valueType),
@@ -50,38 +51,39 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
             return {
                 type: "discriminatedUnion",
                 discriminant: union.discriminant.wireValue,
-                variants: union.types.map((variant): APIV1Write.DiscriminatedUnionVariant => {
+                variants: union.types.map((variant): FdrCjsSdk.api.v1.register.DiscriminatedUnionVariant => {
                     return {
                         description: variant.docs ?? undefined,
                         discriminantValue: variant.discriminantValue.wireValue,
-                        additionalProperties: Ir.types.SingleUnionTypeProperties._visit<APIV1Write.ObjectType>(
-                            variant.shape,
-                            {
-                                samePropertiesAsObject: (extension) => ({
-                                    extends: [extension.typeId],
-                                    properties: baseProperties
-                                }),
-                                singleProperty: (singleProperty) => ({
-                                    extends: [],
-                                    properties: [
-                                        {
-                                            key: singleProperty.name.wireValue,
-                                            valueType: convertTypeReference(singleProperty.type)
-                                        },
-                                        ...baseProperties
-                                    ]
-                                }),
-                                noProperties: () => ({
-                                    extends: [],
-                                    properties: baseProperties
-                                }),
-                                _other: () => {
-                                    throw new Error(
-                                        "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
-                                    );
+                        additionalProperties:
+                            Ir.types.SingleUnionTypeProperties._visit<FdrCjsSdk.api.v1.register.ObjectType>(
+                                variant.shape,
+                                {
+                                    samePropertiesAsObject: (extension) => ({
+                                        extends: [extension.typeId],
+                                        properties: baseProperties
+                                    }),
+                                    singleProperty: (singleProperty) => ({
+                                        extends: [],
+                                        properties: [
+                                            {
+                                                key: singleProperty.name.wireValue,
+                                                valueType: convertTypeReference(singleProperty.type)
+                                            },
+                                            ...baseProperties
+                                        ]
+                                    }),
+                                    noProperties: () => ({
+                                        extends: [],
+                                        properties: baseProperties
+                                    }),
+                                    _other: () => {
+                                        throw new Error(
+                                            "Unknown SingleUnionTypeProperties: " + variant.shape.propertiesType
+                                        );
+                                    }
                                 }
-                            }
-                        )
+                            )
                     };
                 })
             };
@@ -89,7 +91,7 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
         undiscriminatedUnion: (union) => {
             return {
                 type: "undiscriminatedUnion",
-                variants: union.members.map((variant): APIV1Write.UndiscriminatedUnionVariant => {
+                variants: union.members.map((variant): FdrCjsSdk.api.v1.register.UndiscriminatedUnionVariant => {
                     return {
                         typeName: variant.type.type === "named" ? variant.type.name.originalName : undefined,
                         description: variant.docs ?? undefined,
@@ -104,10 +106,10 @@ export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {
     });
 }
 
-export function convertTypeReference(irTypeReference: Ir.types.TypeReference): APIV1Write.TypeReference {
-    return irTypeReference._visit<APIV1Write.TypeReference>({
+export function convertTypeReference(irTypeReference: Ir.types.TypeReference): FdrCjsSdk.api.v1.register.TypeReference {
+    return irTypeReference._visit<FdrCjsSdk.api.v1.register.TypeReference>({
         container: (container) => {
-            return Ir.types.ContainerType._visit<APIV1Write.TypeReference>(container, {
+            return Ir.types.ContainerType._visit<FdrCjsSdk.api.v1.register.TypeReference>(container, {
                 list: (itemType) => {
                     return {
                         type: "list",
@@ -134,7 +136,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                     };
                 },
                 literal: (literal) => {
-                    return Ir.types.Literal._visit<APIV1Write.TypeReference>(literal, {
+                    return Ir.types.Literal._visit<FdrCjsSdk.api.v1.register.TypeReference>(literal, {
                         boolean: (booleanLiteral) => {
                             return {
                                 type: "literal",
@@ -172,9 +174,16 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
         primitive: (primitive) => {
             return {
                 type: "primitive",
-                value: Ir.types.PrimitiveTypeV1._visit<APIV1Write.PrimitiveType>(primitive.v1, {
+                value: Ir.types.PrimitiveTypeV1._visit<FdrCjsSdk.api.v1.register.PrimitiveType>(primitive.v1, {
                     integer: () => {
                         return convertInteger(primitive.v2);
+                    },
+                    float: () => {
+                        // TODO: Add support for float types in FDR. We render them as double for now
+                        // (they have the same JSON representation).
+                        return {
+                            type: "double"
+                        };
                     },
                     double: () => {
                         return convertDouble(primitive.v2);
@@ -213,9 +222,18 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
                         };
                     },
                     bigInteger: () => {
-                        // TODO(amckinney): Add support for bigInteger in FDR.
                         return {
-                            type: "string"
+                            type: "bigInteger"
+                        };
+                    },
+                    uint: () => {
+                        return {
+                            type: "uint"
+                        };
+                    },
+                    uint64: () => {
+                        return {
+                            type: "uint64"
                         };
                     },
                     _other: () => {
@@ -235,7 +253,7 @@ export function convertTypeReference(irTypeReference: Ir.types.TypeReference): A
     });
 }
 
-function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): APIV1Write.PrimitiveType {
+function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
     const rules: Ir.StringValidationRules | undefined =
         primitive != null && primitive.type === "string" ? primitive.validation : undefined;
     return {
@@ -247,7 +265,7 @@ function convertString(primitive: Ir.PrimitiveTypeV2 | undefined): APIV1Write.Pr
     };
 }
 
-function convertInteger(primitive: Ir.PrimitiveTypeV2 | undefined): APIV1Write.PrimitiveType {
+function convertInteger(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
     const rules: Ir.IntegerValidationRules | undefined =
         primitive != null && primitive.type === "integer" ? primitive.validation : undefined;
     return {
@@ -258,7 +276,7 @@ function convertInteger(primitive: Ir.PrimitiveTypeV2 | undefined): APIV1Write.P
     };
 }
 
-function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): APIV1Write.PrimitiveType {
+function convertDouble(primitive: Ir.PrimitiveTypeV2 | undefined): FdrCjsSdk.api.v1.register.PrimitiveType {
     const rules: Ir.DoubleValidationRules | undefined =
         primitive != null && primitive.type === "double" ? primitive.validation : undefined;
     return {

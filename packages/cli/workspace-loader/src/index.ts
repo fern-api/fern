@@ -1,3 +1,4 @@
+export * from "./handleFailedWorkspaceParserResult";
 export { loadAPIWorkspace } from "./loadAPIWorkspace";
 export { loadDependency } from "./loadDependency";
 export { loadDocsWorkspace } from "./loadDocsWorkspace";
@@ -5,13 +6,18 @@ export { getValidAbsolutePathToOpenAPI as loadOpenAPIFile } from "./loadOpenAPIF
 export { type FernFile, type ParsedFernFile } from "./types/FernFile";
 export { WorkspaceLoaderFailureType, type WorkspaceLoader } from "./types/Result";
 export {
-    type APIWorkspace,
+    type AsyncAPISource,
     type DocsWorkspace,
     type FernDefinition,
-    type FernWorkspace,
+    type FernWorkspaceMetadata,
+    type IdentifiableSource,
     type OnDiskNamedDefinitionFile,
-    type OSSWorkspace,
+    type OpenAPISource,
+    type ProtobufSource,
+    type Source,
     type Workspace
 } from "./types/Workspace";
 export * from "./utils";
-export { convertToFernWorkspace as convertOpenApiWorkspaceToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
+export * from "./workspaces";
+export { AbstractAPIWorkspace } from "./workspaces/AbstractAPIWorkspace";
+export { type APIWorkspace } from "./workspaces/APIWorkspace";

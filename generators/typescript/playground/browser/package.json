@@ -18,7 +18,8 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "yarn compile && jest --passWithNoTests",
+    "test": "jest --passWithNoTests",
+    "test:update": "jest --passWithNoTests -u",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
     "lint:style": "stylelint 'src/**/*.scss' --allow-empty-input --max-warnings 0",
@@ -27,15 +28,15 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../shared/.prettierignore \"**\"",
     "organize-imports": "organize-imports-cli tsconfig.json",
     "depcheck": "depcheck",
-    "start": "yarn compile && vite",
-    "build": "yarn compile && vite build",
-    "preview": "yarn compile && vite preview"
+    "start": "pnpm compile && vite",
+    "build": "pnpm compile && vite build",
+    "preview": "pnpm compile && vite preview"
   },
   "dependencies": {
     "form-data": "4.0.0",
     "js-base64": "^3.7.6",
     "node-fetch": "2.7.0",
-    "qs": "6.11.2",
+    "qs": "6.12.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "url-join": "^5.0.0"
@@ -43,7 +44,7 @@
   "devDependencies": {
     "@types/node": "^18.7.18",
     "@types/node-fetch": "2.6.9",
-    "@types/qs": "6.9.8",
+    "@types/qs": "6.9.15",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
     "@types/url-join": "4.0.1",

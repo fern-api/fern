@@ -10,7 +10,7 @@ describe("migrateFromV14ToV13", () => {
             pathToFixture: join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of("./fixtures/simple"))
         });
 
-        const typeDeclaration = Object.values(migrated.types)[0];
+        const typeDeclaration = Object.values(migrated.ir.types)[0];
         if (typeDeclaration?.shape._type !== "object") {
             throw new Error("First type is not an object");
         }

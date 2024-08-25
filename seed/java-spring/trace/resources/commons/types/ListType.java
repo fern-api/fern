@@ -17,7 +17,7 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ListType.Builder.class
 )
@@ -113,7 +113,7 @@ public final class ListType {
      */
     @java.lang.Override
     public _FinalStage isFixedLength(Boolean isFixedLength) {
-      this.isFixedLength = Optional.of(isFixedLength);
+      this.isFixedLength = Optional.ofNullable(isFixedLength);
       return this;
     }
 

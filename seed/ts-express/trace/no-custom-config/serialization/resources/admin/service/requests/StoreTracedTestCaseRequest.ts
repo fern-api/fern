@@ -10,10 +10,8 @@ export const StoreTracedTestCaseRequest: core.serialization.Schema<
     serializers.StoreTracedTestCaseRequest.Raw,
     SeedTrace.StoreTracedTestCaseRequest
 > = core.serialization.object({
-    result: core.serialization.lazyObject(async () => (await import("../../../..")).TestCaseResultWithStdout),
-    traceResponses: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../../..")).TraceResponse)
-    ),
+    result: core.serialization.lazyObject(() => serializers.TestCaseResultWithStdout),
+    traceResponses: core.serialization.list(core.serialization.lazyObject(() => serializers.TraceResponse)),
 });
 
 export declare namespace StoreTracedTestCaseRequest {

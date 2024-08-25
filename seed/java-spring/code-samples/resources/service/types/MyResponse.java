@@ -16,7 +16,7 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = MyResponse.Builder.class
 )
@@ -105,7 +105,7 @@ public final class MyResponse {
 
     @java.lang.Override
     public _FinalStage name(String name) {
-      this.name = Optional.of(name);
+      this.name = Optional.ofNullable(name);
       return this;
     }
 

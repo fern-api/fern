@@ -15,7 +15,7 @@ describe("migrateFromV18ToV17", () => {
             )
         });
 
-        expect(Object.values(migrated.services)[0]?.baseUrl).toBe("A");
+        expect(Object.values(migrated.ir.services)[0]?.baseUrl).toBe("A");
     });
 
     it("throws when endpoints have different urls", async () => {

@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
+    Encoding,
     HttpEndpoint,
     HttpHeader,
     HttpMethod,
@@ -7,6 +8,7 @@ import {
     PathParameter,
     PathParameterLocation,
     ResponseErrors,
+    Transport,
     TypeReference
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
@@ -17,10 +19,12 @@ import { IdGenerator } from "../../IdGenerator";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { PropertyResolver } from "../../resolvers/PropertyResolver";
+import { SourceResolver } from "../../resolvers/SourceResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { VariableResolver } from "../../resolvers/VariableResolver";
 import { convertAvailability, convertDeclaration } from "../convertDeclaration";
 import { constructHttpPath } from "./constructHttpPath";
+import { convertCodeSample } from "./convertCodeSamples";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { convertHttpRequestBody } from "./convertHttpRequestBody";
 import { convertHttpResponse } from "./convertHttpResponse";
@@ -28,8 +32,10 @@ import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertPagination } from "./convertPagination";
 import { convertQueryParameter } from "./convertQueryParameter";
 import { convertResponseErrors } from "./convertResponseErrors";
+import { convertTransport } from "./convertTransport";
 
 export async function convertHttpService({
+    rootDefaultUrl,
     rootPathParameters,
     serviceDefinition,
     file,
@@ -38,9 +44,11 @@ export async function convertHttpService({
     propertyResolver,
     exampleResolver,
     variableResolver,
+    sourceResolver,
     globalErrors,
     workspace
 }: {
+    rootDefaultUrl: string | undefined;
     rootPathParameters: PathParameter[];
     serviceDefinition: RawSchemas.HttpServiceSchema;
     file: FernFileContext;
@@ -49,6 +57,7 @@ export async function convertHttpService({
     propertyResolver: PropertyResolver;
     exampleResolver: ExampleResolver;
     variableResolver: VariableResolver;
+    sourceResolver: SourceResolver;
     globalErrors: ResponseErrors;
     workspace: FernWorkspace;
 }): Promise<HttpService> {
@@ -57,6 +66,12 @@ export async function convertHttpService({
         location: PathParameterLocation.Service,
         file,
         variableResolver
+    });
+
+    const transport = await convertTransport({
+        file,
+        serviceDeclaration: serviceDefinition,
+        sourceResolver
     });
 
     const serviceName = { fernFilepath: file.fernFilepath };
@@ -74,6 +89,8 @@ export async function convertHttpService({
                   )
                 : [],
         pathParameters: servicePathParameters,
+        encoding: convertTransportToEncoding(transport),
+        transport,
         endpoints: await Promise.all(
             Object.entries(serviceDefinition.endpoints).map(async ([endpointKey, endpoint]): Promise<HttpEndpoint> => {
                 const endpointPathParameters = await convertPathParameters({
@@ -89,7 +106,7 @@ export async function convertHttpService({
                     displayName: endpoint["display-name"],
                     auth: endpoint.auth ?? serviceDefinition.auth,
                     idempotent: endpoint.idempotent ?? serviceDefinition.idempotent ?? false,
-                    baseUrl: endpoint.url ?? serviceDefinition.url,
+                    baseUrl: endpoint.url ?? serviceDefinition.url ?? rootDefaultUrl,
                     method: endpoint.method != null ? convertHttpMethod(endpoint.method) : HttpMethod.Post,
                     path: constructHttpPath(endpoint.path),
                     fullPath: constructHttpPath(
@@ -122,30 +139,39 @@ export async function convertHttpService({
                               )
                             : [],
                     requestBody: convertHttpRequestBody({ request: endpoint.request, file }),
-                    sdkRequest: convertHttpSdkRequest({
+                    sdkRequest: await convertHttpSdkRequest({
                         service: serviceDefinition,
                         request: endpoint.request,
+                        endpoint,
+                        endpointKey,
                         file,
-                        typeResolver
+                        typeResolver,
+                        propertyResolver
                     }),
                     response: await convertHttpResponse({ endpoint, file, typeResolver }),
                     errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
-                    examples:
+                    userSpecifiedExamples:
                         endpoint.examples != null
-                            ? endpoint.examples.map((example) =>
-                                  convertExampleEndpointCall({
-                                      service: serviceDefinition,
-                                      endpoint,
-                                      example,
-                                      typeResolver,
-                                      errorResolver,
-                                      exampleResolver,
-                                      variableResolver,
-                                      file,
-                                      workspace
-                                  })
-                              )
+                            ? endpoint.examples.map((example) => {
+                                  return {
+                                      example: convertExampleEndpointCall({
+                                          service: serviceDefinition,
+                                          endpoint,
+                                          example,
+                                          typeResolver,
+                                          errorResolver,
+                                          exampleResolver,
+                                          variableResolver,
+                                          file,
+                                          workspace
+                                      }),
+                                      codeSamples: example["code-samples"]?.map((codeSample) =>
+                                          convertCodeSample({ codeSample, file })
+                                      )
+                                  };
+                              })
                             : [],
+                    autogeneratedExamples: [], // gets filled in later on
                     pagination: await convertPagination({
                         propertyResolver,
                         file,
@@ -337,4 +363,21 @@ export function getHeaderName({ headerKey, header }: { headerKey: string; header
         name: headerKey,
         wasExplicitlySet: false
     };
+}
+
+function convertTransportToEncoding(transport: Transport): Encoding {
+    switch (transport.type) {
+        case "http":
+            return {
+                json: {},
+                proto: undefined
+            };
+        case "grpc":
+            return {
+                json: undefined,
+                proto: {}
+            };
+        default:
+            assertNever(transport);
+    }
 }

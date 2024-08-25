@@ -1,7 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-type x-fern-type parse open api 1`] = `
+exports[`x-fern-type > x-fern-type > parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -13,10 +14,13 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
   "nonRequestReferencedSchemas": [],
   "schemas": {
     "BaseUser": {
+      "availability": null,
       "description": null,
+      "encoding": null,
       "generatedName": "BaseUser",
       "groupName": null,
       "key": {
+        "availability": null,
         "description": null,
         "generatedName": "BaseUser",
         "groupName": null,
@@ -33,6 +37,7 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
       "nameOverride": null,
       "type": "map",
       "value": {
+        "availability": null,
         "description": null,
         "generatedName": "BaseUser",
         "groupName": null,

@@ -1,15 +1,14 @@
-using SeedAudiences;
-using SeedAudiences.FolderB;
+using SeedAudiences.Core;
 
 #nullable enable
 
 namespace SeedAudiences.FolderB;
 
-public class FolderBClient
+public partial class FolderBClient
 {
     private RawClient _client;
 
-    public FolderBClient(RawClient client)
+    internal FolderBClient(RawClient client)
     {
         _client = client;
         Common = new CommonClient(_client);

@@ -15,8 +15,11 @@ export declare namespace CustomAuth {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -32,7 +35,7 @@ export class CustomAuth {
      * @throws {@link SeedCustomAuth.UnauthorizedRequest}
      *
      * @example
-     *     await seedCustomAuth.customAuth.getWithCustomAuth()
+     *     await client.customAuth.getWithCustomAuth()
      */
     public async getWithCustomAuth(requestOptions?: CustomAuth.RequestOptions): Promise<boolean> {
         const _response = await core.fetcher({
@@ -42,17 +45,19 @@ export class CustomAuth {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/custom-auth",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/custom-auth/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...(await this._getCustomAuthorizationHeaders()),
             },
             contentType: "application/json",
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.customAuth.getWithCustomAuth.Response.parseOrThrow(_response.body, {
+            return serializers.customAuth.getWithCustomAuth.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -64,7 +69,7 @@ export class CustomAuth {
             switch (_response.error.statusCode) {
                 case 401:
                     throw new SeedCustomAuth.UnauthorizedRequest(
-                        await serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -104,7 +109,7 @@ export class CustomAuth {
      * @throws {@link SeedCustomAuth.BadRequest}
      *
      * @example
-     *     await seedCustomAuth.customAuth.postWithCustomAuth({
+     *     await client.customAuth.postWithCustomAuth({
      *         "key": "value"
      *     })
      */
@@ -116,18 +121,20 @@ export class CustomAuth {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/custom-auth",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/custom-auth/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...(await this._getCustomAuthorizationHeaders()),
             },
             contentType: "application/json",
+            requestType: "json",
             body: request,
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.customAuth.postWithCustomAuth.Response.parseOrThrow(_response.body, {
+            return serializers.customAuth.postWithCustomAuth.Response.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -139,7 +146,7 @@ export class CustomAuth {
             switch (_response.error.statusCode) {
                 case 401:
                     throw new SeedCustomAuth.UnauthorizedRequest(
-                        await serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
+                        serializers.UnauthorizedRequestErrorBody.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

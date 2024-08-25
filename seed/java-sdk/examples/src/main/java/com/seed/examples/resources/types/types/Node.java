@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = Node.Builder.class)
 public final class Node {
     private final String name;
@@ -132,7 +132,7 @@ public final class Node {
 
         @java.lang.Override
         public _FinalStage trees(List<Tree> trees) {
-            this.trees = Optional.of(trees);
+            this.trees = Optional.ofNullable(trees);
             return this;
         }
 
@@ -145,7 +145,7 @@ public final class Node {
 
         @java.lang.Override
         public _FinalStage nodes(List<Node> nodes) {
-            this.nodes = Optional.of(nodes);
+            this.nodes = Optional.ofNullable(nodes);
             return this;
         }
 

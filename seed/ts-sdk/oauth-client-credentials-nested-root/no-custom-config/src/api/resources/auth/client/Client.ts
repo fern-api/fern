@@ -15,8 +15,11 @@ export declare namespace Auth {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -29,11 +32,9 @@ export class Auth {
      * @param {Auth.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedOauthClientCredentials.auth.getToken({
+     *     await client.auth.getToken({
      *         clientId: "string",
      *         clientSecret: "string",
-     *         audience: "https://api.example.com",
-     *         grantType: "client_credentials",
      *         scope: "string"
      *     })
      */
@@ -49,12 +50,14 @@ export class Auth {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/oauth-client-credentials-nested-root",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/oauth-client-credentials-nested-root/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body: {
-                ...(await serializers.auth.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" })),
+                ...serializers.auth.GetTokenRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
                 audience: "https://api.example.com",
                 grant_type: "client_credentials",
             },
@@ -63,7 +66,7 @@ export class Auth {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.auth.TokenResponse.parseOrThrow(_response.body, {
+            return serializers.auth.TokenResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

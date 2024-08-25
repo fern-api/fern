@@ -24,6 +24,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         response: GeneratedEndpointResponse;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
+        omitUndefined: boolean;
     }
 }
 
@@ -38,6 +39,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private response: GeneratedEndpointResponse;
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
+    private omitUndefined: boolean;
 
     constructor({
         endpoint,
@@ -47,7 +49,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         defaultTimeoutInSeconds,
         request,
         includeSerdeLayer,
-        retainOriginalCasing
+        retainOriginalCasing,
+        omitUndefined
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -57,6 +60,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.response = response;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.omitUndefined = omitUndefined;
     }
 
     public getOverloads(): EndpointSignature[] {
@@ -64,6 +68,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     public getSignature(context: SdkContext): EndpointSignature {
+        const paginationInfo = this.response.getPaginationInfo(context);
         return {
             parameters: [
                 ...this.request.getEndpointParameters(context),
@@ -71,7 +76,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                     requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint)
                 })
             ],
-            returnTypeWithoutPromise: this.response.getReturnType(context)
+            returnTypeWithoutPromise:
+                paginationInfo != null
+                    ? context.coreUtilities.pagination.Page._getReferenceToType(paginationInfo.itemType)
+                    : this.response.getReturnType(context)
         };
     }
 
@@ -114,7 +122,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         }
 
         const examples: string[] = [];
-        for (const example of getExampleEndpointCalls(this.endpoint.examples)) {
+        for (const example of getExampleEndpointCalls(this.endpoint)) {
             const generatedExample = this.getExample({
                 context,
                 example,
@@ -168,7 +176,96 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     }
 
     public getStatements(context: SdkContext): ts.Statement[] {
-        return [...this.request.getBuildRequestStatements(context), ...this.invokeFetcherAndReturnResponse(context)];
+        const body = [
+            ...this.request.getBuildRequestStatements(context),
+            ...this.invokeFetcherAndReturnResponse(context)
+        ];
+
+        const requestParameter = this.request.getRequestParameter(context);
+        const paginationInfo = this.response.getPaginationInfo(context);
+        if (paginationInfo != null && requestParameter != null) {
+            const listFn = ts.factory.createVariableDeclarationList(
+                [
+                    ts.factory.createVariableDeclaration(
+                        ts.factory.createIdentifier("list"),
+                        undefined,
+                        undefined,
+                        ts.factory.createArrowFunction(
+                            [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
+                            undefined,
+                            [
+                                ts.factory.createParameterDeclaration(
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                    ts.factory.createIdentifier("request"),
+                                    undefined,
+                                    requestParameter,
+                                    undefined
+                                )
+                            ],
+                            ts.factory.createTypeReferenceNode("Promise", [this.response.getReturnType(context)]),
+                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                            ts.factory.createBlock(body, undefined)
+                        )
+                    )
+                ],
+                ts.NodeFlags.Const
+            );
+            const statements: ts.Statement[] = [ts.factory.createVariableStatement(undefined, listFn)];
+            if (paginationInfo.type === "offset" || paginationInfo.type === "offset-step") {
+                statements.push(paginationInfo.initializeOffset);
+            }
+            statements.push(
+                ts.factory.createReturnStatement(
+                    context.coreUtilities.pagination.Pageable._construct({
+                        responseType: paginationInfo.responseType,
+                        itemType: paginationInfo.itemType,
+                        response: ts.factory.createAwaitExpression(
+                            ts.factory.createCallExpression(ts.factory.createIdentifier("list"), undefined, [
+                                ts.factory.createIdentifier("request")
+                            ])
+                        ),
+                        hasNextPage: this.createLambdaWithResponse({ body: paginationInfo.hasNextPage }),
+                        getItems: this.createLambdaWithResponse({ body: paginationInfo.getItems }),
+                        loadPage: this.createLambdaWithResponse({
+                            body: ts.factory.createBlock(paginationInfo.loadPage),
+                            ignoreResponse: paginationInfo.type === "offset"
+                        })
+                    })
+                )
+            );
+            return statements;
+        }
+        return body;
+    }
+
+    private createLambdaWithResponse({
+        body,
+        ignoreResponse
+    }: {
+        body: ts.ConciseBody;
+        ignoreResponse?: boolean;
+    }): ts.Expression {
+        const responseParameterName = ignoreResponse ? "_response" : "response";
+        return ts.factory.createArrowFunction(
+            undefined,
+            undefined,
+            [
+                ts.factory.createParameterDeclaration(
+                    undefined,
+                    undefined,
+                    undefined,
+                    ts.factory.createIdentifier(responseParameterName),
+                    undefined,
+                    undefined,
+                    undefined
+                )
+            ],
+            undefined,
+            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+            body
+        );
     }
 
     public invokeFetcherAndReturnResponse(context: SdkContext): ts.Statement[] {
@@ -182,7 +279,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             generatedClientClass: this.generatedSdkClientClass,
             context,
             includeSerdeLayer: this.includeSerdeLayer,
-            retainOriginalCasing: this.retainOriginalCasing
+            retainOriginalCasing: this.retainOriginalCasing,
+            omitUndefined: this.omitUndefined
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);

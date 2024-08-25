@@ -1,6 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 
 export async function convertGeneratorWorkspaceToFernWorkspace({
     fixture,
@@ -25,7 +25,5 @@ export async function convertGeneratorWorkspaceToFernWorkspace({
         );
         return undefined;
     }
-    return workspace.workspace.type === "fern"
-        ? workspace.workspace
-        : await convertOpenApiWorkspaceToFernWorkspace(workspace.workspace, taskContext);
+    return workspace.workspace.toFernWorkspace({ context: taskContext });
 }

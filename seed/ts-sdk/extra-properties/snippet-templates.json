@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_user.createUser"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedExtraProperties = new SeedExtraPropertiesClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedExtraPropertiesClient } from \"@fern/extra-properties\";"
+                ],
+                "templateString": "const client = new SeedExtraPropertiesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedExtraProperties.user.createUser(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.user.createUser(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

@@ -7,7 +7,8 @@ export function convertServer(server: OpenAPIV3.ServerObject): Server {
     return {
         url: getServerUrl({ url: server.url, variables: server.variables ?? {} }),
         description: server.description,
-        name: getServerName(server)
+        name: getServerName(server),
+        audiences: getExtension<string[]>(server, FernOpenAPIExtension.AUDIENCES)
     };
 }
 

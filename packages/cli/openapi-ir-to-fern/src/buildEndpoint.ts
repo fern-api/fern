@@ -1,15 +1,17 @@
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/configuration";
 import { assertNever, MediaType } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { Endpoint, EndpointAvailability, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
+import { Endpoint, EndpointExample, Request, Schema, SchemaId } from "@fern-api/openapi-ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { buildEndpointExample, convertFullExample } from "./buildEndpointExample";
+import { buildEndpointExample } from "./buildEndpointExample";
 import { ERROR_DECLARATIONS_FILENAME, EXTERNAL_AUDIENCE } from "./buildFernDefinition";
 import { buildHeader } from "./buildHeader";
 import { buildPathParameter } from "./buildPathParameter";
 import { buildQueryParameter } from "./buildQueryParameter";
 import { buildTypeReference } from "./buildTypeReference";
 import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
+import { convertAvailability } from "./utils/convertAvailability";
+import { convertFullExample } from "./utils/convertFullExample";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
 
@@ -33,9 +35,14 @@ export function buildEndpoint({
 
     const names = new Set<string>();
 
+    let path = endpoint.path;
+
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
-        pathParameters[pathParameter.name] = buildPathParameter({
+        if (pathParameter.parameterNameOverride) {
+            path = path.replace(pathParameter.name, pathParameter.parameterNameOverride);
+        }
+        pathParameters[pathParameter.parameterNameOverride ?? pathParameter.name] = buildPathParameter({
             pathParameter,
             context,
             fileContainingReference: declarationFile
@@ -69,13 +76,15 @@ export function buildEndpoint({
         } else {
             pagination = {
                 offset: endpoint.pagination.offset,
-                results: endpoint.pagination.results
+                step: endpoint.pagination.step,
+                results: endpoint.pagination.results,
+                "has-next-page": endpoint.pagination.hasNextPage
             };
         }
     }
 
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
-        path: endpoint.path,
+        path,
         method: convertToHttpMethod(endpoint.method),
         auth: endpoint.authed,
         docs: endpoint.description ?? undefined,
@@ -213,12 +222,8 @@ export function buildEndpoint({
         convertedEndpoint.idempotent = true;
     }
 
-    if (endpoint.availability === EndpointAvailability.Beta) {
-        convertedEndpoint.availability = "pre-release";
-    } else if (endpoint.availability === EndpointAvailability.GenerallyAvailable) {
-        convertedEndpoint.availability = "generally-available";
-    } else if (endpoint.availability === EndpointAvailability.Deprecated) {
-        convertedEndpoint.availability = "deprecated";
+    if (endpoint.availability != null) {
+        convertedEndpoint.availability = convertAvailability(endpoint.availability);
     }
 
     Object.entries(endpoint.errors).forEach(([statusCode, httpError]) => {
@@ -394,8 +399,33 @@ function getRequest({
                     context
                 });
 
-                if (!usedNames.has(property.key) && property.audiences.length <= 0) {
-                    return [property.key, propertyTypeReference];
+                // TODO: clean up conditional logic
+                const name = property.nameOverride ?? property.key;
+                const availability = convertAvailability(property.availability);
+                if (!usedNames.has(name) && property.audiences.length <= 0) {
+                    usedNames.add(name);
+                    if (property.nameOverride != null) {
+                        return [
+                            property.key,
+                            {
+                                type: getTypeFromTypeReference(propertyTypeReference),
+                                docs: getDocsFromTypeReference(propertyTypeReference),
+                                name: property.nameOverride,
+                                availability
+                            }
+                        ];
+                    }
+                    return [
+                        property.key,
+                        availability
+                            ? {
+                                  ...(typeof propertyTypeReference === "string"
+                                      ? { type: propertyTypeReference }
+                                      : propertyTypeReference),
+                                  availability
+                              }
+                            : propertyTypeReference
+                    ];
                 }
 
                 const typeReference: RawSchemas.ObjectPropertySchema = {
@@ -403,7 +433,7 @@ function getRequest({
                     docs: getDocsFromTypeReference(propertyTypeReference)
                 };
 
-                if (usedNames.has(property.key)) {
+                if (usedNames.has(name)) {
                     typeReference.name = property.generatedName;
                 }
 
@@ -411,6 +441,11 @@ function getRequest({
                     typeReference.audiences = property.audiences;
                 }
 
+                if (availability != null) {
+                    typeReference.availability = availability;
+                }
+
+                usedNames.add(name);
                 return [property.key, typeReference];
             })
         );

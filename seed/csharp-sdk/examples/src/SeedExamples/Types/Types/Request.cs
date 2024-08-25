@@ -1,11 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 #nullable enable
 
 namespace SeedExamples;
 
-public class Request
+public record Request
 {
     [JsonPropertyName("request")]
-    public object Request_ { get; init; }
+    public required object Request_ { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

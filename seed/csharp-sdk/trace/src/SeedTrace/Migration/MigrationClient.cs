@@ -1,40 +1,65 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedTrace;
+using System.Threading;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class MigrationClient
+public partial class MigrationClient
 {
     private RawClient _client;
 
-    public MigrationClient(RawClient client)
+    internal MigrationClient(RawClient client)
     {
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Migration.GetAttemptedMigrationsAsync(
+    ///     new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
-        GetAttemptedMigrationsRequest request
+        GetAttemptedMigrationsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Dictionary<string, string>()
-        {
-            { "admin-key-header", request.AdminKeyHeader },
-        };
-        var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
-            {
-                Method = HttpMethod.Get,
-                Path = "/all",
-                Headers = _headers
-            }
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "admin-key-header", request.AdminKeyHeader } }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var response = await _client.MakeRequestAsync(
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "/migration-info/all",
+                Headers = _headers,
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<IEnumerable<Migration>>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<IEnumerable<Migration>>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedTraceException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedTraceApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

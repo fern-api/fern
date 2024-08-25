@@ -1,28 +1,32 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import {
-    AliasTypeDeclaration,
-    DeclaredTypeName,
+    FernFilepath,
     IntermediateRepresentation,
     Name,
-    ObjectProperty,
-    ObjectTypeDeclaration,
+    PrimitiveType,
+    PrimitiveTypeV1,
     TypeDeclaration,
     TypeId,
     TypeReference,
-    UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration
+    UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { csharp } from "..";
+import { convertReadOnlyPrimitiveTypes, csharp } from "..";
 import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
+    CONSTANTS_CLASS_NAME,
+    DATETIME_SERIALIZER_CLASS_NAME,
+    JSON_UTILS_CLASS_NAME,
     ONE_OF_SERIALIZER_CLASS_NAME,
     STRING_ENUM_SERIALIZER_CLASS_NAME
 } from "../AsIs";
 import { BaseCsharpCustomConfigSchema } from "../custom-config/BaseCsharpCustomConfigSchema";
 import { CsharpProject } from "../project";
-import { CORE_DIRECTORY_NAME } from "../project/CsharpProject";
+import { Namespace } from "../project/CSharpFile";
+import { CORE_DIRECTORY_NAME, PUBLIC_CORE_DIRECTORY_NAME } from "../project/CsharpProject";
+import { CsharpProtobufTypeMapper } from "../proto/CsharpProtobufTypeMapper";
+import { ProtobufResolver } from "../proto/ProtobufResolver";
 import { CsharpTypeMapper } from "./CsharpTypeMapper";
 
 export abstract class AbstractCsharpGeneratorContext<
@@ -31,8 +35,12 @@ export abstract class AbstractCsharpGeneratorContext<
     private namespace: string;
     public readonly project: CsharpProject;
     public readonly csharpTypeMapper: CsharpTypeMapper;
-    public readonly flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map();
+    public readonly csharpProtobufTypeMapper: CsharpProtobufTypeMapper;
+    public readonly protobufResolver: ProtobufResolver;
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
+    private allNamespaceSegments?: Set<string>;
+    private allTypeClassReferences?: Map<string, Set<Namespace>>;
+    private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -45,10 +53,12 @@ export abstract class AbstractCsharpGeneratorContext<
             this.customConfig.namespace ??
             upperFirst(camelCase(`${this.config.organization}_${this.ir.apiName.pascalCase.unsafeName}`));
         this.project = new CsharpProject(this, this.namespace);
-        for (const typeId of Object.keys(ir.types)) {
-            this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
-        }
         this.csharpTypeMapper = new CsharpTypeMapper(this);
+        this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
+        this.protobufResolver = new ProtobufResolver(this, this.csharpTypeMapper);
+        this.readOnlyMemoryTypes = new Set<PrimitiveTypeV1>(
+            convertReadOnlyPrimitiveTypes(this.customConfig["read-only-memory-types"] ?? [])
+        );
         config.output.mode._visit<void>({
             github: (github) => {
                 if (github.publishInfo?.type === "nuget") {
@@ -73,10 +83,105 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.namespace}.Test`;
     }
 
+    public getTestUtilsNamespace(): string {
+        return `${this.getTestNamespace()}.Utils`;
+    }
+
+    public getMockServerTestNamespace(): string {
+        return `${this.getTestNamespace()}.Unit.MockServer`;
+    }
+
+    public hasGrpcEndpoints(): boolean {
+        // TODO: Replace this with the this.ir.sdkConfig.hasGrpcEndpoints property (when available).
+        return Object.values(this.ir.services).some((service) => service.transport?.type === "grpc");
+    }
+
+    public getConstantsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: CONSTANTS_CLASS_NAME
+        });
+    }
+
+    public getAllNamespaceSegments(): Set<string> {
+        if (this.allNamespaceSegments == null) {
+            this.allNamespaceSegments = new Set(
+                Object.values(this.ir.subpackages).flatMap((subpackage) =>
+                    this.getFullNamespaceSegments(subpackage.fernFilepath)
+                )
+            );
+        }
+        return this.allNamespaceSegments;
+    }
+
+    public getAllTypeClassReferences(): Map<string, Set<Namespace>> {
+        if (this.allTypeClassReferences == null) {
+            const resultMap = new Map<string, Set<string>>();
+            Object.values(this.ir.types).forEach((typeDeclaration) => {
+                const classReference = this.csharpTypeMapper.convertToClassReference(typeDeclaration.name);
+                const key = classReference.name;
+                const value = classReference.namespace;
+
+                if (!resultMap.has(key)) {
+                    resultMap.set(key, new Set<string>());
+                }
+
+                resultMap.get(key)?.add(value);
+            });
+            this.allTypeClassReferences = resultMap;
+        }
+        return this.allTypeClassReferences;
+    }
+
+    public getNamespaceFromFernFilepath(fernFilepath: FernFilepath): string {
+        return this.getFullNamespaceSegments(fernFilepath).join(".");
+    }
+
+    abstract getChildNamespaceSegments(fernFilepath: FernFilepath): string[];
+
+    public getFullNamespaceSegments(fernFilepath: FernFilepath): string[] {
+        return [this.getNamespace(), ...this.getChildNamespaceSegments(fernFilepath)];
+    }
+
     public getStringEnumSerializerClassReference(): csharp.ClassReference {
         return csharp.classReference({
             namespace: this.getCoreNamespace(),
             name: STRING_ENUM_SERIALIZER_CLASS_NAME
+        });
+    }
+
+    public getDateTimeSerializerClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: DATETIME_SERIALIZER_CLASS_NAME
+        });
+    }
+
+    public getJsonUtilsClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: this.getCoreNamespace(),
+            name: JSON_UTILS_CLASS_NAME
+        });
+    }
+
+    public getJsonExceptionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            namespace: "System.Text.Json",
+            name: "JsonException"
+        });
+    }
+
+    public getJTokenClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "JToken",
+            namespace: "Newtonsoft.Json.Linq"
+        });
+    }
+
+    public getFluentAssetionsJsonClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "",
+            namespace: "FluentAssertions.Json"
         });
     }
 
@@ -107,20 +212,35 @@ export abstract class AbstractCsharpGeneratorContext<
         });
     }
 
+    public getProtoConverterClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "ProtoConverter",
+            namespace: this.getCoreNamespace()
+        });
+    }
+
     public getPascalCaseSafeName(name: Name): string {
         return name.pascalCase.safeName;
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
-        const typeDeclaration = this.ir.types[typeId];
+        const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
             throw new Error(`Type declaration with id ${typeId} not found`);
         }
         return typeDeclaration;
     }
 
+    public getTypeDeclaration(typeId: TypeId): TypeDeclaration | undefined {
+        return this.ir.types[typeId];
+    }
+
     public getCoreDirectory(): RelativeFilePath {
         return RelativeFilePath.of(CORE_DIRECTORY_NAME);
+    }
+
+    public getPublicCoreDirectory(): RelativeFilePath {
+        return join(this.getCoreDirectory(), RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME));
     }
 
     public getAsUndiscriminatedUnionTypeDeclaration(
@@ -144,6 +264,10 @@ export abstract class AbstractCsharpGeneratorContext<
         }
 
         let declaration = this.getTypeDeclarationOrThrow(reference.typeId);
+        if (this.protobufResolver.isAnyWellKnownProtobufType(declaration.name.typeId)) {
+            return undefined;
+        }
+
         if (declaration.shape.type === "undiscriminatedUnion") {
             return { declaration: declaration.shape, isList: false };
         }
@@ -166,60 +290,109 @@ export abstract class AbstractCsharpGeneratorContext<
         return undefined;
     }
 
-    public abstract getAsIsFiles(): string[];
+    public getToStringMethod(): csharp.Method {
+        return csharp.method({
+            name: "ToString",
+            access: "public",
+            isAsync: false,
+            override: true,
+            parameters: [],
+            return_: csharp.Type.string(),
+            body: csharp.codeblock((writer) => {
+                writer.write("return ");
+                writer.writeNodeStatement(
+                    csharp.invokeMethod({
+                        on: this.getJsonUtilsClassReference(),
+                        method: "Serialize",
+                        arguments_: [csharp.codeblock("this")]
+                    })
+                );
+            })
+        });
+    }
+
+    public isOptional(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "optional";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isOptional(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return false;
+        }
+    }
+
+    public isPrimitive(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return typeReference.container.type === "optional";
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isPrimitive(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return true;
+        }
+    }
+
+    public isReadOnlyMemoryType(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return false;
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isReadOnlyMemoryType(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return this.readOnlyMemoryTypes.has(typeReference.primitive.v1) ?? false;
+        }
+    }
+
+    public getDefaultValueForPrimitive({ primitive }: { primitive: PrimitiveType }): csharp.CodeBlock {
+        return PrimitiveTypeV1._visit<csharp.CodeBlock>(primitive.v1, {
+            integer: () => csharp.codeblock("0"),
+            long: () => csharp.codeblock("0"),
+            uint: () => csharp.codeblock("0"),
+            uint64: () => csharp.codeblock("0"),
+            float: () => csharp.codeblock("0.0f"),
+            double: () => csharp.codeblock("0.0"),
+            boolean: () => csharp.codeblock("false"),
+            string: () => csharp.codeblock('""'),
+            date: () => csharp.codeblock("DateOnly.MinValue"),
+            dateTime: () => csharp.codeblock("DateTime.MinValue"),
+            uuid: () => csharp.codeblock('""'),
+            base64: () => csharp.codeblock('""'),
+            bigInteger: () => csharp.codeblock('""'),
+            _other: () => csharp.codeblock("null")
+        });
+    }
+
+    public abstract getCoreAsIsFiles(): string[];
+
+    public abstract getPublicCoreAsIsFiles(): string[];
+
+    public abstract getAsIsTestUtils(): string[];
 
     public abstract getDirectoryForTypeId(typeId: TypeId): string;
 
     public abstract getNamespaceForTypeId(typeId: TypeId): string;
 
-    // STOLEN FROM: ruby/TypesGenerator.ts
-    // We need a better way to share this sort of ir-processing logic.
-    //
-    // We pull all inherited properties onto the object because C#
-    // does not allow for multiple inheritence of classes, and creating interfaces feels
-    // heavy-handed + duplicative.
-    private getFlattenedProperties(typeId: TypeId): ObjectProperty[] {
-        const td = this.getTypeDeclarationOrThrow(typeId);
-        return td === undefined
-            ? []
-            : this.flattenedProperties.get(typeId) ??
-                  td.shape._visit<ObjectProperty[]>({
-                      alias: (atd: AliasTypeDeclaration) => {
-                          return atd.aliasOf._visit<ObjectProperty[]>({
-                              container: () => [],
-                              named: (dtn: DeclaredTypeName) => this.getFlattenedProperties(dtn.typeId),
-                              primitive: () => [],
-                              unknown: () => [],
-                              _other: () => []
-                          });
-                      },
-                      enum: () => {
-                          this.flattenedProperties.set(typeId, []);
-                          return [];
-                      },
-                      object: (otd: ObjectTypeDeclaration) => {
-                          const props = [
-                              ...otd.properties,
-                              ...otd.extends.flatMap((eo) => this.getFlattenedProperties(eo.typeId))
-                          ];
-                          this.flattenedProperties.set(typeId, props);
-                          return props;
-                      },
-                      union: (utd: UnionTypeDeclaration) => {
-                          const props = [
-                              ...utd.baseProperties,
-                              ...utd.extends.flatMap((eo) => this.getFlattenedProperties(eo.typeId))
-                          ];
-                          this.flattenedProperties.set(typeId, props);
-                          return props;
-                      },
-                      undiscriminatedUnion: () => {
-                          this.flattenedProperties.set(typeId, []);
-                          return [];
-                      },
-                      _other: () => {
-                          throw new Error("Attempting to type declaration for an unknown type.");
-                      }
-                  });
-    }
+    public abstract getExtraDependencies(): Record<string, string>;
 }

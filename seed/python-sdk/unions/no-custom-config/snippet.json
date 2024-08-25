@@ -1,0 +1,31 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_union.get"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedUnions\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.get(\n    id=\"string\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.get(\n        id=\"string\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/",
+                "method": "PATCH",
+                "identifier_override": "endpoint_union.update"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedUnions\nfrom seed.union import Shape_Circle\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.union.update(\n    request=Shape_Circle(\n        id=\"string\",\n        radius=1.1,\n    ),\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\nfrom seed.union import Shape_Circle\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.union.update(\n        request=Shape_Circle(\n            id=\"string\",\n            radius=1.1,\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}

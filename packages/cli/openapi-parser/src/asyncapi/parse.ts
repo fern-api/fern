@@ -6,50 +6,72 @@ import {
     Schema,
     SchemaId,
     SchemaWithExample,
+    Source,
     WebsocketChannel,
     WebsocketSessionExample
 } from "@fern-api/openapi-ir-sdk";
 import { TaskContext } from "@fern-api/task-context";
 import { OpenAPIV3 } from "openapi-types";
 import { getExtension } from "../getExtension";
+import { ParseOpenAPIOptions } from "../options";
+import { convertAvailability } from "../schema/convertAvailability";
 import { convertSchema } from "../schema/convertSchemas";
-import { convertUndiscriminatedOneOf } from "../schema/convertUndiscriminatedOneOf";
+import { convertUndiscriminatedOneOf, UndiscriminatedOneOfPrefix } from "../schema/convertUndiscriminatedOneOf";
 import { convertSchemaWithExampleToSchema } from "../schema/utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../schema/utils/isReferenceObject";
 import { AsyncAPIV2ParserContext } from "./AsyncAPIParserContext";
 import { ExampleWebsocketSessionFactory } from "./ExampleWebsocketSessionFactory";
 import { FernAsyncAPIExtension } from "./fernExtensions";
 import { getFernExamples, WebsocketSessionExampleExtension } from "./getFernExamples";
+import { ParseAsyncAPIOptions } from "./options";
 import { AsyncAPIV2 } from "./v2";
 
 export interface AsyncAPIIntermediateRepresentation {
     schemas: Record<SchemaId, Schema>;
     channel: WebsocketChannel | undefined;
+    basePath: string | undefined;
 }
 
 export function parseAsyncAPI({
     document,
     taskContext,
-    shouldUseTitleAsName
+    options,
+    source,
+    asyncApiOptions,
+    namespace
 }: {
     document: AsyncAPIV2.Document;
     taskContext: TaskContext;
-    shouldUseTitleAsName: boolean;
+    options: ParseOpenAPIOptions;
+    source: Source;
+    asyncApiOptions: ParseAsyncAPIOptions;
+    namespace: string | undefined;
 }): AsyncAPIIntermediateRepresentation {
     const breadcrumbs: string[] = [];
+    if (namespace != null) {
+        breadcrumbs.push(namespace);
+    }
     if (document.tags?.[0] != null) {
         breadcrumbs.push(document.tags[0].name);
-    } else {
+    } else if (asyncApiOptions.naming !== "v2") {
+        // In improved naming, we allow you to not have any prefixes here at all
+        // by not specifying tags. Without useImprovedMessageNaming, and no tags,
+        // we do still prefix with "Websocket".
         breadcrumbs.push("websocket");
     }
 
-    const context = new AsyncAPIV2ParserContext({ document, taskContext, shouldUseTitleAsName });
+    const context = new AsyncAPIV2ParserContext({
+        document,
+        taskContext,
+        options,
+        namespace
+    });
 
     const schemas: Record<SchemaId, SchemaWithExample> = {};
     let parsedChannel: WebsocketChannel | undefined = undefined;
 
     for (const [schemaId, schema] of Object.entries(document.components?.schemas ?? {})) {
-        const convertedSchema = convertSchema(schema, false, context, [schemaId]);
+        const convertedSchema = convertSchema(schema, false, context, [schemaId], source, namespace);
         schemas[schemaId] = convertedSchema;
     }
 
@@ -67,9 +89,10 @@ export function parseAsyncAPI({
                 pathParameters.push({
                     name,
                     description: parameter.description,
+                    parameterNameOverride: undefined,
                     schema:
                         parameter.schema != null
-                            ? convertSchema(parameter.schema, false, context, breadcrumbs)
+                            ? convertSchema(parameter.schema, false, context, breadcrumbs, source, namespace)
                             : SchemaWithExample.primitive({
                                   schema: PrimitiveSchemaValueWithExample.string({
                                       default: undefined,
@@ -80,11 +103,14 @@ export function parseAsyncAPI({
                                       example: undefined
                                   }),
                                   description: undefined,
+                                  availability: undefined,
                                   generatedName: "",
                                   groupName: undefined,
                                   nameOverride: undefined
                               }),
-                    variableReference: undefined
+                    variableReference: undefined,
+                    availability: convertAvailability(parameter),
+                    source
                 });
             }
         }
@@ -96,10 +122,19 @@ export function parseAsyncAPI({
                 const resolvedHeader = isReferenceObject(schema) ? context.resolveSchemaReference(schema) : schema;
                 headers.push({
                     name,
-                    schema: convertSchema(resolvedHeader, !required.includes(name), context, breadcrumbs),
+                    schema: convertSchema(
+                        resolvedHeader,
+                        !required.includes(name),
+                        context,
+                        breadcrumbs,
+                        source,
+                        namespace
+                    ),
                     description: resolvedHeader.description,
                     parameterNameOverride: undefined,
-                    env: undefined
+                    env: undefined,
+                    availability: convertAvailability(resolvedHeader),
+                    source
                 });
             }
         }
@@ -113,9 +148,18 @@ export function parseAsyncAPI({
                     : schema;
                 queryParameters.push({
                     name,
-                    schema: convertSchema(resolvedQueryParameter, !required.includes(name), context, breadcrumbs),
+                    schema: convertSchema(
+                        resolvedQueryParameter,
+                        !required.includes(name),
+                        context,
+                        breadcrumbs,
+                        source,
+                        namespace
+                    ),
                     description: resolvedQueryParameter.description,
-                    parameterNameOverride: undefined
+                    parameterNameOverride: undefined,
+                    availability: convertAvailability(resolvedQueryParameter),
+                    source
                 });
             }
         }
@@ -126,7 +170,10 @@ export function parseAsyncAPI({
                 generatedName: channel.publish.operationId ?? "PublishEvent",
                 event: channel.publish,
                 breadcrumbs,
-                context
+                context,
+                source,
+                options,
+                asyncApiOptions
             });
         }
 
@@ -136,7 +183,10 @@ export function parseAsyncAPI({
                 generatedName: channel.subscribe.operationId ?? "SubscribeEvent",
                 event: channel.subscribe,
                 breadcrumbs,
-                context
+                context,
+                source,
+                options,
+                asyncApiOptions
             });
         }
 
@@ -153,7 +203,9 @@ export function parseAsyncAPI({
                         queryParameters
                     },
                     publish: publishSchema,
-                    subscribe: subscribeSchema
+                    subscribe: subscribeSchema,
+                    source,
+                    namespace
                 });
             } else {
                 const autogenExample = exampleFactory.buildWebsocketSessionExample({
@@ -169,7 +221,7 @@ export function parseAsyncAPI({
                 }
             }
 
-            const tag = document.tags?.[0];
+            const tags = document.tags?.[0]?.name != null ? [document.tags?.[0].name] : undefined;
             parsedChannel = {
                 handshake: {
                     headers: headers.map((header) => {
@@ -188,18 +240,20 @@ export function parseAsyncAPI({
                     pathParameters: pathParameters.map((param) => {
                         return {
                             ...param,
+                            parameterNameOverride: undefined, // come back
                             schema: convertSchemaWithExampleToSchema(param.schema)
                         };
                     })
                 },
-                groupName: tag?.name != null ? [tag.name] : ["Websocket"],
+                groupName: context.resolveTags(tags, "Websocket"),
                 publish: publishSchema != null ? convertSchemaWithExampleToSchema(publishSchema) : publishSchema,
                 subscribe:
                     subscribeSchema != null ? convertSchemaWithExampleToSchema(subscribeSchema) : subscribeSchema,
                 summary: getExtension<string | undefined>(channel, FernAsyncAPIExtension.FERN_DISPLAY_NAME),
                 path: channelPath,
                 description: undefined,
-                examples
+                examples,
+                source
             };
             break;
         }
@@ -209,7 +263,8 @@ export function parseAsyncAPI({
         schemas: Object.fromEntries(
             Object.entries(schemas).map(([id, schema]) => [id, convertSchemaWithExampleToSchema(schema)])
         ),
-        channel: parsedChannel
+        channel: parsedChannel,
+        basePath: getExtension<string | undefined>(document, FernAsyncAPIExtension.BASE_PATH)
     };
 }
 
@@ -217,33 +272,57 @@ function convertMessageToSchema({
     generatedName,
     event,
     context,
-    breadcrumbs
+    breadcrumbs,
+    source,
+    options,
+    asyncApiOptions
 }: {
     breadcrumbs: string[];
     generatedName: string;
     event: AsyncAPIV2.PublishEvent | AsyncAPIV2.SubscribeEvent;
     context: AsyncAPIV2ParserContext;
+    source: Source;
+    options: ParseOpenAPIOptions;
+    asyncApiOptions: ParseAsyncAPIOptions;
 }): SchemaWithExample | undefined {
     if (event.message.oneOf != null) {
         const subtypes: (OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject)[] = [];
+        const prefixes: UndiscriminatedOneOfPrefix[] = [];
         for (const schema of event.message.oneOf) {
             let resolvedSchema: OpenAPIV3.SchemaObject | OpenAPIV3.ReferenceObject;
+            let namePrefix: UndiscriminatedOneOfPrefix = { type: "notFound" };
             if (isReferenceObject(schema)) {
-                resolvedSchema = context.resolveMessageReference(schema).payload;
+                const resolvedMessage = context.resolveMessageReference(schema);
+                if (!isReferenceObject(resolvedMessage.payload) && asyncApiOptions.naming === "v2") {
+                    namePrefix = resolvedMessage.name ? { type: "name", name: resolvedMessage.name } : namePrefix;
+                    resolvedSchema = {
+                        ...resolvedMessage.payload,
+                        title: resolvedMessage.name ?? resolvedMessage.payload.title,
+                        description: resolvedMessage.name ?? resolvedMessage.payload.description
+                    };
+                } else {
+                    resolvedSchema = resolvedMessage.payload;
+                }
             } else {
                 resolvedSchema = schema;
             }
+            prefixes.push(namePrefix);
             subtypes.push(resolvedSchema);
         }
         return convertUndiscriminatedOneOf({
             description: event.description ?? event.message.description,
+            availability: convertAvailability(event.message),
             subtypes,
             nameOverride: event.operationId,
             generatedName,
             groupName: undefined,
             wrapAsNullable: false,
             breadcrumbs,
-            context
+            context,
+            encoding: undefined,
+            source,
+            namespace: context.namespace,
+            subtypePrefixOverrides: asyncApiOptions.naming === "v2" ? prefixes : []
         });
     }
     return undefined;

@@ -22,10 +22,23 @@ module SeedMultiLineDocsClient
     #  This ID is unique to each user.
     # @param request_options [SeedMultiLineDocsClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
+    #  multi_line_docs.user.get_user(user_id: "string")
     def get_user(user_id:, request_options: nil)
       @request_client.conn.get do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/users/#{user_id}"
       end
     end
@@ -39,10 +52,20 @@ module SeedMultiLineDocsClient
     #  This propery is not required.
     # @param request_options [SeedMultiLineDocsClient::RequestOptions]
     # @return [SeedMultiLineDocsClient::User::User]
+    # @example
+    #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
+    #  multi_line_docs.user.create_user(name: "string", age: 1)
     def create_user(name:, age: nil, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request_options&.additional_body_parameters || {}), name: name, age: age }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/users"
       end
@@ -67,11 +90,24 @@ module SeedMultiLineDocsClient
     #  This ID is unique to each user.
     # @param request_options [SeedMultiLineDocsClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
+    #  multi_line_docs.user.get_user(user_id: "string")
     def get_user(user_id:, request_options: nil)
       Async do
         @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/users/#{user_id}"
         end
       end
@@ -86,11 +122,21 @@ module SeedMultiLineDocsClient
     #  This propery is not required.
     # @param request_options [SeedMultiLineDocsClient::RequestOptions]
     # @return [SeedMultiLineDocsClient::User::User]
+    # @example
+    #  multi_line_docs = SeedMultiLineDocsClient::Client.new(base_url: "https://api.example.com")
+    #  multi_line_docs.user.create_user(name: "string", age: 1)
     def create_user(name:, age: nil, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request_options&.additional_body_parameters || {}), name: name, age: age }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/users"
         end

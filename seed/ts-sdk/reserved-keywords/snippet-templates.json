@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_package.test"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedNurseryApi = new SeedNurseryApiClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedNurseryApiClient } from \"@fern/reserved-keywords\";"
+                ],
+                "templateString": "const client = new SeedNurseryApiClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedNurseryApi.package.test(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.package.test(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

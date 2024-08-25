@@ -8,7 +8,7 @@ import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
 import { ErrorResolver } from "@fern-typescript/resolvers";
 import { ts } from "ts-morph";
-import { GeneratedEndpointResponse } from "./GeneratedEndpointResponse";
+import { GeneratedEndpointResponse, PaginationResponseInfo } from "./GeneratedEndpointResponse";
 import { getSuccessReturnType } from "./getSuccessReturnType";
 
 export declare namespace GeneratedNonThrowingEndpointResponse {
@@ -56,6 +56,10 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
         this.errorResolver = errorResolver;
         this.includeSerdeLayer = includeSerdeLayer;
+    }
+
+    public getPaginationInfo(): PaginationResponseInfo | undefined {
+        return undefined;
     }
 
     public getResponseVariableName(): string {

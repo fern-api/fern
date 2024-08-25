@@ -4,5 +4,6 @@ import { constructCasingsGenerator } from "@fern-api/ir-generator";
 // when the call-site doesn't care about the language nor special casing convention.
 export const CASINGS_GENERATOR = constructCasingsGenerator({
     generationLanguage: undefined,
+    keywords: undefined,
     smartCasing: false
 });

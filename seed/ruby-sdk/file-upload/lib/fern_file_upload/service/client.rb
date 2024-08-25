@@ -28,11 +28,26 @@ module SeedFileUploadClient
     #   * :foo (String)
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
+    #  file_upload.service.post(
+    #    file: my_file.txt,
+    #    file_list: my_file.txt,
+    #    maybe_file: my_file.txt,
+    #    maybe_file_list: my_file.txt
+    #  )
     def post(integer:, file:, file_list:, list_of_objects:, maybe_string: nil, maybe_file: nil, maybe_file_list: nil, maybe_integer: nil,
              optional_list_of_strings: nil, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           maybeString: maybe_string,
@@ -56,10 +71,20 @@ module SeedFileUploadClient
     # @param file [String, IO]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
+    #  file_upload.service.just_file(file: my_file.txt)
     def just_file(file:, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file)
@@ -76,11 +101,25 @@ module SeedFileUploadClient
     # @param file [String, IO]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
+    #  file_upload.service.just_file_with_query_params(
+    #    maybe_string: "string",
+    #    integer: 1,
+    #    maybe_integer: 1,
+    #    list_of_strings: "string",
+    #    optional_list_of_strings: "string",
+    #    file: my_file.txt
+    #  )
     def just_file_with_query_params(integer:, list_of_strings:, file:, maybe_string: nil, maybe_integer: nil,
                                     optional_list_of_strings: nil, request_options: nil)
       @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
         req.params = {
           **(request_options&.additional_query_parameters || {}),
           "maybeString": maybe_string,
@@ -120,12 +159,27 @@ module SeedFileUploadClient
     #   * :foo (String)
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
+    #  file_upload.service.post(
+    #    file: my_file.txt,
+    #    file_list: my_file.txt,
+    #    maybe_file: my_file.txt,
+    #    maybe_file_list: my_file.txt
+    #  )
     def post(integer:, file:, file_list:, list_of_objects:, maybe_string: nil, maybe_file: nil, maybe_file_list: nil, maybe_integer: nil,
              optional_list_of_strings: nil, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             maybeString: maybe_string,
@@ -150,11 +204,21 @@ module SeedFileUploadClient
     # @param file [String, IO]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
+    #  file_upload.service.just_file(file: my_file.txt)
     def just_file(file:, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             file: SeedFileUploadClient::FileUtilities.as_faraday_multipart(file_like: file)
@@ -172,12 +236,26 @@ module SeedFileUploadClient
     # @param file [String, IO]
     # @param request_options [SeedFileUploadClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  file_upload = SeedFileUploadClient::Client.new(base_url: "https://api.example.com")
+    #  file_upload.service.just_file_with_query_params(
+    #    maybe_string: "string",
+    #    integer: 1,
+    #    maybe_integer: 1,
+    #    list_of_strings: "string",
+    #    optional_list_of_strings: "string",
+    #    file: my_file.txt
+    #  )
     def just_file_with_query_params(integer:, list_of_strings:, file:, maybe_string: nil, maybe_integer: nil,
                                     optional_list_of_strings: nil, request_options: nil)
       Async do
         @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
           req.params = {
             **(request_options&.additional_query_parameters || {}),
             "maybeString": maybe_string,

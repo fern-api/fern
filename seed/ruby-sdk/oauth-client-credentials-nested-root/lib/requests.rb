@@ -6,27 +6,22 @@ require "async/http/faraday"
 
 module SeedOauthClientCredentialsClient
   class RequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String, Method]
+    attr_reader :token
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @param token [String]
+    # @param token [String, Method]
     # @return [SeedOauthClientCredentialsClient::RequestClient]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, token: nil)
       @base_url = base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_oauth_client_credentials_nested_root",
-        "X-Fern-SDK-Version": "0.0.1",
-        "Authorization": "Bearer #{token}"
-      }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+      @token = token
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.request :retry, { max: max_retries } unless max_retries.nil?
@@ -39,30 +34,36 @@ module SeedOauthClientCredentialsClient
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
     end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "fern_oauth_client_credentials_nested_root",
+        "X-Fern-SDK-Version": "0.0.1"
+      }
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
+      headers
+    end
   end
 
   class AsyncRequestClient
-    # @return [Hash{String => String}]
-    attr_reader :headers
     # @return [Faraday]
     attr_reader :conn
     # @return [String]
     attr_reader :base_url
+    # @return [String, Method]
+    attr_reader :token
 
     # @param base_url [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @param token [String]
+    # @param token [String, Method]
     # @return [SeedOauthClientCredentialsClient::AsyncRequestClient]
-    def initialize(token:, base_url: nil, max_retries: nil, timeout_in_seconds: nil)
+    def initialize(base_url: nil, max_retries: nil, timeout_in_seconds: nil, token: nil)
       @base_url = base_url
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "fern_oauth_client_credentials_nested_root",
-        "X-Fern-SDK-Version": "0.0.1",
-        "Authorization": "Bearer #{token}"
-      }
-      @conn = Faraday.new(headers: @headers) do |faraday|
+      @token = token
+      @conn = Faraday.new do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
         faraday.adapter :async_http
@@ -76,6 +77,17 @@ module SeedOauthClientCredentialsClient
     def get_url(request_options: nil)
       request_options&.base_url || @base_url
     end
+
+    # @return [Hash{String => String}]
+    def get_headers
+      headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "fern_oauth_client_credentials_nested_root",
+        "X-Fern-SDK-Version": "0.0.1"
+      }
+      headers["Authorization"] = ((@token.is_a? Method) ? @token.call : @token) unless @token.nil?
+      headers
+    end
   end
 
   # Additional options for request-specific configuration when calling APIs via the
@@ -83,7 +95,7 @@ module SeedOauthClientCredentialsClient
   class RequestOptions
     # @return [String]
     attr_reader :base_url
-    # @return [String]
+    # @return [String, Method]
     attr_reader :token
     # @return [Hash{String => Object}]
     attr_reader :additional_headers
@@ -95,7 +107,7 @@ module SeedOauthClientCredentialsClient
     attr_reader :timeout_in_seconds
 
     # @param base_url [String]
-    # @param token [String]
+    # @param token [String, Method]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
@@ -117,7 +129,7 @@ module SeedOauthClientCredentialsClient
   class IdempotencyRequestOptions
     # @return [String]
     attr_reader :base_url
-    # @return [String]
+    # @return [String, Method]
     attr_reader :token
     # @return [Hash{String => Object}]
     attr_reader :additional_headers
@@ -129,7 +141,7 @@ module SeedOauthClientCredentialsClient
     attr_reader :timeout_in_seconds
 
     # @param base_url [String]
-    # @param token [String]
+    # @param token [String, Method]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]

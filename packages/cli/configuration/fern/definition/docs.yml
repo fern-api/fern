@@ -1,25 +1,141 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+docs: |-
+  This file contains the schema for the `docs.yml` configuration file, which is used to configure the appearance and behavior of the documentation site.
+  The docs schema is intended to be human-readable and hand-maintained, by using human-friendly undiscriminated unions and optional properties.
 
 types:
+  ProgrammingLanguage:
+    enum:
+      - typescript
+      - javascript
+      - python
+      - java
+      - go
+      - ruby
+      - csharp
+      - nodets
+      - nodejs
+      - dotnet
+      - curl
+      - jvm
+      - ts
+      - js
+
+  AnalyticsConfig:
+    properties:
+      segment: optional<SegmentConfig>
+      fullstory: optional<FullStoryAnalyticsConfig>
+      intercom: optional<IntercomConfig>
+      posthog: optional<PostHogConfig>
+      # gtm: optional<GTMConfig>
+      # ga4: optional<GoogleAnalytics4Config>
+      # amplitude: optional<AmplitudeConfig>
+      # mixpanel: optional<MixpanelConfig>
+      # hotjar: optional<HotJarConfig>
+      # koala: optional<KoalaConfig>
+      # logrocket: optional<LogRocketConfig>
+      # pirsch: optional<PirschConfig>
+      # plausible: optional<PlausibleConfig>
+      # fathom: optional<FathomConfig>
+      # clearbit: optional<ClearBitConfig>
+      # heap: optional<HeapConfig>
+
+  SegmentConfig:
+    properties:
+      write-key: string
+  
+  FullStoryAnalyticsConfig:
+    properties:
+      org-id: string
+
+  IntercomConfig:
+    properties:
+      app-id: string
+      api-base: optional<string>
+
+  PostHogConfig:
+    properties:
+      api-key: string
+      endpoint: optional<string>
+
+  # GTMConfig:
+  #   properties:
+  #     container-id: string
+
+  # GoogleAnalytics4Config:
+  #   properties:
+  #     measurement-id: string
+
+  # AmplitudeConfig:
+  #   properties:
+  #     api-key: string
+
+  # MixpanelConfig:
+  #   properties:
+  #     api-key: string
+
+  # HotJarConfig:
+  #   properties:
+  #     hjid: string
+  #     hjsv: string
+
+  # KoalaConfig:
+  #   properties:
+  #     api-key: string
+
+  # LogRocketConfig:
+  #   properties:
+  #     api-key: string
+
+  # PirschConfig:
+  #   properties:
+  #     id: string
+
+  # PlausibleConfig:
+  #   properties:
+  #     domain: string
+
+  # FathomConfig:
+  #   properties:
+  #     site-id: string
+
+  # ClearBitConfig:
+  #   properties:
+  #     api-key: string
+
+  # HeapConfig:
+  #   properties:
+  #     app-id: string
+      
   DocsConfiguration:
     properties:
-      instances: list<DocsInstances>
+      instances: list<DocsInstance>
       title:
         type: optional<string>
         docs: used as tab bar title, and in the navbar if no logo is defined
+      analytics: 
+        type: optional<AnalyticsConfig>
+        docs: |
+          The `analytics` object allows you to configure analytics for your docs site.
+          Currently, only Segment is supported.
 
       # navigation
       tabs: optional<map<TabId, TabConfig>>
       versions: optional<list<VersionConfig>>
+      landing-page: optional<PageConfiguration>
       navigation:
         type: optional<NavigationConfig>
         docs: The navigation config is skipped when multiple versions are present.
       "navbar-links": optional<list<NavbarLink>>
       "footer-links": optional<FooterLinksConfig>
+      experimental: optional<ExperimentalConfig>
+      "default-language": optional<ProgrammingLanguage>
 
       # seo
       metadata: optional<MetadataConfig>
       redirects: optional<list<RedirectConfig>>
+
+      # please note: some of the following options represent files provided by the user, which require validation. if someone adds another file record to the spec, please ensure that file is visited in packages/cli/yaml/yaml-schema/src/docsAst/visitDocsConfigFileAst.ts
 
       # branding
       logo: optional<LogoConfiguration>
@@ -43,14 +159,31 @@ types:
       display-name: string
       icon: optional<string>
       slug: optional<string>
+      skip-slug: optional<boolean>
+      hidden: optional<boolean>
       href:
         type: optional<string>
         docs: |
           If `href` is set, clicking on the tab will redirect to the given URL.
 
           Tabs with `href` must not have children in the navigation config.
+      changelog: optional<ChangelogFolderRelativePath>
 
-  DocsInstances:
+  ChangelogFolderRelativePath:
+    type: string
+    docs: |-
+      The relative path to a folder containing markdown files broken down by date.
+
+      Example:
+      ```
+      changelog: "changelog"
+      ```
+
+      This will look for markdown files in the `/fern/changelog` directory, which should contain files named like 
+      - `/fern/changelog/2024-04-29.mdx`.
+      - `/fern/changelog/2023-01-02.mdx`.
+
+  DocsInstance:
     properties:
       url: string
       "custom-domain": optional<CustomDomain>
@@ -141,6 +274,7 @@ types:
   VersionFileConfig:
     properties:
       tabs: optional<map<TabId, TabConfig>>
+      landing-page: optional<PageConfiguration>
       navigation: NavigationConfig
 
   NavigationConfig:
@@ -166,8 +300,9 @@ types:
     union:
       - PageConfiguration
       - SectionConfiguration
-      - ApiSectionConfiguration
+      - ApiReferenceConfiguration
       - LinkConfiguration
+      - ChangelogConfiguration
 
   LogoConfiguration:
     properties:
@@ -243,7 +378,7 @@ types:
           - `{number}px`
 
       searchbar-placement:
-        type: optional<SidebarOrHeaderPlacement>
+        type: optional<SearchbarPlacement>
         docs: |
           Sets the placement of the searchbar
 
@@ -252,7 +387,7 @@ types:
           Note: this setting is ignored when `disable-header` is set to true.
 
       tabs-placement:
-        type: optional<SidebarOrHeaderPlacement>
+        type: optional<TabsPlacement>
         docs: |
           Set the placement of the tabs
 
@@ -287,7 +422,17 @@ types:
           If `disable-header` is set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,
           and a 1px border will separate the sidebar from the content.
 
-  SidebarOrHeaderPlacement:
+  SearchbarPlacement:
+    enum:
+      - header
+      - value: header-tabs
+        name: header_tabs
+        docs: |
+          The searchbar will be placed in the header, but on the tabs row. If the tabs row is hidden, the searchbar will be placed in the header instead.
+          This is a good option if you want to keep the searchbar visible, but save space in the header for more navbar links.
+      - sidebar
+
+  TabsPlacement:
     enum:
       - header
       - sidebar
@@ -312,7 +457,7 @@ types:
         type: optional<string>
         docs: The relative path of the font file. To define multiple weight and style varations of the same font, use `paths` instead.
       weight:
-        type: optional<string>
+        type: optional<FontWeight>
         docs: |
           @default: `100 900`.
         availability: in-development
@@ -340,6 +485,12 @@ types:
         type: optional<string>
         availability: in-development
 
+  FontWeight:
+    discriminated: false
+    union:
+      - string
+      - integer
+
   FontStyle:
     enum:
       - normal
@@ -363,7 +514,7 @@ types:
     properties:
       path: string
       weight:
-        type: optional<string>
+        type: optional<FontWeight>
         docs: |
           @default: `100 900`.
       style:
@@ -379,9 +530,22 @@ types:
       icon: optional<string>
       hidden: optional<boolean>
 
+  ChangelogConfiguration:
+    properties:
+      changelog: ChangelogFolderRelativePath
+      title: optional<string> # defaults to "Changelog"
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      # skip-slug: optional<boolean> # skip-slug is not needed for changelog
+
   SectionConfiguration:
     properties:
       section: string
+      path:
+        type: optional<string>
+        docs: |
+          The relative path to the markdown file that will be displayed when the section is clicked.
       contents: list<NavigationItem>
       collapsed: optional<boolean>
       slug: optional<string>
@@ -389,7 +553,7 @@ types:
       hidden: optional<boolean>
       skip-slug: optional<boolean>
 
-  ApiSectionConfiguration:
+  ApiReferenceConfiguration:
     properties:
       api: string
       "api-name":
@@ -402,75 +566,107 @@ types:
       snippets: optional<SnippetsConfiguration>
       summary:
         type: optional<string>
-        docs: |
-          Relative path to the markdown file. This summary is displayed at the top of the API section.
+        docs: Relative path to the markdown file
       layout:
-        type: optional<ApiNavigationItems>
+        type: optional<list<ApiReferenceLayoutItem>>
         docs: |
           Advanced usage: when specified, this object will be used to customize the order that your API endpoints are displayed in the docs site, including subpackages, and additional markdown pages (to be rendered in between API endpoints). If not specified, the order will be inferred from the OpenAPI Spec or Fern Definition.
       icon: optional<string>
       slug: optional<string>
       hidden: optional<boolean>
       skip-slug: optional<boolean>
+      alphabetized:
+        type: optional<boolean>
+        docs: |
+          If `alphabetized` is set to true, packages and endpoints will be sorted alphabetically, unless explicitly ordered in the `layout` object.
       flattened:
         type: optional<boolean>
         docs: |
           If `flattened` is set to true, the title specified in `api` will be hidden, and its endpoints and subpackages won't be grouped under it.
 
           This setting is useful if the API reference is short and you want to display all endpoints at the top level.
+      paginated:
+        availability: in-development
+        type: optional<boolean>
+        docs: If true, the API reference will be paginated rather than displayed in a single page (long-scrolling).
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affects all endpoints.
 
-  ApiNavigationItem:
+  ApiReferenceLayoutItem:
     docs: |
       Use the `layout` object to customize the order that your API endpoints
       are displayed in the docs site.
     discriminated: false
     union:
       - type: string
-        docs: |
-          This should be either an endpoint, websocket, webhook, or subpackage ID
-      - type: map<string, ApiNavigationItems>
-        docs: |
-          Keyed by subpackage ID, this object allows you to group endpoints and pages together.
-      - type: PageConfiguration
-        docs: |
-          This should be a markdown file that will be displayed in the API section.
+        docs: This should be either an endpoint, websocket, webhook, or subpackage ID
+      - type: map<string, ApiReferencePackageConfiguration>
+        docs: Keyed by subpackage name, this object allows you to group endpoints and pages together.
+      - ApiReferenceSectionConfiguration
+      - ApiReferenceEndpointConfiguration
+      - PageConfiguration
+      - LinkConfiguration
 
-  ApiNavigationItems:
-    type: list<ApiNavigationItem>
-    examples:
-      - name: Ordering Groups
-        value:
-          - users # users endpoints will be displayed first
-          - roles
-          - permissions
-      - name: Ordering Endpoints
-        value:
-          - roles:
-              - get
-              - create
-              - update
-          - users:
-              - get
-              - create
-              - update
-          - permissions:
-              - get
-              - create
-              - update
-      - name: Ordering Groups and Pages
-        value:
-          - users
-          - roles:
-              - get
-              - create
-              - ./pages/inner-page.mdx
-              - update
-          - permissions
+  ApiReferenceSectionConfiguration:
+    properties:
+      section:
+        type: string
+        docs: |
+          The title of the api package that will be displayed in the sidebar.
+      referenced-packages:
+        type: optional<list<string>>
+        docs: This section will inherit the endpoints from the specified subpackage(s). If multiple packages are specified, they will be merged.
+      summary:
+        type: optional<string>
+        docs: Relative path to the markdown file.
+      contents: optional<list<ApiReferenceLayoutItem>>
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affects all endpoints.
+
+  ApiReferencePackageConfiguration:
+    discriminated: false
+    union:
+      - list<ApiReferenceLayoutItem>
+      - ApiReferencePackageConfigurationWithOptions
+
+  ApiReferencePackageConfigurationWithOptions:
+    properties:
+      title: optional<string>
+      summary:
+        type: optional<string>
+        docs: |
+          Relative path to the markdown file. This summary is displayed at the top of the API section.
+      contents: optional<list<ApiReferenceLayoutItem>>
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      skip-slug: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that is applied only to descendants of this api package.
+
+  ApiReferenceEndpointConfiguration:
+    properties:
+      endpoint: string
+      title: optional<string>
+      slug: optional<string>
+      icon: optional<string>
+      hidden: optional<boolean>
+      playground:
+        type: optional<PlaygroundSettings>
+        docs: Settings for the api playground that affect this endpoint specifically.
 
   LinkConfiguration:
     properties:
       link: string
       href: string
+      icon: optional<string>
 
   VersionedSnippetLanguageConfiguration:
     properties:
@@ -492,6 +688,7 @@ types:
       typescript: optional<SnippetLanguageConfiguration>
       go: optional<SnippetLanguageConfiguration>
       java: optional<SnippetLanguageConfiguration>
+      ruby: optional<SnippetLanguageConfiguration>
 
   ColorsConfiguration:
     properties:
@@ -700,7 +897,7 @@ types:
     docs: |
       The `metadata` object allows you to customize the appearance of your docs site in search engines and social media.
       These settings are applied globally, but can be overridden on a per-page basis using frontmatter.
-    availability: in-development
+    availability: pre-release
     properties:
       "og:site_name": optional<string>
       "og:title": optional<string>
@@ -747,3 +944,29 @@ types:
   IntegrationsConfig:
     properties:
       intercom: optional<string>
+
+  ExperimentalConfig:
+    properties:
+      mdx-components:
+        type: optional<list<string>>
+        docs: |
+          List of relative paths to folders or files that end in .{ts,tsx,js,jsx},
+          and makes them available for use in MDX files.
+      disable-stream-toggle:
+        type: optional<boolean>
+        docs: |
+          If `disable-stream-toggle` is set to true, the stream toggle will be disabled.
+
+          This behavior is unstable and may change in the future.
+
+  PlaygroundSettings:
+    properties:
+      environments:
+        type: optional<list<string>>
+        docs: A list of environment IDs that are allowed to be used in the playground.
+          If not provided, all environments are allowed. And if the provided list is empty, the playground should be disabled.
+      button: optional<PlaygroundButtonSettings>
+
+  PlaygroundButtonSettings:
+    properties:
+      href: optional<string>

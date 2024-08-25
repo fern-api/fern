@@ -1,30 +1,59 @@
+using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedAudiences;
-using SeedAudiences.FolderA;
+using SeedAudiences.Core;
 
 #nullable enable
 
 namespace SeedAudiences.FolderA;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<Response> GetDirectThreadAsync()
+    /// <example>
+    /// <code>
+    /// await client.FolderA.Service.GetDirectThreadAsync();
+    /// </code>
+    /// </example>
+    public async Task<Response> GetDirectThreadAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Get, Path = "" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Get,
+                Path = "",
+                Options = options,
+            },
+            cancellationToken
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<Response>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<Response>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedAudiencesException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedAudiencesApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
+        );
     }
 }

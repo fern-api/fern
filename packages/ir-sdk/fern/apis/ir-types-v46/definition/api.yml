@@ -1,0 +1,3 @@
+name: ir-v46
+docs: |
+ Add a literal type to the example type definition, and add an ID field for examples.

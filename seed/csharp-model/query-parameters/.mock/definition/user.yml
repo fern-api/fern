@@ -24,6 +24,8 @@ service:
           deadline: datetime
           bytes: base64
           user: User
+          userList: list<User>
+          optionalDeadline: optional<datetime>
           keyValue: map<string, string>
           optionalString: optional<string>
           nestedUser: NestedUser

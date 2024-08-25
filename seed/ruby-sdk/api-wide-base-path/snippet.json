@@ -1,4 +1,27 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.post"
+            },
+            "snippet": {
+                "client": "require \"fern_api_wide_base_path\"\n\napi_wide_base_path = SeedApiWideBasePathClient::Client.new(base_url: \"https://api.example.com\")\napi_wide_base_path.service.post(\n  path_param: \"string\",\n  service_param: \"string\",\n  resource_param: \"string\",\n  endpoint_param: 1\n)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}",
+                "method": "POST",
+                "identifierOverride": "endpoint_service.post"
+            },
+            "snippet": {
+                "client": "require \"fern_api_wide_base_path\"\n\napi_wide_base_path = SeedApiWideBasePathClient::Client.new(base_url: \"https://api.example.com\")\napi_wide_base_path.service.post(\n  path_param: \"string\",\n  service_param: \"string\",\n  resource_param: \"string\",\n  endpoint_param: 1\n)",
+                "type": "ruby"
+            }
+        }
+    ],
     "types": {}
 }

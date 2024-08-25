@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
     path = "/"
 )
 public interface V2Service {
-  @GetMapping("")
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
   void test(@RequestHeader("X-Random-Header") Optional<String> xRandomHeader);
 }

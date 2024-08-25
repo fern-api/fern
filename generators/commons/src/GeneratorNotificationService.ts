@@ -1,12 +1,12 @@
 import { FernGeneratorExec, FernGeneratorExecClient } from "@fern-fern/generator-exec-sdk";
-import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 import {
     ExitStatusUpdate,
-    GeneratorUpdate,
-    LogLevel,
     GeneratorConfig,
-    GithubOutputMode
+    GeneratorUpdate,
+    GithubOutputMode,
+    LogLevel
 } from "@fern-fern/generator-exec-sdk/api";
+import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
 
 export { GeneratorExecParsing, ExitStatusUpdate, GeneratorUpdate, LogLevel, FernGeneratorExec };
 export type { GeneratorConfig, GithubOutputMode };
@@ -24,6 +24,7 @@ export class GeneratorNotificationService {
 
             this.taskId = environment.id;
             // Every 2 seconds we flush the buffer
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
             setInterval(async () => {
                 if (this.buffer.length > 0) {
                     await this.flush();

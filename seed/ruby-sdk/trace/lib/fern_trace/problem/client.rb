@@ -33,12 +33,26 @@ module SeedTraceClient
     #   * :method_name (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::CreateProblemResponse]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.problem.create_problem(request: { problem_name: "string", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "string", contents: "string" }, read_only_files: [{ filename: "string", contents: "string" }] } }, input_params: [{ name: "string" }], testcases: [{ test_case: { id: "string", params:  } }], method_name: "string" })
     def create_problem(request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/create"
       end
@@ -59,12 +73,26 @@ module SeedTraceClient
     #   * :method_name (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::UpdateProblemResponse]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.problem.update_problem(problem_id: "string", request: { problem_name: "string", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "string", contents: "string" }, read_only_files: [{ filename: "string", contents: "string" }] } }, input_params: [{ name: "string" }], testcases: [{ test_case: { id: "string", params:  } }], method_name: "string" })
     def update_problem(problem_id:, request:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/update/#{problem_id}"
       end
@@ -76,12 +104,29 @@ module SeedTraceClient
     # @param problem_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.problem.delete_problem(problem_id: "string")
     def delete_problem(problem_id:, request_options: nil)
       @request_client.conn.delete do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
+        unless request_options.nil? || request_options&.additional_body_parameters.nil?
+          req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+        end
         req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/delete/#{problem_id}"
       end
     end
@@ -100,12 +145,26 @@ module SeedTraceClient
     #  - Period `.`
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::GetDefaultStarterFilesResponse]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.problem.get_default_starter_files(input_params: [{ name: "string" }], method_name: "string")
     def get_default_starter_files(input_params:, output_type:, method_name:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
         req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
           inputParams: input_params,
@@ -141,13 +200,27 @@ module SeedTraceClient
     #   * :method_name (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::CreateProblemResponse]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.problem.create_problem(request: { problem_name: "string", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "string", contents: "string" }, read_only_files: [{ filename: "string", contents: "string" }] } }, input_params: [{ name: "string" }], testcases: [{ test_case: { id: "string", params:  } }], method_name: "string" })
     def create_problem(request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/create"
         end
@@ -169,13 +242,27 @@ module SeedTraceClient
     #   * :method_name (String)
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::UpdateProblemResponse]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.problem.update_problem(problem_id: "string", request: { problem_name: "string", problem_description: { boards:  }, files: { JAVA: { solution_file: { filename: "string", contents: "string" }, read_only_files: [{ filename: "string", contents: "string" }] } }, input_params: [{ name: "string" }], testcases: [{ test_case: { id: "string", params:  } }], method_name: "string" })
     def update_problem(problem_id:, request:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/update/#{problem_id}"
         end
@@ -188,13 +275,30 @@ module SeedTraceClient
     # @param problem_id [String]
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [Void]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.problem.delete_problem(problem_id: "string")
     def delete_problem(problem_id:, request_options: nil)
       Async do
         @request_client.conn.delete do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/problem-crud/delete/#{problem_id}"
         end
       end
@@ -214,13 +318,27 @@ module SeedTraceClient
     #  - Period `.`
     # @param request_options [SeedTraceClient::RequestOptions]
     # @return [SeedTraceClient::Problem::GetDefaultStarterFilesResponse]
+    # @example
+    #  trace = SeedTraceClient::Client.new(
+    #    base_url: "https://api.example.com",
+    #    environment: SeedTraceClient::Environment::PROD,
+    #    token: "YOUR_AUTH_TOKEN"
+    #  )
+    #  trace.problem.get_default_starter_files(input_params: [{ name: "string" }], method_name: "string")
     def get_default_starter_files(input_params:, output_type:, method_name:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
           req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
             inputParams: input_params,

@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const StopRequest: core.serialization.ObjectSchema<serializers.StopRequest.Raw, SeedTrace.StopRequest> =
     core.serialization.object({
-        submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+        submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     });
 
 export declare namespace StopRequest {

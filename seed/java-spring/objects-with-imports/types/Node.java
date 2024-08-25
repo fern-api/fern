@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 import resources.commons.metadata.types.Metadata;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Node.Builder.class
 )
@@ -121,7 +121,7 @@ public final class Node {
 
     @java.lang.Override
     public _FinalStage metadata(Metadata metadata) {
-      this.metadata = Optional.of(metadata);
+      this.metadata = Optional.ofNullable(metadata);
       return this;
     }
 
@@ -137,7 +137,7 @@ public final class Node {
 
     @java.lang.Override
     public _FinalStage label(String label) {
-      this.label = Optional.of(label);
+      this.label = Optional.ofNullable(label);
       return this;
     }
 

@@ -10,8 +10,8 @@ export const UnexpectedLanguageError: core.serialization.ObjectSchema<
     serializers.UnexpectedLanguageError.Raw,
     SeedTrace.UnexpectedLanguageError
 > = core.serialization.object({
-    expectedLanguage: core.serialization.lazy(async () => (await import("../../..")).Language),
-    actualLanguage: core.serialization.lazy(async () => (await import("../../..")).Language),
+    expectedLanguage: core.serialization.lazy(() => serializers.Language),
+    actualLanguage: core.serialization.lazy(() => serializers.Language),
 });
 
 export declare namespace UnexpectedLanguageError {

@@ -11,9 +11,10 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     FernDocsConfig.DocsConfiguration
 > = core.serialization.object({
     instances: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).DocsInstances)
+        core.serialization.lazyObject(async () => (await import("../../..")).DocsInstance)
     ),
     title: core.serialization.string().optional(),
+    analytics: core.serialization.lazyObject(async () => (await import("../../..")).AnalyticsConfig).optional(),
     tabs: core.serialization
         .record(
             core.serialization.lazy(async () => (await import("../../..")).TabId),
@@ -23,6 +24,10 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     versions: core.serialization
         .list(core.serialization.lazyObject(async () => (await import("../../..")).VersionConfig))
         .optional(),
+    landingPage: core.serialization.property(
+        "landing-page",
+        core.serialization.lazyObject(async () => (await import("../../..")).PageConfiguration).optional()
+    ),
     navigation: core.serialization.lazy(async () => (await import("../../..")).NavigationConfig).optional(),
     navbarLinks: core.serialization.property(
         "navbar-links",
@@ -31,6 +36,11 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     footerLinks: core.serialization.property(
         "footer-links",
         core.serialization.lazyObject(async () => (await import("../../..")).FooterLinksConfig).optional()
+    ),
+    experimental: core.serialization.lazyObject(async () => (await import("../../..")).ExperimentalConfig).optional(),
+    defaultLanguage: core.serialization.property(
+        "default-language",
+        core.serialization.lazy(async () => (await import("../../..")).ProgrammingLanguage).optional()
     ),
     metadata: core.serialization.lazyObject(async () => (await import("../../..")).MetadataConfig).optional(),
     redirects: core.serialization
@@ -52,13 +62,17 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
 
 export declare namespace DocsConfiguration {
     interface Raw {
-        instances: serializers.DocsInstances.Raw[];
+        instances: serializers.DocsInstance.Raw[];
         title?: string | null;
+        analytics?: serializers.AnalyticsConfig.Raw | null;
         tabs?: Record<serializers.TabId.Raw, serializers.TabConfig.Raw> | null;
         versions?: serializers.VersionConfig.Raw[] | null;
+        "landing-page"?: serializers.PageConfiguration.Raw | null;
         navigation?: serializers.NavigationConfig.Raw | null;
         "navbar-links"?: serializers.NavbarLink.Raw[] | null;
         "footer-links"?: serializers.FooterLinksConfig.Raw | null;
+        experimental?: serializers.ExperimentalConfig.Raw | null;
+        "default-language"?: serializers.ProgrammingLanguage.Raw | null;
         metadata?: serializers.MetadataConfig.Raw | null;
         redirects?: serializers.RedirectConfig.Raw[] | null;
         logo?: serializers.LogoConfiguration.Raw | null;

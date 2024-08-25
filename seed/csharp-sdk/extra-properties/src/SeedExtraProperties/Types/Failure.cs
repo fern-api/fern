@@ -1,11 +1,17 @@
 using System.Text.Json.Serialization;
+using SeedExtraProperties.Core;
 
 #nullable enable
 
 namespace SeedExtraProperties;
 
-public class Failure
+public record Failure
 {
     [JsonPropertyName("status")]
-    public string Status { get; init; }
+    public required string Status { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

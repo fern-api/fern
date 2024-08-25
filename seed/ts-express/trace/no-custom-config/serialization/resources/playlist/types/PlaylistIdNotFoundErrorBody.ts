@@ -12,7 +12,7 @@ export const PlaylistIdNotFoundErrorBody: core.serialization.Schema<
 > = core.serialization
     .union("type", {
         playlistId: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).PlaylistId),
+            value: core.serialization.lazy(() => serializers.PlaylistId),
         }),
     })
     .transform<SeedTrace.PlaylistIdNotFoundErrorBody>({

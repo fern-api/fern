@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedObjectsWithImports;
 using SeedObjectsWithImports.Core;
 
 #nullable enable
@@ -14,5 +13,5 @@ public enum FileInfo
     Regular,
 
     [EnumMember(Value = "DIRECTORY")]
-    Directory
+    Directory,
 }

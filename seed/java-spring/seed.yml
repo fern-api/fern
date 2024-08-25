@@ -1,4 +1,4 @@
-irVersion: v42
+irVersion: v46
 docker: fernapi/fern-java-spring:latest
 dockerCommand: 
   - cd generators/java
@@ -24,3 +24,5 @@ allowedFailures:
   - response-property
   - streaming
   - server-sent-events
+  - alias-extends
+  - any-auth

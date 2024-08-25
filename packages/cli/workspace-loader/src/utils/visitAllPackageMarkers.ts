@@ -1,7 +1,7 @@
 import { entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { PackageMarkerFileSchema } from "@fern-api/yaml-schema";
-import { FernWorkspace } from "../types/Workspace";
+import { FernWorkspace } from "../workspaces";
 import { getAllPackageMarkers } from "./getAllPackageMarkers";
 
 export async function visitAllPackageMarkers(

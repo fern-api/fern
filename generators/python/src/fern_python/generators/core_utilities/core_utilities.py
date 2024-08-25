@@ -2,18 +2,18 @@ import os
 from typing import Set
 
 from fern_python.codegen import AST, Filepath, Project
-from fern_python.external_dependencies.pydantic import (
-    Pydantic,
-    PydanticVersionCompatibility,
-)
+from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
+from fern_python.external_dependencies.pydantic import PYDANTIC_CORE_DEPENDENCY
+from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from fern_python.source_file_factory import SourceFileFactory
 
 
 class CoreUtilities:
-    def __init__(self, allow_skipping_validation: bool) -> None:
+    def __init__(self, allow_skipping_validation: bool, use_typeddict_requests: bool) -> None:
         self.filepath = (Filepath.DirectoryFilepathPart(module_name="core"),)
         self._module_path = tuple(part.module_name for part in self.filepath)
         self._allow_skipping_validation = allow_skipping_validation
+        self._use_typeddict_requests = use_typeddict_requests
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -33,7 +33,26 @@ class CoreUtilities:
                 directories=self.filepath,
                 file=Filepath.FilepathPart(module_name="pydantic_utilities"),
             ),
-            exports={"pydantic_v1", "deep_union_pydantic_dicts"},
+            exports={
+                "parse_obj_as",
+                "UniversalBaseModel",
+                "IS_PYDANTIC_V2",
+                "universal_root_validator",
+                "universal_field_validator",
+                "update_forward_refs",
+                "UniversalRootModel",
+            },
+        )
+        project.add_dependency(PYDANTIC_CORE_DEPENDENCY)
+
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="serialization.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="serialization"),
+            ),
+            exports={"FieldMetadata"},
         )
 
         if self._allow_skipping_validation:
@@ -70,6 +89,16 @@ class CoreUtilities:
             ),
         )
 
+    def get_field_metadata(self) -> FieldMetadata:
+        field_metadata_reference = AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "serialization"), named_import="FieldMetadata"
+            ),
+        )
+
+        return FieldMetadata(reference=field_metadata_reference)
+
     def get_union_metadata(self) -> AST.ClassReference:
         return AST.ClassReference(
             qualified_name_excluding_import=(),
@@ -78,7 +107,7 @@ class CoreUtilities:
             ),
         )
 
-    def get_unchecked_pydantic_base_model(self, version: PydanticVersionCompatibility) -> AST.ClassReference:
+    def get_unchecked_pydantic_base_model(self) -> AST.ClassReference:
         return (
             AST.ClassReference(
                 qualified_name_excluding_import=(),
@@ -88,7 +117,7 @@ class CoreUtilities:
                 ),
             )
             if self._allow_skipping_validation
-            else Pydantic.BaseModel(version)
+            else self.get_universal_base_model()
         )
 
     def get_construct_type(self) -> AST.Reference:
@@ -100,22 +129,29 @@ class CoreUtilities:
         )
 
     def _construct_type(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        def write_value_being_casted(writer: NodeWriter) -> None:
+            writer.write_reference(self.get_construct_type())
+            writer.write("(")
+            writer.write_newline_if_last_line_not()
+            with writer.indent():
+                writer.write("type_ =")
+                AST.Expression(type_of_obj).write(writer=writer)
+                writer.write(", ")
+                writer.write(" # type: ignore")
+                writer.write_newline_if_last_line_not()
+
+                writer.write("object_ =")
+                obj.write(writer=writer)
+                writer.write_newline_if_last_line_not()
+            writer.write(")")
+
         def write(writer: AST.NodeWriter) -> None:
             writer.write_node(
                 AST.TypeHint.invoke_cast(
                     type_casted_to=type_of_obj,
-                    value_being_casted=AST.Expression(
-                        AST.FunctionInvocation(
-                            function_definition=self.get_construct_type(),
-                            kwargs=[("type_", AST.Expression(type_of_obj)), ("object_", obj)],
-                        )
-                    ),
+                    value_being_casted=AST.Expression(AST.CodeWriter(write_value_being_casted)),
                 )
             )
-
-            # mypy gets confused when passing unions for the Type argument
-            # https://github.com/pydantic/pydantic/issues/1847
-            writer.write_line("# type: ignore")
 
         return AST.Expression(AST.CodeWriter(write))
 
@@ -123,22 +159,79 @@ class CoreUtilities:
         return (
             self._construct_type(type_of_obj, obj)
             if self._allow_skipping_validation
-            else Pydantic.parse_obj_as(PydanticVersionCompatibility.Both, type_of_obj, obj)
+            else self.get_parse_obj_as(type_of_obj, obj)
         )
 
-    def get_pydantic_version_import(self) -> AST.Reference:
-        return AST.Reference(
+    def get_universal_base_model(self) -> AST.ClassReference:
+        return AST.ClassReference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
-                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="pydantic_v1"
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                named_import="UniversalBaseModel",
             ),
         )
 
-    def get_pydantic_deep_union_import(self) -> AST.Reference:
+    def get_update_forward_refs(self) -> AST.Reference:
         return AST.Reference(
             qualified_name_excluding_import=(),
             import_=AST.ReferenceImport(
                 module=AST.Module.local(*self._module_path, "pydantic_utilities"),
-                named_import="deep_union_pydantic_dicts",
+                named_import="update_forward_refs",
+            ),
+        )
+
+    def get_parse_obj_as(self, type_of_obj: AST.TypeHint, obj: AST.Expression) -> AST.Expression:
+        return AST.Expression(
+            AST.FunctionInvocation(
+                function_definition=AST.Reference(
+                    qualified_name_excluding_import=(),
+                    import_=AST.ReferenceImport(
+                        module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="parse_obj_as"
+                    ),
+                ),
+                args=[AST.Expression(type_of_obj), obj],
+            )
+        )
+
+    def get_is_pydantic_v2(self) -> AST.Expression:
+        return AST.Expression(
+            AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="IS_PYDANTIC_V2"
+                ),
+            )
+        )
+
+    def universal_root_validator(self, pre: bool = False) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                    named_import="universal_root_validator",
+                ),
+            ),
+            kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
+        )
+
+    def universal_field_validator(self, field_name: str, pre: bool = False) -> AST.FunctionInvocation:
+        return AST.FunctionInvocation(
+            function_definition=AST.Reference(
+                qualified_name_excluding_import=(),
+                import_=AST.ReferenceImport(
+                    module=AST.Module.local(*self._module_path, "pydantic_utilities"),
+                    named_import="universal_field_validator",
+                ),
+            ),
+            args=[AST.Expression(expression=f'"{field_name}"')],
+            kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
+        )
+
+    def get_universal_root_model(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "pydantic_utilities"), named_import="UniversalRootModel"
             ),
         )

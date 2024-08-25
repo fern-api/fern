@@ -1,0 +1,82 @@
+---
+title: How to use OpenAPI Overrides
+subtitle: Use overrides to customize user-facing documentation fields, examples, and naming.
+---
+
+When you generate your OpenAPI from server code, you may want to further customize portions of your OpenAPI spec. You can do this with OpenAPI Overrides. When you run `fern generate`, Fern will automatically apply these overrides on top of your OpenAPI spec.
+
+## How to use OpenAPI Overrides
+
+To use OpenAPI Overrides, create a file named `openapi-overrides.yml`. You can put the file anywhere in your project. This file contains the overrides you want to apply to your OpenAPI spec. For more on the extensions available, visit our page on [OpenAPI Extensions](https://buildwithfern.com/learn/api-definition/openapi/extensions).
+
+### Example
+
+Here's an example of an `openapi-overrides.yml` file for the ElevenLabs API:
+
+<CodeBlock title="openapi-overrides.yml">
+```yaml
+x-fern-global-headers:
+  - header: xi-api-key
+    name: api-key
+    optional: true
+    env: ELEVEN_API_KEY
+servers:
+  - url: https://api.elevenlabs.io/
+    x-fern-server-name: Production
+x-fern-groups:
+  samples:
+    summary: Samples
+  voices:
+    summary: Voices
+  projects:
+    summary: Projects
+  models:
+    summary: Models
+paths:
+  /v1/history:
+    get:
+      x-fern-sdk-group-name:
+        - history
+      x-fern-sdk-method-name: get_all
+      x-fern-examples:
+        - query-parameters:
+            page_size: 1
+            voice_id: "pMsXgVXv3BLzUgSXRplE"
+          response:
+            body:
+              history:
+                [
+                  {
+                    history_item_id: "ja9xsmfGhxYcymxGcOGB",
+                    request_id: "BF0BZg4IwLGBlaVjv9Im",
+                    settings:
+                      {
+                        similarity_boost: 0.5,
+                        stability: 0.71,
+                        style: 0,
+                        use_speaker_boost: true,
+                      },
+                    source: "TTS",
+                  },
+                ]
+              last_history_item_id: "ja9xsmfGhxYcymxGcOGB"
+              has_more: true
+  /v1/history/{history_item_id}:
+    get:
+      x-fern-sdk-group-name:
+        - history
+      x-fern-sdk-method-name: get
+```
+</CodeBlock>
+
+## Specifying OpenAPI Overrides in `generators.yml`
+
+You'll need to specify the path to your `openapi-overrides.yml` file in your `generators.yml` file. Here's an example:
+
+<CodeBlock title="../openapi-overrides.yml">
+```yaml
+api: 
+  - path: ../openapi.json
+    overrides: ../openapi-overrides.yml 
+```
+</CodeBlock>

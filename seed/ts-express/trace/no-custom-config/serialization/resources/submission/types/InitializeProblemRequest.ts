@@ -10,7 +10,7 @@ export const InitializeProblemRequest: core.serialization.ObjectSchema<
     serializers.InitializeProblemRequest.Raw,
     SeedTrace.InitializeProblemRequest
 > = core.serialization.object({
-    problemId: core.serialization.lazy(async () => (await import("../../..")).ProblemId),
+    problemId: core.serialization.lazy(() => serializers.ProblemId),
     problemVersion: core.serialization.number().optional(),
 });
 

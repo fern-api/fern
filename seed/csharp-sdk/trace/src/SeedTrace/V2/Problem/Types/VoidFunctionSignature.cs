@@ -1,12 +1,17 @@
 using System.Text.Json.Serialization;
-using SeedTrace.V2;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace.V2;
 
-public class VoidFunctionSignature
+public record VoidFunctionSignature
 {
     [JsonPropertyName("parameters")]
-    public IEnumerable<Parameter> Parameters { get; init; }
+    public IEnumerable<Parameter> Parameters { get; set; } = new List<Parameter>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

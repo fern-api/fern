@@ -15,6 +15,8 @@ declare namespace Raw {
     export interface OffsetPaginationExtensionSchema {
         offset: string;
         results: string;
+        step: string | undefined;
+        "has-next-page": string | undefined;
     }
 }
 
@@ -33,7 +35,9 @@ export function convertPaginationExtension(
     const maybeOffsetPagination = pagination as Raw.OffsetPaginationExtensionSchema;
     return Pagination.offset({
         offset: maybeOffsetPagination.offset,
-        results: maybeOffsetPagination.results
+        results: maybeOffsetPagination.results,
+        step: maybeOffsetPagination.step,
+        hasNextPage: maybeOffsetPagination["has-next-page"]
     });
 }
 

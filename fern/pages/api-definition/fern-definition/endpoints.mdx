@@ -27,8 +27,9 @@ Each service defines:
 
 An endpoint includes:
 
-- A **URL path** (_Optionally including path parameters_)
-- An **HTTP Method**
+- A **URL path** _(Optionally including path parameters)_
+- A **Display Name** _(Optional)_
+- An **HTTP Method** 
 - **Request information** _(Optional)_
   - **Query-parameters**
   - **Headers**
@@ -58,7 +59,24 @@ The full path for the endpoint is the concatenation of:
 - The service `base-path`
 - The endpoint `path`
 
-### Path parameters
+## Display Name
+
+The display name will appear as the title of an endpoint [like this one](https://buildwithfern.com/learn/cli-api/api-reference/docs/generate). By default, the display name is equal to the 'Title Case' of the endpoint name. If you would like to customize the endpoint name, you can **set the display name**. 
+
+<CodeBlock title="user.yml">
+```yaml
+service:
+  base-path: /users
+  auth: false
+  endpoints:
+    getAllUsers:
+      path: /all
+      display-name: Retrieve All Users 
+      method: GET
+```
+</CodeBlock>
+
+## Path parameters
 
 Supply path parameters for your endpoints to create dynamic URLs.
 
@@ -120,10 +138,11 @@ parameter.
 
 <CodeBlock title="user.yml">
 ```yaml
-query-parameters:
-  filter:
-    type: string
-    allow-multiple: true # <---
+  ...
+  query-parameters:
+    filter:
+      type: string
+      allow-multiple: true # <---
 ```
 </CodeBlock>
 
@@ -160,10 +179,10 @@ Each endpoint can specify request headers:
         path: /all
         method: GET 
         request: 
-        # this name is required for idiomatic SDKs name:
-        name: GetAllUsersRequest 
-        headers: 
-          X-Endpoint-Header: string
+          # this name is required for idiomatic SDKs name:
+          name: GetAllUsersRequest 
+          headers: 
+            X-Endpoint-Header: string
   ```
 </CodeBlock>
 
@@ -221,11 +240,12 @@ makes the generated SDKs a bit more idiomatic.
       createUser: 
         path: /create 
         method: POST 
-        request: # this name is required for idiomatic SDKs 
-        name: CreateUserRequest 
-        body: 
-          properties: 
-            userName: string
+        request: 
+          # this name is required for idiomatic SDKs 
+          name: CreateUserRequest 
+          body: 
+            properties: 
+              userName: string
   ```
 </CodeBlock>
 

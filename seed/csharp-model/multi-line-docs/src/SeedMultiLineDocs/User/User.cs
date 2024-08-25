@@ -1,13 +1,14 @@
 using System.Text.Json.Serialization;
+using SeedMultiLineDocs.Core;
 
 #nullable enable
 
 namespace SeedMultiLineDocs;
 
-public class User
+public record User
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
 
     /// <summary>
     /// The user's name. This name is unique to each user. A few examples are included below:
@@ -17,11 +18,16 @@ public class User
     /// - Charlie
     /// </summary>
     [JsonPropertyName("name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// The user's age.
     /// </summary>
     [JsonPropertyName("age")]
-    public int? Age { get; init; }
+    public int? Age { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

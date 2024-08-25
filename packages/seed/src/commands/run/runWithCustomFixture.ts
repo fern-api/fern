@@ -13,11 +13,13 @@ import { writeDotMock } from "../test/test-runner/TestRunner";
 export async function runWithCustomFixture({
     pathToFixture,
     workspace,
-    logLevel
+    logLevel,
+    audience
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
     logLevel: LogLevel;
+    audience: string | undefined;
 }): Promise<void> {
     const lock = new Semaphore(1);
     const outputDir = await tmp.dir();
@@ -35,7 +37,7 @@ export async function runWithCustomFixture({
         taskContextFactory,
         skipScripts: true,
         keepDocker: true,
-        scriptRunner: new ScriptRunner(workspace)
+        scriptRunner: new ScriptRunner(workspace, false)
     });
 
     const fernWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
@@ -61,13 +63,14 @@ export async function runWithCustomFixture({
             customConfig: customFixtureConfig?.customConfig,
             publishConfig: customFixtureConfig?.publishConfig,
             publishMetadata: customFixtureConfig?.publishMetadata,
-            selectAudiences: customFixtureConfig?.audiences,
+            selectAudiences: audience != null ? [audience] : customFixtureConfig?.audiences,
             taskContext,
             outputDir: absolutePathToOutput,
             outputMode: customFixtureConfig?.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
             outputFolder: customFixtureConfig?.outputFolder ?? "custom",
             id: "custom",
-            keepDocker: true
+            keepDocker: true,
+            readme: customFixtureConfig?.readmeConfig
         });
         await writeDotMock({
             absolutePathToDotMockDirectory: absolutePathToOutput,

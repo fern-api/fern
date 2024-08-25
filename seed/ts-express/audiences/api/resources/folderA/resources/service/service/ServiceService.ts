@@ -44,7 +44,7 @@ export class ServiceService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.folderA.Response.jsonOrThrow(responseBody, {
+                                serializers.folderA.Response.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

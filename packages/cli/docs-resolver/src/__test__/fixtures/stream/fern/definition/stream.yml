@@ -1,0 +1,415 @@
+types:
+  Stop:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+  Prompt:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - list<integer>
+      - list<list<integer>>
+  ChatCompletionChoice:
+    properties:
+      finish_reason: optional<FinishReason>
+      index:
+        type: integer
+      logprobs: optional<Logprobs>
+      message:
+        type: ChatMessage
+  ChatCompletionChunk:
+    properties:
+      choices:
+        type: list<ChatCompletionChunkChoice>
+      created:
+        type: integer
+      id:
+        type: string
+      model:
+        type: string
+      object: optional<unknown>
+      usage: optional<UsageStats>
+  ChatCompletionChunkChoice:
+    properties:
+      delta: ChatCompletionDelta
+      finish_reason: optional<FinishReason>
+      index: integer
+      logprobs: optional<Logprobs>
+  ChatCompletionDelta:
+    properties:
+      content: optional<string>
+      role: optional<string>
+  ChatCompletionResponse:
+    properties:
+      choices:
+        type: list<ChatCompletionChoice>
+      created:
+        type: integer
+      id:
+        type: string
+      model:
+        type: string
+      object: optional<unknown>
+      usage:
+        type: UsageStats
+  ChatCompletionResponseFormat:
+    properties:
+      schema: optional<map<string, unknown>>
+      type: string
+  ChatMessage:
+    properties:
+      content:
+        type: optional<string>
+      role:
+        type: string
+  CompletionChoice:
+    properties:
+      finish_reason: optional<FinishReason>
+      index: integer
+      logprobs: optional<Logprobs>
+      text: string
+  CompletionResponse:
+    properties:
+      choices: list<CompletionChoice>
+      created:
+        type: integer
+      id: string
+      model: string
+      object: optional<unknown>
+      system_fingerprint: string
+      usage: optional<UsageStats>
+  ErrorResponseValidationErrorsValue:
+    discriminated: false
+    union:
+      - string
+      - list<string>
+  ErrorResponse:
+    properties:
+      code: optional<string>
+      message: string
+      object:
+        type: optional<string>
+        default: error
+      param: optional<string>
+      type: string
+      validation_errors: optional<map<string, optional<ErrorResponseValidationErrorsValue>>>
+  FinishReason:
+    enum:
+      - stop
+      - length
+      - tool_calls
+      - content_filter
+      - function_call
+      - cancelled
+  FunctionCall:
+    properties:
+      arguments:
+        type: string
+      name:
+        type: string
+  HTTPValidationError:
+    properties:
+      detail: optional<list<ValidationError>>
+  Logprobs:
+    properties:
+      content:
+        type: optional<list<optional<LogprobsContent>>>
+  LogprobsContent:
+    properties:
+      bytes:
+        type: optional<list<unknown>>
+      logprob:
+        type: double
+      token:
+        type: string
+      top_logprobs:
+        type: optional<list<TopLogprobs>>
+  StreamOptions:
+    properties:
+      include_usage:
+        type: optional<boolean>
+  ToolCall:
+    properties:
+      function:
+        type: FunctionCall
+      id:
+        type: string
+      type: optional<unknown>
+  TopLogprobs:
+    properties:
+      bytes:
+        type: optional<list<unknown>>
+      logprob:
+        type: double
+      token:
+        type: string
+  UsageStats:
+    properties:
+      completion_tokens:
+        type: integer
+      prompt_tokens:
+        type: integer
+      total_tokens:
+        type: integer
+  ValidationErrorLocItem:
+    discriminated: false
+    union:
+      - string
+      - integer
+  ValidationError:
+    properties:
+      loc: list<ValidationErrorLocItem>
+      msg: string
+      type: string
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    createChatCompletion_stream:
+      path: /v1/chat/completions
+      method: POST
+      auth: false
+      display-name: Create Chat Completion
+      request:
+        name: CreateChatCompletionStreamRequest
+        body:
+          properties:
+            frequency_penalty:
+              type: optional<double>
+            ignore_eos: optional<boolean>
+            logit_bias: optional<map<string, optional<double>>>
+            loglikelihood: optional<boolean>
+            logprobs: optional<boolean>
+            max_tokens:
+              type: optional<integer>
+            messages:
+              type: list<ChatMessage>
+            model:
+              type: string
+            "n":
+              type: optional<integer>
+              default: 1
+            presence_penalty:
+              type: optional<double>
+              default: 0
+            repetition_penalty:
+              type: optional<double>
+              default: 1
+            response_format:
+              type: optional<ChatCompletionResponseFormat>
+            stop: optional<Stop>
+            stream:
+              type: literal<true>
+            stream_options:
+              type: optional<StreamOptions>
+            temperature:
+              type: optional<double>
+              default: 1
+            top_logprobs:
+              type: optional<integer>
+              default: 0
+            top_p:
+              type: optional<double>
+              default: 1
+            user: optional<string>
+      response-stream:
+        type: ChatCompletionChunk
+        format: sse
+      url: TextGen
+    createChatCompletion:
+      path: /v1/chat/completions
+      method: POST
+      auth: false
+      display-name: Create Chat Completion
+      request:
+        name: CreateChatCompletionRequest
+        body:
+          properties:
+            frequency_penalty:
+              type: optional<double>
+              default: 0
+            ignore_eos: optional<boolean>
+            logit_bias: optional<map<string, optional<double>>>
+            loglikelihood: optional<boolean>
+            logprobs: optional<boolean>
+            max_tokens:
+              type: optional<integer>
+              default: 512
+            messages:
+              type: list<ChatMessage>
+            model:
+              type: string
+            "n":
+              type: optional<integer>
+              default: 1
+            presence_penalty:
+              type: optional<double>
+              default: 0
+            repetition_penalty:
+              type: optional<double>
+              default: 1
+            response_format:
+              type: optional<ChatCompletionResponseFormat>
+            stop: optional<Stop>
+            stream:
+              type: literal<false>
+            stream_options:
+              type: optional<StreamOptions>
+            temperature:
+              type: optional<double>
+              default: 1
+            top_logprobs:
+              type: optional<integer>
+              default: 0
+            top_p:
+              type: optional<double>
+              default: 1
+            user: optional<string>
+      response:
+        type: ChatCompletionResponse
+      url: TextGen
+      examples:
+        - request:
+            messages:
+              - role: role
+            model: model
+            stream: false
+          response:
+            body:
+              choices:
+                - finish_reason: stop
+                  index: 1
+                  message:
+                    role: role
+              created: 1
+              id: id
+              model: model
+              object:
+                key: value
+              usage:
+                completion_tokens: 1
+                prompt_tokens: 1
+                total_tokens: 1
+    createCompletion_stream:
+      path: /v1/completions
+      method: POST
+      auth: false
+      display-name: Create Completion
+      request:
+        name: CreateCompletionStreamRequest
+        body:
+          properties:
+            best_of:
+              type: optional<integer>
+              default: 1
+            echo:
+              type: optional<boolean>
+            frequency_penalty:
+              type: optional<double>
+              default: 0
+            logit_bias:
+              type: optional<map<string, optional<double>>>
+            loglikelihood:
+              type: optional<boolean>
+            logprobs:
+              type: optional<integer>
+            max_tokens:
+              type: optional<integer>
+              default: 16
+            model:
+              type: string
+            "n":
+              type: optional<integer>
+              default: 1
+            presence_penalty:
+              type: optional<double>
+              default: 0
+            prompt:
+              type: optional<Prompt>
+            repetition_penalty:
+              type: optional<double>
+              default: 1
+            seed:
+              type: optional<integer>
+              default: 0
+            stop:
+              type: optional<Stop>
+            stream:
+              type: literal<true>
+            stream_options:
+              type: optional<StreamOptions>
+            suffix:
+              type: optional<string>
+            temperature:
+              type: optional<double>
+              default: 1
+            top_p:
+              type: optional<double>
+              default: 1
+            user: optional<string>
+      response-stream:
+        type: CompletionResponse
+        format: sse
+      url: TextGen
+    createCompletion:
+      path: /v1/completions
+      method: POST
+      auth: false
+      display-name: Create Completion
+      request:
+        name: CreateCompletionRequest
+        body:
+          properties:
+            best_of:
+              type: optional<integer>
+              default: 1
+            echo:
+              type: optional<boolean>
+            frequency_penalty:
+              type: optional<double>
+              default: 0
+            logit_bias:
+              type: optional<map<string, optional<double>>>
+            loglikelihood:
+              type: optional<boolean>
+            logprobs:
+              type: optional<integer>
+            max_tokens:
+              type: optional<integer>
+              default: 16
+            model:
+              type: string
+            "n":
+              type: optional<integer>
+              default: 1
+            presence_penalty:
+              type: optional<double>
+              default: 0
+            prompt:
+              type: optional<Prompt>
+            repetition_penalty:
+              type: optional<double>
+              default: 1
+            seed:
+              type: optional<integer>
+              default: 0
+            stop:
+              type: optional<Stop>
+            stream:
+              type: literal<false>
+            stream_options:
+              type: optional<StreamOptions>
+            suffix:
+              type: optional<string>
+            temperature:
+              type: optional<double>
+              default: 1
+            top_p:
+              type: optional<double>
+              default: 1
+            user: optional<string>
+      response:
+        type: CompletionResponse
+      url: TextGen

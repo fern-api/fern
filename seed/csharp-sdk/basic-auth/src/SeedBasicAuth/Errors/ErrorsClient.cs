@@ -1,14 +1,14 @@
-using SeedBasicAuth;
+using SeedBasicAuth.Core;
 
 #nullable enable
 
 namespace SeedBasicAuth;
 
-public class ErrorsClient
+public partial class ErrorsClient
 {
     private RawClient _client;
 
-    public ErrorsClient(RawClient client)
+    internal ErrorsClient(RawClient client)
     {
         _client = client;
     }

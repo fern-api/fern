@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_service.getMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
+                "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getMovie(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getMovie(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -63,10 +94,41 @@
             "identifierOverride": "endpoint_service.getMovieDocs"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
+                "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getMovieDocs(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getMovieDocs(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -115,10 +177,41 @@
             "identifierOverride": "endpoint_service.getMovieName"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
+                "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getMovieName(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getMovieName(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -167,10 +260,41 @@
             "identifierOverride": "endpoint_service.getMovieMetadata"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
+                "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getMovieMetadata(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getMovieMetadata(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -219,10 +343,41 @@
             "identifierOverride": "endpoint_service.getOptionalMovie"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
+                "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getOptionalMovie(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getOptionalMovie(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -271,10 +426,41 @@
             "identifierOverride": "endpoint_service.getOptionalMovieDocs"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
+                "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getOptionalMovieDocs(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getOptionalMovieDocs(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -323,10 +509,41 @@
             "identifierOverride": "endpoint_service.getOptionalMovieName"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedResponseProperty = new SeedResponsePropertyClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedResponsePropertyClient } from \"@fern/response-property\";"
+                ],
+                "templateString": "const client = new SeedResponsePropertyClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedResponseProperty.service.getOptionalMovieName(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.getOptionalMovieName(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

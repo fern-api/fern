@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "shape"
 require "ostruct"
 require "json"
 
@@ -12,6 +13,8 @@ module SeedValidationClient
     attr_reader :even
     # @return [String]
     attr_reader :name
+    # @return [SeedValidationClient::Shape]
+    attr_reader :shape
     # @return [OpenStruct] Additional properties unmapped to the current class definition
     attr_reader :additional_properties
     # @return [Object]
@@ -23,14 +26,16 @@ module SeedValidationClient
     # @param decimal [Float]
     # @param even [Integer]
     # @param name [String]
+    # @param shape [SeedValidationClient::Shape]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [SeedValidationClient::Type]
-    def initialize(decimal:, even:, name:, additional_properties: nil)
+    def initialize(decimal:, even:, name:, shape:, additional_properties: nil)
       @decimal = decimal
       @even = even
       @name = name
+      @shape = shape
       @additional_properties = additional_properties
-      @_field_set = { "decimal": decimal, "even": even, "name": name }
+      @_field_set = { "decimal": decimal, "even": even, "name": name, "shape": shape }
     end
 
     # Deserialize a JSON object to an instance of Type
@@ -39,13 +44,16 @@ module SeedValidationClient
     # @return [SeedValidationClient::Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      decimal = struct["decimal"]
-      even = struct["even"]
-      name = struct["name"]
+      parsed_json = JSON.parse(json_object)
+      decimal = parsed_json["decimal"]
+      even = parsed_json["even"]
+      name = parsed_json["name"]
+      shape = parsed_json["shape"]
       new(
         decimal: decimal,
         even: even,
         name: name,
+        shape: shape,
         additional_properties: struct
       )
     end
@@ -67,6 +75,7 @@ module SeedValidationClient
       obj.decimal.is_a?(Float) != false || raise("Passed value for field obj.decimal is not the expected type, validation failed.")
       obj.even.is_a?(Integer) != false || raise("Passed value for field obj.even is not the expected type, validation failed.")
       obj.name.is_a?(String) != false || raise("Passed value for field obj.name is not the expected type, validation failed.")
+      obj.shape.is_a?(SeedValidationClient::Shape) != false || raise("Passed value for field obj.shape is not the expected type, validation failed.")
     end
   end
 end

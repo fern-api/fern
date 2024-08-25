@@ -18,7 +18,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ListUsersExtendedRequest.Builder.class)
 public final class ListUsersExtendedRequest {
     private final Optional<UUID> cursor;
@@ -85,7 +85,7 @@ public final class ListUsersExtendedRequest {
         }
 
         public Builder cursor(UUID cursor) {
-            this.cursor = Optional.of(cursor);
+            this.cursor = Optional.ofNullable(cursor);
             return this;
         }
 

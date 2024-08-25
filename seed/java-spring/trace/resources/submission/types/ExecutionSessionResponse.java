@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Optional;
 import resources.commons.types.Language;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ExecutionSessionResponse.Builder.class
 )
@@ -151,7 +151,7 @@ public final class ExecutionSessionResponse {
 
     @java.lang.Override
     public _FinalStage executionSessionUrl(String executionSessionUrl) {
-      this.executionSessionUrl = Optional.of(executionSessionUrl);
+      this.executionSessionUrl = Optional.ofNullable(executionSessionUrl);
       return this;
     }
 

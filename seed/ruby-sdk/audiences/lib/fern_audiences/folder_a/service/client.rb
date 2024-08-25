@@ -18,10 +18,23 @@ module SeedAudiencesClient
 
       # @param request_options [SeedAudiencesClient::RequestOptions]
       # @return [SeedAudiencesClient::FolderA::Service::Response]
+      # @example
+      #  audiences = SeedAudiencesClient::Client.new(base_url: "https://api.example.com")
+      #  audiences.folder_a.service.get_direct_thread
       def get_direct_thread(request_options: nil)
         response = @request_client.conn.get do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
+          unless request_options.nil? || request_options&.additional_body_parameters.nil?
+            req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+          end
           req.url "#{@request_client.get_url(request_options: request_options)}/"
         end
         SeedAudiencesClient::FolderA::Service::Response.from_json(json_object: response.body)
@@ -40,11 +53,24 @@ module SeedAudiencesClient
 
       # @param request_options [SeedAudiencesClient::RequestOptions]
       # @return [SeedAudiencesClient::FolderA::Service::Response]
+      # @example
+      #  audiences = SeedAudiencesClient::Client.new(base_url: "https://api.example.com")
+      #  audiences.folder_a.service.get_direct_thread
       def get_direct_thread(request_options: nil)
         Async do
           response = @request_client.conn.get do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+            req.headers = {
+          **(req.headers || {}),
+          **@request_client.get_headers,
+          **(request_options&.additional_headers || {})
+            }.compact
+            unless request_options.nil? || request_options&.additional_query_parameters.nil?
+              req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+            end
+            unless request_options.nil? || request_options&.additional_body_parameters.nil?
+              req.body = { **(request_options&.additional_body_parameters || {}) }.compact
+            end
             req.url "#{@request_client.get_url(request_options: request_options)}/"
           end
           SeedAudiencesClient::FolderA::Service::Response.from_json(json_object: response.body)

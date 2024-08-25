@@ -12,6 +12,14 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             path: RelativeFilePath.of("generators/typescript/utils/core-utilities/zurg/src"),
             ignoreGlob: "**/__test__"
         },
+        unitTests: {
+            fromDirectory: RelativeFilePath.of("__test__"),
+            findAndReplace: {
+                "../../builders": "../../../../src/core/schemas/builders",
+                "../builders": "../../../src/core/schemas/builders",
+                "../../Schema": "../../../../src/core/schemas/Schema"
+            }
+        },
         originalPathOnDocker: AbsoluteFilePath.of("/assets/zurg"),
         pathInCoreUtilities: [{ nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } }]
     };
@@ -422,36 +430,28 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         return {
             optional: () => this.optional(baseSchema),
             parse: (raw, opts) =>
-                ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parse"),
-                        undefined,
-                        [raw, ...this.constructSchemaOptionsArgs(opts)]
-                    )
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parse"),
+                    undefined,
+                    [raw, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             json: (parsed, opts) =>
-                ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "json"),
-                        undefined,
-                        [parsed, ...this.constructSchemaOptionsArgs(opts)]
-                    )
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "json"),
+                    undefined,
+                    [parsed, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             parseOrThrow: (raw, opts) =>
-                ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parseOrThrow"),
-                        undefined,
-                        [raw, ...this.constructSchemaOptionsArgs(opts)]
-                    )
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "parseOrThrow"),
+                    undefined,
+                    [raw, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             jsonOrThrow: (parsed, opts) =>
-                ts.factory.createAwaitExpression(
-                    ts.factory.createCallExpression(
-                        ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "jsonOrThrow"),
-                        undefined,
-                        [parsed, ...this.constructSchemaOptionsArgs(opts)]
-                    )
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(baseSchema.toExpression(), "jsonOrThrow"),
+                    undefined,
+                    [parsed, ...this.constructSchemaOptionsArgs(opts)]
                 ),
             transform: ({
                 newShape,
@@ -500,6 +500,14 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             properties.push(
                 ts.factory.createPropertyAssignment(
                     ts.factory.createIdentifier("skipValidation"),
+                    ts.factory.createTrue()
+                )
+            );
+        }
+        if (schemaOptions.omitUndefined) {
+            properties.push(
+                ts.factory.createPropertyAssignment(
+                    ts.factory.createIdentifier("omitUndefined"),
                     ts.factory.createTrue()
                 )
             );
@@ -570,14 +578,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             isOptional: schema.isOptional,
             toExpression: () =>
                 ts.factory.createCallExpression(lazy.getExpression(), undefined, [
-                    ts.factory.createArrowFunction(
-                        [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)],
-                        undefined,
-                        [],
-                        undefined,
-                        undefined,
-                        schema.toExpression()
-                    )
+                    ts.factory.createArrowFunction([], undefined, [], undefined, undefined, schema.toExpression())
                 ])
         };
 
@@ -596,7 +597,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                     toExpression: () =>
                         ts.factory.createCallExpression(lazyObject.getExpression(), undefined, [
                             ts.factory.createArrowFunction(
-                                [ts.factory.createModifier(ts.SyntaxKind.AsyncKeyword)],
+                                [],
                                 undefined,
                                 [],
                                 undefined,

@@ -10,13 +10,11 @@ export const RecordingResponseNotification: core.serialization.ObjectSchema<
     serializers.RecordingResponseNotification.Raw,
     SeedTrace.RecordingResponseNotification
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
     testCaseId: core.serialization.string().optional(),
     lineNumber: core.serialization.number(),
-    lightweightStackInfo: core.serialization.lazyObject(
-        async () => (await import("../../..")).LightweightStackframeInformation
-    ),
-    tracedFile: core.serialization.lazyObject(async () => (await import("../../..")).TracedFile).optional(),
+    lightweightStackInfo: core.serialization.lazyObject(() => serializers.LightweightStackframeInformation),
+    tracedFile: core.serialization.lazyObject(() => serializers.TracedFile).optional(),
 });
 
 export declare namespace RecordingResponseNotification {

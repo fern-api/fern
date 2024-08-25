@@ -1,4 +1,4 @@
-using SeedBearerTokenEnvironmentVariable;
+using SeedBearerTokenEnvironmentVariable.Core;
 
 #nullable enable
 
@@ -8,29 +8,39 @@ public partial class SeedBearerTokenEnvironmentVariableClient
 {
     private RawClient _client;
 
-    public SeedBearerTokenEnvironmentVariableClient (string apiKey = null, ClientOptions clientOptions = null) {
-        apiKey = apiKey ?? GetFromEnvironmentOrThrow(
+    public SeedBearerTokenEnvironmentVariableClient(
+        string? apiKey = null,
+        ClientOptions? clientOptions = null
+    )
+    {
+        apiKey ??= GetFromEnvironmentOrThrow(
             "COURIER_API_KEY",
             "Please pass in apiKey or set the environment variable COURIER_API_KEY."
-        _client = 
-        new RawClient(
-            new Dictionary<string, string>() {
-                { "Authorization", $"Bearer {apiKey}" }, 
-                { "X-Fern-Language", "C#" }, 
-            }, clientOptions ?? new ClientOptions());
-        Service = 
-        new ServiceClient(
-            _client);
-    }
-
-    public ServiceClient Service { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message) {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null) {
-            throw new Exception(message);
+        );
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "Authorization", $"Bearer {apiKey}" },
+                { "X-Fern-Language", "C#" },
+                { "User-Agent", "Fernbearer-token-environment-variable/0.0.1" },
+            }
+        );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
         }
-        return value;
+        _client = new RawClient(clientOptions);
+        Service = new ServiceClient(_client);
     }
 
+    public ServiceClient Service { get; init; }
+
+    private static string GetFromEnvironmentOrThrow(string env, string message)
+    {
+        return Environment.GetEnvironmentVariable(env) ?? throw new Exception(message);
+    }
 }

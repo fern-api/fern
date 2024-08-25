@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { SourceFetcher } from "@fern-api/generator-commons";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
@@ -10,9 +11,12 @@ import { CSharpFile } from "./CSharpFile";
 import { File } from "./File";
 
 const SRC_DIRECTORY_NAME = "src";
+const PROTOBUF_DIRECTORY_NAME = "proto";
 const AS_IS_DIRECTORY = path.join(__dirname, "asIs");
 
 export const CORE_DIRECTORY_NAME = "Core";
+export const TEST_UTILS_DIRECTORY_NAME = "Utils";
+export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
 /**
  * In memory representation of a C# project.
  */
@@ -20,7 +24,10 @@ export class CsharpProject {
     private testFiles: CSharpFile[] = [];
     private sourceFiles: CSharpFile[] = [];
     private coreFiles: File[] = [];
+    private testUtilFiles: File[] = [];
+    private publicCoreFiles: File[] = [];
     private absolutePathToOutputDirectory: AbsoluteFilePath;
+    private sourceFetcher: SourceFetcher;
     public readonly filepaths: CsharpProjectFilepaths;
 
     public constructor(
@@ -29,10 +36,18 @@ export class CsharpProject {
     ) {
         this.absolutePathToOutputDirectory = AbsoluteFilePath.of(this.context.config.output.path);
         this.filepaths = new CsharpProjectFilepaths(name);
+        this.sourceFetcher = new SourceFetcher({
+            context: this.context,
+            sourceConfig: this.context.ir.sourceConfig
+        });
     }
 
     public addCoreFiles(file: File): void {
         this.coreFiles.push(file);
+    }
+
+    public addPublicCoreFiles(file: File): void {
+        this.publicCoreFiles.push(file);
     }
 
     public addSourceFiles(file: CSharpFile): void {
@@ -67,8 +82,26 @@ export class CsharpProject {
             await file.write(absolutePathToTestProjectDirectory);
         }
 
-        for (const file of this.context.getAsIsFiles()) {
-            this.coreFiles.push(await this.createCoreAsIsFile(file));
+        for (const filename of this.context.getCoreAsIsFiles()) {
+            this.coreFiles.push(
+                await this.createAsIsFile({
+                    filename,
+                    namespace: this.context.getCoreNamespace()
+                })
+            );
+        }
+
+        for (const filename of this.context.getPublicCoreAsIsFiles()) {
+            this.publicCoreFiles.push(
+                await this.createAsIsFile({
+                    filename,
+                    namespace: this.context.getNamespace()
+                })
+            );
+        }
+
+        for (const file of this.context.getAsIsTestUtils()) {
+            this.testUtilFiles.push(await this.createTestUtilsAsIsFile(file));
         }
 
         const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
@@ -86,6 +119,7 @@ export class CsharpProject {
         await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
 
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
+        await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
         await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
             doNotPipeOutput: true,
@@ -110,6 +144,12 @@ export class CsharpProject {
         this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);
         await mkdir(absolutePathToProjectDirectory, { recursive: true });
 
+        const absolutePathToProtoDirectory = join(
+            this.absolutePathToOutputDirectory,
+            RelativeFilePath.of(PROTOBUF_DIRECTORY_NAME)
+        );
+        const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
+
         const csproj = new CsProj({
             version: this.context.config.output?.mode._visit({
                 downloadFiles: () => undefined,
@@ -131,7 +171,9 @@ export class CsharpProject {
                 github: (github) => github.repoUrl,
                 publish: () => undefined,
                 _other: () => undefined
-            })
+            }),
+            context: this.context,
+            protobufSourceFilePaths
         });
         const templateCsProjContents = csproj.toString();
         await writeFile(
@@ -199,18 +241,86 @@ export class CsharpProject {
         return absolutePathToCoreDirectory;
     }
 
-    private async createCoreAsIsFile(filename: string): Promise<File> {
+    /*
+     * Unused after removing unneccessary utils file.
+     */
+    private async createTestUtilsDirectory({
+        absolutePathToTestProjectDirectory
+    }: {
+        absolutePathToTestProjectDirectory: AbsoluteFilePath;
+    }): Promise<AbsoluteFilePath> {
+        const absolutePathToTestUtilsDirectory = join(
+            absolutePathToTestProjectDirectory,
+            RelativeFilePath.of(TEST_UTILS_DIRECTORY_NAME)
+        );
+        this.context.logger.debug(`mkdir ${absolutePathToTestUtilsDirectory}`);
+        await mkdir(absolutePathToTestUtilsDirectory, { recursive: true });
+
+        for (const file of this.testUtilFiles) {
+            await file.write(absolutePathToTestUtilsDirectory);
+        }
+
+        return absolutePathToTestUtilsDirectory;
+    }
+
+    private async createPublicCoreDirectory({
+        absolutePathToProjectDirectory
+    }: {
+        absolutePathToProjectDirectory: AbsoluteFilePath;
+    }): Promise<AbsoluteFilePath> {
+        const absolutePathToPublicCoreDirectory = join(
+            absolutePathToProjectDirectory,
+            RelativeFilePath.of(CORE_DIRECTORY_NAME),
+            RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME)
+        );
+        this.context.logger.debug(`mkdir ${absolutePathToPublicCoreDirectory}`);
+        await mkdir(absolutePathToPublicCoreDirectory, { recursive: true });
+
+        for (const file of this.publicCoreFiles) {
+            await file.write(absolutePathToPublicCoreDirectory);
+        }
+
+        return absolutePathToPublicCoreDirectory;
+    }
+
+    private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
             filename.replace(".Template", ""),
             RelativeFilePath.of(""),
-            replaceTemplate({ contents, namespace: this.context.getNamespace() })
+            replaceTemplate({
+                contents,
+                grpc: this.context.hasGrpcEndpoints(),
+                namespace
+            })
+        );
+    }
+
+    private async createTestUtilsAsIsFile(filename: string): Promise<File> {
+        const contents = (await readFile(getAsIsFilepath(filename))).toString();
+        return new File(
+            filename.replace(".Template", ""),
+            RelativeFilePath.of(""),
+            replaceTemplate({
+                contents,
+                grpc: this.context.hasGrpcEndpoints(),
+                namespace: this.context.getTestUtilsNamespace()
+            })
         );
     }
 }
 
-function replaceTemplate({ contents, namespace }: { contents: string; namespace: string }): string {
+function replaceTemplate({
+    contents,
+    grpc,
+    namespace
+}: {
+    contents: string;
+    grpc: boolean;
+    namespace: string;
+}): string {
     return template(contents)({
+        grpc,
         namespace
     });
 }
@@ -234,6 +344,14 @@ class CsharpProjectFilepaths {
         return join(this.getProjectDirectory(), RelativeFilePath.of(CORE_DIRECTORY_NAME));
     }
 
+    public getPublicCoreFilesDirectory(): RelativeFilePath {
+        return join(
+            this.getProjectDirectory(),
+            RelativeFilePath.of(CORE_DIRECTORY_NAME),
+            RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME)
+        );
+    }
+
     public getTestFilesDirectory(): RelativeFilePath {
         return join(this.getSourceFileDirectory(), RelativeFilePath.of(this.getTestProjectName()));
     }
@@ -248,6 +366,8 @@ declare namespace CsProj {
         version?: string;
         license?: string;
         githubUrl?: string;
+        context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+        protobufSourceFilePaths: RelativeFilePath[];
     }
 }
 
@@ -257,37 +377,132 @@ class CsProj {
     private version: string | undefined;
     private license: string | undefined;
     private githubUrl: string | undefined;
+    private packageId: string | undefined;
+    private context: AbstractCsharpGeneratorContext<BaseCsharpCustomConfigSchema>;
+    private protobufSourceFilePaths: RelativeFilePath[];
 
-    public constructor({ version, license, githubUrl }: CsProj.Args) {
+    public constructor({ version, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
         this.version = version;
         this.license = license;
         this.githubUrl = githubUrl;
+        this.context = context;
+        this.protobufSourceFilePaths = protobufSourceFilePaths;
+        this.packageId = this.context.customConfig["package-id"];
     }
 
     public toString(): string {
-        const propertyGroups = this.getPropertyGroups();
-        return `
+        const projectGroup = this.getProjectGroup();
+        const dependencies = this.getDependencies();
+        return ` 
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <NuGetAudit>false</NuGetAudit>
-        ${propertyGroups.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
-    </PropertyGroup>
+${projectGroup.join("\n")}
 
-    <ItemGroup>
-        <PackageReference Include="OneOf" Version="3.0.263" />
-        <PackageReference Include="System.Text.Json" Version="8.0.3" />
+    <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+        <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
+    </PropertyGroup>
+    
+    <ItemGroup Condition="'$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+        <PackageReference Include="Portable.System.DateTimeOnly" Version="8.0.1" />
+    </ItemGroup>
+    
+    <ItemGroup Condition="'$(TargetFramework)' == 'net462'">
+        <Reference Include="System.Net.Http" />
+    </ItemGroup>
+    
+    <ItemGroup Condition="'$(TargetFramework)' == 'net7.0' Or '$(TargetFramework)' == 'net6.0' Or '$(TargetFramework)' == 'net462' Or '$(TargetFramework)' == 'netstandard2.0'">
+        <PackageReference Include="PolySharp" Version="1.14.1">
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+            <PrivateAssets>all</PrivateAssets>
+        </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+        ${dependencies.join(`\n${FOUR_SPACES}${FOUR_SPACES}`)}
+    </ItemGroup>
+${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${FOUR_SPACES}`)}
     <ItemGroup>
         <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
     </ItemGroup>
 ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
+    <ItemGroup>
+        <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
+            <_Parameter1>${this.context.project.filepaths.getTestProjectName()}</_Parameter1>
+        </AssemblyAttribute>
+    </ItemGroup>
 
 </Project>
 `;
+    }
+
+    private getDependencies(): string[] {
+        const result: string[] = [];
+        result.push('<PackageReference Include="OneOf" Version="3.0.263" />');
+        result.push('<PackageReference Include="OneOf.Extended" Version="3.0.263" />');
+        result.push('<PackageReference Include="System.Text.Json" Version="8.0.4" />');
+        for (const [name, version] of Object.entries(this.context.getExtraDependencies())) {
+            result.push(`<PackageReference Include="${name}" Version="${version}" />`);
+        }
+        return result;
+    }
+
+    private getProtobufDependencies(protobufSourceFilePaths: RelativeFilePath[]): string[] {
+        if (protobufSourceFilePaths.length === 0) {
+            return [];
+        }
+
+        const pathToProtobufDirectory = `..\\..\\${PROTOBUF_DIRECTORY_NAME}`;
+
+        const result: string[] = [];
+
+        result.push("");
+        result.push("<ItemGroup>");
+        result.push('    <PackageReference Include="Google.Protobuf" Version="3.27.2" />');
+        result.push('    <PackageReference Include="Grpc.Net.Client" Version="2.63.0" />');
+        result.push('    <PackageReference Include="Grpc.Net.ClientFactory" Version="2.63.0" />');
+        result.push('    <PackageReference Include="Grpc.Tools" Version="2.64.0">');
+        result.push(
+            "        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>"
+        );
+        result.push("        <PrivateAssets>all</PrivateAssets>");
+        result.push("    </PackageReference>");
+        result.push("</ItemGroup>\n");
+
+        result.push("<ItemGroup>");
+        for (const protobufSourceFilePath of protobufSourceFilePaths) {
+            const protobufSourceWindowsPath = this.relativePathToWindowsPath(protobufSourceFilePath);
+            result.push(
+                `    <Protobuf Include="${pathToProtobufDirectory}\\${protobufSourceWindowsPath}" GrpcServices="Client" ProtoRoot="${pathToProtobufDirectory}">`
+            );
+            result.push("    </Protobuf>");
+        }
+        result.push("</ItemGroup>\n");
+
+        return result;
+    }
+
+    private getProjectGroup(): string[] {
+        const result: string[] = [];
+
+        result.push(`${FOUR_SPACES}<PropertyGroup>`);
+        if (this.packageId != null) {
+            result.push(`${FOUR_SPACES}${FOUR_SPACES}<PackageId>${this.packageId}</PackageId>`);
+        }
+        result.push(
+            `${FOUR_SPACES}${FOUR_SPACES}<TargetFrameworks>net462;net8.0;net7.0;net6.0;netstandard2.0</TargetFrameworks>`
+        );
+        result.push(`${FOUR_SPACES}${FOUR_SPACES}<ImplicitUsings>enable</ImplicitUsings>`);
+        result.push(`${FOUR_SPACES}${FOUR_SPACES}<NuGetAudit>false</NuGetAudit>`);
+        result.push(`${FOUR_SPACES}${FOUR_SPACES}<LangVersion>12</LangVersion>`);
+        result.push(`${FOUR_SPACES}${FOUR_SPACES}<Nullable>enable</Nullable>`);
+
+        const propertyGroups = this.getPropertyGroups();
+        for (const propertyGroup of propertyGroups) {
+            result.push(`${FOUR_SPACES}${FOUR_SPACES}${propertyGroup}`);
+        }
+        result.push(`${FOUR_SPACES}</PropertyGroup>`);
+
+        return result;
     }
 
     private getPropertyGroups(): string[] {
@@ -320,5 +535,9 @@ ${this.getAdditionalItemGroups().join(`\n${FOUR_SPACES}`)}
         }
 
         return result;
+    }
+
+    private relativePathToWindowsPath(relativePath: RelativeFilePath): RelativeFilePath {
+        return RelativeFilePath.of(path.win32.normalize(relativePath));
     }
 }

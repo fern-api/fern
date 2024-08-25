@@ -1,4 +1,3 @@
-import { generatePathTemplate } from "@fern-api/generator-commons";
 import {
     Argument,
     AstNode,
@@ -17,7 +16,6 @@ import {
     HashReference,
     Import,
     LocationGenerator,
-    LongClassReference,
     Module_,
     Parameter,
     Property,
@@ -33,18 +31,24 @@ import {
     HttpService,
     MultipleBaseUrlsEnvironments,
     Name,
+    OAuthRefreshEndpoint,
+    OAuthTokenEndpoint,
     ObjectProperty,
     Package,
     PathParameter,
+    PlatformHeaders,
     SdkConfig,
     SingleBaseUrlEnvironments,
     Subpackage,
     TypeId
 } from "@fern-fern/ir-sdk/api";
+import { format } from "util";
+import { ArtifactRegistry } from "./utils/ArtifactRegistry";
 import { EndpointGenerator } from "./utils/EndpointGenerator";
 import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { IdempotencyRequestOptions } from "./utils/IdempotencyRequestOptionsClass";
+import { OauthFunction, OauthTokenProvider } from "./utils/oauth/OauthTokenProvider";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 
 export interface ClientClassPair {
@@ -71,7 +75,9 @@ export function generateEndpoints(
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
-    packagePath: string[]
+    packagePath: string[],
+    packageClassReference: ClassReference | undefined,
+    artifactRegistry: ArtifactRegistry | undefined
 ): Function_[] {
     return endpoints
         .map((endpoint) => {
@@ -142,6 +148,9 @@ export function generateEndpoints(
                 skipExample: !generator.endpointHasExamples
             });
 
+            if (artifactRegistry != null && packageClassReference != null) {
+                artifactRegistry.registerEndpoint(endpoint.id, func, packageClassReference);
+            }
             if (generator.endpointHasExamples) {
                 eg.registerSnippet(func, endpoint);
             }
@@ -185,7 +194,14 @@ export function generateRootPackage(
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
     typeExporterLocation: string,
+    headersGenerator: HeadersGenerator,
+    retriesProperty: Property,
+    timeoutProperty: Property,
+    artifactRegistry: ArtifactRegistry,
+    oauthTokenProviderClass: Class_ | undefined,
+    locationGenerator: LocationGenerator,
     environmentClass?: ClassReference,
+    defaultEnvironment?: string,
     rootService?: HttpService
 ): GeneratedRubyFile {
     const classReference = new ClassReference({
@@ -200,6 +216,101 @@ export function generateRootPackage(
         type: requestClient.classReference,
         variableType: VariableType.INSTANCE
     });
+
+    const initializerBody: AstNode[] = [];
+    const asyncInitializerBody: AstNode[] = [];
+
+    const initializerArguments =
+        requestClient.initializer?.parameters
+            .filter((param) => oauthTokenProviderClass == null || param.name !== OauthTokenProvider.FIELD_NAME)
+            .map((param) => param.toArgument(param.name)) ?? [];
+
+    const asyncInitializerArguments =
+        requestClient.initializer?.parameters
+            .filter((param) => oauthTokenProviderClass == null || param.name !== OauthTokenProvider.FIELD_NAME)
+            .map((param) => param.toArgument(param.name)) ?? [];
+
+    if (oauthTokenProviderClass != null) {
+        const tokenProviderName = "oauth_provider";
+        const oauthProviderVariable = new Variable({
+            name: tokenProviderName,
+            type: oauthTokenProviderClass.classReference,
+            variableType: VariableType.INSTANCE
+        });
+        const initOauthProvider = new Expression({
+            leftSide: oauthProviderVariable,
+            rightSide: new FunctionInvocation({
+                onObject: oauthTokenProviderClass.classReference,
+                baseFunction: oauthTokenProviderClass.initializer,
+                arguments_: [
+                    ...(oauthTokenProviderClass.initializer?.parameters ?? [])
+                        .filter((param) => param.name !== "request_client")
+                        .map((param) => param.toArgument(param.name)),
+                    new Argument({
+                        name: "request_client",
+                        value: new FunctionInvocation({
+                            onObject: requestClient.classReference,
+                            baseFunction: requestClient.initializer,
+                            // Spread the array here so we don't lazily pick up the
+                            // method call for token we add in down below
+                            arguments_: [...initializerArguments]
+                        }),
+                        isNamed: true
+                    })
+                ]
+            }),
+            isAssignment: true
+        });
+
+        initializerBody.push(initOauthProvider);
+        asyncInitializerBody.push(initOauthProvider);
+
+        initializerArguments.push(
+            new Argument({
+                name: OauthTokenProvider.FIELD_NAME,
+                value: `@${tokenProviderName}.method(:token)`,
+                isNamed: true
+            })
+        );
+        asyncInitializerArguments.push(
+            new Argument({
+                name: OauthTokenProvider.FIELD_NAME,
+                value: `@${tokenProviderName}.method(:token)`,
+                isNamed: true
+            })
+        );
+    }
+
+    initializerBody.push(
+        ...[
+            new Expression({
+                leftSide: requestClientVariable,
+                rightSide: new FunctionInvocation({
+                    onObject: requestClient.classReference,
+                    baseFunction: requestClient.initializer,
+                    arguments_: initializerArguments
+                }),
+                isAssignment: true
+            }),
+            ...Array.from(syncSubpackages.entries()).map(([spName, sp]) => {
+                const spInstanceVar = new Variable({
+                    name: getSubpackagePropertyNameFromIr(spName),
+                    type: sp.classReference,
+                    variableType: VariableType.INSTANCE
+                });
+                return new Expression({
+                    leftSide: spInstanceVar,
+                    rightSide: new FunctionInvocation({
+                        onObject: sp.classReference,
+                        baseFunction: sp.initializer,
+                        arguments_: sp.initializer?.parameters.map((param) => param.toArgument(requestClientVariable))
+                    }),
+                    isAssignment: true
+                });
+            })
+        ]
+    );
+
     const clientClass = new Class_({
         classReference,
         properties: Array.from(syncSubpackages.entries()).map(
@@ -219,43 +330,24 @@ export function generateRootPackage(
                   generatedClasses,
                   flattenedProperties,
                   fileUploadUtility,
-                  []
+                  [],
+                  classReference,
+                  artifactRegistry
               )
             : [],
         includeInitializer: false,
         initializerOverride: new Function_({
             name: "initialize",
             invocationName: "new",
-            functionBody: [
-                new Expression({
-                    leftSide: requestClientVariable,
-                    rightSide: new FunctionInvocation({
-                        onObject: requestClient.classReference,
-                        baseFunction: requestClient.initializer,
-                        arguments_: requestClient.initializer?.parameters.map((param) => param.toArgument(param.name))
-                    }),
-                    isAssignment: true
-                }),
-                ...Array.from(syncSubpackages.entries()).map(([spName, sp]) => {
-                    const spInstanceVar = new Variable({
-                        name: getSubpackagePropertyNameFromIr(spName),
-                        type: sp.classReference,
-                        variableType: VariableType.INSTANCE
-                    });
-                    return new Expression({
-                        leftSide: spInstanceVar,
-                        rightSide: new FunctionInvocation({
-                            onObject: sp.classReference,
-                            baseFunction: sp.initializer,
-                            arguments_: sp.initializer?.parameters.map((param) =>
-                                param.toArgument(requestClientVariable)
-                            )
-                        }),
-                        isAssignment: true
-                    });
-                })
-            ],
-            parameters: requestClient.initializer?.parameters,
+            functionBody: initializerBody,
+            parameters: getClientParameters(
+                "rootClient",
+                environmentClass,
+                headersGenerator,
+                retriesProperty,
+                timeoutProperty,
+                defaultEnvironment
+            ),
             returnValue: classReference
         })
     });
@@ -266,6 +358,38 @@ export function generateRootPackage(
         type: asyncRequestClient.classReference,
         variableType: VariableType.INSTANCE
     });
+    asyncInitializerBody.push(
+        ...[
+            new Expression({
+                leftSide: asyncRequestClientVariable,
+                rightSide: new FunctionInvocation({
+                    onObject: asyncRequestClient.classReference,
+                    baseFunction: asyncRequestClient.initializer,
+                    arguments_: asyncRequestClient.initializer?.parameters.map((param) => param.toArgument(param.name))
+                }),
+                isAssignment: true
+            }),
+            ...Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
+                const spInstanceVar = new Variable({
+                    name: getSubpackagePropertyNameFromIr(spName),
+                    type: sp.classReference,
+                    variableType: VariableType.INSTANCE
+                });
+                return new Expression({
+                    leftSide: spInstanceVar,
+                    rightSide: new FunctionInvocation({
+                        onObject: sp.classReference,
+                        baseFunction: sp.initializer,
+                        arguments_: sp.initializer?.parameters.map((param) =>
+                            param.toArgument(asyncRequestClientVariable)
+                        )
+                    }),
+                    isAssignment: true
+                });
+            })
+        ]
+    );
+
     const asyncClassReference = new ClassReference({
         name: "AsyncClient",
         import_: new Import({ from: gemName, isExternal: false }),
@@ -290,58 +414,37 @@ export function generateRootPackage(
                   generatedClasses,
                   flattenedProperties,
                   fileUploadUtility,
-                  []
+                  [],
+                  undefined,
+                  undefined
               )
             : [],
         includeInitializer: false,
         initializerOverride: new Function_({
             name: "initialize",
             invocationName: "new",
-            functionBody: [
-                new Expression({
-                    leftSide: asyncRequestClientVariable,
-                    rightSide: new FunctionInvocation({
-                        onObject: asyncRequestClient.classReference,
-                        baseFunction: asyncRequestClient.initializer,
-                        arguments_: asyncRequestClient.initializer?.parameters.map((param) =>
-                            param.toArgument(param.name)
-                        )
-                    }),
-                    isAssignment: true
-                }),
-                ...Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
-                    const spInstanceVar = new Variable({
-                        name: getSubpackagePropertyNameFromIr(spName),
-                        type: sp.classReference,
-                        variableType: VariableType.INSTANCE
-                    });
-                    return new Expression({
-                        leftSide: spInstanceVar,
-                        rightSide: new FunctionInvocation({
-                            onObject: sp.classReference,
-                            baseFunction: sp.initializer,
-                            arguments_: sp.initializer?.parameters.map((param) =>
-                                param.toArgument(asyncRequestClientVariable)
-                            )
-                        }),
-                        isAssignment: true
-                    });
-                })
-            ],
-            parameters: asyncRequestClient.initializer?.parameters,
+            functionBody: asyncInitializerBody,
+            parameters: getClientParameters(
+                "rootClient",
+                environmentClass,
+                headersGenerator,
+                retriesProperty,
+                timeoutProperty,
+                defaultEnvironment
+            ),
             returnValue: asyncClassReference
         })
     });
 
     const maybeEnvironmentImport = environmentClass?.import_;
     const typeExporterImport = new Import({ from: typeExporterLocation, isExternal: false });
-    const rootNode = Module_.wrapInModules(
-        clientName,
-        [clientClass, asyncClientClass],
-        undefined,
-        maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport],
-        true
-    );
+    const rootNode = Module_.wrapInModules({
+        locationGenerator,
+        child: [clientClass, asyncClientClass],
+        arbitraryImports:
+            maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport]
+    });
+
     return new GeneratedRubyFile({
         rootNode,
         fullPath: gemName
@@ -465,10 +568,11 @@ export function generateService(
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
     locationGenerator: LocationGenerator,
-    packagePath: string[]
+    packagePath: string[],
+    artifactRegistry: ArtifactRegistry
 ): ClientClassPair {
     const subpackageName = subpackage.name;
-    const serviceName = subpackageName.pascalCase.safeName;
+    const serviceName = subpackageName.pascalCase.unsafeName;
     const import_ = new Import({
         from: locationGenerator.getLocationForServiceDeclaration(service.name),
         isExternal: false
@@ -478,6 +582,11 @@ export function generateService(
     // Add Client class
     const serviceBasePath = generateRubyPathTemplate(service.pathParameters, service.basePath);
     const requestClientProperty = new Property({ name: "request_client", type: requestClientCr });
+    const syncClientClassReference = new ClassReference({
+        name: `${serviceName}Client`,
+        import_,
+        moduleBreadcrumbs
+    });
     const syncClientClass = new Class_({
         classReference: new ClassReference({
             name: `${serviceName}Client`,
@@ -499,7 +608,9 @@ export function generateService(
             generatedClasses,
             flattenedProperties,
             fileUploadUtility,
-            packagePath
+            packagePath,
+            syncClientClassReference,
+            artifactRegistry
         )
     });
 
@@ -526,7 +637,9 @@ export function generateService(
             generatedClasses,
             flattenedProperties,
             fileUploadUtility,
-            packagePath
+            packagePath,
+            undefined,
+            undefined
         )
     });
 
@@ -598,65 +711,15 @@ export function generateEnvironmentConstants(environmentsConfig: EnvironmentsCon
 
 function generateRequestClientInitializer(
     isAsync: boolean,
-    sdkConfig: SdkConfig,
     classReference: ClassReference,
-    gemName: string,
-    sdkVersion: string | undefined,
     headersGenerator: HeadersGenerator,
     environmentCr: ClassReference | undefined,
     isMultiBaseUrlEnvironments: boolean,
+    retriesProperty: Property,
+    timeoutProperty: Property,
     defaultEnvironment?: string,
     hasFileBasedDependencies = false
 ): Function_ {
-    const allHeaders = new Map([
-        // SDK Default Headers
-        [`"${sdkConfig.platformHeaders.language}"`, "Ruby"],
-        [`"${sdkConfig.platformHeaders.sdkName}"`, gemName]
-    ]);
-    if (sdkVersion !== undefined) {
-        allHeaders.set(`"${sdkConfig.platformHeaders.sdkVersion}"`, sdkVersion);
-    }
-
-    // If "all" then require the param and always put it in, if optional
-    // just add the header if it's there headers["name"] = value if value
-    let authHeaders = new Map();
-    const authHeaderSetters: AstNode[] = [];
-    let headersToSet = headersGenerator.getAdditionalHeadersAsProperties();
-    if (headersGenerator.isAuthRequired) {
-        authHeaders = new Map(headersGenerator.getAuthHeaders());
-    } else {
-        headersToSet = [...headersGenerator.getAuthHeadersAsProperties(), ...headersToSet];
-    }
-    // Make an if statement for each auth scheme that adds the header if present
-    headersToSet.forEach((prop) =>
-        authHeaderSetters.push(
-            new ConditionalStatement({
-                if_: {
-                    rightSide: new FunctionInvocation({
-                        onObject: prop.name,
-                        baseFunction: new Function_({ name: "nil?", functionBody: [] })
-                    }),
-                    operation: "!",
-                    expressions: [
-                        new Expression({
-                            leftSide: `@headers["${prop.wireValue ?? prop.name}"]`,
-                            rightSide: prop.name,
-                            isAssignment: true
-                        })
-                    ]
-                }
-            })
-        )
-    );
-
-    const retriesProperty = new Property({
-        name: "max_retries",
-        type: LongClassReference,
-        isOptional: true,
-        documentation: "The number of times to retry a failed request, defaults to 2."
-    });
-    const timeoutProperty = new Property({ name: "timeout_in_seconds", type: LongClassReference, isOptional: true });
-
     const retryOptions = new HashInstance({
         contents: new Map([["max", retriesProperty.toVariable(VariableType.LOCAL)]])
     });
@@ -701,7 +764,6 @@ function generateRequestClientInitializer(
         );
     }
 
-    const initialRequestOverrides: Property[] = [retriesProperty, timeoutProperty];
     faradayConfiguration.push(
         new ConditionalStatement({
             if_: {
@@ -749,19 +811,9 @@ function generateRequestClientInitializer(
         })
     );
 
-    const functionParams = [];
-    const functionBody = [];
+    let functionBody: AstNode[] = [];
 
     if (environmentCr !== undefined) {
-        functionParams.push(
-            new Parameter({
-                name: "environment",
-                type: environmentCr,
-                defaultValue: defaultEnvironment,
-                isOptional: true,
-                example: defaultEnvironment
-            })
-        );
         functionBody.push(
             new Expression({
                 leftSide: "@default_environment",
@@ -789,37 +841,67 @@ function generateRequestClientInitializer(
         );
     }
 
-    functionParams.push(
-        new Parameter({
-            name: "base_url",
-            type: StringClassReference,
-            isOptional: true,
-            example: '"https://api.example.com"'
-        })
+    headersGenerator.getAuthHeaders().forEach(([prop_name, prop_value]) =>
+        functionBody.push(
+            new Expression({
+                leftSide: prop_name,
+                rightSide: prop_value,
+                isAssignment: true
+            })
+        )
     );
+
+    const headerSetters: AstNode[] = [];
+    const headersToSet = headersGenerator.getAdditionalHeadersAsProperties();
+    const hasHeaders = headersToSet.length > 0;
+
+    // Make an if statement for each auth scheme that adds the header if present
+    headersToSet.forEach((prop) =>
+        headerSetters.push(
+            new ConditionalStatement({
+                if_: {
+                    rightSide: new FunctionInvocation({
+                        onObject: prop.name,
+                        baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                    }),
+                    operation: "!",
+                    expressions: [
+                        new Expression({
+                            leftSide: `@headers["${prop.wireValue ?? prop.name}"]`,
+                            rightSide: prop.name,
+                            isAssignment: true
+                        })
+                    ]
+                }
+            })
+        )
+    );
+
+    if (hasHeaders) {
+        functionBody = functionBody.concat([
+            new Expression({
+                leftSide: "@headers",
+                rightSide: new HashInstance({}),
+                isAssignment: true
+            }),
+            ...headerSetters
+        ]);
+    }
 
     return new Function_({
         name: "initialize",
         invocationName: "new",
-        parameters: [
-            ...functionParams,
-            // Select sample of the request overrides object properties
-            ...initialRequestOverrides.map((prop) => prop.toParameter({})),
-            // Auth headers
-            ...headersGenerator.getAuthHeadersAsParameters(),
-            // Global headers
-            ...headersGenerator.getAdditionalHeadersAsParameters()
-        ],
+        parameters: getClientParameters(
+            "requestClient",
+            environmentCr,
+            headersGenerator,
+            retriesProperty,
+            timeoutProperty,
+            defaultEnvironment
+        ),
         returnValue: classReference,
         functionBody: [
             ...functionBody,
-            // Set the header
-            new Expression({
-                leftSide: "@headers",
-                rightSide: new HashInstance({ contents: new Map([...allHeaders.entries(), ...authHeaders.entries()]) }),
-                isAssignment: true
-            }),
-            ...authHeaderSetters,
             // Set the Faraday connection
             new Expression({
                 leftSide: "@conn",
@@ -829,13 +911,15 @@ function generateRequestClientInitializer(
                         import_: new Import({ from: "faraday", isExternal: true })
                     }),
                     baseFunction: new Function_({ name: "new", functionBody: [] }),
-                    arguments_: [
-                        new Argument({
-                            isNamed: true,
-                            name: "headers",
-                            value: "@headers"
-                        })
-                    ],
+                    arguments_: hasHeaders
+                        ? [
+                              new Argument({
+                                  isNamed: true,
+                                  name: "headers",
+                                  value: "@headers"
+                              })
+                          ]
+                        : undefined,
                     block: { arguments: "faraday", expressions: faradayConfiguration }
                 }),
                 isAssignment: true
@@ -844,11 +928,56 @@ function generateRequestClientInitializer(
     });
 }
 
+function getClientParameters(
+    desiredClient: "rootClient" | "requestClient",
+    environmentCr: ClassReference | undefined,
+    headersGenerator: HeadersGenerator,
+    retriesProperty: Property,
+    timeoutProperty: Property,
+    defaultEnvironment?: string
+): Parameter[] {
+    const functionParams = [
+        new Parameter({
+            name: "base_url",
+            type: StringClassReference,
+            isOptional: true,
+            example: '"https://api.example.com"'
+        })
+    ];
+    if (environmentCr !== undefined) {
+        functionParams.push(
+            new Parameter({
+                name: "environment",
+                type: environmentCr,
+                defaultValue: defaultEnvironment,
+                isOptional: true,
+                example: defaultEnvironment
+            })
+        );
+    }
+
+    const initialRequestOverrides: Property[] = [retriesProperty, timeoutProperty];
+
+    return [
+        ...functionParams,
+        // Select sample of the request overrides object properties
+        ...initialRequestOverrides.map((prop) => prop.toParameter({})),
+        // Auth headers
+        ...headersGenerator.getAuthHeadersAsParameters(desiredClient === "rootClient"),
+        // Global headers
+        ...headersGenerator.getAdditionalHeadersAsParameters()
+    ];
+}
+
 function requestClientFunctions(
     requestOptions: RequestOptions,
     baseUrlProperty: Property,
     environmentProperty: Property | undefined,
-    isMultiBaseUrlEnvironments: boolean
+    isMultiBaseUrlEnvironments: boolean,
+    platformHeaders: PlatformHeaders,
+    headersGenerator: HeadersGenerator,
+    gemName: string,
+    sdkVersion: string | undefined
 ): Function_[] {
     const requestOptionsParameter = new Parameter({
         name: "request_options",
@@ -862,6 +991,15 @@ function requestClientFunctions(
     const parameters = [requestOptionsParameter];
     if (environmentProperty != null && isMultiBaseUrlEnvironments) {
         parameters.push(environmentOverrideParameter);
+    }
+
+    const allHeaders = new Map([
+        // SDK Default Headers
+        [`"${platformHeaders.language}"`, "Ruby"],
+        [`"${platformHeaders.sdkName}"`, gemName]
+    ]);
+    if (sdkVersion !== undefined) {
+        allHeaders.set(`"${platformHeaders.sdkVersion}"`, sdkVersion);
     }
 
     return [
@@ -889,6 +1027,35 @@ function requestClientFunctions(
             ],
             parameters,
             returnValue: StringClassReference
+        }),
+        new Function_({
+            name: "get_headers",
+            functionBody: [
+                new Expression({
+                    leftSide: "headers",
+                    rightSide: new HashInstance({
+                        contents: new Map([...allHeaders.entries()])
+                    }),
+                    isAssignment: true
+                }),
+                ...headersGenerator.getAuthHeadersAsProperties().map(
+                    (prop) =>
+                        new Expression({
+                            leftSide: `headers["${prop.wireValue ?? prop.name}"]`,
+                            rightSide: `((${prop.toVariable(VariableType.INSTANCE).write({})}.is_a? Method) ? ${prop
+                                .toVariable(VariableType.INSTANCE)
+                                .write({})}.call : ${prop.toVariable(VariableType.INSTANCE).write({})}) unless ${prop
+                                .toVariable(VariableType.INSTANCE)
+                                .write({})}.nil?`,
+                            isAssignment: true
+                        })
+                ),
+                new Expression({
+                    leftSide: "headers",
+                    isAssignment: false
+                })
+            ],
+            returnValue: new HashReference({ keyType: StringClassReference, valueType: StringClassReference })
         })
     ];
 }
@@ -903,7 +1070,9 @@ export function generateRequestClients(
     isMultiBaseUrlEnvironments: boolean,
     defaultEnvironment: string | undefined,
     hasFileBasedDependencies: boolean | undefined,
-    requestOptions: RequestOptions
+    requestOptions: RequestOptions,
+    retriesProperty: Property,
+    timeoutProperty: Property
 ): [Class_, Class_] {
     const hasEnvironments = environmentCr != null;
     const faradayReference = new ClassReference({
@@ -920,12 +1089,9 @@ export function generateRequestClients(
     });
     // Client properties
     const clientProperties = [
-        new Property({
-            name: "headers",
-            type: new HashReference({ keyType: StringClassReference, valueType: StringClassReference })
-        }),
         new Property({ name: "conn", type: faradayReference }),
-        baseUrlProperty
+        baseUrlProperty,
+        ...headersGenerator.getAuthHeadersAsProperties()
     ];
 
     if (hasEnvironments) {
@@ -944,13 +1110,12 @@ export function generateRequestClients(
         includeInitializer: false,
         initializerOverride: generateRequestClientInitializer(
             false,
-            sdkConfig,
             clientClassReference,
-            gemName,
-            sdkVersion,
             headersGenerator,
             environmentCr,
             isMultiBaseUrlEnvironments,
+            retriesProperty,
+            timeoutProperty,
             defaultEnvironment,
             hasFileBasedDependencies
         ),
@@ -958,7 +1123,11 @@ export function generateRequestClients(
             requestOptions,
             baseUrlProperty,
             environmentCr != null ? environmentProperty : undefined,
-            isMultiBaseUrlEnvironments
+            isMultiBaseUrlEnvironments,
+            sdkConfig.platformHeaders,
+            headersGenerator,
+            gemName,
+            sdkVersion
         )
     });
 
@@ -974,13 +1143,12 @@ export function generateRequestClients(
         includeInitializer: false,
         initializerOverride: generateRequestClientInitializer(
             true,
-            sdkConfig,
             asyncClientClassReference,
-            gemName,
-            sdkVersion,
             headersGenerator,
             environmentCr,
             isMultiBaseUrlEnvironments,
+            retriesProperty,
+            timeoutProperty,
             defaultEnvironment,
             hasFileBasedDependencies
         ),
@@ -988,7 +1156,11 @@ export function generateRequestClients(
             requestOptions,
             baseUrlProperty,
             environmentCr != null ? environmentProperty : undefined,
-            isMultiBaseUrlEnvironments
+            isMultiBaseUrlEnvironments,
+            sdkConfig.platformHeaders,
+            headersGenerator,
+            gemName,
+            sdkVersion
         )
     });
 
@@ -997,4 +1169,66 @@ export function generateRequestClients(
 
 export function getSubpackagePropertyNameFromIr(name: Name): string {
     return name.snakeCase.safeName;
+}
+
+export function getOauthAccessTokenFunctionMetadata({
+    tokenEndpoint,
+    artifactRegistry
+}: {
+    tokenEndpoint: OAuthTokenEndpoint;
+    artifactRegistry: ArtifactRegistry;
+}): OauthFunction {
+    const endpointId = tokenEndpoint.endpointReference;
+    const tokenFunction = artifactRegistry.getEndpointFunction(endpointId);
+    const tokenFunctionClientClassReference = artifactRegistry.getEndpointPackage(endpointId);
+
+    if (tokenFunction == null || tokenFunctionClientClassReference == null) {
+        throw new Error(`Could not find endpoint function for ${endpointId}`);
+    }
+
+    return {
+        tokenResponseProperty: tokenEndpoint.responseProperties,
+        tokenFunction,
+        tokenFunctionClientClassReference
+    };
+}
+
+export function getOauthRefreshTokenFunctionMetadata({
+    refreshEndpoint,
+    artifactRegistry
+}: {
+    refreshEndpoint: OAuthRefreshEndpoint;
+    artifactRegistry: ArtifactRegistry;
+}): OauthFunction {
+    const endpointId = refreshEndpoint.endpointReference;
+    const tokenFunction = artifactRegistry.getEndpointFunction(endpointId);
+    const tokenFunctionClientClassReference = artifactRegistry.getEndpointPackage(endpointId);
+
+    if (tokenFunction == null || tokenFunctionClientClassReference == null) {
+        throw new Error(`Could not find endpoint function for ${endpointId}`);
+    }
+
+    return {
+        tokenResponseProperty: refreshEndpoint.responseProperties,
+        tokenFunction,
+        tokenFunctionClientClassReference
+    };
+}
+
+function generatePathTemplate(templateString: string, pathParameters: PathParameter[], basePath?: HttpPath): string {
+    if (basePath === undefined) {
+        return "";
+    }
+    let pathParametersTemplate = basePath.head;
+    for (let i = 0; i < basePath.parts.length; i++) {
+        const pathPart = pathParameters[i];
+        if (pathPart === undefined) {
+            continue;
+        }
+        pathParametersTemplate = pathParametersTemplate.concat(
+            `${format(templateString, pathPart.name.snakeCase.safeName)}${basePath.parts[i]?.tail ?? ""}`
+        );
+    }
+    // Strip leading and trailing slashes
+    return pathParametersTemplate.replaceAll(/^\/+|\/+$/g, "");
 }

@@ -14,8 +14,11 @@ export declare namespace Enum {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,7 +31,7 @@ export class Enum {
      * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.enum.getAndReturnEnum(Fiddle.types.WeatherReport.Sunny)
+     *     await client.endpoints.enum.getAndReturnEnum(Fiddle.types.WeatherReport.Sunny)
      */
     public async getAndReturnEnum(
         request: Fiddle.types.WeatherReport,
@@ -42,11 +45,13 @@ export class Enum {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.types.WeatherReport.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.types.WeatherReport.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -54,7 +59,7 @@ export class Enum {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.types.WeatherReport.parseOrThrow(_response.body, {
+                body: serializers.types.WeatherReport.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

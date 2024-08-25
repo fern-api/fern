@@ -38,7 +38,7 @@ export class HeadersService {
 
     public toRouter(): express.Router {
         this.router.post("/headers", async (req, res, next) => {
-            const request = await serializers.SendLiteralsInHeadersRequest.parse(req.body);
+            const request = serializers.SendLiteralsInHeadersRequest.parse(req.body);
             if (request.ok) {
                 req.body = request.value;
                 try {
@@ -47,7 +47,7 @@ export class HeadersService {
                         {
                             send: async (responseBody) => {
                                 res.json(
-                                    await serializers.SendResponse.jsonOrThrow(responseBody, {
+                                    serializers.SendResponse.jsonOrThrow(responseBody, {
                                         unrecognizedObjectKeys: "strip",
                                     })
                                 );

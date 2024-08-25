@@ -10,7 +10,7 @@ export const DeepEqualityCorrectnessCheck: core.serialization.ObjectSchema<
     serializers.v2.DeepEqualityCorrectnessCheck.Raw,
     SeedTrace.v2.DeepEqualityCorrectnessCheck
 > = core.serialization.object({
-    expectedValueParameterId: core.serialization.lazy(async () => (await import("../../../../..")).v2.ParameterId),
+    expectedValueParameterId: core.serialization.lazy(() => serializers.v2.ParameterId),
 });
 
 export declare namespace DeepEqualityCorrectnessCheck {

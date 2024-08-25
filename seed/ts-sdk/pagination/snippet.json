@@ -8,7 +8,18 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithCursorPagination({\n    page: 1,\n    perPage: 1,\n    order: SeedPagination.Order.Asc,\n    startingAfter: \"string\"\n});\n"
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listWithCursorPagination({\n    page: 1,\n    perPage: 1,\n    order: SeedPagination.Order.Asc,\n    startingAfter: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithBodyCursorPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listWithBodyCursorPagination({\n    pagination: {\n        cursor: \"string\"\n    }\n});\n"
             }
         },
         {
@@ -19,7 +30,40 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithOffsetPagination({\n    page: 1,\n    perPage: 1,\n    order: SeedPagination.Order.Asc,\n    startingAfter: \"string\"\n});\n"
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listWithOffsetPagination({\n    page: 1,\n    perPage: 1,\n    order: SeedPagination.Order.Asc,\n    startingAfter: \"string\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifier_override": "endpoint_users.listWithBodyOffsetPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listWithBodyOffsetPagination({\n    pagination: {\n        page: 1\n    }\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetStepPagination"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listWithOffsetStepPagination({\n    page: 1,\n    limit: 1,\n    order: SeedPagination.Order.Asc\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "GET",
+                "identifier_override": "endpoint_users.listWithOffsetPaginationHasNextPage"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedPaginationClient, SeedPagination } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listWithOffsetPaginationHasNextPage({\n    page: 1,\n    limit: 1,\n    order: SeedPagination.Order.Asc\n});\n"
             }
         },
         {
@@ -30,7 +74,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\n"
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listWithExtendedResults({\n    cursor: \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\"\n});\n"
             }
         },
         {
@@ -41,7 +85,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listUsernames({\n    startingAfter: \"string\"\n});\n"
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listUsernames({\n    startingAfter: \"string\"\n});\n"
             }
         },
         {
@@ -52,7 +96,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst seedPagination = new SeedPaginationClient({ token: \"YOUR_TOKEN\" });\nawait seedPagination.users.listWithGlobalConfig({\n    offset: 1\n});\n"
+                "client": "import { SeedPaginationClient } from \"@fern/pagination\";\n\nconst client = new SeedPaginationClient({ environment: \"YOUR_BASE_URL\", token: \"YOUR_TOKEN\" });\nawait client.users.listWithGlobalConfig({\n    offset: 1\n});\n"
             }
         }
     ],

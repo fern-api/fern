@@ -1,7 +1,15 @@
 imports:
   features: features.yml
 types:
+  CliSeedWorkspaceConfiguration:
+    properties:
+      changelogLocation: 
+        type: optional<string>
+        docs: | 
+          The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
+
   SeedWorkspaceConfiguration:
+    extends: CliSeedWorkspaceConfiguration
     properties:
       irVersion: string
       language: optional<Language>
@@ -65,6 +73,7 @@ types:
       - go
       - ruby
       - csharp
+      - swift
 
   GeneratorType:
     enum:
@@ -78,16 +87,35 @@ types:
       publishConfig: unknown
       publishMetadata: unknown
       customConfig: unknown
+      readmeConfig: optional<ReadmeConfig>
       audiences: optional<list<string>>
       outputFolder: string
       outputVersion: optional<string>
       outputMode: 
         type: optional<OutputMode>
         docs: Overrides the default output mode
+
+  ReadmeConfig:
+    properties:
+      defaultEndpoint: optional<ReadmeEndpoint>
+      bannerLink: optional<string>
+      apiReferenceLink: optional<string>
+      features: optional<map<string, list<ReadmeEndpoint>>>
+
+  ReadmeEndpoint:
+    discriminated: false
+    union: 
+      - string
+      - ReadmeEndpointObject
+
+  ReadmeEndpointObject:
+    properties:
+      method: string
+      path: string
+      stream: optional<boolean>
   
   OutputMode: 
     enum: 
       - github
       - local_files
       - publish
-

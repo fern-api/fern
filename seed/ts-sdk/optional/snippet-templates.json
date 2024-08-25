@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_optional.sendOptionalBody"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedObjectsWithImports = new SeedObjectsWithImportsClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedObjectsWithImportsClient } from \"@fern/optional\";"
+                ],
+                "templateString": "const client = new SeedObjectsWithImportsClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedObjectsWithImports.optional.sendOptionalBody(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.optional.sendOptionalBody(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

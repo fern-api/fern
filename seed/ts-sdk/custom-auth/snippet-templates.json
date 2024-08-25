@@ -11,10 +11,57 @@
             "identifierOverride": "endpoint_custom-auth.getWithCustomAuth"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedCustomAuthClient } from \"@fern/custom-auth\";"
+                ],
+                "templateString": "const client = new SeedCustomAuthClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "customAuthScheme: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "Authorization",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedCustomAuth.customAuth.getWithCustomAuth()",
+                "templateString": "await client.customAuth.getWithCustomAuth()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],
@@ -35,10 +82,57 @@
             "identifierOverride": "endpoint_custom-auth.postWithCustomAuth"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedCustomAuth = new SeedCustomAuthClient({ customAuthScheme: \"YOUR_CUSTOM_AUTH_SCHEME\" });\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedCustomAuthClient } from \"@fern/custom-auth\";"
+                ],
+                "templateString": "const client = new SeedCustomAuthClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "customAuthScheme: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "Authorization",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedCustomAuth.customAuth.postWithCustomAuth(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.customAuth.postWithCustomAuth(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

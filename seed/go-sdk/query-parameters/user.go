@@ -11,18 +11,20 @@ import (
 )
 
 type GetUsersRequest struct {
-	Limit          int               `json:"-" url:"limit"`
-	Id             uuid.UUID         `json:"-" url:"id"`
-	Date           time.Time         `json:"-" url:"date" format:"date"`
-	Deadline       time.Time         `json:"-" url:"deadline"`
-	Bytes          []byte            `json:"-" url:"bytes"`
-	User           *User             `json:"-" url:"user,omitempty"`
-	KeyValue       map[string]string `json:"-" url:"keyValue,omitempty"`
-	OptionalString *string           `json:"-" url:"optionalString,omitempty"`
-	NestedUser     *NestedUser       `json:"-" url:"nestedUser,omitempty"`
-	OptionalUser   *User             `json:"-" url:"optionalUser,omitempty"`
-	ExcludeUser    []*User           `json:"-" url:"excludeUser,omitempty"`
-	Filter         []string          `json:"-" url:"filter"`
+	Limit            int               `json:"-" url:"limit"`
+	Id               uuid.UUID         `json:"-" url:"id"`
+	Date             time.Time         `json:"-" url:"date" format:"date"`
+	Deadline         time.Time         `json:"-" url:"deadline"`
+	Bytes            []byte            `json:"-" url:"bytes"`
+	User             *User             `json:"-" url:"user,omitempty"`
+	UserList         []*User           `json:"-" url:"userList,omitempty"`
+	OptionalDeadline *time.Time        `json:"-" url:"optionalDeadline,omitempty"`
+	KeyValue         map[string]string `json:"-" url:"keyValue,omitempty"`
+	OptionalString   *string           `json:"-" url:"optionalString,omitempty"`
+	NestedUser       *NestedUser       `json:"-" url:"nestedUser,omitempty"`
+	OptionalUser     *User             `json:"-" url:"optionalUser,omitempty"`
+	ExcludeUser      []*User           `json:"-" url:"excludeUser,omitempty"`
+	Filter           []string          `json:"-" url:"filter"`
 }
 
 type NestedUser struct {

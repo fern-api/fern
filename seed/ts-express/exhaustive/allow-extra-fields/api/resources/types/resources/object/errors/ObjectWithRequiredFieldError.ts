@@ -15,7 +15,7 @@ export class ObjectWithRequiredFieldError extends errors.SeedExhaustiveError {
 
     public async send(res: express.Response): Promise<void> {
         res.status(400).json(
-            await serializers.types.ObjectWithRequiredField.jsonOrThrow(this.body, {
+            serializers.types.ObjectWithRequiredField.jsonOrThrow(this.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

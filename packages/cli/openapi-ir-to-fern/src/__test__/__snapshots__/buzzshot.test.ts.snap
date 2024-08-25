@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`open api parser buzzshot docs 1`] = `
+exports[`open api parser > buzzshot > docs 1`] = `
 {
   "definitionFiles": {
     "api.yml": {
@@ -388,6 +388,9 @@ exports[`open api parser buzzshot docs 1`] = `
                         "key": "key",
                         "label": "label",
                         "present": true,
+                        "value": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "group": "group",
@@ -630,6 +633,9 @@ exports[`open api parser buzzshot docs 1`] = `
                         "key": "key",
                         "label": "label",
                         "present": true,
+                        "value": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "first_name": "first_name",
@@ -657,6 +663,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "types": {
         "ListAccountsResponse": {
@@ -664,8 +673,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -675,8 +682,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -687,14 +692,15 @@ exports[`open api parser buzzshot docs 1`] = `
             },
             "results": "optional<list<root.Room>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListGamesResponse": {
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -704,8 +710,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -716,14 +720,15 @@ exports[`open api parser buzzshot docs 1`] = `
             },
             "results": "optional<list<root.Game>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListGroupsResponse": {
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -733,8 +738,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -745,14 +748,15 @@ exports[`open api parser buzzshot docs 1`] = `
             },
             "results": "optional<list<root.Group>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListLocationsResponse": {
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -762,8 +766,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -774,14 +776,15 @@ exports[`open api parser buzzshot docs 1`] = `
             },
             "results": "optional<list<root.Room>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListPhotosResponse": {
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -791,8 +794,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -803,14 +804,15 @@ exports[`open api parser buzzshot docs 1`] = `
             },
             "results": "optional<list<root.Photo>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListPlayersResponse": {
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -820,8 +822,6 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -831,6 +831,9 @@ exports[`open api parser buzzshot docs 1`] = `
               },
             },
             "results": "optional<list<root.Player>>",
+          },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
           },
         },
       },
@@ -856,8 +859,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "group": "optional<string>",
           "id": "optional<integer>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -872,6 +873,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "time": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GameComplete": {
         "docs": undefined,
@@ -882,6 +886,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "hints": "optional<integer>",
           "score": "optional<integer>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GameExtraFieldsItem": {
         "docs": undefined,
@@ -891,6 +898,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GamePhotosItem": {
         "docs": undefined,
@@ -898,8 +908,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "added_at": "optional<datetime>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -909,6 +917,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Group": {
@@ -928,8 +939,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "id": "optional<integer>",
           "is_event": "optional<boolean>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -943,6 +952,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "start_at": "optional<datetime>",
           "time": "string",
           "updated_at": "optional<datetime>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "GroupGamesItem": {
@@ -962,8 +974,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
           "id": "optional<integer>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -977,6 +987,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "time": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupGamesItemComplete": {
         "docs": undefined,
@@ -987,6 +1000,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "hints": "optional<integer>",
           "score": "optional<integer>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupGamesItemExtraFieldsItem": {
         "docs": undefined,
@@ -996,6 +1012,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupPhotosItem": {
         "docs": undefined,
@@ -1004,8 +1023,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "game": "optional<string>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -1015,6 +1032,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "GroupPlayersItem": {
@@ -1032,8 +1052,6 @@ exports[`open api parser buzzshot docs 1`] = `
           },
           "extra_fields": "list<GroupPlayersItemExtraFieldsItem>",
           "first_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -1043,8 +1061,6 @@ exports[`open api parser buzzshot docs 1`] = `
             },
           },
           "last_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -1058,6 +1074,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "signature": "optional<string>",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupPlayersItemExtraFieldsItem": {
         "docs": undefined,
@@ -1066,6 +1085,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Photo": {
@@ -1084,6 +1106,9 @@ exports[`open api parser buzzshot docs 1`] = `
           },
           "processed": "list<PhotoProcessedItem>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "PhotoProcessedItem": {
         "docs": undefined,
@@ -1093,8 +1118,6 @@ exports[`open api parser buzzshot docs 1`] = `
           "group": "optional<string>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -1104,6 +1127,9 @@ exports[`open api parser buzzshot docs 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Player": {
@@ -1121,8 +1147,6 @@ exports[`open api parser buzzshot docs 1`] = `
           },
           "extra_fields": "list<PlayerExtraFieldsItem>",
           "first_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -1133,8 +1157,6 @@ exports[`open api parser buzzshot docs 1`] = `
           },
           "id": "optional<integer>",
           "last_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -1147,6 +1169,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "phone": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "PlayerExtraFieldsItem": {
         "docs": undefined,
@@ -1155,6 +1180,9 @@ exports[`open api parser buzzshot docs 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Room": {
@@ -1171,6 +1199,9 @@ exports[`open api parser buzzshot docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
     },
@@ -1194,7 +1225,7 @@ exports[`open api parser buzzshot docs 1`] = `
 }
 `;
 
-exports[`open api parser buzzshot simple 1`] = `
+exports[`open api parser > buzzshot > simple 1`] = `
 {
   "definitionFiles": {
     "api.yml": {
@@ -1582,6 +1613,9 @@ exports[`open api parser buzzshot simple 1`] = `
                         "key": "key",
                         "label": "label",
                         "present": true,
+                        "value": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "group": "group",
@@ -1824,6 +1858,9 @@ exports[`open api parser buzzshot simple 1`] = `
                         "key": "key",
                         "label": "label",
                         "present": true,
+                        "value": {
+                          "key": "value",
+                        },
                       },
                     ],
                     "first_name": "first_name",
@@ -1851,6 +1888,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "types": {
         "ListAccountsResponse": {
@@ -1858,8 +1898,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1869,8 +1907,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1881,14 +1917,15 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "results": "optional<list<root.Room>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListGamesResponse": {
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1898,8 +1935,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1910,14 +1945,15 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "results": "optional<list<root.Game>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListGroupsResponse": {
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1927,8 +1963,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1939,14 +1973,15 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "results": "optional<list<root.Group>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListLocationsResponse": {
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1956,8 +1991,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1968,14 +2001,15 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "results": "optional<list<root.Room>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListPhotosResponse": {
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1985,8 +2019,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -1997,14 +2029,15 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "results": "optional<list<root.Photo>>",
           },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
+          },
         },
         "ListPlayersResponse": {
           "docs": undefined,
           "properties": {
             "count": "optional<integer>",
             "next": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -2014,8 +2047,6 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "previous": {
-              "default": undefined,
-              "docs": undefined,
               "type": "optional<string>",
               "validation": {
                 "format": "uri",
@@ -2025,6 +2056,9 @@ exports[`open api parser buzzshot simple 1`] = `
               },
             },
             "results": "optional<list<root.Player>>",
+          },
+          "source": {
+            "openapi": "buzzshot/openapi.yml",
           },
         },
       },
@@ -2050,8 +2084,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "group": "optional<string>",
           "id": "optional<integer>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2066,6 +2098,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "time": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GameComplete": {
         "docs": undefined,
@@ -2076,6 +2111,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "hints": "optional<integer>",
           "score": "optional<integer>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GameExtraFieldsItem": {
         "docs": undefined,
@@ -2085,6 +2123,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GamePhotosItem": {
         "docs": undefined,
@@ -2092,8 +2133,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "added_at": "optional<datetime>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -2103,6 +2142,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Group": {
@@ -2122,8 +2164,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "id": "optional<integer>",
           "is_event": "optional<boolean>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2137,6 +2177,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "start_at": "optional<datetime>",
           "time": "string",
           "updated_at": "optional<datetime>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "GroupGamesItem": {
@@ -2156,8 +2199,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
           "id": "optional<integer>",
           "name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2171,6 +2212,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "time": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupGamesItemComplete": {
         "docs": undefined,
@@ -2181,6 +2225,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "hints": "optional<integer>",
           "score": "optional<integer>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupGamesItemExtraFieldsItem": {
         "docs": undefined,
@@ -2190,6 +2237,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupPhotosItem": {
         "docs": undefined,
@@ -2198,8 +2248,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "game": "optional<string>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -2209,6 +2257,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "GroupPlayersItem": {
@@ -2226,8 +2277,6 @@ exports[`open api parser buzzshot simple 1`] = `
           },
           "extra_fields": "list<GroupPlayersItemExtraFieldsItem>",
           "first_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2237,8 +2286,6 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "last_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2252,6 +2299,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "signature": "optional<string>",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "GroupPlayersItemExtraFieldsItem": {
         "docs": undefined,
@@ -2260,6 +2310,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Photo": {
@@ -2278,6 +2331,9 @@ exports[`open api parser buzzshot simple 1`] = `
           },
           "processed": "list<PhotoProcessedItem>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "PhotoProcessedItem": {
         "docs": undefined,
@@ -2287,8 +2343,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "group": "optional<string>",
           "photo": "string",
           "processed_image": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "binary",
@@ -2298,6 +2352,9 @@ exports[`open api parser buzzshot simple 1`] = `
             },
           },
           "ready": "optional<string>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Player": {
@@ -2315,8 +2372,6 @@ exports[`open api parser buzzshot simple 1`] = `
           },
           "extra_fields": "list<PlayerExtraFieldsItem>",
           "first_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2327,8 +2382,6 @@ exports[`open api parser buzzshot simple 1`] = `
           },
           "id": "optional<integer>",
           "last_name": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": undefined,
@@ -2341,6 +2394,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "phone": "string",
           "updated_at": "optional<datetime>",
         },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
+        },
       },
       "PlayerExtraFieldsItem": {
         "docs": undefined,
@@ -2349,6 +2405,9 @@ exports[`open api parser buzzshot simple 1`] = `
           "label": "optional<string>",
           "present": "boolean",
           "value": "optional<map<string, unknown>>",
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
       "Room": {
@@ -2365,6 +2424,9 @@ exports[`open api parser buzzshot simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "buzzshot/openapi.yml",
         },
       },
     },

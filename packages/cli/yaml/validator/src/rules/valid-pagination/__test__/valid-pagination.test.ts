@@ -28,7 +28,7 @@ describe("valid-pagination", () => {
         const expectedViolations: ValidationViolation[] = [
             {
                 message:
-                    "Pagination configuration for endpoint listWithPaginationTypos specifies 'cursor' $request.typo, but that query parameter does not exist.",
+                    "Pagination configuration for endpoint listWithPaginationTypos specifies 'cursor' $request.typo, which is not a valid 'cursor' type.",
                 nodePath: ["service", "endpoints", "listWithPaginationTypos"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 severity: "error"
@@ -70,6 +70,13 @@ describe("valid-pagination", () => {
             },
             {
                 message:
+                    "Pagination configuration for endpoint listWithInvalidOffsetStepPaginationType specifies 'step' $request.limit, which is not a valid 'step' type.",
+                nodePath: ["service", "endpoints", "listWithInvalidOffsetStepPaginationType"],
+                relativeFilepath: RelativeFilePath.of("simple.yml"),
+                severity: "error"
+            },
+            {
+                message:
                     "Pagination configuration for endpoint listWithInvalidPaginationPrefix must define a dot-delimited 'cursor' property starting with $request (e.g. $request.cursor).",
                 nodePath: ["service", "endpoints", "listWithInvalidPaginationPrefix"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
@@ -91,14 +98,7 @@ describe("valid-pagination", () => {
             },
             {
                 message:
-                    "Pagination configuration for endpoint listWithInvalidRequest specifies 'cursor' $request.starting_after, but that query parameter does not exist.",
-                nodePath: ["service", "endpoints", "listWithInvalidRequest"],
-                relativeFilepath: RelativeFilePath.of("simple.yml"),
-                severity: "error"
-            },
-            {
-                message:
-                    "Pagination configuration for endpoint listWithInvalidGlobalConfig specifies 'offset' $request.offset, but that query parameter does not exist.",
+                    "Pagination configuration for endpoint listWithInvalidGlobalConfig specifies 'offset' $request.offset, which is not a valid 'offset' type.",
                 nodePath: ["service", "endpoints", "listWithInvalidGlobalConfig"],
                 relativeFilepath: RelativeFilePath.of("simple.yml"),
                 severity: "error"

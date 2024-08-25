@@ -19,7 +19,7 @@ import java.util.Objects;
 import resources.commons.types.ProblemId;
 import resources.commons.types.UserId;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = Playlist.Builder.class
 )

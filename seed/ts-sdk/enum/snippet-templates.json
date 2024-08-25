@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_inlined-request.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedEnumClient } from \"@fern/enum\";"
+                ],
+                "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedEnum.inlinedRequest.send(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.inlinedRequest.send(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -62,6 +93,120 @@
                                         "type": "enum"
                                     },
                                     "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "operandOrColor: $FERN_INPUT",
+                                        "members": [
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        "red": "SeedEnum.Color.Red",
+                                                        "blue": "SeedEnum.Color.Blue"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Color",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        ">": "SeedEnum.Operand.GreaterThan",
+                                                        "=": "SeedEnum.Operand.EqualTo",
+                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Operand",
+                                                    "type": "id"
+                                                }
+                                            }
+                                        ],
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "operandOrColor",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "maybeOperandOrColor: $FERN_INPUT",
+                                        "members": [
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        "red": "SeedEnum.Color.Red",
+                                                        "blue": "SeedEnum.Color.Blue"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Color",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        ">": "SeedEnum.Operand.GreaterThan",
+                                                        "=": "SeedEnum.Operand.EqualTo",
+                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Operand",
+                                                    "type": "id"
+                                                }
+                                            }
+                                        ],
+                                        "templateInput": {
+                                            "location": "BODY",
+                                            "path": "maybeOperandOrColor",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
+                                    },
+                                    "type": "template"
                                 }
                             ],
                             "type": "generic"
@@ -86,10 +231,41 @@
             "identifierOverride": "endpoint_path-param.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedEnumClient } from \"@fern/enum\";"
+                ],
+                "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedEnum.pathParam.send(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.pathParam.send(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -137,6 +313,120 @@
                                         "type": "enum"
                                     },
                                     "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "members": [
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        "red": "SeedEnum.Color.Red",
+                                                        "blue": "SeedEnum.Color.Blue"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Color",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        ">": "SeedEnum.Operand.GreaterThan",
+                                                        "=": "SeedEnum.Operand.EqualTo",
+                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Operand",
+                                                    "type": "id"
+                                                }
+                                            }
+                                        ],
+                                        "templateInput": {
+                                            "location": "PATH",
+                                            "path": "operandOrColor",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "members": [
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        "red": "SeedEnum.Color.Red",
+                                                        "blue": "SeedEnum.Color.Blue"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Color",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        ">": "SeedEnum.Operand.GreaterThan",
+                                                        "=": "SeedEnum.Operand.EqualTo",
+                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Operand",
+                                                    "type": "id"
+                                                }
+                                            }
+                                        ],
+                                        "templateInput": {
+                                            "location": "PATH",
+                                            "path": "maybeOperandOrColor",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
+                                    },
+                                    "type": "template"
                                 }
                             ],
                             "type": "generic"
@@ -161,10 +451,41 @@
             "identifierOverride": "endpoint_query-param.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedEnumClient } from \"@fern/enum\";"
+                ],
+                "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedEnum.queryParam.send(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.queryParam.send(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -210,6 +531,120 @@
                                             "type": "payload"
                                         },
                                         "type": "enum"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "operandOrColor: $FERN_INPUT",
+                                        "members": [
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        "red": "SeedEnum.Color.Red",
+                                                        "blue": "SeedEnum.Color.Blue"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Color",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        ">": "SeedEnum.Operand.GreaterThan",
+                                                        "=": "SeedEnum.Operand.EqualTo",
+                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Operand",
+                                                    "type": "id"
+                                                }
+                                            }
+                                        ],
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "operandOrColor",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "maybeOperandOrColor: $FERN_INPUT",
+                                        "members": [
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        "red": "SeedEnum.Color.Red",
+                                                        "blue": "SeedEnum.Color.Blue"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Color",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        ">": "SeedEnum.Operand.GreaterThan",
+                                                        "=": "SeedEnum.Operand.EqualTo",
+                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Operand",
+                                                    "type": "id"
+                                                }
+                                            }
+                                        ],
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "maybeOperandOrColor",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
                                     },
                                     "type": "template"
                                 }
@@ -236,10 +671,41 @@
             "identifierOverride": "endpoint_query-param.sendList"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedEnum = new SeedEnumClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedEnumClient } from \"@fern/enum\";"
+                ],
+                "templateString": "const client = new SeedEnumClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedEnum.queryParam.sendList(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.queryParam.sendList(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [
@@ -285,6 +751,120 @@
                                             "type": "payload"
                                         },
                                         "type": "enum"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "operandOrColor: $FERN_INPUT",
+                                        "members": [
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        "red": "SeedEnum.Color.Red",
+                                                        "blue": "SeedEnum.Color.Blue"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Color",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        ">": "SeedEnum.Operand.GreaterThan",
+                                                        "=": "SeedEnum.Operand.EqualTo",
+                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Operand",
+                                                    "type": "id"
+                                                }
+                                            }
+                                        ],
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "operandOrColor",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "maybeOperandOrColor: $FERN_INPUT",
+                                        "members": [
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        "red": "SeedEnum.Color.Red",
+                                                        "blue": "SeedEnum.Color.Blue"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Color",
+                                                    "type": "id"
+                                                }
+                                            },
+                                            {
+                                                "template": {
+                                                    "imports": [],
+                                                    "isOptional": true,
+                                                    "values": {
+                                                        ">": "SeedEnum.Operand.GreaterThan",
+                                                        "=": "SeedEnum.Operand.EqualTo",
+                                                        "less_than": "SeedEnum.Operand.LessThan"
+                                                    },
+                                                    "templateString": "$FERN_INPUT",
+                                                    "templateInput": {
+                                                        "location": "RELATIVE",
+                                                        "type": "payload"
+                                                    },
+                                                    "type": "enum"
+                                                },
+                                                "type": {
+                                                    "value": "type_:Operand",
+                                                    "type": "id"
+                                                }
+                                            }
+                                        ],
+                                        "templateInput": {
+                                            "location": "QUERY",
+                                            "path": "maybeOperandOrColor",
+                                            "type": "payload"
+                                        },
+                                        "type": "union_v2"
                                     },
                                     "type": "template"
                                 }

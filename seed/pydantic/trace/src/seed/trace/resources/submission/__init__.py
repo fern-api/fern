@@ -21,7 +21,7 @@ from .custom_test_cases_unsupported import CustomTestCasesUnsupported
 from .error_info import ErrorInfo, ErrorInfo_CompileError, ErrorInfo_InternalError, ErrorInfo_RuntimeError
 from .errored_response import ErroredResponse
 from .exception_info import ExceptionInfo
-from .exception_v_2 import ExceptionV2, ExceptionV2_Generic
+from .exception_v_2 import ExceptionV2, ExceptionV2_Generic, ExceptionV2_Timeout
 from .execution_session_response import ExecutionSessionResponse
 from .execution_session_state import ExecutionSessionState
 from .execution_session_status import ExecutionSessionStatus
@@ -64,6 +64,7 @@ from .submission_id_not_found import SubmissionIdNotFound
 from .submission_request import (
     SubmissionRequest,
     SubmissionRequest_InitializeProblemRequest,
+    SubmissionRequest_InitializeWorkspaceRequest,
     SubmissionRequest_Stop,
     SubmissionRequest_SubmitV2,
     SubmissionRequest_WorkspaceSubmit,
@@ -73,7 +74,9 @@ from .submission_response import (
     SubmissionResponse_CodeExecutionUpdate,
     SubmissionResponse_ProblemInitialized,
     SubmissionResponse_ServerErrored,
+    SubmissionResponse_ServerInitialized,
     SubmissionResponse_Terminated,
+    SubmissionResponse_WorkspaceInitialized,
 )
 from .submission_status_for_test_case import (
     SubmissionStatusForTestCase,
@@ -96,6 +99,7 @@ from .test_submission_status import (
     TestSubmissionStatus,
     TestSubmissionStatus_Errored,
     TestSubmissionStatus_Running,
+    TestSubmissionStatus_Stopped,
     TestSubmissionStatus_TestCaseIdToState,
 )
 from .test_submission_status_v_2 import TestSubmissionStatusV2
@@ -103,9 +107,11 @@ from .test_submission_update import TestSubmissionUpdate
 from .test_submission_update_info import (
     TestSubmissionUpdateInfo,
     TestSubmissionUpdateInfo_Errored,
+    TestSubmissionUpdateInfo_Finished,
     TestSubmissionUpdateInfo_GradedTestCase,
     TestSubmissionUpdateInfo_RecordedTestCase,
     TestSubmissionUpdateInfo_Running,
+    TestSubmissionUpdateInfo_Stopped,
 )
 from .trace_response import TraceResponse
 from .trace_response_v_2 import TraceResponseV2
@@ -125,6 +131,7 @@ from .workspace_submission_status import (
     WorkspaceSubmissionStatus_Errored,
     WorkspaceSubmissionStatus_Ran,
     WorkspaceSubmissionStatus_Running,
+    WorkspaceSubmissionStatus_Stopped,
     WorkspaceSubmissionStatus_Traced,
 )
 from .workspace_submission_status_v_2 import WorkspaceSubmissionStatusV2
@@ -132,8 +139,11 @@ from .workspace_submission_update import WorkspaceSubmissionUpdate
 from .workspace_submission_update_info import (
     WorkspaceSubmissionUpdateInfo,
     WorkspaceSubmissionUpdateInfo_Errored,
+    WorkspaceSubmissionUpdateInfo_Finished,
     WorkspaceSubmissionUpdateInfo_Ran,
     WorkspaceSubmissionUpdateInfo_Running,
+    WorkspaceSubmissionUpdateInfo_Stopped,
+    WorkspaceSubmissionUpdateInfo_Traced,
     WorkspaceSubmissionUpdateInfo_TracedV2,
 )
 from .workspace_submit_request import WorkspaceSubmitRequest
@@ -167,6 +177,7 @@ __all__ = [
     "ExceptionInfo",
     "ExceptionV2",
     "ExceptionV2_Generic",
+    "ExceptionV2_Timeout",
     "ExecutionSessionResponse",
     "ExecutionSessionState",
     "ExecutionSessionStatus",
@@ -206,6 +217,7 @@ __all__ = [
     "SubmissionIdNotFound",
     "SubmissionRequest",
     "SubmissionRequest_InitializeProblemRequest",
+    "SubmissionRequest_InitializeWorkspaceRequest",
     "SubmissionRequest_Stop",
     "SubmissionRequest_SubmitV2",
     "SubmissionRequest_WorkspaceSubmit",
@@ -213,7 +225,9 @@ __all__ = [
     "SubmissionResponse_CodeExecutionUpdate",
     "SubmissionResponse_ProblemInitialized",
     "SubmissionResponse_ServerErrored",
+    "SubmissionResponse_ServerInitialized",
     "SubmissionResponse_Terminated",
+    "SubmissionResponse_WorkspaceInitialized",
     "SubmissionStatusForTestCase",
     "SubmissionStatusForTestCase_Graded",
     "SubmissionStatusForTestCase_GradedV2",
@@ -239,13 +253,16 @@ __all__ = [
     "TestSubmissionStatusV2",
     "TestSubmissionStatus_Errored",
     "TestSubmissionStatus_Running",
+    "TestSubmissionStatus_Stopped",
     "TestSubmissionStatus_TestCaseIdToState",
     "TestSubmissionUpdate",
     "TestSubmissionUpdateInfo",
     "TestSubmissionUpdateInfo_Errored",
+    "TestSubmissionUpdateInfo_Finished",
     "TestSubmissionUpdateInfo_GradedTestCase",
     "TestSubmissionUpdateInfo_RecordedTestCase",
     "TestSubmissionUpdateInfo_Running",
+    "TestSubmissionUpdateInfo_Stopped",
     "TraceResponse",
     "TraceResponseV2",
     "TraceResponsesPage",
@@ -264,12 +281,16 @@ __all__ = [
     "WorkspaceSubmissionStatus_Errored",
     "WorkspaceSubmissionStatus_Ran",
     "WorkspaceSubmissionStatus_Running",
+    "WorkspaceSubmissionStatus_Stopped",
     "WorkspaceSubmissionStatus_Traced",
     "WorkspaceSubmissionUpdate",
     "WorkspaceSubmissionUpdateInfo",
     "WorkspaceSubmissionUpdateInfo_Errored",
+    "WorkspaceSubmissionUpdateInfo_Finished",
     "WorkspaceSubmissionUpdateInfo_Ran",
     "WorkspaceSubmissionUpdateInfo_Running",
+    "WorkspaceSubmissionUpdateInfo_Stopped",
+    "WorkspaceSubmissionUpdateInfo_Traced",
     "WorkspaceSubmissionUpdateInfo_TracedV2",
     "WorkspaceSubmitRequest",
     "WorkspaceTracedUpdate",

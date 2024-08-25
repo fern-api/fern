@@ -1,24 +1,29 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class RecordingResponseNotification
+public record RecordingResponseNotification
 {
     [JsonPropertyName("submissionId")]
-    public Guid SubmissionId { get; init; }
+    public required string SubmissionId { get; set; }
 
     [JsonPropertyName("testCaseId")]
-    public string? TestCaseId { get; init; }
+    public string? TestCaseId { get; set; }
 
     [JsonPropertyName("lineNumber")]
-    public int LineNumber { get; init; }
+    public required int LineNumber { get; set; }
 
     [JsonPropertyName("lightweightStackInfo")]
-    public LightweightStackframeInformation LightweightStackInfo { get; init; }
+    public required LightweightStackframeInformation LightweightStackInfo { get; set; }
 
     [JsonPropertyName("tracedFile")]
-    public TracedFile? TracedFile { get; init; }
+    public TracedFile? TracedFile { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -1,4 +1,4 @@
-using SeedBasicAuth;
+using SeedBasicAuth.Core;
 
 #nullable enable
 
@@ -9,30 +9,32 @@ public partial class SeedBasicAuthClient
     private RawClient _client;
 
     public SeedBasicAuthClient(
-        string username = null,
-        string password = null,
-        ClientOptions clientOptions = null
+        string? username = null,
+        string? password = null,
+        ClientOptions? clientOptions = null
     )
     {
-        _client = new RawClient(
-            new Dictionary<string, string>() { { "X-Fern-Language", "C#" }, },
-            clientOptions ?? new ClientOptions()
+        var defaultHeaders = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-Fern-Language", "C#" },
+                { "User-Agent", "Fernbasic-auth/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         BasicAuth = new BasicAuthClient(_client);
         Errors = new ErrorsClient(_client);
     }
 
-    public BasicAuthClient BasicAuth { get; }
+    public BasicAuthClient BasicAuth { get; init; }
 
-    public ErrorsClient Errors { get; }
-
-    private string GetFromEnvironmentOrThrow(string env, string message)
-    {
-        var value = Environment.GetEnvironmentVariable(env);
-        if (value == null)
-        {
-            throw new Exception(message);
-        }
-        return value;
-    }
+    public ErrorsClient Errors { get; init; }
 }

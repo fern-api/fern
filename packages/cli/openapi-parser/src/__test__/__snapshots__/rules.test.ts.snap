@@ -1,7 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`rules rules parse open api 1`] = `
+exports[`rules > rules > parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -68,44 +69,55 @@ exports[`rules rules parse open api 1`] = `
         "schema": {
           "type": "oneOf",
           "value": {
+            "availability": null,
             "description": null,
+            "encoding": null,
             "generatedName": "GetExampleResponse",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "schemas": [
               {
+                "availability": null,
                 "description": null,
                 "generatedName": "GetExampleResponseZero",
                 "groupName": null,
                 "nameOverride": null,
                 "schema": "Schema",
+                "source": {
+                  "file": "rules/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "reference",
               },
               {
                 "additionalProperties": false,
                 "allOf": [],
                 "allOfPropertyConflicts": [],
+                "availability": null,
                 "description": null,
                 "generatedName": "GetExampleResponseMessage",
-                "groupName": null,
+                "groupName": [],
                 "nameOverride": null,
                 "properties": [
                   {
                     "audiences": [],
+                    "availability": null,
                     "conflict": {},
                     "generatedName": "getExampleResponseMessageMessage",
                     "key": "message",
                     "nameOverride": null,
                     "schema": {
+                      "availability": null,
                       "description": null,
                       "generatedName": "getExampleResponseMessageMessage",
-                      "groupName": null,
+                      "groupName": [],
                       "nameOverride": null,
                       "type": "optional",
                       "value": {
+                        "availability": null,
                         "description": null,
                         "generatedName": "GetExampleResponseMessageMessage",
-                        "groupName": null,
+                        "groupName": [],
                         "nameOverride": null,
                         "schema": {
                           "default": null,
@@ -120,16 +132,32 @@ exports[`rules rules parse open api 1`] = `
                     },
                   },
                 ],
+                "source": {
+                  "file": "rules/openapi.yml",
+                  "type": "openapi",
+                },
                 "type": "object",
               },
             ],
+            "source": {
+              "file": "rules/openapi.yml",
+              "type": "openapi",
+            },
             "type": "undisciminated",
           },
+        },
+        "source": {
+          "file": "rules/openapi.yml",
+          "type": "openapi",
         },
         "type": "json",
       },
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "rules/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Default and validation rules",
       "tags": [],
     },
@@ -146,27 +174,31 @@ exports[`rules rules parse open api 1`] = `
       "additionalProperties": false,
       "allOf": [],
       "allOfPropertyConflicts": [],
+      "availability": null,
       "description": null,
       "generatedName": "Schema",
-      "groupName": null,
+      "groupName": [],
       "nameOverride": null,
       "properties": [
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaId",
           "key": "id",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schemaId",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SchemaId",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 50,
@@ -183,20 +215,23 @@ exports[`rules rules parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaName",
           "key": "name",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schemaName",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SchemaName",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": "type",
@@ -212,20 +247,23 @@ exports[`rules rules parse open api 1`] = `
         },
         {
           "audiences": [],
+          "availability": null,
           "conflict": {},
           "generatedName": "schemaValue",
           "key": "value",
           "nameOverride": null,
           "schema": {
+            "availability": null,
             "description": null,
             "generatedName": "schemaValue",
-            "groupName": null,
+            "groupName": [],
             "nameOverride": null,
             "type": "optional",
             "value": {
+              "availability": null,
               "description": null,
               "generatedName": "SchemaValue",
-              "groupName": null,
+              "groupName": [],
               "nameOverride": null,
               "schema": {
                 "default": 1.1,
@@ -241,6 +279,10 @@ exports[`rules rules parse open api 1`] = `
           },
         },
       ],
+      "source": {
+        "file": "rules/openapi.yml",
+        "type": "openapi",
+      },
       "type": "object",
     },
   },

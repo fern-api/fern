@@ -15,7 +15,7 @@ import java.lang.String;
 import java.util.Objects;
 import types.Type;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ResponseType.Builder.class
 )

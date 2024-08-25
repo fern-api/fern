@@ -35,8 +35,9 @@ module SeedTraceClient
       # @return [SeedTraceClient::Submission::LightweightStackframeInformation]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        num_stack_frames = struct["numStackFrames"]
-        top_stack_frame_method_name = struct["topStackFrameMethodName"]
+        parsed_json = JSON.parse(json_object)
+        num_stack_frames = parsed_json["numStackFrames"]
+        top_stack_frame_method_name = parsed_json["topStackFrameMethodName"]
         new(
           num_stack_frames: num_stack_frames,
           top_stack_frame_method_name: top_stack_frame_method_name,

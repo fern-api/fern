@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern&utm_content=logo">
-    <img src="/fern/images/logo-green.png" height="80" align="center" alt="header" />
+    <img src="/fern/images/logo-primary.png" height="80" align="center" alt="header" />
   </a>
 <br/>
 
@@ -80,13 +80,13 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 | `fernapi/fern-python-sdk`              | [![Python Generator Version](https://img.shields.io/docker/v/fernapi/fern-python-sdk)](./generators/python/sdk/VERSION)                  | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)         | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
 | `fernapi/fern-java-sdk`                | [![Java Generator Version](https://img.shields.io/docker/v/fernapi/fern-java-sdk)](./generators/java/sdk/VERSION)                        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)           | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
 | `fernapi/fern-ruby-sdk`                | [![Ruby Generator Version](https://img.shields.io/docker/v/fernapi/fern-ruby-sdk)](./generators/ruby/sdk/VERSION)                        | [CHANGELOG.md](./generators/ruby/sdk/CHANGELOG.md)           | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                      |
-| `fernapi/fern-go-sdk`                  | [![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)](./generators/go/sdk/VERSION)                              | [CHANGELOG.md](./generators/go/sdk/CHANGELOG.md)             | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                              |
+| `fernapi/fern-go-sdk`                  | [![Go Generator Version](https://img.shields.io/docker/v/fernapi/fern-go-sdk)](./generators/go/VERSION)                              | [CHANGELOG.md](./generators/go/sdk/CHANGELOG.md)             | [main.go](./generators/go/cmd/fern-go-sdk/main.go)                              |
 | `fernapi/fern-csharp-sdk`              | [![C# Generator Version](https://img.shields.io/docker/v/fernapi/fern-csharp-sdk)](./generators/csharp/sdk/VERSION)                      | [CHANGELOG.md](./generators/csharp/sdk/CHANGELOG.md)         | [cli.ts](./generators/csharp/sdk/src/cli.ts)                                    |
 
 ### Server-side Generators
 
 Fern's server-side generators output boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers,
-who write their API definition (as an OpenAPI spec or Fern definition) and want to generate backend code. Watch a demo [here](https://docs.buildwithfern.com/fern-sd-ks/other-generators/server-side/express-js#demo-video).
+who write their API definition (as an OpenAPI spec or Fern definition) and want to generate backend code.
 
 | Generator ID                  | Latest Version | Changelog                                                    | Entrypoint                                                                       |
 | ----------------------------- | -------------- | ------------------------------------------------------------ | -------------------------------------------------------------------------------- |
@@ -117,7 +117,7 @@ Fern's spec generators can output an OpenAPI spec or a Postman collection.
 
 ## 🌿 CLI Commands
 
-Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://docs.buildwithfern.com/overview/cli/overview).
+Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://buildwithfern.com/learn/cli-api/cli-reference/commands).
 
 `fern init`: adds a new starter API to your repository.
 
@@ -143,8 +143,6 @@ Frameworks currently supported:
 - [Express](./generators/typescript)
 - [Spring Boot](./generators/java)
 - [FastAPI](./generators/python)
-
-For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfern.com/fern-sd-ks/other-generators/server-side/express-js#demo-video).
 
 ### Fern Definition
 
@@ -219,6 +217,10 @@ Checkout open source projects that are using Fern Definitions:
 - [Metriport](https://github.com/metriport/metriport/tree/develop/fern/definition)
 - [Rivet](https://github.com/rivet-gg/rivet/tree/main/fern/definition)
 - [Revert](https://github.com/revertinc/revert/tree/main/fern/definition)
+
+## Inspiration
+
+Fern is inspired by internal tooling built to enhance the developer experience. We stand on the shoulders of giants. While teams were responsible for building the following tools, we want to give a shout out to Mark Elliot (creator of Conjure at Palantir), Michael Dowling (creator of Smithy at AWS), and Ian McCrystal (creator of Stripe Docs).
 
 ## Community
 

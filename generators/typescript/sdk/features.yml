@@ -1,0 +1,57 @@
+features:
+  - id: USAGE
+    description: |
+      Instantiate and use the client with the following:
+
+  - id: REQUEST_AND_RESPONSE_TYPES
+    description: |
+      The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
+      following namespace:
+
+  - id: EXCEPTION_HANDLING
+    description: |
+      When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error
+      will be thrown.
+
+  - id: RETRIES
+    advanced: true
+    description: |
+      The SDK is instrumented with automatic retries with exponential backoff. A request will be retried as long
+      as the request is deemed retriable and the number of retry attempts has not grown larger than the configured
+      retry limit (default: 2).
+
+      A request is deemed retriable when any of the following HTTP status codes is returned:
+      
+      - [408](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/408) (Timeout)
+      - [429](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/429) (Too Many Requests)
+      - [5XX](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/500) (Internal Server Errors)
+
+      Use the `maxRetries` request option to configure this behavior.
+
+  - id: TIMEOUTS
+    advanced: true
+    description: |
+      The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
+
+  - id: ABORTING_REQUESTS
+    advanced: true
+    description: |
+      The SDK allows users to abort requests at any point by passing in an abort signal.
+
+  - id: RUNTIME_COMPATIBILITY
+    advanced: true
+    description: |
+      The SDK defaults to `node-fetch` but will use the global fetch client if present. The SDK works in the following
+      runtimes:
+
+      - Node.js 18+
+      - Vercel
+      - Cloudflare Workers
+      - Deno v1.25+
+      - Bun 1.0+
+      - React Native
+
+      ### Customizing Fetch Client
+
+      The SDK provides a way for your to customize the underlying HTTP client / Fetch function. If you're running in an
+      unsupported environment, this provides a way for you to break glass and ensure the SDK works.

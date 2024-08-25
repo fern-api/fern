@@ -14,8 +14,18 @@ export const APIDefinitionSettingsSchema = z.object({
         .optional(z.boolean())
         .describe(
             "Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true."
+        ),
+    unions: z
+        .optional(z.enum(["v1"]))
+        .describe("What version of union generation to use, this will grow over time. Defaults to v0."),
+    "message-naming": z
+        .optional(z.enum(["v1", "v2"]))
+        .describe(
+            "What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1."
         )
 });
+
+export type APIDefinitionSettingsSchema = z.infer<typeof APIDefinitionSettingsSchema>;
 
 /**
  * @example
@@ -43,16 +53,79 @@ export const APIDefintionWithOverridesSchema = z.object({
 /**
  * @example
  * api:
+ *  proto:
+ *    root: proto
+ *    target: proto/user/v1/user.proto
+ *    local-generation: true
+ */
+export const ProtobufDefinitionSchema = z.strictObject({
+    root: z.string().describe("The path to the `.proto` directroy root (e.g. `proto`)."),
+    target: z
+        .string()
+        .describe("The path to the target `.proto` file that defines the API (e.g. `proto/user/v1/user.proto`)."),
+    overrides: z.optional(z.string()).describe("Path to the overrides configuration"),
+    "local-generation": z
+        .optional(z.boolean())
+        .describe("Whether to compile the `.proto` files locally. By default, we generate remotely.")
+});
+
+export type ProtobufDefinitionSchema = z.infer<typeof ProtobufDefinitionSchema>;
+
+/**
+ * @example
+ * api:
+ *  proto:
+ *    root: proto
+ *    target: proto/user/v1/user.proto
+ */
+export const ProtobufAPIDefinitionSchema = z.strictObject({
+    proto: ProtobufDefinitionSchema
+});
+
+export type ProtobufAPIDefinitionSchema = z.infer<typeof ProtobufAPIDefinitionSchema>;
+
+/**
+ * @example
+ * api:
  *  - path: openapi.yml
  *    overrides: overrides.yml
  *  - openapi.yml
+ *  - proto:
+ *      root: proto
+ *      target: proto/user/v1/user.proto
  */
-export const APIDefinitionList = z.array(z.union([APIDefinitionPathSchema, APIDefintionWithOverridesSchema]));
+export const APIDefinitionList = z.array(
+    z.union([APIDefinitionPathSchema, APIDefintionWithOverridesSchema, ProtobufAPIDefinitionSchema])
+);
 
-export const APIConfigurationSchema = z.union([
+export const APIConfigurationSchemaInternal = z.union([
     APIDefinitionPathSchema,
     APIDefintionWithOverridesSchema,
-    APIDefinitionList
+    APIDefinitionList,
+    ProtobufAPIDefinitionSchema
+]);
+
+export type APIConfigurationSchemaInternal = z.infer<typeof APIConfigurationSchemaInternal>;
+
+/**
+ * Allow for namespacing of the API and it's contents, the name on the record will be applied throughout the API.
+ * Note we nest the namespaced config under a `namespaces` key to disambiguate from the top-level keys from the APIConfigurationSchemaInternal (proto, settings, etc.)
+ *
+ * @example
+ * api:
+ *  namespaces:
+ *    docs:
+ *      - path: openapi.yml
+ *        overrides: overrides.yml
+ *      - openapi.yml
+ *      - proto:
+ *          root: proto
+ *          target: proto/user/v1/user.proto
+ *    sdks: ./sdks/openapi.yml
+ */
+export const APIConfigurationSchema = z.union([
+    APIConfigurationSchemaInternal,
+    z.strictObject({ namespaces: z.record(APIConfigurationSchemaInternal) })
 ]);
 
 export type APIConfigurationSchema = z.infer<typeof APIConfigurationSchema>;

@@ -14,8 +14,11 @@ export declare namespace Container {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,7 +31,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnListOfPrimitives(["string"])
+     *     await client.endpoints.container.getAndReturnListOfPrimitives(["string"])
      */
     public async getAndReturnListOfPrimitives(
         request: string[],
@@ -42,11 +45,13 @@ export class Container {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -56,7 +61,7 @@ export class Container {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
+                body: serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
                     _response.body,
                     {
                         unrecognizedObjectKeys: "passthrough",
@@ -79,7 +84,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnListOfObjects([{
+     *     await client.endpoints.container.getAndReturnListOfObjects([{
      *             string: "string"
      *         }])
      */
@@ -100,11 +105,13 @@ export class Container {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -114,15 +121,12 @@ export class Container {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(
-                    _response.body,
-                    {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: ["response"],
-                    }
-                ),
+                body: serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
             };
         }
 
@@ -137,7 +141,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
+     *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
      */
     public async getAndReturnSetOfPrimitives(
         request: Set<string>,
@@ -151,11 +155,13 @@ export class Container {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -165,7 +171,7 @@ export class Container {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
+                body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
                     _response.body,
                     {
                         unrecognizedObjectKeys: "passthrough",
@@ -188,7 +194,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnSetOfObjects(new Set([{
+     *     await client.endpoints.container.getAndReturnSetOfObjects(new Set([{
      *             string: "string"
      *         }]))
      */
@@ -209,11 +215,13 @@ export class Container {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -223,15 +231,12 @@ export class Container {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(
-                    _response.body,
-                    {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: ["response"],
-                    }
-                ),
+                body: serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
             };
         }
 
@@ -246,7 +251,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnMapPrimToPrim({
+     *     await client.endpoints.container.getAndReturnMapPrimToPrim({
      *         "string": "string"
      *     })
      */
@@ -262,11 +267,13 @@ export class Container {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -276,15 +283,12 @@ export class Container {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(
-                    _response.body,
-                    {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        breadcrumbsPrefix: ["response"],
-                    }
-                ),
+                body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
             };
         }
 
@@ -299,7 +303,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnMapOfPrimToObject({
+     *     await client.endpoints.container.getAndReturnMapOfPrimToObject({
      *         "string": {
      *             string: "string"
      *         }
@@ -322,11 +326,13 @@ export class Container {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
+            requestType: "json",
+            body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
             }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
@@ -336,7 +342,7 @@ export class Container {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
+                body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
                     _response.body,
                     {
                         unrecognizedObjectKeys: "passthrough",
@@ -359,7 +365,7 @@ export class Container {
      * @param {Container.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await fiddle.endpoints.container.getAndReturnOptional({
+     *     await client.endpoints.container.getAndReturnOptional({
      *         string: "string"
      *     })
      */
@@ -380,13 +386,15 @@ export class Container {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/exhaustive",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/exhaustive/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
+            requestType: "json",
             body:
                 request != null
-                    ? await serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
+                    ? serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
                           unrecognizedObjectKeys: "strip",
                       })
                     : undefined,
@@ -397,7 +405,7 @@ export class Container {
         if (_response.ok) {
             return {
                 ok: true,
-                body: await serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
+                body: serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

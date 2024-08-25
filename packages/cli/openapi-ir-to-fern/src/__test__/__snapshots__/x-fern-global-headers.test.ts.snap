@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
+exports[`x-fern-global-headers > x-fern-global-headers > docs 1`] = `
 {
   "definitionFiles": {
     "user.yml": {
@@ -16,7 +16,9 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "headers": {},
+                "headers": {
+                  "x-api-key": "x-api-key",
+                },
                 "path-parameters": {
                   "userId": "userId",
                 },
@@ -49,7 +51,12 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "x-api-key": {
+                  "name": "apiKey",
+                  "type": "string",
+                },
+              },
               "name": "UserGetRequest",
               "query-parameters": undefined,
             },
@@ -79,7 +86,12 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
                   },
                 },
               },
-              "headers": undefined,
+              "headers": {
+                "x-api-key": {
+                  "name": "apiKey",
+                  "type": "string",
+                },
+              },
               "name": "UserGetStreamRequest",
               "query-parameters": undefined,
             },
@@ -90,6 +102,9 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
+        },
       },
     },
   },
@@ -99,8 +114,6 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -111,13 +124,14 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
           },
           "streamed": "optional<literal<true>>",
         },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
+        },
       },
       "User": {
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -127,6 +141,9 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
             },
           },
           "streamed": "optional<literal<false>>",
+        },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
         },
       },
     },
@@ -139,25 +156,34 @@ exports[`x-fern-global-headers x-fern-global-headers docs 1`] = `
     "headers": {
       "another_header": {
         "env": "MY_HEADER_ENV",
-        "name": "anotherHeader",
-        "type": "string",
+        "name": undefined,
+        "type": "optional<string>",
       },
       "my-api-key": {
         "env": undefined,
-        "name": "apiKeyAlias",
+        "name": "api-key-alias",
         "type": "optional<string>",
       },
-      "x-api-key": {
-        "name": "apiKey",
-        "type": "string",
+      "version": {
+        "env": "SQUARE_VERSION",
+        "name": "Square-Version",
+        "type": "literal<"2024-06-04">",
       },
     },
     "name": "api",
+    "version": {
+      "default": "1.0",
+      "header": "my-api-version",
+      "values": [
+        "1.0",
+        "latest",
+      ],
+    },
   },
 }
 `;
 
-exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
+exports[`x-fern-global-headers > x-fern-global-headers > simple 1`] = `
 {
   "definitionFiles": {
     "user.yml": {
@@ -247,6 +273,9 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
+        },
       },
     },
   },
@@ -256,8 +285,6 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -268,13 +295,14 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
           },
           "streamed": "optional<literal<true>>",
         },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
+        },
       },
       "User": {
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -284,6 +312,9 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
             },
           },
           "streamed": "optional<literal<false>>",
+        },
+        "source": {
+          "openapi": "x-fern-global-headers/openapi.yml",
         },
       },
     },
@@ -296,13 +327,18 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
     "headers": {
       "another_header": {
         "env": "MY_HEADER_ENV",
-        "name": "anotherHeader",
-        "type": "string",
+        "name": undefined,
+        "type": "optional<string>",
       },
       "my-api-key": {
         "env": undefined,
-        "name": "apiKeyAlias",
+        "name": "api-key-alias",
         "type": "optional<string>",
+      },
+      "version": {
+        "env": "SQUARE_VERSION",
+        "name": "Square-Version",
+        "type": "literal<"2024-06-04">",
       },
       "x-api-key": {
         "name": "apiKey",
@@ -310,6 +346,14 @@ exports[`x-fern-global-headers x-fern-global-headers simple 1`] = `
       },
     },
     "name": "api",
+    "version": {
+      "default": "1.0",
+      "header": "my-api-version",
+      "values": [
+        "1.0",
+        "latest",
+      ],
+    },
   },
 }
 `;

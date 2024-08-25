@@ -10,12 +10,10 @@ export const LightweightProblemInfoV2: core.serialization.ObjectSchema<
     serializers.v2.LightweightProblemInfoV2.Raw,
     SeedTrace.v2.LightweightProblemInfoV2
 > = core.serialization.object({
-    problemId: core.serialization.lazy(async () => (await import("../../../../..")).ProblemId),
+    problemId: core.serialization.lazy(() => serializers.ProblemId),
     problemName: core.serialization.string(),
     problemVersion: core.serialization.number(),
-    variableTypes: core.serialization.list(
-        core.serialization.lazy(async () => (await import("../../../../..")).VariableType)
-    ),
+    variableTypes: core.serialization.list(core.serialization.lazy(() => serializers.VariableType)),
 });
 
 export declare namespace LightweightProblemInfoV2 {

@@ -1,0 +1,37 @@
+---
+title: Global Configuration
+description: Specify global headers, path parameters or query parameters meant to be included on every request.
+---
+
+The `api.yml` configuration supports global configuration like headers and path parameters. 
+
+## Global Headers
+
+You can specify headers that are meant to be included on every request:
+
+<CodeBlock title="api.yml">
+```yaml
+name: api
+headers:
+  X-App-Id: string
+```
+</CodeBlock>
+
+## Global path parameters
+
+You can specify path parameters that are meant to be included on every request:
+
+<CodeBlock title="api.yml">
+```yaml
+name: api
+base-path: /{userId}/{orgId}
+path-parameters:
+  userId: string
+  orgId: string
+```
+</CodeBlock>
+
+## Global query parameters
+
+You cannot yet specify query parameters that are meant to be included on every request.
+If you'd like to see this feature, please upvote [this issue](https://github.com/fern-api/fern/issues/2930).

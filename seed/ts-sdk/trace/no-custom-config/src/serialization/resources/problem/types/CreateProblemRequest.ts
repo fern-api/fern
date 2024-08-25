@@ -19,7 +19,7 @@ export const CreateProblemRequest: core.serialization.ObjectSchema<
     problemDescription: ProblemDescription,
     files: core.serialization.record(Language, ProblemFiles.optional()),
     inputParams: core.serialization.list(VariableTypeAndName),
-    outputType: core.serialization.lazy(async () => (await import("../../..")).VariableType),
+    outputType: core.serialization.lazy(() => serializers.VariableType),
     testcases: core.serialization.list(TestCaseWithExpectedResult),
     methodName: core.serialization.string(),
 });

@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedTrace;
 using SeedTrace.Core;
 
 #nullable enable
@@ -14,5 +13,5 @@ public enum ReservedKeywordEnum
     Is,
 
     [EnumMember(Value = "as")]
-    As
+    As,
 }

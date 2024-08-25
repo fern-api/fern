@@ -44,7 +44,11 @@ export class EnumGenerator extends FileGenerator<CSharpFile, ModelCustomConfigSc
 
         return new CSharpFile({
             clazz: enum_,
-            directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId)
+            directory: this.context.getDirectoryForTypeId(this.typeDeclaration.name.typeId),
+            allNamespaceSegments: this.context.getAllNamespaceSegments(),
+            allTypeClassReferences: this.context.getAllTypeClassReferences(),
+            namespace: this.context.getNamespace(),
+            customConfig: this.context.customConfig
         });
     }
 

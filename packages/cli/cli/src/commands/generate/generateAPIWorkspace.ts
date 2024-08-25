@@ -8,9 +8,10 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import { APIWorkspace } from "@fern-api/workspace-loader";
 import { GROUP_CLI_OPTION } from "../../constants";
 import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
+import { GenerationMode } from "./generateAPIWorkspaces";
 
 export async function generateWorkspace({
     organization,
@@ -23,19 +24,21 @@ export async function generateWorkspace({
     token,
     useLocalDocker,
     keepDocker,
-    absolutePathToPreview
+    absolutePathToPreview,
+    mode
 }: {
     organization: string;
-    workspace: FernWorkspace;
+    workspace: APIWorkspace;
     projectConfig: fernConfigJson.ProjectConfig;
     context: TaskContext;
     version: string | undefined;
     groupName: string | undefined;
     shouldLogS3Url: boolean;
-    token: FernToken;
+    token: FernToken | undefined;
     useLocalDocker: boolean;
     keepDocker: boolean;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    mode: GenerationMode | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -61,7 +64,11 @@ export async function generateWorkspace({
         return context.failAndThrow(`Group '${groupNameOrDefault}' does not exist.`);
     }
 
-    await validateAPIWorkspaceAndLogIssues({ workspace, context, logWarnings: false });
+    await validateAPIWorkspaceAndLogIssues({
+        workspace: await workspace.toFernWorkspace({ context }),
+        context,
+        logWarnings: false
+    });
 
     if (useLocalDocker) {
         await runLocalGenerationForWorkspace({
@@ -72,6 +79,9 @@ export async function generateWorkspace({
             context
         });
     } else {
+        if (!token) {
+            return context.failAndThrow("Please run fern login");
+        }
         await runRemoteGenerationForAPIWorkspace({
             projectConfig,
             organization,
@@ -82,7 +92,8 @@ export async function generateWorkspace({
             shouldLogS3Url,
             token,
             whitelabel: workspace.generatorsConfiguration.whitelabel,
-            absolutePathToPreview
+            absolutePathToPreview,
+            mode
         });
     }
 }

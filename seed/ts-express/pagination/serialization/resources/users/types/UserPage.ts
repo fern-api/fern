@@ -8,7 +8,7 @@ import * as core from "../../../../core";
 
 export const UserPage: core.serialization.ObjectSchema<serializers.UserPage.Raw, SeedPagination.UserPage> =
     core.serialization.object({
-        data: core.serialization.lazyObject(async () => (await import("../../..")).UserListContainer),
+        data: core.serialization.lazyObject(() => serializers.UserListContainer),
         next: core.serialization.string().optional(),
     });
 

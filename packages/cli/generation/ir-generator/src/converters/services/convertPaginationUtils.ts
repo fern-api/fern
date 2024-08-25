@@ -2,21 +2,23 @@ import { RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
-import { getRequestProperty, getResponsePropertyComponents } from "./convertProperty";
+import { getRequestPropertyComponents, getResponsePropertyComponents } from "./convertProperty";
 
 export type PaginationPropertyComponents = CursorPaginationPropertyComponents | OffsetPaginationPropertyComponents;
 
 export interface CursorPaginationPropertyComponents {
     type: "cursor";
-    cursor: string;
+    cursor: string[];
     next_cursor: string[];
     results: string[];
 }
 
 export interface OffsetPaginationPropertyComponents {
     type: "offset";
-    offset: string;
+    offset: string[];
     results: string[];
+    step: string[] | undefined;
+    hasNextPage: string[] | undefined;
 }
 
 export function getPaginationPropertyComponents(
@@ -25,13 +27,18 @@ export function getPaginationPropertyComponents(
     if (isRawOffsetPaginationSchema(endpointPagination)) {
         return {
             type: "offset",
-            offset: getRequestProperty(endpointPagination.offset),
-            results: getResponsePropertyComponents(endpointPagination.results)
+            offset: getRequestPropertyComponents(endpointPagination.offset),
+            results: getResponsePropertyComponents(endpointPagination.results),
+            step: endpointPagination.step != null ? getRequestPropertyComponents(endpointPagination.step) : undefined,
+            hasNextPage:
+                endpointPagination["has-next-page"] != null
+                    ? getResponsePropertyComponents(endpointPagination["has-next-page"])
+                    : undefined
         };
     }
     return {
         type: "cursor",
-        cursor: getRequestProperty(endpointPagination.cursor),
+        cursor: getRequestPropertyComponents(endpointPagination.cursor),
         next_cursor: getResponsePropertyComponents(endpointPagination.next_cursor),
         results: getResponsePropertyComponents(endpointPagination.results)
     };

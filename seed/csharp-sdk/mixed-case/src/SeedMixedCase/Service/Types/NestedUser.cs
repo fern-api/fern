@@ -1,15 +1,20 @@
 using System.Text.Json.Serialization;
-using SeedMixedCase;
+using SeedMixedCase.Core;
 
 #nullable enable
 
 namespace SeedMixedCase;
 
-public class NestedUser
+public record NestedUser
 {
     [JsonPropertyName("Name")]
-    public string Name { get; init; }
+    public required string Name { get; set; }
 
     [JsonPropertyName("NestedUser")]
-    public User NestedUser_ { get; init; }
+    public required User NestedUser_ { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

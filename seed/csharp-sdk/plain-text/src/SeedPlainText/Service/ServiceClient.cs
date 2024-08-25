@@ -1,22 +1,49 @@
-using SeedPlainText;
+using System.Net.Http;
+using System.Threading;
+using SeedPlainText.Core;
 
 #nullable enable
 
 namespace SeedPlainText;
 
-public class ServiceClient
+public partial class ServiceClient
 {
     private RawClient _client;
 
-    public ServiceClient(RawClient client)
+    internal ServiceClient(RawClient client)
     {
         _client = client;
     }
 
-    public async void GetTextAsync()
+    /// <example>
+    /// <code>
+    /// await client.Service.GetTextAsync();
+    /// </code>
+    /// </example>
+    public async Task<string> GetTextAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest { Method = HttpMethod.Post, Path = "/text" }
+            new RawClient.JsonApiRequest
+            {
+                BaseUrl = _client.Options.BaseUrl,
+                Method = HttpMethod.Post,
+                Path = "text",
+                Options = options,
+            },
+            cancellationToken
+        );
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            return responseBody;
+        }
+        throw new SeedPlainTextApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            responseBody
         );
     }
 }

@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`anyOf anyOf docs 1`] = `
+exports[`anyOf > anyOf > docs 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -28,11 +28,9 @@ exports[`anyOf anyOf docs 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "An optional string value.
 ",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
               },
             },
@@ -46,6 +44,9 @@ exports[`anyOf anyOf docs 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "anyOf/openapi.yml",
+      },
     },
     "types": {
       "Response": {
@@ -53,12 +54,13 @@ exports[`anyOf anyOf docs 1`] = `
 ",
         "properties": {
           "value": {
-            "default": undefined,
             "docs": "An optional numerical value.
 ",
             "type": "optional<double>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "anyOf/openapi.yml",
         },
       },
     },
@@ -73,7 +75,7 @@ exports[`anyOf anyOf docs 1`] = `
 }
 `;
 
-exports[`anyOf anyOf simple 1`] = `
+exports[`anyOf > anyOf > simple 1`] = `
 {
   "definitionFiles": {},
   "packageMarkerFile": {
@@ -101,11 +103,9 @@ exports[`anyOf anyOf simple 1`] = `
             "body": {
               "properties": {
                 "id": {
-                  "default": undefined,
                   "docs": "An optional string value.
 ",
                   "type": "optional<string>",
-                  "validation": undefined,
                 },
               },
             },
@@ -119,6 +119,9 @@ exports[`anyOf anyOf simple 1`] = `
           },
         },
       },
+      "source": {
+        "openapi": "anyOf/openapi.yml",
+      },
     },
     "types": {
       "Response": {
@@ -126,12 +129,13 @@ exports[`anyOf anyOf simple 1`] = `
 ",
         "properties": {
           "value": {
-            "default": undefined,
             "docs": "An optional numerical value.
 ",
             "type": "optional<double>",
-            "validation": undefined,
           },
+        },
+        "source": {
+          "openapi": "anyOf/openapi.yml",
         },
       },
     },

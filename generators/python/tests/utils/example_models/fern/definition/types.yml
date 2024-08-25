@@ -27,7 +27,7 @@ types:
 
   ObjectWithOptionalField: #generic object that supports any type, makes it easier to use when testing
     properties:
-      literal: literal<"lit_one", "lit_two">
+      literal: literal<"lit_one">
       string: optional<string>
       integer: optional<integer>
       long: optional<long>
@@ -42,5 +42,20 @@ types:
       map: optional<map<integer, string>>
       enum: optional<Color>
       union: optional<Shape>
+      second_union: optional<Shape>
       undiscriminated_union: optional<UndiscriminatedShape>
       any: unknown
+  
+  ObjectWithDefaults:
+    docs: |
+      Defines properties with default values and validation rules.
+    properties:
+      decimal:
+        type: optional<double>
+        default: 1.1
+      string:
+        type: optional<string>
+        default: "here's a sentence!"
+      required_string:
+        type: string
+        default: "I neeeeeeeeeed this!"

@@ -1,14 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedOauthClientCredentialsDefault.Core;
 
 #nullable enable
 
 namespace SeedOauthClientCredentialsDefault;
 
-public class TokenResponse
+public record TokenResponse
 {
     [JsonPropertyName("access_token")]
-    public string AccessToken { get; init; }
+    public required string AccessToken { get; set; }
 
     [JsonPropertyName("expires_in")]
-    public int ExpiresIn { get; init; }
+    public required int ExpiresIn { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

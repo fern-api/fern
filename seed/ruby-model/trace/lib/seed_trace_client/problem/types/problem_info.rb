@@ -84,22 +84,22 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        problem_id = struct["problemId"]
+        problem_id = parsed_json["problemId"]
         if parsed_json["problemDescription"].nil?
           problem_description = nil
         else
           problem_description = parsed_json["problemDescription"].to_json
           problem_description = SeedTraceClient::Problem::ProblemDescription.from_json(json_object: problem_description)
         end
-        problem_name = struct["problemName"]
-        problem_version = struct["problemVersion"]
-        files = parsed_json["files"]&.transform_values do |v|
-          v = v.to_json
-          SeedTraceClient::Problem::ProblemFiles.from_json(json_object: v)
+        problem_name = parsed_json["problemName"]
+        problem_version = parsed_json["problemVersion"]
+        files = parsed_json["files"]&.transform_values do |value|
+          value = value.to_json
+          SeedTraceClient::Problem::ProblemFiles.from_json(json_object: value)
         end
-        input_params = parsed_json["inputParams"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Problem::VariableTypeAndName.from_json(json_object: v)
+        input_params = parsed_json["inputParams"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Problem::VariableTypeAndName.from_json(json_object: item)
         end
         if parsed_json["outputType"].nil?
           output_type = nil
@@ -107,12 +107,12 @@ module SeedTraceClient
           output_type = parsed_json["outputType"].to_json
           output_type = SeedTraceClient::Commons::VariableType.from_json(json_object: output_type)
         end
-        testcases = parsed_json["testcases"]&.map do |v|
-          v = v.to_json
-          SeedTraceClient::Commons::TestCaseWithExpectedResult.from_json(json_object: v)
+        testcases = parsed_json["testcases"]&.map do |item|
+          item = item.to_json
+          SeedTraceClient::Commons::TestCaseWithExpectedResult.from_json(json_object: item)
         end
-        method_name = struct["methodName"]
-        supports_custom_test_cases = struct["supportsCustomTestCases"]
+        method_name = parsed_json["methodName"]
+        supports_custom_test_cases = parsed_json["supportsCustomTestCases"]
         new(
           problem_id: problem_id,
           problem_description: problem_description,

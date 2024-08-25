@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info:
+  title: Copied mostly from Apiture
+servers:
+  - url: https://api.apiture.com/banking
+paths: {}
+components:
+  schemas:
+    jointOwnerInvitationFields:
+      title: Joint Owner Invitation Fields (v1.0.0)
+      description: Fields used to compose other joint owner invitation schemas.
+      type: object
+      required:
+        - firstName
+        - lastName
+        - age
+        - disallowDebitCardAccess
+      properties:
+        firstName:
+          description: The invitee's first name.
+          type: string
+          default: "Jane"
+        lastName:
+          description: The invitee's last name.
+          type: string
+          default: "Doe"
+        age:
+          description: The invitee's age.
+          type: integer
+          format: int64
+          default: 1000000
+        disallowDebitCardAccess:
+          description: If `true`, the invitee is not allowed to order or manage debit cards for the account.
+          type: boolean
+          default: false

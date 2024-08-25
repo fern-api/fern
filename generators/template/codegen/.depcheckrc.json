@@ -1,0 +1,14 @@
+{
+    "ignores": [
+        "@types/jest",
+        "@types/node",
+        "@fern-fern/ir-sdk",
+        "@fern-api/core-utils",
+        "@fern-api/fs-utils",
+        "@fern-api/logging-execa",
+        "zod"
+    ],
+    "ignore-patterns": [
+        "lib"
+    ]
+}

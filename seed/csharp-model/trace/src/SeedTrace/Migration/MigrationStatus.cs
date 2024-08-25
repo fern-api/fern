@@ -1,6 +1,5 @@
 using System.Runtime.Serialization;
 using System.Text.Json.Serialization;
-using SeedTrace;
 using SeedTrace.Core;
 
 #nullable enable
@@ -17,5 +16,5 @@ public enum MigrationStatus
     Failed,
 
     [EnumMember(Value = "FINISHED")]
-    Finished
+    Finished,
 }

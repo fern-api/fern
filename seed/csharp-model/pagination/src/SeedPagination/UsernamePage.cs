@@ -1,14 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedPagination.Core;
 
 #nullable enable
 
 namespace SeedPagination;
 
-public class UsernamePage
+public record UsernamePage
 {
     [JsonPropertyName("after")]
-    public string? After { get; init; }
+    public string? After { get; set; }
 
     [JsonPropertyName("data")]
-    public IEnumerable<string> Data { get; init; }
+    public IEnumerable<string> Data { get; set; } = new List<string>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

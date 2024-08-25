@@ -19,7 +19,7 @@ import java.util.Objects;
 import resources.submission.types.TestCaseResultWithStdout;
 import resources.submission.types.TraceResponse;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = StoreTracedTestCaseRequest.Builder.class
 )

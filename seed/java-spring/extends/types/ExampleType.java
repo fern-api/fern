@@ -14,29 +14,30 @@ import java.lang.Object;
 import java.lang.String;
 import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(
     builder = ExampleType.Builder.class
 )
-public final class ExampleType implements IDocs {
-  private final String docs;
-
+public final class ExampleType implements IExampleType, IDocs {
   private final String name;
 
-  private ExampleType(String docs, String name) {
-    this.docs = docs;
+  private final String docs;
+
+  private ExampleType(String name, String docs) {
     this.name = name;
+    this.docs = docs;
+  }
+
+  @JsonProperty("name")
+  @java.lang.Override
+  public String getName() {
+    return name;
   }
 
   @JsonProperty("docs")
   @java.lang.Override
   public String getDocs() {
     return docs;
-  }
-
-  @JsonProperty("name")
-  public String getName() {
-    return name;
   }
 
   @java.lang.Override
@@ -46,12 +47,12 @@ public final class ExampleType implements IDocs {
   }
 
   private boolean equalTo(ExampleType other) {
-    return docs.equals(other.docs) && name.equals(other.name);
+    return name.equals(other.name) && docs.equals(other.docs);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.docs, this.name);
+    return Objects.hash(this.name, this.docs);
   }
 
   @java.lang.Override
@@ -59,18 +60,18 @@ public final class ExampleType implements IDocs {
     return ObjectMappers.stringify(this);
   }
 
-  public static DocsStage builder() {
+  public static NameStage builder() {
     return new Builder();
   }
 
-  public interface DocsStage {
-    NameStage docs(String docs);
+  public interface NameStage {
+    DocsStage name(String name);
 
     Builder from(ExampleType other);
   }
 
-  public interface NameStage {
-    _FinalStage name(String name);
+  public interface DocsStage {
+    _FinalStage docs(String docs);
   }
 
   public interface _FinalStage {
@@ -80,38 +81,38 @@ public final class ExampleType implements IDocs {
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements DocsStage, NameStage, _FinalStage {
-    private String docs;
-
+  public static final class Builder implements NameStage, DocsStage, _FinalStage {
     private String name;
+
+    private String docs;
 
     private Builder() {
     }
 
     @java.lang.Override
     public Builder from(ExampleType other) {
-      docs(other.getDocs());
       name(other.getName());
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("docs")
-    public NameStage docs(String docs) {
-      this.docs = docs;
+      docs(other.getDocs());
       return this;
     }
 
     @java.lang.Override
     @JsonSetter("name")
-    public _FinalStage name(String name) {
+    public DocsStage name(String name) {
       this.name = name;
       return this;
     }
 
     @java.lang.Override
+    @JsonSetter("docs")
+    public _FinalStage docs(String docs) {
+      this.docs = docs;
+      return this;
+    }
+
+    @java.lang.Override
     public ExampleType build() {
-      return new ExampleType(docs, name);
+      return new ExampleType(name, docs);
     }
   }
 }

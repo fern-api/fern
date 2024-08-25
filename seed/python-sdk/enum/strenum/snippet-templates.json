@@ -11,7 +11,16 @@
             "identifierOverride": "endpoint_inlined-request.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedEnum"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -52,6 +61,118 @@
                             },
                             "type": "enum"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "operand_or_color=$FERN_INPUT",
+                            "members": [
+                                {
+                                    "type": {
+                                        "value": "type_:Color",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            "red": "\"red\"",
+                                            "blue": "\"blue\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                },
+                                {
+                                    "type": {
+                                        "value": "type_:Operand",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                }
+                            ],
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": "operandOrColor"
+                            },
+                            "type": "union_v2"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "maybe_operand_or_color=$FERN_INPUT",
+                            "members": [
+                                {
+                                    "type": {
+                                        "value": "type_:Color",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            "red": "\"red\"",
+                                            "blue": "\"blue\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                },
+                                {
+                                    "type": {
+                                        "value": "type_:Operand",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                }
+                            ],
+                            "templateInput": {
+                                "location": "BODY",
+                                "path": "maybeOperandOrColor"
+                            },
+                            "type": "union_v2"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -61,7 +182,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedEnum"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -102,6 +232,118 @@
                                 },
                                 "type": "enum"
                             }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "operand_or_color=$FERN_INPUT",
+                                "members": [
+                                    {
+                                        "type": {
+                                            "value": "type_:Color",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                "red": "\"red\"",
+                                                "blue": "\"blue\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    },
+                                    {
+                                        "type": {
+                                            "value": "type_:Operand",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                ">": "\">\"",
+                                                "=": "\"=\"",
+                                                "less_than": "\"less_than\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    }
+                                ],
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "operandOrColor"
+                                },
+                                "type": "union_v2"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_operand_or_color=$FERN_INPUT",
+                                "members": [
+                                    {
+                                        "type": {
+                                            "value": "type_:Color",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                "red": "\"red\"",
+                                                "blue": "\"blue\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    },
+                                    {
+                                        "type": {
+                                            "value": "type_:Operand",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                ">": "\">\"",
+                                                "=": "\"=\"",
+                                                "less_than": "\"less_than\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    }
+                                ],
+                                "templateInput": {
+                                    "location": "BODY",
+                                    "path": "maybeOperandOrColor"
+                                },
+                                "type": "union_v2"
+                            }
                         }
                     ],
                     "inputDelimiter": ",\n\t",
@@ -123,7 +365,16 @@
             "identifierOverride": "endpoint_path-param.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedEnum"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -164,6 +415,118 @@
                             },
                             "type": "enum"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "operand_or_color=$FERN_INPUT",
+                            "members": [
+                                {
+                                    "type": {
+                                        "value": "type_:Color",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            "red": "\"red\"",
+                                            "blue": "\"blue\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                },
+                                {
+                                    "type": {
+                                        "value": "type_:Operand",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                }
+                            ],
+                            "templateInput": {
+                                "location": "PATH",
+                                "path": "operandOrColor"
+                            },
+                            "type": "union_v2"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "maybe_operand_or_color=$FERN_INPUT",
+                            "members": [
+                                {
+                                    "type": {
+                                        "value": "type_:Color",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            "red": "\"red\"",
+                                            "blue": "\"blue\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                },
+                                {
+                                    "type": {
+                                        "value": "type_:Operand",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                }
+                            ],
+                            "templateInput": {
+                                "location": "PATH",
+                                "path": "maybeOperandOrColor"
+                            },
+                            "type": "union_v2"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -173,7 +536,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedEnum"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -214,6 +586,118 @@
                                 },
                                 "type": "enum"
                             }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "operand_or_color=$FERN_INPUT",
+                                "members": [
+                                    {
+                                        "type": {
+                                            "value": "type_:Color",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                "red": "\"red\"",
+                                                "blue": "\"blue\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    },
+                                    {
+                                        "type": {
+                                            "value": "type_:Operand",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                ">": "\">\"",
+                                                "=": "\"=\"",
+                                                "less_than": "\"less_than\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    }
+                                ],
+                                "templateInput": {
+                                    "location": "PATH",
+                                    "path": "operandOrColor"
+                                },
+                                "type": "union_v2"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_operand_or_color=$FERN_INPUT",
+                                "members": [
+                                    {
+                                        "type": {
+                                            "value": "type_:Color",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                "red": "\"red\"",
+                                                "blue": "\"blue\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    },
+                                    {
+                                        "type": {
+                                            "value": "type_:Operand",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                ">": "\">\"",
+                                                "=": "\"=\"",
+                                                "less_than": "\"less_than\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    }
+                                ],
+                                "templateInput": {
+                                    "location": "PATH",
+                                    "path": "maybeOperandOrColor"
+                                },
+                                "type": "union_v2"
+                            }
                         }
                     ],
                     "inputDelimiter": ",\n\t",
@@ -235,7 +719,16 @@
             "identifierOverride": "endpoint_query-param.send"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedEnum"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -276,6 +769,118 @@
                             },
                             "type": "enum"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "operand_or_color=$FERN_INPUT",
+                            "members": [
+                                {
+                                    "type": {
+                                        "value": "type_:Color",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            "red": "\"red\"",
+                                            "blue": "\"blue\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                },
+                                {
+                                    "type": {
+                                        "value": "type_:Operand",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                }
+                            ],
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "operandOrColor"
+                            },
+                            "type": "union_v2"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "maybe_operand_or_color=$FERN_INPUT",
+                            "members": [
+                                {
+                                    "type": {
+                                        "value": "type_:Color",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            "red": "\"red\"",
+                                            "blue": "\"blue\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                },
+                                {
+                                    "type": {
+                                        "value": "type_:Operand",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                }
+                            ],
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "maybeOperandOrColor"
+                            },
+                            "type": "union_v2"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -285,7 +890,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedEnum"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -326,6 +940,118 @@
                                 },
                                 "type": "enum"
                             }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "operand_or_color=$FERN_INPUT",
+                                "members": [
+                                    {
+                                        "type": {
+                                            "value": "type_:Color",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                "red": "\"red\"",
+                                                "blue": "\"blue\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    },
+                                    {
+                                        "type": {
+                                            "value": "type_:Operand",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                ">": "\">\"",
+                                                "=": "\"=\"",
+                                                "less_than": "\"less_than\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    }
+                                ],
+                                "templateInput": {
+                                    "location": "QUERY",
+                                    "path": "operandOrColor"
+                                },
+                                "type": "union_v2"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_operand_or_color=$FERN_INPUT",
+                                "members": [
+                                    {
+                                        "type": {
+                                            "value": "type_:Color",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                "red": "\"red\"",
+                                                "blue": "\"blue\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    },
+                                    {
+                                        "type": {
+                                            "value": "type_:Operand",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                ">": "\">\"",
+                                                "=": "\"=\"",
+                                                "less_than": "\"less_than\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    }
+                                ],
+                                "templateInput": {
+                                    "location": "QUERY",
+                                    "path": "maybeOperandOrColor"
+                                },
+                                "type": "union_v2"
+                            }
                         }
                     ],
                     "inputDelimiter": ",\n\t",
@@ -347,7 +1073,16 @@
             "identifierOverride": "endpoint_query-param.sendList"
         },
         "snippetTemplate": {
-            "clientInstantiation": "from seed.client import SeedEnum\n\nclient = SeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+            "clientInstantiation": {
+                "imports": [
+                    "from seed import SeedEnum"
+                ],
+                "isOptional": true,
+                "templateString": "client = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
+                "templateInputs": [],
+                "inputDelimiter": ",",
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
                 "isOptional": true,
@@ -388,6 +1123,118 @@
                             },
                             "type": "enum"
                         }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "operand_or_color=$FERN_INPUT",
+                            "members": [
+                                {
+                                    "type": {
+                                        "value": "type_:Color",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            "red": "\"red\"",
+                                            "blue": "\"blue\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                },
+                                {
+                                    "type": {
+                                        "value": "type_:Operand",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                }
+                            ],
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "operandOrColor"
+                            },
+                            "type": "union_v2"
+                        }
+                    },
+                    {
+                        "type": "template",
+                        "value": {
+                            "imports": [],
+                            "isOptional": true,
+                            "templateString": "maybe_operand_or_color=$FERN_INPUT",
+                            "members": [
+                                {
+                                    "type": {
+                                        "value": "type_:Color",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            "red": "\"red\"",
+                                            "blue": "\"blue\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                },
+                                {
+                                    "type": {
+                                        "value": "type_:Operand",
+                                        "type": "id"
+                                    },
+                                    "template": {
+                                        "imports": [],
+                                        "isOptional": true,
+                                        "templateString": "$FERN_INPUT",
+                                        "values": {
+                                            ">": "\">\"",
+                                            "=": "\"=\"",
+                                            "less_than": "\"less_than\""
+                                        },
+                                        "templateInput": {
+                                            "location": "RELATIVE",
+                                            "path": null
+                                        },
+                                        "type": "enum"
+                                    }
+                                }
+                            ],
+                            "templateInput": {
+                                "location": "QUERY",
+                                "path": "maybeOperandOrColor"
+                            },
+                            "type": "union_v2"
+                        }
                     }
                 ],
                 "inputDelimiter": ",\n\t",
@@ -397,7 +1244,16 @@
         },
         "additionalTemplates": {
             "async": {
-                "clientInstantiation": "from seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(\n    base_url=\"https://yourhost.com/path/to/api\",\n)",
+                "clientInstantiation": {
+                    "imports": [
+                        "from seed import AsyncSeedEnum"
+                    ],
+                    "isOptional": true,
+                    "templateString": "client = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )",
+                    "templateInputs": [],
+                    "inputDelimiter": ",",
+                    "type": "generic"
+                },
                 "functionInvocation": {
                     "imports": [],
                     "isOptional": true,
@@ -437,6 +1293,118 @@
                                     "path": "maybeOperand"
                                 },
                                 "type": "enum"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "operand_or_color=$FERN_INPUT",
+                                "members": [
+                                    {
+                                        "type": {
+                                            "value": "type_:Color",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                "red": "\"red\"",
+                                                "blue": "\"blue\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    },
+                                    {
+                                        "type": {
+                                            "value": "type_:Operand",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                ">": "\">\"",
+                                                "=": "\"=\"",
+                                                "less_than": "\"less_than\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    }
+                                ],
+                                "templateInput": {
+                                    "location": "QUERY",
+                                    "path": "operandOrColor"
+                                },
+                                "type": "union_v2"
+                            }
+                        },
+                        {
+                            "type": "template",
+                            "value": {
+                                "imports": [],
+                                "isOptional": true,
+                                "templateString": "maybe_operand_or_color=$FERN_INPUT",
+                                "members": [
+                                    {
+                                        "type": {
+                                            "value": "type_:Color",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                "red": "\"red\"",
+                                                "blue": "\"blue\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    },
+                                    {
+                                        "type": {
+                                            "value": "type_:Operand",
+                                            "type": "id"
+                                        },
+                                        "template": {
+                                            "imports": [],
+                                            "isOptional": true,
+                                            "templateString": "$FERN_INPUT",
+                                            "values": {
+                                                ">": "\">\"",
+                                                "=": "\"=\"",
+                                                "less_than": "\"less_than\""
+                                            },
+                                            "templateInput": {
+                                                "location": "RELATIVE",
+                                                "path": null
+                                            },
+                                            "type": "enum"
+                                        }
+                                    }
+                                ],
+                                "templateInput": {
+                                    "location": "QUERY",
+                                    "path": "maybeOperandOrColor"
+                                },
+                                "type": "union_v2"
                             }
                         }
                     ],

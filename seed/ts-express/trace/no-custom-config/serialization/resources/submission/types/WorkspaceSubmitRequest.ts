@@ -10,11 +10,9 @@ export const WorkspaceSubmitRequest: core.serialization.ObjectSchema<
     serializers.WorkspaceSubmitRequest.Raw,
     SeedTrace.WorkspaceSubmitRequest
 > = core.serialization.object({
-    submissionId: core.serialization.lazy(async () => (await import("../../..")).SubmissionId),
-    language: core.serialization.lazy(async () => (await import("../../..")).Language),
-    submissionFiles: core.serialization.list(
-        core.serialization.lazyObject(async () => (await import("../../..")).SubmissionFileInfo)
-    ),
+    submissionId: core.serialization.lazy(() => serializers.SubmissionId),
+    language: core.serialization.lazy(() => serializers.Language),
+    submissionFiles: core.serialization.list(core.serialization.lazyObject(() => serializers.SubmissionFileInfo)),
     userId: core.serialization.string().optional(),
 });
 

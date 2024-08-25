@@ -1,7 +1,7 @@
-from typing import Tuple
+from typing import Literal, Tuple
 
 import fern.ir.resources as ir_types
-from fern.generator_exec.resources import GeneratorConfig
+from fern.generator_exec import GeneratorConfig
 
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import Project
@@ -11,7 +11,6 @@ from fern_python.generators.pydantic_model import (
     PydanticModelGenerator,
 )
 from fern_python.snippet import SnippetRegistry
-from fern_python.source_file_factory import SourceFileFactory
 from fern_python.utils import build_snippet_writer
 
 from .auth import SecurityFileGenerator
@@ -25,6 +24,9 @@ from .service_generator import ServiceGenerator
 
 
 class FastApiGenerator(AbstractGenerator):
+    def project_type(self) -> Literal["sdk", "pydantic", "fastapi"]:
+        return "fastapi"
+
     def should_format_files(
         self,
         *,
@@ -54,9 +56,6 @@ class FastApiGenerator(AbstractGenerator):
     ) -> None:
         custom_config = FastAPICustomConfig.parse_obj(generator_config.custom_config or {})
         self._pydantic_model_custom_config = PydanticModelCustomConfig(
-            forbid_extra_fields=True,
-            extra_fields="forbid",
-            wrapped_aliases=True,
             include_union_utils=True,
             include_validators=custom_config.include_validators,
             skip_formatting=custom_config.skip_formatting,
@@ -73,11 +72,15 @@ class FastApiGenerator(AbstractGenerator):
                 generator_config=generator_config,
                 ir=ir,
             ),
+            custom_config=custom_config,
+            use_str_enums=self._pydantic_model_custom_config.use_str_enums,
         )
 
-        snippet_registry = SnippetRegistry()
+        snippet_registry = SnippetRegistry(source_file_factory=context.source_file_factory)
         snippet_writer = build_snippet_writer(
-            context=context.pydantic_generator_context, improved_imports=False, use_str_enums=False
+            context=context.pydantic_generator_context,
+            improved_imports=False,
+            use_str_enums=self._pydantic_model_custom_config.use_str_enums,
         )
 
         PydanticModelGenerator().generate_types(
@@ -93,6 +96,7 @@ class FastApiGenerator(AbstractGenerator):
         for service in ir.services.values():
             self._generate_service(
                 context=context,
+                custom_config=custom_config,
                 ir=ir,
                 generator_exec_wrapper=generator_exec_wrapper,
                 service=service,
@@ -132,10 +136,13 @@ class FastApiGenerator(AbstractGenerator):
         generator_exec_wrapper: GeneratorExecWrapper,
         service: ir_types.HttpService,
         project: Project,
+        custom_config: FastAPICustomConfig,
     ) -> None:
         filepath = context.get_filepath_for_service(service.name)
-        service_file = SourceFileFactory.create(
-            project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
+        service_file = context.source_file_factory.create(
+            project=project,
+            filepath=filepath,
+            generator_exec_wrapper=generator_exec_wrapper,
         )
         ServiceGenerator(context=context, service=service).generate(source_file=service_file)
         project.write_source_file(source_file=service_file, filepath=filepath)
@@ -147,7 +154,7 @@ class FastApiGenerator(AbstractGenerator):
                     inlined_request_filepath = context.get_filepath_for_inlined_request(
                         service_name=service.name, request=request_body
                     )
-                    inlined_request_source_file = SourceFileFactory.create(
+                    inlined_request_source_file = context.source_file_factory.create(
                         project=project,
                         filepath=inlined_request_filepath,
                         generator_exec_wrapper=generator_exec_wrapper,
@@ -173,7 +180,7 @@ class FastApiGenerator(AbstractGenerator):
         project: Project,
     ) -> None:
         filepath = context.get_filepath_for_error(error.name)
-        source_file = SourceFileFactory.create(
+        source_file = context.source_file_factory.create(
             project=project, filepath=filepath, generator_exec_wrapper=generator_exec_wrapper
         )
         ErrorGenerator(context=context, error=error).generate(source_file=source_file)

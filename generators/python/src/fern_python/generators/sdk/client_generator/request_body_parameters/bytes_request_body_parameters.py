@@ -26,7 +26,12 @@ class BytesRequestBodyParameters(AbstractRequestBodyParameters):
                 type_hint=AST.TypeHint.optional(AST.TypeHint.bytes_or_bytes_stream())
                 if self._request.is_optional
                 else AST.TypeHint.bytes_or_bytes_stream(),
-                raw_type=ir_types.TypeReference.factory.primitive(ir_types.PrimitiveType.BASE_64),
+                raw_type=ir_types.TypeReference.factory.primitive(
+                    ir_types.PrimitiveType(
+                        v_1=ir_types.PrimitiveTypeV1.STRING,
+                        v_2=None,
+                    ),
+                ),
             )
         ]
 
@@ -39,9 +44,6 @@ class BytesRequestBodyParameters(AbstractRequestBodyParameters):
         return None
 
     def get_files(self) -> Optional[AST.Expression]:
-        return None
-
-    def get_pre_fetch_statements(self, names_to_deconflict: Optional[List[str]] = None) -> Optional[AST.CodeWriter]:
         return None
 
     def is_default_body_parameter_used(self) -> bool:

@@ -71,7 +71,10 @@ public interface PlaylistService {
       @PathVariable("playlistId") PlaylistId playlistId,
       @RequestBody Optional<UpdatePlaylistRequest> body) throws PlaylistIdNotFoundError;
 
-  @DeleteMapping("/{playlist_id}")
+  @DeleteMapping(
+      value = "/{playlist_id}",
+      produces = "application/json"
+  )
   void deletePlaylist(@RequestHeader("Authorization") BearerAuth auth, Principal principal,
       @RequestHeader("X-Random-Header") Optional<String> xRandomHeader,
       @PathVariable("playlist_id") PlaylistId playlistId);

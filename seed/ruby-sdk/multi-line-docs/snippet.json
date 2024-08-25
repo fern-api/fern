@@ -1,4 +1,49 @@
 {
-    "endpoints": [],
+    "endpoints": [
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "client": "require \"fern_multi_line_docs\"\n\nmulti_line_docs = SeedMultiLineDocsClient::Client.new(base_url: \"https://api.example.com\")\nmulti_line_docs.user.get_user(user_id: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifierOverride": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "client": "require \"fern_multi_line_docs\"\n\nmulti_line_docs = SeedMultiLineDocsClient::Client.new(base_url: \"https://api.example.com\")\nmulti_line_docs.user.create_user(name: \"string\", age: 1)",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users/{userId}",
+                "method": "GET",
+                "identifierOverride": "endpoint_user.getUser"
+            },
+            "snippet": {
+                "client": "require \"fern_multi_line_docs\"\n\nmulti_line_docs = SeedMultiLineDocsClient::Client.new(base_url: \"https://api.example.com\")\nmulti_line_docs.user.get_user(user_id: \"string\")",
+                "type": "ruby"
+            }
+        },
+        {
+            "id": {
+                "path": "/users",
+                "method": "POST",
+                "identifierOverride": "endpoint_user.createUser"
+            },
+            "snippet": {
+                "client": "require \"fern_multi_line_docs\"\n\nmulti_line_docs = SeedMultiLineDocsClient::Client.new(base_url: \"https://api.example.com\")\nmulti_line_docs.user.create_user(name: \"string\", age: 1)",
+                "type": "ruby"
+            }
+        }
+    ],
     "types": {}
 }

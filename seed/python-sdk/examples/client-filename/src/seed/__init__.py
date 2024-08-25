@@ -11,6 +11,7 @@ from .types import (
     Exception,
     ExceptionInfo,
     Exception_Generic,
+    Exception_Timeout,
     ExtendedMovie,
     File,
     Identifier,
@@ -35,12 +36,14 @@ from .types import (
     Type,
 )
 from . import commons, file, health, service, types
+from .client import AsyncSeedExhaustive, SeedExhaustive
 from .environment import SeedExhaustiveEnvironment
 from .version import __version__
 
 __all__ = [
     "Actor",
     "Actress",
+    "AsyncSeedExhaustive",
     "BasicType",
     "CastMember",
     "ComplexType",
@@ -49,6 +52,7 @@ __all__ = [
     "Exception",
     "ExceptionInfo",
     "Exception_Generic",
+    "Exception_Timeout",
     "ExtendedMovie",
     "File",
     "Identifier",
@@ -65,6 +69,7 @@ __all__ = [
     "Request",
     "Response",
     "ResponseType",
+    "SeedExhaustive",
     "SeedExhaustiveEnvironment",
     "StuntDouble",
     "Test",

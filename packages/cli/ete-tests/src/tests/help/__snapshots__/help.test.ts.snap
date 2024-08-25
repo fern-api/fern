@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`help no arguments 1`] = `
+exports[`help > no arguments 1`] = `
 "fern-dev
 
 Commands:
@@ -24,11 +24,11 @@ Commands:
   fern-dev api update           Pulls the latest OpenAPI spec from the specified
                                 origin in generators.yml and updates the local
                                 spec.
-  fern-dev generator upgrade    Upgrades the specified generator in
-                                generators.yml to the latest stable version.
   fern-dev upgrade              Upgrades version in fern.config.json. Also
                                 upgrades generators in generators.yml to their
                                 minimum-compatible versions.
+  fern-dev generator            Operate on the generators within your Fern
+                                configuration
 
 Options:
       --help       Show help                                           [boolean]

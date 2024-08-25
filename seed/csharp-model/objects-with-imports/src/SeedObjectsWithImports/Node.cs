@@ -1,18 +1,24 @@
 using System.Text.Json.Serialization;
 using SeedObjectsWithImports.Commons;
+using SeedObjectsWithImports.Core;
 
 #nullable enable
 
 namespace SeedObjectsWithImports;
 
-public class Node
+public record Node
 {
     [JsonPropertyName("id")]
-    public string Id { get; init; }
+    public required string Id { get; set; }
 
     [JsonPropertyName("label")]
-    public string? Label { get; init; }
+    public string? Label { get; set; }
 
     [JsonPropertyName("metadata")]
-    public Metadata? Metadata { get; init; }
+    public Metadata? Metadata { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

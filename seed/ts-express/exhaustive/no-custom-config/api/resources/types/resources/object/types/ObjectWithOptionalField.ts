@@ -3,6 +3,7 @@
  */
 
 export interface ObjectWithOptionalField {
+    /** This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered. */
     string?: string;
     integer?: number;
     long?: number;
@@ -15,4 +16,5 @@ export interface ObjectWithOptionalField {
     list?: string[];
     set?: Set<string>;
     map?: Record<number, string>;
+    bigint?: string;
 }

@@ -1,0 +1,35 @@
+openapi: 3.1.0
+info:
+  title: Enum of separator characters
+  version: 1.0.0
+paths:
+  /settings:
+    patch:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Settings'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Settings'
+
+components:
+  schemas:
+    Settings:
+      type: object
+      properties:
+        separator:
+          $ref: '#/components/schemas/DocumentIDSeparators'
+    DocumentIDSeparators:
+      type: string
+      enum:
+        - /    # slash
+        - '-'  # hyphen
+        - '|'  # pipe
+        - .    # dot
+        - ''   # empty string

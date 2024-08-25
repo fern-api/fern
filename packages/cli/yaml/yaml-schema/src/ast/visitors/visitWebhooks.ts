@@ -21,6 +21,7 @@ export async function visitWebhooks({
     await visitObject(webhook, {
         "display-name": noop,
         method: noop,
+        examples: noop,
         headers: async (headers) => {
             await visitHeaders({
                 headers,
@@ -85,6 +86,7 @@ export async function visitWebhooks({
                                     });
                                 },
                                 audiences: noop,
+                                encoding: noop,
                                 default: noop,
                                 validation: noop
                             });
@@ -133,6 +135,7 @@ async function visitHeaders({
                 },
                 docs: createDocsVisitor(visitor, nodePathForHeader),
                 audiences: noop,
+                encoding: noop,
                 env: noop,
                 default: noop,
                 validation: noop

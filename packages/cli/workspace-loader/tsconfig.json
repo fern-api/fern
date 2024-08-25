@@ -5,8 +5,10 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../commons/fs-utils" },
+    { "path": "../../commons/logging-execa" },
     { "path": "../../core" },
     { "path": "../configuration" },
+    { "path": "../logger" },
     { "path": "../openapi-ir-to-fern" },
     { "path": "../openapi-parser" },
     { "path": "../semver-utils" },

@@ -1,6 +1,11 @@
 import { fernConfigJson, generatorsYml } from "@fern-api/configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { FernWorkspace } from "@fern-api/workspace-loader";
+import {
+    APIWorkspace,
+    FernWorkspace,
+    getOSSWorkspaceSettingsFromGeneratorInvocation,
+    OSSWorkspace
+} from "@fern-api/workspace-loader";
 import chalk from "chalk";
 import os from "os";
 import path from "path";
@@ -15,7 +20,7 @@ export async function runLocalGenerationForWorkspace({
     context
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
-    workspace: FernWorkspace;
+    workspace: APIWorkspace;
     generatorGroup: generatorsYml.GeneratorGroup;
     keepDocker: boolean;
     context: TaskContext;
@@ -30,10 +35,23 @@ export async function runLocalGenerationForWorkspace({
                         "Cannot generate because output location is not local-file-system"
                     );
                 } else {
+                    let fernWorkspace: FernWorkspace;
+                    if (workspace instanceof OSSWorkspace) {
+                        fernWorkspace = await workspace.toFernWorkspace(
+                            { context },
+                            getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                        );
+                    } else {
+                        fernWorkspace = await workspace.toFernWorkspace(
+                            {},
+                            getOSSWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                        );
+                    }
+
                     await writeFilesToDiskAndRunGenerator({
                         organization: projectConfig.organization,
                         absolutePathToFernConfig: projectConfig._absolutePath,
-                        workspace,
+                        workspace: fernWorkspace,
                         generatorInvocation,
                         absolutePathToLocalOutput: generatorInvocation.absolutePathToLocalOutput,
                         absolutePathToLocalSnippetJSON: undefined,

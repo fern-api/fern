@@ -27,6 +27,20 @@ export interface UsersServiceMethods {
         },
         next: express.NextFunction
     ): void | Promise<void>;
+    listWithBodyCursorPagination(
+        req: express.Request<
+            never,
+            SeedPagination.ListUsersPaginationResponse,
+            SeedPagination.ListUsersBodyCursorPaginationRequest,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedPagination.ListUsersPaginationResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
     listWithOffsetPagination(
         req: express.Request<
             never,
@@ -37,6 +51,56 @@ export interface UsersServiceMethods {
                 per_page?: number;
                 order?: SeedPagination.Order;
                 starting_after?: string;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedPagination.ListUsersPaginationResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
+    listWithBodyOffsetPagination(
+        req: express.Request<
+            never,
+            SeedPagination.ListUsersPaginationResponse,
+            SeedPagination.ListUsersBodyOffsetPaginationRequest,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedPagination.ListUsersPaginationResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
+    listWithOffsetStepPagination(
+        req: express.Request<
+            never,
+            SeedPagination.ListUsersPaginationResponse,
+            never,
+            {
+                page?: number;
+                limit?: number;
+                order?: SeedPagination.Order;
+            }
+        >,
+        res: {
+            send: (responseBody: SeedPagination.ListUsersPaginationResponse) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction
+    ): void | Promise<void>;
+    listWithOffsetPaginationHasNextPage(
+        req: express.Request<
+            never,
+            SeedPagination.ListUsersPaginationResponse,
+            never,
+            {
+                page?: number;
+                limit?: number;
+                order?: SeedPagination.Order;
             }
         >,
         res: {
@@ -121,7 +185,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -146,6 +210,49 @@ export class UsersService {
                 next(error);
             }
         });
+        this.router.post("", async (req, res, next) => {
+            const request = serializers.ListUsersBodyCursorPaginationRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.listWithBodyCursorPagination(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedPaginationError) {
+                        console.warn(
+                            `Endpoint 'listWithBodyCursorPagination' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition."
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                    ),
+                });
+                next(request.errors);
+            }
+        });
         this.router.get("", async (req, res, next) => {
             try {
                 await this.methods.listWithOffsetPagination(
@@ -153,7 +260,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -178,6 +285,113 @@ export class UsersService {
                 next(error);
             }
         });
+        this.router.post("", async (req, res, next) => {
+            const request = serializers.ListUsersBodyOffsetPaginationRequest.parse(req.body);
+            if (request.ok) {
+                req.body = request.value;
+                try {
+                    await this.methods.listWithBodyOffsetPagination(
+                        req as any,
+                        {
+                            send: async (responseBody) => {
+                                res.json(
+                                    serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                        unrecognizedObjectKeys: "strip",
+                                    })
+                                );
+                            },
+                            cookie: res.cookie.bind(res),
+                            locals: res.locals,
+                        },
+                        next
+                    );
+                    next();
+                } catch (error) {
+                    if (error instanceof errors.SeedPaginationError) {
+                        console.warn(
+                            `Endpoint 'listWithBodyOffsetPagination' unexpectedly threw ${error.constructor.name}.` +
+                                ` If this was intentional, please add ${error.constructor.name} to` +
+                                " the endpoint's errors list in your Fern Definition."
+                        );
+                        await error.send(res);
+                    } else {
+                        res.status(500).json("Internal Server Error");
+                    }
+                    next(error);
+                }
+            } else {
+                res.status(422).json({
+                    errors: request.errors.map(
+                        (error) => ["request", ...error.path].join(" -> ") + ": " + error.message
+                    ),
+                });
+                next(request.errors);
+            }
+        });
+        this.router.get("", async (req, res, next) => {
+            try {
+                await this.methods.listWithOffsetStepPagination(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next
+                );
+                next();
+            } catch (error) {
+                if (error instanceof errors.SeedPaginationError) {
+                    console.warn(
+                        `Endpoint 'listWithOffsetStepPagination' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition."
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("", async (req, res, next) => {
+            try {
+                await this.methods.listWithOffsetPaginationHasNextPage(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(
+                                serializers.ListUsersPaginationResponse.jsonOrThrow(responseBody, {
+                                    unrecognizedObjectKeys: "strip",
+                                })
+                            );
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next
+                );
+                next();
+            } catch (error) {
+                if (error instanceof errors.SeedPaginationError) {
+                    console.warn(
+                        `Endpoint 'listWithOffsetPaginationHasNextPage' unexpectedly threw ${error.constructor.name}.` +
+                            ` If this was intentional, please add ${error.constructor.name} to` +
+                            " the endpoint's errors list in your Fern Definition."
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
         this.router.get("", async (req, res, next) => {
             try {
                 await this.methods.listWithExtendedResults(
@@ -185,7 +399,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.ListUsersExtendedResponse.jsonOrThrow(responseBody, {
+                                serializers.ListUsersExtendedResponse.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -217,7 +431,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.UsernameCursor.jsonOrThrow(responseBody, {
+                                serializers.UsernameCursor.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );
@@ -249,7 +463,7 @@ export class UsersService {
                     {
                         send: async (responseBody) => {
                             res.json(
-                                await serializers.UsernameContainer.jsonOrThrow(responseBody, {
+                                serializers.UsernameContainer.jsonOrThrow(responseBody, {
                                     unrecognizedObjectKeys: "strip",
                                 })
                             );

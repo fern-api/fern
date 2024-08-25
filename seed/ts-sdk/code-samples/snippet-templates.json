@@ -11,10 +11,41 @@
             "identifierOverride": "endpoint_service.hello"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedCodeSamples = new SeedCodeSamplesClient;\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedCodeSamplesClient } from \"@fern/code-samples\";"
+                ],
+                "templateString": "const client = new SeedCodeSamplesClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedCodeSamples.service.hello(\n\t$FERN_INPUT\n)",
+                "templateString": "await client.service.hello(\n\t$FERN_INPUT\n)",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [

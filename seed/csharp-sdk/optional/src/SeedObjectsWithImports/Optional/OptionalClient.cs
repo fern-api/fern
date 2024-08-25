@@ -1,34 +1,49 @@
+using System.Net.Http;
 using System.Text.Json;
-using SeedObjectsWithImports;
+using SeedObjectsWithImports.Core;
 
 #nullable enable
 
 namespace SeedObjectsWithImports;
 
-public class OptionalClient
+public partial class OptionalClient
 {
     private RawClient _client;
 
-    public OptionalClient(RawClient client)
+    internal OptionalClient(RawClient client)
     {
         _client = client;
     }
 
-    public async Task<string> SendOptionalBodyAsync(Dictionary<string, object>? request)
+    public async Task<string> SendOptionalBodyAsync(object? request, RequestOptions? options = null)
     {
         var response = await _client.MakeRequestAsync(
-            new RawClient.ApiRequest
+            new RawClient.JsonApiRequest
             {
+                BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Post,
-                Path = "/send-optional-body",
-                Body = request
+                Path = "send-optional-body",
+                Body = request,
+                Options = options
             }
         );
-        string responseBody = await response.Raw.Content.ReadAsStringAsync();
-        if (response.StatusCode >= 200 && response.StatusCode < 400)
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        if (response.StatusCode is >= 200 and < 400)
         {
-            return JsonSerializer.Deserialize<string>(responseBody);
+            try
+            {
+                return JsonUtils.Deserialize<string>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedObjectsWithImportsException("Failed to deserialize response", e);
+            }
         }
-        throw new Exception(responseBody);
+
+        throw new SeedObjectsWithImportsApiException(
+            $"Error with status code {response.StatusCode}",
+            response.StatusCode,
+            JsonUtils.Deserialize<object>(responseBody)
+        );
     }
 }

@@ -191,6 +191,9 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
 	switch unmarshaler.Type {
 	case "foo":
 		value := new(Foo)

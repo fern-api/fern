@@ -1,6 +1,6 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
+exports[`x-fern-resolutions > x-fern-resolutions > docs 1`] = `
 {
   "definitionFiles": {
     "user.yml": {
@@ -54,6 +54,9 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-resolutions/openapi.yml",
+        },
       },
     },
   },
@@ -63,8 +66,6 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -73,6 +74,9 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-resolutions/openapi.yml",
         },
       },
     },
@@ -87,7 +91,7 @@ exports[`x-fern-resolutions x-fern-resolutions docs 1`] = `
 }
 `;
 
-exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
+exports[`x-fern-resolutions > x-fern-resolutions > simple 1`] = `
 {
   "definitionFiles": {
     "user.yml": {
@@ -141,6 +145,9 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
             },
           },
         },
+        "source": {
+          "openapi": "x-fern-resolutions/openapi.yml",
+        },
       },
     },
   },
@@ -150,8 +157,6 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
         "docs": undefined,
         "properties": {
           "id": {
-            "default": undefined,
-            "docs": undefined,
             "type": "optional<string>",
             "validation": {
               "format": "uuid",
@@ -160,6 +165,9 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
               "pattern": undefined,
             },
           },
+        },
+        "source": {
+          "openapi": "x-fern-resolutions/openapi.yml",
         },
       },
     },

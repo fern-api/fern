@@ -3,7 +3,7 @@ import {
     ExampleType,
     FernFilepath,
     ObjectTypeDeclaration,
-    PrimitiveType,
+    PrimitiveTypeV1,
     Type,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
@@ -271,9 +271,12 @@ function isTypeStringLike(type: TypeReference): boolean {
     if (type.type !== "primitive") {
         return false;
     }
-    return PrimitiveType._visit(type.primitive, {
+    return PrimitiveTypeV1._visit(type.primitive.v1, {
         integer: () => false,
         double: () => false,
+        uint: () => false,
+        uint64: () => false,
+        float: () => false,
         string: () => true,
         boolean: () => false,
         long: () => false,
@@ -281,6 +284,7 @@ function isTypeStringLike(type: TypeReference): boolean {
         uuid: () => true,
         date: () => true,
         base64: () => true,
+        bigInteger: () => true,
         _other: () => false
     });
 }

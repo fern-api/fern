@@ -5,7 +5,6 @@ from fern_python.external_dependencies import FastAPI
 from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.fastapi.custom_config import FastAPICustomConfig
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
-from fern_python.source_file_factory import SourceFileFactory
 
 from ..context import FastApiGeneratorContext
 
@@ -19,7 +18,7 @@ class FernHTTPExceptionGenerator:
         self.FernHTTPException = context.core_utilities.exceptions.FernHTTPException
 
     def generate(self, project: Project, generator_exec_wrapper: GeneratorExecWrapper) -> None:
-        source_file = SourceFileFactory.create(
+        source_file = self._context.source_file_factory.create(
             project=project,
             generator_exec_wrapper=generator_exec_wrapper,
             filepath=self.FernHTTPException.filepath,
@@ -99,6 +98,11 @@ class FernHTTPExceptionGenerator:
             version=self._custom_config.pydantic_config.version,
             smart_union=False,
             require_optional_fields=self._custom_config.pydantic_config.require_optional_fields,
+            pydantic_base_model=self._context.core_utilities.get_universal_base_model(),
+            is_pydantic_v2=self._context.core_utilities.get_is_pydantic_v2(),
+            universal_field_validator=self._context.core_utilities.universal_field_validator,
+            universal_root_validator=self._context.core_utilities.universal_root_validator,
+            update_forward_ref_function_reference=self._context.core_utilities.get_update_forward_refs(),
         ) as body_pydantic_model:
             body_pydantic_model.add_field(
                 PydanticField(

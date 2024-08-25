@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = BinaryTreeNodeValue.Builder.class)
 public final class BinaryTreeNodeValue {
     private final String nodeId;
@@ -154,7 +154,7 @@ public final class BinaryTreeNodeValue {
 
         @java.lang.Override
         public _FinalStage left(String left) {
-            this.left = Optional.of(left);
+            this.left = Optional.ofNullable(left);
             return this;
         }
 
@@ -167,7 +167,7 @@ public final class BinaryTreeNodeValue {
 
         @java.lang.Override
         public _FinalStage right(String right) {
-            this.right = Optional.of(right);
+            this.right = Optional.ofNullable(right);
             return this;
         }
 

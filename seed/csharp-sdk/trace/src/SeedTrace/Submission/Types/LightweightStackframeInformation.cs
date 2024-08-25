@@ -1,14 +1,20 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class LightweightStackframeInformation
+public record LightweightStackframeInformation
 {
     [JsonPropertyName("numStackFrames")]
-    public int NumStackFrames { get; init; }
+    public required int NumStackFrames { get; set; }
 
     [JsonPropertyName("topStackFrameMethodName")]
-    public string TopStackFrameMethodName { get; init; }
+    public required string TopStackFrameMethodName { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

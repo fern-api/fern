@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_ABSENT)
 @JsonDeserialize(builder = ExecutionSessionResponse.Builder.class)
 public final class ExecutionSessionResponse {
     private final String sessionId;
@@ -165,7 +165,7 @@ public final class ExecutionSessionResponse {
 
         @java.lang.Override
         public _FinalStage executionSessionUrl(String executionSessionUrl) {
-            this.executionSessionUrl = Optional.of(executionSessionUrl);
+            this.executionSessionUrl = Optional.ofNullable(executionSessionUrl);
             return this;
         }
 

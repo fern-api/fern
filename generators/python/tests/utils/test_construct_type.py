@@ -2,17 +2,19 @@
 
 
 from datetime import datetime, date
-from re import M
 from typing import cast
 import uuid
+
+import pytest
 from core_utilities.sdk.unchecked_base_model import construct_type
+from tests.utils.example_models.types.resources.types.square import Square
 from .example_models.manual_types.defaulted_object import ObjectWithDefaultedOptionalFields
-from .example_models.types.resources.types import ObjectWithOptionalField, Circle, Shape_Square
+from .example_models.types.resources.types import ObjectWithOptionalField, Circle, Shape_Square, Shape_Circle
 
 
 def test_construct_valid() -> None:
     response = {
-        "literal": "lit_two",
+        "literal": "lit_one",
         "string": "circle",
         "integer": 1,
         "long": 1000000,
@@ -26,13 +28,15 @@ def test_construct_valid() -> None:
         "set": ["string"],
         "map": {1: "string"},
         "union": {"type": "square", "id": "string", "length": 1.1},
+        "second_union": {"type": "circle", "id": "another_string", "radius": 2.3},
         "undiscriminated_union": {"id": "string2", "length": 6.7},
         "enum": "red",
-        "any": "something here"
+        "any": "something here",
+        "additional_field": "this here"
     }
     cast_response = cast(ObjectWithOptionalField, construct_type(type_=ObjectWithOptionalField, object_=response))
 
-    assert cast_response.literal == "lit_two"
+    assert cast_response.literal == "lit_one"
     assert cast_response.string == "circle"
     assert cast_response.integer == 1
     assert cast_response.long_ == 1000000
@@ -47,21 +51,28 @@ def test_construct_valid() -> None:
     assert cast_response.map_ == {1: "string"}
     assert cast_response.enum == "red"
     assert cast_response.any == "something here"
+    assert cast_response.additional_field == "this here"  # type: ignore # Since this is not in the model mypy complains, but it's still fine
 
-    shape_expectation = Shape_Square(id="string", length=1.1)
+    square_expectation = Shape_Square(id="string", length=1.1)
     assert cast_response.union is not None
-    assert cast_response.union.id == shape_expectation.id
-    assert "length" in cast_response.union.dict() and cast_response.union.length == shape_expectation.length
-    assert cast_response.union.type == shape_expectation.type
+    assert cast_response.union.id == square_expectation.id
+    assert isinstance(cast_response.union, Shape_Square) and cast_response.union.length == square_expectation.length
+    assert cast_response.union.type == square_expectation.type
+
+    circle_expectation = Shape_Circle(id="another_string", radius=2.3)
+    assert cast_response.second_union is not None
+    assert cast_response.second_union.id == circle_expectation.id
+    assert isinstance(cast_response.second_union, Shape_Circle) and cast_response.second_union.radius == circle_expectation.radius
+    assert cast_response.second_union.type == circle_expectation.type
 
     assert cast_response.undiscriminated_union is not None
-    assert cast_response.undiscriminated_union.id == "string2"
-    assert "length" in cast_response.undiscriminated_union.dict() and cast_response.undiscriminated_union.length == 6.7
+    assert cast_response.undiscriminated_union.id == "string2"  # type: ignore # Since this is not in the model mypy complains, but it's still fine
+    assert isinstance(cast_response.undiscriminated_union, Square) and cast_response.undiscriminated_union.length == 6.7
 
 
 def test_construct_unset() -> None:
     response = {
-        "literal": "lit_two",
+        "literal": "lit_one",
         "string": "circle",
         "integer": 1,
         "long": 1000000,
@@ -83,7 +94,7 @@ def test_construct_unset() -> None:
 
     d = cast_response.dict(by_alias=True, exclude_unset=True)
     assert d == {
-        "literal": "lit_two",
+        "literal": "lit_one",
         "string": "circle",
         "integer": 1,
         "long": 1000000,

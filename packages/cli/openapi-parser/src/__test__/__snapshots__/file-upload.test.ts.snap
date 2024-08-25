@@ -1,7 +1,8 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`file-upload file-upload parse open api 1`] = `
+exports[`file-upload > file-upload > parse open api 1`] = `
 {
+  "apiVersion": null,
   "basePath": null,
   "channel": [],
   "description": null,
@@ -88,12 +89,20 @@ exports[`file-upload file-upload parse open api 1`] = `
             },
           },
         ],
+        "source": {
+          "file": "file-upload/openapi.yml",
+          "type": "openapi",
+        },
         "type": "multipart",
       },
       "requestNameOverride": null,
       "response": null,
       "sdkName": null,
       "server": [],
+      "source": {
+        "file": "file-upload/openapi.yml",
+        "type": "openapi",
+      },
       "summary": "Upload a file",
       "tags": [],
     },

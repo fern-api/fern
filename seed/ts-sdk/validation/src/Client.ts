@@ -14,8 +14,11 @@ export declare namespace SeedValidationClient {
     }
 
     interface RequestOptions {
+        /** The maximum time to wait for a response in seconds. */
         timeoutInSeconds?: number;
+        /** The number of times to retry the request. Defaults to 2. */
         maxRetries?: number;
+        /** A hook to abort the request. */
         abortSignal?: AbortSignal;
     }
 }
@@ -28,10 +31,11 @@ export class SeedValidationClient {
      * @param {SeedValidationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedValidation.create({
+     *     await client.create({
      *         decimal: 1.1,
      *         even: 1,
-     *         name: "string"
+     *         name: "string",
+     *         shape: SeedValidation.Shape.Square
      *     })
      */
     public async create(
@@ -45,17 +49,19 @@ export class SeedValidationClient {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/validation",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/validation/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
-            body: await serializers.CreateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            requestType: "json",
+            body: serializers.CreateRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Type.parseOrThrow(_response.body, {
+            return serializers.Type.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -90,7 +96,7 @@ export class SeedValidationClient {
      * @param {SeedValidationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await seedValidation.get({
+     *     await client.get({
      *         decimal: 1.1,
      *         even: 1,
      *         name: "string"
@@ -112,17 +118,19 @@ export class SeedValidationClient {
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "@fern/validation",
                 "X-Fern-SDK-Version": "0.0.1",
+                "User-Agent": "@fern/validation/0.0.1",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            requestType: "json",
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return await serializers.Type.parseOrThrow(_response.body, {
+            return serializers.Type.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

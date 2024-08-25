@@ -1,21 +1,25 @@
 using System.Text.Json.Serialization;
 using OneOf;
-using SeedExamples;
 using SeedExamples.Core;
 
 #nullable enable
 
 namespace SeedExamples;
 
-public class Identifier
+public record Identifier
 {
     [JsonPropertyName("type")]
     [JsonConverter(typeof(OneOfSerializer<OneOf<BasicType, ComplexType>>))]
-    public OneOf<BasicType, ComplexType> Type { get; init; }
+    public required OneOf<BasicType, ComplexType> Type { get; set; }
 
     [JsonPropertyName("value")]
-    public string Value { get; init; }
+    public required string Value { get; set; }
 
     [JsonPropertyName("label")]
-    public string Label { get; init; }
+    public required string Label { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

@@ -15,10 +15,10 @@
  */
 package com.fern.java.generators;
 
-import com.fern.irV42.model.commons.TypeId;
-import com.fern.irV42.model.types.DeclaredTypeName;
-import com.fern.irV42.model.types.ObjectProperty;
-import com.fern.irV42.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.commons.TypeId;
+import com.fern.ir.model.types.DeclaredTypeName;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.PoetTypeNameMapper;
 import com.fern.java.generators.object.EnrichedObjectProperty;
@@ -118,7 +118,8 @@ public final class ObjectGenerator extends AbstractFileGenerator {
                 implementsInterfaces,
                 true,
                 publicConstructorsEnabled,
-                generatorContext.deserializeWithAdditionalProperties());
+                generatorContext.deserializeWithAdditionalProperties(),
+                generatorContext.getCustomConfig().jsonInclude());
         TypeSpec objectTypeSpec = genericObjectGenerator.generate();
         JavaFile javaFile =
                 JavaFile.builder(className.packageName(), objectTypeSpec).build();

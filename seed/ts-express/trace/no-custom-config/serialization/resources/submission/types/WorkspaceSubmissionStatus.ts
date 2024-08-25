@@ -13,13 +13,13 @@ export const WorkspaceSubmissionStatus: core.serialization.Schema<
     .union("type", {
         stopped: core.serialization.object({}),
         errored: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).ErrorInfo),
+            value: core.serialization.lazy(() => serializers.ErrorInfo),
         }),
         running: core.serialization.object({
-            value: core.serialization.lazy(async () => (await import("../../..")).RunningSubmissionState),
+            value: core.serialization.lazy(() => serializers.RunningSubmissionState),
         }),
-        ran: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceRunDetails),
-        traced: core.serialization.lazyObject(async () => (await import("../../..")).WorkspaceRunDetails),
+        ran: core.serialization.lazyObject(() => serializers.WorkspaceRunDetails),
+        traced: core.serialization.lazyObject(() => serializers.WorkspaceRunDetails),
     })
     .transform<SeedTrace.WorkspaceSubmissionStatus>({
         transform: (value) => value,

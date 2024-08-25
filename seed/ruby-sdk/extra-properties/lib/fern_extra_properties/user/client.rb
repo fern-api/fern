@@ -15,19 +15,27 @@ module SeedExtraPropertiesClient
       @request_client = request_client
     end
 
-    # @param type [String]
-    # @param version [String]
     # @param name [String]
     # @param request_options [SeedExtraPropertiesClient::RequestOptions]
     # @return [SeedExtraPropertiesClient::User::User]
-    def create_user(type:, version:, name:, request_options: nil)
+    # @example
+    #  extra_properties = SeedExtraPropertiesClient::Client.new(base_url: "https://api.example.com")
+    #  extra_properties.user.create_user(name: "string")
+    def create_user(name:, request_options: nil)
       response = @request_client.conn.post do |req|
         req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.headers = {
+      **(req.headers || {}),
+      **@request_client.get_headers,
+      **(request_options&.additional_headers || {})
+        }.compact
+        unless request_options.nil? || request_options&.additional_query_parameters.nil?
+          req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+        end
         req.body = {
           **(request_options&.additional_body_parameters || {}),
-          _type: type,
-          _version: version,
+          "_type": "CreateUserRequest",
+          "_version": "v1",
           name: name
         }.compact
         req.url "#{@request_client.get_url(request_options: request_options)}/user"
@@ -46,20 +54,28 @@ module SeedExtraPropertiesClient
       @request_client = request_client
     end
 
-    # @param type [String]
-    # @param version [String]
     # @param name [String]
     # @param request_options [SeedExtraPropertiesClient::RequestOptions]
     # @return [SeedExtraPropertiesClient::User::User]
-    def create_user(type:, version:, name:, request_options: nil)
+    # @example
+    #  extra_properties = SeedExtraPropertiesClient::Client.new(base_url: "https://api.example.com")
+    #  extra_properties.user.create_user(name: "string")
+    def create_user(name:, request_options: nil)
       Async do
         response = @request_client.conn.post do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+          req.headers = {
+        **(req.headers || {}),
+        **@request_client.get_headers,
+        **(request_options&.additional_headers || {})
+          }.compact
+          unless request_options.nil? || request_options&.additional_query_parameters.nil?
+            req.params = { **(request_options&.additional_query_parameters || {}) }.compact
+          end
           req.body = {
             **(request_options&.additional_body_parameters || {}),
-            _type: type,
-            _version: version,
+            "_type": "CreateUserRequest",
+            "_version": "v1",
             name: name
           }.compact
           req.url "#{@request_client.get_url(request_options: request_options)}/user"

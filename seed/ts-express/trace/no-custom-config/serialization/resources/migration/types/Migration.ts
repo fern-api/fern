@@ -9,7 +9,7 @@ import * as core from "../../../../core";
 export const Migration: core.serialization.ObjectSchema<serializers.Migration.Raw, SeedTrace.Migration> =
     core.serialization.object({
         name: core.serialization.string(),
-        status: core.serialization.lazy(async () => (await import("../../..")).MigrationStatus),
+        status: core.serialization.lazy(() => serializers.MigrationStatus),
     });
 
 export declare namespace Migration {

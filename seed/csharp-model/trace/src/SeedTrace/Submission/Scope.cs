@@ -1,12 +1,17 @@
 using System.Text.Json.Serialization;
-using SeedTrace;
+using SeedTrace.Core;
 
 #nullable enable
 
 namespace SeedTrace;
 
-public class Scope
+public record Scope
 {
     [JsonPropertyName("variables")]
-    public Dictionary<string, DebugVariableValue> Variables { get; init; }
+    public object Variables { get; set; } = new Dictionary<string, object?>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

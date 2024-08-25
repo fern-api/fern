@@ -11,10 +11,57 @@
             "identifierOverride": "endpoint_service.getWithBearerToken"
         },
         "snippetTemplate": {
-            "clientInstantiation": "const seedBearerTokenEnvironmentVariable = new SeedBearerTokenEnvironmentVariableClient({ apiKey: \"YOUR_API_KEY\" });\n",
+            "clientInstantiation": {
+                "imports": [
+                    "import { SeedBearerTokenEnvironmentVariableClient } from \"@fern/bearer-token-environment-variable\";"
+                ],
+                "templateString": "const client = new SeedBearerTokenEnvironmentVariableClient($FERN_INPUT);",
+                "isOptional": false,
+                "inputDelimiter": ",",
+                "templateInputs": [
+                    {
+                        "value": {
+                            "imports": [],
+                            "templateString": "{ $FERN_INPUT }",
+                            "isOptional": true,
+                            "templateInputs": [
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "environment: \"YOUR_BASE_URL\"",
+                                        "isOptional": false,
+                                        "templateInputs": [],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                },
+                                {
+                                    "value": {
+                                        "imports": [],
+                                        "templateString": "apiKey: $FERN_INPUT",
+                                        "isOptional": false,
+                                        "templateInputs": [
+                                            {
+                                                "location": "AUTH",
+                                                "path": "token",
+                                                "type": "payload"
+                                            }
+                                        ],
+                                        "type": "generic"
+                                    },
+                                    "type": "template"
+                                }
+                            ],
+                            "type": "generic"
+                        },
+                        "type": "template"
+                    }
+                ],
+                "type": "generic"
+            },
             "functionInvocation": {
                 "imports": [],
-                "templateString": "await seedBearerTokenEnvironmentVariable.service.getWithBearerToken()",
+                "templateString": "await client.service.getWithBearerToken()",
                 "isOptional": false,
                 "inputDelimiter": ",\n\t",
                 "templateInputs": [],

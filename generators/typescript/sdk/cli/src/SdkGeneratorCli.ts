@@ -53,7 +53,12 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             tolerateRepublish: parsed?.tolerateRepublish ?? false,
             retainOriginalCasing: parsed?.retainOriginalCasing ?? false,
             allowExtraFields: parsed?.allowExtraFields ?? false,
-            inlineFileProperties: parsed?.inlineFileProperties ?? false
+            inlineFileProperties: parsed?.inlineFileProperties ?? false,
+            packageJson: parsed?.packageJson,
+            publishToJsr: parsed?.publishToJsr ?? false,
+            omitUndefined: parsed?.omitUndefined ?? false,
+            generateWireTests: parsed?.generateWireTests ?? false,
+            noScripts: parsed?.noScripts ?? false
         };
     }
 
@@ -74,17 +79,25 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             customConfig.namespaceExport ??
             `${upperFirst(camelCase(config.organization))}${upperFirst(camelCase(config.workspaceName))}`;
 
+        const maybeGithubOutputMode = config.output.mode.type === "github" ? config.output.mode : undefined;
+
         const sdkGenerator = new SdkGenerator({
             namespaceExport,
             intermediateRepresentation,
             context: generatorContext,
             npmPackage,
             generateJestTests: config.output.mode.type === "github",
+            rawConfig: config,
             config: {
+                runScripts: !customConfig.noScripts,
                 organization: config.organization,
                 apiName: intermediateRepresentation.apiName.originalName,
                 whitelabel: config.whitelabel,
                 generateOAuthClients: config.generateOauthClients,
+                originalReadmeFilepath:
+                    config.originalReadmeFilepath != null
+                        ? AbsoluteFilePath.of(config.originalReadmeFilepath)
+                        : undefined,
                 snippetFilepath:
                     config.output.snippetFilepath != null
                         ? AbsoluteFilePath.of(config.output.snippetFilepath)
@@ -115,18 +128,23 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 includeSerdeLayer: !customConfig.noSerdeLayer,
                 retainOriginalCasing: customConfig.retainOriginalCasing ?? false,
                 noOptionalProperties: customConfig.noOptionalProperties,
-                includeApiReference: customConfig.includeApiReference ?? false,
                 tolerateRepublish: customConfig.tolerateRepublish,
                 allowExtraFields: customConfig.allowExtraFields ?? false,
                 inlineFileProperties: customConfig.inlineFileProperties ?? false,
-                writeUnitTests: false,
-                executionEnvironment: this.exectuionEnvironment(config)
+                writeUnitTests: customConfig.generateWireTests ?? config.writeUnitTests,
+                executionEnvironment: this.exectuionEnvironment(config),
+                packageJson: customConfig.packageJson,
+                githubRepoUrl: maybeGithubOutputMode?.repoUrl,
+                githubInstallationToken: maybeGithubOutputMode?.installationToken,
+                outputJsr: customConfig.publishToJsr ?? false,
+                omitUndefined: customConfig.omitUndefined ?? false
             }
         });
         const typescriptProject = await sdkGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
         await sdkGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory()
+            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
+            pathToRoot: persistedTypescriptProject.getRootDirectory()
         });
 
         return persistedTypescriptProject;
@@ -142,6 +160,10 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected shouldTolerateRepublish(customConfig: SdkCustomConfig): boolean {
         return customConfig.tolerateRepublish;
+    }
+
+    protected publishToJsr(customConfig: SdkCustomConfig): boolean {
+        return customConfig.publishToJsr ?? false;
     }
 
     protected exectuionEnvironment(config: FernGeneratorExec.GeneratorConfig): "local" | "dev" | "prod" {

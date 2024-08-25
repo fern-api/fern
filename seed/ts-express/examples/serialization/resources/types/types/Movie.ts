@@ -8,13 +8,13 @@ import * as core from "../../../../core";
 
 export const Movie: core.serialization.ObjectSchema<serializers.Movie.Raw, SeedExamples.Movie> =
     core.serialization.object({
-        id: core.serialization.lazy(async () => (await import("../../..")).MovieId),
-        prequel: core.serialization.lazy(async () => (await import("../../..")).MovieId).optional(),
+        id: core.serialization.lazy(() => serializers.MovieId),
+        prequel: core.serialization.lazy(() => serializers.MovieId).optional(),
         title: core.serialization.string(),
         from: core.serialization.string(),
         rating: core.serialization.number(),
         type: core.serialization.stringLiteral("movie"),
-        tag: core.serialization.lazy(async () => (await import("../../..")).commons.Tag),
+        tag: core.serialization.lazy(() => serializers.commons.Tag),
         book: core.serialization.string().optional(),
         metadata: core.serialization.record(core.serialization.string(), core.serialization.unknown()),
     });
