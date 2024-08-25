@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedObjectsWithImports.Core;
 
 #nullable enable
 
@@ -11,4 +12,9 @@ public record Metadata
 
     [JsonPropertyName("data")]
     public Dictionary<string, string>? Data { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

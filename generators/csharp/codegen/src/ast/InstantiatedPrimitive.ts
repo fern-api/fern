@@ -64,6 +64,7 @@ interface DateInstantiation {
 interface DateTimeInstantiation {
     type: "dateTime";
     value: Date;
+    parse: boolean;
 }
 
 interface GuidInstantiation {
@@ -86,13 +87,13 @@ export class PrimitiveInstantiation extends AstNode {
                 writer.write(this.internalType.value.toString());
                 break;
             case "long":
-                writer.write(this.internalType.value.toString());
+                writer.write(`${this.internalType.value.toString()}`);
                 break;
             case "uint":
-                writer.write(this.internalType.value.toString());
+                writer.write(`${this.internalType.value.toString()}`);
                 break;
             case "ulong":
-                writer.write(this.internalType.value.toString());
+                writer.write(`${this.internalType.value.toString()}`);
                 break;
             case "string":
                 writer.write(`"${PrimitiveInstantiation.escapeForCSharp(this.internalType.value)}"`);
@@ -101,10 +102,10 @@ export class PrimitiveInstantiation extends AstNode {
                 writer.write(this.internalType.value.toString());
                 break;
             case "float":
-                writer.write(this.internalType.value.toString());
+                writer.write(`${this.internalType.value.toString()}f`);
                 break;
             case "double":
-                writer.write(this.internalType.value.toString());
+                writer.write(`${this.internalType.value.toString()}`);
                 break;
             case "date": {
                 const date = new Date(this.internalType.value);
@@ -115,14 +116,18 @@ export class PrimitiveInstantiation extends AstNode {
                 break;
             }
             case "dateTime": {
-                writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, DateTimeStyles.`);
-                writer.writeNode(
-                    csharp.classReference({
-                        name: "AdjustToUniversal",
-                        namespace: "System.Globalization"
-                    })
-                );
-                writer.write(")");
+                if (this.internalType.parse) {
+                    writer.write(`DateTime.Parse("${this.internalType.value.toISOString()}", null, DateTimeStyles.`);
+                    writer.writeNode(
+                        csharp.classReference({
+                            name: "AdjustToUniversal",
+                            namespace: "System.Globalization"
+                        })
+                    );
+                    writer.write(")");
+                } else {
+                    writer.write(this.constructDatetimeWithoutParse(this.internalType.value));
+                }
                 break;
             }
             case "uuid":
@@ -197,10 +202,11 @@ export class PrimitiveInstantiation extends AstNode {
         });
     }
 
-    public static dateTime(value: Date): PrimitiveInstantiation {
+    public static dateTime(value: Date, parse = true): PrimitiveInstantiation {
         return new this({
             type: "dateTime",
-            value
+            value,
+            parse
         });
     }
 

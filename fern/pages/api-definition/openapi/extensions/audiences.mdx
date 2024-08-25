@@ -41,6 +41,20 @@ navigation:
 
 </Info>
 
+## Audiences for Servers
+
+To mark a server with a particular audience, add the `x-fern-server-name` and `x-fern-audiences` extension to the relevant server.
+
+In the example below, the `Production` server is only available to public consumers:
+
+```yaml title="openapi.yml" {3-5}
+servers:
+  - url: https://api.com
+    x-fern-server-name: Production
+    x-fern-audiences:
+      - public
+```
+
 ## Audiences for Endpoints
 
 To mark an endpoint with a particular audience, add the `x-fern-audiences` extension to the relevant endpoint.

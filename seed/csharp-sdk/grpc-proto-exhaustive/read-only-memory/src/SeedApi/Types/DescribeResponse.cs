@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedApi.Core;
 using Proto = Data.V1.Grpc;
 
 #nullable enable
@@ -19,6 +20,11 @@ public record DescribeResponse
     [JsonPropertyName("totalCount")]
     public uint? TotalCount { get; set; }
 
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
+
     /// <summary>
     /// Maps the DescribeResponse type into its Protobuf-equivalent representation.
     /// </summary>
@@ -35,7 +41,7 @@ public record DescribeResponse
         }
         if (Dimension != null)
         {
-            result.Dimension = Dimension ?? 0U;
+            result.Dimension = Dimension ?? 0;
         }
         if (Fullness != null)
         {
@@ -43,7 +49,7 @@ public record DescribeResponse
         }
         if (TotalCount != null)
         {
-            result.TotalCount = TotalCount ?? 0U;
+            result.TotalCount = TotalCount ?? 0;
         }
         return result;
     }

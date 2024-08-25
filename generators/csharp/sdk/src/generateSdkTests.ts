@@ -35,13 +35,7 @@ function generateMockServerTests({ context, files }: { context: SdkGeneratorCont
             if (useableExamples.length === 0) {
                 continue;
             }
-            const file = new MockServerTestGenerator(
-                context,
-                useableExamples,
-                endpoint,
-                serviceId,
-                service.name.fernFilepath
-            ).generate();
+            const file = new MockServerTestGenerator(context, useableExamples, endpoint, serviceId).generate();
             files.push(file);
         }
     }

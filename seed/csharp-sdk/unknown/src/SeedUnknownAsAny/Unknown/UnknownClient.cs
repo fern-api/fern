@@ -16,6 +16,11 @@ public partial class UnknownClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "value" } });
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<object>> PostAsync(
         object request,
         RequestOptions? options = null,
@@ -53,6 +58,11 @@ public partial class UnknownClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Unknown.PostObjectAsync(new MyObject());
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<object>> PostObjectAsync(
         MyObject request,
         RequestOptions? options = null,

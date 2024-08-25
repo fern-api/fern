@@ -36,6 +36,8 @@ export declare namespace Method {
         classReference?: ClassReference;
         /* Any annotations to add to the method */
         annotations?: Annotation[];
+        /* Any code example to add to the method */
+        codeExample?: AstNode;
     }
 }
 
@@ -51,6 +53,7 @@ export class Method extends AstNode {
     public readonly override: boolean;
     private readonly parameters: Parameter[];
     private readonly annotations: Annotation[];
+    private readonly codeExample: AstNode | undefined;
 
     constructor({
         name,
@@ -63,7 +66,8 @@ export class Method extends AstNode {
         type,
         classReference,
         parameters,
-        annotations
+        annotations,
+        codeExample
     }: Method.Args) {
         super();
         this.name = name;
@@ -77,6 +81,7 @@ export class Method extends AstNode {
         this.reference = classReference;
         this.parameters = parameters;
         this.annotations = annotations ?? [];
+        this.codeExample = codeExample;
     }
 
     public addParameter(parameter: Parameter): void {
@@ -89,7 +94,30 @@ export class Method extends AstNode {
             this.summary.split("\n").forEach((line) => {
                 writer.writeLine(`/// ${line}`);
             });
+
             writer.writeLine("/// </summary>");
+        }
+        if (this.codeExample != null) {
+            writer.writeLine("/// <example>");
+            writer.writeLine("/// <code>");
+            this.codeExample
+                .toString({
+                    namespace: writer.getNamespace(),
+                    allNamespaceSegments: writer.getAllNamespaceSegments(),
+                    allTypeClassReferences: writer.getAllTypeClassReferences(),
+                    rootNamespace: writer.getRootNamespace(),
+                    customConfig: writer.getCustomConfig(),
+                    format: true,
+                    skipImports: true
+                })
+                .split("\n")
+                .forEach((line) => {
+                    if (line !== "") {
+                        writer.writeLine(`/// ${line}`);
+                    }
+                });
+            writer.writeLine("/// </code>");
+            writer.writeLine("/// </example>");
         }
 
         if (this.annotations.length > 0) {

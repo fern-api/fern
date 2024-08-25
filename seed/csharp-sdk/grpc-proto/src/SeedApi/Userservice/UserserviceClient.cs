@@ -22,6 +22,11 @@ public partial class UserserviceClient
         _userService = new UserService.UserServiceClient(_grpc.Channel);
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Userservice.CreateAsync(new CreateRequest());
+    /// </code>
+    /// </example>
     public async Task<CreateResponse> CreateAsync(
         CreateRequest request,
         GrpcRequestOptions? options = null,
@@ -34,7 +39,6 @@ public partial class UserserviceClient
                 options ?? new GrpcRequestOptions(),
                 cancellationToken
             );
-            ;
             var call = _userService.CreateAsync(request.ToProto(), callOptions);
             var response = await call.ConfigureAwait(false);
             return CreateResponse.FromProto(response);

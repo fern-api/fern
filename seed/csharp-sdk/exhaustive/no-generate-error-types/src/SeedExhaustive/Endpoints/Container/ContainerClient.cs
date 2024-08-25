@@ -18,6 +18,11 @@ public partial class ContainerClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Container.GetAndReturnListOfPrimitivesAsync(new List<string>() { "string" });
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<string>> GetAndReturnListOfPrimitivesAsync(
         IEnumerable<string> request,
         RequestOptions? options = null,
@@ -55,6 +60,13 @@ public partial class ContainerClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Container.GetAndReturnListOfObjectsAsync(
+    ///     new List<ObjectWithRequiredField>() { new ObjectWithRequiredField { String = "string" } }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<ObjectWithRequiredField>> GetAndReturnListOfObjectsAsync(
         IEnumerable<ObjectWithRequiredField> request,
         RequestOptions? options = null,
@@ -92,6 +104,13 @@ public partial class ContainerClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Container.GetAndReturnSetOfPrimitivesAsync(
+    ///     new HashSet<string>() { "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<HashSet<string>> GetAndReturnSetOfPrimitivesAsync(
         HashSet<string> request,
         RequestOptions? options = null,
@@ -129,6 +148,13 @@ public partial class ContainerClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Container.GetAndReturnSetOfObjectsAsync(
+    ///     new HashSet<ObjectWithRequiredField>() { new ObjectWithRequiredField { String = "string" } }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<HashSet<ObjectWithRequiredField>> GetAndReturnSetOfObjectsAsync(
         HashSet<ObjectWithRequiredField> request,
         RequestOptions? options = null,
@@ -166,6 +192,13 @@ public partial class ContainerClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Container.GetAndReturnMapPrimToPrimAsync(
+    ///     new Dictionary<string, string>() { { "string", "string" } }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<Dictionary<string, string>> GetAndReturnMapPrimToPrimAsync(
         Dictionary<string, string> request,
         RequestOptions? options = null,
@@ -203,6 +236,19 @@ public partial class ContainerClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Container.GetAndReturnMapOfPrimToObjectAsync(
+    ///     new Dictionary<string, ObjectWithRequiredField>()
+    ///     {
+    ///         {
+    ///             "string",
+    ///             new ObjectWithRequiredField { String = "string" }
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<
         Dictionary<string, ObjectWithRequiredField>
     > GetAndReturnMapOfPrimToObjectAsync(
@@ -244,6 +290,13 @@ public partial class ContainerClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Container.GetAndReturnOptionalAsync(
+    ///     new ObjectWithRequiredField { String = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<ObjectWithRequiredField?> GetAndReturnOptionalAsync(
         ObjectWithRequiredField? request,
         RequestOptions? options = null,

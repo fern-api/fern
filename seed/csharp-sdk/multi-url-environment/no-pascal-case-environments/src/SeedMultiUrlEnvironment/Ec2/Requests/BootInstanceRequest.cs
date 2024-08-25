@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedMultiUrlEnvironment.Core;
 
 #nullable enable
 
@@ -8,4 +9,9 @@ public record BootInstanceRequest
 {
     [JsonPropertyName("size")]
     public required string Size { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

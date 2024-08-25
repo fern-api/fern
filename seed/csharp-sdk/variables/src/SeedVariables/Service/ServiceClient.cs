@@ -16,6 +16,11 @@ public partial class ServiceClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.PostAsync("string");
+    /// </code>
+    /// </example>
     public async Task PostAsync(
         string endpointParam,
         RequestOptions? options = null,

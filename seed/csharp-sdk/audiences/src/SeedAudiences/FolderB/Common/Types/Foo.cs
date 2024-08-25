@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedAudiences.Core;
 using SeedAudiences.FolderC;
 
 #nullable enable
@@ -9,4 +10,9 @@ public record Foo
 {
     [JsonPropertyName("foo")]
     public FolderCFoo? Foo_ { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

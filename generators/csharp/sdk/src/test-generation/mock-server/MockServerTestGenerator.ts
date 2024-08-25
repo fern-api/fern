@@ -26,8 +26,7 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
         context: SdkGeneratorContext,
         private readonly exampleEndpointCalls: ExampleEndpointCall[],
         private readonly endpoint: HttpEndpoint,
-        private readonly serviceId: ServiceId,
-        private readonly serviceFilePath: FernFilepath
+        private readonly serviceId: ServiceId
     ) {
         super(context);
         this.classReference = csharp.classReference({
@@ -116,14 +115,14 @@ export class MockServerTestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 }
                 writer.newLine();
 
-                const endpointSnippet = this.endpointGenerator.generateEndpointSnippet({
+                const endpointSnippet = this.endpointGenerator.generateHttpEndpointSnippet({
                     example,
                     endpoint: this.endpoint,
                     clientVariableName: "Client",
                     serviceId: this.serviceId,
-                    serviceFilePath: this.serviceFilePath,
                     getResult: true,
-                    requestOptions: csharp.codeblock("RequestOptions")
+                    requestOptions: csharp.codeblock("RequestOptions"),
+                    parseDatetimes: true
                 });
                 if (endpointSnippet == null) {
                     throw new Error("Endpoint snippet is null");

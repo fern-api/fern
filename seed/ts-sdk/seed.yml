@@ -13,7 +13,9 @@ local:
   env:
     NODE_ENV: test
 customFixtureConfig: 
-  generateWireTests: true    
+  customConfig: 
+    generateWireTests: true    
+    noSerdeLayer: true
 fixtures:
   imdb:
     - customConfig: null

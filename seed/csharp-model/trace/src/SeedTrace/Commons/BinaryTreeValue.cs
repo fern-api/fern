@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedTrace.Core;
 
 #nullable enable
 
@@ -12,4 +13,9 @@ public record BinaryTreeValue
     [JsonPropertyName("nodes")]
     public Dictionary<string, BinaryTreeNodeValue> Nodes { get; set; } =
         new Dictionary<string, BinaryTreeNodeValue>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

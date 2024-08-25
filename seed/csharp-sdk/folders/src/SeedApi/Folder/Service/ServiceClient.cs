@@ -18,6 +18,11 @@ public partial class ServiceClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Folder.Service.EndpointAsync();
+    /// </code>
+    /// </example>
     public async Task EndpointAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default
@@ -45,6 +50,13 @@ public partial class ServiceClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Folder.Service.UnknownRequestAsync(
+    ///     new Dictionary<object, object?>() { { "key", "value" } }
+    /// );
+    /// </code>
+    /// </example>
     public async Task UnknownRequestAsync(
         object request,
         RequestOptions? options = null,

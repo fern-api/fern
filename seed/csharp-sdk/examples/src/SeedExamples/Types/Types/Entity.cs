@@ -14,4 +14,9 @@ public record Entity
 
     [JsonPropertyName("name")]
     public required string Name { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

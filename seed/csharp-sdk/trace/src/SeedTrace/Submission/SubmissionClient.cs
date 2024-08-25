@@ -20,6 +20,11 @@ public partial class SubmissionClient
     /// <summary>
     /// Returns sessionId and execution server URL for session. Spins up server.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Submission.CreateExecutionSessionAsync(Language.Java);
+    /// </code>
+    /// </example>
     public async Task<ExecutionSessionResponse> CreateExecutionSessionAsync(
         Language language,
         RequestOptions? options = null,
@@ -59,6 +64,11 @@ public partial class SubmissionClient
     /// <summary>
     /// Returns execution server URL for session. Returns empty if session isn't registered.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Submission.GetExecutionSessionAsync("string");
+    /// </code>
+    /// </example>
     public async Task<ExecutionSessionResponse?> GetExecutionSessionAsync(
         string sessionId,
         RequestOptions? options = null,
@@ -98,6 +108,11 @@ public partial class SubmissionClient
     /// <summary>
     /// Stops execution session.
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.Submission.StopExecutionSessionAsync("string");
+    /// </code>
+    /// </example>
     public async Task StopExecutionSessionAsync(
         string sessionId,
         RequestOptions? options = null,
@@ -126,6 +141,11 @@ public partial class SubmissionClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Submission.GetExecutionSessionsStateAsync();
+    /// </code>
+    /// </example>
     public async Task<GetExecutionSessionStateResponse> GetExecutionSessionsStateAsync(
         RequestOptions? options = null,
         CancellationToken cancellationToken = default

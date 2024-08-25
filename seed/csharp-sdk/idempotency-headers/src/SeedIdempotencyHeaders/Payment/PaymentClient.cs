@@ -17,6 +17,11 @@ public partial class PaymentClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Payment.CreateAsync(new CreatePaymentRequest { Amount = 1, Currency = Currency.Usd });
+    /// </code>
+    /// </example>
     public async Task<string> CreateAsync(
         CreatePaymentRequest request,
         RequestOptions? options = null,
@@ -54,6 +59,11 @@ public partial class PaymentClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Payment.DeleteAsync("string");
+    /// </code>
+    /// </example>
     public async Task DeleteAsync(
         string paymentId,
         RequestOptions? options = null,

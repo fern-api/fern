@@ -16,6 +16,18 @@ public partial class AuthClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Auth.GetTokenAsync(
+    ///     new GetTokenRequest
+    ///     {
+    ///         ClientId = "string",
+    ///         ClientSecret = "string",
+    ///         GrantType = "client_credentials",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<TokenResponse> GetTokenAsync(
         GetTokenRequest request,
         RequestOptions? options = null,
