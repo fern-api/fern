@@ -325,6 +325,31 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                     "description": "description",
                   },
                   "riskLevel": "VERY_HIGH",
+                  "savedPaymentDetails": [
+                    {
+                      "checkIdentifier": "savedPaymentDetails",
+                      "checkNumber": "savedPaymentDetails",
+                      "deliveryStatus": "COMPLETED",
+                      "etaTimestamp": 1.1,
+                      "method": "CHECK",
+                      "name": "savedPaymentDetails",
+                      "shippingAddress": {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    },
+                  ],
                   "shareHolders": [
                     {
                       "contactDetails": {
@@ -479,6 +504,29 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                     "transactionAmount": 68351.34,
                     "transactionCurrency": "INR",
                   },
+                  "destinationPaymentDetails": {
+                    "checkIdentifier": "destinationPaymentDetails",
+                    "checkNumber": "destinationPaymentDetails",
+                    "deliveryStatus": "COMPLETED",
+                    "etaTimestamp": 1.1,
+                    "method": "CHECK",
+                    "name": "destinationPaymentDetails",
+                    "shippingAddress": {
+                      "addressLines": [
+                        "Klara-Franke Str 20",
+                      ],
+                      "city": "Berlin",
+                      "country": "Germany",
+                      "postcode": "10557",
+                      "state": "Berlin",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  },
                   "destinationUserId": "9350a2611e0771cba03310f74bf6",
                   "deviceData": {
                     "appVersion": "1.1.0",
@@ -524,6 +572,29 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                     "country": "DE",
                     "transactionAmount": 800,
                     "transactionCurrency": "EUR",
+                  },
+                  "originPaymentDetails": {
+                    "checkIdentifier": "originPaymentDetails",
+                    "checkNumber": "originPaymentDetails",
+                    "deliveryStatus": "COMPLETED",
+                    "etaTimestamp": 1.1,
+                    "method": "CHECK",
+                    "name": "originPaymentDetails",
+                    "shippingAddress": {
+                      "addressLines": [
+                        "Klara-Franke Str 20",
+                      ],
+                      "city": "Berlin",
+                      "country": "Germany",
+                      "postcode": "10557",
+                      "state": "Berlin",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
                   },
                   "originUserId": "8650a2611d0771cba03310f74bf6",
                   "productType": "productType",
@@ -1028,6 +1099,31 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "description": "description",
                   },
                   "riskLevel": "VERY_HIGH",
+                  "savedPaymentDetails": [
+                    {
+                      "checkIdentifier": "savedPaymentDetails",
+                      "checkNumber": "savedPaymentDetails",
+                      "deliveryStatus": "COMPLETED",
+                      "etaTimestamp": 1.1,
+                      "method": "CHECK",
+                      "name": "savedPaymentDetails",
+                      "shippingAddress": {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    },
+                  ],
                   "shareHolders": [
                     {
                       "contactDetails": {
@@ -1232,6 +1328,24 @@ Here are some of the most used payload fields explained (you can find the full p
                   "transactionAmount": 68351.34,
                   "transactionCurrency": "INR",
                 },
+                "destinationPaymentDetails": {
+                  "method": "CHECK",
+                  "shippingAddress": {
+                    "addressLines": [
+                      "Klara-Franke Str 20",
+                    ],
+                    "city": "Berlin",
+                    "country": "Germany",
+                    "postcode": "10557",
+                    "state": "Berlin",
+                    "tags": [
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                    ],
+                  },
+                },
                 "destinationUserId": "9350a2611e0771cba03310f74bf6",
                 "deviceData": {
                   "appVersion": "1.1.0",
@@ -1250,6 +1364,24 @@ Here are some of the most used payload fields explained (you can find the full p
                   "country": "DE",
                   "transactionAmount": 800,
                   "transactionCurrency": "EUR",
+                },
+                "originPaymentDetails": {
+                  "method": "CHECK",
+                  "shippingAddress": {
+                    "addressLines": [
+                      "Klara-Franke Str 20",
+                    ],
+                    "city": "Berlin",
+                    "country": "Germany",
+                    "postcode": "10557",
+                    "state": "Berlin",
+                    "tags": [
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                    ],
+                  },
                 },
                 "originUserId": "8650a2611d0771cba03310f74bf6",
                 "promotionCodeUsed": true,
@@ -1535,6 +1667,29 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "transactionAmount": 68351.34,
                       "transactionCurrency": "INR",
                     },
+                    "destinationPaymentDetails": {
+                      "checkIdentifier": "destinationPaymentDetails",
+                      "checkNumber": "destinationPaymentDetails",
+                      "deliveryStatus": "COMPLETED",
+                      "etaTimestamp": 1.1,
+                      "method": "CHECK",
+                      "name": "destinationPaymentDetails",
+                      "shippingAddress": {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    },
                     "destinationUserId": "9350a2611e0771cba03310f74bf6",
                     "deviceData": {
                       "appVersion": "1.1.0",
@@ -1553,6 +1708,29 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "country": "DE",
                       "transactionAmount": 800,
                       "transactionCurrency": "EUR",
+                    },
+                    "originPaymentDetails": {
+                      "checkIdentifier": "originPaymentDetails",
+                      "checkNumber": "originPaymentDetails",
+                      "deliveryStatus": "COMPLETED",
+                      "etaTimestamp": 1.1,
+                      "method": "CHECK",
+                      "name": "originPaymentDetails",
+                      "shippingAddress": {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
                     },
                     "originUserId": "8650a2611d0771cba03310f74bf6",
                     "productType": "productType",
@@ -4915,6 +5093,31 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                     "description": "description",
                   },
                   "riskLevel": "VERY_HIGH",
+                  "savedPaymentDetails": [
+                    {
+                      "checkIdentifier": "savedPaymentDetails",
+                      "checkNumber": "savedPaymentDetails",
+                      "deliveryStatus": "COMPLETED",
+                      "etaTimestamp": 1.1,
+                      "method": "CHECK",
+                      "name": "savedPaymentDetails",
+                      "shippingAddress": {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    },
+                  ],
                   "shareHolders": [
                     {
                       "contactDetails": {
@@ -5069,6 +5272,29 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                     "transactionAmount": 68351.34,
                     "transactionCurrency": "INR",
                   },
+                  "destinationPaymentDetails": {
+                    "checkIdentifier": "destinationPaymentDetails",
+                    "checkNumber": "destinationPaymentDetails",
+                    "deliveryStatus": "COMPLETED",
+                    "etaTimestamp": 1.1,
+                    "method": "CHECK",
+                    "name": "destinationPaymentDetails",
+                    "shippingAddress": {
+                      "addressLines": [
+                        "Klara-Franke Str 20",
+                      ],
+                      "city": "Berlin",
+                      "country": "Germany",
+                      "postcode": "10557",
+                      "state": "Berlin",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
+                  },
                   "destinationUserId": "9350a2611e0771cba03310f74bf6",
                   "deviceData": {
                     "appVersion": "1.1.0",
@@ -5114,6 +5340,29 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                     "country": "DE",
                     "transactionAmount": 800,
                     "transactionCurrency": "EUR",
+                  },
+                  "originPaymentDetails": {
+                    "checkIdentifier": "originPaymentDetails",
+                    "checkNumber": "originPaymentDetails",
+                    "deliveryStatus": "COMPLETED",
+                    "etaTimestamp": 1.1,
+                    "method": "CHECK",
+                    "name": "originPaymentDetails",
+                    "shippingAddress": {
+                      "addressLines": [
+                        "Klara-Franke Str 20",
+                      ],
+                      "city": "Berlin",
+                      "country": "Germany",
+                      "postcode": "10557",
+                      "state": "Berlin",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
+                      ],
+                    },
                   },
                   "originUserId": "8650a2611d0771cba03310f74bf6",
                   "productType": "productType",
@@ -5618,6 +5867,31 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "description": "description",
                   },
                   "riskLevel": "VERY_HIGH",
+                  "savedPaymentDetails": [
+                    {
+                      "checkIdentifier": "savedPaymentDetails",
+                      "checkNumber": "savedPaymentDetails",
+                      "deliveryStatus": "COMPLETED",
+                      "etaTimestamp": 1.1,
+                      "method": "CHECK",
+                      "name": "savedPaymentDetails",
+                      "shippingAddress": {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    },
+                  ],
                   "shareHolders": [
                     {
                       "contactDetails": {
@@ -5822,6 +6096,24 @@ Here are some of the most used payload fields explained (you can find the full p
                   "transactionAmount": 68351.34,
                   "transactionCurrency": "INR",
                 },
+                "destinationPaymentDetails": {
+                  "method": "CHECK",
+                  "shippingAddress": {
+                    "addressLines": [
+                      "Klara-Franke Str 20",
+                    ],
+                    "city": "Berlin",
+                    "country": "Germany",
+                    "postcode": "10557",
+                    "state": "Berlin",
+                    "tags": [
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                    ],
+                  },
+                },
                 "destinationUserId": "9350a2611e0771cba03310f74bf6",
                 "deviceData": {
                   "appVersion": "1.1.0",
@@ -5840,6 +6132,24 @@ Here are some of the most used payload fields explained (you can find the full p
                   "country": "DE",
                   "transactionAmount": 800,
                   "transactionCurrency": "EUR",
+                },
+                "originPaymentDetails": {
+                  "method": "CHECK",
+                  "shippingAddress": {
+                    "addressLines": [
+                      "Klara-Franke Str 20",
+                    ],
+                    "city": "Berlin",
+                    "country": "Germany",
+                    "postcode": "10557",
+                    "state": "Berlin",
+                    "tags": [
+                      {
+                        "key": "customKey",
+                        "value": "customValue",
+                      },
+                    ],
+                  },
                 },
                 "originUserId": "8650a2611d0771cba03310f74bf6",
                 "promotionCodeUsed": true,
@@ -6125,6 +6435,29 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "transactionAmount": 68351.34,
                       "transactionCurrency": "INR",
                     },
+                    "destinationPaymentDetails": {
+                      "checkIdentifier": "destinationPaymentDetails",
+                      "checkNumber": "destinationPaymentDetails",
+                      "deliveryStatus": "COMPLETED",
+                      "etaTimestamp": 1.1,
+                      "method": "CHECK",
+                      "name": "destinationPaymentDetails",
+                      "shippingAddress": {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
+                    },
                     "destinationUserId": "9350a2611e0771cba03310f74bf6",
                     "deviceData": {
                       "appVersion": "1.1.0",
@@ -6143,6 +6476,29 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "country": "DE",
                       "transactionAmount": 800,
                       "transactionCurrency": "EUR",
+                    },
+                    "originPaymentDetails": {
+                      "checkIdentifier": "originPaymentDetails",
+                      "checkNumber": "originPaymentDetails",
+                      "deliveryStatus": "COMPLETED",
+                      "etaTimestamp": 1.1,
+                      "method": "CHECK",
+                      "name": "originPaymentDetails",
+                      "shippingAddress": {
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
+                        "tags": [
+                          {
+                            "key": "customKey",
+                            "value": "customValue",
+                          },
+                        ],
+                      },
                     },
                     "originUserId": "8650a2611d0771cba03310f74bf6",
                     "productType": "productType",

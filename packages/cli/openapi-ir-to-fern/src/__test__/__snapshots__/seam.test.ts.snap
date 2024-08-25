@@ -3137,7 +3137,7 @@ exports[`seam > seam > docs 1`] = `
                       "errors": [
                         {
                           "created_at": "2024-01-15T09:30:00Z",
-                          "error_code": "seam_bridge_disconnected",
+                          "error_code": "visionline_instance_unreachable",
                           "message": "errors",
                         },
                       ],
@@ -3212,7 +3212,7 @@ exports[`seam > seam > docs 1`] = `
                         "errors": [
                           {
                             "created_at": "2024-01-15T09:30:00Z",
-                            "error_code": "seam_bridge_disconnected",
+                            "error_code": "visionline_instance_unreachable",
                             "message": "errors",
                           },
                         ],
@@ -3290,7 +3290,7 @@ exports[`seam > seam > docs 1`] = `
                         "errors": [
                           {
                             "created_at": "2024-01-15T09:30:00Z",
-                            "error_code": "seam_bridge_disconnected",
+                            "error_code": "visionline_instance_unreachable",
                             "message": "errors",
                           },
                         ],
@@ -11795,7 +11795,7 @@ exports[`seam > seam > docs 1`] = `
                         "errors": [
                           {
                             "created_at": "2024-01-15T09:30:00Z",
-                            "error_code": "seam_bridge_disconnected",
+                            "error_code": "visionline_instance_unreachable",
                             "message": "errors",
                           },
                         ],
@@ -22050,7 +22050,7 @@ exports[`seam > seam > simple 1`] = `
                       "errors": [
                         {
                           "created_at": "2024-01-15T09:30:00Z",
-                          "error_code": "seam_bridge_disconnected",
+                          "error_code": "visionline_instance_unreachable",
                           "message": "errors",
                         },
                       ],
@@ -22125,7 +22125,7 @@ exports[`seam > seam > simple 1`] = `
                         "errors": [
                           {
                             "created_at": "2024-01-15T09:30:00Z",
-                            "error_code": "seam_bridge_disconnected",
+                            "error_code": "visionline_instance_unreachable",
                             "message": "errors",
                           },
                         ],
@@ -22203,7 +22203,7 @@ exports[`seam > seam > simple 1`] = `
                         "errors": [
                           {
                             "created_at": "2024-01-15T09:30:00Z",
-                            "error_code": "seam_bridge_disconnected",
+                            "error_code": "visionline_instance_unreachable",
                             "message": "errors",
                           },
                         ],
@@ -30708,7 +30708,7 @@ exports[`seam > seam > simple 1`] = `
                         "errors": [
                           {
                             "created_at": "2024-01-15T09:30:00Z",
-                            "error_code": "seam_bridge_disconnected",
+                            "error_code": "visionline_instance_unreachable",
                             "message": "errors",
                           },
                         ],
