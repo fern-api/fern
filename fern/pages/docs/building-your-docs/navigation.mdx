@@ -235,19 +235,3 @@ tabs:
                  path: contact-us.mdx
 ```
 </CodeBlock>
-
-## Redirects
-
-The `redirects` object allows you to redirect traffic from one path to another. You can also use [`regex`](https://www.npmjs.com/package/path-to-regexp) within redirects. 
-
-<CodeBlock title="docs.yml">
-```yml
-redirects:
-  - source: "/old-path"
-    destination: "/new-path"
-  - source: "/incorrect/path"
-    destination: "/correct/path"
-  - source: "/old-folder/:slug" # <- using regex
-    destination: "/new-folder/:slug"
-```
-</CodeBlock>
