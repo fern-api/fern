@@ -18,3 +18,22 @@ redirects:
     destination: "/new-folder/:slug"
 ```
 </CodeBlock>
+
+## Links
+
+You can add a link to an external page within your sidebar navigation with the following configuration: 
+
+```yaml title="docs.yml"
+navigation: 
+  - section: Home
+    contents:
+      - page: Introduction
+        path: ./intro.mdx
+      - link: Our YouTube Channel
+        href: https://www.youtube.com/
+```
+
+<Frame>
+<img src="./external-link.png" alt="An external link within navigation" />
+</Frame>
+
