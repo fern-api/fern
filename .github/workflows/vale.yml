@@ -2,6 +2,8 @@ name: run-vale
 
 on: 
   pull_request:
+    branches:
+      - main
     paths:
       - "fern/pages/**"
 
