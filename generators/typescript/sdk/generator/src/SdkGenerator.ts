@@ -56,9 +56,9 @@ import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-refere
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
-import { GeneratorCli } from "./generator-cli/Client";
-import { ReadmeGenerator } from "./generator-cli/ReadmeGenerator";
-import { ReferenceGenerator } from "./generator-cli/ReferenceGenerator";
+import { ReadmeConfigBuilder } from "./generator-agent/ReadmeConfigBuilder";
+import { ReferenceConfigBuilder } from "./generator-agent/ReferenceConfigBuilder";
+import { TypeScriptGeneratorAgent } from "./generator-agent/TypeScriptGeneratorAgent";
 import { TemplateGenerator } from "./TemplateGenerator";
 import { JestTestGenerator } from "./test-generator/JestTestGenerator";
 import { VersionGenerator } from "./version/VersionGenerator";
@@ -182,9 +182,8 @@ export class SdkGenerator {
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
     private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private jestTestGenerator: JestTestGenerator;
-    private generatorCli: GeneratorCli;
-    private readmeGenerator: ReadmeGenerator;
-    private refGenerator: ReferenceGenerator;
+    private referenceConfigBuilder: ReferenceConfigBuilder;
+    private generatorAgent: TypeScriptGeneratorAgent;
     private FdrClient: FdrSnippetTemplateClient | undefined;
 
     constructor({
@@ -367,15 +366,17 @@ export class SdkGenerator {
             writeUnitTests: this.config.writeUnitTests,
             includeSerdeLayer: config.includeSerdeLayer
         });
-        this.generatorCli = new GeneratorCli({
-            logger: context.logger
-        });
-        this.readmeGenerator = new ReadmeGenerator({
-            generatorCli: this.generatorCli,
-            logger: context.logger
-        });
-        this.refGenerator = new ReferenceGenerator({
-            generatorCli: this.generatorCli
+        this.referenceConfigBuilder = new ReferenceConfigBuilder();
+        this.generatorAgent = new TypeScriptGeneratorAgent({
+            logger: this.context.logger,
+            referenceConfigBuilder: this.referenceConfigBuilder,
+            readmeConfigBuilder: new ReadmeConfigBuilder({
+                logger: this.context.logger,
+                npmPackage: this.npmPackage,
+                endpointSnippets: this.endpointSnippets,
+                githubRepoUrl: this.config.githubRepoUrl,
+                githubInstallationToken: this.config.githubInstallationToken
+            })
         });
 
         this.FdrClient =
@@ -733,32 +734,25 @@ export class SdkGenerator {
             return;
         }
         await this.withRawFile({
-            filepath: this.readmeGenerator.getExportedFilePath(),
+            filepath: this.generatorAgent.getExportedReadmeFilePath(),
             run: async ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-                const readmeContent = await this.readmeGenerator.generateReadme({
-                    context,
-                    ir: this.intermediateRepresentation,
-                    organization: this.config.organization,
-                    npmPackage: this.npmPackage,
-                    endpointSnippets: this.endpointSnippets,
-                    githubRepoUrl: this.config.githubRepoUrl,
-                    githubInstallationToken: this.config.githubInstallationToken
-                });
+                const readmeContent = await this.generatorAgent.generateReadme(context);
                 sourceFile.replaceWithText(readmeContent);
             }
         });
     }
 
     private async generateReference(): Promise<void> {
-        if (this.refGenerator.isEmpty()) {
+        if (this.referenceConfigBuilder.isEmpty()) {
             // Don't generate a reference.md if there aren't any sections.
             return;
         }
         await this.withRawFile({
-            filepath: this.refGenerator.getExportedFilePath(),
-            run: async ({ sourceFile }) => {
-                const referenceContent = await this.refGenerator.generateReference();
+            filepath: this.generatorAgent.getExportedReferenceFilePath(),
+            run: async ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                const referenceContent = await this.generatorAgent.generateReference(context);
                 sourceFile.replaceWithText(referenceContent);
             }
         });
@@ -820,7 +814,7 @@ export class SdkGenerator {
             if (service.endpoints.length === 0) {
                 return;
             }
-            let serviceReference = this.refGenerator.addSection({
+            let serviceReference = this.referenceConfigBuilder.addSection({
                 title:
                     service.displayName ??
                     service.name.fernFilepath.allParts.map((part) => part.pascalCase.unsafeName).join(" ")
@@ -831,7 +825,7 @@ export class SdkGenerator {
 
             for (const endpoint of service.endpoints) {
                 if (packageId.isRoot) {
-                    serviceReference = this.refGenerator.addRootSection();
+                    serviceReference = this.referenceConfigBuilder.addRootSection();
                 }
 
                 if (this.config.snippetTemplateFilepath != null && this.npmPackage != null) {

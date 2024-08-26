@@ -43,22 +43,17 @@ export class ReadmeSnippetBuilder {
 
     constructor({
         context,
-        readmeConfig,
         npmPackage,
-        services,
         endpointSnippets
     }: {
         context: SdkContext;
-        readmeConfig: ReadmeConfig | undefined;
         npmPackage: NpmPackage | undefined;
-        services: Record<ServiceId, HttpService>;
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }) {
         this.context = context;
-        this.readmeConfig = readmeConfig;
-        this.endpoints = this.buildEndpoints(services);
+        this.endpoints = this.buildEndpoints(context.ir.services);
         this.snippets = this.buildSnippets(endpointSnippets);
-        this.defaultEndpointId = this.getDefaultEndpointId({ readmeConfig, endpointSnippets });
+        this.defaultEndpointId = this.getDefaultEndpointId({ readmeConfig: context.ir.readmeConfig, endpointSnippets });
         this.rootPackageName = this.getRootPackageName(npmPackage);
         this.rootClientConstructorName = this.getRootClientConstructorName(context);
         this.clientVariableName = this.getClientVariableName(context);
