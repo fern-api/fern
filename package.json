@@ -18,6 +18,7 @@
     "format": "prettier --write --ignore-unknown --ignore-path ./shared/.prettierignore",
     "format:fix": "pnpm format --ignore-path ./shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ./shared/.prettierignore \"**\"",
+    "vale:check": "vale fern/pages/",
     "add-workspace": "yarn mrlint add-workspace",
     "depcheck": "pnpm -r --no-bail depcheck",
     "codegen:local": "pnpm fern:local generate",
