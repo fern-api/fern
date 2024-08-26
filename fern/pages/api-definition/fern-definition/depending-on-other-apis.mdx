@@ -26,7 +26,7 @@ $ fern register
 To add a dependency on another API, you must add a `dependencies.yml` to declare which 
 APIs you wish to depend on. 
 
-```yaml {4}
+```bash {4}
 fern/
 ├─ fern.config.json
 ├─ generators.yml
@@ -46,7 +46,7 @@ dependencies:
 Next, you need create a folder in your Fern Definition to house the dependency. Inside the folder, create a special file
 `__package__.yml` which specifies the dependency and version you want to add.
 
-```yaml {8-9}
+```bash {8-9}
 fern/
 ├─ fern.config.json
 ├─ generators.yml

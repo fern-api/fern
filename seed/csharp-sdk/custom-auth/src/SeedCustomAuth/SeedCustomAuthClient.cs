@@ -18,6 +18,8 @@ public partial class SeedCustomAuthClient
             {
                 { "X-API-KEY", customAuthScheme },
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedCustomAuth" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Ferncustom-auth/0.0.1" },
             }
         );

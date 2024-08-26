@@ -20,6 +20,8 @@ public partial class SeedExamplesClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedExamples" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernexamples/0.0.1" },
             }
         );

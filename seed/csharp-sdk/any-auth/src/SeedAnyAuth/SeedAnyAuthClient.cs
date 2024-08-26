@@ -28,6 +28,8 @@ public partial class SeedAnyAuthClient
                 { "Authorization", $"Bearer {token}" },
                 { "X-API-Key", apiKey },
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedAnyAuth" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernany-auth/0.0.1" },
             }
         );

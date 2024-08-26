@@ -170,28 +170,39 @@ export class ExampleTypeFactory {
                         const exampleDiscriminant = fullExample?.[schema.value.discriminantProperty];
                         const exampleUnionVariantSchema = schema.value.schemas[exampleDiscriminant];
 
-                        // Pick the union variant from the example, or default to the first one
-                        const unionVariant =
-                            this.getDiscriminatedUnionVariantSchema(schema.value, fullExample) ??
-                            Object.entries(schema.value.schemas)[0];
-                        if (
-                            exampleDiscriminant != null &&
-                            exampleUnionVariantSchema != null &&
-                            exampleUnionVariantSchema.type === "object"
-                        ) {
-                            allProperties = this.getAllProperties(exampleUnionVariantSchema);
-                            requiredProperties = this.getAllRequiredProperties(exampleUnionVariantSchema);
-                            result[schema.value.discriminantProperty] = FullExample.primitive(
-                                PrimitiveExample.string(exampleDiscriminant)
-                            );
-                        } else if (unionVariant != null && unionVariant[1].type === "object") {
-                            allProperties = this.getAllProperties(unionVariant[1]);
-                            requiredProperties = this.getAllRequiredProperties(unionVariant[1]);
-                            result[schema.value.discriminantProperty] = FullExample.primitive(
-                                PrimitiveExample.string(unionVariant[0])
-                            );
-                        } else {
-                            return undefined;
+                        // Pick the union variant from the example, othwerise try each of them until one works
+                        const unionVariants = [];
+
+                        const schemaFromExample = this.getDiscriminatedUnionVariantSchema(schema.value, fullExample);
+                        if (schemaFromExample != null) {
+                            unionVariants.push(schemaFromExample);
+                        }
+
+                        unionVariants.push(...Object.entries(schema.value.schemas));
+
+                        for (const unionVariant of unionVariants) {
+                            if (
+                                exampleDiscriminant != null &&
+                                exampleUnionVariantSchema != null &&
+                                exampleUnionVariantSchema.type === "object"
+                            ) {
+                                allProperties = this.getAllProperties(exampleUnionVariantSchema);
+                                requiredProperties = this.getAllRequiredProperties(exampleUnionVariantSchema);
+                                result[schema.value.discriminantProperty] = FullExample.primitive(
+                                    PrimitiveExample.string(exampleDiscriminant)
+                                );
+                                break;
+                            } else {
+                                const objectSchema = this.getObjectSchema(unionVariant[1]);
+                                if (objectSchema == null) {
+                                    continue;
+                                }
+                                allProperties = this.getAllProperties(objectSchema);
+                                requiredProperties = this.getAllRequiredProperties(objectSchema);
+                                result[schema.value.discriminantProperty] = FullExample.primitive(
+                                    PrimitiveExample.string(unionVariant[0])
+                                );
+                            }
                         }
 
                         for (const commonProperty of schema.value.commonProperties) {
@@ -436,6 +447,21 @@ export class ExampleTypeFactory {
             default:
                 assertNever(schema);
         }
+    }
+
+    private getObjectSchema(
+        schema: FernOpenapiIr.SchemaWithExample
+    ): FernOpenapiIr.ObjectSchemaWithExample | undefined {
+        if (schema.type === "object") {
+            return schema;
+        }
+        if (schema.type === "reference") {
+            const referenceDeclaration = this.schemas[schema.schema];
+            if (referenceDeclaration != null) {
+                return this.getObjectSchema(referenceDeclaration);
+            }
+        }
+        return undefined;
     }
 
     private getDiscriminatedUnionVariantSchema(

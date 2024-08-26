@@ -17,7 +17,9 @@ on:
       - "generators/java/spring/VERSION"
       - "generators/typescript/sdk/VERSION"
       - "generators/typescript/express/VERSION"
-      - "generators/go/VERSION"
+      - "generators/go/fiber/VERSION"
+      - "generators/go/model/VERSION"
+      - "generators/go/sdk/VERSION"
       - "generators/csharp/sdk/VERSION"
       - "generators/csharp/model/VERSION"
   workflow_dispatch:
@@ -39,9 +41,9 @@ on:
           - java-spring
           - typescript-sdk
           - typescript-express
-          - go-sdk
-          - go-model
           - go-fiber
+          - go-model
+          - go-sdk
           - csharp-sdk
           - csharp-model
 
@@ -64,9 +66,9 @@ jobs:
       spring: ${{ steps.filter.outputs.spring }}
       ts-sdk: ${{ steps.filter.outputs.ts-sdk }}
       ts-express: ${{ steps.filter.outputs.ts-express }}
-      go-sdk: ${{ steps.filter.outputs.go-sdk }}
-      go-model: ${{ steps.filter.outputs.go-model }}
       go-fiber: ${{ steps.filter.outputs.go-fiber }}
+      go-model: ${{ steps.filter.outputs.go-model }}
+      go-sdk: ${{ steps.filter.outputs.go-sdk }}
       csharp-sdk: ${{ steps.filter.outputs.csharp-sdk }}
       csharp-model: ${{ steps.filter.outputs.csharp-model }}
     steps:
@@ -87,9 +89,9 @@ jobs:
             spring: 'generators/java/spring/VERSION'
             ts-sdk: 'generators/typescript/sdk/VERSION'
             ts-express: 'generators/typescript/express/VERSION'
-            go-sdk: 'generators/go/VERSION'
-            go-model: 'generators/go/VERSION'
-            go-fiber: 'generators/go/VERSION'
+            go-fiber: 'generators/go/fiber/VERSION'
+            go-model: 'generators/go/model/VERSION'
+            go-sdk: 'generators/go/sdk/VERSION'
             csharp-sdk: 'generators/csharp/sdk/VERSION'
             csharp-model: 'generators/csharp/model/VERSION'
 
@@ -776,13 +778,13 @@ jobs:
       - name: Print Version
         if: ${{ inputs.generator != 'go-sdk' }}
         run: |
-          projectVersion=$(cat generators/go/VERSION)
+          projectVersion=$(cat generators/go/sdk/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
       - name: Print Version Dev
         if: ${{ inputs.generator == 'go-sdk' }}
         run: |
-          projectVersion=$(cat generators/go/VERSION)
+          projectVersion=$(cat generators/go/sdk/VERSION)
           commitNumber=$(git log --oneline | wc -l )
           sha_short=$(git rev-parse --short HEAD)
           echo $projectVersion-$commitNumber-$sha_short
@@ -794,7 +796,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./generators/go
-          file: ./generators/go/docker/Dockerfile.sdk
+          file: ./generators/go/sdk/Dockerfile
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=min
@@ -825,13 +827,13 @@ jobs:
       - name: Print Version
         if: ${{ inputs.generator != 'go-model' }}
         run: |
-          projectVersion=$(cat generators/go/VERSION)
+          projectVersion=$(cat generators/go/model/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
       - name: Print Version Dev
         if: ${{ inputs.generator == 'go-model' }}
         run: |
-          projectVersion=$(cat generators/go/VERSION)
+          projectVersion=$(cat generators/go/model/VERSION)
           commitNumber=$(git log --oneline | wc -l )
           sha_short=$(git rev-parse --short HEAD)
           echo $projectVersion-$commitNumber-$sha_short
@@ -843,7 +845,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./generators/go
-          file: ./generators/go/docker/Dockerfile.model
+          file: ./generators/go/model/Dockerfile
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=min
@@ -874,13 +876,13 @@ jobs:
       - name: Print Version
         if: ${{ inputs.generator != 'go-fiber' }}
         run: |
-          projectVersion=$(cat generators/go/VERSION)
+          projectVersion=$(cat generators/go/fiber/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
       - name: Print Version Dev
         if: ${{ inputs.generator == 'go-fiber' }}
         run: |
-          projectVersion=$(cat generators/go/VERSION)
+          projectVersion=$(cat generators/go/fiber/VERSION)
           commitNumber=$(git log --oneline | wc -l )
           sha_short=$(git rev-parse --short HEAD)
           echo $projectVersion-$commitNumber-$sha_short
@@ -892,7 +894,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./generators/go
-          file: ./generators/go/docker/Dockerfile.fiber
+          file: ./generators/go/fiber/Dockerfile
           platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=min

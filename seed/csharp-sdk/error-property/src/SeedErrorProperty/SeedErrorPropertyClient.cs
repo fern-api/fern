@@ -14,6 +14,8 @@ public partial class SeedErrorPropertyClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedErrorProperty" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernerror-property/0.0.1" },
             }
         );

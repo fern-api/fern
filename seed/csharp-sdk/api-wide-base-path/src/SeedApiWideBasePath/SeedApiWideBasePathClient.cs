@@ -14,6 +14,8 @@ public partial class SeedApiWideBasePathClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedApiWideBasePath" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernapi-wide-base-path/0.0.1" },
             }
         );

@@ -151,12 +151,7 @@ export class CsharpProject {
         const protobufSourceFilePaths = await this.sourceFetcher.copyProtobufSources(absolutePathToProtoDirectory);
 
         const csproj = new CsProj({
-            version: this.context.config.output?.mode._visit({
-                downloadFiles: () => undefined,
-                github: (github) => github.version,
-                publish: (publish) => publish.version,
-                _other: () => undefined
-            }),
+            version: this.context.getVersion(),
             license: this.context.config.license?._visit({
                 custom: (val) => {
                     return val.filename;

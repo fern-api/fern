@@ -3,6 +3,7 @@ import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/gener
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { generateModels } from "./generateModels";
 import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
+import { generateVersion } from "./generateVersion";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
@@ -51,12 +52,16 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
         for (const file of generatedTypes) {
             context.project.addSourceFiles(file);
         }
+
+        context.project.addSourceFiles(generateVersion({ context }));
+
         const protobufFiles = generateWellKnownProtobufFiles(context);
         if (protobufFiles != null) {
             for (const file of protobufFiles) {
                 context.project.addSourceFiles(file);
             }
         }
+
         await context.project.persist();
     }
 }
