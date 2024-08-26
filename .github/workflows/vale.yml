@@ -15,5 +15,5 @@ jobs:
         with:
           files: fern/pages/
           fail_on_error: true
-          reporter: github-pr-review
+          reporter: github-pr-check
           token: ${{ secrets.FERN_TOKEN }}
