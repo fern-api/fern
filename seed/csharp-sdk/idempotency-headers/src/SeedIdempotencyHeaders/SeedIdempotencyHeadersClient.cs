@@ -15,6 +15,8 @@ public partial class SeedIdempotencyHeadersClient
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedIdempotencyHeaders" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernidempotency-headers/0.0.1" },
             }
         );

@@ -14,6 +14,8 @@ public partial class SeedMixedCaseClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedMixedCase" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernmixed-case/0.0.1" },
             }
         );

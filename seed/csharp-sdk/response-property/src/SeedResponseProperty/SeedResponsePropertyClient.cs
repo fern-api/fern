@@ -14,6 +14,8 @@ public partial class SeedResponsePropertyClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedResponseProperty" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernresponse-property/0.0.1" },
             }
         );

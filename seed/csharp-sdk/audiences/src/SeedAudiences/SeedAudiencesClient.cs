@@ -18,6 +18,8 @@ public partial class SeedAudiencesClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedAudiences" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernaudiences/0.0.1" },
             }
         );

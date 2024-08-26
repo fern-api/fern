@@ -17,6 +17,8 @@ public partial class SeedValidationClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedValidation" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernvalidation/0.0.1" },
             }
         );

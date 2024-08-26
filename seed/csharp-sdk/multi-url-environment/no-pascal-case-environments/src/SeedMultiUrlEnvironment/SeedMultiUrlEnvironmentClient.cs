@@ -15,6 +15,8 @@ public partial class SeedMultiUrlEnvironmentClient
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedMultiUrlEnvironment" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernmulti-url-environment/0.0.1" },
             }
         );
