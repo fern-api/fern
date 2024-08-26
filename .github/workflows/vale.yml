@@ -1,12 +1,10 @@
 name: run-vale
 
-on:
-  pull_request
+on: [pull_request]
 
 jobs:
   run:
-    name: vale
-    permissions: write-all
+    name: runner / vale
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 
