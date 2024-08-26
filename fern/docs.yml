@@ -241,8 +241,6 @@ navigation:
         contents: 
           - page: Navigation
             path: ./pages/docs/building-your-docs/navigation.mdx
-          - page: Redirects and Links
-            path: ./pages/docs/building-your-docs/redirects-links.mdx
           - page: Customize Styling 
             path: ./pages/docs/building-your-docs/styling.mdx
           - page: Custom CSS & Global JS
