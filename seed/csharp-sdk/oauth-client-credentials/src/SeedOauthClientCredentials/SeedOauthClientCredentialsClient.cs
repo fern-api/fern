@@ -14,6 +14,8 @@ public partial class SeedOauthClientCredentialsClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedOauthClientCredentials" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernoauth-client-credentials/0.0.1" },
             }
         );

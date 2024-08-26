@@ -14,6 +14,8 @@ public partial class SeedFileUploadClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedFileUpload" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernfile-upload/0.0.1" },
             }
         );

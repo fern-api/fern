@@ -14,6 +14,8 @@ public partial class SeedEnumClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedEnum" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernenum/0.0.1" },
             }
         );

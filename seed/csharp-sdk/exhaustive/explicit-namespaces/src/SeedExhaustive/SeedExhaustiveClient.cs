@@ -21,6 +21,8 @@ public partial class SeedExhaustiveClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedExhaustive" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernexhaustive/0.0.1" },
             }
         );

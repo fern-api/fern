@@ -14,6 +14,8 @@ public partial class SeedUndiscriminatedUnionsClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedUndiscriminatedUnions" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernundiscriminated-unions/0.0.1" },
             }
         );

@@ -17,6 +17,8 @@ public partial class SeedAliasExtendsClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedAliasExtends" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernalias-extends/0.0.1" },
             }
         );

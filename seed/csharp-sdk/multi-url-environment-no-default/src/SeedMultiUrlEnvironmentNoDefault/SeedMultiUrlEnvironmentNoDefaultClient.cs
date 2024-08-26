@@ -18,6 +18,8 @@ public partial class SeedMultiUrlEnvironmentNoDefaultClient
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedMultiUrlEnvironmentNoDefault" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernmulti-url-environment-no-default/0.0.1" },
             }
         );
