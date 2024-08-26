@@ -201,16 +201,14 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             key: csharp.codeblock(`"${platformHeaders.language}"`),
             value: csharp.codeblock('"C#"')
         });
-        if (this.context.config.publish != null) {
-            headerEntries.push({
-                key: csharp.codeblock(`"${platformHeaders.sdkName}"`),
-                value: csharp.codeblock(`"${this.context.getNamespace()}"`)
-            });
-            headerEntries.push({
-                key: csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
-                value: csharp.codeblock(`"${this.context.config.publish.version}"`)
-            });
-        }
+        headerEntries.push({
+            key: csharp.codeblock(`"${platformHeaders.sdkName}"`),
+            value: csharp.codeblock(`"${this.context.getNamespace()}"`)
+        });
+        headerEntries.push({
+            key: csharp.codeblock(`"${platformHeaders.sdkVersion}"`),
+            value: this.context.getCurrentVersionValueAccess()
+        });
         if (platformHeaders.userAgent != null) {
             headerEntries.push({
                 key: csharp.codeblock(`"${platformHeaders.userAgent.header}"`),

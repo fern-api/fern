@@ -5,7 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.39.17] - 2024-08-21
+## [0.39.19] - 2024-08-25
+
+- Fix: The OpenAPI importer now handles generating examples for referenced `oneOf` schemas. Previously, 
+  examples generation would fail. 
+- Fix: The OpenAPI importer now handles generating examples for circular `oneOf` schemas. Previously, the 
+  the converter would only default to generating examples for the first `oneOf` schema. If the first variant, 
+  circularly referenced itself, this would make terminating the example impossible. 
+  Now, the example generator tries every schema in order, guaranteeing that a termination condition will be 
+  reached. 
+
+## [0.39.18] - 2024-08-23
+
+- Internal: Produce IR v57.8.0 with raw datetime examples. The raw datetime examples help 
+  when generating test fixtures to assert conditions about the original datetime. 
+
+## [0.39.17] - 2024-08-23
 
 - Fix: Previously, object declarations with extends and no properties did not have examples 
   propagating in the Docs and SDKs. The core issue was in IR generation which has now 

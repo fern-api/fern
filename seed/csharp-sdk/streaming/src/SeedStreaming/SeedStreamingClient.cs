@@ -14,6 +14,8 @@ public partial class SeedStreamingClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedStreaming" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernstreaming/0.0.1" },
             }
         );

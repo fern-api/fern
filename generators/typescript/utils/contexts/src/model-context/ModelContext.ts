@@ -5,4 +5,5 @@ import { TypeSchemaContext } from "./type-schema";
 export interface ModelContext extends BaseContext {
     type: TypeContext;
     typeSchema: TypeSchemaContext;
+    includeSerdeLayer: boolean;
 }

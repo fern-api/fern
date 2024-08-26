@@ -28811,6 +28811,231 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   "value": 1,
                 },
               },
+              "models": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "aggregation_keys": {
+                          "properties": {
+                            "log_level": {
+                              "type": "enum",
+                              "value": "debug",
+                            },
+                            "transformation_id": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "transformation_id",
+                                  },
+                                },
+                              ],
+                            },
+                          },
+                          "type": "object",
+                        },
+                        "auto_resolved_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "created_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "models",
+                          },
+                        },
+                        "data": {
+                          "properties": {
+                            "transformation_execution": {
+                              "properties": {
+                                "created_at": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "datetime",
+                                    "value": "2024-01-15T09:30:00Z",
+                                  },
+                                },
+                                "id": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "id",
+                                  },
+                                },
+                                "log_level": {
+                                  "type": "enum",
+                                  "value": "debug",
+                                },
+                                "logs": {
+                                  "type": "array",
+                                  "value": [
+                                    {
+                                      "properties": {
+                                        "message": {
+                                          "type": "primitive",
+                                          "value": {
+                                            "type": "string",
+                                            "value": "message",
+                                          },
+                                        },
+                                        "type": {
+                                          "type": "enum",
+                                          "value": "error",
+                                        },
+                                      },
+                                      "type": "object",
+                                    },
+                                  ],
+                                },
+                                "original_event_data_id": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "original_event_data_id",
+                                  },
+                                },
+                                "team_id": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "team_id",
+                                  },
+                                },
+                                "transformation_id": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "transformation_id",
+                                  },
+                                },
+                                "transformed_event_data_id": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "transformed_event_data_id",
+                                  },
+                                },
+                                "updated_at": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "datetime",
+                                    "value": "2024-01-15T09:30:00Z",
+                                  },
+                                },
+                                "webhook_id": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "webhook_id",
+                                  },
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                          "type": "object",
+                        },
+                        "dismissed_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "first_seen_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "iss_YXKv5OdJXCiVwkPhGy",
+                          },
+                        },
+                        "last_seen_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "last_updated_by": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "models",
+                          },
+                        },
+                        "merged_with": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "models",
+                          },
+                        },
+                        "opened_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "reference": {
+                          "properties": {
+                            "transformation_execution_id": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "transformation_execution_id",
+                              },
+                            },
+                          },
+                          "type": "object",
+                        },
+                        "status": {
+                          "type": "enum",
+                          "value": "OPENED",
+                        },
+                        "team_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "models",
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "transformation",
+                          },
+                        },
+                        "updated_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "models",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -33297,7 +33522,421 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           },
         },
       },
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "parameterNameOverride": null,
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": {
+            "type": "oneOf",
+            "value": {
+              "type": "discriminated",
+              "value": {
+                "aggregation_keys": {
+                  "properties": {
+                    "log_level": {
+                      "type": "enum",
+                      "value": "debug",
+                    },
+                    "transformation_id": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "transformation_id",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  "type": "object",
+                },
+                "auto_resolved_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "created_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "data": {
+                  "properties": {
+                    "transformation_execution": {
+                      "properties": {
+                        "created_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "id",
+                          },
+                        },
+                        "issue_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "issue_id",
+                          },
+                        },
+                        "log_level": {
+                          "type": "enum",
+                          "value": "debug",
+                        },
+                        "logs": {
+                          "type": "array",
+                          "value": [
+                            {
+                              "properties": {
+                                "message": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "message",
+                                  },
+                                },
+                                "type": {
+                                  "type": "enum",
+                                  "value": "error",
+                                },
+                              },
+                              "type": "object",
+                            },
+                          ],
+                        },
+                        "original_event_data": {
+                          "properties": {
+                            "path": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "path",
+                              },
+                            },
+                          },
+                          "type": "object",
+                        },
+                        "original_event_data_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "original_event_data_id",
+                          },
+                        },
+                        "team_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "team_id",
+                          },
+                        },
+                        "transformation_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "transformation_id",
+                          },
+                        },
+                        "transformed_event_data": {
+                          "properties": {
+                            "path": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "path",
+                              },
+                            },
+                          },
+                          "type": "object",
+                        },
+                        "transformed_event_data_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "transformed_event_data_id",
+                          },
+                        },
+                        "updated_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "webhook_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "webhook_id",
+                          },
+                        },
+                      },
+                      "type": "object",
+                    },
+                    "trigger_attempt": {
+                      "properties": {
+                        "archived_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "archived_at",
+                          },
+                        },
+                        "attempt_number": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "bulk_retry_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "bulk_retry_id",
+                          },
+                        },
+                        "created_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "delivered_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "delivery_latency": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "destination_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "destination_id",
+                          },
+                        },
+                        "error_code": {
+                          "type": "enum",
+                          "value": "TIMEOUT",
+                        },
+                        "event_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "event_id",
+                          },
+                        },
+                        "id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "id",
+                          },
+                        },
+                        "requested_url": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "requested_url",
+                          },
+                        },
+                        "responded_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "response_latency": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "response_status": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "state": {
+                          "type": "enum",
+                          "value": "DELIVERING",
+                        },
+                        "status": {
+                          "type": "enum",
+                          "value": "QUEUED",
+                        },
+                        "successful_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                        "team_id": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "team_id",
+                          },
+                        },
+                        "trigger": {
+                          "type": "enum",
+                          "value": "INITIAL",
+                        },
+                        "updated_at": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "datetime",
+                            "value": "2024-01-15T09:30:00Z",
+                          },
+                        },
+                      },
+                      "type": "object",
+                    },
+                  },
+                  "type": "object",
+                },
+                "dismissed_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "first_seen_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "id": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "iss_YXKv5OdJXCiVwkPhGy",
+                  },
+                },
+                "last_seen_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "last_updated_by": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "merged_with": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "opened_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "reference": {
+                  "properties": {
+                    "transformation_execution_id": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "transformation_execution_id",
+                      },
+                    },
+                    "trigger_event_request_transformation_id": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "trigger_event_request_transformation_id",
+                      },
+                    },
+                  },
+                  "type": "object",
+                },
+                "status": {
+                  "type": "enum",
+                  "value": "OPENED",
+                },
+                "team_id": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "transformation",
+                  },
+                },
+                "updated_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+              },
+            },
+          },
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "GetIssueRequest",
       "headers": [],
       "idempotent": null,
@@ -33424,7 +34063,174 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           },
         },
       },
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "parameterNameOverride": null,
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "status": {
+                "type": "enum",
+                "value": "OPENED",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "type": "oneOf",
+            "value": {
+              "type": "discriminated",
+              "value": {
+                "aggregation_keys": {
+                  "properties": {
+                    "log_level": {
+                      "type": "enum",
+                      "value": "debug",
+                    },
+                    "transformation_id": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "transformation_id",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  "type": "object",
+                },
+                "auto_resolved_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "created_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "dismissed_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "first_seen_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "id": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "iss_YXKv5OdJXCiVwkPhGy",
+                  },
+                },
+                "last_seen_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "last_updated_by": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "merged_with": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "opened_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "reference": {
+                  "properties": {
+                    "transformation_execution_id": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "transformation_execution_id",
+                      },
+                    },
+                    "trigger_event_request_transformation_id": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "trigger_event_request_transformation_id",
+                      },
+                    },
+                  },
+                  "type": "object",
+                },
+                "status": {
+                  "type": "enum",
+                  "value": "OPENED",
+                },
+                "team_id": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "transformation",
+                  },
+                },
+                "updated_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+              },
+            },
+          },
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "UpdateIssueRequest",
       "headers": [],
       "idempotent": null,
@@ -33629,7 +34435,166 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
           },
         },
       },
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "id",
+              "parameterNameOverride": null,
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "id",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": {
+            "type": "oneOf",
+            "value": {
+              "type": "discriminated",
+              "value": {
+                "aggregation_keys": {
+                  "properties": {
+                    "log_level": {
+                      "type": "enum",
+                      "value": "debug",
+                    },
+                    "transformation_id": {
+                      "type": "array",
+                      "value": [
+                        {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "transformation_id",
+                          },
+                        },
+                      ],
+                    },
+                  },
+                  "type": "object",
+                },
+                "auto_resolved_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "created_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "dismissed_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "first_seen_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "id": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "iss_YXKv5OdJXCiVwkPhGy",
+                  },
+                },
+                "last_seen_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "last_updated_by": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "merged_with": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "opened_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "datetime",
+                    "value": "2024-01-15T09:30:00Z",
+                  },
+                },
+                "reference": {
+                  "properties": {
+                    "transformation_execution_id": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "transformation_execution_id",
+                      },
+                    },
+                    "trigger_event_request_transformation_id": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "trigger_event_request_transformation_id",
+                      },
+                    },
+                  },
+                  "type": "object",
+                },
+                "status": {
+                  "type": "enum",
+                  "value": "OPENED",
+                },
+                "team_id": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "transformation",
+                  },
+                },
+                "updated_at": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+              },
+            },
+          },
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "DismissIssueRequest",
       "headers": [],
       "idempotent": null,
@@ -48954,7 +49919,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                       },
                       "rules": {
                         "type": "array",
-                        "value": [],
+                        "value": [
+                          {
+                            "type": "oneOf",
+                            "value": {
+                              "type": "discriminated",
+                              "value": {
+                                "delay": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "int",
+                                    "value": 1,
+                                  },
+                                },
+                                "type": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "delay",
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        ],
                       },
                       "team_id": {
                         "type": "primitive",
@@ -50407,7 +51395,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "team_id": {
                 "type": "primitive",
@@ -50701,7 +51712,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "team_id": {
                 "type": "primitive",
@@ -50973,7 +52007,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "team_id": {
                 "type": "primitive",
@@ -51207,7 +52264,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "team_id": {
                 "type": "primitive",
@@ -51550,7 +52630,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "team_id": {
                 "type": "primitive",
@@ -51735,7 +52838,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
               },
               "rules": {
                 "type": "array",
-                "value": [],
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "team_id": {
                 "type": "primitive",
@@ -59176,6 +60302,60 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                           "value": "2024-01-15T09:30:00Z",
                         },
                       },
+                      "resolved_rules": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "oneOf",
+                            "value": {
+                              "type": "discriminated",
+                              "value": {
+                                "delay": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "int",
+                                    "value": 1,
+                                  },
+                                },
+                                "type": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "delay",
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
+                      "rules": {
+                        "type": "array",
+                        "value": [
+                          {
+                            "type": "oneOf",
+                            "value": {
+                              "type": "discriminated",
+                              "value": {
+                                "delay": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "int",
+                                    "value": 1,
+                                  },
+                                },
+                                "type": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "delay",
+                                  },
+                                },
+                              },
+                            },
+                          },
+                        ],
+                      },
                       "ruleset": {
                         "properties": {
                           "created_at": {
@@ -59208,7 +60388,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                           },
                           "rules": {
                             "type": "array",
-                            "value": [],
+                            "value": [
+                              {
+                                "type": "oneOf",
+                                "value": {
+                                  "type": "discriminated",
+                                  "value": {
+                                    "delay": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "int",
+                                        "value": 1,
+                                      },
+                                    },
+                                    "type": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "delay",
+                                      },
+                                    },
+                                  },
+                                },
+                              },
+                            ],
                           },
                           "team_id": {
                             "type": "primitive",
@@ -60880,6 +62083,60 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
+              "resolved_rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              "rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -60919,7 +62176,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [],
+                    "value": [
+                      {
+                        "type": "oneOf",
+                        "value": {
+                          "type": "discriminated",
+                          "value": {
+                            "delay": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 1,
+                              },
+                            },
+                            "type": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "delay",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -61947,6 +63227,60 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
+              "resolved_rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              "rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -61986,7 +63320,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [],
+                    "value": [
+                      {
+                        "type": "oneOf",
+                        "value": {
+                          "type": "discriminated",
+                          "value": {
+                            "delay": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 1,
+                              },
+                            },
+                            "type": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "delay",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -62992,6 +64349,60 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
+              "resolved_rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              "rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -63031,7 +64442,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [],
+                    "value": [
+                      {
+                        "type": "oneOf",
+                        "value": {
+                          "type": "discriminated",
+                          "value": {
+                            "delay": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 1,
+                              },
+                            },
+                            "type": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "delay",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -63452,6 +64886,60 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
+              "resolved_rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              "rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -63491,7 +64979,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [],
+                    "value": [
+                      {
+                        "type": "oneOf",
+                        "value": {
+                          "type": "discriminated",
+                          "value": {
+                            "delay": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 1,
+                              },
+                            },
+                            "type": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "delay",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -64120,6 +65631,60 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
+              "resolved_rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              "rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -64159,7 +65724,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [],
+                    "value": [
+                      {
+                        "type": "oneOf",
+                        "value": {
+                          "type": "discriminated",
+                          "value": {
+                            "delay": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 1,
+                              },
+                            },
+                            "type": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "delay",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -64531,6 +66119,60 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
+              "resolved_rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              "rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -64570,7 +66212,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [],
+                    "value": [
+                      {
+                        "type": "oneOf",
+                        "value": {
+                          "type": "discriminated",
+                          "value": {
+                            "delay": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 1,
+                              },
+                            },
+                            "type": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "delay",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -64942,6 +66607,60 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
+              "resolved_rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              "rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -64981,7 +66700,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [],
+                    "value": [
+                      {
+                        "type": "oneOf",
+                        "value": {
+                          "type": "discriminated",
+                          "value": {
+                            "delay": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 1,
+                              },
+                            },
+                            "type": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "delay",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -65353,6 +67095,60 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   "value": "2024-01-15T09:30:00Z",
                 },
               },
+              "resolved_rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
+              "rules": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "delay": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "int",
+                            "value": 1,
+                          },
+                        },
+                        "type": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "delay",
+                          },
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -65392,7 +67188,30 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
                   },
                   "rules": {
                     "type": "array",
-                    "value": [],
+                    "value": [
+                      {
+                        "type": "oneOf",
+                        "value": {
+                          "type": "discriminated",
+                          "value": {
+                            "delay": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "int",
+                                "value": 1,
+                              },
+                            },
+                            "type": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "delay",
+                              },
+                            },
+                          },
+                        },
+                      },
+                    ],
                   },
                   "team_id": {
                     "type": "primitive",
@@ -81880,6 +83699,7 @@ exports[`open api parser > hookdeck > parse open api 1`] = `
   },
   "servers": [
     {
+      "audiences": null,
       "description": "Production API",
       "name": null,
       "url": "https://api.hookdeck.com/2023-01-01",

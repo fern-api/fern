@@ -2,7 +2,8 @@ import { AbstractCsharpGeneratorCli, TestFileGenerator, validateReadOnlyMemoryTy
 import {
     generateModels,
     generateTests as generateModelTests,
-    generateWellKnownProtobufFiles
+    generateWellKnownProtobufFiles,
+    generateVersion
 } from "@fern-api/fern-csharp-model";
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -96,6 +97,9 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         for (const file of models) {
             context.project.addSourceFiles(file);
         }
+
+        context.project.addSourceFiles(generateVersion({ context }));
+
         if (context.config.writeUnitTests) {
             const modelTests = generateModelTests({ context });
             for (const file of modelTests) {

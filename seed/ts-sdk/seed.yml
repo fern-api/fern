@@ -15,6 +15,7 @@ local:
 customFixtureConfig: 
   customConfig: 
     generateWireTests: true    
+    noSerdeLayer: true
 fixtures:
   imdb:
     - customConfig: null

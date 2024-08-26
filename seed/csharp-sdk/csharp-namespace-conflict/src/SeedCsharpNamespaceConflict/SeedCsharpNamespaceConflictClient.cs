@@ -16,6 +16,8 @@ public partial class SeedCsharpNamespaceConflictClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedCsharpNamespaceConflict" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Ferncsharp-namespace-conflict/0.0.1" },
             }
         );

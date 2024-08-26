@@ -41,7 +41,7 @@ export async function getPreviewDocsDefinition({
         )
     );
 
-    const apiCollector = new ReferencedAPICollector();
+    const apiCollector = new ReferencedAPICollector(context);
 
     const filesV2: Record<string, DocsV1Read.File_> = {};
 
@@ -91,6 +91,8 @@ type APIDefinitionID = string;
 class ReferencedAPICollector {
     private readonly apis: Record<APIDefinitionID, APIV1Read.ApiDefinition> = {};
 
+    constructor(private readonly context: TaskContext) {}
+
     public addReferencedAPI({
         ir,
         snippetsConfig
@@ -98,26 +100,36 @@ class ReferencedAPICollector {
         ir: IntermediateRepresentation;
         snippetsConfig: APIV1Write.SnippetsConfig;
     }): APIDefinitionID {
-        const id = uuidv4();
+        try {
+            const id = uuidv4();
 
-        const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig });
+            const apiDefinition = convertIrToFdrApi({ ir, snippetsConfig });
 
-        const dbApiDefinition = convertAPIDefinitionToDb(
-            apiDefinition,
-            id,
-            new SDKSnippetHolder({
-                snippetsConfigWithSdkId: {},
-                snippetsBySdkId: {},
-                snippetTemplatesByEndpoint: {},
-                snippetTemplatesByEndpointId: {},
-                snippetsBySdkIdAndEndpointId: {}
-            })
-        );
+            const dbApiDefinition = convertAPIDefinitionToDb(
+                apiDefinition,
+                id,
+                new SDKSnippetHolder({
+                    snippetsConfigWithSdkId: {},
+                    snippetsBySdkId: {},
+                    snippetTemplatesByEndpoint: {},
+                    snippetTemplatesByEndpointId: {},
+                    snippetsBySdkIdAndEndpointId: {}
+                })
+            );
 
-        const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
+            const readApiDefinition = convertDbAPIDefinitionToRead(dbApiDefinition);
 
-        this.apis[id] = readApiDefinition;
-        return id;
+            this.apis[id] = readApiDefinition;
+            return id;
+        } catch (e) {
+            // Print Error
+            const err = e as Error;
+            this.context.logger.error(`Failed to read referenced API: ${err?.message}`);
+            if (err.stack != null) {
+                this.context.logger.error(err?.stack);
+            }
+            throw e;
+        }
     }
 
     public getAPIsForDefinition(): Record<FdrAPI.ApiDefinitionId, APIV1Read.ApiDefinition> {

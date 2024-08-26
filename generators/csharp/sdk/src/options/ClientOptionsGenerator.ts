@@ -40,7 +40,7 @@ export class ClientOptionsGenerator extends FileGenerator<CSharpFile, SdkCustomC
             directory: this.context.getPublicCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
+            namespace: this.context.getPublicCoreNamespace(),
             customConfig: this.context.customConfig
         });
     }

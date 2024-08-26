@@ -174,18 +174,11 @@ exports[`open api parser > supertokens > parse open api 1`] = `
             "value": {
               "type": "discriminated",
               "value": {
-                "secret": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "JBSWY3DPEHPK3PXP",
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "DEVICE_ALREADY_EXISTS_ERROR",
                   },
                 },
               },
@@ -702,7 +695,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "DEVICE_ALREADY_EXISTS_ERROR",
                   },
                 },
               },
@@ -1174,49 +1167,11 @@ exports[`open api parser > supertokens > parse open api 1`] = `
             "value": {
               "type": "discriminated",
               "value": {
-                "devices": {
-                  "type": "array",
-                  "value": [
-                    {
-                      "properties": {
-                        "name": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "string",
-                            "value": "name",
-                          },
-                        },
-                        "period": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "double",
-                            "value": 1.1,
-                          },
-                        },
-                        "skew": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "double",
-                            "value": 1.1,
-                          },
-                        },
-                        "verified": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "boolean",
-                            "value": true,
-                          },
-                        },
-                      },
-                      "type": "object",
-                    },
-                  ],
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "TOTP_NOT_ENABLED_ERROR",
                   },
                 },
               },
@@ -1763,18 +1718,11 @@ exports[`open api parser > supertokens > parse open api 1`] = `
             "value": {
               "type": "discriminated",
               "value": {
-                "didDeviceExist": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean",
-                    "value": true,
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "TOTP_NOT_ENABLED_ERROR",
                   },
                 },
               },
@@ -2233,11 +2181,18 @@ exports[`open api parser > supertokens > parse open api 1`] = `
             "value": {
               "type": "discriminated",
               "value": {
+                "retryAfterMs": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double",
+                    "value": 90000,
+                  },
+                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "LIMIT_REACHED_ERROR",
                   },
                 },
               },
@@ -2753,18 +2708,18 @@ exports[`open api parser > supertokens > parse open api 1`] = `
             "value": {
               "type": "discriminated",
               "value": {
+                "retryAfterMs": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double",
+                    "value": 90000,
+                  },
+                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
-                  },
-                },
-                "wasAlreadyVerified": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean",
-                    "value": false,
+                    "value": "LIMIT_REACHED_ERROR",
                   },
                 },
               },
@@ -3315,32 +3270,11 @@ exports[`open api parser > supertokens > parse open api 1`] = `
             "value": {
               "type": "discriminated",
               "value": {
-                "externalUserId": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "externalId",
-                  },
-                },
-                "externalUserIdInfo": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "Info about external userId",
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
-                  },
-                },
-                "superTokensUserId": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "fa7a0841-b533-4478-95533-0fde890c3483",
+                    "value": "UNKNOWN_MAPPING_ERROR",
                   },
                 },
               },
@@ -3869,11 +3803,25 @@ exports[`open api parser > supertokens > parse open api 1`] = `
             "value": {
               "type": "discriminated",
               "value": {
+                "doesExternalUserIdExist": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean",
+                    "value": true,
+                  },
+                },
+                "doesSuperTokensUserIdExist": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "boolean",
+                    "value": true,
+                  },
+                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "USER_ID_MAPPING_ALREADY_EXISTS_ERROR",
                   },
                 },
               },
@@ -4946,7 +4894,7 @@ exports[`open api parser > supertokens > parse open api 1`] = `
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNKNOWN_MAPPING_ERROR",
                   },
                 },
               },
@@ -9960,34 +9908,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "WRONG_CREDENTIALS_ERROR",
                   },
-                },
-                "user": {
-                  "properties": {
-                    "email": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "johndoe@gmail.com",
-                      },
-                    },
-                    "id": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                    "timeJoined": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1623918032231,
-                      },
-                    },
-                  },
-                  "type": "object",
                 },
               },
             },
@@ -10438,34 +10360,8 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "EMAIL_ALREADY_EXISTS_ERROR",
                   },
-                },
-                "user": {
-                  "properties": {
-                    "email": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "johndoe@gmail.com",
-                      },
-                    },
-                    "id": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                    "timeJoined": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1623918032231,
-                      },
-                    },
-                  },
-                  "type": "object",
                 },
               },
             },
@@ -11962,14 +11858,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
-                  },
-                },
-                "token": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "ZTRiOTBjNz...jI5MTZlODkxw",
+                    "value": "UNKNOWN_USER_ID_ERROR",
                   },
                 },
               },
@@ -12965,14 +12854,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
-                  },
-                },
-                "userId": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "fa7a0841-b533-4478-95533-0fde890c3483",
+                    "value": "RESET_PASSWORD_INVALID_TOKEN_ERROR",
                   },
                 },
               },
@@ -16954,14 +16836,7 @@ Note that there is an invisible character at the end of the path, this was to av
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
-                  },
-                },
-                "token": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "ZTRiOTBjNz...jI5MTZlODkxw",
+                    "value": "EMAIL_ALREADY_VERIFIED_ERROR",
                   },
                 },
               },
@@ -18158,25 +18033,11 @@ Note that there is an invisible character at the end of the path, this was to av
             "value": {
               "type": "discriminated",
               "value": {
-                "email": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "johndoe@gmail.com",
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
-                  },
-                },
-                "userId": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "fa7a0841-b533-4478-95533-0fde890c3483",
+                    "value": "EMAIL_VERIFICATION_INVALID_TOKEN_ERROR",
                   },
                 },
               },
@@ -20419,18 +20280,11 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "didUserAlreadyHaveRole": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean",
-                    "value": true,
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNKNOWN_ROLE_ERROR",
                   },
                 },
               },
@@ -20876,18 +20730,11 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "didUserHaveRole": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "boolean",
-                    "value": true,
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNKNOWN_ROLE_ERROR",
                   },
                 },
               },
@@ -21746,20 +21593,8 @@ e.g.:
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNKNOWN_ROLE_ERROR",
                   },
-                },
-                "users": {
-                  "type": "array",
-                  "value": [
-                    {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                  ],
                 },
               },
             },
@@ -22627,23 +22462,11 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "permissions": {
-                  "type": "array",
-                  "value": [
-                    {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "permission",
-                      },
-                    },
-                  ],
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNKNOWN_ROLE_ERROR",
                   },
                 },
               },
@@ -23057,7 +22880,7 @@ e.g.:
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNKNOWN_ROLE_ERROR",
                   },
                 },
               },
@@ -24708,81 +24531,18 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "expiry": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "value": 1637262633029,
-                  },
-                },
-                "sessionHandle": {
+                "message": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                    "value": "Error Message",
                   },
                 },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
-                  },
-                },
-                "timeCreated": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                    "value": 1637262633029,
-                  },
-                },
-                "userDataInDatabase": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "test",
-                      },
-                      "value": {
-                        "type": "unknown",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "int",
-                            "value": 123,
-                          },
-                        },
-                      },
-                    },
-                  ],
-                },
-                "userDataInJWT": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "test",
-                      },
-                      "value": {
-                        "type": "unknown",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "int",
-                            "value": 123,
-                          },
-                        },
-                      },
-                    },
-                  ],
-                },
-                "userId": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "fa7a0841-b533-4478-95533-0fde890c3483",
+                    "value": "UNAUTHORISED",
                   },
                 },
               },
@@ -26532,77 +26292,18 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "accessToken": {
-                  "properties": {
-                    "createdTime": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "expiry": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "token": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                      },
-                    },
+                "message": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "Error Message",
                   },
-                  "type": "object",
-                },
-                "session": {
-                  "properties": {
-                    "handle": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                      },
-                    },
-                    "userDataInJWT": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "test",
-                          },
-                          "value": {
-                            "type": "unknown",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "int",
-                                "value": 123,
-                              },
-                            },
-                          },
-                        },
-                      ],
-                    },
-                    "userId": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                  },
-                  "type": "object",
                 },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "TRY_REFRESH_TOKEN",
                   },
                 },
               },
@@ -27225,110 +26926,18 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "accessToken": {
-                  "properties": {
-                    "createdTime": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "expiry": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "token": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
-                "antiCsrfToken": {
+                "message": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "ZTRiOTBjNz...jI5MTZlODkxw",
+                    "value": "Error Message",
                   },
-                },
-                "refreshToken": {
-                  "properties": {
-                    "createdTime": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "expiry": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "token": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                      },
-                    },
-                  },
-                  "type": "object",
-                },
-                "session": {
-                  "properties": {
-                    "handle": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                      },
-                    },
-                    "userDataInJWT": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "test",
-                          },
-                          "value": {
-                            "type": "unknown",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "int",
-                                "value": 123,
-                              },
-                            },
-                          },
-                        },
-                      ],
-                    },
-                    "userId": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                  },
-                  "type": "object",
                 },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNAUTHORISED",
                   },
                 },
               },
@@ -28400,77 +28009,18 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "accessToken": {
-                  "properties": {
-                    "createdTime": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "expiry": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1637262633029,
-                      },
-                    },
-                    "token": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "ZTRiOTBjNz...jI5MTZlODkxw",
-                      },
-                    },
+                "message": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "Error Message",
                   },
-                  "type": "object",
-                },
-                "session": {
-                  "properties": {
-                    "handle": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "68en6gd6-865b-4af6-ba00-96e5c153257d",
-                      },
-                    },
-                    "userDataInJWT": {
-                      "type": "map",
-                      "value": [
-                        {
-                          "key": {
-                            "type": "string",
-                            "value": "test",
-                          },
-                          "value": {
-                            "type": "unknown",
-                            "value": {
-                              "type": "primitive",
-                              "value": {
-                                "type": "int",
-                                "value": 123,
-                              },
-                            },
-                          },
-                        },
-                      ],
-                    },
-                    "userId": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "fa7a0841-b533-4478-95533-0fde890c3483",
-                      },
-                    },
-                  },
-                  "type": "object",
                 },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNAUTHORISED",
                   },
                 },
               },
@@ -28955,33 +28505,19 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
+                "message": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "Error Message",
+                  },
+                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNAUTHORISED",
                   },
-                },
-                "userDataInDatabase": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "test",
-                      },
-                      "value": {
-                        "type": "unknown",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "int",
-                            "value": 123,
-                          },
-                        },
-                      },
-                    },
-                  ],
                 },
               },
             },
@@ -29338,7 +28874,64 @@ e.g.:
           },
         },
       },
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "type": "oneOf",
+            "value": {
+              "type": "discriminated",
+              "value": {
+                "message": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "Error Message",
+                  },
+                },
+                "status": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "UNAUTHORISED",
+                  },
+                },
+              },
+            },
+          },
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "PutSessionDataRequest",
       "headers": [
         {
@@ -29722,18 +29315,11 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "jwt": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNSUPPORTED_ALGORITHM_ERROR",
                   },
                 },
               },
@@ -30511,33 +30097,19 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
+                "message": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "Error Message",
+                  },
+                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNAUTHORISED",
                   },
-                },
-                "userDataInJWT": {
-                  "type": "map",
-                  "value": [
-                    {
-                      "key": {
-                        "type": "string",
-                        "value": "test",
-                      },
-                      "value": {
-                        "type": "unknown",
-                        "value": {
-                          "type": "primitive",
-                          "value": {
-                            "type": "int",
-                            "value": 123,
-                          },
-                        },
-                      },
-                    },
-                  ],
                 },
               },
             },
@@ -30894,7 +30466,64 @@ e.g.:
           },
         },
       },
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [
+            {
+              "name": "rid",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "session",
+                },
+              },
+            },
+            {
+              "name": "api-key",
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "ajs30Nlbs0DjvsdFIne934n8NVee5n",
+                },
+              },
+            },
+          ],
+          "name": null,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {},
+            "type": "object",
+          },
+          "response": {
+            "type": "oneOf",
+            "value": {
+              "type": "discriminated",
+              "value": {
+                "message": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "Error Message",
+                  },
+                },
+                "status": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "UNAUTHORISED",
+                  },
+                },
+              },
+            },
+          },
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "PutJwtDataRequest",
       "headers": [
         {
@@ -31392,34 +31021,8 @@ e.g.:
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "INVALID_EMAIL_ERROR",
                   },
-                },
-                "user": {
-                  "properties": {
-                    "email": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "test@example.com",
-                      },
-                    },
-                    "timeCreated": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 1231321231,
-                      },
-                    },
-                    "userId": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "example-userid",
-                      },
-                    },
-                  },
-                  "type": "object",
                 },
               },
             },
@@ -32045,34 +31648,8 @@ e.g.:
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "UNKNOWN_USER_ERROR",
                   },
-                },
-                "user": {
-                  "properties": {
-                    "email": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "test@example.com",
-                      },
-                    },
-                    "timeCreated": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "double",
-                        "value": 391238234792,
-                      },
-                    },
-                    "userId": {
-                      "type": "primitive",
-                      "value": {
-                        "type": "string",
-                        "value": "r23r-f235th54-g3413gf-r32dr2",
-                      },
-                    },
-                  },
-                  "type": "object",
                 },
               },
             },
@@ -33863,7 +33440,7 @@ e.g.:
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "INVAlID_SESSION_ERROR",
                   },
                 },
               },
@@ -34682,18 +34259,11 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "sessionId": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "string",
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "INVAlID_CREDENTIALS_ERROR",
                   },
                 },
               },
@@ -35999,18 +35569,11 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "path": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "/usr/lib/supertokens/config.yaml",
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "NOT_ALLOWED",
                   },
                 },
               },
@@ -39890,18 +39453,11 @@ e.g.:
             "value": {
               "type": "discriminated",
               "value": {
-                "licenseKey": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "string",
-                    "value": "eyJhbGciOiJIUzI1NiIsIn...",
-                  },
-                },
                 "status": {
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "NO_LICENSE_KEY_FOUND_ERROR",
                   },
                 },
               },
@@ -40207,7 +39763,7 @@ e.g.:
                   "type": "primitive",
                   "value": {
                     "type": "string",
-                    "value": "OK",
+                    "value": "INVALID_LICENSE_KEY_ERROR",
                   },
                 },
               },

@@ -360,12 +360,13 @@ export class SdkGenerator {
             allowExtraFields: config.allowExtraFields,
             omitUndefined: config.omitUndefined
         });
-        this.jestTestGenerator = new JestTestGenerator(
-            intermediateRepresentation,
-            this.dependencyManager,
-            this.rootDirectory,
-            this.config.writeUnitTests
-        );
+        this.jestTestGenerator = new JestTestGenerator({
+            ir: intermediateRepresentation,
+            dependencyManager: this.dependencyManager,
+            rootDirectory: this.rootDirectory,
+            writeUnitTests: this.config.writeUnitTests,
+            includeSerdeLayer: config.includeSerdeLayer
+        });
         this.generatorCli = new GeneratorCli({
             logger: context.logger
         });

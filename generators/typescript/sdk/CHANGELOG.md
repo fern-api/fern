@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.39.5] - 2024-08-20
+
+- Fix: If `noSerdeLayer` is enabled, then the generated TypeScript SDK snippets and wire tests 
+  will not use `Date` objects but instead use strings. Without this fix, the generated 
+  wire tests would result in failures. 
+
 ## [0.39.4] - 2024-08-20
 
 - Fix: Ensure that environment files don't generate, unless there is a valid environment available.

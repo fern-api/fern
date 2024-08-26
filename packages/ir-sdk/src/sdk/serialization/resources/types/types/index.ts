@@ -65,5 +65,6 @@ export * from "./ExampleMapContainer";
 export * from "./ExampleLiteralContainer";
 export * from "./ExampleKeyValuePair";
 export * from "./ExamplePrimitive";
+export * from "./ExampleDatetime";
 export * from "./ExampleNamedType";
 export * from "./ExampleObjectTypeWithTypeId";
