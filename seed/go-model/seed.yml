@@ -1,6 +1,6 @@
 irVersion: v40
 docker: fernapi/fern-go-model:latest
-dockerCommand: docker build -f ./generators/go/docker/Dockerfile.model -t fernapi/fern-go-model:latest ./generators/go
+dockerCommand: docker build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest ./generators/go
 language: go
 generatorType: sdk
 defaultOutputMode: github
