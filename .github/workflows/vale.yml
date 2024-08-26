@@ -8,8 +8,9 @@ on:
       - "fern/pages/**"
 
 jobs:
-  vale:
-    name: runner / vale
+  run:
+    name: vale
+    permissions: write-all
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 
