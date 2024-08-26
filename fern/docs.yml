@@ -270,6 +270,9 @@ navigation:
           - page: Reusable snippets
             icon: fa-regular fa-recycle
             path: ./pages/fern-docs/content/reusable-snippets.mdx
+          - page: Changelog
+            path: ./pages/docs/writing-content/changelog.mdx
+            icon: fa-regular fa-clock
 
       - section: API References
         contents:
