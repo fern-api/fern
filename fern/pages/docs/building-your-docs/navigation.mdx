@@ -111,35 +111,24 @@ navigation:
     icon: fa-regular fa-puzzle
 ```
 
-## Navigation bar links
+## Links
 
-For links that you want to be easily accessible, you can specify a list of links in `navbar-links`. These links appear as buttons in the top right of your documentation website.
+You can add a link to an external page within your sidebar navigation with the following configuration: 
 
-```yaml Example of navbar-links config
-navbar-links:
-  - type: secondary
-    text: Contact support
-    url: https://example.com/support
-  - type: primary
-    text: Login
-    url: https://example.com/login
+```yaml title="docs.yml"
+navigation: 
+  - section: Home
+    contents:
+      - page: Introduction
+        path: ./intro.mdx
+      - link: Our YouTube Channel
+        href: https://www.youtube.com/
 ```
 
-### navbar-link type
+<Frame>
+<img src="./external-link.png" alt="An external link within navigation" />
+</Frame>
 
-Set the type to either `primary` or `secondary`. Primary links are designed to stand out and indicate that they are clickable with an arrow `>`. You can have one primary link.
-
-### navbar-link text
-
-Set the link text that is displayed to the user.
-
-### navbar-link url
-
-Set the target `url` for the link. 
-
-To use a relative URL, make sure that you use `/` to begin the URL instead of `./`. This link opens in a new browser tab, regardless of whether it is a relative or absolute URL. 
-
-You can use a trackable link in your URL. For example, if using [UTM parameters](https://en.wikipedia.org/wiki/UTM_parameters), instead of `https://www.example.com/login`, set the `url` to `https://www.example.com/login?utm_source=docs&utm_medium=navbar`.
 
 ## Tabs
 
@@ -233,21 +222,5 @@ tabs:
            contents: 
               - page: Contact Us
                  path: contact-us.mdx
-```
-</CodeBlock>
-
-## Redirects
-
-The `redirects` object allows you to redirect traffic from one path to another. You can also use [`regex`](https://www.npmjs.com/package/path-to-regexp) within redirects. 
-
-<CodeBlock title="docs.yml">
-```yml
-redirects:
-  - source: "/old-path"
-    destination: "/new-path"
-  - source: "/incorrect/path"
-    destination: "/correct/path"
-  - source: "/old-folder/:slug" # <- using regex
-    destination: "/new-folder/:slug"
 ```
 </CodeBlock>

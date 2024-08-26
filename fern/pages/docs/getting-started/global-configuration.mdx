@@ -29,11 +29,21 @@ favicon: path/to/favicon.ico
 </ParamField>
 
 <ParamField path="logo" type="object" required={false}>
-  Learn more about the logo configuration [here](/learn/docs/getting-started/global-configuration#logo-configuration). 
+  Learn more about the `logo` configuration [here](/learn/docs/getting-started/global-configuration#logo-configuration). 
 </ParamField>
 
 <ParamField path="favicon" type="string" required={false}>
   Relative filepath to the favicon.
+</ParamField>
+
+<ParamField path="redirects" type="list of objects" required={false}>
+  An array of paths you want to configure to permanently redirect to another path. Learn more about the 
+  `redirects` configuration [here](/learn/docs/getting-started/global-configuration#redirects-configuration).
+</ParamField>
+
+<ParamField path="navbar-links" type="list of objects" required={false}>
+  Array of names and urls of links you want to include as a call to action. Learn more about the 
+  `navbar-links` configuration [here](/learn/docs/getting-started/global-configuration#navbar-links-configuration).
 </ParamField>
 
 ## Logo Configuration
@@ -57,3 +67,49 @@ logo:
   Path to the image for the light mode logo. You can exclude this if you don't have light mode enabled. SVG format is recommended.
 </ParamField>
 
+## Redirects Configuration
+
+```yaml docs.yml
+redirects:
+  - source: "/old-path"
+    destination: "/new-path"
+  - source: "/old-folder/*"
+    destination: "/new-folder/*"
+```
+
+<ParamField path="source" type="string" required={false}>
+  The path that you want to redirect from.
+</ParamField>
+
+<ParamField path="destination" type="string" required={false}>
+  The path that you want to redirect to.
+</ParamField>
+
+## NavBar Links Configuration
+
+```yaml docs.yml
+navbar-links:
+  - type: minimal
+    text: Contact support
+    href: https://example.com/support
+  - type: filled
+    text: Login
+    href: https://example.com/login
+    rounded: false
+```
+
+<ParamField path="type" type="enum" required={false}>
+  One of `outlined`, `minimal`, or `filled`. This value controls the styling of the button. 
+</ParamField>
+
+<ParamField path="href" type="string" required={false}>
+  The url once you click on the button. Example: https://buildwithfern.com/contact
+</ParamField>
+
+<ParamField path="text" type="string" required={false}>
+  Text inside the button.
+</ParamField>
+
+<ParamField path="rounded" type="boolean" required={false}>
+  Whether the button is rounded or square. 
+</ParamField>
