@@ -79,6 +79,10 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.namespace}.Core`;
     }
 
+    public getPublicCoreNamespace(): string {
+        return this.getNamespace();
+    }
+
     public getTestNamespace(): string {
         return `${this.namespace}.Test`;
     }
@@ -89,6 +93,15 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public getMockServerTestNamespace(): string {
         return `${this.getTestNamespace()}.Unit.MockServer`;
+    }
+
+    public getVersion(): string | undefined {
+        return this.config.output?.mode._visit({
+            downloadFiles: () => undefined,
+            github: (github) => github.version,
+            publish: (publish) => publish.version,
+            _other: () => undefined
+        });
     }
 
     public hasGrpcEndpoints(): boolean {
@@ -183,6 +196,25 @@ export abstract class AbstractCsharpGeneratorContext<
             name: "",
             namespace: "FluentAssertions.Json"
         });
+    }
+
+    public getVersionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Version",
+            namespace: this.getPublicCoreNamespace()
+        });
+    }
+
+    public getCurrentVersionValueAccess(): csharp.CodeBlock {
+        return csharp.codeblock((writer) => {
+            writer.writeNode(this.getVersionClassReference());
+            writer.write(".");
+            writer.write(this.getCurrentVersionPropertyName());
+        });
+    }
+
+    public getCurrentVersionPropertyName(): string {
+        return "Current";
     }
 
     public getCollectionItemSerializerReference(

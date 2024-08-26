@@ -14,6 +14,8 @@ public partial class SeedWebsocketClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedWebsocket" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernwebsocket/0.0.1" },
             }
         );

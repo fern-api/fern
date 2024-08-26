@@ -15,6 +15,8 @@ public partial class SeedNoEnvironmentClient
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedNoEnvironment" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernno-environment/0.0.1" },
             }
         );

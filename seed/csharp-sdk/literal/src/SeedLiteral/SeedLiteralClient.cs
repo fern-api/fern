@@ -16,6 +16,8 @@ public partial class SeedLiteralClient
                 { "X-API-Version", "02-02-2024" },
                 { "X-API-Enable-Audit-Logging", true.ToString() },
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedLiteral" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernliteral/0.0.1" },
             }
         );

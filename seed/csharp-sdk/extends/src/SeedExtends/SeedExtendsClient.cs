@@ -17,6 +17,8 @@ public partial class SeedExtendsClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedExtends" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernextends/0.0.1" },
             }
         );

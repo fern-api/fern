@@ -14,6 +14,8 @@ public partial class SeedNurseryApiClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedNurseryApi" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernreserved-keywords/0.0.1" },
             }
         );

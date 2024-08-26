@@ -14,6 +14,8 @@ public partial class SeedBytesClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedBytes" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernbytes/0.0.1" },
             }
         );

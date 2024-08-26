@@ -11372,7 +11372,81 @@ exports[`open api parser > hathora > parse open api 1`] = `
           },
         },
       },
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "description": null,
+          "headers": [],
+          "name": null,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "parameterNameOverride": null,
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "appId",
+                },
+              },
+            },
+            {
+              "name": "roomId",
+              "parameterNameOverride": null,
+              "value": {
+                "type": "primitive",
+                "value": {
+                  "type": "string",
+                  "value": "roomId",
+                },
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": null,
+          "response": {
+            "type": "oneOf",
+            "value": {
+              "type": "discriminated",
+              "value": {
+                "host": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "port": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "double",
+                    "value": 1.1,
+                  },
+                },
+                "roomId": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "string",
+                  },
+                },
+                "status": {
+                  "type": "primitive",
+                  "value": {
+                    "type": "string",
+                    "value": "active",
+                  },
+                },
+                "transportType": {
+                  "type": "enum",
+                  "value": "tcp",
+                },
+              },
+            },
+          },
+          "type": "full",
+        },
+      ],
       "generatedRequestName": "GetConnectionInfoRequest",
       "headers": [],
       "idempotent": null,
