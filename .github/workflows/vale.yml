@@ -1,11 +1,7 @@
 name: run-vale
 
-on: 
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "fern/pages/**"
+on:
+  pull_request
 
 jobs:
   run:
