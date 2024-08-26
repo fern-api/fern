@@ -3,8 +3,8 @@ name: run-vale
 on: [pull_request]
 
 jobs:
-  run:
-    name: runner / vale
+  vale:
+    name: run vale
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 
