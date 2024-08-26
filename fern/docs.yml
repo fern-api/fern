@@ -28,7 +28,7 @@ tabs:
     display-name: SDKs
     slug: sdks
   servers:
-    display-name: Servers
+    display-name: Server Stubs
     slug: servers
   cli-api:
     display-name: CLI & API Reference
