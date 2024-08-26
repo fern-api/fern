@@ -42,13 +42,13 @@ An endpoint includes:
 Each endpoint has a URL path.
 
 <CodeBlock title="user.yml">
-```yaml
+```yaml {6}
 service:
   base-path: /users
   auth: false
   endpoints:
     getAllUsers:
-      path: /all # <---
+      path: /all
       method: GET
 ```
 </CodeBlock>
@@ -64,7 +64,7 @@ The full path for the endpoint is the concatenation of:
 The display name will appear as the title of an endpoint [like this one](https://buildwithfern.com/learn/cli-api/api-reference/docs/generate). By default, the display name is equal to the 'Title Case' of the endpoint name. If you would like to customize the endpoint name, you can **set the display name**. 
 
 <CodeBlock title="user.yml">
-```yaml
+```yaml {7}
 service:
   base-path: /users
   auth: false
@@ -81,14 +81,14 @@ service:
 Supply path parameters for your endpoints to create dynamic URLs.
 
 <CodeBlock title="user.yml">
-```yaml
+```yaml {6-8}
 service:
   base-path: /users
   auth: false
   endpoints:
     getUser:
-      path: /{userId} # <---
-      path-parameters: # <---
+      path: /{userId} 
+      path-parameters: 
         userId: string
       method: GET
 ```
@@ -97,7 +97,7 @@ service:
 Services can also have path-parameters:
 
 <CodeBlock title='project.yml'>
-  ```yaml 
+  ```yaml {2-4}
   service: 
     base-path: /projects/{projectId}
     path-parameters: 
@@ -137,12 +137,12 @@ the generated SDKs so that consumers can provide multiple values for the query
 parameter.
 
 <CodeBlock title="user.yml">
-```yaml
+```yaml {5}
   ...
   query-parameters:
     filter:
       type: string
-      allow-multiple: true # <---
+      allow-multiple: true
 ```
 </CodeBlock>
 
@@ -189,12 +189,12 @@ Each endpoint can specify request headers:
 Services can also specify request headers. These headers will cascade to the service's endpoints.
 
 <CodeBlock title='user.yml'>
-  ```diff 
+  ```yaml {4-5} 
   service: 
     base-path: /users 
     auth: false 
-  + headers: 
-  +   X-Service-Header: string 
+    headers: 
+      X-Service-Header: string 
     endpoints: 
       getAllUsers: 
         path: /all 
@@ -212,7 +212,7 @@ Services can also specify request headers. These headers will cascade to the ser
 Endpoints can specify a request body type.
 
 <CodeBlock title="user.yml">
-```yaml
+```yaml {10}
 service:
   base-path: /users
   auth: false
@@ -222,7 +222,7 @@ service:
       path-parameters:
         userId: string
       method: POST
-      request: string # <---
+      request: string
 ```
 </CodeBlock>
 
@@ -255,7 +255,7 @@ If the request involves uploading a file, use the `file` type
 in your request body.
 
 <CodeBlock title="document.yml">
-```yaml
+```yaml {12}
 service:
   base-path: /documents
   auth: false
@@ -267,7 +267,7 @@ service:
         name: UploadDocumentRequest
         body:
           properties:
-            file: file # <------ 
+            file: file
 ```
 </CodeBlock>
 
@@ -365,7 +365,7 @@ outputs. Examples will show up as comments in your SDKs, API documentation, and 
 You may add examples for endpoints, types, and errors.
 
 <CodeBlock title="user.yml">
-```yaml
+```yaml {13-19}
 service:
   base-path: /users
   auth: false
@@ -378,7 +378,7 @@ service:
       response: User
       errors:
         - UserNotFoundError
-      examples: # <---
+      examples:
         - path-parameters:
             userId: alice-user-id
           response:
@@ -475,12 +475,12 @@ You can also specify examples of failed endpoints calls. Add the `error`
 property to a response example to designate which failure you're demonstrating.
 
 <CodeBlock title="user.yml">
-```yaml
+```yaml {5}
 examples:
   - path-parameters:
       userId: missing-user-id
     response:
-      error: UserNotFoundError # <--
+      error: UserNotFoundError
 
 errors:
   UserNotFoundError:
@@ -491,18 +491,18 @@ errors:
 If the error has a body, then you must include the body in the example.
 
 <CodeBlock title="user.yml">
-```yaml
+```yaml {6, 11}
 examples:
   - path-parameters:
       userId: missing-user-id
     response:
       error: UserNotFoundError
-      body: "User with id `missing-user-id` was not found" # <--
+      body: "User with id `missing-user-id` was not found"
 
 errors:
   UserNotFoundError:
     status-code: 404
-    type: string # <--
+    type: string
 ```
 </CodeBlock>
 
@@ -511,7 +511,7 @@ errors:
 To avoid duplication, you can reference examples from types using `$`.
 
 <CodeBlock title="user.yml">
-```yaml
+```yaml {12}
 service:
   base-path: /users
   auth: true
@@ -523,7 +523,7 @@ service:
         userId: UserId
       examples:
         - path-parameters:
-            userId: $UserId.Example1 # <---
+            userId: $UserId.Example1
 
 types:
   UserId:

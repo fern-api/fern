@@ -36,12 +36,12 @@ In Fern, you use the `"properties"` key to create an object:
 ```yaml {3,8}
 types:
   Person:
-    properties: # <---
+    properties:
       name: string
       address: Address
 
   Address:
-    properties: # <---
+    properties:
       line1: string
       line2: optional<string>
       city: string
@@ -111,10 +111,10 @@ An enum represents a string with a set of allowed values.
 
 In Fern, you use the `"enum"` key to create an enum:
 
-```yaml
+```yaml {3}
 types:
   WeatherReport:
-    enum: # <---
+    enum:
       - SUNNY
       - CLOUDY
       - RAINING
@@ -128,11 +128,11 @@ types:
   Operator:
     enum:
       - name: LESS_THAN # <--- the name that will be used in SDKs
-        value: < # <--- the value that will be serialized
+        value: '<' # <--- the value that will be serialized
       - name: GREATER_THAN
-        value: >
+        value: '>'
       - name: NOT_EQUAL
-        value: !=
+        value: '!='
 ```
 
 ### Unions
@@ -169,10 +169,10 @@ discriminant property:
 
 You can customize the discriminant property using the "discriminant" key:
 
-```diff {3}
+```yaml {3}
  types:
    Animal:
-+    discriminant: animalType
+     discriminant: animalType
      union:
        dog: Dog
        cat: Cat
@@ -195,7 +195,7 @@ This corresponds to a JSON object like this:
 
 You can also have a union without a discriminant.
 
-```
+```yaml 
 MyUnion:
   discriminated: false
   union:

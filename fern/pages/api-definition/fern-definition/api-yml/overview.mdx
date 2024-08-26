@@ -5,12 +5,12 @@ description: The api.yml file contains general API configuration when using the 
 
 A `fern/` folder has a special file called `api.yml`, which includes all the API-wide configuration.
 
-```yaml
+```bash {5}
 fern/
 ├─ fern.config.json
 ├─ generators.yml
 └─ definition/
-  ├─ api.yml # <---
+  ├─ api.yml
   ├─ pet.yml
   ├─ store.yml
   └─ user.yml
@@ -31,9 +31,9 @@ name: api
 You can define a top level API description. This description will come through in the OpenAPI spec and Postman collection.
 
 <CodeBlock title="api.yml">
-```yaml
+```yaml {2-4}
 name: api
-docs: |  # <---
+docs: | 
   ## Header
   This API provides access to...
 ```
