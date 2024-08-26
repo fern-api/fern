@@ -1,4 +1,4 @@
-name: Check Docs with Vale
+name: run-vale
 
 on: 
   pull_request:
