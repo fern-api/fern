@@ -241,14 +241,10 @@ navigation:
         contents: 
           - page: Navigation
             path: ./pages/docs/building-your-docs/navigation.mdx
-          - page: Customize Styling 
-            path: ./pages/docs/building-your-docs/styling.mdx
           - page: Custom CSS & Global JS
             path: ./pages/docs/building-your-docs/custom-css-js.mdx
           - page: Pull Request Preview
             path: ./pages/docs/building-your-docs/pr-preview.mdx
-          - page: Local Development
-            path: ./pages/docs/building-your-docs/local-development.mdx
           - page: Custom Domain
             path: ./pages/docs/building-your-docs/custom-domain.mdx
 
