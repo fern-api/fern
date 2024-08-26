@@ -31,7 +31,7 @@ You can reference an example from another type, endpoint, or error.
 Just like types, you can compose examples. To reference an example from another
 type, use `$`.
 
-```yaml
+```yaml {14}
 types:
   UserId:
     type: integer
@@ -45,7 +45,7 @@ types:
       name: string
     examples:
       - value:
-          id: $UserId.Example1 # <---
+          id: $UserId.Example1
           name: Jane Smith
 ```
 

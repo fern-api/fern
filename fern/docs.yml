@@ -17,18 +17,23 @@ title: Fern
 tabs:
   home:
     display-name: Home
+    icon: fa-regular fa-home
     slug: home
   api-definition:
     display-name: API Definition
+    icon: fa-regular fa-book
     slug: api-definition
   docs:
     display-name: Docs
+    icon: fa-regular fa-browser
     slug: docs
   sdks:
     display-name: SDKs
+    icon: fa-brands fa-codepen
     slug: sdks
   cli-api:
     display-name: CLI & API Reference
+    icon: fa-regular fa-code
     slug: cli-api
 
 css: ./assets/styles.css
@@ -240,46 +245,60 @@ navigation:
       - section: Building Your Docs 
         contents: 
           - page: Navigation
+            icon: fa-regular fa-compass
             path: ./pages/docs/building-your-docs/navigation.mdx
           - page: Custom CSS & Global JS
+            icon: fa-regular fa-paintbrush
             path: ./pages/docs/building-your-docs/custom-css-js.mdx
           - page: Pull Request Preview
+            icon: fa-regular fa-file-magnifying-glass
             path: ./pages/docs/building-your-docs/pr-preview.mdx
           - page: Custom Domain
+            icon: fa-regular fa-globe-pointer
             path: ./pages/docs/building-your-docs/custom-domain.mdx
 
       - section: Writing Content
         slug: content
         contents:
           - page: Write Markdown content
+            icon: fa-regular fa-font
             path: ./pages/fern-docs/content/write-markdown.mdx
             slug: write-markdown
           - page: Frontmatter
+            icon: fa-regular fa-sliders
             path: ./pages/fern-docs/content/front-matter.mdx
           - page: Reusable snippets
+            icon: fa-regular fa-recycle
             path: ./pages/fern-docs/content/reusable-snippets.mdx
 
       - section: API References
         contents:
           - page: Generate API reference
+            icon: fa-regular fa-gear-code
             path: ./pages/fern-docs/content/generate-api-ref.mdx
             slug: generate-api-ref
           - page: SDK snippets
+            icon: fa-regular fa-message-code
             path: ./pages/fern-docs/config/sdk-snippets.mdx
           - page: Endpoint errors
+            icon: fa-regular fa-exclamation-triangle
             path: ./pages/fern-docs/config/endpoint-errors.mdx
           - page: Reorder API Reference pages
+            icon: fa-regular fa-arrow-up-arrow-down
             path: ./pages/fern-docs/content/reorder-api-ref.mdx
           - page: Write markdown in API Reference
+            icon: fa-regular fa-pencil
             path: ./pages/fern-docs/content/api-ref-content.mdx
       
       - section: Integrations
         slug: integrations
         contents: 
           - page: Overview
+            icon: fa-regular fa-link
             slug: overview
             path: ./pages/docs/integrations/overview.mdx         
           - section: Analytics
+            icon: fa-regular fa-chart-simple
             slug: analytics
             contents: 
               - page: PostHog
@@ -289,6 +308,7 @@ navigation:
               - page: Segment
                 path: ./pages/docs/integrations/analytics/segment.mdx                
           - section: Support
+            icon: fa-regular fa-headset
             slug: support
             contents: 
               - page: Intercom
@@ -302,14 +322,17 @@ navigation:
         contents: 
           - page: GitLab
             slug: gitlab
+            icon: fa-brands fa-gitlab
             path: ./pages/docs/developer-tools/gitlab.mdx
           - page: Vale
+            icon: fa-regular fa-list-check
             path: ./pages/docs/developer-tools/vale.mdx
 
       - section: Components
         slug: components
         contents:
-          - page: Overview 
+          - page: Overview
+            icon: fa-regular fa-toolbox
             path: ./pages/docs/components/overview.mdx
           - page: Accordions
             path: ./pages/docs/components/accordions.mdx
@@ -341,7 +364,7 @@ navigation:
             icon: "rectangle-code"
           - page: Steps
             path: ./pages/docs/components/steps.mdx
-            icon: "arrow-fa-regular fa-progress"
+            icon: "fa-solid fa-arrow-progress"
             slug: steps
           - page: Frames
             path: ./pages/docs/components/frames.mdx
@@ -390,6 +413,15 @@ navbar-links:
   - type: filled
     text: Book a demo
     url: https://buildwithfern.com/contact
+    
+typography:
+  bodyFont:
+    name: GT-Planar
+    path: ./assets/GT-Planar.woff2
+    weight: 400
+  headingsFont:
+    name: GT-Planar
+    path: ./assets/GT-Planar-Bold.woff2  
 
 logo:
   href: https://www.buildwithfern.com
@@ -403,6 +435,9 @@ colors:
     dark: "#1DA32B"
     light: "#1DA32B"
   background:
+    dark: "#081008"
+    light: "#FBFFFA"
+  header-background: 
     dark: "#081008"
     light: "#FBFFFA"
 favicon: ./images/favicon.ico
