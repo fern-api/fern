@@ -1,6 +1,6 @@
 irVersion: v40
 docker: fernapi/fern-go-fiber:latest
-dockerCommand: docker build -f ./generators/go/docker/Dockerfile.fiber -t fernapi/fern-go-fiber:latest ./generators/go
+dockerCommand: docker build -f ./generators/go/fiber/Dockerfile -t fernapi/fern-go-fiber:latest ./generators/go
 language: go
 generatorType: sdk
 defaultOutputMode: github
