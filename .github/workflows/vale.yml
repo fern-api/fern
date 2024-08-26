@@ -16,3 +16,6 @@ jobs:
         uses: errata-ai/vale-action@reviewdog
         with:
           files: fern/pages/
+          fail_on_error: true
+        env: 
+          token: ${{ secrets.FERN_TOKEN }}
