@@ -36,6 +36,11 @@ favicon: path/to/favicon.ico
   Relative filepath to the favicon.
 </ParamField>
 
+<ParamField path="colors" type="objects" required={true}>
+  Configure the `primaryAccent` and `background` colors. Learn more about the `colrs` configuration 
+  [here](/learn/docs/getting-started/global-configuration#colrs-configuration). 
+</ParamField>
+
 <ParamField path="redirects" type="list of objects" required={false}>
   An array of paths you want to configure to permanently redirect to another path. Learn more about the 
   `redirects` configuration [here](/learn/docs/getting-started/global-configuration#redirects-configuration).
@@ -44,6 +49,41 @@ favicon: path/to/favicon.ico
 <ParamField path="navbar-links" type="list of objects" required={false}>
   Array of names and urls of links you want to include as a call to action. Learn more about the 
   `navbar-links` configuration [here](/learn/docs/getting-started/global-configuration#navbar-links-configuration).
+</ParamField>
+
+<ParamField path="background-image" type="object" required={false}>
+  Set a custom background image to be displayed behind every page. Learn more about the 
+  `background-image` configuration [here](/learn/docs/getting-started/global-configuration#background-image-configuration).
+</ParamField>
+
+<ParamField path="typography" type="object" required={false}>
+  Customize the fonts used in your documentation website. Learn more about the 
+  `typography` configuration [here](/learn/docs/getting-started/global-configuration#typography-configuration).
+</ParamField>
+
+<ParamField path="layout" type="object" required={false}>
+  Customize the layout of your documentation website. Learn more about the 
+  `layout` configuration [here](/learn/docs/getting-started/global-configuration#layout-configuration).
+</ParamField>
+
+## Colors Configuration 
+
+```yaml docs.yml
+colors: 
+  accentPrimary: 
+    light: "#418326"
+    dark: "#ADFF8C"
+  background: 
+    light: "#ffffff"
+    dark: "#0d0e11"    
+```
+
+<ParamField path="accentPrimary" type="object" required={true}>
+  The configured accent primary color for light and dark mdoe. 
+</ParamField>
+
+<ParamField path="background" type="object" required={false}>
+  The configured background colors for light and dark mode. 
 </ParamField>
 
 ## Logo Configuration
@@ -113,3 +153,149 @@ navbar-links:
 <ParamField path="rounded" type="boolean" required={false}>
   Whether the button is rounded or square. 
 </ParamField>
+
+## Background Image Configuration
+
+```yaml docs.yml
+background-image: 
+  light: ./path/to/bg-light.svg
+  dark: ./path/to/bg-dark.svg
+```
+
+<ParamField path="background-image.light" type="string" required={false}>
+  Relative filepath to the light-mode background image. 
+</ParamField>
+
+<ParamField path="background-image.dark" type="string" required={false}>
+  Relative filepath to the dark-mode background image.
+</ParamField>
+
+
+## Typography Configuration 
+
+```yaml docs.yml {2-16}
+typography:
+  bodyFont:
+    name: Inter-Regular
+    path: ./fonts/Inter-Regular.woff2
+  headingsFont:
+    name: Inter-Bold
+    paths: 
+      - path: ./fonts/Inter-Bold.woff2
+        weight: "400"
+        style: normal
+      - path: ./fonts/Inter-Bold.woff2
+        weight: 500 900 # <-- indicates a range of weights
+        style: normal    
+  codeFont: 
+    name: Roboto-Mono-Regular
+    path: ./fonts/Roboto-Mono-Regular.woff2
+```
+<ParamField path="typography.bodyFont" type="object" required={false}>
+  Customize page and section titles. If not supplied, defaults to the body font. 
+  
+  Learn more about font configuration [here](/learn/docs/getting-started/global-configuration#font-configuration).
+</ParamField>
+
+<ParamField path="typography.headingsFont" type="object" required={false}>
+  Customize paragraph text and other body text. 
+  
+  Learn more about font configuration [here](/learn/docs/getting-started/global-configuration#font-configuration). 
+</ParamField>
+
+<ParamField path="typography.codeFont" type="object" required={false}>
+  Customize code blocks and inline code snippets. 
+  
+  Learn more about font configuration [here](/learn/docs/getting-started/global-configuration#font-configuration). 
+</ParamField>
+
+### Font Configuration
+
+<CodeGroup>
+```yaml title="Basic" {3-4}
+typography:
+  bodyFont:
+    name: Inter-Regular
+    path: ./fonts/Inter-Regular.woff2
+```
+```yaml title="Variable Font" {3-10}
+typography:
+  bodyFont:
+    name: Inter-Regular
+    paths: 
+      - path: ./fonts/Inter-Bold.woff2
+        weight: "400"
+        style: normal
+      - path: ./fonts/Inter-Bold.woff2
+        weight: 500 900 # <-- indicates a range of weights
+        style: normal    
+```
+</CodeGroup>
+
+<ParamField path="name" type="string" required={false}>
+  The name of the font. Defaults to a generated name that will be used to reference your custom font in the eventually injected CSS. 
+</ParamField>
+
+<ParamField path="path" type="string" required={false}>
+  Relative filepath to a variable font file. If the font file is not variable, use `paths` instead. 
+</ParamField>
+
+<ParamField path="paths" type="object" required={false}>
+  A list of font files for particular weights. Each element in the list includes a `path`, `weight`, and `style` property.
+</ParamField>
+
+## Layout Configuration 
+
+```yaml docs.yml
+layout:
+  header-height: 70px
+  page-width: 1344px
+  content-width: 672px
+  sidebar-width: 336px
+  searchbar-placement: header
+  tabs-placement: header
+  content-alignment: left
+```
+
+<ParamField path="layout.header-height" type="string" required={false}>
+  Sets the height of the header. Defaults to `4rem` (`64px`). Valid options are `{number}rem` or `{number}px`. 
+</ParamField>
+
+<ParamField path="layout.page-width" type="string" required={false}>
+  Sets the maximum width of the docs layout, including the sidebar and content. Defaults to `88rem` (`1408px`). 
+  Valid options are `{number}rem`, `{number}px`, or `full`. 
+</ParamField>
+
+<ParamField path="layout.content-width" type="string" required={false}>
+  Sets the maximum width of the markdown article content. Defaults to `44rem` (`704px`). 
+  Valid options are `{number}rem` or `{number}px`. 
+</ParamField>
+
+<ParamField path="layout.sidebar-width" type="string" required={false}>
+  Sets the width of the sidebar in desktop mode. Defaults to `18rem` (`288px`). Valid options are `{number}rem` or `{number}px`. 
+</ParamField>
+
+<ParamField path="layout.searchbar-placement" type="string" required={false}>
+  Sets the placement of the searchbar. Can be one of `header`, `sidebar` or `header_tabs` (places the searchbar in the header but on the tabs row). 
+  Defaults to `sidebar`. 
+
+  <Note>This setting is ignored when `disable-header` is set to true.</Note>
+</ParamField>
+
+<ParamField path="layout.tabs-placement" type="string" required={false}>
+  Set the placement of the tabs. Can be one of `header` or `sidebar`. 
+  Defaults to `sidebar`.
+
+  <Note>This setting is ignored when `disable-header` is set to true.</Note>
+</ParamField>
+
+<ParamField path="layout.content-alignment" type="string" required={false}>
+  Set the alignment of the mardown content. Can be one of `center` or `left`. 
+  Defaults to `center`. 
+</ParamField>
+
+<ParamField path="layout.disable-header" type="boolean" required={false}>
+  If set to true, the header will not be rendered. Instead, the logo will be rendered as part of the sidebar,
+  and a 1px border will separate the sidebar from the content.
+</ParamField>
+
