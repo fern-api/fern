@@ -45,7 +45,7 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
             directory: this.context.getPublicCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
+            namespace: this.context.getPublicCoreNamespace(),
             customConfig: this.context.customConfig
         });
     }

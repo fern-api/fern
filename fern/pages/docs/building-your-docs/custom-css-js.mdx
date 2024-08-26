@@ -78,12 +78,12 @@ Here's an example of what you can do with custom CSS:
 Add a `styles.css` file and include it in your `fern/` project:
 
 <CodeBlock title="Add the styles.css file">
-```diff {5}
+```bash {5}
   fern/
   ├─ openapi/
   ├─ pages/
   ├─ images/
-+ ├─ styles.css
+  ├─ styles.css
   ├─ docs.yml
   └─ fern.config.json
 ```
@@ -123,12 +123,12 @@ check out [Customize Styling](/learn/docs/building-your-docs/customize-styling).
 Customize the behavior of your Docs site by injecting custom JavaScript globally. Add a `custom.js` file and include it in your `fern/` project:
 
 <CodeBlock title="Add the styles.css file">
-```diff {5}
+```bash {5}
   fern/
   ├─ openapi/
   ├─ pages/
   ├─ images/
-+ ├─ custom.js
+  ├─ custom.js
   ├─ docs.yml
   └─ fern.config.json
 ```
@@ -178,14 +178,14 @@ are stored in `fern/` and referenced in `docs.yml`:
 
 <CodeBlocks>
 <CodeBlock title="fern/">
-```diff {5-7}
+```bash {5-7}
   fern/
   ├─ openapi/
   ├─ pages/
   ├─ images/
-+ ├─ dist/
-+   └─ output.css
-+   └─ output.js
+  ├─ dist/
+    └─ output.css
+    └─ output.js
   ├─ docs.yml
   └─ fern.config.json
 ```

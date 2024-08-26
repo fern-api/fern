@@ -14,6 +14,8 @@ public partial class SeedPaginationClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedPagination" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernpagination/0.0.1" },
             }
         );

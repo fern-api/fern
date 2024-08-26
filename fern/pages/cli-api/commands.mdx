@@ -87,7 +87,7 @@ Explore documentation for popular Fern CLI commands.
     Use `--group <group>` to filter to a specific group within `generators.yml`. Required unless you have a `default-group` declared in `generators.yml`.
 
     ```bash
-    $ fern generate --group internal
+    fern generate --group internal
     ```
 
     ### api
@@ -95,7 +95,7 @@ Explore documentation for popular Fern CLI commands.
     Use `--api <api>` to specify the API for SDK generation.
 
     ```bash
-    $ fern generate --api public-api
+    fern generate --api public-api
     ```
 
     ### version
@@ -214,7 +214,7 @@ Explore documentation for popular Fern CLI commands.
 
     This will create the following folder structure in your project:
 
-    ```yaml
+    ```bash
     fern/
     ├─ fern.config.json # root-level configuration
     ├─ generators.yml # generators you're using
@@ -235,10 +235,10 @@ Explore documentation for popular Fern CLI commands.
 
     ```yaml docs.yaml
     instances:
-    - url: https://your-organization.docs.buildwithfern.com
+      - url: https://your-organization.docs.buildwithfern.com
     title: Your Organization | Documentation
     navigation:
-    - api: API Reference
+      - api: API Reference
     colors:
     accentPrimary: '#ffffff'
     background: '#000000'
@@ -296,9 +296,9 @@ Explore documentation for popular Fern CLI commands.
 
     ```yaml
     - name: Generate and Publish Documentation with Fern
-    env:
-        FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-    run: fern generate --docs
+      env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+      run: fern generate --docs
     ```
 
     See [the full example on GitHub](https://github.com/fern-api/fern/blob/main/.github/workflows/publish-docs.yml).
@@ -308,8 +308,8 @@ Explore documentation for popular Fern CLI commands.
 
   <Accordion title="fern write-definition">
 
-    Use `fern write-definition` to convert your OpenAPI specification into a Fern Definition. 
-    You must have a `fern/openapi/` folder that contains an OpenAPI specification file in `.json` or `.yaml` format.
+    Use `fern write-definition` to convert your OpenAPI Specification into a Fern Definition. 
+    You must have a `fern/openapi/` folder that contains an OpenAPI Specification file in `.json` or `.yaml` format.
 
     <CodeBlock title="terminal">
     ```bash
@@ -319,22 +319,22 @@ Explore documentation for popular Fern CLI commands.
 
     When run, this command creates a new folder within `fern/` called `.definition/`. 
 
-    ```diff {6-8}
+    ```bash {6-8}
     fern/
     ├─ fern.config.json
     ├─ generators.yml
     └─ openapi/
         └─ openapi.json
-    + └─ .definition/ <--- your Fern Definition
-    +   └─ api.yml
-    +   └─ __package__.yml
+      └─ .definition/ # <--- your Fern Definition
+        └─ api.yml
+        └─ __package__.yml
     ```
 
     <Warning>
     If you do not see the `.definition/` folder, use the appropriate command or configuration to view hidden folders (`ls -a` in `bash` and `zsh`).
     </Warning>
 
-    If your `fern/` folder contains both an `openapi/` and a `definition/` folder, Fern defaults to reading your OpenAPI specification. To use your Fern Definition as input, you must:
+    If your `fern/` folder contains both an `openapi/` and a `definition/` folder, Fern defaults to reading your OpenAPI Specification. To use your Fern Definition as input, you must:
     - Rename the `.definition/` folder to `definition/`.
     - Remove or rename the `openapi/` folder. For example, you can rename it to `.openapi/`. 
 
@@ -362,12 +362,12 @@ Explore documentation for popular Fern CLI commands.
 
     When run, this command creates a new file within `fern/openapi/` called `openapi-overrides.yml`. 
 
-    ```diff {5}
+    ```bash {5}
     fern/
     ├─ fern.config.json
     ├─ generators.yml
     └─ openapi/
-    +   └─ openapi-overrides.yaml <--- your overrides file
+        └─ openapi-overrides.yaml # <--- your overrides file
         └─ openapi.json
     ```
 

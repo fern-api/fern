@@ -17,6 +17,8 @@ public partial class SeedPackageYmlClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedPackageYml" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernpackage-yml/0.0.1" },
             }
         );
