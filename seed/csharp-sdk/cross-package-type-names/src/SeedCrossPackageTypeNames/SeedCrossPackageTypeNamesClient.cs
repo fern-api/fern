@@ -18,6 +18,8 @@ public partial class SeedCrossPackageTypeNamesClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedCrossPackageTypeNames" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Ferncross-package-type-names/0.0.1" },
             }
         );

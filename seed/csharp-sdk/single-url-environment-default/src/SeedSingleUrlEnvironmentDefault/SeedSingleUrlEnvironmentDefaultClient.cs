@@ -18,6 +18,8 @@ public partial class SeedSingleUrlEnvironmentDefaultClient
             {
                 { "Authorization", $"Bearer {token}" },
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedSingleUrlEnvironmentDefault" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernsingle-url-environment-default/0.0.1" },
             }
         );

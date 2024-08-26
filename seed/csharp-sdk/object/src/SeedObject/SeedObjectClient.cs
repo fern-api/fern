@@ -14,6 +14,8 @@ public partial class SeedObjectClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedObject" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernobject/0.0.1" },
             }
         );
