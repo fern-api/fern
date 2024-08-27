@@ -44,7 +44,7 @@ public partial class FolderClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
         throw new SeedApiApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,

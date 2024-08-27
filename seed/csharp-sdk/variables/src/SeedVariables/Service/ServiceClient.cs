@@ -41,7 +41,7 @@ public partial class ServiceClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync();
+        var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
         throw new SeedVariablesApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
