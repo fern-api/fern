@@ -14,7 +14,7 @@ import * as SeedObject from "../index";
  *         three: "three",
  *         four: true,
  *         five: 5,
- *         six: new Date("1994-01-01T01:01:01.000Z"),
+ *         six: "1994-01-01T01:01:01Z",
  *         seven: "1994-01-01",
  *         eight: "7f71f677-e138-4a5c-bb01-e4453a19bfef",
  *         nine: "TWFueSBoYW5kcyBtYWtlIGxpZ2h0IHdvcmsu",
