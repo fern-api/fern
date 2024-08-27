@@ -3,7 +3,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import * as serializers from "@fern-fern/generators-sdk/serialization";
 import { readFile } from "fs/promises";
-import YAML from "yaml";
+import yaml from "js-yaml";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
 
 export async function registerCliRelease({
@@ -36,19 +36,16 @@ export async function registerCliRelease({
     }
 
     // We've found a versions file, let's read it and register all the versions
-    const changelogs = YAML.parseDocument((await readFile(absolutePathToChangelogLocation)).toString());
+    const changelogs = yaml.load((await readFile(absolutePathToChangelogLocation)).toString());
     context.logger.info("Registering CLI releases...");
-    if (YAML.isSeq(changelogs)) {
-        for (const entry of changelogs.items) {
-            if (!YAML.isMap(entry)) {
-                continue;
-            }
+    if (Array.isArray(changelogs)) {
+        for (const entry of changelogs) {
             try {
                 const release = serializers.generators.CliReleaseRequest.parseOrThrow(entry);
                 context.logger.debug(`Registering CLI release: ${release.version}`);
-                fdrClient.generators.cli.upsertCliRelease(release);
+                await fdrClient.generators.cli.upsertCliRelease(release);
             } catch (e) {
-                context.logger.error(`Error parsing release: ${e}`);
+                context.logger.error(`Error parsing release: ${(e as Error)?.message}`);
             }
         }
     }
