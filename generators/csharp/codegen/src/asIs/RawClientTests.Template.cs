@@ -3,9 +3,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
-using WireMock.RequestBuilders;
-using WireMock.ResponseBuilders;
 using WireMock.Server;
+using RequestBuilders = WireMock.RequestBuilders;
+using ResponseBuilders = WireMock.ResponseBuilders;
 using <%= namespace%>.Core;
 
 namespace <%= namespace%>.Test.Core
@@ -25,6 +25,7 @@ namespace <%= namespace%>.Test.Core
             _httpClient = new HttpClient { BaseAddress = new Uri(_server.Url) };
             _rawClient = new RawClient(
                 new ClientOptions() {
+                    BaseUrl = _server.Url,
                     HttpClient = _httpClient,
                     MaxRetries = _maxRetries
                 }
@@ -38,21 +39,21 @@ namespace <%= namespace%>.Test.Core
         [TestCase(504)]
         public async Task MakeRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
         {
-            _server.Given(Request.Create().WithPath("/test").UsingGet())
+            _server.Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WillSetStateTo("Server Error")
-                .RespondWith(Response.Create().WithStatusCode(statusCode));
+                .RespondWith(ResponseBuilders.Response.Create().WithStatusCode(statusCode));
 
-            _server.Given(Request.Create().WithPath("/test").UsingGet())
+            _server.Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WhenStateIs("Server Error")
                 .WillSetStateTo("Success")
-                .RespondWith(Response.Create().WithStatusCode(statusCode));
+                .RespondWith(ResponseBuilders.Response.Create().WithStatusCode(statusCode));
 
-            _server.Given(Request.Create().WithPath("/test").UsingGet())
+            _server.Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WhenStateIs("Success")
-                .RespondWith(Response.Create().WithStatusCode(200).WithBody("Success"));
+                .RespondWith(ResponseBuilders.Response.Create().WithStatusCode(200).WithBody("Success"));
 
             var request = new RawClient.BaseApiRequest
             {
@@ -75,10 +76,10 @@ namespace <%= namespace%>.Test.Core
         [TestCase(409)]
         public async Task MakeRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(int statusCode)
         {
-            _server.Given(Request.Create().WithPath("/test").UsingGet())
+            _server.Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WillSetStateTo("Server Error")
-                .RespondWith(Response.Create().WithStatusCode(statusCode).WithBody("Failure"));
+                .RespondWith(ResponseBuilders.Response.Create().WithStatusCode(statusCode).WithBody("Failure"));
 
             var request = new RawClient.BaseApiRequest
             {

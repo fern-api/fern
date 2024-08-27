@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using SeedEnum.Core;
-using WireMock.RequestBuilders;
-using WireMock.ResponseBuilders;
 using WireMock.Server;
+using RequestBuilders = WireMock.RequestBuilders;
+using ResponseBuilders = WireMock.ResponseBuilders;
 
 namespace SeedEnum.Test.Core
 {
@@ -24,7 +24,12 @@ namespace SeedEnum.Test.Core
             _server = WireMockServer.Start();
             _httpClient = new HttpClient { BaseAddress = new Uri(_server.Url) };
             _rawClient = new RawClient(
-                new ClientOptions() { HttpClient = _httpClient, MaxRetries = _maxRetries }
+                new ClientOptions()
+                {
+                    BaseUrl = _server.Url,
+                    HttpClient = _httpClient,
+                    MaxRetries = _maxRetries,
+                }
             );
         }
 
@@ -36,23 +41,25 @@ namespace SeedEnum.Test.Core
         public async Task MakeRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
         {
             _server
-                .Given(Request.Create().WithPath("/test").UsingGet())
+                .Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WillSetStateTo("Server Error")
-                .RespondWith(Response.Create().WithStatusCode(statusCode));
+                .RespondWith(ResponseBuilders.Response.Create().WithStatusCode(statusCode));
 
             _server
-                .Given(Request.Create().WithPath("/test").UsingGet())
+                .Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WhenStateIs("Server Error")
                 .WillSetStateTo("Success")
-                .RespondWith(Response.Create().WithStatusCode(statusCode));
+                .RespondWith(ResponseBuilders.Response.Create().WithStatusCode(statusCode));
 
             _server
-                .Given(Request.Create().WithPath("/test").UsingGet())
+                .Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WhenStateIs("Success")
-                .RespondWith(Response.Create().WithStatusCode(200).WithBody("Success"));
+                .RespondWith(
+                    ResponseBuilders.Response.Create().WithStatusCode(200).WithBody("Success")
+                );
 
             var request = new RawClient.BaseApiRequest
             {
@@ -76,10 +83,15 @@ namespace SeedEnum.Test.Core
         public async Task MakeRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(int statusCode)
         {
             _server
-                .Given(Request.Create().WithPath("/test").UsingGet())
+                .Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WillSetStateTo("Server Error")
-                .RespondWith(Response.Create().WithStatusCode(statusCode).WithBody("Failure"));
+                .RespondWith(
+                    ResponseBuilders
+                        .Response.Create()
+                        .WithStatusCode(statusCode)
+                        .WithBody("Failure")
+                );
 
             var request = new RawClient.BaseApiRequest
             {
