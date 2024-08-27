@@ -8,18 +8,11 @@ on:
       - "generators/python/sdk/versions.yml"
       - "generators/python/fastapi/versions.yml"
       - "generators/python/pydantic/versions.yml"
-<<<<<<< HEAD
       - "generators/ruby/model/versions.yml"
       - "generators/ruby/sdk/versions.yml"
 
       # - "generators/openapi/versions.yml"
       # - "generators/postman/versions.yml"
-=======
-      # - "generators/openapi/versions.yml"
-      # - "generators/postman/versions.yml"
-      # - "generators/ruby/model/versions.yml"
-      # - "generators/ruby/sdk/versions.yml"
->>>>>>> main
       # - "generators/java/sdk/versions.yml"
       # - "generators/java/model/versions.yml"
       # - "generators/java/spring/versions.yml"
@@ -48,18 +41,11 @@ jobs:
             python-sdk: 'generators/python/sdk/versions.yml'
             fastapi: "generators/python/fastapi/versions.yml"
             pydantic: "generators/python/pydantic/versions.yml"
-<<<<<<< HEAD
             ruby-model: 'generators/ruby/model/versions.yml'
             ruby-sdk: 'generators/ruby/sdk/versions.yml'
 
           # openapi: 'generators/openapi/versions.yml'
           # postman: 'generators/postman/versions.yml'
-=======
-          # openapi: 'generators/openapi/versions.yml'
-          # postman: 'generators/postman/versions.yml'
-          # ruby-model: 'generators/ruby/model/versions.yml'
-          # ruby-sdk: 'generators/ruby/sdk/versions.yml'
->>>>>>> main
           # java-sdk: 'generators/java/sdk/versions.yml'
           # java-model: 'generators/java/model/versions.yml'
           # spring: 'generators/java/spring/versions.yml'

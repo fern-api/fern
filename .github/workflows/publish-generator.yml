@@ -1,3 +1,4 @@
+# TODO: delete this when we migrate to the one versions file in `publish-generators-v2`
 name: publish-generators
 
 on:
