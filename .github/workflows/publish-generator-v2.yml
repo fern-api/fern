@@ -125,9 +125,7 @@ jobs:
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml || DOES_PREVIOUS_VERSIONS_EXIST=false
 
-          if [ $DOES_PREVIOUS_VERSIONS_EXIST = false ]; then
-            pnpm seed:local publish generator ${{ matrix.generator }}
-          else
+          if [ $DOES_PREVIOUS_VERSIONS_EXIST != false ]; then
             pnpm seed:local publish generator ${{ matrix.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ matrix.generator }}_previous_versions.yml --log-level debug
           fi
 
@@ -177,9 +175,7 @@ jobs:
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ inputs.generator }}_previous_versions.yml || DOES_PREVIOUS_VERSIONS_EXIST=false
 
-          if [ $DOES_PREVIOUS_VERSIONS_EXIST = false ]; then
-            pnpm seed:local publish generator ${{ inputs.generator }}
-          else
+          if [ $DOES_PREVIOUS_VERSIONS_EXIST != false ]; then
             pnpm seed:local publish generator ${{ inputs.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ inputs.generator }}_previous_versions.yml --log-level debug
           fi
 
