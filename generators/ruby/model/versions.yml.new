@@ -1,0 +1,20 @@
+- version: 0.0.8
+  created_at: '2024-03-22'
+  changelog_entry:
+    - type: internal
+      summary: Leverage shared generator notification and config parsing logic.
+  ir_version: 32
+
+- version: 0.0.7
+  created_at: '2024-03-22'
+  changelog_entry:
+    - type: internal
+      summary: Ensure the Ruby generators do not have strict dependencies on the IR
+  ir_version: 32
+
+- version: 0.0.6
+  created_at: '2024-01-24'
+  changelog_entry:
+    - type: internal
+      summary: Initialize the changelog
+  ir_version: 32
