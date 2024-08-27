@@ -6,6 +6,7 @@ import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { publishCli } from "./commands/publish/publishCli";
 import { publishGenerator } from "./commands/publish/publishGenerator";
+import { getIrVersionForGeneratorVersion } from "../../cli/generation/ir-migrations/src";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
 import { registerGenerator } from "./commands/register/registerGenerator";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
@@ -15,6 +16,7 @@ import { DockerTestRunner, LocalTestRunner } from "./commands/test/test-runner";
 import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
+import { enrichChangelogWithIr } from "./commands/enrichIr/enrichIr";
 
 void tryRunCli();
 
@@ -34,6 +36,7 @@ export async function tryRunCli(): Promise<void> {
     addRunCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
+    addEnrichChangelogWithIr(cli);
 
     await cli.parse();
 
@@ -391,6 +394,43 @@ function addRegisterCommands(cli: Argv) {
                 }
             );
     });
+}
+
+function addEnrichChangelogWithIr(cli: Argv) {
+    cli.command(
+        "enrich-with-ir <generator>",
+        "Enriches the changelog with IR data",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Generator(s) to register"
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            if (argv.generators != null) {
+                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+            }
+            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+            const context = taskContextFactory.create("Register");
+
+            const maybeGeneratorWorkspace = generators.find((g) => g.workspaceName === argv.generator);
+            if (maybeGeneratorWorkspace == null) {
+                context.failAndThrow(`Specified generator ${argv.generator} not found.`);
+                return;
+            }
+
+            await enrichChangelogWithIr({
+                generator: maybeGeneratorWorkspace,
+                context
+            });
+        }
+    );
 }
 
 function throwIfGeneratorDoesNotExist({

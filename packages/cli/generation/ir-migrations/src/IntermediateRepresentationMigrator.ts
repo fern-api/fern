@@ -46,6 +46,7 @@ import { V46_TO_V45_MIGRATION } from "./migrations/v46-to-v45/migrateFromV46ToV4
 import { V47_TO_V46_MIGRATION } from "./migrations/v47-to-v46/migrateFromV47ToV46";
 import { V48_TO_V47_MIGRATION } from "./migrations/v48-to-v47/migrateFromV48ToV47";
 import { V49_TO_V48_MIGRATION } from "./migrations/v49-to-v48/migrateFromV49ToV48";
+import { convertExampleTypeReference } from "./migrations/v5-to-v4/convertExampleTypeReference";
 import { V5_TO_V4_MIGRATION } from "./migrations/v5-to-v4/migrateFromV5ToV4";
 import { V50_TO_V49_MIGRATION } from "./migrations/v50-to-v49/migrateFromV50ToV49";
 import { V51_TO_V50_MIGRATION } from "./migrations/v51-to-v50/migrateFromV51ToV50";
@@ -80,6 +81,10 @@ export interface IntermediateRepresentationMigrator {
         context: TaskContext;
         targetGenerator?: GeneratorNameAndVersion;
     }): MigratedIntermediateMigration<Migrated>;
+    justGetIRVersionForGenerator: (args: {
+        context: TaskContext;
+        targetGenerator: GeneratorNameAndVersion;
+    }) => string | undefined;
 }
 
 export interface MigratedIntermediateMigration<Migrated> {
@@ -126,6 +131,24 @@ class BuildaleIntermediateRepresentationMigratorBuilderImpl<LaterVersion>
 class IntermediateRepresentationMigratorImpl implements IntermediateRepresentationMigrator {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     constructor(public readonly migrations: IrMigration<any, any>[]) {}
+    public justGetIRVersionForGenerator(args: {
+        context: TaskContext;
+        targetGenerator: GeneratorNameAndVersion;
+    }): string | undefined {
+        let lastIrVersion = this.migrations[0]!.laterVersion;
+        for (const migration of this.migrations) {
+            if (this.shouldRunMigration({ migration, targetGenerator: args.targetGenerator })) {
+                lastIrVersion = migration.earlierVersion;
+            } else {
+                break;
+            }
+        }
+
+        if (lastIrVersion == null) {
+            args.context.failAndThrow("No IR version found for generator");
+        }
+        return lastIrVersion;
+    }
 
     public migrateForGenerator({
         intermediateRepresentation,

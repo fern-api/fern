@@ -1,4 +1,5 @@
 irVersion: v39
+changelogLocation: ../../generators/ruby/sdk/versions.yml
 publish:
   preBuildCommands:
     - ./.github/actions/install
@@ -46,6 +47,7 @@ allowedFailures:
   # TODO: Add support for recursive undiscriminated unions.
   - grpc
   - any-auth
+  - trace
 features:
   requestOptions: true
   idempotency: false

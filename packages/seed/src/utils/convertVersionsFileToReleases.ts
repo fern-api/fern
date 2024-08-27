@@ -13,7 +13,7 @@ export async function parseGeneratorReleasesFile({
     generatorId: string;
     changelogPath: string;
     context: TaskContext;
-    action: (release: GeneratorReleaseRequest) => Promise<void>;
+    action: (release: GeneratorReleaseRequest, rawRelease: object) => Promise<void>;
 }): Promise<void> {
     context.logger.debug(`Parsing versions file ${changelogPath}`);
     const changelogs = yaml.load((await readFile(changelogPath)).toString());
@@ -22,9 +22,10 @@ export async function parseGeneratorReleasesFile({
             try {
                 const release = serializers.generators.GeneratorReleaseRequest.parseOrThrow({
                     generator_id: generatorId,
+                    ir_version: 0,
                     ...entry
                 });
-                await action(release);
+                await action(release, entry);
             } catch (e) {
                 context.logger.error(`Failed to parse and run action on release: ${(e as Error)?.message}`);
             }

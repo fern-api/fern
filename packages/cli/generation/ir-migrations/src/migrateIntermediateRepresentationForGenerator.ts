@@ -39,3 +39,16 @@ export function migrateIntermediateRepresentationToVersionForGenerator({
     });
     return migrated.jsonify();
 }
+
+export async function getIrVersionForGeneratorVersion({
+    targetGenerator,
+    context
+}: {
+    targetGenerator: GeneratorNameAndVersion;
+    context: TaskContext;
+}): Promise<string | undefined> {
+    return getIntermediateRepresentationMigrator().justGetIRVersionForGenerator({
+        targetGenerator,
+        context
+    });
+}
