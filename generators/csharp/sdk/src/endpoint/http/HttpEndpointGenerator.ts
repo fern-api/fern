@@ -191,7 +191,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         return csharp.codeblock((writer) => {
             if (endpoint.response?.body == null) {
                 writer.writeTextStatement(
-                    `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync(${this.context.getCancellationTokenParameterName()})`
+                    `var ${RESPONSE_BODY_VARIABLE_NAME} = await ${RESPONSE_VARIABLE_NAME}.Raw.Content.ReadAsStringAsync()`
                 );
             }
             if (

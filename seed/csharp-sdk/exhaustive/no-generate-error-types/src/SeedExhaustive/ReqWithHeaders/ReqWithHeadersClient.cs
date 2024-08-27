@@ -51,7 +51,7 @@ public partial class ReqWithHeadersClient
         {
             return;
         }
-        var responseBody = await response.Raw.Content.ReadAsStringAsync(cancellationToken);
+        var responseBody = await response.Raw.Content.ReadAsStringAsync();
         throw new SeedExhaustiveApiException(
             $"Error with status code {response.StatusCode}",
             response.StatusCode,
