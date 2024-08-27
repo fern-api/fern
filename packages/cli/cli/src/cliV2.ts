@@ -154,7 +154,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         .option("generator", {
                             string: true,
                             demandOption: true,
-                            description: "The type of generator to upgrade, ex: `fern-typescript-node-sdk`."
+                            description: "The name of the generator to get, ex: `fern-typescript-node-sdk`."
                         })
                         .option("group", {
                             string: true,
