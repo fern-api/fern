@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+- Feature: Generate `snippet.json` file containing usage snippets for each endpoint.
+
+- Feature: Apply the timeout configured on the `ClientOptions` or `RequestOptions` type.
+
 ## [1.4.0] - 2024-08-26
 
 - Improvement: Generate an internal `Version` class that can be used to reference the current version.

@@ -25,7 +25,7 @@ export declare namespace Writer {
 
 export class Writer {
     /* The contents being written */
-    private buffer = "";
+    public buffer = "";
     /* Indentation level (multiple of 4) */
     private indentLevel = 0;
     /* Whether anything has been written to the buffer */
@@ -202,6 +202,11 @@ export class Writer {
             }
         }
         return this.buffer;
+    }
+
+    public importsToString(): string | undefined {
+        const imports = this.stringifyImports();
+        return imports.length > 0 ? imports : undefined;
     }
 
     public isReadOnlyMemoryType(type: string): boolean {

@@ -29,8 +29,8 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/generator-commons": "workspace:*",
     "@fern-api/logger": "workspace:*",
-    "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/generator-cli-sdk": "0.0.56",
     "@fern-fern/generator-exec-sdk": "^0.0.898",
     "@fern-fern/ir-sdk": "53.8.0",
@@ -54,7 +54,6 @@
     "@types/uuid": "^9.0.8",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
-    "tmp-promise": "^3.0.3",
     "ts-morph": "^15.1.0",
     "ts-poet": "^6.7.0",
     "url-join": "^5.0.0",

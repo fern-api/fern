@@ -26,7 +26,7 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedBearerTokenEnvironmentVariableClient("API_KEY");
+        Client = new SeedBearerTokenEnvironmentVariableClient();
 
         RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }
