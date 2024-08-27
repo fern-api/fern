@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Feature: Apply the timeout configured on the `ClientOptions` or `RequestOptions` type.
 - Feature: Add exponential backoff retrier, which acts upon `MaxRetries` configuration option
   specified on the `ClientOptions` and `RequestOptions`.
+- Feature: Generate the `RawClientTests.cs` file, which includes retry logic tests.
 - Improvement: Refactor the `RawClient` with additional helper methods so that it's easier to follow.
 
 ## [1.4.0] - 2024-08-26
