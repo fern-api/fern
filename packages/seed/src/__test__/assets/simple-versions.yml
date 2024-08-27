@@ -1,4 +1,5 @@
 - version: 0.39.10
   ir_version: 53
   changelog_entry:
-    type: chore
+    - type: chore
+      summary: asd
