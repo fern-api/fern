@@ -91,7 +91,7 @@ export class EndpointSnippetsGenerator {
                   clientVariableName: "client",
                   serviceId,
                   getResult: true,
-                  parseDatetimes: true
+                  parseDatetimes: false
               });
         if (methodInvocation == null) {
             return undefined;

@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedTrace;\nusing System.Globalization;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.SendTestSubmissionUpdateAsync(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    new TestSubmissionUpdate\n    {\n        UpdateTime = DateTime.Parse(\n            \"2024-01-15T09:30:00.000Z\",\n            null,\n            DateTimeStyles.AdjustToUniversal\n        ),\n        UpdateInfo = RunningSubmissionState.QueueingSubmission,\n    }\n);\n"
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.SendTestSubmissionUpdateAsync(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    new TestSubmissionUpdate\n    {\n        UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        UpdateInfo = RunningSubmissionState.QueueingSubmission,\n    }\n);\n"
             }
         },
         {
@@ -58,7 +58,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedTrace;\nusing System.Globalization;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.SendWorkspaceSubmissionUpdateAsync(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    new WorkspaceSubmissionUpdate\n    {\n        UpdateTime = DateTime.Parse(\n            \"2024-01-15T09:30:00.000Z\",\n            null,\n            DateTimeStyles.AdjustToUniversal\n        ),\n        UpdateInfo = RunningSubmissionState.QueueingSubmission,\n    }\n);\n"
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.SendWorkspaceSubmissionUpdateAsync(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    new WorkspaceSubmissionUpdate\n    {\n        UpdateTime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        UpdateInfo = RunningSubmissionState.QueueingSubmission,\n    }\n);\n"
             }
         },
         {
@@ -154,7 +154,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedTrace;\nusing System.Globalization;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Playlist.CreatePlaylistAsync(\n    1,\n    new CreatePlaylistRequest\n    {\n        Datetime = DateTime.Parse(\n            \"2024-01-15T09:30:00.000Z\",\n            null,\n            DateTimeStyles.AdjustToUniversal\n        ),\n        OptionalDatetime = DateTime.Parse(\n            \"2024-01-15T09:30:00.000Z\",\n            null,\n            DateTimeStyles.AdjustToUniversal\n        ),\n        Body = new PlaylistCreateRequest\n        {\n            Name = \"string\",\n            Problems = new List<string>() { \"string\" },\n        },\n    }\n);\n"
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Playlist.CreatePlaylistAsync(\n    1,\n    new CreatePlaylistRequest\n    {\n        Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),\n        Body = new PlaylistCreateRequest\n        {\n            Name = \"string\",\n            Problems = new List<string>() { \"string\" },\n        },\n    }\n);\n"
             }
         },
         {
