@@ -3,6 +3,7 @@ import { Argv } from "yargs";
 import { CliContext } from "./cli-context/CliContext";
 import { GlobalCliOptions, loadProjectAndRegisterWorkspacesWithContext } from "./cliCommons";
 import { getGeneratorList } from "./commands/generator-list/getGeneratorList";
+import { getGeneratorMetadata } from "./commands/generator-metadata/getGeneratorMetadata";
 import { getOrganziation } from "./commands/organization/getOrganization";
 import { upgradeGenerator } from "./commands/upgrade/upgradeGenerator";
 
@@ -142,6 +143,58 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         }),
                         includeMajor: argv.includeMajor
                     });
+                }
+            )
+            .command(
+                // Meant to retrieve metadata about the generator, for now this is hidden and the only option is --version
+                "metadata",
+                false,
+                (yargs) =>
+                    yargs
+                        .option("generator", {
+                            string: true,
+                            demandOption: true,
+                            description: "The type of generator to upgrade, ex: `fern-typescript-node-sdk`."
+                        })
+                        .option("group", {
+                            string: true,
+                            demandOption: true,
+                            description:
+                                "The group in which the generator is located, if group is not specified, the all generators of the specified type will be upgraded."
+                        })
+                        .option("api", {
+                            string: true,
+                            description:
+                                "The API to upgrade the generator for. If not specified, the generator will be upgraded for all APIs."
+                        })
+                        .option("version", {
+                            boolean: true,
+                            default: false,
+                            description: "Get the version of the specified generator."
+                        }),
+                async (argv) => {
+                    cliContext.instrumentPostHogEvent({
+                        command: "fern generator metadata",
+                        properties: {
+                            generator: argv.generator,
+                            version: argv.version,
+                            api: argv.api,
+                            group: argv.group,
+                            includeMajor: argv.includeMajor
+                        }
+                    });
+                    if (argv.version) {
+                        await getGeneratorMetadata({
+                            cliContext,
+                            generatorFilter: argv.generator,
+                            groupFilter: argv.group,
+                            apiFilter: argv.api,
+                            project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                                commandLineApiWorkspace: argv.api,
+                                defaultToAllApiWorkspaces: true
+                            })
+                        });
+                    }
                 }
             );
     });
