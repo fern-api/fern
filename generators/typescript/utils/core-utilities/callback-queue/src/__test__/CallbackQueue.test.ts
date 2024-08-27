@@ -23,7 +23,7 @@ describe("CallbackQueue", () => {
         await queue.toPromise();
 
         expect(numbers).toEqual([1, 2, 0, 3]);
-    }, 12_000);
+    }, 10_000);
 });
 
 function delay(ms: number): Promise<void> {
