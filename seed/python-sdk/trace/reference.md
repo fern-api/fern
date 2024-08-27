@@ -374,9 +374,15 @@ client.admin.send_workspace_submission_update(
 import uuid
 
 from seed import SeedTrace
-from seed.commons import DebugVariableValue_IntegerValue
+from seed.commons import (
+    DebugVariableValue_IntegerValue,
+    VariableValue_IntegerValue,
+)
 from seed.submission import (
+    ActualResult_Value,
     ExpressionLocation,
+    Scope,
+    StackFrame,
     StackInformation,
     TestCaseResult,
     TestCaseResultWithStdout,
@@ -393,7 +399,13 @@ client.admin.store_traced_test_case(
     ),
     test_case_id="string",
     result=TestCaseResultWithStdout(
-        result=TestCaseResult(),
+        result=TestCaseResult(
+            expected_result=VariableValue_IntegerValue(value=1),
+            actual_result=ActualResult_Value(
+                value=VariableValue_IntegerValue(value={"key": "value"})
+            ),
+            passed=True,
+        ),
         stdout="string",
     ),
     trace_responses=[
@@ -403,8 +415,22 @@ client.admin.store_traced_test_case(
             ),
             line_number=1,
             return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(),
-            stack=StackInformation(),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="string",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={"string": {"key": "value"}},
+                        )
+                    ],
+                ),
+            ),
             stdout="string",
         )
     ],
@@ -487,6 +513,8 @@ from seed import SeedTrace
 from seed.commons import DebugVariableValue_IntegerValue
 from seed.submission import (
     ExpressionLocation,
+    Scope,
+    StackFrame,
     StackInformation,
     TracedFile,
     TraceResponseV2,
@@ -507,10 +535,27 @@ client.admin.store_traced_test_case_v_2(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             line_number=1,
-            file=TracedFile(),
+            file=TracedFile(
+                filename="string",
+                directory="string",
+            ),
             return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(),
-            stack=StackInformation(),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="string",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={"string": {"key": "value"}},
+                        )
+                    ],
+                ),
+            ),
             stdout="string",
         )
     ],
@@ -587,6 +632,8 @@ from seed.submission import (
     ExceptionInfo,
     ExceptionV2_Generic,
     ExpressionLocation,
+    Scope,
+    StackFrame,
     StackInformation,
     TraceResponse,
     WorkspaceRunDetails,
@@ -601,8 +648,16 @@ client.admin.store_traced_workspace(
         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ),
     workspace_run_details=WorkspaceRunDetails(
-        exception_v_2=ExceptionV2_Generic(),
-        exception=ExceptionInfo(),
+        exception_v_2=ExceptionV2_Generic(
+            exception_type="string",
+            exception_message="string",
+            exception_stacktrace="string",
+        ),
+        exception=ExceptionInfo(
+            exception_type="string",
+            exception_message="string",
+            exception_stacktrace="string",
+        ),
         stdout="string",
     ),
     trace_responses=[
@@ -612,8 +667,22 @@ client.admin.store_traced_workspace(
             ),
             line_number=1,
             return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(),
-            stack=StackInformation(),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="string",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={"string": {"key": "value"}},
+                        )
+                    ],
+                ),
+            ),
             stdout="string",
         )
     ],
@@ -688,6 +757,8 @@ from seed import SeedTrace
 from seed.commons import DebugVariableValue_IntegerValue
 from seed.submission import (
     ExpressionLocation,
+    Scope,
+    StackFrame,
     StackInformation,
     TracedFile,
     TraceResponseV2,
@@ -707,10 +778,27 @@ client.admin.store_traced_workspace_v_2(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             line_number=1,
-            file=TracedFile(),
+            file=TracedFile(
+                filename="string",
+                directory="string",
+            ),
             return_value=DebugVariableValue_IntegerValue(value=1),
-            expression_location=ExpressionLocation(),
-            stack=StackInformation(),
+            expression_location=ExpressionLocation(
+                start=1,
+                offset=1,
+            ),
+            stack=StackInformation(
+                num_stack_frames=1,
+                top_stack_frame=StackFrame(
+                    method_name="string",
+                    line_number=1,
+                    scopes=[
+                        Scope(
+                            variables={"string": {"key": "value"}},
+                        )
+                    ],
+                ),
+            ),
             stdout="string",
         )
     ],

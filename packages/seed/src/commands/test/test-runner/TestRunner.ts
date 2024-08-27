@@ -244,7 +244,7 @@ export abstract class TestRunner {
     public abstract runGenerator(args: TestRunner.DoRunArgs): Promise<void>;
 
     protected getParsedDockerName(): ParsedDockerName {
-        return parseDockerOrThrow(this.generator.workspaceConfig.docker);
+        return parseDockerOrThrow(this.generator.workspaceConfig.test.docker.image);
     }
 }
 

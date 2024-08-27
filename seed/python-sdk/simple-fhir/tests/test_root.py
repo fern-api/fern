@@ -10,20 +10,46 @@ async def test_get_account(client: SeedApi, async_client: AsyncSeedApi) -> None:
     expected_response: typing.Any = {
         "resource_type": "Account",
         "name": "string",
-        "patient": {},
-        "practitioner": {},
+        "patient": {
+            "resource_type": "Patient",
+            "name": "string",
+            "scripts": [{"key": "value"}],
+            "id": "string",
+            "related_resources": [{"key": "value"}],
+            "memo": {"description": "string", "account": {"key": "value"}},
+        },
+        "practitioner": {
+            "resource_type": "Practitioner",
+            "name": "string",
+            "id": "string",
+            "related_resources": [{"key": "value"}],
+            "memo": {"description": "string", "account": {"key": "value"}},
+        },
         "id": "string",
-        "related_resources": [{}],
-        "memo": {"description": "string", "account": {}},
+        "related_resources": [{"key": "value"}],
+        "memo": {"description": "string", "account": {"key": "value"}},
     }
     expected_types: typing.Any = {
         "resource_type": None,
         "name": None,
-        "patient": {},
-        "practitioner": {},
+        "patient": {
+            "resource_type": None,
+            "name": None,
+            "scripts": ("list", {0: None}),
+            "id": None,
+            "related_resources": ("list", {0: None}),
+            "memo": {"description": None, "account": None},
+        },
+        "practitioner": {
+            "resource_type": None,
+            "name": None,
+            "id": None,
+            "related_resources": ("list", {0: None}),
+            "memo": {"description": None, "account": None},
+        },
         "id": None,
-        "related_resources": ("list", {0: {}}),
-        "memo": {"description": None, "account": {}},
+        "related_resources": ("list", {0: None}),
+        "memo": {"description": None, "account": None},
     }
     response = client.get_account(account_id="string")
     validate_response(response, expected_response, expected_types)
