@@ -126,15 +126,15 @@
 - version: 3.4.2
   created_at: '2024-08-05'
   changelog_entry:
-    type: fix
-    summary: The Python generator now instantiates `Any` types as `Optional[Any]` to be able to mitigate breaks in Pydantic V2.
+    - type: fix
+      summary: The Python generator now instantiates `Any` types as `Optional[Any]` to be able to mitigate breaks in Pydantic V2.
   ir_version: 53
 
 - version: 3.4.1
   created_at: '2024-08-04'
   changelog_entry:
-    type: chore
-    summary: Literal templates are generated if they are union members
+    - type: chore
+      summary: Literal templates are generated if they are union members
   ir_version: 53
 
 - version: 3.4.0
@@ -200,6 +200,7 @@
   created_at: '2024-07-31'
   changelog_entry:
     - type: internal
+      summary: Upgrade to IR 53.1.0
       changed:
         - 'Upgrade to IR 53.1.0'
         - The Python generator now creates snippet templates for undiscriminated unions.
@@ -254,14 +255,14 @@
 - version: 3.0.0-rc1
   created_at: '2024-07-23'
   changelog_entry:
-    type: fix
-    summary: "`expected_types` within our test suite are now typed as `Tuple[typing.Any, typing.Any]`."
-    fixed:
-      - >-
-        Sometimes mypy will error on the typing of `expected_types` within our
-        test suite, despite them being labeled as `typing.Any`. This updates the
-        types for tuples to `typing.Tuple[tying.Any, typing.Any]` to appease
-        mypy.
+    - type: fix
+      summary: "`expected_types` within our test suite are now typed as `Tuple[typing.Any, typing.Any]`."
+      fixed:
+        - >-
+          Sometimes mypy will error on the typing of `expected_types` within our
+          test suite, despite them being labeled as `typing.Any`. This updates the
+          types for tuples to `typing.Tuple[tying.Any, typing.Any]` to appease
+          mypy.
   ir_version: 49
 
 - version: 3.0.0-rc0
@@ -280,7 +281,7 @@
 - version: 2.16.0
   created_at: '2024-07-16'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: The generated SDK now allows for specifying whether or not to generate `streaming` functions as overloaded functions or separate functions.
   ir_version: 49
 
@@ -365,7 +366,7 @@
 - version: 2.14.0-rc3
   created_at: '2024-07-01'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: Generated readmes now include an "advanced" section.
       changed:
         - >-
@@ -686,7 +687,7 @@
 - version: 2.5.2
   created_at: '2024-05-23'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: Support `list` SDK method names instead of defaulting to `list_`.
   ir_version: 39
 
@@ -747,10 +748,7 @@
   created_at: '2024-05-21'
   changelog_entry:
     - type: fix
-      fixed:
-        - >-
-          Inlined body parameters now deconflict in naming with header and query
-          parameters by prefixing the request objects name.
+      summary: Inlined body parameters now deconflict in naming with header and query parameters by prefixing the request objects name.
   ir_version: 39
 
 - version: 2.3.2
@@ -943,7 +941,7 @@
 - version: 1.4.0
   created_at: '2024-04-29'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: keyword arguments are now ordered such that required params are ordered before optional params
       changed:
         - >-
@@ -1138,15 +1136,15 @@
 - version: 0.13.1
   created_at: '2024-03-26'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: discriminant values in unions are now defaulted such that callers no longer need to specify the discriminant
   ir_version: 37
 
 - version: 0.13.0
   created_at: '2024-03-25'
   changelog_entry:
-    type: improvement
-    changed: the python SDK now exposes it's version through `__version__` to match module standards and expectations.
+    - type: feat
+      summary: the python SDK now exposes it's version through `__version__` to match module standards and expectations.
   ir_version: 37
 
 - version: 0.12.5
@@ -1172,7 +1170,7 @@
 - version: 0.12.3
   created_at: '2024-03-18'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: Allow bytes requests to take in iterators of bytes, mirroring the types allowed by HTTPX.
   ir_version: 37
 
@@ -1234,7 +1232,7 @@
 - version: 0.11.8-rc1
   created_at: '2024-03-02'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: Introduces a `max_retries` parameter to the RequestOptions dict accepted by all requests.
       changed:
         - >-
@@ -1248,7 +1246,7 @@
 - version: 0.11.8-rc0
   created_at: '2024-02-27'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: introduces additional configuration to customize the client class and file name.
       changed:
         - >-
@@ -1260,7 +1258,7 @@
 - version: 0.11.7
   created_at: '2024-02-27'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: Introduces a flag `use_str_enums` to swap from using proper Enum classes to using Literals to represent enums.
       changed:
         - >-
@@ -1273,7 +1271,7 @@
 - version: 0.11.6
   created_at: '2024-02-26'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: You can now specify envvars to scan for headers, not just auth scheme headers.
   ir_version: 36
 
@@ -1313,7 +1311,7 @@
 - version: 0.11.2
   created_at: '2024-02-21'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: introduce configuration to flatten the directory structure
       changed:
         - >-
@@ -1324,7 +1322,7 @@
 - version: 0.11.1
   created_at: '2024-02-20'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: Python now supports specifying files to auto-export from the root `__init__.py` file
       changed:
         - >-
@@ -1337,7 +1335,7 @@
 - version: 0.11.0
   created_at: '2024-02-19'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: Python now supports a wider range of types for file upload
       changed:
         - >-
@@ -1380,7 +1378,7 @@
 - version: 0.10.1
   created_at: '2024-02-14'
   changelog_entry:
-    - type: improvement
+    - type: feat
       summary: Add support for a RequestOptions object for each generated function within Python SDKs
       changed:
         - >-
@@ -1395,10 +1393,8 @@
 - version: 0.10.0
   created_at: '2024-02-13'
   changelog_entry:
-    - type: internal
-      changed:
-        - The generator now consumes IRV38.
     - type: break
+      summary: The generator no longer supports Python 3.7
       removed:
         - The generator no longer supports Python 3.7
         - The `backports` dependency has been removed
