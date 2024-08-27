@@ -37,7 +37,7 @@ export declare namespace Method {
         /* Any annotations to add to the method */
         annotations?: Annotation[];
         /* Any code example to add to the method */
-        codeExample?: AstNode;
+        codeExample?: string;
     }
 }
 
@@ -53,7 +53,7 @@ export class Method extends AstNode {
     public readonly override: boolean;
     private readonly parameters: Parameter[];
     private readonly annotations: Annotation[];
-    private readonly codeExample: AstNode | undefined;
+    private readonly codeExample: string | undefined;
 
     constructor({
         name,
@@ -100,22 +100,11 @@ export class Method extends AstNode {
         if (this.codeExample != null) {
             writer.writeLine("/// <example>");
             writer.writeLine("/// <code>");
-            this.codeExample
-                .toString({
-                    namespace: writer.getNamespace(),
-                    allNamespaceSegments: writer.getAllNamespaceSegments(),
-                    allTypeClassReferences: writer.getAllTypeClassReferences(),
-                    rootNamespace: writer.getRootNamespace(),
-                    customConfig: writer.getCustomConfig(),
-                    format: true,
-                    skipImports: true
-                })
-                .split("\n")
-                .forEach((line) => {
-                    if (line !== "") {
-                        writer.writeLine(`/// ${line}`);
-                    }
-                });
+            this.codeExample.split("\n").forEach((line) => {
+                if (line !== "") {
+                    writer.writeLine(`/// ${line}`);
+                }
+            });
             writer.writeLine("/// </code>");
             writer.writeLine("/// </example>");
         }

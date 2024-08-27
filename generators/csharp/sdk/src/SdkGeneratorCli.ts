@@ -8,6 +8,8 @@ import {
 import { GeneratorNotificationService } from "@fern-api/generator-commons";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { writeFile } from "fs/promises";
+import { SnippetJsonGenerator } from "./endpoint/snippets/SnippetJsonGenerator";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
@@ -22,6 +24,7 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
+import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
 
 export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -185,6 +188,13 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli<SdkCustomConfigS
         const test = testGenerator.generate();
         context.project.addTestFiles(test);
 
+        if (context.config.output.snippetFilepath != null) {
+            const snippets = new SnippetJsonGenerator({ context }).generate();
+            await writeFile(
+                context.config.output.snippetFilepath,
+                JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
+            );
+        }
         await context.project.persist();
     }
 }

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Feature: Generate `snippet.json` file containing usage snippets for each endpoint.
+
 - Feature: Apply the timeout configured on the `ClientOptions` or `RequestOptions` type.
 
 ## [1.4.0] - 2024-08-26
