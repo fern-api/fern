@@ -8,7 +8,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - Feature: Apply the timeout configured on the `ClientOptions` or `RequestOptions` type.
-- Improvement: Propagate the cancellation token to the `ReadAsStringAsync` method.
 
 ## [1.4.0] - 2024-08-26
 
