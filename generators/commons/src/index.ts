@@ -1,3 +1,4 @@
+export * from "./AbstractGeneratorAgent";
 export * from "./AbstractGeneratorCli";
 export * from "./AbstractGeneratorContext";
 export * from "./AstNode";

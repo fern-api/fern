@@ -161,6 +161,9 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../packages/commons/logging-execa
+      '@fern-fern/generator-cli-sdk':
+        specifier: 0.0.56
+        version: 0.0.56
       '@fern-fern/generator-exec-sdk':
         specifier: ^0.0.898
         version: 0.0.898
@@ -1932,12 +1935,12 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../../packages/commons/fs-utils
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../../commons
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
-      '@fern-api/logging-execa':
-        specifier: workspace:*
-        version: link:../../../../packages/commons/logging-execa
       '@fern-fern/generator-cli-sdk':
         specifier: 0.0.56
         version: 0.0.56
@@ -2007,9 +2010,6 @@ importers:
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
-      tmp-promise:
-        specifier: ^3.0.3
-        version: 3.0.3
       ts-morph:
         specifier: ^15.1.0
         version: 15.1.0
@@ -2594,6 +2594,9 @@ importers:
 
   generators/typescript/utils/contexts:
     dependencies:
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../../commons
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../../packages/cli/logger
@@ -3182,10 +3185,6 @@ importers:
       typescript:
         specifier: 4.6.4
         version: 4.6.4
-
-  packages/cli/cli/dist/dev: {}
-
-  packages/cli/cli/dist/prod: {}
 
   packages/cli/configuration:
     dependencies:

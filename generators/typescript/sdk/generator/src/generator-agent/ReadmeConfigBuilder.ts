@@ -2,87 +2,45 @@ import { Logger } from "@fern-api/logger";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { ExportedFilePath, NpmPackage } from "@fern-typescript/commons";
+import { NpmPackage } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
-import { readFile } from "fs/promises";
+import { readFileSync } from "fs";
 import yaml from "js-yaml";
 import path from "path";
-import { GeneratorCli } from "./Client";
 import { ReadmeSnippetBuilder } from "./ReadmeSnippetBuilder";
 
 const DOCKER_FEATURES_CONFIG_PATH = "/assets/features.yml";
-const README_FILENAME = "README.md";
 
-export class ReadmeGenerator {
-    private generatorCli: GeneratorCli;
+export class ReadmeConfigBuilder {
     private logger: Logger;
+    private endpointSnippets: FernGeneratorExec.Endpoint[];
+    private githubRepoUrl: string | undefined;
+    private githubInstallationToken: string | undefined;
 
-    constructor({ generatorCli, logger }: { generatorCli: GeneratorCli; logger: Logger }) {
-        this.generatorCli = generatorCli;
-        this.logger = logger;
-    }
-
-    public getExportedFilePath(): ExportedFilePath {
-        return {
-            directories: [],
-            file: {
-                nameOnDisk: README_FILENAME
-            },
-            rootDir: ""
-        };
-    }
-
-    public async generateReadme({
-        context,
-        ir,
-        organization,
+    constructor({
+        logger,
         endpointSnippets,
-        npmPackage,
         githubRepoUrl,
         githubInstallationToken
     }: {
-        context: SdkContext;
-        ir: IntermediateRepresentation;
-        organization: string;
+        logger: Logger;
         endpointSnippets: FernGeneratorExec.Endpoint[];
-        npmPackage: NpmPackage | undefined;
         githubRepoUrl: string | undefined;
         githubInstallationToken: string | undefined;
-    }): Promise<string> {
+    }) {
+        this.logger = logger;
+        this.endpointSnippets = endpointSnippets;
+        this.githubRepoUrl = githubRepoUrl;
+        this.githubInstallationToken = githubInstallationToken;
+    }
+
+    public build(context: SdkContext): FernGeneratorCli.ReadmeConfig {
+        const featureConfig = this.readFeatureConfig();
         const readmeSnippetBuilder = new ReadmeSnippetBuilder({
             context,
-            readmeConfig: ir.readmeConfig,
-            npmPackage,
-            services: ir.services,
-            endpointSnippets
+            endpointSnippets: this.endpointSnippets
         });
-        const readmeConfig = await this.newReadmeConfig({
-            ir,
-            organization,
-            snippets: readmeSnippetBuilder.buildReadmeSnippets(),
-            npmPackage,
-            githubRepoUrl,
-            githubInstallationToken
-        });
-        return this.generatorCli.generateReadme({ readmeConfig });
-    }
-
-    private async newReadmeConfig({
-        ir,
-        organization,
-        snippets,
-        npmPackage,
-        githubRepoUrl,
-        githubInstallationToken
-    }: {
-        ir: IntermediateRepresentation;
-        organization: string;
-        snippets: Record<FernGeneratorCli.FeatureId, string[]>;
-        npmPackage: NpmPackage | undefined;
-        githubRepoUrl: string | undefined;
-        githubInstallationToken: string | undefined;
-    }): Promise<FernGeneratorCli.ReadmeConfig> {
-        const featureConfig = await this.readFeatureConfig();
+        const snippets = readmeSnippetBuilder.buildReadmeSnippets();
         const features: FernGeneratorCli.ReadmeFeature[] = [];
         for (const feature of featureConfig.features) {
             const featureSnippets = snippets[feature.id];
@@ -99,20 +57,20 @@ export class ReadmeGenerator {
         }
         return {
             remote: this.getRemote({
-                githubRepoUrl,
-                githubInstallationToken
+                githubRepoUrl: this.githubRepoUrl,
+                githubInstallationToken: this.githubInstallationToken
             }),
-            language: this.getLanguageInfo({ npmPackage }),
-            organization,
-            apiReferenceLink: ir.readmeConfig?.apiReferenceLink,
-            bannerLink: ir.readmeConfig?.bannerLink,
+            language: this.getLanguageInfo({ npmPackage: context.npmPackage }),
+            organization: context.config.organization,
+            apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
+            bannerLink: context.ir.readmeConfig?.bannerLink,
             features
         };
     }
 
-    private async readFeatureConfig(): Promise<FernGeneratorCli.FeatureConfig> {
+    private readFeatureConfig(): FernGeneratorCli.FeatureConfig {
         this.logger.debug("Reading feature configuration ...");
-        const rawContents = await readFile(getFeaturesConfigPath(), "utf8");
+        const rawContents = readFileSync(getFeaturesConfigPath(), "utf8");
         if (rawContents.length === 0) {
             throw new Error("Internal error; failed to read feature configuration");
         }

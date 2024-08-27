@@ -32,7 +32,6 @@ export class ReadmeSnippetBuilder {
     private static RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY";
 
     private readonly context: SdkContext;
-    private readonly readmeConfig: ReadmeConfig | undefined = undefined;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
@@ -43,26 +42,19 @@ export class ReadmeSnippetBuilder {
 
     constructor({
         context,
-        readmeConfig,
-        npmPackage,
-        services,
         endpointSnippets
     }: {
         context: SdkContext;
-        readmeConfig: ReadmeConfig | undefined;
-        npmPackage: NpmPackage | undefined;
-        services: Record<ServiceId, HttpService>;
         endpointSnippets: FernGeneratorExec.Endpoint[];
     }) {
         this.context = context;
-        this.readmeConfig = readmeConfig;
-        this.endpoints = this.buildEndpoints(services);
+        this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
-        this.defaultEndpointId = this.getDefaultEndpointId({ readmeConfig, endpointSnippets });
-        this.rootPackageName = this.getRootPackageName(npmPackage);
-        this.rootClientConstructorName = this.getRootClientConstructorName(context);
-        this.clientVariableName = this.getClientVariableName(context);
-        this.genericAPISdkErrorName = this.getGenericApiSdkErrorName(context);
+        this.defaultEndpointId = this.getDefaultEndpointId(endpointSnippets);
+        this.rootPackageName = this.getRootPackageName();
+        this.rootClientConstructorName = this.getRootClientConstructorName();
+        this.clientVariableName = this.getClientVariableName();
+        this.genericAPISdkErrorName = this.getGenericApiSdkErrorName();
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -195,7 +187,7 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
     }
 
     private getEndpointIdsForFeature(featureId: FeatureId): EndpointId[] | undefined {
-        return this.readmeConfig?.features?.[this.getFeatureKey(featureId)];
+        return this.context.ir.readmeConfig?.features?.[this.getFeatureKey(featureId)];
     }
 
     private getEndpoints(endpointIds: EndpointId[]): EndpointWithFilepath[] {
@@ -208,9 +200,9 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         });
     }
 
-    private buildEndpoints(services: Record<ServiceId, HttpService>): Record<EndpointId, EndpointWithFilepath> {
+    private buildEndpoints(): Record<EndpointId, EndpointWithFilepath> {
         const endpoints: Record<EndpointId, EndpointWithFilepath> = {};
-        for (const service of Object.values(services)) {
+        for (const service of Object.values(this.context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 endpoints[endpoint.id] = {
                     endpoint,
@@ -240,15 +232,9 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return snippet;
     }
 
-    private getDefaultEndpointId({
-        readmeConfig,
-        endpointSnippets
-    }: {
-        readmeConfig: ReadmeConfig | undefined;
-        endpointSnippets: FernGeneratorExec.Endpoint[];
-    }): EndpointId {
-        if (readmeConfig?.defaultEndpoint != null) {
-            return readmeConfig.defaultEndpoint;
+    private getDefaultEndpointId(endpointSnippets: FernGeneratorExec.Endpoint[]): EndpointId {
+        if (this.context.ir.readmeConfig?.defaultEndpoint != null) {
+            return this.context.ir.readmeConfig.defaultEndpoint;
         }
         // Prefer POST endpoints because they include better request structures
         // in snippets.
@@ -285,25 +271,25 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         return endpoint.snippet.client;
     }
 
-    private getRootPackageName(npmPackage: NpmPackage | undefined): string {
-        const packageName = npmPackage?.packageName;
+    private getRootPackageName(): string {
+        const packageName = this.context.npmPackage?.packageName;
         if (packageName == null || packageName.length === 0) {
             return this.context.namespaceExport;
         }
         return packageName;
     }
 
-    private getRootClientConstructorName(context: SdkContext): string {
-        return getTextOfTsNode(context.sdkClientClass.getReferenceToClientClass({ isRoot: true }).getTypeNode());
+    private getRootClientConstructorName(): string {
+        return getTextOfTsNode(this.context.sdkClientClass.getReferenceToClientClass({ isRoot: true }).getTypeNode());
     }
 
-    private getClientVariableName(context: SdkContext): string {
-        return getTextOfTsNode(context.sdkInstanceReferenceForSnippet);
+    private getClientVariableName(): string {
+        return getTextOfTsNode(this.context.sdkInstanceReferenceForSnippet);
     }
 
-    private getGenericApiSdkErrorName(context: SdkContext): string {
+    private getGenericApiSdkErrorName(): string {
         const errorName = getTextOfTsNode(
-            context.genericAPISdkError.getReferenceToGenericAPISdkError().getEntityName()
+            this.context.genericAPISdkError.getReferenceToGenericAPISdkError().getEntityName()
         );
         const split = errorName.split(".");
         return split[1] ?? errorName;
