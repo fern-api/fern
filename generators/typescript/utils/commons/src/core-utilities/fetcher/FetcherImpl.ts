@@ -41,13 +41,23 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             dependencyManager.addDependency("formdata-node", "^6.0.3");
             dependencyManager.addDependency("node-fetch", "2.7.0");
             dependencyManager.addDependency("qs", "6.11.2");
+            dependencyManager.addDependency("readable-stream", "^4.5.2");
             dependencyManager.addDependency("@types/qs", "6.9.8", {
                 type: DependencyType.DEV
             });
             dependencyManager.addDependency("@types/node-fetch", "2.6.9", {
                 type: DependencyType.DEV
             });
+            dependencyManager.addDependency("@types/readable-stream", "^4.0.15", {
+                type: DependencyType.DEV
+            });
             dependencyManager.addDependency("fetch-mock-jest", "^1.5.1", {
+                type: DependencyType.DEV
+            });
+            dependencyManager.addDependency("webpack", "^5.94.0", {
+                type: DependencyType.DEV
+            });
+            dependencyManager.addDependency("ts-loader", "^9.3.1", {
                 type: DependencyType.DEV
             });
         }

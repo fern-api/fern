@@ -676,7 +676,7 @@ importers:
         version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.15.7)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.6.4)(webpack@5.93.0(esbuild@0.15.7))
+        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.15.7))
       typescript:
         specifier: 4.6.4
         version: 4.6.4
@@ -889,7 +889,7 @@ importers:
         version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.6.4)(webpack@5.93.0(esbuild@0.19.12))
+        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.19.12))
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
@@ -1772,7 +1772,7 @@ importers:
         version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
       ts-loader:
         specifier: ^9.3.1
-        version: 9.5.1(typescript@4.6.4)(webpack@5.93.0)
+        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0)
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(postcss@8.4.38)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4))(typescript@4.6.4)
@@ -2755,6 +2755,9 @@ importers:
       qs:
         specifier: 6.12.1
         version: 6.12.1
+      readable-stream:
+        specifier: ^4.5.2
+        version: 4.5.2
     devDependencies:
       '@types/express':
         specifier: ^4.17.21
@@ -2774,6 +2777,9 @@ importers:
       '@types/qs':
         specifier: 6.9.15
         version: 6.9.15
+      '@types/readable-stream':
+        specifier: ^4.0.15
+        version: 4.0.15
       depcheck:
         specifier: ^1.4.6
         version: 1.4.6
@@ -2807,9 +2813,15 @@ importers:
       ts-jest:
         specifier: ^29.2.4
         version: 29.2.4(@babel/core@7.25.2)(@jest/transform@29.7.0)(@jest/types@29.6.3)(babel-jest@29.7.0(@babel/core@7.25.2))(esbuild@0.19.12)(jest@29.7.0(@types/node@18.7.18)(ts-node@10.9.2(@types/node@18.7.18)(typescript@4.6.4)))(typescript@4.6.4)
+      ts-loader:
+        specifier: ^9.3.1
+        version: 9.5.1(typescript@4.6.4)(webpack@5.94.0)
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+      webpack:
+        specifier: ^5.94.0
+        version: 5.94.0
 
   generators/typescript/utils/core-utilities/utils:
     devDependencies:
@@ -3185,6 +3197,8 @@ importers:
       typescript:
         specifier: 4.6.4
         version: 4.6.4
+
+  packages/cli/cli/dist/dev: {}
 
   packages/cli/configuration:
     dependencies:
@@ -7225,12 +7239,6 @@ packages:
   '@types/dockerode@3.3.9':
     resolution: {integrity: sha512-SYRN5FF/qmwpxUT6snJP5D8k0wgoUKOGVs625XvpRJOOUi6s//UYI4F0tbyE3OmzpI70Fo1+aqpzX27zCrInww==}
 
-  '@types/eslint-scope@3.7.7':
-    resolution: {integrity: sha512-MzMFlSLBqNF2gcHWO0G1vP/YQyfvrxZ0bF+u7mzUdZ1/xK4A4sru+nraZz5i3iEIk1l1uyicaDVTB4QbbEkAYg==}
-
-  '@types/eslint@9.6.0':
-    resolution: {integrity: sha512-gi6WQJ7cHRgZxtkQEoyHMppPjq9Kxo5Tjn2prSKDSmZrCz8TZ3jSRCeTJm+WoM+oB0WG37bRqLzaaU3q7JypGg==}
-
   '@types/estree-jsx@1.0.0':
     resolution: {integrity: sha512-3qvGd0z8F2ENTGr/GG1yViqfiKmRfrXVx5sJyHGFu3z7m5g5utCQtGp/g29JnjflhtQJBv1WDQukHiT58xPcYQ==}
 
@@ -7387,6 +7395,9 @@ packages:
 
   '@types/react@18.2.57':
     resolution: {integrity: sha512-ZvQsktJgSYrQiMirAN60y4O/LRevIV8hUzSOSNB6gfR3/o3wCBFQx3sPwIYtuDMeiVgsSS3UzCV26tEzgnfvQw==}
+
+  '@types/readable-stream@4.0.15':
+    resolution: {integrity: sha512-oAZ3kw+kJFkEqyh7xORZOku1YAKvsFTogRY8kVl4vHpEKiDkfnSA/My8haRE7fvmix5Zyy+1pwzOi7yycGLBJw==}
 
   '@types/scheduler@0.16.3':
     resolution: {integrity: sha512-5cJ8CB4yAx7BH1oMvdU0Jh9lrEXyPkar6F9G/ERswkCuvP4KQZfZkSjcMbAICCpQTN4OuZn8tz0HiKv9TGZgrQ==}
@@ -7705,6 +7716,10 @@ packages:
   abab@2.0.6:
     resolution: {integrity: sha512-j2afSsaIENvHZN2B8GOpF566vZ5WVk5opAiMTvWgaQT8DkbOqsTfvNAvHoRGU2zzP8cPoqys+xHTRDWW8L+/BA==}
     deprecated: Use your platform's native atob() and btoa() methods instead
+
+  abort-controller@3.0.0:
+    resolution: {integrity: sha512-h8lQ8tacZYnR3vNQTgibj+tODHI5/+l06Au2Pcriv/Gmet0eaj4TwWH41sO9wnHDiQsEj19q0drzdWdeAHtweg==}
+    engines: {node: '>=6.5'}
 
   accepts@1.3.8:
     resolution: {integrity: sha512-PYAthTa2m2VKxuvSD3DPC/Gy+U+sOA1LAuT8mkmRuvw+NACSaeXEQ+NHcVF7rONl6qcaxV3Uuemwawk+7+SJLw==}
@@ -9028,6 +9043,10 @@ packages:
   etag@1.8.1:
     resolution: {integrity: sha512-aIL5Fx7mawVa300al2BnEE4iNvo1qETxLrPI/o05L7z6go7fCw1J6EQmbK4FmJ2AS7kgVF/KEZWufBfdClMcPg==}
     engines: {node: '>= 0.6'}
+
+  event-target-shim@5.0.1:
+    resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
+    engines: {node: '>=6'}
 
   events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
@@ -11167,6 +11186,10 @@ packages:
   process-nextick-args@2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
 
+  process@0.11.10:
+    resolution: {integrity: sha512-cdGef/drWFoydD1JsMzuFf8100nZl+GT+yacc2bEced5f9Rjk4z+WtFUTBu9PhOi9j/jfmBPu0mMEY4wIdAF8A==}
+    engines: {node: '>= 0.6.0'}
+
   promise-make-naked@2.1.2:
     resolution: {integrity: sha512-y7s8ZuHIG56JYspB24be9GFkXA1zXL85Ur9u1DKrW/tvyUoPxWgBjnalK6Nc6l7wHBcAW0c3PO07+XOsWTRuhg==}
 
@@ -11294,6 +11317,10 @@ packages:
   readable-stream@3.6.0:
     resolution: {integrity: sha512-BViHy7LKeTz4oNnkcLJ+lVSL6vpiFeX6/d3oSH8zCW7UxP2onchk+vTGB143xuFjHS3deTgkKoXXymXqymiIdA==}
     engines: {node: '>= 6'}
+
+  readable-stream@4.5.2:
+    resolution: {integrity: sha512-yjavECdqeZ3GLXNgRXgeQEdz9fvDDkNKyHnbHRFtOr7/LcfgBcmct7t/ET+HaCTqfh06OzoAxrkN/IfjJBVe+g==}
+    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
   readable-web-to-node-stream@3.0.2:
     resolution: {integrity: sha512-ePeK6cc1EcKLEhJFt/AebMCLL+GgSKhuygrZ/GLaKZYEecIgIECf4UaUuaByiGtzckwR4ain9VzUh95T1exYGw==}
@@ -12513,8 +12540,8 @@ packages:
     resolution: {integrity: sha512-/DyMEOrDgLKKIG0fmvtz+4dUX/3Ghozwgm6iPp8KRhvn+eQf9+Q7GWxVNMk3+uCPWfdXYC4ExGBckIXdFEfH1w==}
     engines: {node: '>=10.13.0'}
 
-  webpack@5.93.0:
-    resolution: {integrity: sha512-Y0m5oEY1LRuwly578VqluorkXbvXKh7U3rLoQCEO04M97ScRr44afGVkI0FQFsXzysk5OgFAxjZAb9rsGQVihA==}
+  webpack@5.94.0:
+    resolution: {integrity: sha512-KcsGn50VT+06JH/iunZJedYGUJS5FGjow8wb9c0v5n1Om8O1g4L6LjtfxwlXIATopoQu+vOXXa7gYisWxCoPyg==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     peerDependencies:
@@ -14403,16 +14430,6 @@ snapshots:
       '@types/docker-modem': 3.0.2
       '@types/node': 18.7.18
 
-  '@types/eslint-scope@3.7.7':
-    dependencies:
-      '@types/eslint': 9.6.0
-      '@types/estree': 1.0.5
-
-  '@types/eslint@9.6.0':
-    dependencies:
-      '@types/estree': 1.0.5
-      '@types/json-schema': 7.0.15
-
   '@types/estree-jsx@1.0.0':
     dependencies:
       '@types/estree': 1.0.5
@@ -14581,6 +14598,11 @@ snapshots:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.3
       csstype: 3.1.2
+
+  '@types/readable-stream@4.0.15':
+    dependencies:
+      '@types/node': 18.7.18
+      safe-buffer: 5.1.2
 
   '@types/scheduler@0.16.3': {}
 
@@ -15018,6 +15040,10 @@ snapshots:
       tslib: 1.14.1
 
   abab@2.0.6: {}
+
+  abort-controller@3.0.0:
+    dependencies:
+      event-target-shim: 5.0.1
 
   accepts@1.3.8:
     dependencies:
@@ -16523,6 +16549,8 @@ snapshots:
   esutils@2.0.3: {}
 
   etag@1.8.1: {}
+
+  event-target-shim@5.0.1: {}
 
   events@3.3.0: {}
 
@@ -19136,6 +19164,8 @@ snapshots:
 
   process-nextick-args@2.0.1: {}
 
+  process@0.11.10: {}
+
   promise-make-naked@2.1.2: {}
 
   promise-polyfill@8.3.0: {}
@@ -19271,6 +19301,14 @@ snapshots:
       inherits: 2.0.4
       string_decoder: 1.3.0
       util-deprecate: 1.0.2
+
+  readable-stream@4.5.2:
+    dependencies:
+      abort-controller: 3.0.0
+      buffer: 6.0.3
+      events: 3.3.0
+      process: 0.11.10
+      string_decoder: 1.3.0
 
   readable-web-to-node-stream@3.0.2:
     dependencies:
@@ -20135,36 +20173,36 @@ snapshots:
       ansi-escapes: 5.0.0
       supports-hyperlinks: 2.3.0
 
-  terser-webpack-plugin@5.3.10(esbuild@0.15.7)(webpack@5.93.0(esbuild@0.15.7)):
+  terser-webpack-plugin@5.3.10(esbuild@0.15.7)(webpack@5.94.0(esbuild@0.15.7)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.31.5
-      webpack: 5.93.0(esbuild@0.15.7)
+      webpack: 5.94.0(esbuild@0.15.7)
     optionalDependencies:
       esbuild: 0.15.7
 
-  terser-webpack-plugin@5.3.10(esbuild@0.19.12)(webpack@5.93.0(esbuild@0.19.12)):
+  terser-webpack-plugin@5.3.10(esbuild@0.19.12)(webpack@5.94.0(esbuild@0.19.12)):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.31.5
-      webpack: 5.93.0(esbuild@0.19.12)
+      webpack: 5.94.0(esbuild@0.19.12)
     optionalDependencies:
       esbuild: 0.19.12
 
-  terser-webpack-plugin@5.3.10(webpack@5.93.0):
+  terser-webpack-plugin@5.3.10(webpack@5.94.0):
     dependencies:
       '@jridgewell/trace-mapping': 0.3.25
       jest-worker: 27.5.1
       schema-utils: 3.3.0
       serialize-javascript: 6.0.2
       terser: 5.31.5
-      webpack: 5.93.0
+      webpack: 5.94.0
 
   terser@5.31.5:
     dependencies:
@@ -20320,7 +20358,7 @@ snapshots:
       babel-jest: 29.7.0(@babel/core@7.25.2)
       esbuild: 0.19.12
 
-  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.93.0(esbuild@0.15.7)):
+  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.15.7)):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.15.0
@@ -20328,9 +20366,9 @@ snapshots:
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4
-      webpack: 5.93.0(esbuild@0.15.7)
+      webpack: 5.94.0(esbuild@0.15.7)
 
-  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.93.0(esbuild@0.19.12)):
+  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.94.0(esbuild@0.19.12)):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.15.0
@@ -20338,9 +20376,9 @@ snapshots:
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4
-      webpack: 5.93.0(esbuild@0.19.12)
+      webpack: 5.94.0(esbuild@0.19.12)
 
-  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.93.0):
+  ts-loader@9.5.1(typescript@4.6.4)(webpack@5.94.0):
     dependencies:
       chalk: 4.1.2
       enhanced-resolve: 5.15.0
@@ -20348,7 +20386,7 @@ snapshots:
       semver: 7.6.2
       source-map: 0.7.4
       typescript: 4.6.4
-      webpack: 5.93.0
+      webpack: 5.94.0
 
   ts-morph@15.1.0:
     dependencies:
@@ -20786,9 +20824,8 @@ snapshots:
 
   webpack-sources@3.2.3: {}
 
-  webpack@5.93.0:
+  webpack@5.94.0:
     dependencies:
-      '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.5
       '@webassemblyjs/ast': 1.12.1
       '@webassemblyjs/wasm-edit': 1.12.1
@@ -20809,7 +20846,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(webpack@5.93.0)
+      terser-webpack-plugin: 5.3.10(webpack@5.94.0)
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
@@ -20817,9 +20854,8 @@ snapshots:
       - esbuild
       - uglify-js
 
-  webpack@5.93.0(esbuild@0.15.7):
+  webpack@5.94.0(esbuild@0.15.7):
     dependencies:
-      '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.5
       '@webassemblyjs/ast': 1.12.1
       '@webassemblyjs/wasm-edit': 1.12.1
@@ -20840,7 +20876,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(esbuild@0.15.7)(webpack@5.93.0(esbuild@0.15.7))
+      terser-webpack-plugin: 5.3.10(esbuild@0.15.7)(webpack@5.94.0(esbuild@0.15.7))
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
@@ -20848,9 +20884,8 @@ snapshots:
       - esbuild
       - uglify-js
 
-  webpack@5.93.0(esbuild@0.19.12):
+  webpack@5.94.0(esbuild@0.19.12):
     dependencies:
-      '@types/eslint-scope': 3.7.7
       '@types/estree': 1.0.5
       '@webassemblyjs/ast': 1.12.1
       '@webassemblyjs/wasm-edit': 1.12.1
@@ -20871,7 +20906,7 @@ snapshots:
       neo-async: 2.6.2
       schema-utils: 3.3.0
       tapable: 2.2.1
-      terser-webpack-plugin: 5.3.10(esbuild@0.19.12)(webpack@5.93.0(esbuild@0.19.12))
+      terser-webpack-plugin: 5.3.10(esbuild@0.19.12)(webpack@5.94.0(esbuild@0.19.12))
       watchpack: 2.4.1
       webpack-sources: 3.2.3
     transitivePeerDependencies:
