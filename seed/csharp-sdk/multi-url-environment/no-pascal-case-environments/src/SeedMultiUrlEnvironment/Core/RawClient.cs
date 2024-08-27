@@ -31,7 +31,7 @@ internal class RawClient(ClientOptions clientOptions)
         SetHeaders(httpRequest, request.Headers);
         SetHeaders(httpRequest, request.Options?.Headers ?? new());
 
-        // Add the request body to the request
+        // Add the request body to the request.
         if (request is JsonApiRequest jsonRequest)
         {
             if (jsonRequest.Body != null)
@@ -47,9 +47,18 @@ internal class RawClient(ClientOptions clientOptions)
         {
             httpRequest.Content = new StreamContent(streamRequest.Body);
         }
-        // Send the request
+
+        // Apply the request timeout, if any.
+        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        var timeout = request.Options?.Timeout ?? Options.Timeout;
+        if (timeout != null)
+        {
+            cts.CancelAfter(timeout);
+        }
+
+        // Send the request.
         var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
-        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
+        var response = await httpClient.SendAsync(httpRequest, cts.Token);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 

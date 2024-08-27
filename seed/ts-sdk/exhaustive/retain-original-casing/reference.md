@@ -583,7 +583,7 @@ await client.endpoints.httpMethods.testPatch("string", {
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: new Date("2024-01-15T09:30:00.000Z"),
+    datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
@@ -705,7 +705,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: new Date("2024-01-15T09:30:00.000Z"),
+    datetime: "2024-01-15T09:30:00Z",
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
@@ -875,7 +875,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
         long: 1000000,
         double: 1.1,
         bool: true,
-        datetime: new Date("2024-01-15T09:30:00.000Z"),
+        datetime: "2024-01-15T09:30:00Z",
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
@@ -942,7 +942,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
         long: 1000000,
         double: 1.1,
         bool: true,
-        datetime: new Date("2024-01-15T09:30:00.000Z"),
+        datetime: "2024-01-15T09:30:00Z",
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
@@ -1018,7 +1018,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([
             long: 1000000,
             double: 1.1,
             bool: true,
-            datetime: new Date("2024-01-15T09:30:00.000Z"),
+            datetime: "2024-01-15T09:30:00Z",
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
@@ -1661,7 +1661,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
 <dd>
 
 ```typescript
-await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"));
+await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
 ```
 
 </dd>
@@ -1933,7 +1933,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
         long: 1000000,
         double: 1.1,
         bool: true,
-        datetime: new Date("2024-01-15T09:30:00.000Z"),
+        datetime: "2024-01-15T09:30:00Z",
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",

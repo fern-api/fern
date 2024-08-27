@@ -1,6 +1,18 @@
 irVersion: v53
-docker: fernapi/fern-pydantic-model:latest
-dockerCommand: docker build -f ./generators/python/pydantic/Dockerfile -t fernapi/fern-pydantic-model:latest ./generators/python
+publish:
+  workingDirectory: generators/python
+  preBuildCommands:
+    - chmod +x setup-python.sh && ./setup-python.sh
+    - poetry install
+  docker:
+    file: ./generators/python/pydantic/Dockerfile
+    image: fernapi/fern-pydantic-model
+    context: ./generators/python
+test:
+  docker:
+    image: fernapi/fern-pydantic-model:latest
+    command: docker build -f ./generators/python/pydantic/Dockerfile -t fernapi/fern-pydantic-model:latest ./generators/python
+
 language: python
 generatorType: model
 defaultOutputMode: github

@@ -36,6 +36,7 @@ jobs:
             ruby
             seed
             postman
+            ci
           requireScope: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

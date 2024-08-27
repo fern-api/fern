@@ -1,20 +1,33 @@
 irVersion: v53
 changelogLocation: ../../generators/python/sdk/versions.yml
-docker: fernapi/fern-python-sdk:latest
-dockerCommand: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
-language: python
-generatorType: sdk
-defaultOutputMode: github
-local:
+publish:
   workingDirectory: generators/python
-  buildCommand:
+  preBuildCommands:
     - chmod +x setup-python.sh && ./setup-python.sh
     - poetry config virtualenvs.in-project true
     - poetry install
-  # The envvar is needed to trick the generator to look in the right place for the core_utils files
-  runCommand: poetry run python -m src.fern_python.generators.sdk.cli
-  env: 
-    PYTEST_CURRENT_TEST: "some value"
+  docker: 
+    file: ./generators/python/sdk/Dockerfile
+    image: fernapi/fern-python-sdk
+    context: ./generators/python
+test:
+  docker:
+    image: fernapi/fern-python-sdk:latest
+    command: docker build -f ./generators/python/sdk/Dockerfile -t fernapi/fern-python-sdk:latest ./generators/python
+  local:
+    workingDirectory: generators/python
+    buildCommand:
+      - chmod +x setup-python.sh && ./setup-python.sh
+      - poetry config virtualenvs.in-project true
+      - poetry install
+    # The envvar is needed to trick the generator to look in the right place for the core_utils files
+    runCommand: poetry run python -m src.fern_python.generators.sdk.cli
+    env: 
+      PYTEST_CURRENT_TEST: "some value"
+
+language: python
+generatorType: sdk
+defaultOutputMode: github
 customFixtureConfig:
   customConfig: 
     use_typeddict_requests: true
