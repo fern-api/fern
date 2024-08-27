@@ -1,3 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`fern generator metadata > fern generator metadata --version 1`] = `"0.9.5"`;

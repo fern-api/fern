@@ -147,7 +147,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
             )
             .command(
                 // Meant to retrieve metadata about the generator, for now this is hidden and the only option is --version
-                "metadata",
+                "get",
                 false,
                 (yargs) =>
                     yargs
@@ -174,7 +174,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         }),
                 async (argv) => {
                     cliContext.instrumentPostHogEvent({
-                        command: "fern generator metadata",
+                        command: "fern generator get",
                         properties: {
                             generator: argv.generator,
                             version: argv.version,
