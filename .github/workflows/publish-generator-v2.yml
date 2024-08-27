@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - ab/debug-gen-v2
     paths:
       - "generators/python/sdk/versions.yml"
       # - "generators/python/fastapi/versions.yml"
@@ -109,7 +110,7 @@ jobs:
         run: |
           if [ ${{ matrix.generator }} = "python-sdk" ]; then
               VERSIONS_FILE="generators/python/sdk/versions.yml"
-          done
+          fi
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
 
@@ -147,7 +148,7 @@ jobs:
         run: |
           if [ ${{ inputs.generator }} = "python-sdk" ]; then
               VERSIONS_FILE="generators/python/sdk/versions.yml"
-          done
+          fi
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ inputs.generator }}_previous_versions.yml
 
