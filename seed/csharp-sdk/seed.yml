@@ -1,7 +1,22 @@
 
 irVersion: v53
-docker: fernapi/fern-csharp-sdk:latest
-dockerCommand: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
+  docker: 
+    file: ./generators/csharp/sdk/Dockerfile
+    image: fernapi/fern-csharp-sdk
+    context: .
+test:
+  docker:
+    image: fernapi/fern-csharp-sdk:latest
+    command: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
+  local: 
+    workingDirectory: generators/csharp
+    buildCommand: 
+      - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
+    runCommand: node sdk/dist/bundle.cjs
+
 language: csharp
 generatorType: SDK
 defaultOutputMode: github
@@ -12,11 +27,7 @@ scripts:
     commands:
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
       # - dotnet test src
-local: 
-  workingDirectory: generators/csharp
-  buildCommand: 
-    - pnpm --filter @fern-api/fern-csharp-sdk dist:cli
-  runCommand: node sdk/dist/bundle.cjs
+
 fixtures: 
   imdb:
     - customConfig: null

@@ -44,9 +44,37 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
             "problemVersion": 1,
             "supportedLanguages": ["JAVA"],
             "customFiles": {"type": "basic"},
-            "generatedFiles": {},
-            "customTestCaseTemplates": [{}],
-            "testcases": [{}],
+            "generatedFiles": {
+                "generatedTestCaseFiles": {"string": {"files": [{"key": "value"}]}},
+                "generatedTemplateFiles": {"string": {"files": [{"key": "value"}]}},
+                "other": {"string": {"files": [{"key": "value"}]}},
+            },
+            "customTestCaseTemplates": [
+                {
+                    "templateId": "string",
+                    "name": "string",
+                    "implementation": {
+                        "description": {"boards": [{"type": "html", "key": "value"}]},
+                        "function": {"type": "withActualResult"},
+                    },
+                }
+            ],
+            "testcases": [
+                {
+                    "metadata": {"id": "string", "name": "string", "hidden": True},
+                    "implementation": {
+                        "0": "s",
+                        "1": "t",
+                        "2": "r",
+                        "3": "i",
+                        "4": "n",
+                        "5": "g",
+                        "type": "templateId",
+                    },
+                    "arguments": {"string": {"type": "integerValue", "key": "value"}},
+                    "expects": {"expectedStdout": {"key": "value"}},
+                }
+            ],
             "isPublic": True,
         }
     ]
@@ -60,9 +88,35 @@ async def test_get_problems(client: SeedTrace, async_client: AsyncSeedTrace) -> 
                 "problemVersion": "integer",
                 "supportedLanguages": ("set", {0: None}),
                 "customFiles": "no_validate",
-                "generatedFiles": {},
-                "customTestCaseTemplates": ("list", {0: {}}),
-                "testcases": ("list", {0: {}}),
+                "generatedFiles": {
+                    "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+                    "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+                    "other": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+                },
+                "customTestCaseTemplates": (
+                    "list",
+                    {
+                        0: {
+                            "templateId": None,
+                            "name": None,
+                            "implementation": {
+                                "description": {"boards": ("list", {0: "no_validate"})},
+                                "function": "no_validate",
+                            },
+                        }
+                    },
+                ),
+                "testcases": (
+                    "list",
+                    {
+                        0: {
+                            "metadata": {"id": None, "name": None, "hidden": None},
+                            "implementation": "no_validate",
+                            "arguments": ("dict", {0: (None, "no_validate")}),
+                            "expects": {"expectedStdout": None},
+                        }
+                    },
+                ),
                 "isPublic": None,
             }
         },
@@ -84,9 +138,29 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
         "problemVersion": 1,
         "supportedLanguages": ["JAVA"],
         "customFiles": {"type": "basic"},
-        "generatedFiles": {},
-        "customTestCaseTemplates": [{}],
-        "testcases": [{}],
+        "generatedFiles": {
+            "generatedTestCaseFiles": {"string": {"files": [{"key": "value"}]}},
+            "generatedTemplateFiles": {"string": {"files": [{"key": "value"}]}},
+            "other": {"string": {"files": [{"key": "value"}]}},
+        },
+        "customTestCaseTemplates": [
+            {
+                "templateId": "string",
+                "name": "string",
+                "implementation": {
+                    "description": {"boards": [{"type": "html", "key": "value"}]},
+                    "function": {"type": "withActualResult"},
+                },
+            }
+        ],
+        "testcases": [
+            {
+                "metadata": {"id": "string", "name": "string", "hidden": True},
+                "implementation": {"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "templateId"},
+                "arguments": {"string": {"type": "integerValue", "key": "value"}},
+                "expects": {"expectedStdout": {"key": "value"}},
+            }
+        ],
         "isPublic": True,
     }
     expected_types: typing.Any = {
@@ -96,9 +170,35 @@ async def test_get_latest_problem(client: SeedTrace, async_client: AsyncSeedTrac
         "problemVersion": "integer",
         "supportedLanguages": ("set", {0: None}),
         "customFiles": "no_validate",
-        "generatedFiles": {},
-        "customTestCaseTemplates": ("list", {0: {}}),
-        "testcases": ("list", {0: {}}),
+        "generatedFiles": {
+            "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+            "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+            "other": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+        },
+        "customTestCaseTemplates": (
+            "list",
+            {
+                0: {
+                    "templateId": None,
+                    "name": None,
+                    "implementation": {
+                        "description": {"boards": ("list", {0: "no_validate"})},
+                        "function": "no_validate",
+                    },
+                }
+            },
+        ),
+        "testcases": (
+            "list",
+            {
+                0: {
+                    "metadata": {"id": None, "name": None, "hidden": None},
+                    "implementation": "no_validate",
+                    "arguments": ("dict", {0: (None, "no_validate")}),
+                    "expects": {"expectedStdout": None},
+                }
+            },
+        ),
         "isPublic": None,
     }
     response = client.v_2.problem.get_latest_problem(problem_id="string")
@@ -118,9 +218,29 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
         "problemVersion": 1,
         "supportedLanguages": ["JAVA"],
         "customFiles": {"type": "basic"},
-        "generatedFiles": {},
-        "customTestCaseTemplates": [{}],
-        "testcases": [{}],
+        "generatedFiles": {
+            "generatedTestCaseFiles": {"string": {"files": [{"key": "value"}]}},
+            "generatedTemplateFiles": {"string": {"files": [{"key": "value"}]}},
+            "other": {"string": {"files": [{"key": "value"}]}},
+        },
+        "customTestCaseTemplates": [
+            {
+                "templateId": "string",
+                "name": "string",
+                "implementation": {
+                    "description": {"boards": [{"type": "html", "key": "value"}]},
+                    "function": {"type": "withActualResult"},
+                },
+            }
+        ],
+        "testcases": [
+            {
+                "metadata": {"id": "string", "name": "string", "hidden": True},
+                "implementation": {"0": "s", "1": "t", "2": "r", "3": "i", "4": "n", "5": "g", "type": "templateId"},
+                "arguments": {"string": {"type": "integerValue", "key": "value"}},
+                "expects": {"expectedStdout": {"key": "value"}},
+            }
+        ],
         "isPublic": True,
     }
     expected_types: typing.Any = {
@@ -130,9 +250,35 @@ async def test_get_problem_version(client: SeedTrace, async_client: AsyncSeedTra
         "problemVersion": "integer",
         "supportedLanguages": ("set", {0: None}),
         "customFiles": "no_validate",
-        "generatedFiles": {},
-        "customTestCaseTemplates": ("list", {0: {}}),
-        "testcases": ("list", {0: {}}),
+        "generatedFiles": {
+            "generatedTestCaseFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+            "generatedTemplateFiles": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+            "other": ("dict", {0: (None, {"files": ("list", {0: None})})}),
+        },
+        "customTestCaseTemplates": (
+            "list",
+            {
+                0: {
+                    "templateId": None,
+                    "name": None,
+                    "implementation": {
+                        "description": {"boards": ("list", {0: "no_validate"})},
+                        "function": "no_validate",
+                    },
+                }
+            },
+        ),
+        "testcases": (
+            "list",
+            {
+                0: {
+                    "metadata": {"id": None, "name": None, "hidden": None},
+                    "implementation": "no_validate",
+                    "arguments": ("dict", {0: (None, "no_validate")}),
+                    "expects": {"expectedStdout": None},
+                }
+            },
+        ),
         "isPublic": None,
     }
     response = client.v_2.problem.get_problem_version(problem_id="string", problem_version=1)

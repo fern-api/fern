@@ -1,6 +1,15 @@
 irVersion: v23
-docker: fernapi/fern-openapi:latest
-dockerCommand: pnpm --filter @fern-api/openapi-generator dockerTagLatest
+publish:
+  preBuildCommands:
+    - pnpm --filter @fern-api/openapi-generator dist:cli
+  docker:
+    file: ./generators/openapi/Dockerfile
+    image: fernapi/fern-openapi
+    context: ./generators/openapi
+test:
+  docker:
+    image: fernapi/fern-openapi:latest
+    command: pnpm --filter @fern-api/openapi-generator dockerTagLatest
 generatorType: Documentation
 defaultOutputMode: local_files
 fixtures:
