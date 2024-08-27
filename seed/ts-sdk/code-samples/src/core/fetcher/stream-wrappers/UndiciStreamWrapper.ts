@@ -161,8 +161,12 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
         const infiniteRead = true;
         while (infiniteRead) {
             const { done, value } = await this.reader.read();
-            if (done) {break;}
-            if (value) {chunks.push(value);}
+            if (done) {
+                break;
+            }
+            if (value) {
+                chunks.push(value);
+            }
         }
 
         const decoder = new TextDecoder(this.encoding || "utf-8");
@@ -197,8 +201,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
     private async _startReading(): Promise<void> {
         try {
             this._emit("readable");
-            const infiniteRead = true;
-            while (infiniteRead) {
+            while (true) {
                 if (this.paused) {
                     await new Promise((resolve) => {
                         this.resumeCallback = resolve;
