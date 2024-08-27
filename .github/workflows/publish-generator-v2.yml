@@ -9,10 +9,11 @@ on:
       - "generators/python/sdk/versions.yml"
       - "generators/python/fastapi/versions.yml"
       - "generators/python/pydantic/versions.yml"
+      - "generators/ruby/model/versions.yml"
+      - "generators/ruby/sdk/versions.yml"
+
       # - "generators/openapi/versions.yml"
       # - "generators/postman/versions.yml"
-      # - "generators/ruby/model/versions.yml"
-      # - "generators/ruby/sdk/versions.yml"
       # - "generators/java/sdk/versions.yml"
       # - "generators/java/model/versions.yml"
       # - "generators/java/spring/versions.yml"
@@ -31,10 +32,11 @@ on:
           - python-sdk
           - fastapi
           - pydantic
+          - ruby-sdk
+          - ruby-model
+
           # - openapi
           # - postman
-          # - ruby-sdk
-          # - ruby-model
           # - java-sdk
           # - java-model
           # - java-spring
@@ -63,10 +65,11 @@ jobs:
             python-sdk: 'generators/python/sdk/versions.yml'
             fastapi: "generators/python/fastapi/versions.yml"
             pydantic: "generators/python/pydantic/versions.yml"
+            ruby-model: 'generators/ruby/model/versions.yml'
+            ruby-sdk: 'generators/ruby/sdk/versions.yml'
+
           # openapi: 'generators/openapi/versions.yml'
           # postman: 'generators/postman/versions.yml'
-          # ruby-model: 'generators/ruby/model/versions.yml'
-          # ruby-sdk: 'generators/ruby/sdk/versions.yml'
           # java-sdk: 'generators/java/sdk/versions.yml'
           # java-model: 'generators/java/model/versions.yml'
           # spring: 'generators/java/spring/versions.yml'
@@ -114,6 +117,10 @@ jobs:
               VERSIONS_FILE="generators/python/fastapi/versions.yml"
           elif [ ${{ matrix.generator }} = "pydantic" ]; then
               VERSIONS_FILE="generators/python/pydantic/versions.yml"
+          elif [ ${{ matrix.generator }} = "ruby-model" ]; then
+              VERSIONS_FILE="generators/ruby/model/versions.yml"
+          elif [ ${{ matrix.generator }} = "ruby-sdk" ]; then
+              VERSIONS_FILE="generators/ruby/sdk/versions.yml"
           fi
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
@@ -157,6 +164,10 @@ jobs:
               VERSIONS_FILE="generators/python/fastapi/versions.yml"
           elif [ ${{ inputs.generator }} = "pydantic" ]; then
               VERSIONS_FILE="generators/python/pydantic/versions.yml"
+          elif [ ${{ inputs.generator }} = "ruby-model" ]; then
+              VERSIONS_FILE="generators/ruby/model/versions.yml"
+          elif [ ${{ inputs.generator }} = "ruby-sdk" ]; then
+              VERSIONS_FILE="generators/ruby/sdk/versions.yml"
           fi
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ inputs.generator }}_previous_versions.yml
