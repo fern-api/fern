@@ -160,7 +160,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             string: true,
                             demandOption: true,
                             description:
-                                "The group in which the generator is located, if group is not specified, the all generators of the specified type will be upgraded."
+                                "The group in which the generator is located."
                         })
                         .option("api", {
                             string: true,
