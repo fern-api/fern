@@ -10,7 +10,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedAuthEnvironmentVariables;\n\nvar client = new SeedAuthEnvironmentVariablesClient(\"X_ANOTHER_HEADER\", \"API_KEY\");\nawait client.Service.GetWithApiKeyAsync();\n"
+                "client": "using SeedAuthEnvironmentVariables;\n\nvar client = new SeedAuthEnvironmentVariablesClient(\"X_ANOTHER_HEADER\");\nawait client.Service.GetWithApiKeyAsync();\n"
             }
         },
         {
@@ -22,7 +22,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedAuthEnvironmentVariables;\n\nvar client = new SeedAuthEnvironmentVariablesClient(\"X_ANOTHER_HEADER\", \"API_KEY\");\nawait client.Service.GetWithHeaderAsync(new HeaderAuthRequest { XEndpointHeader = \"string\" });\n"
+                "client": "using SeedAuthEnvironmentVariables;\n\nvar client = new SeedAuthEnvironmentVariablesClient(\"X_ANOTHER_HEADER\");\nawait client.Service.GetWithHeaderAsync(new HeaderAuthRequest { XEndpointHeader = \"string\" });\n"
             }
         }
     ]

@@ -26,7 +26,7 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedAnyAuthClient("TOKEN", "API_KEY");
+        Client = new SeedAnyAuthClient();
 
         RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }

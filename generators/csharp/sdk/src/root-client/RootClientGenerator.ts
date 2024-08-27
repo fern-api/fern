@@ -313,16 +313,24 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             for (const scheme of this.context.ir.auth.schemes) {
                 switch (scheme.type) {
                     case "header":
-                        // assuming type is string for now to avoid generating complex example types here.
-                        arguments_.push(csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
+                        if (scheme.headerEnvVar == null) {
+                            // assuming type is string for now to avoid generating complex example types here.
+                            arguments_.push(csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
+                        }
                         break;
                     case "basic": {
-                        arguments_.push(csharp.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`));
-                        arguments_.push(csharp.codeblock(`"${scheme.password.screamingSnakeCase.safeName}"`));
+                        if (scheme.usernameEnvVar == null) {
+                            arguments_.push(csharp.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`));
+                        }
+                        if (scheme.passwordEnvVar == null) {
+                            arguments_.push(csharp.codeblock(`"${scheme.password.screamingSnakeCase.safeName}"`));
+                        }
                         break;
                     }
                     case "bearer":
-                        arguments_.push(csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
+                        if (scheme.tokenEnvVar == null) {
+                            arguments_.push(csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
+                        }
                         break;
                     case "oauth":
                         break;

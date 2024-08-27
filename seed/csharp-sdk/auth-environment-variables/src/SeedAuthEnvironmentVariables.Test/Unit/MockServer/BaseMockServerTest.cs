@@ -26,7 +26,7 @@ public class BaseMockServerTest
         );
 
         // Initialize the Client
-        Client = new SeedAuthEnvironmentVariablesClient("X_ANOTHER_HEADER", "API_KEY");
+        Client = new SeedAuthEnvironmentVariablesClient("X_ANOTHER_HEADER");
 
         RequestOptions = new RequestOptions { BaseUrl = Server.Urls[0] };
     }

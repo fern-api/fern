@@ -68,7 +68,7 @@ export abstract class AstNode {
         this.write(writer);
         return {
             imports: writer.importsToString(),
-            body: AstNode.toFormattedSnippet(writer.getBuffer())
+            body: AstNode.toFormattedSnippet(writer.buffer)
         };
     }
 
