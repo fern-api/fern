@@ -17945,6 +17945,7 @@ The default value is 'en_us'.
   },
   "servers": [
     {
+      "audiences": null,
       "description": "AssemblyAI API",
       "name": null,
       "url": "https://api.assemblyai.com",

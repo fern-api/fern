@@ -25,7 +25,9 @@ generatorType: SDK
 defaultOutputMode: github
 
 customFixtureConfig: 
-  generateWireTests: true    
+  customConfig: 
+    generateWireTests: true    
+    noSerdeLayer: true
 fixtures:
   imdb:
     - customConfig: null

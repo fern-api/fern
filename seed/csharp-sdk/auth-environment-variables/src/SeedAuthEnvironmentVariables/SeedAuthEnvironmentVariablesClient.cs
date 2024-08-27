@@ -23,6 +23,8 @@ public partial class SeedAuthEnvironmentVariablesClient
             {
                 { "X-FERN-API-KEY", apiKey },
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedAuthEnvironmentVariables" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernauth-environment-variables/0.0.1" },
             }
         );

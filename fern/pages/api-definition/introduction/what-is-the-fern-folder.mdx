@@ -9,7 +9,7 @@ generators, and your CLI version.
 ## Directory Structure
 
 When you run `fern init`, your Fern folder will be initialized with the following files:
-```yaml
+```bash
 fern/
   ├─ fern.config.json
   ├─ generators.yml
@@ -18,7 +18,7 @@ fern/
     └─ imdb.yml
 ```
 
-If you want to intialize Fern with an OpenAPI spec, run `fern init --openapi path/to/openapi` instead.
+If you want to intialize Fern with an OpenAPI Specification, run `fern init --openapi path/to/openapi` instead.
 ```yaml
 fern/
   ├─ fern.config.json
@@ -82,7 +82,9 @@ groups:
 The Fern folder is capable of housing multiple API definitions. Instead of placing your API definition 
 at the top-level, you can nest them within an `apis` folder. 
 
-```yaml
+<Tabs>
+<Tab title="OpenAPI Definition">
+```bash
 fern/
   ├─ fern.config.json
   ├─ generators.yml
@@ -96,3 +98,23 @@ fern/
         └─ openapi/
           ├─ openapi.yml
 ```
+</Tab>
+<Tab title="Fern Definition">
+```bash
+fern/
+  ├─ fern.config.json
+  ├─ generators.yml
+  └─ apis/
+    └─ imdb/
+        ├─ generators.yml
+        └─ definition/
+          ├─ api.yml
+          └─ imdb.yml
+    └─ disney/
+        ├─ generators.yml
+        └─ definition/
+          ├─ api.yml
+          └─ disney.yml
+```
+</Tab>
+</Tabs>

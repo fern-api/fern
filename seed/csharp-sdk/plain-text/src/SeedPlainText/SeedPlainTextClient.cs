@@ -14,6 +14,8 @@ public partial class SeedPlainTextClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedPlainText" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernplain-text/0.0.1" },
             }
         );

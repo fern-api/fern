@@ -14,6 +14,8 @@ public partial class SeedUnionsClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedUnions" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernunions/0.0.1" },
             }
         );

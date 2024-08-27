@@ -14,6 +14,8 @@ public partial class SeedApiClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedApi" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernimdb/0.0.1" },
             }
         );

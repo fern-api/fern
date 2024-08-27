@@ -44,7 +44,7 @@ public record CreateRequest
         }
         if (Age != null)
         {
-            result.Age = Age ?? 0U;
+            result.Age = Age ?? 0;
         }
         if (Weight != null)
         {

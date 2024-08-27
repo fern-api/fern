@@ -10,7 +10,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-go-fiber:latest
-    command: docker build -f ./generators/go/docker/Dockerfile.fiber -t fernapi/fern-go-fiber:latest ./generators/go
+    command: docker build -f ./generators/go/fiber/Dockerfile -t fernapi/fern-go-fiber:latest ./generators/go
 language: go
 generatorType: sdk
 defaultOutputMode: github

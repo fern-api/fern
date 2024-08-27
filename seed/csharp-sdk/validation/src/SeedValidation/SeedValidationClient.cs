@@ -17,6 +17,8 @@ public partial class SeedValidationClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedValidation" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernvalidation/0.0.1" },
             }
         );
@@ -36,7 +38,7 @@ public partial class SeedValidationClient
     /// await client.CreateAsync(
     ///     new CreateRequest
     ///     {
-    ///         Decimal = 1.1d,
+    ///         Decimal = 1.1,
     ///         Even = 1,
     ///         Name = "string",
     ///         Shape = Shape.Square,
@@ -86,7 +88,7 @@ public partial class SeedValidationClient
     /// await client.GetAsync(
     ///     new GetRequest
     ///     {
-    ///         Decimal = 1.1d,
+    ///         Decimal = 1.1,
     ///         Even = 1,
     ///         Name = "string",
     ///     }

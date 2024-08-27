@@ -24,7 +24,7 @@ public record Usage
         var result = new Proto.Usage();
         if (Units != null)
         {
-            result.Units = Units ?? 0U;
+            result.Units = Units ?? 0;
         }
         return result;
     }

@@ -1895,6 +1895,23 @@ exports[`open api parser > hathora > docs 1`] = `
               "root.GetConnectionInfoRequestNotFoundError",
               "root.GetConnectionInfoRequestInternalServerError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "roomId": "roomId",
+                },
+                "response": {
+                  "body": {
+                    "host": "string",
+                    "port": 1.1,
+                    "roomId": "string",
+                    "status": "active",
+                    "transportType": "tcp",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "pagination": undefined,
             "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
@@ -4810,6 +4827,23 @@ exports[`open api parser > hathora > simple 1`] = `
               "root.BadRequestError",
               "root.NotFoundError",
               "root.InternalServerError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "appId": "appId",
+                  "roomId": "roomId",
+                },
+                "response": {
+                  "body": {
+                    "host": "string",
+                    "port": 1.1,
+                    "roomId": "string",
+                    "status": "active",
+                    "transportType": "tcp",
+                  },
+                },
+              },
             ],
             "method": "GET",
             "pagination": undefined,

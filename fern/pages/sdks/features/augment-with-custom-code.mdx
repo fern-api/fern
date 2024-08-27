@@ -34,10 +34,10 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
       ### Add `src/helper.ts` to `.fernignore`
 
       <CodeBlock title=".fernignore">
-        ```yaml
+        ```yaml {3}
         #  Specify files that shouldn't be modified by Fern
 
-        + src/helper.ts
+        src/helper.ts
         ```
       </CodeBlock>
 
@@ -64,10 +64,10 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
       ### Add `src/<package>/helper.py` to `.fernignore`
 
       <CodeBlock title=".fernignore">
-        ```yaml
+        ```yaml {3}
         #  Specify files that shouldn't be modified by Fern
 
-        + src/<package>/helper.py
+        src/<package>/helper.py
         ```
       </CodeBlock>
 
@@ -101,10 +101,10 @@ list them out in `.fernignore`. Fern won't override any files that you add in `.
       ### Add `src/main/java/<package>/Helper.java` to `.fernignore`
 
       <CodeBlock title=".fernignore">
-        ```yaml
+        ```yaml {3}
         #  Specify files that shouldn't be modified by Fern
 
-        + src/main/java/<package>/Helper.java
+        src/main/java/<package>/Helper.java
         ```
       </CodeBlock>
 
@@ -167,7 +167,7 @@ Fern generated client and add whatever methods you want.
 
       <CodeBlock title="src/index.ts">
         ```typescript
-        + export { MyClient } from src/wrapper/MyClient; // instead of `src/Client`
+        export { MyClient } from src/wrapper/MyClient; // instead of `src/Client`
         ```
       </CodeBlock>
 
@@ -176,7 +176,7 @@ Fern generated client and add whatever methods you want.
       Add both the `wrapper` directory and `index.ts` to `.fernignore`.
 
       <CodeBlock title=".fernignore">
-        ```yaml
+        ```diff
         + src/wrapper
         + src/index.ts
         ```
@@ -244,7 +244,7 @@ Fern generated client and add whatever methods you want.
       Add the `client.py` to `.fernignore`.
 
       <CodeBlock title=".fernignore">
-        ```yaml
+        ```diff
         + src/<package>/client.py
         ```
       </CodeBlock>
@@ -296,7 +296,7 @@ Fern generated client and add whatever methods you want.
       Add the `MyClient.java` to `.fernignore`.
 
       <CodeBlock title=".fernignore">
-        ```yaml
+        ```diff
         + src/main/java/com/example/MyClient.java
         ```
       </CodeBlock>

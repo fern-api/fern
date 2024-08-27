@@ -212,7 +212,7 @@ public partial class DataserviceClient
 
     /// <example>
     /// <code>
-    /// await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1U });
+    /// await client.Dataservice.QueryAsync(new QueryRequest { TopK = 1 });
     /// </code>
     /// </example>
     public async Task<QueryResponse> QueryAsync(

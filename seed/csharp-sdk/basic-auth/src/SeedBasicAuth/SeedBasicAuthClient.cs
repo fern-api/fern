@@ -18,6 +18,8 @@ public partial class SeedBasicAuthClient
             new Dictionary<string, string>()
             {
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedBasicAuth" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Fernbasic-auth/0.0.1" },
             }
         );

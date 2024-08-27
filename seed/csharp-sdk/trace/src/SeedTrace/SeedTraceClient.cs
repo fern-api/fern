@@ -20,6 +20,8 @@ public partial class SeedTraceClient
             {
                 { "X-Random-Header", xRandomHeader },
                 { "X-Fern-Language", "C#" },
+                { "X-Fern-SDK-Name", "SeedTrace" },
+                { "X-Fern-SDK-Version", Version.Current },
                 { "User-Agent", "Ferntrace/0.0.1" },
             }
         );

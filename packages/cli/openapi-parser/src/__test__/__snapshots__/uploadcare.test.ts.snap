@@ -15529,6 +15529,7 @@ change the value to \`auto\`.
   "securitySchemes": {},
   "servers": [
     {
+      "audiences": null,
       "description": "Production server",
       "name": null,
       "url": "https://upload.uploadcare.com",

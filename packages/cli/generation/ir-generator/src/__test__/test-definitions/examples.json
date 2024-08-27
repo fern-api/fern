@@ -9263,7 +9263,8 @@
                                         "type": "primitive",
                                         "primitive": {
                                             "type": "datetime",
-                                            "datetime": "1994-01-01T01:01:01.000Z"
+                                            "datetime": "1994-01-01T01:01:01.000Z",
+                                            "raw": "1994-01-01T01:01:01Z"
                                         }
                                     },
                                     "jsonExample": "1994-01-01T01:01:01Z"

@@ -44,7 +44,7 @@ public class GetTest : BaseMockServerTest
         var response = await Client.GetAsync(
             new GetRequest
             {
-                Decimal = 1.1d,
+                Decimal = 1.1,
                 Even = 1,
                 Name = "string",
             },

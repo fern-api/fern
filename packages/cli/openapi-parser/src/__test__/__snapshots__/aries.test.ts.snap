@@ -113382,6 +113382,7 @@ exports[`open api parser > aries > parse open api 1`] = `
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "/",
