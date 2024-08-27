@@ -165,7 +165,7 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         .option("api", {
                             string: true,
                             description:
-                                "The API to upgrade the generator for. If not specified, the generator will be upgraded for all APIs."
+                                "The API in which the generator is located."
                         })
                         .option("version", {
                             boolean: true,
