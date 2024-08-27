@@ -28,9 +28,6 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
         this.resumeCallback = null;
         this.encoding = null;
     }
-    [Symbol.asyncIterator](): AsyncIterableIterator<ReadFormat> {
-        throw new Error("Method not implemented.");
-    }
 
     public on(event: string, callback: EventCallback): void {
         this.events[event]?.push(callback);
