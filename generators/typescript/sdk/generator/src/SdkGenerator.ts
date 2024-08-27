@@ -372,7 +372,6 @@ export class SdkGenerator {
             referenceConfigBuilder: this.referenceConfigBuilder,
             readmeConfigBuilder: new ReadmeConfigBuilder({
                 logger: this.context.logger,
-                npmPackage: this.npmPackage,
                 endpointSnippets: this.endpointSnippets,
                 githubRepoUrl: this.config.githubRepoUrl,
                 githubInstallationToken: this.config.githubInstallationToken
@@ -1210,6 +1209,7 @@ export class SdkGenerator {
         { isForSnippet }: { isForSnippet?: boolean } = {}
     ): SdkContextImpl {
         return new SdkContextImpl({
+            logger: this.context.logger,
             config: this.rawConfig,
             ir: this.intermediateRepresentation,
             npmPackage: this.npmPackage,

@@ -2600,6 +2600,9 @@ importers:
 
   generators/typescript/utils/contexts:
     dependencies:
+      '@fern-api/generator-commons':
+        specifier: workspace:*
+        version: link:../../../commons
       '@fern-api/logger':
         specifier: workspace:*
         version: link:../../../../packages/cli/logger

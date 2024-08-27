@@ -14,26 +14,22 @@ const DOCKER_FEATURES_CONFIG_PATH = "/assets/features.yml";
 export class ReadmeConfigBuilder {
     private logger: Logger;
     private endpointSnippets: FernGeneratorExec.Endpoint[];
-    private npmPackage: NpmPackage | undefined;
     private githubRepoUrl: string | undefined;
     private githubInstallationToken: string | undefined;
 
     constructor({
         logger,
         endpointSnippets,
-        npmPackage,
         githubRepoUrl,
         githubInstallationToken
     }: {
         logger: Logger;
         endpointSnippets: FernGeneratorExec.Endpoint[];
-        npmPackage: NpmPackage | undefined;
         githubRepoUrl: string | undefined;
         githubInstallationToken: string | undefined;
     }) {
         this.logger = logger;
         this.endpointSnippets = endpointSnippets;
-        this.npmPackage = npmPackage;
         this.githubRepoUrl = githubRepoUrl;
         this.githubInstallationToken = githubInstallationToken;
     }
@@ -42,7 +38,6 @@ export class ReadmeConfigBuilder {
         const featureConfig = this.readFeatureConfig();
         const readmeSnippetBuilder = new ReadmeSnippetBuilder({
             context,
-            npmPackage: this.npmPackage,
             endpointSnippets: this.endpointSnippets
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
@@ -65,7 +60,7 @@ export class ReadmeConfigBuilder {
                 githubRepoUrl: this.githubRepoUrl,
                 githubInstallationToken: this.githubInstallationToken
             }),
-            language: this.getLanguageInfo({ npmPackage: this.npmPackage }),
+            language: this.getLanguageInfo({ npmPackage: context.npmPackage }),
             organization: context.config.organization,
             apiReferenceLink: context.ir.readmeConfig?.apiReferenceLink,
             bannerLink: context.ir.readmeConfig?.bannerLink,

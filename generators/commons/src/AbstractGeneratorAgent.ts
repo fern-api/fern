@@ -1,7 +1,12 @@
 import { Logger } from "@fern-api/logger";
+import { AbstractGeneratorContext } from "./AbstractGeneratorContext";
 import { GeneratorAgentClient } from "./GeneratorAgentClient";
 
-export abstract class AbstractGeneratorAgent<Context, ReadmeConfig, ReferenceConfig> {
+export abstract class AbstractGeneratorAgent<
+    GeneratorContext extends AbstractGeneratorContext,
+    ReadmeConfig,
+    ReferenceConfig
+> {
     public README_FILENAME = "README.md";
     public REFERENCE_FILENAME = "reference.md";
 
@@ -13,12 +18,12 @@ export abstract class AbstractGeneratorAgent<Context, ReadmeConfig, ReferenceCon
         });
     }
 
-    public async generateReadme(context: Context): Promise<string> {
+    public async generateReadme(context: GeneratorContext): Promise<string> {
         const readmeConfig = this.getReadmeConfig(context);
         return this.cli.generateReadme({ readmeConfig });
     }
 
-    public async generateReference(context: Context): Promise<string> {
+    public async generateReference(context: GeneratorContext): Promise<string> {
         const referenceConfig = this.getReferenceConfig(context);
         return this.cli.generateReference({ referenceConfig });
     }
@@ -26,10 +31,10 @@ export abstract class AbstractGeneratorAgent<Context, ReadmeConfig, ReferenceCon
     /**
      * Gets the README.md configuration.
      */
-    protected abstract getReadmeConfig(context: Context): ReadmeConfig;
+    protected abstract getReadmeConfig(context: GeneratorContext): ReadmeConfig;
 
     /**
      * Gets the reference.md configuration.
      */
-    protected abstract getReferenceConfig(context: Context): ReferenceConfig;
+    protected abstract getReferenceConfig(context: GeneratorContext): ReferenceConfig;
 }

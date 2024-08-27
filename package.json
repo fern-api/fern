@@ -40,7 +40,8 @@
     "ir:generate": "pnpm --filter @fern-api/ir-sdk generate",
     "openapi-ir:generate": "pnpm --filter @fern-api/openapi-ir-sdk generate",
     "seed-config:generate": "pnpm --filter @fern-api/seed-cli generate",
-    "docs-config:generate": "pnpm --filter @fern-api/configuration generate"
+    "docs-config:generate": "pnpm --filter @fern-api/configuration generate",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",
