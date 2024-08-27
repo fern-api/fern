@@ -202,7 +202,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
         try {
             this._emit("readable");
             const infiniteRead = true;
-        while (infiniteRead) {
+            while (infiniteRead) {
                 if (this.paused) {
                     await new Promise((resolve) => {
                         this.resumeCallback = resolve;

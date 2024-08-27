@@ -28,7 +28,7 @@ function buildMessage({
     statusCode: number | undefined;
     body: unknown | undefined;
 }): string {
-    const lines: string[] = [];
+    let lines: string[] = [];
     if (message != null) {
         lines.push(message);
     }

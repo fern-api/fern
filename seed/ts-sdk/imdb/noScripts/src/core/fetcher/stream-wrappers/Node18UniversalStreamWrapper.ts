@@ -22,7 +22,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
             readable: [],
             close: [],
             pause: [],
-            resume: [],
+            resume: []
         };
         this.paused = false;
         this.resumeCallback = null;
@@ -252,7 +252,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
             },
             [Symbol.asyncIterator]() {
                 return this;
-            },
+            }
         };
     }
 }

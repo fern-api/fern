@@ -22,7 +22,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
             readable: [],
             close: [],
             pause: [],
-            resume: [],
+            resume: []
         };
         this.paused = false;
         this.resumeCallback = null;
@@ -239,7 +239,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
             },
             [Symbol.asyncIterator]() {
                 return this;
-            },
+            }
         };
     }
 }
