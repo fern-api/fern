@@ -171,8 +171,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     public async text(): Promise<string> {
         const chunks: ReadFormat[] = [];
 
-        const infiniteRead = true;
-        while (infiniteRead) {
+        while (true) {
             const { done, value } = await this.reader.read();
             if (done) {
                 break;

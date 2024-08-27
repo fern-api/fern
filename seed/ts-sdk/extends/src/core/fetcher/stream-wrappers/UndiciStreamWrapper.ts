@@ -158,8 +158,7 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
     public async text(): Promise<string> {
         const chunks: BlobPart[] = [];
 
-        const infiniteRead = true;
-        while (infiniteRead) {
+        while (true) {
             const { done, value } = await this.reader.read();
             if (done) {
                 break;
