@@ -97,14 +97,22 @@ export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCusto
         return files;
     }
 
-    public getAsIsTestUtils(): string[] {
-        return [];
+    public getCoreTestAsIsFiles(): string[] {
+        return [AsIsFiles.RawClientTests];
     }
 
     public getPublicCoreAsIsFiles(): string[] {
         if (this.hasGrpcEndpoints()) {
             return [AsIsFiles.GrpcRequestOptions];
         }
+        return [];
+    }
+
+    public getPublicCoreTestAsIsFiles(): string[] {
+        return [];
+    }
+
+    public getAsIsTestUtils(): string[] {
         return [];
     }
 

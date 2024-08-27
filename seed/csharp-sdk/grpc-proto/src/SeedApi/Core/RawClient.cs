@@ -29,22 +29,13 @@ internal class RawClient(ClientOptions clientOptions)
         CancellationToken cancellationToken = default
     )
     {
-        // Apply the request timeout, if any.
+        // Apply the request timeout.
         var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var timeout = request.Options?.Timeout ?? Options.Timeout;
-        if (timeout != null)
-        {
-            cts.CancelAfter(timeout);
-        }
+        cts.CancelAfter(timeout);
 
         // Send the request.
-        var httpRequest = BuildHttpRequest(request);
-        return await SendWithRetriesAsync(
-            request.Options?.HttpClient ?? Options.HttpClient,
-            httpRequest,
-            request.Options?.MaxRetries ?? Options.MaxRetries,
-            cts.Token
-        );
+        return await SendWithRetriesAsync(request, cts.Token);
     }
 
     public record BaseApiRequest
@@ -88,6 +79,33 @@ internal class RawClient(ClientOptions clientOptions)
         public required int StatusCode { get; init; }
 
         public required HttpResponseMessage Raw { get; init; }
+    }
+
+    private async Task<ApiResponse> SendWithRetriesAsync(
+        BaseApiRequest request,
+        CancellationToken cancellationToken
+    )
+    {
+        var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
+        var maxRetries = request.Options?.MaxRetries ?? Options.MaxRetries;
+        var response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken);
+        for (var i = 0; i < maxRetries; i++)
+        {
+            if (!ShouldRetry(response))
+            {
+                break;
+            }
+            var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
+            await Task.Delay(delayMs, cancellationToken);
+            response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken);
+        }
+        return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+    }
+
+    private static bool ShouldRetry(HttpResponseMessage response)
+    {
+        var statusCode = (int)response.StatusCode;
+        return statusCode is 408 or 429 or >= 500;
     }
 
     private HttpRequestMessage BuildHttpRequest(BaseApiRequest request)
@@ -168,32 +186,5 @@ internal class RawClient(ClientOptions clientOptions)
                 httpRequest.Headers.TryAddWithoutValidation(header.Key, value);
             }
         }
-    }
-
-    private static async Task<ApiResponse> SendWithRetriesAsync(
-        HttpClient httpClient,
-        HttpRequestMessage httpRequest,
-        int maxRetries,
-        CancellationToken cancellationToken
-    )
-    {
-        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
-        for (var i = 0; i < maxRetries; i++)
-        {
-            if (!ShouldRetry(response))
-            {
-                break;
-            }
-            var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
-            await Task.Delay(delayMs, cancellationToken);
-            response = await httpClient.SendAsync(httpRequest, cancellationToken);
-        }
-        return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
-    }
-
-    private static bool ShouldRetry(HttpResponseMessage response)
-    {
-        var statusCode = (int)response.StatusCode;
-        return statusCode is 408 or 429 or >= 500;
     }
 }

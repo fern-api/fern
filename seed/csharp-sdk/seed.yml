@@ -26,6 +26,7 @@ scripts:
   - docker: bitnami/dotnet-sdk:8
     commands:
       - dotnet build src -c Release /p:ContinuousIntegrationBuild=true
+      - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core"
       # - dotnet test src
 
 fixtures: 
