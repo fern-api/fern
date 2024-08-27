@@ -11,8 +11,11 @@ namespace SeedMixedCase.Core;
 /// </summary>
 internal class RawClient(ClientOptions clientOptions)
 {
+    private const int InitialRetryDelayMs = 1000;
+    private const int MaxRetryDelayMs = 60000;
+
     /// <summary>
-    /// The http client used to make requests.
+    /// The client options applied on every request.
     /// </summary>
     public readonly ClientOptions Options = clientOptions;
 
@@ -21,33 +24,6 @@ internal class RawClient(ClientOptions clientOptions)
         CancellationToken cancellationToken = default
     )
     {
-        var url = BuildUrl(request);
-        var httpRequest = new HttpRequestMessage(request.Method, url);
-        if (request.ContentType != null)
-        {
-            request.Headers.Add("Content-Type", request.ContentType);
-        }
-        SetHeaders(httpRequest, Options.Headers);
-        SetHeaders(httpRequest, request.Headers);
-        SetHeaders(httpRequest, request.Options?.Headers ?? new());
-
-        // Add the request body to the request.
-        if (request is JsonApiRequest jsonRequest)
-        {
-            if (jsonRequest.Body != null)
-            {
-                httpRequest.Content = new StringContent(
-                    JsonUtils.Serialize(jsonRequest.Body),
-                    Encoding.UTF8,
-                    "application/json"
-                );
-            }
-        }
-        else if (request is StreamApiRequest { Body: not null } streamRequest)
-        {
-            httpRequest.Content = new StreamContent(streamRequest.Body);
-        }
-
         // Apply the request timeout, if any.
         var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var timeout = request.Options?.Timeout ?? Options.Timeout;
@@ -57,9 +33,13 @@ internal class RawClient(ClientOptions clientOptions)
         }
 
         // Send the request.
-        var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
-        var response = await httpClient.SendAsync(httpRequest, cts.Token);
-        return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+        var httpRequest = BuildHttpRequest(request);
+        return await SendWithRetriesAsync(
+            request.Options?.HttpClient ?? Options.HttpClient,
+            httpRequest,
+            request.Options?.MaxRetries ?? Options.MaxRetries,
+            cts.Token
+        );
     }
 
     public record BaseApiRequest
@@ -105,19 +85,40 @@ internal class RawClient(ClientOptions clientOptions)
         public required HttpResponseMessage Raw { get; init; }
     }
 
-    private void SetHeaders(HttpRequestMessage httpRequest, Headers headers)
+    private HttpRequestMessage BuildHttpRequest(BaseApiRequest request)
     {
-        foreach (var header in headers)
+        var url = BuildUrl(request);
+        var httpRequest = new HttpRequestMessage(request.Method, url);
+        switch (request)
         {
-            var value = header.Value?.Match(str => str, func => func.Invoke());
-            if (value != null)
+            // Add the request body to the request.
+            case JsonApiRequest jsonRequest:
             {
-                httpRequest.Headers.TryAddWithoutValidation(header.Key, value);
+                if (jsonRequest.Body != null)
+                {
+                    httpRequest.Content = new StringContent(
+                        JsonUtils.Serialize(jsonRequest.Body),
+                        Encoding.UTF8,
+                        "application/json"
+                    );
+                }
+                break;
             }
+            case StreamApiRequest { Body: not null } streamRequest:
+                httpRequest.Content = new StreamContent(streamRequest.Body);
+                break;
         }
+        if (request.ContentType != null)
+        {
+            request.Headers.Add("Content-Type", request.ContentType);
+        }
+        SetHeaders(httpRequest, Options.Headers);
+        SetHeaders(httpRequest, request.Headers);
+        SetHeaders(httpRequest, request.Options?.Headers ?? new Headers());
+        return httpRequest;
     }
 
-    private string BuildUrl(BaseApiRequest request)
+    private static string BuildUrl(BaseApiRequest request)
     {
         var baseUrl = request.Options?.BaseUrl ?? request.BaseUrl;
         var trimmedBaseUrl = baseUrl.TrimEnd('/');
@@ -148,7 +149,46 @@ internal class RawClient(ClientOptions clientOptions)
                 return current;
             }
         );
-        url = url.Substring(0, url.Length - 1);
+        url = url[..^1];
         return url;
+    }
+
+    private static void SetHeaders(HttpRequestMessage httpRequest, Headers headers)
+    {
+        foreach (var header in headers)
+        {
+            var value = header.Value?.Match(str => str, func => func.Invoke());
+            if (value != null)
+            {
+                httpRequest.Headers.TryAddWithoutValidation(header.Key, value);
+            }
+        }
+    }
+
+    private static async Task<ApiResponse> SendWithRetriesAsync(
+        HttpClient httpClient,
+        HttpRequestMessage httpRequest,
+        int maxRetries,
+        CancellationToken cancellationToken
+    )
+    {
+        var response = await httpClient.SendAsync(httpRequest, cancellationToken);
+        for (var i = 0; i < maxRetries; i++)
+        {
+            if (!ShouldRetry(response))
+            {
+                break;
+            }
+            var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
+            await Task.Delay(delayMs, cancellationToken);
+            response = await httpClient.SendAsync(httpRequest, cancellationToken);
+        }
+        return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
+    }
+
+    private static bool ShouldRetry(HttpResponseMessage response)
+    {
+        var statusCode = (int)response.StatusCode;
+        return statusCode is 408 or 429 or >= 500;
     }
 }
