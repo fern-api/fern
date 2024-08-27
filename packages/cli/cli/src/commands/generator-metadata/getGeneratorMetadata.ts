@@ -14,8 +14,8 @@ export async function getGeneratorMetadata({
     groupFilter: string;
     apiFilter: string | undefined;
     project: Project;
-}): Promise<void> {
-    let generatorFound = false;
+}): Promise<generatorsYml.GeneratorInvocation | undefined> {
+    let maybeGenerator: generatorsYml.GeneratorInvocation | undefined;
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
             await cliContext.runTaskForWorkspace(workspace, async (context) => {
@@ -42,8 +42,7 @@ export async function getGeneratorMetadata({
                     // Log version of generator to stdout
                     for (const generator of group.generators) {
                         if (generatorFilter === generator.name) {
-                            process.stdout.write(generator.version);
-                            generatorFound = true;
+                            maybeGenerator = generator;
                         }
                     }
                 }
@@ -51,12 +50,5 @@ export async function getGeneratorMetadata({
         })
     );
 
-    if (!generatorFound) {
-        const maybeApiFilter = apiFilter ? ` for API ${apiFilter}` : "";
-        cliContext.failAndThrow(
-            `Generator ${generatorFilter}, in group ${groupFilter}${maybeApiFilter} was not found.`
-        );
-    }
-
-    return;
+    return maybeGenerator;
 }

@@ -159,13 +159,11 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                         .option("group", {
                             string: true,
                             demandOption: true,
-                            description:
-                                "The group in which the generator is located."
+                            description: "The group in which the generator is located."
                         })
                         .option("api", {
                             string: true,
-                            description:
-                                "The API in which the generator is located."
+                            description: "The API in which the generator is located."
                         })
                         .option("version", {
                             boolean: true,
@@ -183,17 +181,24 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             includeMajor: argv.includeMajor
                         }
                     });
+                    const generator = await getGeneratorMetadata({
+                        cliContext,
+                        generatorFilter: argv.generator,
+                        groupFilter: argv.group,
+                        apiFilter: argv.api,
+                        project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                            commandLineApiWorkspace: argv.api,
+                            defaultToAllApiWorkspaces: true
+                        })
+                    });
+                    if (generator == null) {
+                        const maybeApiFilter = argv.api ? ` for API ${argv.api}` : "";
+                        cliContext.failAndThrow(
+                            `Generator ${argv.generator}, in group ${argv.group}${maybeApiFilter} was not found.`
+                        );
+                    }
                     if (argv.version) {
-                        await getGeneratorMetadata({
-                            cliContext,
-                            generatorFilter: argv.generator,
-                            groupFilter: argv.group,
-                            apiFilter: argv.api,
-                            project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
-                                commandLineApiWorkspace: argv.api,
-                                defaultToAllApiWorkspaces: true
-                            })
-                        });
+                        process.stdout.write(generator.version);
                     }
                 }
             );
