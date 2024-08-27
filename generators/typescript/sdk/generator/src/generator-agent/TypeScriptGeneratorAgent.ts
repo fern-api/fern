@@ -6,11 +6,7 @@ import { ReferenceConfigBuilder } from "./ReferenceConfigBuilder";
 import { ExportedFilePath } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 
-export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<
-    SdkContext,
-    FernGeneratorCli.ReadmeConfig,
-    FernGeneratorCli.ReferenceConfig
-> {
+export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
     private referenceConfigBuilder: ReferenceConfigBuilder;
 

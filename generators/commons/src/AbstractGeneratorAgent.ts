@@ -1,12 +1,9 @@
 import { Logger } from "@fern-api/logger";
 import { AbstractGeneratorContext } from "./AbstractGeneratorContext";
 import { GeneratorAgentClient } from "./GeneratorAgentClient";
+import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 
-export abstract class AbstractGeneratorAgent<
-    GeneratorContext extends AbstractGeneratorContext,
-    ReadmeConfig,
-    ReferenceConfig
-> {
+export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGeneratorContext> {
     public README_FILENAME = "README.md";
     public REFERENCE_FILENAME = "reference.md";
 
@@ -31,10 +28,10 @@ export abstract class AbstractGeneratorAgent<
     /**
      * Gets the README.md configuration.
      */
-    protected abstract getReadmeConfig(context: GeneratorContext): ReadmeConfig;
+    protected abstract getReadmeConfig(context: GeneratorContext): FernGeneratorCli.ReadmeConfig;
 
     /**
      * Gets the reference.md configuration.
      */
-    protected abstract getReferenceConfig(context: GeneratorContext): ReferenceConfig;
+    protected abstract getReferenceConfig(context: GeneratorContext): FernGeneratorCli.ReferenceConfig;
 }
