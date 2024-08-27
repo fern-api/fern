@@ -1,0 +1,425 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/",
+                "method": "GET",
+                "identifier_override": "endpoint_v2.test"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.V2.TestAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/admin/store-test-submission-status/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.updateTestSubmissionStatus"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.UpdateTestSubmissionStatusAsync(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"no-properties-union\"\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/admin/store-test-submission-status-v2/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.sendTestSubmissionUpdate"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\nusing System.Globalization;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.SendTestSubmissionUpdateAsync(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    new TestSubmissionUpdate\n    {\n        UpdateTime = DateTime.Parse(\n            \"2024-01-15T09:30:00.000Z\",\n            null,\n            DateTimeStyles.AdjustToUniversal\n        ),\n        UpdateInfo = RunningSubmissionState.QueueingSubmission,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/admin/store-workspace-submission-status/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.updateWorkspaceSubmissionStatus"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.UpdateWorkspaceSubmissionStatusAsync(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"no-properties-union\"\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/admin/store-workspace-submission-status-v2/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.sendWorkspaceSubmissionUpdate"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\nusing System.Globalization;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.SendWorkspaceSubmissionUpdateAsync(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    new WorkspaceSubmissionUpdate\n    {\n        UpdateTime = DateTime.Parse(\n            \"2024-01-15T09:30:00.000Z\",\n            null,\n            DateTimeStyles.AdjustToUniversal\n        ),\n        UpdateInfo = RunningSubmissionState.QueueingSubmission,\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/admin/store-test-trace/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedTestCase"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.StoreTracedTestCaseAsync(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"string\",\n    new StoreTracedTestCaseRequest\n    {\n        Result = new TestCaseResultWithStdout\n        {\n            Result = new TestCaseResult\n            {\n                ExpectedResult = 1,\n                ActualResult = new Dictionary<object, object?>() { { \"key\", \"value\" } },\n                Passed = true,\n            },\n            Stdout = \"string\",\n        },\n        TraceResponses = new List<TraceResponse>()\n        {\n            new TraceResponse\n            {\n                SubmissionId = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                LineNumber = 1,\n                ReturnValue = 1,\n                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },\n                Stack = new StackInformation\n                {\n                    NumStackFrames = 1,\n                    TopStackFrame = new StackFrame\n                    {\n                        MethodName = \"string\",\n                        LineNumber = 1,\n                        Scopes = new List<Scope>()\n                        {\n                            new Scope\n                            {\n                                Variables = new Dictionary<string, object>()\n                                {\n                                    {\n                                        \"string\",\n                                        new Dictionary<object, object?>() { { \"key\", \"value\" } }\n                                    },\n                                },\n                            },\n                        },\n                    },\n                },\n                Stdout = \"string\",\n            },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/admin/store-test-trace-v2/submission/{submissionId}/testCase/{testCaseId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedTestCaseV2"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.StoreTracedTestCaseV2Async(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    \"string\",\n    new List<TraceResponseV2>()\n    {\n        new TraceResponseV2\n        {\n            SubmissionId = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            LineNumber = 1,\n            File = new TracedFile { Filename = \"string\", Directory = \"string\" },\n            ReturnValue = 1,\n            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },\n            Stack = new StackInformation\n            {\n                NumStackFrames = 1,\n                TopStackFrame = new StackFrame\n                {\n                    MethodName = \"string\",\n                    LineNumber = 1,\n                    Scopes = new List<Scope>()\n                    {\n                        new Scope\n                        {\n                            Variables = new Dictionary<string, object>()\n                            {\n                                {\n                                    \"string\",\n                                    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n                                },\n                            },\n                        },\n                    },\n                },\n            },\n            Stdout = \"string\",\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/admin/store-workspace-trace/submission/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedWorkspace"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.StoreTracedWorkspaceAsync(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    new StoreTracedWorkspaceRequest\n    {\n        WorkspaceRunDetails = new WorkspaceRunDetails\n        {\n            ExceptionV2 = new ExceptionInfo\n            {\n                ExceptionType = \"string\",\n                ExceptionMessage = \"string\",\n                ExceptionStacktrace = \"string\",\n            },\n            Exception = new ExceptionInfo\n            {\n                ExceptionType = \"string\",\n                ExceptionMessage = \"string\",\n                ExceptionStacktrace = \"string\",\n            },\n            Stdout = \"string\",\n        },\n        TraceResponses = new List<TraceResponse>()\n        {\n            new TraceResponse\n            {\n                SubmissionId = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n                LineNumber = 1,\n                ReturnValue = 1,\n                ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },\n                Stack = new StackInformation\n                {\n                    NumStackFrames = 1,\n                    TopStackFrame = new StackFrame\n                    {\n                        MethodName = \"string\",\n                        LineNumber = 1,\n                        Scopes = new List<Scope>()\n                        {\n                            new Scope\n                            {\n                                Variables = new Dictionary<string, object>()\n                                {\n                                    {\n                                        \"string\",\n                                        new Dictionary<object, object?>() { { \"key\", \"value\" } }\n                                    },\n                                },\n                            },\n                        },\n                    },\n                },\n                Stdout = \"string\",\n            },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/admin/store-workspace-trace-v2/submission/{submissionId}",
+                "method": "POST",
+                "identifier_override": "endpoint_admin.storeTracedWorkspaceV2"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Admin.StoreTracedWorkspaceV2Async(\n    \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n    new List<TraceResponseV2>()\n    {\n        new TraceResponseV2\n        {\n            SubmissionId = \"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32\",\n            LineNumber = 1,\n            File = new TracedFile { Filename = \"string\", Directory = \"string\" },\n            ReturnValue = 1,\n            ExpressionLocation = new ExpressionLocation { Start = 1, Offset = 1 },\n            Stack = new StackInformation\n            {\n                NumStackFrames = 1,\n                TopStackFrame = new StackFrame\n                {\n                    MethodName = \"string\",\n                    LineNumber = 1,\n                    Scopes = new List<Scope>()\n                    {\n                        new Scope\n                        {\n                            Variables = new Dictionary<string, object>()\n                            {\n                                {\n                                    \"string\",\n                                    new Dictionary<object, object?>() { { \"key\", \"value\" } }\n                                },\n                            },\n                        },\n                    },\n                },\n            },\n            Stdout = \"string\",\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/homepage-problems",
+                "method": "GET",
+                "identifier_override": "endpoint_homepage.getHomepageProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Homepage.GetHomepageProblemsAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/homepage-problems",
+                "method": "POST",
+                "identifier_override": "endpoint_homepage.setHomepageProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Homepage.SetHomepageProblemsAsync(new List<string>() { \"string\" });\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/migration-info/all",
+                "method": "GET",
+                "identifier_override": "endpoint_migration.getAttemptedMigrations"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Migration.GetAttemptedMigrationsAsync(\n    new GetAttemptedMigrationsRequest { AdminKeyHeader = \"string\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/create",
+                "method": "POST",
+                "identifier_override": "endpoint_playlist.createPlaylist"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\nusing System.Globalization;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Playlist.CreatePlaylistAsync(\n    1,\n    new CreatePlaylistRequest\n    {\n        Datetime = DateTime.Parse(\n            \"2024-01-15T09:30:00.000Z\",\n            null,\n            DateTimeStyles.AdjustToUniversal\n        ),\n        OptionalDatetime = DateTime.Parse(\n            \"2024-01-15T09:30:00.000Z\",\n            null,\n            DateTimeStyles.AdjustToUniversal\n        ),\n        Body = new PlaylistCreateRequest\n        {\n            Name = \"string\",\n            Problems = new List<string>() { \"string\" },\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/all",
+                "method": "GET",
+                "identifier_override": "endpoint_playlist.getPlaylists"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Playlist.GetPlaylistsAsync(\n    1,\n    new GetPlaylistsRequest\n    {\n        Limit = 1,\n        OtherField = \"string\",\n        MultiLineDocs = \"string\",\n        OptionalMultipleField = [\"string\"],\n        MultipleField = [\"string\"],\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "GET",
+                "identifier_override": "endpoint_playlist.getPlaylist"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Playlist.GetPlaylistAsync(1, \"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlistId}",
+                "method": "PUT",
+                "identifier_override": "endpoint_playlist.updatePlaylist"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Playlist.UpdatePlaylistAsync(\n    1,\n    \"string\",\n    new UpdatePlaylistRequest\n    {\n        Name = \"string\",\n        Problems = new List<string>() { \"string\" },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/v2/playlist/{serviceParam}/{playlist_id}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_playlist.deletePlaylist"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Playlist.DeletePlaylistAsync(1, \"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problem-crud/create",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.createProblem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Problem.CreateProblemAsync(\n    new CreateProblemRequest\n    {\n        ProblemName = \"string\",\n        ProblemDescription = new ProblemDescription { Boards = new List<object>() { \"string\" } },\n        Files = new Dictionary<Language, ProblemFiles>()\n        {\n            {\n                Language.Java,\n                new ProblemFiles\n                {\n                    SolutionFile = new FileInfo { Filename = \"string\", Contents = \"string\" },\n                    ReadOnlyFiles = new List<FileInfo>()\n                    {\n                        new FileInfo { Filename = \"string\", Contents = \"string\" },\n                    },\n                }\n            },\n        },\n        InputParams = new List<VariableTypeAndName>()\n        {\n            new VariableTypeAndName { VariableType = \"no-properties-union\", Name = \"string\" },\n        },\n        OutputType = \"no-properties-union\",\n        Testcases = new List<TestCaseWithExpectedResult>()\n        {\n            new TestCaseWithExpectedResult\n            {\n                TestCase = new TestCase\n                {\n                    Id = \"string\",\n                    Params = new List<object>() { 1 },\n                },\n                ExpectedResult = 1,\n            },\n        },\n        MethodName = \"string\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problem-crud/update/{problemId}",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.updateProblem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Problem.UpdateProblemAsync(\n    \"string\",\n    new CreateProblemRequest\n    {\n        ProblemName = \"string\",\n        ProblemDescription = new ProblemDescription { Boards = new List<object>() { \"string\" } },\n        Files = new Dictionary<Language, ProblemFiles>()\n        {\n            {\n                Language.Java,\n                new ProblemFiles\n                {\n                    SolutionFile = new FileInfo { Filename = \"string\", Contents = \"string\" },\n                    ReadOnlyFiles = new List<FileInfo>()\n                    {\n                        new FileInfo { Filename = \"string\", Contents = \"string\" },\n                    },\n                }\n            },\n        },\n        InputParams = new List<VariableTypeAndName>()\n        {\n            new VariableTypeAndName { VariableType = \"no-properties-union\", Name = \"string\" },\n        },\n        OutputType = \"no-properties-union\",\n        Testcases = new List<TestCaseWithExpectedResult>()\n        {\n            new TestCaseWithExpectedResult\n            {\n                TestCase = new TestCase\n                {\n                    Id = \"string\",\n                    Params = new List<object>() { 1 },\n                },\n                ExpectedResult = 1,\n            },\n        },\n        MethodName = \"string\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problem-crud/delete/{problemId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_problem.deleteProblem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Problem.DeleteProblemAsync(\"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problem-crud/default-starter-files",
+                "method": "POST",
+                "identifier_override": "endpoint_problem.getDefaultStarterFiles"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Problem.GetDefaultStarterFilesAsync(\n    new GetDefaultStarterFilesRequest\n    {\n        InputParams = new List<VariableTypeAndName>()\n        {\n            new VariableTypeAndName { VariableType = \"no-properties-union\", Name = \"string\" },\n        },\n        OutputType = \"no-properties-union\",\n        MethodName = \"string\",\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/sessions/create-session/{language}",
+                "method": "POST",
+                "identifier_override": "endpoint_submission.createExecutionSession"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Submission.CreateExecutionSessionAsync(Language.Java);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/sessions/{sessionId}",
+                "method": "GET",
+                "identifier_override": "endpoint_submission.getExecutionSession"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Submission.GetExecutionSessionAsync(\"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/sessions/stop/{sessionId}",
+                "method": "DELETE",
+                "identifier_override": "endpoint_submission.stopExecutionSession"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Submission.StopExecutionSessionAsync(\"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/sessions/execution-sessions-state",
+                "method": "GET",
+                "identifier_override": "endpoint_submission.getExecutionSessionsState"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Submission.GetExecutionSessionsStateAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/sysprop/num-warm-instances/{language}/{numWarmInstances}",
+                "method": "PUT",
+                "identifier_override": "endpoint_sysprop.setNumWarmInstances"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/sysprop/num-warm-instances",
+                "method": "GET",
+                "identifier_override": "endpoint_sysprop.getNumWarmInstances"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.Sysprop.GetNumWarmInstancesAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getLightweightProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.V2.Problem.GetLightweightProblemsAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.V2.Problem.GetProblemsAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getLatestProblem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.V2.Problem.GetLatestProblemAsync(\"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/problem.getProblemVersion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.V2.Problem.GetProblemVersionAsync(\"string\", 1);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problems-v2/lightweight-problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getLightweightProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.V2.V3.Problem.GetLightweightProblemsAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problems-v2/problem-info",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getProblems"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.V2.V3.Problem.GetProblemsAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getLatestProblem"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.V2.V3.Problem.GetLatestProblemAsync(\"string\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/problems-v2/problem-info/{problemId}/version/{problemVersion}",
+                "method": "GET",
+                "identifier_override": "endpoint_v2/v3/problem.getProblemVersion"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedTrace;\n\nvar client = new SeedTraceClient(\"TOKEN\");\nawait client.V2.V3.Problem.GetProblemVersionAsync(\"string\", 1);\n"
+            }
+        }
+    ]
+}

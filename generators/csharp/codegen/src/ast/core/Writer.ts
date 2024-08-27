@@ -204,6 +204,15 @@ export class Writer {
         return this.buffer;
     }
 
+    public importsToString(): string | undefined {
+        const imports = this.stringifyImports();
+        return imports.length > 0 ? imports : undefined;
+    }
+
+    public getBuffer(): string {
+        return this.buffer;
+    }
+
     public isReadOnlyMemoryType(type: string): boolean {
         return this.customConfig["read-only-memory-types"]?.includes(type) ?? false;
     }

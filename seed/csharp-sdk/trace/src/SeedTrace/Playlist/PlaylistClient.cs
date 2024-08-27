@@ -26,8 +26,16 @@ public partial class PlaylistClient
     ///     1,
     ///     new CreatePlaylistRequest
     ///     {
-    ///         Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         OptionalDatetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///         Datetime = DateTime.Parse(
+    ///             "2024-01-15T09:30:00.000Z",
+    ///             null,
+    ///             DateTimeStyles.AdjustToUniversal
+    ///         ),
+    ///         OptionalDatetime = DateTime.Parse(
+    ///             "2024-01-15T09:30:00.000Z",
+    ///             null,
+    ///             DateTimeStyles.AdjustToUniversal
+    ///         ),
     ///         Body = new PlaylistCreateRequest
     ///         {
     ///             Name = "string",

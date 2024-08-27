@@ -4,6 +4,11 @@ import { Writer } from "./Writer";
 
 type Namespace = string;
 
+export interface FormattedAstNodeSnippet {
+    imports: string | undefined;
+    body: string;
+}
+
 export abstract class AstNode {
     /**
      * Every AST node knows how to write itself to a string.
@@ -39,13 +44,38 @@ export abstract class AstNode {
         });
         this.write(writer);
         const stringNode = writer.toString(skipImports);
-        return format ? this.toFormattedSnippet(stringNode) : stringNode;
+        return format ? AstNode.toFormattedSnippet(stringNode) : stringNode;
+    }
+
+    public toFormattedSnippet({
+        allNamespaceSegments,
+        allTypeClassReferences,
+        rootNamespace,
+        customConfig
+    }: {
+        allNamespaceSegments: Set<string>;
+        allTypeClassReferences: Map<string, Set<Namespace>>;
+        rootNamespace: string;
+        customConfig: BaseCsharpCustomConfigSchema;
+    }): FormattedAstNodeSnippet {
+        const writer = new Writer({
+            namespace: "",
+            allNamespaceSegments,
+            allTypeClassReferences,
+            rootNamespace,
+            customConfig
+        });
+        this.write(writer);
+        return {
+            imports: writer.importsToString(),
+            body: AstNode.toFormattedSnippet(writer.getBuffer())
+        };
     }
 
     /**
      * function for formatting snippets, useful in testing
      */
-    public toFormattedSnippet(code: string): string {
+    private static toFormattedSnippet(code: string): string {
         code += ";";
         try {
             const finalCode = AstNode.formatCSharpCode(code);

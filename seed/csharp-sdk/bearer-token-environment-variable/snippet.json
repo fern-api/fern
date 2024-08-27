@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/apiKey",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithBearerToken"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedBearerTokenEnvironmentVariable;\n\nvar client = new SeedBearerTokenEnvironmentVariableClient(\"API_KEY\");\nawait client.Service.GetWithBearerTokenAsync();\n"
+            }
+        }
+    ]
+}

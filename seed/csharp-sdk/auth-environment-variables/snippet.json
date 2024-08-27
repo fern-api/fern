@@ -1,0 +1,29 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/apiKey",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithApiKey"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedAuthEnvironmentVariables;\n\nvar client = new SeedAuthEnvironmentVariablesClient(\"X_ANOTHER_HEADER\", \"API_KEY\");\nawait client.Service.GetWithApiKeyAsync();\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/apiKeyInHeader",
+                "method": "GET",
+                "identifier_override": "endpoint_service.getWithHeader"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "using SeedAuthEnvironmentVariables;\n\nvar client = new SeedAuthEnvironmentVariablesClient(\"X_ANOTHER_HEADER\", \"API_KEY\");\nawait client.Service.GetWithHeaderAsync(new HeaderAuthRequest { XEndpointHeader = \"string\" });\n"
+            }
+        }
+    ]
+}

@@ -36,7 +36,11 @@ public partial class InlinedRequestsClient
     ///             Long = 1000000,
     ///             Double = 1.1,
     ///             Bool = true,
-    ///             Datetime = new DateTime(2024, 01, 15, 09, 30, 00, 000),
+    ///             Datetime = DateTime.Parse(
+    ///                 "2024-01-15T09:30:00.000Z",
+    ///                 null,
+    ///                 DateTimeStyles.AdjustToUniversal
+    ///             ),
     ///             Date = new DateOnly(2023, 1, 15),
     ///             Uuid = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     ///             Base64 = "SGVsbG8gd29ybGQh",
