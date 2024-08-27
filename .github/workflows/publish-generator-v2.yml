@@ -101,6 +101,7 @@ jobs:
 
       - name: Run publish
         env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         # This is wack and redundant, but the path filter Github Action above does not let you easily see
@@ -109,7 +110,7 @@ jobs:
         run: |
           if [ ${{ matrix.generator }} = "python-sdk" ]; then
               VERSIONS_FILE="generators/python/sdk/versions.yml"
-          done
+          fi
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
 
@@ -139,6 +140,7 @@ jobs:
 
       - name: Run publish
         env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           DOCKER_USERNAME: fernapi
           DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
         # This is wack and redundant, but the path filter Github Action above does not let you easily see
@@ -147,7 +149,7 @@ jobs:
         run: |
           if [ ${{ inputs.generator }} = "python-sdk" ]; then
               VERSIONS_FILE="generators/python/sdk/versions.yml"
-          done
+          fi
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ inputs.generator }}_previous_versions.yml
 
