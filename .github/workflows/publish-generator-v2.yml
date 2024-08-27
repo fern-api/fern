@@ -7,8 +7,8 @@ on:
       - main
     paths:
       - "generators/python/sdk/versions.yml"
-      # - "generators/python/fastapi/versions.yml"
-      # - "generators/python/pydantic/versions.yml"
+      - "generators/python/fastapi/versions.yml"
+      - "generators/python/pydantic/versions.yml"
       # - "generators/openapi/versions.yml"
       # - "generators/postman/versions.yml"
       # - "generators/ruby/model/versions.yml"
@@ -29,9 +29,9 @@ on:
         type: choice
         options:
           - python-sdk
+          - fastapi
+          - pydantic
           # - openapi
-          # - fastapi
-          # - pydantic
           # - postman
           # - ruby-sdk
           # - ruby-model
@@ -61,8 +61,8 @@ jobs:
         with:
           filters: |
             python-sdk: 'generators/python/sdk/versions.yml'
-          # fastapi: 'generators/python/fastapi/versions.yml'
-          # pydantic: 'generators/python/pydantic/versions.yml'
+            fastapi: "generators/python/fastapi/versions.yml"
+            pydantic: "generators/python/pydantic/versions.yml"
           # openapi: 'generators/openapi/versions.yml'
           # postman: 'generators/postman/versions.yml'
           # ruby-model: 'generators/ruby/model/versions.yml'
@@ -110,6 +110,10 @@ jobs:
         run: |
           if [ ${{ matrix.generator }} = "python-sdk" ]; then
               VERSIONS_FILE="generators/python/sdk/versions.yml"
+          elif [ ${{ matrix.generator }} = "fastapi" ]; then
+              VERSIONS_FILE="generators/python/fastapi/versions.yml"
+          elif [ ${{ matrix.generator }} = "pydantic" ]; then
+              VERSIONS_FILE="generators/python/pydantic/versions.yml"
           fi
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
@@ -149,6 +153,10 @@ jobs:
         run: |
           if [ ${{ inputs.generator }} = "python-sdk" ]; then
               VERSIONS_FILE="generators/python/sdk/versions.yml"
+          elif [ ${{ inputs.generator }} = "fastapi" ]; then
+              VERSIONS_FILE="generators/python/fastapi/versions.yml"
+          elif [ ${{ inputs.generator }} = "pydantic" ]; then
+              VERSIONS_FILE="generators/python/pydantic/versions.yml"
           fi
 
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ inputs.generator }}_previous_versions.yml

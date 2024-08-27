@@ -1,0 +1,102 @@
+name: validate seed changelog file
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "generators/python/sdk/versions.yml"
+      - "generators/python/fastapi/versions.yml"
+      - "generators/python/pydantic/versions.yml"
+      # - "generators/openapi/versions.yml"
+      # - "generators/postman/versions.yml"
+      # - "generators/ruby/model/versions.yml"
+      # - "generators/ruby/sdk/versions.yml"
+      # - "generators/java/sdk/versions.yml"
+      # - "generators/java/model/versions.yml"
+      # - "generators/java/spring/versions.yml"
+      # - "generators/typescript/sdk/versions.yml"
+      # - "generators/typescript/express/versions.yml"
+      # - "generators/go/versions.yml"
+      # - "generators/csharp/sdk/versions.yml"
+      # - "generators/csharp/model/versions.yml"
+
+      # Cancel previous workflows on previous push
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  versions-changed:
+    runs-on: ubuntu-latest
+    outputs:
+      generators: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            python-sdk: 'generators/python/sdk/versions.yml'
+            fastapi: "generators/python/fastapi/versions.yml"
+            pydantic: "generators/python/pydantic/versions.yml"
+          # openapi: 'generators/openapi/versions.yml'
+          # postman: 'generators/postman/versions.yml'
+          # ruby-model: 'generators/ruby/model/versions.yml'
+          # ruby-sdk: 'generators/ruby/sdk/versions.yml'
+          # java-sdk: 'generators/java/sdk/versions.yml'
+          # java-model: 'generators/java/model/versions.yml'
+          # spring: 'generators/java/spring/versions.yml'
+          # ts-sdk: 'generators/typescript/sdk/versions.yml'
+          # ts-express: 'generators/typescript/express/versions.yml'
+          # go-sdk: 'generators/go/versions.yml'
+          # go-model: 'generators/go/versions.yml'
+          # go-fiber: 'generators/go/versions.yml'
+          # csharp-sdk: 'generators/csharp/sdk/versions.yml'
+          # csharp-model: 'generators/csharp/model/versions.yml'
+
+  validate-cli:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    strategy:
+      matrix:
+        generator: ${{ fromJSON(needs.versions-changed.outputs.generators) }}
+    steps:
+      - name: Checkout repo at current ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Validate changelog
+        run: |
+          pnpm seed:local validate cli --log-level debug
+
+  validate-generator:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    strategy:
+      matrix:
+        generator: ${{ fromJSON(needs.versions-changed.outputs.generators) }}
+    steps:
+      - name: Checkout repo at current ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Validate changelog
+        run: |
+          if [ ${{ matrix.generator }} = "python-sdk" ]; then
+              VERSIONS_FILE="generators/python/sdk/versions.yml"
+          elif [ ${{ matrix.generator }} = "fastapi" ]; then
+              VERSIONS_FILE="generators/python/fastapi/versions.yml"
+          elif [ ${{ matrix.generator }} = "pydantic" ]; then
+              VERSIONS_FILE="generators/python/pydantic/versions.yml"
+          fi
+
+          pnpm seed:local validate generator ${{ matrix.generator }} --log-level debug
