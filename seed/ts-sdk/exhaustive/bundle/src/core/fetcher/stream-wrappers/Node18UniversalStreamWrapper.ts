@@ -213,8 +213,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
     private async _startReading(): Promise<void> {
         try {
             this._emit("readable");
-            const infiniteRead = true;
-            while (infiniteRead) {
+            while (true) {
                 if (this.paused) {
                     await new Promise((resolve) => {
                         this.resumeCallback = resolve;

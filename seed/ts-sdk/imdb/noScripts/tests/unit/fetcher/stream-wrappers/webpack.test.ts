@@ -12,13 +12,13 @@ describe("test env compatibility", () => {
                             {
                                 test: /\.tsx?$/,
                                 use: "ts-loader",
-                                exclude: /node_modules/,
-                            },
-                        ],
+                                exclude: /node_modules/
+                            }
+                        ]
                     },
                     resolve: {
-                        extensions: [".tsx", ".ts", ".js"],
-                    },
+                        extensions: [".tsx", ".ts", ".js"]
+                    }
                 },
                 (err, stats) => {
                     try {
