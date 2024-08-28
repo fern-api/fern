@@ -58,6 +58,7 @@ jobs:
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN"
 
   publish:
+    needs: [live-test]
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
