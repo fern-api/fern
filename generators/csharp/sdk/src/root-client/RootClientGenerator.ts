@@ -292,9 +292,13 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
         };
     }
 
-    public generateExampleClientInstantiationSnippet(
-        clientOptionsArgument?: csharp.ClassInstantiation
-    ): csharp.ClassInstantiation {
+    public generateExampleClientInstantiationSnippet({
+        clientOptionsArgument,
+        includeEnvVarArguments
+    }: {
+        clientOptionsArgument?: csharp.ClassInstantiation;
+        includeEnvVarArguments?: boolean;
+    }): csharp.ClassInstantiation {
         new csharp.ClassInstantiation({
             classReference: this.context.getClientOptionsClassReference(),
             arguments_: [{ name: "BaseUrl", assignment: csharp.codeblock("Server.Urls[0]") }]
@@ -313,22 +317,22 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
             for (const scheme of this.context.ir.auth.schemes) {
                 switch (scheme.type) {
                     case "header":
-                        if (scheme.headerEnvVar == null) {
+                        if (scheme.headerEnvVar == null || includeEnvVarArguments) {
                             // assuming type is string for now to avoid generating complex example types here.
                             arguments_.push(csharp.codeblock(`"${scheme.name.name.screamingSnakeCase.safeName}"`));
                         }
                         break;
                     case "basic": {
-                        if (scheme.usernameEnvVar == null) {
+                        if (scheme.usernameEnvVar == null || includeEnvVarArguments) {
                             arguments_.push(csharp.codeblock(`"${scheme.username.screamingSnakeCase.safeName}"`));
                         }
-                        if (scheme.passwordEnvVar == null) {
+                        if (scheme.passwordEnvVar == null || includeEnvVarArguments) {
                             arguments_.push(csharp.codeblock(`"${scheme.password.screamingSnakeCase.safeName}"`));
                         }
                         break;
                     }
                     case "bearer":
-                        if (scheme.tokenEnvVar == null) {
+                        if (scheme.tokenEnvVar == null || includeEnvVarArguments) {
                             arguments_.push(csharp.codeblock(`"${scheme.token.screamingSnakeCase.safeName}"`));
                         }
                         break;

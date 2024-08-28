@@ -18,7 +18,7 @@ export class SnippetJsonGenerator {
 
     public generate(): FernGeneratorExec.Snippets | undefined {
         const rootClientSnippet = this.rootClientGenerator
-            .generateExampleClientInstantiationSnippet()
+            .generateExampleClientInstantiationSnippet({})
             .toFormattedSnippet({
                 allNamespaceSegments: this.context.getAllNamespaceSegments(),
                 allTypeClassReferences: this.context.getAllTypeClassReferences(),
