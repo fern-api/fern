@@ -20,7 +20,11 @@ public partial class ReqWithHeadersClient
     /// <example>
     /// <code>
     /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-    ///     new ReqWithHeaders { XTestEndpointHeader = "string", Body = "string" }
+    ///     new SeedExhaustive.ReqWithHeaders.ReqWithHeaders
+    ///     {
+    ///         XTestEndpointHeader = "string",
+    ///         Body = "string",
+    ///     }
     /// );
     /// </code>
     /// </example>

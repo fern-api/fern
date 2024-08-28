@@ -26,7 +26,9 @@ export async function parseGeneratorReleasesFile({
                 });
                 await action(release);
             } catch (e) {
-                context.logger.error(`Failed to parse and run action on release: ${(e as Error)?.message}`);
+                context.logger.error(
+                    `Failed to parse and run action on release ${JSON.stringify(entry)}: ${(e as Error)?.message}`
+                );
             }
         }
     }

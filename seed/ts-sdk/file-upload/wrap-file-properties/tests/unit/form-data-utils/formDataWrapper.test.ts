@@ -11,7 +11,7 @@ describe("CrossPlatformFormData", () => {
         });
 
         it("should append a Readable stream with a specified filename", async () => {
-            const value = (await import("stream")).Readable.from(["file content"]);
+            const value = (await import("readable-stream")).Readable.from(["file content"]);
             const filename = "testfile.txt";
 
             await formData.appendFile("file", value, filename);
@@ -82,7 +82,7 @@ describe("CrossPlatformFormData", () => {
         });
 
         it("should append a Readable stream with a specified filename", async () => {
-            const value = (await import("stream")).Readable.from(["file content"]);
+            const value = (await import("readable-stream")).Readable.from(["file content"]);
             const filename = "testfile.txt";
 
             await formData.appendFile("file", value, filename);

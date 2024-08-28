@@ -21,7 +21,7 @@ describe("chooseStreamWrapper", () => {
     });
 
     it('should return a NodePre18StreamWrapper when RUNTIME.type is "node" and RUNTIME.parsedVersion is not null and RUNTIME.parsedVersion is less than 18', async () => {
-        const stream = await import("stream");
+        const stream = await import("readable-stream");
         const expected = new NodePre18StreamWrapper(new stream.Readable());
 
         RUNTIME.type = "node";

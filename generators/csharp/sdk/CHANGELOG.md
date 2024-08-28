@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.5.0] - 2024-08-27
 
+- Feature: Generate `snippet.json` file containing usage snippets for each endpoint.
+
 - Feature: Apply the timeout configured on the `ClientOptions` or `RequestOptions` type.
 - Feature: Add exponential backoff retrier, which acts upon `MaxRetries` configuration option
   specified on the `ClientOptions` and `RequestOptions`.

@@ -7,12 +7,13 @@ on:
       - main
     paths:
       - "generators/python/sdk/versions.yml"
-      # - "generators/python/fastapi/versions.yml"
-      # - "generators/python/pydantic/versions.yml"
+      - "generators/python/fastapi/versions.yml"
+      - "generators/python/pydantic/versions.yml"
+      - "generators/ruby/model/versions.yml"
+      - "generators/ruby/sdk/versions.yml"
+
       # - "generators/openapi/versions.yml"
       # - "generators/postman/versions.yml"
-      # - "generators/ruby/model/versions.yml"
-      # - "generators/ruby/sdk/versions.yml"
       # - "generators/java/sdk/versions.yml"
       # - "generators/java/model/versions.yml"
       # - "generators/java/spring/versions.yml"
@@ -29,12 +30,13 @@ on:
         type: choice
         options:
           - python-sdk
+          - fastapi
+          - pydantic
+          - ruby-sdk
+          - ruby-model
+
           # - openapi
-          # - fastapi
-          # - pydantic
           # - postman
-          # - ruby-sdk
-          # - ruby-model
           # - java-sdk
           # - java-model
           # - java-spring
@@ -61,12 +63,13 @@ jobs:
         with:
           filters: |
             python-sdk: 'generators/python/sdk/versions.yml'
-          # fastapi: 'generators/python/fastapi/versions.yml'
-          # pydantic: 'generators/python/pydantic/versions.yml'
+            fastapi: "generators/python/fastapi/versions.yml"
+            pydantic: "generators/python/pydantic/versions.yml"
+            ruby-model: 'generators/ruby/model/versions.yml'
+            ruby-sdk: 'generators/ruby/sdk/versions.yml'
+
           # openapi: 'generators/openapi/versions.yml'
           # postman: 'generators/postman/versions.yml'
-          # ruby-model: 'generators/ruby/model/versions.yml'
-          # ruby-sdk: 'generators/ruby/sdk/versions.yml'
           # java-sdk: 'generators/java/sdk/versions.yml'
           # java-model: 'generators/java/model/versions.yml'
           # spring: 'generators/java/spring/versions.yml'
@@ -110,11 +113,22 @@ jobs:
         run: |
           if [ ${{ matrix.generator }} = "python-sdk" ]; then
               VERSIONS_FILE="generators/python/sdk/versions.yml"
+          elif [ ${{ matrix.generator }} = "fastapi" ]; then
+              VERSIONS_FILE="generators/python/fastapi/versions.yml"
+          elif [ ${{ matrix.generator }} = "pydantic" ]; then
+              VERSIONS_FILE="generators/python/pydantic/versions.yml"
+          elif [ ${{ matrix.generator }} = "ruby-model" ]; then
+              VERSIONS_FILE="generators/ruby/model/versions.yml"
+          elif [ ${{ matrix.generator }} = "ruby-sdk" ]; then
+              VERSIONS_FILE="generators/ruby/sdk/versions.yml"
           fi
 
-          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
+          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml || DOES_PREVIOUS_VERSIONS_EXIST=false
 
-          pnpm seed:local publish generator ${{ matrix.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ matrix.generator }}_previous_versions.yml --log-level debug
+          if [ $DOES_PREVIOUS_VERSIONS_EXIST != false ]; then
+            pnpm seed:local publish generator ${{ matrix.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ matrix.generator }}_previous_versions.yml --log-level debug
+          fi
+
           pnpm seed:local register generator --generators ${{ matrix.generator }}
 
   # Manually publish and register generators
@@ -149,9 +163,20 @@ jobs:
         run: |
           if [ ${{ inputs.generator }} = "python-sdk" ]; then
               VERSIONS_FILE="generators/python/sdk/versions.yml"
+          elif [ ${{ inputs.generator }} = "fastapi" ]; then
+              VERSIONS_FILE="generators/python/fastapi/versions.yml"
+          elif [ ${{ inputs.generator }} = "pydantic" ]; then
+              VERSIONS_FILE="generators/python/pydantic/versions.yml"
+          elif [ ${{ inputs.generator }} = "ruby-model" ]; then
+              VERSIONS_FILE="generators/ruby/model/versions.yml"
+          elif [ ${{ inputs.generator }} = "ruby-sdk" ]; then
+              VERSIONS_FILE="generators/ruby/sdk/versions.yml"
           fi
 
-          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ inputs.generator }}_previous_versions.yml
+          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ inputs.generator }}_previous_versions.yml || DOES_PREVIOUS_VERSIONS_EXIST=false
 
-          pnpm seed:local publish generator ${{ inputs.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ inputs.generator }}_previous_versions.yml --log-level debug
+          if [ $DOES_PREVIOUS_VERSIONS_EXIST != false ]; then
+            pnpm seed:local publish generator ${{ inputs.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ inputs.generator }}_previous_versions.yml --log-level debug
+          fi
+
           pnpm seed:local register generator --generators ${{ inputs.generator }}

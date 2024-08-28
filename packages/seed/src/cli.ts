@@ -12,6 +12,8 @@ import { ScriptRunner } from "./commands/test/ScriptRunner";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner } from "./commands/test/test-runner";
 import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import { validateCliRelease } from "./commands/validate/validateCliRelease";
+import { validateGenerator } from "./commands/validate/validateGenerator";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
 
@@ -33,6 +35,7 @@ export async function tryRunCli(): Promise<void> {
     addRunCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
+    addValidateCommands(cli);
 
     await cli.parse();
 
@@ -113,7 +116,7 @@ function addTestCommand(cli: Argv) {
                         lock,
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
-                        scriptRunner: scriptRunner,
+                        scriptRunner,
                         keepDocker: false // dummy
                     });
                 } else {
@@ -123,7 +126,7 @@ function addTestCommand(cli: Argv) {
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
                         keepDocker: argv.keepDocker,
-                        scriptRunner: scriptRunner
+                        scriptRunner
                     });
                 }
 
@@ -334,6 +337,64 @@ function addRegisterCommands(cli: Argv) {
                         await registerGenerator({
                             generator,
                             fdrClient,
+                            context
+                        });
+                    }
+                }
+            );
+    });
+}
+
+function addValidateCommands(cli: Argv) {
+    cli.command("validate", "Validate your changelog file", (yargs) => {
+        yargs
+            .command(
+                "cli",
+                "validate CLI releases",
+                (addtlYargs) =>
+                    addtlYargs.option("log-level", {
+                        default: LogLevel.Info,
+                        choices: LOG_LEVELS
+                    }),
+                async (argv) => {
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Register");
+
+                    await validateCliRelease({
+                        context
+                    });
+                }
+            )
+            .command(
+                "generator <generator>",
+                "validate generator releases.",
+                (yargs) =>
+                    yargs
+                        .positional("generator", {
+                            type: "string",
+                            demandOption: true,
+                            description: "Generator who's changelog you want to validate"
+                        })
+                        .option("log-level", {
+                            default: LogLevel.Info,
+                            choices: LOG_LEVELS
+                        }),
+                async (argv) => {
+                    const generators = await loadGeneratorWorkspaces();
+                    if (argv.generators != null) {
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+                    }
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Register");
+
+                    for (const generator of generators) {
+                        // If you've specified a list of generators, and the current generator is not in that list, skip it
+                        if (argv.generator !== generator.workspaceName) {
+                            continue;
+                        }
+                        // Register the generator and it's versions
+                        await validateGenerator({
+                            generator,
                             context
                         });
                     }

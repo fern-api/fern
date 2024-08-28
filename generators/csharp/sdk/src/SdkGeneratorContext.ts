@@ -1,10 +1,13 @@
 import { AbstractCsharpGeneratorContext, AsIsFiles, csharp } from "@fern-api/csharp-codegen";
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     DeclaredErrorName,
     FernFilepath,
     HttpEndpoint,
     HttpService,
+    IntermediateRepresentation,
     Name,
     ProtobufService,
     ServiceId,
@@ -13,6 +16,7 @@ import {
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
+import { EndpointSnippetsGenerator } from "./endpoint/snippets/EndpointSnippetsGenerator";
 import { GrpcClientInfo } from "./grpc/GrpcClientInfo";
 import { CLIENT_OPTIONS_CLASS_NAME } from "./options/ClientOptionsGenerator";
 import { REQUEST_OPTIONS_CLASS_NAME, REQUEST_OPTIONS_PARAMETER_NAME } from "./options/RequestOptionsGenerator";
@@ -24,6 +28,17 @@ export const MOCK_SERVER_TEST_FOLDER = RelativeFilePath.of("Unit/MockServer");
 const CANCELLATION_TOKEN_PARAMETER_NAME = "cancellationToken";
 
 export class SdkGeneratorContext extends AbstractCsharpGeneratorContext<SdkCustomConfigSchema> {
+    public readonly snippetGenerator: EndpointSnippetsGenerator;
+    public constructor(
+        public readonly ir: IntermediateRepresentation,
+        public readonly config: FernGeneratorExec.config.GeneratorConfig,
+        public readonly customConfig: SdkCustomConfigSchema,
+        public readonly generatorNotificationService: GeneratorNotificationService
+    ) {
+        super(ir, config, customConfig, generatorNotificationService);
+        this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
+    }
+
     /**
      * Returns the service with the given id
      * @param serviceId
