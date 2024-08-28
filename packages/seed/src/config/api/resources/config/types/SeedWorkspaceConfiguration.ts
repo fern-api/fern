@@ -4,10 +4,12 @@
 
 import * as FernSeedConfig from "../../..";
 
-export interface SeedWorkspaceConfiguration extends FernSeedConfig.CliSeedWorkspaceConfiguration {
+export interface SeedWorkspaceConfiguration {
     irVersion: string;
-    publish: FernSeedConfig.PublishConfiguration;
     test: FernSeedConfig.TestConfiguration;
+    publish: FernSeedConfig.PublishConfiguration;
+    /** The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object. */
+    changelogLocation?: string;
     language?: FernSeedConfig.Language;
     defaultCustomConfig?: Record<string, unknown>;
     defaultOutputMode: FernSeedConfig.OutputMode;

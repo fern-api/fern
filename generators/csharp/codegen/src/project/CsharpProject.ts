@@ -24,8 +24,10 @@ export class CsharpProject {
     private testFiles: CSharpFile[] = [];
     private sourceFiles: CSharpFile[] = [];
     private coreFiles: File[] = [];
-    private testUtilFiles: File[] = [];
+    private coreTestFiles: File[] = [];
     private publicCoreFiles: File[] = [];
+    private publicCoreTestFiles: File[] = [];
+    private testUtilFiles: File[] = [];
     private absolutePathToOutputDirectory: AbsoluteFilePath;
     private sourceFetcher: SourceFetcher;
     public readonly filepaths: CsharpProjectFilepaths;
@@ -46,8 +48,16 @@ export class CsharpProject {
         this.coreFiles.push(file);
     }
 
+    public addCoreTestFiles(file: File): void {
+        this.coreTestFiles.push(file);
+    }
+
     public addPublicCoreFiles(file: File): void {
         this.publicCoreFiles.push(file);
+    }
+
+    public addPublicCoreTestFiles(file: File): void {
+        this.publicCoreTestFiles.push(file);
     }
 
     public addSourceFiles(file: CSharpFile): void {
@@ -91,8 +101,26 @@ export class CsharpProject {
             );
         }
 
+        for (const filename of this.context.getCoreTestAsIsFiles()) {
+            this.coreTestFiles.push(
+                await this.createAsIsFile({
+                    filename,
+                    namespace: this.context.getNamespace()
+                })
+            );
+        }
+
         for (const filename of this.context.getPublicCoreAsIsFiles()) {
             this.publicCoreFiles.push(
+                await this.createAsIsFile({
+                    filename,
+                    namespace: this.context.getNamespace()
+                })
+            );
+        }
+
+        for (const filename of this.context.getPublicCoreTestAsIsFiles()) {
+            this.publicCoreTestFiles.push(
                 await this.createAsIsFile({
                     filename,
                     namespace: this.context.getNamespace()
@@ -119,6 +147,7 @@ export class CsharpProject {
         await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
 
         await this.createCoreDirectory({ absolutePathToProjectDirectory });
+        await this.createCoreTestDirectory({ absolutePathToTestProjectDirectory });
         await this.createPublicCoreDirectory({ absolutePathToProjectDirectory });
 
         await loggingExeca(this.context.logger, "dotnet", ["csharpier", "."], {
@@ -234,6 +263,48 @@ export class CsharpProject {
         }
 
         return absolutePathToCoreDirectory;
+    }
+
+    private async createCoreTestDirectory({
+        absolutePathToTestProjectDirectory
+    }: {
+        absolutePathToTestProjectDirectory: AbsoluteFilePath;
+    }): Promise<AbsoluteFilePath> {
+        const absolutePathToCoreTestDirectory = join(
+            absolutePathToTestProjectDirectory,
+            RelativeFilePath.of(CORE_DIRECTORY_NAME)
+        );
+        this.context.logger.debug(`mkdir ${absolutePathToCoreTestDirectory}`);
+        await mkdir(absolutePathToCoreTestDirectory, { recursive: true });
+
+        for (const file of this.coreTestFiles) {
+            await file.write(absolutePathToCoreTestDirectory);
+        }
+
+        return absolutePathToCoreTestDirectory;
+    }
+
+    /*
+     * Unused until we start generating tests for the public core files.
+     */
+    private async createPublicCoreTestDirectory({
+        absolutePathToTestProjectDirectory
+    }: {
+        absolutePathToTestProjectDirectory: AbsoluteFilePath;
+    }): Promise<AbsoluteFilePath> {
+        const absolutePathToPublicCoreTestDirectory = join(
+            absolutePathToTestProjectDirectory,
+            RelativeFilePath.of(CORE_DIRECTORY_NAME),
+            RelativeFilePath.of(PUBLIC_CORE_DIRECTORY_NAME)
+        );
+        this.context.logger.debug(`mkdir ${absolutePathToPublicCoreTestDirectory}`);
+        await mkdir(absolutePathToPublicCoreTestDirectory, { recursive: true });
+
+        for (const file of this.publicCoreTestFiles) {
+            await file.write(absolutePathToPublicCoreTestDirectory);
+        }
+
+        return absolutePathToPublicCoreTestDirectory;
     }
 
     /*

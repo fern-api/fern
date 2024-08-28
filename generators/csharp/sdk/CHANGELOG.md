@@ -5,11 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.5.0] - 2024-08-28
 
+- Feature: Support service-level headers.
 - Feature: Generate `snippet.json` file containing usage snippets for each endpoint.
-
 - Feature: Apply the timeout configured on the `ClientOptions` or `RequestOptions` type.
+- Feature: Add exponential backoff retrier, which acts upon `MaxRetries` configuration option
+  specified on the `ClientOptions` and `RequestOptions`.
+- Feature: Generate the `RawClientTests.cs` file, which includes retry logic tests.
+- Improvement: Refactor the `RawClient` with additional helper methods so that it's easier to follow.
+- Fix: Fix a bug where `OneOf` used directly as request or response types fail serialization.
 
 ## [1.4.0] - 2024-08-26
 

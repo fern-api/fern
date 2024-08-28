@@ -19,7 +19,12 @@ public partial class ReqWithHeadersClient
     /// <example>
     /// <code>
     /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
-    ///     new ReqWithHeaders { XTestEndpointHeader = "string", Body = "string" }
+    ///     new ReqWithHeaders
+    ///     {
+    ///         XTestEndpointHeader = "string",
+    ///         XTestServiceHeader = "string",
+    ///         Body = "string",
+    ///     }
     /// );
     /// </code>
     /// </example>
@@ -32,6 +37,7 @@ public partial class ReqWithHeadersClient
         var _headers = new Headers(
             new Dictionary<string, string>()
             {
+                { "X-TEST-SERVICE-HEADER", request.XTestServiceHeader },
                 { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
             }
         );

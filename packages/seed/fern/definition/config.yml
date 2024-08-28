@@ -3,17 +3,23 @@ imports:
 types:
   CliSeedWorkspaceConfiguration:
     properties:
+      publishGa: PublishCommand
+      publishRc: PublishCommand
+      publishDev: PublishCommand
       changelogLocation: 
         type: optional<string>
         docs: | 
           The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
 
   SeedWorkspaceConfiguration:
-    extends: CliSeedWorkspaceConfiguration
     properties:
       irVersion: string
-      publish: PublishConfiguration
       test: TestConfiguration
+      publish: PublishConfiguration
+      changelogLocation: 
+        type: optional<string>
+        docs: | 
+          The location of the changelog file, the schema of which must follow FDR's `GeneratorReleaseRequest` object.
 
       language: optional<Language>
       defaultCustomConfig: optional<map<string, unknown>>
@@ -54,6 +60,7 @@ types:
       ex. `pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"`
       Commands can be multi-line, we'll run them all!
     properties:
+      workingDirectory: optional<string>
       versionSubstitution: 
         type: optional<string>
         docs: | 

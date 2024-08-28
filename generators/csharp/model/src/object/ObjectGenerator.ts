@@ -39,18 +39,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
             ...(this.objectDeclaration.extendedProperties ?? [])
         ];
         flattenedProperties.forEach((property) => {
-            const annotations: csharp.Annotation[] = [];
-            const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(property.valueType);
-            if (maybeUndiscriminatedUnion != null) {
-                annotations.push(
-                    getUndiscriminatedUnionSerializerAnnotation({
-                        context: this.context,
-                        undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion.declaration,
-                        isList: maybeUndiscriminatedUnion.isList
-                    })
-                );
-            }
-
             class_.addField(
                 csharp.field({
                     name: this.getPropertyName({ className: this.classReference.name, objectProperty: property.name }),
@@ -60,7 +48,6 @@ export class ObjectGenerator extends FileGenerator<CSharpFile, ModelCustomConfig
                     set: true,
                     summary: property.docs,
                     jsonPropertyName: property.name.wireValue,
-                    annotations,
                     useRequired: true
                 })
             );
