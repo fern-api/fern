@@ -94,7 +94,11 @@ export class BaseMockServerTestGenerator extends FileGenerator<CSharpFile, SdkCu
 
                     writer.writeLine("// Initialize the Client");
                     writer.writeLine("Client = ");
-                    writer.writeNodeStatement(this.rootClientGenerator.generateExampleClientInstantiationSnippet());
+                    writer.writeNodeStatement(
+                        this.rootClientGenerator.generateExampleClientInstantiationSnippet({
+                            includeEnvVarArguments: true
+                        })
+                    );
                     writer.newLine();
 
                     writer.writeLine("RequestOptions = ");

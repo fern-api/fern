@@ -30,7 +30,12 @@ public class GetWithCustomHeaderTest : BaseMockServerTest
         Assert.DoesNotThrowAsync(
             async () =>
                 await Client.ReqWithHeaders.GetWithCustomHeaderAsync(
-                    new ReqWithHeaders { XTestEndpointHeader = "string", Body = "string" },
+                    new ReqWithHeaders
+                    {
+                        XTestEndpointHeader = "string",
+                        XTestServiceHeader = "string",
+                        Body = "string",
+                    },
                     RequestOptions
                 )
         );

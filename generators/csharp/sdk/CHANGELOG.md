@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix: Fix a bug where `OneOf` used directly as request or response types fail serialization.
+
+- Feature: Support service-level headers.
+
 - Feature: Generate `snippet.json` file containing usage snippets for each endpoint.
 
 - Feature: Apply the timeout configured on the `ClientOptions` or `RequestOptions` type.

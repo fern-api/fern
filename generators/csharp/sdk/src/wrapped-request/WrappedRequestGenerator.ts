@@ -74,8 +74,11 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     : query.valueType
             });
         }
-
-        for (const header of this.endpoint.headers) {
+        const service = this.context.ir.services[this.serviceId];
+        if (service == null) {
+            throw new Error("Unexpected service not found");
+        }
+        for (const header of [...this.endpoint.headers, ...service.headers]) {
             class_.addField(
                 csharp.field({
                     name: header.name.name.pascalCase.safeName,
@@ -107,20 +110,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             },
             inlinedRequestBody: (request) => {
                 for (const property of [...request.properties, ...(request.extendedProperties ?? [])]) {
-                    const annotations: csharp.Annotation[] = [];
-                    const maybeUndiscriminatedUnion = this.context.getAsUndiscriminatedUnionTypeDeclaration(
-                        property.valueType
-                    );
-                    if (addJsonAnnotations && maybeUndiscriminatedUnion != null) {
-                        annotations.push(
-                            getUndiscriminatedUnionSerializerAnnotation({
-                                context: this.context,
-                                undiscriminatedUnionDeclaration: maybeUndiscriminatedUnion.declaration,
-                                isList: maybeUndiscriminatedUnion.isList
-                            })
-                        );
-                    }
-
                     const propertyName = property.name.name.pascalCase.safeName;
                     class_.addField(
                         csharp.field({
@@ -131,7 +120,6 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                             set: true,
                             summary: property.docs,
                             jsonPropertyName: addJsonAnnotations ? property.name.wireValue : undefined,
-                            annotations,
                             useRequired: true
                         })
                     );
@@ -205,7 +193,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             });
         }
 
-        for (const header of example.endpointHeaders) {
+        for (const header of [...example.endpointHeaders, ...example.serviceHeaders]) {
             orderedFields.push({
                 name: header.name.name,
                 value: this.exampleGenerator.getSnippetForTypeReference({

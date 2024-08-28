@@ -466,7 +466,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.ReqWithHeaders.GetWithCustomHeaderAsync(\n    new ReqWithHeaders { XTestEndpointHeader = \"string\", Body = \"string\" }\n);\n"
+                "client": "using SeedExhaustive;\n\nvar client = new SeedExhaustiveClient(\"TOKEN\");\nawait client.ReqWithHeaders.GetWithCustomHeaderAsync(\n    new ReqWithHeaders\n    {\n        XTestEndpointHeader = \"string\",\n        XTestServiceHeader = \"string\",\n        Body = \"string\",\n    }\n);\n"
             }
         }
     ]
