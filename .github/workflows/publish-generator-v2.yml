@@ -170,7 +170,5 @@ jobs:
         # the modified file once in the matrix, you have to access it at the filter (e.g. output.openapi_files)
         # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
         run: |
-          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
-          cat tmp_${{ matrix.generator }}_previous_versions.yml
           pnpm seed:local publish generator ${{ inputs.generator }} --ver ${{ inputs.version }} --log-level debug
           pnpm seed:local register generator --generators ${{ inputs.generator }}
