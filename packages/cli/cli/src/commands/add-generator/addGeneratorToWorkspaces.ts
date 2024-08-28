@@ -29,7 +29,8 @@ export async function addGeneratorToWorkspaces({
                     generatorName,
                     generatorsConfiguration,
                     groupName,
-                    context
+                    context,
+                    cliVersion: cliContext.environment.packageVersion
                 });
 
                 await writeFile(

@@ -1,3 +1,4 @@
+import { FernRegistry } from "@fern-fern/generators-sdk";
 import { GENERATORS_CONFIGURATION_FILENAME } from "@fern-api/configuration";
 import { Argv } from "yargs";
 import { CliContext } from "./cli-context/CliContext";
@@ -121,6 +122,10 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             default: false,
                             description:
                                 "Whether or not to include major versions within the upgrade. Defaults to false, meaning major versions will be skipped."
+                        })
+                        .option("channel", {
+                            demandOption: false,
+                            choices: Object.values(FernRegistry.generators.ReleaseType)
                         }),
                 async (argv) => {
                     cliContext.instrumentPostHogEvent({
@@ -130,7 +135,8 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             version: argv.version,
                             api: argv.api,
                             group: argv.group,
-                            includeMajor: argv.includeMajor
+                            includeMajor: argv.includeMajor,
+                            rc: argv.rc
                         }
                     });
                     await upgradeGenerator({
@@ -141,7 +147,8 @@ export function addGeneratorCommands(cli: Argv<GlobalCliOptions>, cliContext: Cl
                             commandLineApiWorkspace: argv.api,
                             defaultToAllApiWorkspaces: true
                         }),
-                        includeMajor: argv.includeMajor
+                        includeMajor: argv.includeMajor,
+                        channel: argv.channel
                     });
                 }
             )
