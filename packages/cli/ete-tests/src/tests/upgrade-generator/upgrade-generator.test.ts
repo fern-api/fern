@@ -15,13 +15,18 @@ describe("fern generator upgrade", () => {
 
         await cp(FIXTURES_DIR, directory, { recursive: true });
 
-        const outputPath = AbsoluteFilePath.of(path.join(directory, "fern"));
-
-        await runFernCli(["generator", "upgrade", ""], {
+        await runFernCli(["generator", "upgrade"], {
             cwd: directory
         });
 
-        expect(await getDirectoryContents(outputPath)).not.toBeNull();
+        const version = await runFernCli(
+            ["generator", "get", "--group", "python-sdk", "--generator", "fernapi/fern-python-sdk", "--version"],
+            {
+                cwd: directory
+            }
+        );
+
+        expect(version.stdout).not.toEqual("0.0.0");
     }, 60_000);
 
     it("fern generator help commands", async () => {
