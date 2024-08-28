@@ -8,8 +8,6 @@ on:
     paths:
       - "generators/openapi/VERSION"
       - "generators/postman/VERSION"
-      - "generators/ruby/model/VERSION"
-      - "generators/ruby/sdk/VERSION"
       - "generators/java/sdk/VERSION"
       - "generators/java/model/VERSION"
       - "generators/java/spring/VERSION"
@@ -29,8 +27,6 @@ on:
         options:
           - openapi
           - postman
-          - ruby-sdk
-          - ruby-model
           - java-sdk
           - java-model
           - java-spring
@@ -51,8 +47,6 @@ jobs:
     outputs:
       openapi: ${{ steps.filter.outputs.openapi }}
       postman: ${{ steps.filter.outputs.postman }}
-      ruby-model: ${{ steps.filter.outputs.ruby-model }}
-      ruby-sdk: ${{ steps.filter.outputs.ruby-sdk }}
       java-sdk: ${{ steps.filter.outputs.java-sdk }}
       java-model: ${{ steps.filter.outputs.java-model }}
       spring: ${{ steps.filter.outputs.spring }}
@@ -71,8 +65,6 @@ jobs:
           filters: |
             openapi: 'generators/openapi/VERSION'
             postman: 'generators/postman/VERSION'
-            ruby-model: 'generators/ruby/model/VERSION'
-            ruby-sdk: 'generators/ruby/sdk/VERSION'
             java-sdk: 'generators/java/sdk/VERSION'
             java-model: 'generators/java/model/VERSION'
             spring: 'generators/java/spring/VERSION'
@@ -191,114 +183,6 @@ jobs:
           push: true
           labels: version=${{env.VERSION}}
           tags: fernapi/fern-postman:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-postman:latest') || '' }}
-
-  ruby-model:
-    runs-on: ubuntu-latest
-    needs: versions-changed
-    if: ${{ needs.versions-changed.outputs.ruby-model == 'true' || inputs.generator == 'ruby-model' }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
-
-      - name: Build CLI
-        working-directory: ./generators/ruby/model
-        run: pnpm dist:cli
-
-      - name: Print Version
-        if: ${{ inputs.generator != 'ruby-model' }}
-        run: |
-          projectVersion=$(cat generators/ruby/model/VERSION)
-          echo $projectVersion
-          echo "VERSION=$projectVersion" >> $GITHUB_ENV
-
-      - name: Print Version Dev
-        if: ${{ inputs.generator == 'ruby-model' }}
-        run: |
-          projectVersion=$(cat generators/ruby/model/VERSION)
-          commitNumber=$(git log --oneline | wc -l )
-          sha_short=$(git rev-parse --short HEAD)
-          echo $projectVersion-$commitNumber-$sha_short
-          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./generators/ruby/model/Dockerfile
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=min
-          push: true
-          labels: version=${{env.VERSION}}
-          tags: fernapi/fern-ruby-model:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-ruby-model:latest') || '' }}
-
-  ruby-sdk:
-    runs-on: ubuntu-latest
-    needs: versions-changed
-    if: ${{ needs.versions-changed.outputs.ruby-sdk == 'true' || inputs.generator == 'ruby-sdk' }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: fernapi
-          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
-
-      - name: Build CLI
-        working-directory: ./generators/ruby/sdk
-        run: pnpm dist:cli
-
-      - name: Print Version
-        if: ${{ inputs.generator != 'ruby-sdk' }}
-        run: |
-          projectVersion=$(cat generators/ruby/sdk/VERSION)
-          echo $projectVersion
-          echo "VERSION=$projectVersion" >> $GITHUB_ENV
-
-      - name: Print Version Dev
-        if: ${{ inputs.generator == 'ruby-sdk' }}
-        run: |
-          projectVersion=$(cat generators/ruby/sdk/VERSION)
-          commitNumber=$(git log --oneline | wc -l )
-          sha_short=$(git rev-parse --short HEAD)
-          echo $projectVersion-$commitNumber-$sha_short
-          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: ./generators/ruby/sdk/Dockerfile
-          platforms: linux/amd64,linux/arm64
-          cache-from: type=gha
-          cache-to: type=gha,mode=min
-          push: true
-          labels: version=${{env.VERSION}}
-          tags: fernapi/fern-ruby-sdk:${{env.VERSION}}${{ (!contains(env.VERSION, '-rc') && ', fernapi/fern-ruby-sdk:latest') || '' }}
 
   java-sdk:
     runs-on: ubuntu-latest
