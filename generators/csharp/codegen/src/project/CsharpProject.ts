@@ -21,8 +21,9 @@ export const PUBLIC_CORE_DIRECTORY_NAME = "Public";
  * In memory representation of a C# project.
  */
 export class CsharpProject {
-    private testFiles: CSharpFile[] = [];
+    private rawFiles: File[] = [];
     private sourceFiles: CSharpFile[] = [];
+    private testFiles: CSharpFile[] = [];
     private coreFiles: File[] = [];
     private coreTestFiles: File[] = [];
     private publicCoreFiles: File[] = [];
@@ -42,6 +43,10 @@ export class CsharpProject {
             context: this.context,
             sourceConfig: this.context.ir.sourceConfig
         });
+    }
+
+    public addRawFiles(file: File): void {
+        this.rawFiles.push(file);
     }
 
     public addCoreFiles(file: File): void {
@@ -83,6 +88,10 @@ export class CsharpProject {
             doNotPipeOutput: true,
             cwd: this.absolutePathToOutputDirectory
         });
+
+        for (const file of this.rawFiles) {
+            await file.write(this.absolutePathToOutputDirectory);
+        }
 
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToProjectDirectory);

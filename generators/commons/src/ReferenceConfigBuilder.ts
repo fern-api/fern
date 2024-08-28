@@ -1,15 +1,14 @@
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
-import { SdkContext } from "@fern-typescript/contexts";
 
 export class ReferenceConfigBuilder {
     private rootSection: FernGeneratorCli.RootPackageReferenceSection | undefined;
     private sections: FernGeneratorCli.ReferenceSection[] = [];
 
-    public build(_context: SdkContext): FernGeneratorCli.ReferenceConfig {
+    public build(language: FernGeneratorCli.Language): FernGeneratorCli.ReferenceConfig {
         return {
             rootSection: this.rootSection,
             sections: this.sections,
-            language: FernGeneratorCli.Language.Typescript
+            language
         };
     }
 

@@ -75,6 +75,10 @@ export abstract class AbstractCsharpGeneratorContext<
         return this.namespace;
     }
 
+    public getPackageId(): string {
+        return this.customConfig["package-id"] ?? this.getNamespace();
+    }
+
     public getCoreNamespace(): string {
         return `${this.namespace}.Core`;
     }
