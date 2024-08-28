@@ -1,57 +1,119 @@
 - changelog_entry:
-  - summary: Release 0.39.19
-    type: chore
+  - summary: The OpenAPI importer now appropriately generates examples for circular `oneOf` schemas.
+    type: fix
+    fixed:
+      - The OpenAPI importer now handles generating examples for referenced `oneOf` schemas. Previously, examples generation would fail. 
+      - |
+        The OpenAPI importer now handles generating examples for circular `oneOf` schemas. Previously, the 
+        the converter would only default to generating examples for the first `oneOf` schema. If the first variant, 
+        circularly referenced itself, this would make terminating the example impossible. 
+        Now, the example generator tries every schema in order, guaranteeing that a termination condition will be 
+        reached. 
   created_at: '2024-08-25'
   ir_version: 53
   version: 0.39.19
+
 - changelog_entry:
-  - summary: Release 0.39.18
-    type: chore
+  - summary: Produce IR v53.8.0 with raw datetime examples.
+    type: fix
+    fixed:
+      - Produce IR v53.8.0 with raw datetime examples. The raw datetime examples help  when generating test fixtures to assert conditions about the original datetime. 
   created_at: '2024-08-23'
   ir_version: 53
   version: 0.39.18
+
 - changelog_entry:
-  - summary: Release 0.39.17
-    type: chore
+  - summary: object declarations with extends and no properties now has examples propagating in the Docs and SDKs
+    type: fix
+    fixed:
+      - |
+        Previously, object declarations with extends and no properties did not have examples 
+        propagating in the Docs and SDKs. The core issue was in IR generation which has now 
+        been resolved. 
+
+        The following will now work as expected: 
+
+        ```yaml
+        types: 
+
+          ObjectWithNoProperties:
+            extends: 
+              - ParentA
+              - ParentB
+            examples: 
+              - name: Default
+                value: 
+                  propertyFromParentA: foo
+                  propertyFromParentB: bar
+        ```
   created_at: '2024-08-23'
   ir_version: 53
   version: 0.39.17
+
 - changelog_entry:
-  - summary: Release 0.39.16
+  - summary: Support running 0.2.x versions of the Postman Generator with IR V53 or above. 
     type: chore
   created_at: '2024-08-22'
   ir_version: 53
   version: 0.39.16
+
 - changelog_entry:
-  - summary: Release 0.39.15
-    type: chore
+  - summary: Introduce `generator list` and `organization` commands to faciliate actions taken by `fern-bot`
+    type: internal
   created_at: '2024-08-21'
   ir_version: 53
   version: 0.39.15
+
 - changelog_entry:
-  - summary: Release 0.39.14
-    type: chore
+  - summary: Format validation is enforced on `date` fields that are specified in examples specified in an api defintion.
+    type: fix
   created_at: '2024-08-21'
   ir_version: 53
   version: 0.39.14
+
 - changelog_entry:
-  - summary: Release 0.39.13
-    type: chore
+  - summary: Generated examples in the Intermediate Representation not respect root level path parameter examples.
+    type: fix
+    fixed:
+      - Generated examples in the Intermediate Representation not respect root level path parameter examples. Previously, when ignored, this would result in invalid cURL examples in documentation.
   created_at: '2024-08-21'
   ir_version: 53
   version: 0.39.13
+
 - changelog_entry:
-  - summary: Release 0.39.12
-    type: chore
+  - summary: The mock folder now includes source files, and the CLI no longer hard fails if it cannot resolve source files that are of OpenAPI type.
+    type: fix
   created_at: '2024-08-20'
   ir_version: 53
   version: 0.39.12
+
 - changelog_entry:
-  - summary: Release 0.39.11
-    type: chore
+  - summary: The Fern CLI now handles parsing `x-fern-parameter-name` on path parameters in an OpenAPI spec.
+    type: fix
+    fixed:
+      - |
+        Fix: The Fern CLI now handles parsing `x-fern-parameter-name` on path parameters in an OpenAPI spec. For example,
+        if you want to rename a path parameter in the generated SDK, you can now do:
+
+        ```yml
+        paths:
+          "/user":
+              get:
+              operationId: list_user
+              parameters:
+                  - in: header
+                  name: X-API-Version
+                  x-fern-parameter-name: version
+                  schema:
+                      type: string
+                  required: true
+        ```
+
+        For more information, please check out the [docs](https://buildwithfern.com/learn/api-definition/openapi/extensions/parameter-names).
   created_at: '2024-08-20'
   ir_version: 53
   version: 0.39.11
+
 - changelog_entry:
   - summary: Release 0.39.10
     type: chore
