@@ -1,12 +1,12 @@
 using System;
 using System.Net.Http;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using SeedApi.Core;
 using WireMock.Server;
-using RequestBuilders = WireMock.RequestBuilders;
-using ResponseBuilders = WireMock.ResponseBuilders;
+using Request = WireMock.RequestBuilders.Request;
+using Response = WireMock.ResponseBuilders.Response;
+using SystemTask = System.Threading.Tasks.Task;
 
 namespace SeedApi.Test.Core
 {
@@ -24,12 +24,7 @@ namespace SeedApi.Test.Core
             _server = WireMockServer.Start();
             _httpClient = new HttpClient { BaseAddress = new Uri(_server.Url) };
             _rawClient = new RawClient(
-                new ClientOptions()
-                {
-                    BaseUrl = _server.Url,
-                    HttpClient = _httpClient,
-                    MaxRetries = _maxRetries,
-                }
+                new ClientOptions() { HttpClient = _httpClient, MaxRetries = _maxRetries }
             );
         }
 
@@ -38,28 +33,26 @@ namespace SeedApi.Test.Core
         [TestCase(429)]
         [TestCase(500)]
         [TestCase(504)]
-        public async Task MakeRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
+        public async SystemTask MakeRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
         {
             _server
-                .Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
+                .Given(Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WillSetStateTo("Server Error")
-                .RespondWith(ResponseBuilders.Response.Create().WithStatusCode(statusCode));
+                .RespondWith(Response.Create().WithStatusCode(statusCode));
 
             _server
-                .Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
+                .Given(Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WhenStateIs("Server Error")
                 .WillSetStateTo("Success")
-                .RespondWith(ResponseBuilders.Response.Create().WithStatusCode(statusCode));
+                .RespondWith(Response.Create().WithStatusCode(statusCode));
 
             _server
-                .Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
+                .Given(Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WhenStateIs("Success")
-                .RespondWith(
-                    ResponseBuilders.Response.Create().WithStatusCode(200).WithBody("Success")
-                );
+                .RespondWith(Response.Create().WithStatusCode(200).WithBody("Success"));
 
             var request = new RawClient.BaseApiRequest
             {
@@ -80,18 +73,15 @@ namespace SeedApi.Test.Core
         [Test]
         [TestCase(400)]
         [TestCase(409)]
-        public async Task MakeRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(int statusCode)
+        public async SystemTask MakeRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(
+            int statusCode
+        )
         {
             _server
-                .Given(RequestBuilders.Request.Create().WithPath("/test").UsingGet())
+                .Given(Request.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WillSetStateTo("Server Error")
-                .RespondWith(
-                    ResponseBuilders
-                        .Response.Create()
-                        .WithStatusCode(statusCode)
-                        .WithBody("Failure")
-                );
+                .RespondWith(Response.Create().WithStatusCode(statusCode).WithBody("Failure"));
 
             var request = new RawClient.BaseApiRequest
             {

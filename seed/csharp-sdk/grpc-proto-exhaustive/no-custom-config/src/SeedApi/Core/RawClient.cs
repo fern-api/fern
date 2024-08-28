@@ -14,10 +14,12 @@ internal class RawClient(ClientOptions clientOptions)
     private const int InitialRetryDelayMs = 1000;
     private const int MaxRetryDelayMs = 60000;
 
+    private readonly Lazy<RawGrpcClient> _grpc = new Lazy<RawGrpcClient>(() => new(clientOptions));
+
     /// <summary>
     /// The gRPC client used to make requests.
     /// </summary>
-    public readonly RawGrpcClient Grpc = new(clientOptions);
+    public RawGrpcClient Grpc => _grpc.Value;
 
     /// <summary>
     /// The client options applied on every request.
@@ -96,7 +98,7 @@ internal class RawClient(ClientOptions clientOptions)
                 break;
             }
             var delayMs = Math.Min(InitialRetryDelayMs * (int)Math.Pow(2, i), MaxRetryDelayMs);
-            await Task.Delay(delayMs, cancellationToken);
+            await System.Threading.Tasks.Task.Delay(delayMs, cancellationToken);
             response = await httpClient.SendAsync(BuildHttpRequest(request), cancellationToken);
         }
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
