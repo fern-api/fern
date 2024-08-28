@@ -24,12 +24,6 @@ public record Account
     public required string Id { get; set; }
 
     [JsonPropertyName("related_resources")]
-    [JsonConverter(
-        typeof(CollectionItemSerializer<
-            OneOf<Account, Patient, Practitioner, Script>,
-            OneOfSerializer<OneOf<Account, Patient, Practitioner, Script>>
-        >)
-    )]
     public IEnumerable<
         OneOf<Account, Patient, Practitioner, Script>
     > RelatedResources { get; set; } = new List<OneOf<Account, Patient, Practitioner, Script>>();

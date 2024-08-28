@@ -9,7 +9,6 @@ namespace SeedExamples;
 public record Entity
 {
     [JsonPropertyName("type")]
-    [JsonConverter(typeof(OneOfSerializer<OneOf<BasicType, ComplexType>>))]
     public required OneOf<BasicType, ComplexType> Type { get; set; }
 
     [JsonPropertyName("name")]
