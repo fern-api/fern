@@ -1,4 +1,4 @@
-import type { Readable } from "stream";
+import type { Readable } from "readable-stream";
 import { RUNTIME } from "../../runtime";
 
 export type EventCallback = (data?: any) => void;
@@ -25,7 +25,7 @@ export async function chooseStreamWrapper(responseBody: any): Promise<Promise<St
         return new (await import("./Node18UniversalStreamWrapper")).Node18UniversalStreamWrapper(
             responseBody as ReadableStream
         );
-    } else if (RUNTIME.type !== "node" && typeof fetch == "function") {
+    } else if (RUNTIME.type !== "node" && typeof fetch === "function") {
         return new (await import("./UndiciStreamWrapper")).UndiciStreamWrapper(responseBody as ReadableStream);
     } else {
         return new (await import("./NodePre18StreamWrapper")).NodePre18StreamWrapper(responseBody as Readable);

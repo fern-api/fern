@@ -1648,7 +1648,8 @@
                                                 "type": "primitive",
                                                 "primitive": {
                                                     "type": "datetime",
-                                                    "datetime": "2024-01-15T09:30:00.000Z"
+                                                    "datetime": "2024-01-15T09:30:00.000Z",
+                                                    "raw": "2024-01-15T09:30:00Z"
                                                 }
                                             },
                                             "jsonExample": "2024-01-15T09:30:00Z"
@@ -2483,7 +2484,8 @@
                                                             "type": "primitive",
                                                             "primitive": {
                                                                 "type": "datetime",
-                                                                "datetime": "2024-01-15T09:30:00.000Z"
+                                                                "datetime": "2024-01-15T09:30:00.000Z",
+                                                                "raw": "2024-01-15T09:30:00Z"
                                                             }
                                                         },
                                                         "jsonExample": "2024-01-15T09:30:00Z"
@@ -4363,7 +4365,7 @@
                                         }
                                     }
                                 },
-                                "id": "c4be9a325df719e21dbfba536e8881635fef52de",
+                                "id": "011b0ab04e4a2f7dcf68be6ccafd7302a555694e",
                                 "docs": null
                             }
                         }

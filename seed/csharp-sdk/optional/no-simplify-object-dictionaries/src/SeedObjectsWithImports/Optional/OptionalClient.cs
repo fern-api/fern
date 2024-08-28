@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedObjectsWithImports.Core;
 
 #nullable enable
@@ -15,9 +16,23 @@ public partial class OptionalClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Optional.SendOptionalBodyAsync(
+    ///     new Dictionary<string, object>()
+    ///     {
+    ///         {
+    ///             "string",
+    ///             new Dictionary<object, object?>() { { "key", "value" } }
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<string> SendOptionalBodyAsync(
         Dictionary<string, object?>? request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -28,7 +43,8 @@ public partial class OptionalClient
                 Path = "send-optional-body",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

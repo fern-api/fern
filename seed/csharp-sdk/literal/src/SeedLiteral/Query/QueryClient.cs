@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedLiteral.Core;
 
 #nullable enable
@@ -15,9 +16,22 @@ public partial class QueryClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Query.SendAsync(
+    ///     new SendLiteralsInQueryRequest
+    ///     {
+    ///         Prompt = "You are a helpful assistant",
+    ///         Stream = false,
+    ///         Query = "What is the weather today",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<SendResponse> SendAsync(
         SendLiteralsInQueryRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -32,7 +46,8 @@ public partial class QueryClient
                 Path = "query",
                 Query = _query,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

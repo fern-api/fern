@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedLiteral.Core;
 
 #nullable enable
@@ -15,9 +16,26 @@ public partial class InlinedClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Inlined.SendAsync(
+    ///     new SendLiteralsInlinedRequest
+    ///     {
+    ///         Temperature = 10.1,
+    ///         Prompt = "You are a helpful assistant",
+    ///         Context = "You're super wise",
+    ///         AliasedContext = "You're super wise",
+    ///         MaybeContext = "You're super wise",
+    ///         Stream = false,
+    ///         Query = "What is the weather today",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<SendResponse> SendAsync(
         SendLiteralsInlinedRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -28,7 +46,8 @@ public partial class InlinedClient
                 Path = "inlined",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

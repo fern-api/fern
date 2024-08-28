@@ -4,6 +4,7 @@ import { askToLogin } from "@fern-api/login";
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
 import { registerGenerator } from "./commands/register/registerGenerator";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
@@ -11,6 +12,8 @@ import { ScriptRunner } from "./commands/test/ScriptRunner";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner } from "./commands/test/test-runner";
 import { FIXTURES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import { validateCliRelease } from "./commands/validate/validateCliRelease";
+import { validateGenerator } from "./commands/validate/validateGenerator";
 import { GeneratorWorkspace, loadGeneratorWorkspaces } from "./loadGeneratorWorkspaces";
 import { Semaphore } from "./Semaphore";
 
@@ -30,7 +33,9 @@ export async function tryRunCli(): Promise<void> {
 
     addTestCommand(cli);
     addRunCommand(cli);
-    addRegisterCommand(cli);
+    addRegisterCommands(cli);
+    addPublishCommands(cli);
+    addValidateCommands(cli);
 
     await cli.parse();
 
@@ -105,13 +110,13 @@ function addTestCommand(cli: Argv) {
                 }
                 let testRunner;
                 const scriptRunner = new ScriptRunner(generator, argv.skipScripts);
-                if (argv.local && generator.workspaceConfig.local != null) {
+                if (argv.local && generator.workspaceConfig.test.local != null) {
                     testRunner = new LocalTestRunner({
                         generator,
                         lock,
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
-                        scriptRunner: scriptRunner,
+                        scriptRunner,
                         keepDocker: false // dummy
                     });
                 } else {
@@ -121,7 +126,7 @@ function addTestCommand(cli: Argv) {
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
                         keepDocker: argv.keepDocker,
-                        scriptRunner: scriptRunner
+                        scriptRunner
                     });
                 }
 
@@ -197,58 +202,205 @@ function addRunCommand(cli: Argv) {
     );
 }
 
-function addRegisterCommand(cli: Argv) {
-    cli.command(
-        "register",
-        "Registers all of the generators, as well as the CLI to FDR unless otherwise specified. To filter to certain generators or to not include the CLI, use the --generator, and --skip-cli flags respectively.",
-        (yargs) =>
-            yargs
-                .option("generator", {
-                    type: "array",
-                    string: true,
-                    demandOption: false,
-                    description: "Generator(s) to register"
-                })
-                .option("cli", {
-                    boolean: true,
-                    default: false,
-                    description: "Initialize a docs website."
-                })
-                .option("log-level", {
-                    default: LogLevel.Info,
-                    choices: LOG_LEVELS
-                }),
-        async (argv) => {
-            const generators = await loadGeneratorWorkspaces();
-            if (argv.generator != null) {
-                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
-            }
-            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
-            const context = taskContextFactory.create("Register");
-            const token = await askToLogin(context);
+function addPublishCommands(cli: Argv) {
+    cli.command("publish", "Publish releases", (yargs) => {
+        yargs
+            // TODO: Implement CLI releasing (currently npm publishing)
+            .command(
+                "generator <generator>",
+                "Publishes all latest versions of the generators to DockerHub unless otherwise specified. To filter to certain generators pass in the generator IDs as a positional, space delimited list.",
+                (yargs) =>
+                    yargs
+                        .positional("generator", {
+                            type: "string",
+                            demandOption: true,
+                            description: "Generator(s) to register"
+                        })
+                        // Version is a reserved option in yargs...
+                        .option("ver", {
+                            type: "string",
+                            demandOption: false
+                        })
+                        .option("changelog", {
+                            type: "string",
+                            demandOption: false,
+                            description:
+                                "Path to the latest changelog file, used along side `previous-changelog` to the most recent new version to publish."
+                        })
+                        .option("previous-changelog", {
+                            type: "string",
+                            demandOption: false,
+                            description:
+                                "Path to the previous changelog file, used along side `changelog` to the most recent new version to publish."
+                        })
+                        .option("log-level", {
+                            default: LogLevel.Info,
+                            choices: LOG_LEVELS
+                        })
+                        .check((argv) => {
+                            return (
+                                // Check: Either version or changelog and previousChangelog must be provided
+                                argv.ver || (argv.changelog && argv.previousChangelog)
+                            );
+                        }),
+                async (argv) => {
+                    const generators = await loadGeneratorWorkspaces();
+                    if (argv.generators != null) {
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+                    }
 
-            const fdrClient = createFdrService({ token: token.value });
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Publish");
 
-            await registerCliRelease({
-                fdrClient,
-                context: taskContextFactory.create("Register")
-            });
-            for (const generator of generators) {
-                if (
-                    (argv.cli && argv.generator == null) ||
-                    (argv.generator != null && !argv.generator.includes(generator.workspaceName))
-                ) {
-                    continue;
+                    const maybeGeneratorWorkspace = generators.find((g) => g.workspaceName === argv.generator);
+                    if (maybeGeneratorWorkspace == null) {
+                        context.failAndThrow(`Specified generator ${argv.generator} not found.`);
+                        return;
+                    }
+
+                    await publishGenerator({
+                        generator: maybeGeneratorWorkspace,
+                        version: argv.ver
+                            ? argv.ver
+                            : {
+                                  // These assertions should be safe given the check with `yargs` above
+                                  //
+                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  latestChangelogPath: argv.changelog!,
+                                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                                  previousChangelogPath: argv.previousChangelog!
+                              },
+                        context
+                    });
                 }
-                // Register the generator and it's versions
-                await registerGenerator({
-                    generator,
-                    fdrClient,
-                    context
-                });
-            }
-        }
-    );
+            );
+    });
+}
+
+function addRegisterCommands(cli: Argv) {
+    cli.command("register", "Register releases within FDR's database", (yargs) => {
+        yargs
+            .command(
+                "cli",
+                "Registers CLI releases",
+                (addtlYargs) =>
+                    addtlYargs.option("log-level", {
+                        default: LogLevel.Info,
+                        choices: LOG_LEVELS
+                    }),
+                async (argv) => {
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Register");
+                    const token = await askToLogin(context);
+
+                    const fdrClient = createFdrService({ token: token.value });
+
+                    await registerCliRelease({
+                        fdrClient,
+                        context
+                    });
+                }
+            )
+            .command(
+                "generator",
+                "Registers all of the generators to FDR unless otherwise specified. To filter to certain generators pass in the generator ids to `--generators`, space delimited list.",
+                (yargs) =>
+                    yargs
+                        // This would ideally be positional, but you can't have positional arguments that are arrays with yargs
+                        .option("generators", {
+                            array: true,
+                            type: "string",
+                            demandOption: false,
+                            description: "Generator(s) to register"
+                        })
+                        .option("log-level", {
+                            default: LogLevel.Info,
+                            choices: LOG_LEVELS
+                        }),
+                async (argv) => {
+                    const generators = await loadGeneratorWorkspaces();
+                    if (argv.generators != null) {
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generators });
+                    }
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Register");
+                    const token = await askToLogin(context);
+
+                    const fdrClient = createFdrService({ token: token.value });
+
+                    for (const generator of generators) {
+                        // If you've specified a list of generators, and the current generator is not in that list, skip it
+                        if (argv.generators != null && !argv.generators.includes(generator.workspaceName)) {
+                            continue;
+                        }
+                        // Register the generator and it's versions
+                        await registerGenerator({
+                            generator,
+                            fdrClient,
+                            context
+                        });
+                    }
+                }
+            );
+    });
+}
+
+function addValidateCommands(cli: Argv) {
+    cli.command("validate", "Validate your changelog file", (yargs) => {
+        yargs
+            .command(
+                "cli",
+                "validate CLI releases",
+                (addtlYargs) =>
+                    addtlYargs.option("log-level", {
+                        default: LogLevel.Info,
+                        choices: LOG_LEVELS
+                    }),
+                async (argv) => {
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Register");
+
+                    await validateCliRelease({
+                        context
+                    });
+                }
+            )
+            .command(
+                "generator <generator>",
+                "validate generator releases.",
+                (yargs) =>
+                    yargs
+                        .positional("generator", {
+                            type: "string",
+                            demandOption: true,
+                            description: "Generator who's changelog you want to validate"
+                        })
+                        .option("log-level", {
+                            default: LogLevel.Info,
+                            choices: LOG_LEVELS
+                        }),
+                async (argv) => {
+                    const generators = await loadGeneratorWorkspaces();
+                    if (argv.generators != null) {
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+                    }
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Register");
+
+                    for (const generator of generators) {
+                        // If you've specified a list of generators, and the current generator is not in that list, skip it
+                        if (argv.generator !== generator.workspaceName) {
+                            continue;
+                        }
+                        // Register the generator and it's versions
+                        await validateGenerator({
+                            generator,
+                            context
+                        });
+                    }
+                }
+            );
+    });
 }
 
 function throwIfGeneratorDoesNotExist({

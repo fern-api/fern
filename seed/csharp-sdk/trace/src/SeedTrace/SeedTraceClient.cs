@@ -1,4 +1,3 @@
-using System;
 using SeedTrace.Core;
 using SeedTrace.V2;
 
@@ -16,15 +15,25 @@ public partial class SeedTraceClient
         ClientOptions? clientOptions = null
     )
     {
-        _client = new RawClient(
+        var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-Random-Header", xRandomHeader },
                 { "X-Fern-Language", "C#" },
-            },
-            new Dictionary<string, Func<string>>(),
-            clientOptions ?? new ClientOptions()
+                { "X-Fern-SDK-Name", "SeedTrace" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Ferntrace/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         V2 = new V2Client(_client);
         Admin = new AdminClient(_client);
         Commons = new CommonsClient(_client);

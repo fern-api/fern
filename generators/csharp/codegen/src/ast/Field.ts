@@ -12,6 +12,10 @@ export declare namespace Field {
         name: string;
         /* The type of the field */
         type: Type;
+        /* The access level of the method */
+        access: Access;
+        /* Whether the the field is a constant value */
+        const_?: boolean;
         /* Whether the the field should use the new keyword */
         new_?: boolean;
         /* Whether the field has a getter method */
@@ -20,8 +24,6 @@ export declare namespace Field {
         init?: boolean;
         /* Whether the field has an set method. Cannot be used with an init method. */
         set?: boolean;
-        /* The access level of the method */
-        access: Access;
         /* Whether the field is static */
         static_?: boolean;
         /* Field annotations */
@@ -43,6 +45,7 @@ export class Field extends AstNode {
     public readonly name: string;
     public readonly access: Access;
     private type: Type;
+    private const_: boolean;
     private new_: boolean;
     private get: boolean;
     private init: boolean;
@@ -58,11 +61,12 @@ export class Field extends AstNode {
     constructor({
         name,
         type,
+        access,
+        const_,
         new_,
         get,
         init,
         set,
-        access,
         annotations,
         initializer,
         summary,
@@ -74,6 +78,7 @@ export class Field extends AstNode {
         super();
         this.name = name;
         this.type = type;
+        this.const_ = const_ ?? false;
         this.new_ = new_ ?? false;
         this.get = get ?? false;
         this.init = init ?? false;
@@ -119,6 +124,9 @@ export class Field extends AstNode {
         }
 
         writer.write(`${this.access} `);
+        if (this.const_) {
+            writer.write("const ");
+        }
         if (this.new_) {
             writer.write("new ");
         }
@@ -134,7 +142,8 @@ export class Field extends AstNode {
         writer.writeNode(this.type);
         writer.write(` ${this.name}`);
 
-        if (this.get || this.init) {
+        const useExpressionBodiedPropertySyntax = this.get && !this.init && !this.set && this.initializer != null;
+        if ((this.get || this.init || this.set) && !useExpressionBodiedPropertySyntax) {
             writer.write(" { ");
             if (this.get) {
                 writer.write("get; ");
@@ -149,7 +158,11 @@ export class Field extends AstNode {
         }
 
         if (this.initializer != null) {
-            writer.write(" = ");
+            if (useExpressionBodiedPropertySyntax) {
+                writer.write(" => ");
+            } else {
+                writer.write(" = ");
+            }
             this.initializer.write(writer);
             writer.writeLine(";");
         } else if (!this.skipDefaultInitializer && !isOptional && isCollection) {

@@ -25,7 +25,7 @@ export declare namespace Writer {
 
 export class Writer {
     /* The contents being written */
-    private buffer = "";
+    public buffer = "";
     /* Indentation level (multiple of 4) */
     private indentLevel = 0;
     /* Whether anything has been written to the buffer */
@@ -61,7 +61,7 @@ export class Writer {
         const textWithoutNewline = textEndsInNewline ? text.substring(0, text.length - 1) : text;
 
         const indent = this.getIndentString();
-        let indentedText = textWithoutNewline.replace("\n", `\n${indent}`);
+        let indentedText = textWithoutNewline.replaceAll("\n", `\n${indent}`);
         if (this.isAtStartOfLine()) {
             indentedText = indent + indentedText;
         }
@@ -156,6 +156,13 @@ export class Writer {
         }
     }
 
+    public addNamespace(namespace: string): void {
+        const foundNamespace = this.references[namespace];
+        if (foundNamespace == null) {
+            this.references[namespace] = [];
+        }
+    }
+
     public addNamespaceAlias(alias: string, namespace: string): void {
         this.namespaceAliases[alias] = namespace;
     }
@@ -164,7 +171,7 @@ export class Writer {
         return this.allTypeClassReferences;
     }
 
-    public getAllNamespaceSegmentsAndTypes(): Set<string | ClassReference> {
+    public getAllNamespaceSegments(): Set<string> {
         return this.allNamespaceSegments;
     }
 
@@ -176,19 +183,34 @@ export class Writer {
         return this.namespace;
     }
 
+    public getCustomConfig(): BaseCsharpCustomConfigSchema {
+        return this.customConfig;
+    }
+
     public getSimplifyObjectDictionaries(): boolean {
         return this.customConfig["simplify-object-dictionaries"] ?? true;
     }
 
-    public toString(): string {
-        const imports = this.stringifyImports();
-        if (imports.length > 0) {
-            return `${imports}
-#nullable enable
-
-${this.buffer}`;
+    public toString(skipImports = false): string {
+        if (!skipImports) {
+            const imports = this.stringifyImports();
+            if (imports.length > 0) {
+                return `${imports}
+    #nullable enable
+    
+    ${this.buffer}`;
+            }
         }
         return this.buffer;
+    }
+
+    public importsToString(): string | undefined {
+        const imports = this.stringifyImports();
+        return imports.length > 0 ? imports : undefined;
+    }
+
+    public isReadOnlyMemoryType(type: string): boolean {
+        return this.customConfig["read-only-memory-types"]?.includes(type) ?? false;
     }
 
     /*******************************

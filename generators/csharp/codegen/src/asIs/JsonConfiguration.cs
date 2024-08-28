@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace <%= namespace%>;
 
@@ -11,7 +12,8 @@ internal static class JsonOptions
         JsonSerializerOptions = new JsonSerializerOptions
         {
             Converters = { new DateTimeSerializer() },
-            WriteIndented = true
+            WriteIndented = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
     }
 }

@@ -336,6 +336,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "uid",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -396,14 +397,14 @@ exports[`open api parser > dopt > parse open api 1`] = `
                           "type": "primitive",
                           "value": {
                             "type": "string",
-                            "value": "string",
+                            "value": "boolean",
                           },
                         },
                         "value": {
                           "type": "primitive",
                           "value": {
-                            "type": "string",
-                            "value": "fields",
+                            "type": "boolean",
+                            "value": true,
                           },
                         },
                       },
@@ -506,6 +507,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "uid",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -1564,6 +1566,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "uid",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2053,6 +2056,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "sid",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2118,7 +2122,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
                                   "type": "primitive",
                                   "value": {
                                     "type": "string",
-                                    "value": "string",
+                                    "value": "boolean",
                                   },
                                 },
                               },
@@ -2287,6 +2291,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "sid",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3643,6 +3648,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "uid",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3653,6 +3659,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
             },
             {
               "name": "intent",
+              "parameterNameOverride": null,
               "value": {
                 "type": "enum",
                 "value": "finish",
@@ -3699,6 +3706,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "uid",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3725,6 +3733,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "intent",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "default": null,
@@ -4980,6 +4989,7 @@ exports[`open api parser > dopt > parse open api 1`] = `
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "http://blocks-api:7071",

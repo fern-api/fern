@@ -1,3 +1,5 @@
+import { GeneratorNotificationService } from "@fern-api/generator-commons";
+import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Constants, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import {
@@ -61,6 +63,7 @@ const ROOT_CLIENT_VARIABLE_NAME = "client";
 
 export declare namespace SdkContextImpl {
     export interface Init {
+        logger: Logger;
         ir: IntermediateRepresentation;
         config: FernGeneratorExec.GeneratorConfig;
         sourceFile: SourceFile;
@@ -112,8 +115,10 @@ export declare namespace SdkContextImpl {
 }
 
 export class SdkContextImpl implements SdkContext {
+    public readonly logger: Logger;
     public readonly ir: IntermediateRepresentation;
     public readonly config: FernGeneratorExec.GeneratorConfig;
+    public readonly generatorNotificationService: GeneratorNotificationService;
     public readonly sourceFile: SourceFile;
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
@@ -145,6 +150,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly omitUndefined: boolean;
 
     constructor({
+        logger,
         ir,
         config,
         npmPackage,
@@ -193,8 +199,10 @@ export class SdkContextImpl implements SdkContext {
         generateOAuthClients,
         omitUndefined
     }: SdkContextImpl.Init) {
+        this.logger = logger;
         this.ir = ir;
         this.config = config;
+        this.generatorNotificationService = new GeneratorNotificationService(config.environment);
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;

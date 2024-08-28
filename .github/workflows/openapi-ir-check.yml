@@ -19,6 +19,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+      
+      - name: Install
+        uses: ./.github/actions/install
 
       - name: Install Fern
         run: npm install -g fern-api
@@ -32,8 +35,7 @@ jobs:
         env:
           FERN_TOKEN: dummy
         run: |
-          cd packages/cli/openapi-ir-sdk
-          pnpm generate
+          pnpm openapi-ir:generate
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code

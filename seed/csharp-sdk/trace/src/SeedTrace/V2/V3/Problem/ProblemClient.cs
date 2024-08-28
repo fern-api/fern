@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedTrace;
 using SeedTrace.Core;
 
@@ -19,8 +20,14 @@ public partial class ProblemClient
     /// <summary>
     /// Returns lightweight versions of all problems
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.V2.V3.Problem.GetLightweightProblemsAsync();
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<LightweightProblemInfoV2>> GetLightweightProblemsAsync(
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -30,7 +37,8 @@ public partial class ProblemClient
                 Method = HttpMethod.Get,
                 Path = "/problems-v2/lightweight-problem-info",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -55,7 +63,15 @@ public partial class ProblemClient
     /// <summary>
     /// Returns latest versions of all problems
     /// </summary>
-    public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.V2.V3.Problem.GetProblemsAsync();
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<ProblemInfoV2>> GetProblemsAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -64,7 +80,8 @@ public partial class ProblemClient
                 Method = HttpMethod.Get,
                 Path = "/problems-v2/problem-info",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -89,9 +106,15 @@ public partial class ProblemClient
     /// <summary>
     /// Returns latest version of a problem
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.V2.V3.Problem.GetLatestProblemAsync("string");
+    /// </code>
+    /// </example>
     public async Task<ProblemInfoV2> GetLatestProblemAsync(
         string problemId,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -101,7 +124,8 @@ public partial class ProblemClient
                 Method = HttpMethod.Get,
                 Path = $"/problems-v2/problem-info/{problemId}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -126,10 +150,16 @@ public partial class ProblemClient
     /// <summary>
     /// Returns requested version of a problem
     /// </summary>
+    /// <example>
+    /// <code>
+    /// await client.V2.V3.Problem.GetProblemVersionAsync("string", 1);
+    /// </code>
+    /// </example>
     public async Task<ProblemInfoV2> GetProblemVersionAsync(
         string problemId,
         int problemVersion,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -139,7 +169,8 @@ public partial class ProblemClient
                 Method = HttpMethod.Get,
                 Path = $"/problems-v2/problem-info/{problemId}/version/{problemVersion}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

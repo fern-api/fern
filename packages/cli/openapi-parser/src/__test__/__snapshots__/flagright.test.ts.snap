@@ -109,6 +109,93 @@ Here are some of the most used payload fields explained (you can find the full p
                 },
                 "type": "object",
               },
+              "destinationPaymentDetails": {
+                "type": "oneOf",
+                "value": {
+                  "type": "discriminated",
+                  "value": {
+                    "method": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "CHECK",
+                      },
+                    },
+                    "shippingAddress": {
+                      "properties": {
+                        "addressLines": {
+                          "type": "array",
+                          "value": [
+                            {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Klara-Franke Str 20",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                        "city": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Berlin",
+                          },
+                        },
+                        "country": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Germany",
+                          },
+                        },
+                        "postcode": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "10557",
+                          },
+                        },
+                        "state": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Berlin",
+                          },
+                        },
+                        "tags": {
+                          "type": "array",
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "customKey",
+                                  },
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "customValue",
+                                  },
+                                },
+                              },
+                              "type": "object",
+                            },
+                          ],
+                        },
+                      },
+                      "type": "object",
+                    },
+                  },
+                },
+              },
               "destinationUserId": {
                 "type": "primitive",
                 "value": {
@@ -217,6 +304,93 @@ Here are some of the most used payload fields explained (you can find the full p
                   },
                 },
                 "type": "object",
+              },
+              "originPaymentDetails": {
+                "type": "oneOf",
+                "value": {
+                  "type": "discriminated",
+                  "value": {
+                    "method": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "CHECK",
+                      },
+                    },
+                    "shippingAddress": {
+                      "properties": {
+                        "addressLines": {
+                          "type": "array",
+                          "value": [
+                            {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Klara-Franke Str 20",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                        "city": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Berlin",
+                          },
+                        },
+                        "country": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Germany",
+                          },
+                        },
+                        "postcode": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "10557",
+                          },
+                        },
+                        "state": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Berlin",
+                          },
+                        },
+                        "tags": {
+                          "type": "array",
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "customKey",
+                                  },
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "customValue",
+                                  },
+                                },
+                              },
+                              "type": "object",
+                            },
+                          ],
+                        },
+                      },
+                      "type": "object",
+                    },
+                  },
+                },
               },
               "originUserId": {
                 "type": "primitive",
@@ -652,6 +826,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "pathParameters": [
             {
               "name": "transactionId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -684,6 +859,125 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   },
                 },
                 "type": "object",
+              },
+              "destinationPaymentDetails": {
+                "type": "oneOf",
+                "value": {
+                  "type": "discriminated",
+                  "value": {
+                    "checkIdentifier": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "destinationPaymentDetails",
+                      },
+                    },
+                    "checkNumber": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "destinationPaymentDetails",
+                      },
+                    },
+                    "deliveryStatus": {
+                      "type": "enum",
+                      "value": "COMPLETED",
+                    },
+                    "etaTimestamp": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "double",
+                        "value": 1.1,
+                      },
+                    },
+                    "method": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "CHECK",
+                      },
+                    },
+                    "name": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "destinationPaymentDetails",
+                      },
+                    },
+                    "shippingAddress": {
+                      "properties": {
+                        "addressLines": {
+                          "type": "array",
+                          "value": [
+                            {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Klara-Franke Str 20",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                        "city": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Berlin",
+                          },
+                        },
+                        "country": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Germany",
+                          },
+                        },
+                        "postcode": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "10557",
+                          },
+                        },
+                        "state": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Berlin",
+                          },
+                        },
+                        "tags": {
+                          "type": "array",
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "customKey",
+                                  },
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "customValue",
+                                  },
+                                },
+                              },
+                              "type": "object",
+                            },
+                          ],
+                        },
+                      },
+                      "type": "object",
+                    },
+                  },
+                },
               },
               "destinationUserId": {
                 "type": "primitive",
@@ -911,6 +1205,125 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                 },
                 "type": "object",
               },
+              "originPaymentDetails": {
+                "type": "oneOf",
+                "value": {
+                  "type": "discriminated",
+                  "value": {
+                    "checkIdentifier": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "originPaymentDetails",
+                      },
+                    },
+                    "checkNumber": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "originPaymentDetails",
+                      },
+                    },
+                    "deliveryStatus": {
+                      "type": "enum",
+                      "value": "COMPLETED",
+                    },
+                    "etaTimestamp": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "double",
+                        "value": 1.1,
+                      },
+                    },
+                    "method": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "CHECK",
+                      },
+                    },
+                    "name": {
+                      "type": "primitive",
+                      "value": {
+                        "type": "string",
+                        "value": "originPaymentDetails",
+                      },
+                    },
+                    "shippingAddress": {
+                      "properties": {
+                        "addressLines": {
+                          "type": "array",
+                          "value": [
+                            {
+                              "type": "unknown",
+                              "value": {
+                                "type": "primitive",
+                                "value": {
+                                  "type": "string",
+                                  "value": "Klara-Franke Str 20",
+                                },
+                              },
+                            },
+                          ],
+                        },
+                        "city": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Berlin",
+                          },
+                        },
+                        "country": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Germany",
+                          },
+                        },
+                        "postcode": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "10557",
+                          },
+                        },
+                        "state": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "Berlin",
+                          },
+                        },
+                        "tags": {
+                          "type": "array",
+                          "value": [
+                            {
+                              "properties": {
+                                "key": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "customKey",
+                                  },
+                                },
+                                "value": {
+                                  "type": "primitive",
+                                  "value": {
+                                    "type": "string",
+                                    "value": "customValue",
+                                  },
+                                },
+                              },
+                              "type": "object",
+                            },
+                          ],
+                        },
+                      },
+                      "type": "object",
+                    },
+                  },
+                },
+              },
               "originUserId": {
                 "type": "primitive",
                 "value": {
@@ -1016,6 +1429,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "availability": null,
           "description": "Unique Transaction Identifier",
           "name": "transactionId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -1378,6 +1792,125 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     },
                     "type": "object",
                   },
+                  "destinationPaymentDetails": {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "checkIdentifier": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "destinationPaymentDetails",
+                          },
+                        },
+                        "checkNumber": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "destinationPaymentDetails",
+                          },
+                        },
+                        "deliveryStatus": {
+                          "type": "enum",
+                          "value": "COMPLETED",
+                        },
+                        "etaTimestamp": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double",
+                            "value": 1.1,
+                          },
+                        },
+                        "method": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "CHECK",
+                          },
+                        },
+                        "name": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "destinationPaymentDetails",
+                          },
+                        },
+                        "shippingAddress": {
+                          "properties": {
+                            "addressLines": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Klara-Franke Str 20",
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                            "city": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Berlin",
+                              },
+                            },
+                            "country": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Germany",
+                              },
+                            },
+                            "postcode": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "10557",
+                              },
+                            },
+                            "state": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Berlin",
+                              },
+                            },
+                            "tags": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "properties": {
+                                    "key": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "customKey",
+                                      },
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "customValue",
+                                      },
+                                    },
+                                  },
+                                  "type": "object",
+                                },
+                              ],
+                            },
+                          },
+                          "type": "object",
+                        },
+                      },
+                    },
+                  },
                   "destinationUserId": {
                     "type": "primitive",
                     "value": {
@@ -1486,6 +2019,125 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       },
                     },
                     "type": "object",
+                  },
+                  "originPaymentDetails": {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "checkIdentifier": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "originPaymentDetails",
+                          },
+                        },
+                        "checkNumber": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "originPaymentDetails",
+                          },
+                        },
+                        "deliveryStatus": {
+                          "type": "enum",
+                          "value": "COMPLETED",
+                        },
+                        "etaTimestamp": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double",
+                            "value": 1.1,
+                          },
+                        },
+                        "method": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "CHECK",
+                          },
+                        },
+                        "name": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "originPaymentDetails",
+                          },
+                        },
+                        "shippingAddress": {
+                          "properties": {
+                            "addressLines": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Klara-Franke Str 20",
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                            "city": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Berlin",
+                              },
+                            },
+                            "country": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Germany",
+                              },
+                            },
+                            "postcode": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "10557",
+                              },
+                            },
+                            "state": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Berlin",
+                              },
+                            },
+                            "tags": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "properties": {
+                                    "key": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "customKey",
+                                      },
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "customValue",
+                                      },
+                                    },
+                                  },
+                                  "type": "object",
+                                },
+                              ],
+                            },
+                          },
+                          "type": "object",
+                        },
+                      },
+                    },
                   },
                   "originUserId": {
                     "type": "primitive",
@@ -2316,6 +2968,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "pathParameters": [
             {
               "name": "userId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2846,6 +3499,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "availability": null,
           "description": "",
           "name": "userId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3319,6 +3973,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "pathParameters": [
             {
               "name": "userId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4059,6 +4714,130 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                 "type": "enum",
                 "value": "VERY_HIGH",
               },
+              "savedPaymentDetails": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "checkIdentifier": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "savedPaymentDetails",
+                          },
+                        },
+                        "checkNumber": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "savedPaymentDetails",
+                          },
+                        },
+                        "deliveryStatus": {
+                          "type": "enum",
+                          "value": "COMPLETED",
+                        },
+                        "etaTimestamp": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double",
+                            "value": 1.1,
+                          },
+                        },
+                        "method": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "CHECK",
+                          },
+                        },
+                        "name": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "savedPaymentDetails",
+                          },
+                        },
+                        "shippingAddress": {
+                          "properties": {
+                            "addressLines": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Klara-Franke Str 20",
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                            "city": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Berlin",
+                              },
+                            },
+                            "country": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Germany",
+                              },
+                            },
+                            "postcode": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "10557",
+                              },
+                            },
+                            "state": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Berlin",
+                              },
+                            },
+                            "tags": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "properties": {
+                                    "key": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "customKey",
+                                      },
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "customValue",
+                                      },
+                                    },
+                                  },
+                                  "type": "object",
+                                },
+                              ],
+                            },
+                          },
+                          "type": "object",
+                        },
+                      },
+                    },
+                  },
+                ],
+              },
               "shareHolders": {
                 "type": "array",
                 "value": [
@@ -4540,6 +5319,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "availability": null,
           "description": "",
           "name": "userId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -6326,6 +7106,130 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "riskLevel": {
                 "type": "enum",
                 "value": "VERY_HIGH",
+              },
+              "savedPaymentDetails": {
+                "type": "array",
+                "value": [
+                  {
+                    "type": "oneOf",
+                    "value": {
+                      "type": "discriminated",
+                      "value": {
+                        "checkIdentifier": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "savedPaymentDetails",
+                          },
+                        },
+                        "checkNumber": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "savedPaymentDetails",
+                          },
+                        },
+                        "deliveryStatus": {
+                          "type": "enum",
+                          "value": "COMPLETED",
+                        },
+                        "etaTimestamp": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "double",
+                            "value": 1.1,
+                          },
+                        },
+                        "method": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "CHECK",
+                          },
+                        },
+                        "name": {
+                          "type": "primitive",
+                          "value": {
+                            "type": "string",
+                            "value": "savedPaymentDetails",
+                          },
+                        },
+                        "shippingAddress": {
+                          "properties": {
+                            "addressLines": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "type": "unknown",
+                                  "value": {
+                                    "type": "primitive",
+                                    "value": {
+                                      "type": "string",
+                                      "value": "Klara-Franke Str 20",
+                                    },
+                                  },
+                                },
+                              ],
+                            },
+                            "city": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Berlin",
+                              },
+                            },
+                            "country": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Germany",
+                              },
+                            },
+                            "postcode": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "10557",
+                              },
+                            },
+                            "state": {
+                              "type": "primitive",
+                              "value": {
+                                "type": "string",
+                                "value": "Berlin",
+                              },
+                            },
+                            "tags": {
+                              "type": "array",
+                              "value": [
+                                {
+                                  "properties": {
+                                    "key": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "customKey",
+                                      },
+                                    },
+                                    "value": {
+                                      "type": "primitive",
+                                      "value": {
+                                        "type": "string",
+                                        "value": "customValue",
+                                      },
+                                    },
+                                  },
+                                  "type": "object",
+                                },
+                              ],
+                            },
+                          },
+                          "type": "object",
+                        },
+                      },
+                    },
+                  },
+                ],
               },
               "shareHolders": {
                 "type": "array",
@@ -27801,6 +28705,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "https://sandbox.api.flagright.com",

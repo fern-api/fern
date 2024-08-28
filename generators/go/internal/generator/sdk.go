@@ -2827,6 +2827,7 @@ func (r *requestBodyVisitor) VisitInlinedRequestBody(inlinedRequestBody *ir.Inli
 		true,  // includeJSONTags
 		false, // includeURLTags
 		r.includeGenericOptionals,
+		false, // includeLiterals
 	)
 	r.dates = objectProperties.dates
 	r.literals = objectProperties.literals
@@ -2870,6 +2871,7 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 		true,  // includeJSONTags
 		false, // includeURLTags
 		r.includeGenericOptionals,
+		false, // includeLiterals
 	)
 	r.dates = objectProperties.dates
 	r.literals = objectProperties.literals

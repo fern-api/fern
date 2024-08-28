@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExtraProperties.Core;
 
 #nullable enable
@@ -15,9 +16,22 @@ public partial class UserClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.User.CreateUserAsync(
+    ///     new CreateUserRequest
+    ///     {
+    ///         Type = "CreateUserRequest",
+    ///         Version = "v1",
+    ///         Name = "string",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<User> CreateUserAsync(
         CreateUserRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -28,7 +42,8 @@ public partial class UserClient
                 Path = "/user",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

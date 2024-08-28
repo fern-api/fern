@@ -1,4 +1,3 @@
-using System;
 using SeedAuthEnvironmentVariables.Core;
 
 #nullable enable
@@ -19,15 +18,25 @@ public partial class SeedAuthEnvironmentVariablesClient
             "FERN_API_KEY",
             "Please pass in apiKey or set the environment variable FERN_API_KEY."
         );
-        _client = new RawClient(
+        var defaultHeaders = new Headers(
             new Dictionary<string, string>()
             {
                 { "X-FERN-API-KEY", apiKey },
                 { "X-Fern-Language", "C#" },
-            },
-            new Dictionary<string, Func<string>>(),
-            clientOptions ?? new ClientOptions()
+                { "X-Fern-SDK-Name", "SeedAuthEnvironmentVariables" },
+                { "X-Fern-SDK-Version", Version.Current },
+                { "User-Agent", "Fernauth-environment-variables/0.0.1" },
+            }
         );
+        clientOptions ??= new ClientOptions();
+        foreach (var header in defaultHeaders)
+        {
+            if (!clientOptions.Headers.ContainsKey(header.Key))
+            {
+                clientOptions.Headers[header.Key] = header.Value;
+            }
+        }
+        _client = new RawClient(clientOptions);
         Service = new ServiceClient(_client);
     }
 

@@ -37,6 +37,7 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
         };
         class_.addField(BASE_URL_FIELD);
         class_.addField(this.baseOptionsGenerator.getHttpClientField(optionArgs));
+        class_.addField(this.baseOptionsGenerator.getHttpHeadersField());
         class_.addField(this.baseOptionsGenerator.getMaxRetriesField(optionArgs));
         class_.addField(this.baseOptionsGenerator.getTimeoutField(optionArgs));
         return new CSharpFile({
@@ -44,7 +45,7 @@ export class RequestOptionsGenerator extends FileGenerator<CSharpFile, SdkCustom
             directory: this.context.getPublicCoreDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.context.getNamespace(),
+            namespace: this.context.getPublicCoreNamespace(),
             customConfig: this.context.customConfig
         });
     }

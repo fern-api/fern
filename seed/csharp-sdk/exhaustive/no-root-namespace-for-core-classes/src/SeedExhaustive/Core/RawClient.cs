@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 
 namespace SeedExhaustive.Core;
 
@@ -8,29 +9,17 @@ namespace SeedExhaustive.Core;
 /// <summary>
 /// Utility class for making raw HTTP requests to the API.
 /// </summary>
-internal class RawClient(
-    Dictionary<string, string> headers,
-    Dictionary<string, Func<string>> headerSuppliers,
-    ClientOptions clientOptions
-)
+internal class RawClient(ClientOptions clientOptions)
 {
     /// <summary>
     /// The http client used to make requests.
     /// </summary>
     public readonly ClientOptions Options = clientOptions;
 
-    /// <summary>
-    /// Global headers to be sent with every request.
-    /// </summary>
-    private readonly Dictionary<string, string> _headers = headers;
-
-    /// <summary>
-    /// Global headers to be sent with every request. These headers take
-    /// precedence over the others.
-    /// </summary>
-    private readonly Dictionary<string, Func<string>> _headerSuppliers = headerSuppliers;
-
-    public async Task<ApiResponse> MakeRequestAsync(BaseApiRequest request)
+    public async Task<ApiResponse> MakeRequestAsync(
+        BaseApiRequest request,
+        CancellationToken cancellationToken = default
+    )
     {
         var url = BuildUrl(request);
         var httpRequest = new HttpRequestMessage(request.Method, url);
@@ -38,22 +27,11 @@ internal class RawClient(
         {
             request.Headers.Add("Content-Type", request.ContentType);
         }
-        // Add global headers to the request
-        foreach (var header in _headers)
-        {
-            httpRequest.Headers.Add(header.Key, header.Value);
-        }
-        // Add global headers to the request from supplier
-        foreach (var header in _headerSuppliers)
-        {
-            httpRequest.Headers.Add(header.Key, header.Value.Invoke());
-        }
-        // Add request headers to the request
-        foreach (var header in request.Headers)
-        {
-            httpRequest.Headers.Add(header.Key, header.Value);
-        }
-        // Add the request body to the request
+        SetHeaders(httpRequest, Options.Headers);
+        SetHeaders(httpRequest, request.Headers);
+        SetHeaders(httpRequest, request.Options?.Headers ?? new());
+
+        // Add the request body to the request.
         if (request is JsonApiRequest jsonRequest)
         {
             if (jsonRequest.Body != null)
@@ -69,9 +47,18 @@ internal class RawClient(
         {
             httpRequest.Content = new StreamContent(streamRequest.Body);
         }
-        // Send the request
+
+        // Apply the request timeout, if any.
+        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        var timeout = request.Options?.Timeout ?? Options.Timeout;
+        if (timeout != null)
+        {
+            cts.CancelAfter(timeout);
+        }
+
+        // Send the request.
         var httpClient = request.Options?.HttpClient ?? Options.HttpClient;
-        var response = await httpClient.SendAsync(httpRequest);
+        var response = await httpClient.SendAsync(httpRequest, cts.Token);
         return new ApiResponse { StatusCode = (int)response.StatusCode, Raw = response };
     }
 
@@ -87,7 +74,7 @@ internal class RawClient(
 
         public Dictionary<string, object> Query { get; init; } = new();
 
-        public Dictionary<string, string> Headers { get; init; } = new();
+        public Headers Headers { get; init; } = new();
 
         public RequestOptions? Options { get; init; }
     }
@@ -116,6 +103,18 @@ internal class RawClient(
         public required int StatusCode { get; init; }
 
         public required HttpResponseMessage Raw { get; init; }
+    }
+
+    private void SetHeaders(HttpRequestMessage httpRequest, Headers headers)
+    {
+        foreach (var header in headers)
+        {
+            var value = header.Value?.Match(str => str, func => func.Invoke());
+            if (value != null)
+            {
+                httpRequest.Headers.TryAddWithoutValidation(header.Key, value);
+            }
+        }
     }
 
     private string BuildUrl(BaseApiRequest request)

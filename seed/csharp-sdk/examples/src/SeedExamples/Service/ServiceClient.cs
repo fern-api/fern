@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExamples.Core;
 
 #nullable enable
@@ -15,7 +16,16 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task<Movie> GetMovieAsync(string movieId, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Service.GetMovieAsync("movie-c06a4ad7");
+    /// </code>
+    /// </example>
+    public async Task<Movie> GetMovieAsync(
+        string movieId,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,7 +34,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Get,
                 Path = $"/movie/{movieId}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -46,7 +57,39 @@ public partial class ServiceClient
         );
     }
 
-    public async Task<string> CreateMovieAsync(Movie request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Service.CreateMovieAsync(
+    ///     new Movie
+    ///     {
+    ///         Id = "movie-c06a4ad7",
+    ///         Prequel = "movie-cv9b914f",
+    ///         Title = "The Boy and the Heron",
+    ///         From = "Hayao Miyazaki",
+    ///         Rating = 8,
+    ///         Type = "movie",
+    ///         Tag = "tag-wf9as23d",
+    ///         Metadata = new Dictionary<string, object>()
+    ///         {
+    ///             {
+    ///                 "actors",
+    ///                 new List<object?>() { "Christian Bale", "Florence Pugh", "Willem Dafoe" }
+    ///             },
+    ///             { "releaseDate", "2023-12-08" },
+    ///             {
+    ///                 "ratings",
+    ///                 new Dictionary<object, object?>() { { "imdb", 7.6 }, { "rottenTomatoes", 97 } }
+    ///             },
+    ///         },
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<string> CreateMovieAsync(
+        Movie request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -56,7 +99,8 @@ public partial class ServiceClient
                 Path = "/movie",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -78,9 +122,22 @@ public partial class ServiceClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Service.GetMetadataAsync(
+    ///     new GetMetadataRequest
+    ///     {
+    ///         Shallow = false,
+    ///         Tag = ["development"],
+    ///         XApiVersion = "0.0.1",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<object> GetMetadataAsync(
         GetMetadataRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var _query = new Dictionary<string, object>();
@@ -89,10 +146,9 @@ public partial class ServiceClient
         {
             _query["shallow"] = request.Shallow.ToString();
         }
-        var _headers = new Dictionary<string, string>()
-        {
-            { "X-API-Version", request.XApiVersion },
-        };
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "X-API-Version", request.XApiVersion } }
+        );
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
@@ -102,7 +158,8 @@ public partial class ServiceClient
                 Query = _query,
                 Headers = _headers,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -124,7 +181,15 @@ public partial class ServiceClient
         );
     }
 
-    public async Task<Response> GetResponseAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Service.GetResponseAsync();
+    /// </code>
+    /// </example>
+    public async Task<Response> GetResponseAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -133,7 +198,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "/response",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

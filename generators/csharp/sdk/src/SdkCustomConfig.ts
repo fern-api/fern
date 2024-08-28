@@ -10,7 +10,10 @@ export const SdkCustomConfigSchema = z.strictObject({
     "root-namespace-for-core-classes": z.boolean().optional(),
     "pascal-case-environments": z.boolean().optional(),
     "generate-error-types": z.boolean().optional(),
-    "extra-dependencies": z.record(z.string()).optional()
+    "extra-dependencies": z.record(z.string()).optional(),
+    "read-only-memory-types": z.optional(z.array(z.string())),
+    "generate-mock-server-tests": z.boolean().optional(),
+    "package-id": z.string().optional()
 });
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

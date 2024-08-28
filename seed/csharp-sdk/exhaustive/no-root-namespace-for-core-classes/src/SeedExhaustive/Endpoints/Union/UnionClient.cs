@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExhaustive.Core;
 
 #nullable enable
@@ -15,7 +16,18 @@ public partial class UnionClient
         _client = client;
     }
 
-    public async Task<object> GetAndReturnUnionAsync(object request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Union.GetAndReturnUnionAsync(
+    ///     new Dog { Name = "string", LikesToWoof = true }
+    /// );
+    /// </code>
+    /// </example>
+    public async Task<object> GetAndReturnUnionAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -25,7 +37,8 @@ public partial class UnionClient
                 Path = "/union",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedValidation.Core;
 
 #nullable enable
 
@@ -17,4 +18,9 @@ public record Type
 
     [JsonPropertyName("shape")]
     public required Shape Shape { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

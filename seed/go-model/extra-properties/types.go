@@ -26,6 +26,7 @@ func (f *Failure) UnmarshalJSON(data []byte) error {
 	type embed Failure
 	var unmarshaler = struct {
 		embed
+		Status string `json:"status"`
 	}{
 		embed: embed(*f),
 	}
@@ -33,7 +34,10 @@ func (f *Failure) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*f = Failure(unmarshaler.embed)
-	f.status = "failure"
+	if unmarshaler.Status != "failure" {
+		return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", f, "failure", unmarshaler.Status)
+	}
+	f.status = unmarshaler.Status
 
 	extraProperties, err := core.ExtractExtraProperties(data, *f, "status")
 	if err != nil {

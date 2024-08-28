@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedStreaming.Core;
 
@@ -16,9 +17,15 @@ public partial class DummyClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
+    /// </code>
+    /// </example>
     public async Task GenerateStreamAsync(
         GenerateStreamRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -29,7 +36,8 @@ public partial class DummyClient
                 Path = "generate-stream",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         throw new SeedStreamingApiException(
@@ -39,9 +47,15 @@ public partial class DummyClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Dummy.GenerateAsync(new Generateequest { Stream = false, NumEvents = 5 });
+    /// </code>
+    /// </example>
     public async Task<StreamResponse> GenerateAsync(
         Generateequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -52,7 +66,8 @@ public partial class DummyClient
                 Path = "generate",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

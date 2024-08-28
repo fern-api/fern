@@ -8,14 +8,14 @@ description: Fern Definition enables the reuse of API type and error names acros
 Every folder in your API definition is a package.
 
 <CodeBlock title='Example of package and nested package'>
-```yaml
+```bash
 fern/
 ├─ fern.config.json
 ├─ generators.yml
-└─ definition/ # <------ root package
+└─ definition/ # <--- root package
   ├─ api.yml
   ├─ projects.yml
-  └─ roles/ # <------- nested package
+  └─ roles/ # <--- nested package
     └─ admin.yml
 ```
 </CodeBlock>
@@ -55,12 +55,12 @@ client.getProjects();
 would have a `fern/` folder:
 
 <CodeBlock title='fern/'>
-```yaml
+```bash {5}
 fern/
 ├─ fern.config.json
 ├─ generators.yml
 └─ definition/
-  ├─ __package__.yml # <---
+  ├─ __package__.yml
   └─ roles.yml
 ```
 </CodeBlock>
@@ -92,7 +92,7 @@ certain types or errors, that's okay because the two APIs live in different
 packages.
 
 <CodeBlock title="Versioning example">
-```yaml
+```bash
 fern/
 ├─ fern.config.json
 ├─ generators.yml
@@ -115,7 +115,7 @@ of your documentation.
 For example, let's say you have the following `fern/` folder:
 
 <CodeBlock title='fern/'>
-```yaml
+```bash
 fern/
 ├─ fern.config.json
 ├─ generators.yml
@@ -131,12 +131,12 @@ want to control the navigation, you can add a `__package__.yml` file
 and configure the order:
 
 <CodeBlock title='fern/'>
-```yaml
+```bash
 fern/
 ├─ fern.config.json
 ├─ generators.yml
 └─ definition/
-  ├─ __package__.yml # <------------ New File
+  ├─ __package__.yml # <--- New File
   ├─ projects.yml
   ├─ roles.yml
   └─ users.yml

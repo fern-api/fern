@@ -1,11 +1,9 @@
 import { doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { FernRegistry, FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
-import * as serializers from "@fern-fern/generators-sdk/serialization";
-import { readFile } from "fs/promises";
-import YAML from "yaml";
 import { GeneratorType } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
+import { parseGeneratorReleasesFile } from "../../utils/convertVersionsFileToReleases";
 
 // TODO: we should share the language and generator type with the FDR definition
 export async function registerGenerator({
@@ -19,12 +17,14 @@ export async function registerGenerator({
 }): Promise<void> {
     const generatorId = generator.workspaceName;
     const generatorConfig = generator.workspaceConfig;
+    context.logger.info(`Registering generator ${generatorId}...`);
+
     // Register generator itself
     fdrClient.generators.upsertGenerator({
         id: generatorId,
         generatorType: convertGeneratorType(generatorConfig.generatorType),
         generatorLanguage: generatorConfig.language,
-        dockerImage: generatorConfig.docker
+        dockerImage: generatorConfig.test.docker.image
     });
 
     // Register generator versions
@@ -41,23 +41,17 @@ export async function registerGenerator({
         }
 
         // We've found a versions file, let's read it and register all the versions
-        const changelogs = YAML.parseDocument((await readFile(absolutePathToChangelogLocation)).toString());
-        if (YAML.isSeq(changelogs)) {
-            for (const entry of changelogs.items) {
-                if (!YAML.isMap(entry)) {
-                    continue;
-                }
-                try {
-                    const release = serializers.generators.GeneratorReleaseRequest.parseOrThrow({
-                        generator_id: generatorId,
-                        ...entry
-                    });
-                    fdrClient.generators.versions.upsertGeneratorRelease(release);
-                } catch (e) {
-                    context.logger.error(`Error parsing release: ${e}`);
-                }
+        context.logger.info(`Registering generator ${generatorId} releases from ${absolutePathToChangelogLocation}...`);
+        await parseGeneratorReleasesFile({
+            generatorId,
+            changelogPath: absolutePathToChangelogLocation,
+            context,
+            action: async (release) => {
+                context.logger.info(`Registering generator ${generatorId} release: ${release.version}`);
+                await fdrClient.generators.versions.upsertGeneratorRelease(release);
             }
-        }
+        });
+        context.logger.info(`Registration complete.`);
     }
 }
 

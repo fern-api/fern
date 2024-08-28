@@ -6,7 +6,11 @@ import { ObjectGenerator } from "./object/ObjectGenerator";
 
 export function generateModels({ context }: { context: ModelGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = [];
-    for (const [_, typeDeclaration] of Object.entries(context.ir.types)) {
+    for (const [typeId, typeDeclaration] of Object.entries(context.ir.types)) {
+        if (context.protobufResolver.isAnyWellKnownProtobufType(typeId)) {
+            // The well-known Protobuf types are generated separately.
+            continue;
+        }
         const file = typeDeclaration.shape._visit<CSharpFile | undefined>({
             alias: () => undefined,
             enum: (etd: EnumTypeDeclaration) => {

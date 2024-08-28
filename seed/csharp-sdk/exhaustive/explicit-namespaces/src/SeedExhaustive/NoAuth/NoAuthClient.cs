@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 using SeedExhaustive.GeneralErrors;
@@ -20,7 +21,16 @@ public partial class NoAuthClient
     /// <summary>
     /// POST request with no auth
     /// </summary>
-    public async Task<bool> PostWithNoAuthAsync(object request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.NoAuth.PostWithNoAuthAsync(new Dictionary<object, object?>() { { "key", "value" } });
+    /// </code>
+    /// </example>
+    public async Task<bool> PostWithNoAuthAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -30,7 +40,8 @@ public partial class NoAuthClient
                 Path = "/no-auth",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

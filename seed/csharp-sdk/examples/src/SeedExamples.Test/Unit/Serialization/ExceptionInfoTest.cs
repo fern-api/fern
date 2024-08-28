@@ -18,11 +18,11 @@ public class ExceptionInfoTest
         var inputJson =
             @"
         {
-  ""exceptionType"": ""Unavailable"",
-  ""exceptionMessage"": ""This component is unavailable!"",
-  ""exceptionStacktrace"": ""<logs>""
-}
-";
+          ""exceptionType"": ""Unavailable"",
+          ""exceptionMessage"": ""This component is unavailable!"",
+          ""exceptionStacktrace"": ""<logs>""
+        }
+        ";
 
         var serializerOptions = new JsonSerializerOptions
         {

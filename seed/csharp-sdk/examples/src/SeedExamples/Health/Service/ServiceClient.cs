@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedExamples;
 using SeedExamples.Core;
@@ -20,7 +21,16 @@ public partial class ServiceClient
     /// <summary>
     /// This endpoint checks the health of a resource.
     /// </summary>
-    public async Task CheckAsync(string id, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Health.Service.CheckAsync("id-2sdx82h");
+    /// </code>
+    /// </example>
+    public async Task CheckAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -29,7 +39,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Get,
                 Path = $"/check/{id}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -46,7 +57,15 @@ public partial class ServiceClient
     /// <summary>
     /// This endpoint checks the health of the service.
     /// </summary>
-    public async Task<bool> PingAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Health.Service.PingAsync();
+    /// </code>
+    /// </example>
+    public async Task<bool> PingAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -55,7 +74,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Get,
                 Path = "/ping",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

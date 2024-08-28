@@ -2,13 +2,13 @@
 
 from .....core.pydantic_utilities import UniversalBaseModel
 import typing
-from ....folder_c.resources.common.foo import Foo as resources_folder_c_resources_common_foo_Foo
+from ....folder_c.resources.common.folder_c_foo import FolderCFoo
 from .....core.pydantic_utilities import IS_PYDANTIC_V2
 import pydantic
 
 
 class Foo(UniversalBaseModel):
-    foo: typing.Optional[resources_folder_c_resources_common_foo_Foo] = None
+    foo: typing.Optional[FolderCFoo] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -22,6 +22,7 @@ import {
     TestClass,
     Type
 } from "./ast";
+import { ReadOnlyMemory } from "./ast/ReadOnlymemory";
 
 export function class_(args: Class.Args): Class {
     return new Class(args);
@@ -83,6 +84,10 @@ export function list(args: List.Args): List {
     return new List(args);
 }
 
+export function readOnlyMemory(args: ReadOnlyMemory.Args): ReadOnlyMemory {
+    return new ReadOnlyMemory(args);
+}
+
 export function set(args: Set.Args): Set {
     return new Set(args);
 }
@@ -127,6 +132,8 @@ export {
     type Argument,
     type Arguments,
     type NamedArgument,
-    type UnnamedArgument
+    type UnnamedArgument,
+    VALID_READ_ONLY_MEMORY_TYPES,
+    convertReadOnlyPrimitiveTypes
 } from "./ast";
 export { AstNode } from "./ast/core/AstNode";

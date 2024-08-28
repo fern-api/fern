@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedTrace.Core;
 
@@ -16,10 +17,16 @@ public partial class SyspropClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Sysprop.SetNumWarmInstancesAsync(Language.Java, 1);
+    /// </code>
+    /// </example>
     public async Task SetNumWarmInstancesAsync(
         Language language,
         int numWarmInstances,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -29,7 +36,8 @@ public partial class SyspropClient
                 Method = HttpMethod.Put,
                 Path = $"/sysprop/num-warm-instances/{language}/{numWarmInstances}",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {
@@ -43,8 +51,14 @@ public partial class SyspropClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Sysprop.GetNumWarmInstancesAsync();
+    /// </code>
+    /// </example>
     public async Task<Dictionary<Language, int>> GetNumWarmInstancesAsync(
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -54,7 +68,8 @@ public partial class SyspropClient
                 Method = HttpMethod.Get,
                 Path = "/sysprop/num-warm-instances",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

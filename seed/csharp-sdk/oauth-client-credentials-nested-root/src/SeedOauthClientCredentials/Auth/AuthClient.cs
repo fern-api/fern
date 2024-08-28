@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedOauthClientCredentials;
 using SeedOauthClientCredentials.Core;
 
@@ -16,9 +17,24 @@ public partial class AuthClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Auth.GetTokenAsync(
+    ///     new GetTokenRequest
+    ///     {
+    ///         ClientId = "string",
+    ///         ClientSecret = "string",
+    ///         Audience = "https://api.example.com",
+    ///         GrantType = "client_credentials",
+    ///         Scope = "string",
+    ///     }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<TokenResponse> GetTokenAsync(
         GetTokenRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -29,7 +45,8 @@ public partial class AuthClient
                 Path = "/token",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

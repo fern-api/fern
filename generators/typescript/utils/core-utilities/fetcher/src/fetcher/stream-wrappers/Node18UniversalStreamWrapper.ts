@@ -1,4 +1,4 @@
-import type { Writable } from "stream";
+import type { Writable } from "readable-stream";
 import { EventCallback, StreamWrapper } from "./chooseStreamWrapper";
 
 export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | Uint32Array>
@@ -173,8 +173,12 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
 
         while (true) {
             const { done, value } = await this.reader.read();
-            if (done) break;
-            if (value) chunks.push(value);
+            if (done) {
+                break;
+            }
+            if (value) {
+                chunks.push(value);
+            }
         }
 
         const decoder = new TextDecoder(this.encoding || "utf-8");

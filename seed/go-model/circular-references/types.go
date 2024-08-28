@@ -132,6 +132,9 @@ func (c *ContainerValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", c)
+	}
 	switch unmarshaler.Type {
 	case "list":
 		var valueUnmarshaler struct {
@@ -221,6 +224,9 @@ func (f *FieldValue) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	f.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", f)
+	}
 	switch unmarshaler.Type {
 	case "primitive_value":
 		var valueUnmarshaler struct {

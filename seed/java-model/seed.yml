@@ -1,17 +1,27 @@
 irVersion: v46
-docker: fernapi/fern-java-model:latest
-dockerCommand: 
-  - cd generators/java
-  - ./gradlew :model:distTar
-  - docker build -f model/Dockerfile -t fernapi/fern-java-model:latest model/
-local:
+publish:
   workingDirectory: generators/java
-  buildCommand:
+  preBuildCommands:
     - ./gradlew :model:distTar
-    - chmod +x install-gradle.sh && ./install-gradle.sh
-    - cd model
-    - tar -xvf build/distributions/model.tar -C .
-  runCommand: cd model/model && java -cp model.jar:lib/* com.fern.java.model.Cli
+  docker: 
+    file: ./generators/java/model/Dockerfile
+    image: fernapi/fern-java-model
+    context: ./generators/java/model
+test:
+  docker:
+    image: fernapi/fern-java-model:latest
+    command: 
+      - cd generators/java
+      - ./gradlew :model:distTar
+      - docker build -f model/Dockerfile -t fernapi/fern-java-model:latest model/
+  local:
+    workingDirectory: generators/java
+    buildCommand:
+      - ./gradlew :model:distTar
+      - chmod +x install-gradle.sh && ./install-gradle.sh
+      - cd model
+      - tar -xvf build/distributions/model.tar -C .
+    runCommand: cd model/model && java -cp model.jar:lib/* com.fern.java.model.Cli
   env: {}
 language: java
 generatorType: Model

@@ -85,6 +85,7 @@ export class ExpressContextImpl implements ExpressContext {
     public readonly externalDependencies: ExternalDependencies;
     public readonly coreUtilities: CoreUtilities;
     public readonly fernConstants: Constants;
+    public readonly includeSerdeLayer: boolean;
 
     public readonly type: TypeContextImpl;
     public readonly typeSchema: TypeSchemaContextImpl;
@@ -131,6 +132,7 @@ export class ExpressContextImpl implements ExpressContext {
         includeSerdeLayer,
         retainOriginalCasing
     }: ExpressContextImpl.Init) {
+        this.includeSerdeLayer = includeSerdeLayer;
         this.sourceFile = sourceFile;
         this.externalDependencies = createExternalDependencies({
             dependencyManager,

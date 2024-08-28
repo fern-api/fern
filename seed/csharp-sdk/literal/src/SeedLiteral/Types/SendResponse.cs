@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedLiteral.Core;
 
 #nullable enable
 
@@ -14,4 +15,9 @@ public record SendResponse
 
     [JsonPropertyName("success")]
     public required bool Success { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

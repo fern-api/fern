@@ -804,6 +804,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "accountId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -973,6 +974,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -1736,6 +1738,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "accountId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -1792,6 +1795,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2431,6 +2435,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "accountId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2587,6 +2592,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2865,6 +2871,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "accountId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2922,6 +2929,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3196,6 +3204,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "accountId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3256,6 +3265,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3540,6 +3550,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "accountId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3660,6 +3671,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4469,6 +4481,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "institutionId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4655,6 +4668,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of a financial institution.",
           "name": "institutionId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5088,6 +5102,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "institutionId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5232,6 +5247,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of a financial institution.",
           "name": "institutionId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5536,6 +5552,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "institutionId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6081,6 +6098,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of a financial institution.",
           "name": "institutionId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -6534,6 +6552,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "accountId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6853,6 +6872,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of this account resource. This is an opaque string.",
           "name": "accountId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -9053,6 +9073,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "transferId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9247,6 +9268,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of this transfer. This is an opaque string.",
           "name": "transferId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -9478,6 +9500,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "transferId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9506,6 +9529,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of this transfer. This is an opaque string.",
           "name": "transferId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -9763,6 +9787,7 @@ This error response may have one of the following \`type\` values:
           "pathParameters": [
             {
               "name": "transferId",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -10029,6 +10054,7 @@ This error response may have one of the following \`type\` values:
           "availability": null,
           "description": "The unique identifier of this transfer. This is an opaque string.",
           "name": "transferId",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -18572,6 +18598,7 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "https://api.apiture.com/banking",

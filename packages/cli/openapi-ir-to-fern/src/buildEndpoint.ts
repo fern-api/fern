@@ -35,9 +35,14 @@ export function buildEndpoint({
 
     const names = new Set<string>();
 
+    let path = endpoint.path;
+
     const pathParameters: Record<string, RawSchemas.HttpPathParameterSchema> = {};
     for (const pathParameter of endpoint.pathParameters) {
-        pathParameters[pathParameter.name] = buildPathParameter({
+        if (pathParameter.parameterNameOverride) {
+            path = path.replace(pathParameter.name, pathParameter.parameterNameOverride);
+        }
+        pathParameters[pathParameter.parameterNameOverride ?? pathParameter.name] = buildPathParameter({
             pathParameter,
             context,
             fileContainingReference: declarationFile
@@ -79,7 +84,7 @@ export function buildEndpoint({
     }
 
     const convertedEndpoint: RawSchemas.HttpEndpointSchema = {
-        path: endpoint.path,
+        path,
         method: convertToHttpMethod(endpoint.method),
         auth: endpoint.authed,
         docs: endpoint.description ?? undefined,

@@ -1,0 +1,15 @@
+- version: 0.39.10
+  ir_version: 53
+  changelog_entry:
+    - type: chore
+      summary: asd
+- version: 0.39.11
+  ir_version: 53
+  changelog_entry:
+    - type: chore
+      summary: asd
+- version: 0.40.10
+  ir_version: 53
+  changelog_entry:
+    - type: chore
+      summary: asd

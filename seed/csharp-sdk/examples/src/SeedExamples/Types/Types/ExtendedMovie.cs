@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedExamples.Core;
 
 #nullable enable
 
@@ -38,4 +39,9 @@ public record ExtendedMovie
 
     [JsonPropertyName("metadata")]
     public object Metadata { get; set; } = new Dictionary<string, object?>();
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

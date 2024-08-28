@@ -91,7 +91,7 @@ export class Admin {
      *
      * @example
      *     await client.admin.sendTestSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
-     *         updateTime: new Date("2024-01-15T09:30:00.000Z"),
+     *         updateTime: "2024-01-15T09:30:00Z",
      *         updateInfo: {
      *             type: "running",
      *             value: SeedTrace.RunningSubmissionState.QueueingSubmission
@@ -203,7 +203,7 @@ export class Admin {
      *
      * @example
      *     await client.admin.sendWorkspaceSubmissionUpdate("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
-     *         updateTime: new Date("2024-01-15T09:30:00.000Z"),
+     *         updateTime: "2024-01-15T09:30:00Z",
      *         updateInfo: {
      *             type: "running",
      *             value: SeedTrace.RunningSubmissionState.QueueingSubmission
@@ -263,7 +263,22 @@ export class Admin {
      * @example
      *     await client.admin.storeTracedTestCase("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", {
      *         result: {
-     *             result: {},
+     *             result: {
+     *                 expectedResult: {
+     *                     type: "integerValue",
+     *                     value: 1
+     *                 },
+     *                 actualResult: {
+     *                     type: "value",
+     *                     value: {
+     *                         type: "integerValue",
+     *                         value: {
+     *                             "key": "value"
+     *                         }
+     *                     }
+     *                 },
+     *                 passed: true
+     *             },
      *             stdout: "string"
      *         },
      *         traceResponses: [{
@@ -273,8 +288,24 @@ export class Admin {
      *                     type: "integerValue",
      *                     value: 1
      *                 },
-     *                 expressionLocation: {},
-     *                 stack: {},
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: {
+     *                         methodName: "string",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "string": {
+     *                                         "key": "value"
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
+     *                 },
      *                 stdout: "string"
      *             }]
      *     })
@@ -336,13 +367,32 @@ export class Admin {
      *     await client.admin.storeTracedTestCaseV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", "string", [{
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             lineNumber: 1,
-     *             file: {},
+     *             file: {
+     *                 filename: "string",
+     *                 directory: "string"
+     *             },
      *             returnValue: {
      *                 type: "integerValue",
      *                 value: 1
      *             },
-     *             expressionLocation: {},
-     *             stack: {},
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: {
+     *                     methodName: "string",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "string": {
+     *                                     "key": "value"
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
+     *             },
      *             stdout: "string"
      *         }])
      */
@@ -402,9 +452,16 @@ export class Admin {
      *     await client.admin.storeTracedWorkspace("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
      *         workspaceRunDetails: {
      *             exceptionV2: {
-     *                 type: "generic"
+     *                 type: "generic",
+     *                 exceptionType: "string",
+     *                 exceptionMessage: "string",
+     *                 exceptionStacktrace: "string"
      *             },
-     *             exception: {},
+     *             exception: {
+     *                 exceptionType: "string",
+     *                 exceptionMessage: "string",
+     *                 exceptionStacktrace: "string"
+     *             },
      *             stdout: "string"
      *         },
      *         traceResponses: [{
@@ -414,8 +471,24 @@ export class Admin {
      *                     type: "integerValue",
      *                     value: 1
      *                 },
-     *                 expressionLocation: {},
-     *                 stack: {},
+     *                 expressionLocation: {
+     *                     start: 1,
+     *                     offset: 1
+     *                 },
+     *                 stack: {
+     *                     numStackFrames: 1,
+     *                     topStackFrame: {
+     *                         methodName: "string",
+     *                         lineNumber: 1,
+     *                         scopes: [{
+     *                                 variables: {
+     *                                     "string": {
+     *                                         "key": "value"
+     *                                     }
+     *                                 }
+     *                             }]
+     *                     }
+     *                 },
      *                 stdout: "string"
      *             }]
      *     })
@@ -473,13 +546,32 @@ export class Admin {
      *     await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", [{
      *             submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             lineNumber: 1,
-     *             file: {},
+     *             file: {
+     *                 filename: "string",
+     *                 directory: "string"
+     *             },
      *             returnValue: {
      *                 type: "integerValue",
      *                 value: 1
      *             },
-     *             expressionLocation: {},
-     *             stack: {},
+     *             expressionLocation: {
+     *                 start: 1,
+     *                 offset: 1
+     *             },
+     *             stack: {
+     *                 numStackFrames: 1,
+     *                 topStackFrame: {
+     *                     methodName: "string",
+     *                     lineNumber: 1,
+     *                     scopes: [{
+     *                             variables: {
+     *                                 "string": {
+     *                                     "key": "value"
+     *                                 }
+     *                             }
+     *                         }]
+     *                 }
+     *             },
      *             stdout: "string"
      *         }])
      */

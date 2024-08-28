@@ -1,3 +1,4 @@
+# TODO: delete this when we migrate to the one versions file in `publish-generators-v2`
 name: generators
 
 on:
@@ -27,12 +28,7 @@ jobs:
 
           const paths = [
             "generators/openapi",
-            "generators/python/sdk",
-            "generators/python/fastapi",
-            "generators/python/pydantic",
             "generators/postman",
-            "generators/ruby/model",
-            "generators/ruby/sdk",
             "generators/java/sdk",
             "generators/java/model",
             "generators/java/spring",

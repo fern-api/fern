@@ -239,6 +239,7 @@ export function generateIr({
                     description: pathParameter.description,
                     name: pathParameter.name,
                     schema: convertSchemaWithExampleToSchema(pathParameter.schema),
+                    parameterNameOverride: pathParameter.parameterNameOverride,
                     variableReference: pathParameter.variableReference,
                     availability: pathParameter.availability,
                     source: pathParameter.source

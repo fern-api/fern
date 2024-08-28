@@ -1,0 +1,87 @@
+---
+title: "Postman Integeration"
+description: "Generate a postman collection full of example requests and responses"
+subtitle: "Generate a postman collection full of example requests and responses"
+---
+
+## Showcase
+
+<CardGroup cols={2}>
+
+<Card
+  title="Primer"
+  href="https://www.postman.com/primerio/workspace/primer-docs/overview"
+  horizontal
+  icon={<img src="https://cdn.prod.website-files.com/5e9dc792e1210c5325f7ebbc/64b039144f484892355032dd_62146168.png" />}
+  iconSize={12}
+/>
+
+<Card
+  title="MirrorWOrld"
+  href="https://developer.mirrorworld.fun/"
+  horizontal
+  icon={<img src="https://cdn.brandfetch.io/idLEJUb6Vb/w/400/h/400/theme/dark/icon.jpeg" />}
+  iconSize={12}
+/>
+
+</CardGroup>
+
+## Getting started
+
+The configuration for the postman generator lives in your fern folder, in a file
+called [`generators.yml`](/learn/api-definition/introduction/what-is-the-fern-folder#generatorsyml).
+
+### **Step 1**: Configure your `generators.yml`
+
+Start by running the following command:
+
+```sh
+fern add fern-postman --group postman
+```
+
+Once the command completes, you will see the following configuration added:
+
+```yaml title="generators.yml" {2-8}
+groups:
+  postman:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.0.45
+        output:
+          location: local-file-system
+          path: ../postman
+```
+
+### **Step 2**: Generate a `collection.json`
+
+Start by running the following command
+
+```sh
+fern generate --group postman
+```
+
+This will trigger postman collection on Fern's cloud. Once complete, you'll see a `collection.json`:
+
+```bash {4-5}
+fern/
+  ├─ fern.config.json
+  ├─ generators.yml
+postman
+  ├─ collection.json
+```
+
+## Publishing
+
+If you'd like Fern to publish the collection directly to Postman instead, you can modify your `generators.yml` configuration
+in the following way:
+
+```yaml title="generators.yml" {6-8}
+generators:
+  postman:
+    generators:
+      - name: fernapi/fern-postman
+        version: 0.0.45
+        output:
+          api-key: ${POSTMAN_API_KEY}
+          workspace-id: 07e228e5-3f91-4223-8e27-bbfe4a81a601
+```

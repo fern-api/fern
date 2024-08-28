@@ -36,7 +36,13 @@ export class CSharpFile extends File {
         super(
             `${clazz.name}.cs`,
             directory,
-            clazz.toString(clazz.getNamespace(), allNamespaceSegments, allTypeClassReferences, namespace, customConfig)
+            clazz.toString({
+                namespace: clazz.getNamespace(),
+                allNamespaceSegments,
+                allTypeClassReferences,
+                rootNamespace: namespace,
+                customConfig
+            })
         );
     }
 

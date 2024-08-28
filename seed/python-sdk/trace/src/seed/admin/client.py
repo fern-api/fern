@@ -297,9 +297,15 @@ class AdminClient:
         import uuid
 
         from seed import SeedTrace
-        from seed.commons import DebugVariableValue_IntegerValue
+        from seed.commons import (
+            DebugVariableValue_IntegerValue,
+            VariableValue_IntegerValue,
+        )
         from seed.submission import (
+            ActualResult_Value,
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TestCaseResult,
             TestCaseResultWithStdout,
@@ -316,7 +322,13 @@ class AdminClient:
             ),
             test_case_id="string",
             result=TestCaseResultWithStdout(
-                result=TestCaseResult(),
+                result=TestCaseResult(
+                    expected_result=VariableValue_IntegerValue(value=1),
+                    actual_result=ActualResult_Value(
+                        value=VariableValue_IntegerValue(value={"key": "value"})
+                    ),
+                    passed=True,
+                ),
                 stdout="string",
             ),
             trace_responses=[
@@ -326,8 +338,22 @@ class AdminClient:
                     ),
                     line_number=1,
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={"string": {"key": "value"}},
+                                )
+                            ],
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -383,6 +409,8 @@ class AdminClient:
         from seed.commons import DebugVariableValue_IntegerValue
         from seed.submission import (
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TracedFile,
             TraceResponseV2,
@@ -403,10 +431,27 @@ class AdminClient:
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                     line_number=1,
-                    file=TracedFile(),
+                    file=TracedFile(
+                        filename="string",
+                        directory="string",
+                    ),
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={"string": {"key": "value"}},
+                                )
+                            ],
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -461,6 +506,8 @@ class AdminClient:
             ExceptionInfo,
             ExceptionV2_Generic,
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TraceResponse,
             WorkspaceRunDetails,
@@ -475,8 +522,16 @@ class AdminClient:
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
             workspace_run_details=WorkspaceRunDetails(
-                exception_v_2=ExceptionV2_Generic(),
-                exception=ExceptionInfo(),
+                exception_v_2=ExceptionV2_Generic(
+                    exception_type="string",
+                    exception_message="string",
+                    exception_stacktrace="string",
+                ),
+                exception=ExceptionInfo(
+                    exception_type="string",
+                    exception_message="string",
+                    exception_stacktrace="string",
+                ),
                 stdout="string",
             ),
             trace_responses=[
@@ -486,8 +541,22 @@ class AdminClient:
                     ),
                     line_number=1,
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={"string": {"key": "value"}},
+                                )
+                            ],
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -540,6 +609,8 @@ class AdminClient:
         from seed.commons import DebugVariableValue_IntegerValue
         from seed.submission import (
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TracedFile,
             TraceResponseV2,
@@ -559,10 +630,27 @@ class AdminClient:
                         "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     ),
                     line_number=1,
-                    file=TracedFile(),
+                    file=TracedFile(
+                        filename="string",
+                        directory="string",
+                    ),
                     return_value=DebugVariableValue_IntegerValue(value=1),
-                    expression_location=ExpressionLocation(),
-                    stack=StackInformation(),
+                    expression_location=ExpressionLocation(
+                        start=1,
+                        offset=1,
+                    ),
+                    stack=StackInformation(
+                        num_stack_frames=1,
+                        top_stack_frame=StackFrame(
+                            method_name="string",
+                            line_number=1,
+                            scopes=[
+                                Scope(
+                                    variables={"string": {"key": "value"}},
+                                )
+                            ],
+                        ),
+                    ),
                     stdout="string",
                 )
             ],
@@ -889,9 +977,15 @@ class AsyncAdminClient:
         import uuid
 
         from seed import AsyncSeedTrace
-        from seed.commons import DebugVariableValue_IntegerValue
+        from seed.commons import (
+            DebugVariableValue_IntegerValue,
+            VariableValue_IntegerValue,
+        )
         from seed.submission import (
+            ActualResult_Value,
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TestCaseResult,
             TestCaseResultWithStdout,
@@ -911,7 +1005,13 @@ class AsyncAdminClient:
                 ),
                 test_case_id="string",
                 result=TestCaseResultWithStdout(
-                    result=TestCaseResult(),
+                    result=TestCaseResult(
+                        expected_result=VariableValue_IntegerValue(value=1),
+                        actual_result=ActualResult_Value(
+                            value=VariableValue_IntegerValue(value={"key": "value"})
+                        ),
+                        passed=True,
+                    ),
                     stdout="string",
                 ),
                 trace_responses=[
@@ -921,8 +1021,22 @@ class AsyncAdminClient:
                         ),
                         line_number=1,
                         return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(),
-                        stack=StackInformation(),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="string",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={"string": {"key": "value"}},
+                                    )
+                                ],
+                            ),
+                        ),
                         stdout="string",
                     )
                 ],
@@ -982,6 +1096,8 @@ class AsyncAdminClient:
         from seed.commons import DebugVariableValue_IntegerValue
         from seed.submission import (
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TracedFile,
             TraceResponseV2,
@@ -1005,10 +1121,27 @@ class AsyncAdminClient:
                             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         ),
                         line_number=1,
-                        file=TracedFile(),
+                        file=TracedFile(
+                            filename="string",
+                            directory="string",
+                        ),
                         return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(),
-                        stack=StackInformation(),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="string",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={"string": {"key": "value"}},
+                                    )
+                                ],
+                            ),
+                        ),
                         stdout="string",
                     )
                 ],
@@ -1067,6 +1200,8 @@ class AsyncAdminClient:
             ExceptionInfo,
             ExceptionV2_Generic,
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TraceResponse,
             WorkspaceRunDetails,
@@ -1084,8 +1219,16 @@ class AsyncAdminClient:
                     "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 ),
                 workspace_run_details=WorkspaceRunDetails(
-                    exception_v_2=ExceptionV2_Generic(),
-                    exception=ExceptionInfo(),
+                    exception_v_2=ExceptionV2_Generic(
+                        exception_type="string",
+                        exception_message="string",
+                        exception_stacktrace="string",
+                    ),
+                    exception=ExceptionInfo(
+                        exception_type="string",
+                        exception_message="string",
+                        exception_stacktrace="string",
+                    ),
                     stdout="string",
                 ),
                 trace_responses=[
@@ -1095,8 +1238,22 @@ class AsyncAdminClient:
                         ),
                         line_number=1,
                         return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(),
-                        stack=StackInformation(),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="string",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={"string": {"key": "value"}},
+                                    )
+                                ],
+                            ),
+                        ),
                         stdout="string",
                     )
                 ],
@@ -1153,6 +1310,8 @@ class AsyncAdminClient:
         from seed.commons import DebugVariableValue_IntegerValue
         from seed.submission import (
             ExpressionLocation,
+            Scope,
+            StackFrame,
             StackInformation,
             TracedFile,
             TraceResponseV2,
@@ -1175,10 +1334,27 @@ class AsyncAdminClient:
                             "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                         ),
                         line_number=1,
-                        file=TracedFile(),
+                        file=TracedFile(
+                            filename="string",
+                            directory="string",
+                        ),
                         return_value=DebugVariableValue_IntegerValue(value=1),
-                        expression_location=ExpressionLocation(),
-                        stack=StackInformation(),
+                        expression_location=ExpressionLocation(
+                            start=1,
+                            offset=1,
+                        ),
+                        stack=StackInformation(
+                            num_stack_frames=1,
+                            top_stack_frame=StackFrame(
+                                method_name="string",
+                                line_number=1,
+                                scopes=[
+                                    Scope(
+                                        variables={"string": {"key": "value"}},
+                                    )
+                                ],
+                            ),
+                        ),
                         stdout="string",
                     )
                 ],

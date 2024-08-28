@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedUnknownAsAny.Core;
 
 #nullable enable
@@ -15,7 +16,16 @@ public partial class UnknownClient
         _client = client;
     }
 
-    public async Task<IEnumerable<object>> PostAsync(object request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Unknown.PostAsync(new Dictionary<object, object?>() { { "key", "value" } });
+    /// </code>
+    /// </example>
+    public async Task<IEnumerable<object>> PostAsync(
+        object request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -25,7 +35,8 @@ public partial class UnknownClient
                 Path = "",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -47,9 +58,15 @@ public partial class UnknownClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Unknown.PostObjectAsync(new MyObject());
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<object>> PostObjectAsync(
         MyObject request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -60,7 +77,8 @@ public partial class UnknownClient
                 Path = "/with-object",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

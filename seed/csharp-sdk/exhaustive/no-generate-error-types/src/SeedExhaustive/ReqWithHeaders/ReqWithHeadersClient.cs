@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedExhaustive.Core;
 
@@ -15,15 +16,25 @@ public partial class ReqWithHeadersClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.ReqWithHeaders.GetWithCustomHeaderAsync(
+    ///     new ReqWithHeaders { XTestEndpointHeader = "string", Body = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task GetWithCustomHeaderAsync(
         ReqWithHeaders request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Dictionary<string, string>()
-        {
-            { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
-        };
+        var _headers = new Headers(
+            new Dictionary<string, string>()
+            {
+                { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
+            }
+        );
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
@@ -33,7 +44,8 @@ public partial class ReqWithHeadersClient
                 Body = request.Body,
                 Headers = _headers,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         if (response.StatusCode is >= 200 and < 400)
         {

@@ -135,8 +135,11 @@ func TestEnum(t *testing.T) {
 // found on the wire.
 func TestLiteral(t *testing.T) {
 	t.Run("object", func(t *testing.T) {
+		invalidValue := new(builtin.Type)
+		require.Error(t, json.Unmarshal([]byte(`{"eighteen": "something"}`), &invalidValue))
+
 		value := new(builtin.Type)
-		require.NoError(t, json.Unmarshal([]byte(`{"eighteen": "something"}`), &value))
+		require.NoError(t, json.Unmarshal([]byte(`{"eighteen": "fern"}`), &value))
 		assert.Equal(t, "fern", value.Eighteen())
 
 		bytes, err := json.Marshal(value)
@@ -144,13 +147,24 @@ func TestLiteral(t *testing.T) {
 
 		object := make(map[string]any)
 		require.NoError(t, json.Unmarshal(bytes, &object))
-
 		assert.Equal(t, "fern", object["eighteen"])
 	})
 
 	t.Run("union", func(t *testing.T) {
+		missingType := new(union.UnionWithLiteral)
+		require.Error(t, json.Unmarshal([]byte(`{"value": "fern", "base": "base", "extended": "extended"}`), &missingType))
+
+		missingValue := new(union.UnionWithLiteral)
+		require.Error(t, json.Unmarshal([]byte(`{"type": "fern", "base": "base", "extended": "extended"}`), &missingValue))
+
+		missingBase := new(union.UnionWithLiteral)
+		require.Error(t, json.Unmarshal([]byte(`{"type": "fern", "value": "fern", "extended": "extended"}`), &missingBase))
+
+		missingExtended := new(union.UnionWithLiteral)
+		require.Error(t, json.Unmarshal([]byte(`{"type": "fern", "value": "fern", "base": "base"}`), &missingExtended))
+
 		value := new(union.UnionWithLiteral)
-		require.NoError(t, json.Unmarshal([]byte(`{"type": "fern", "value": "fern"}`), &value))
+		require.NoError(t, json.Unmarshal([]byte(`{"type": "fern", "value": "fern", "base": "base", "extended": "extended"}`), &value))
 		assert.Equal(t, "extended", value.Extended())
 		assert.Equal(t, "base", value.Base())
 		assert.Equal(t, "fern", value.Fern())

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedExhaustive;
 using SeedExhaustive.Core;
 
@@ -16,9 +17,15 @@ public partial class PrimitiveClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Primitive.GetAndReturnStringAsync("string");
+    /// </code>
+    /// </example>
     public async Task<string> GetAndReturnStringAsync(
         string request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -29,7 +36,8 @@ public partial class PrimitiveClient
                 Path = "/primitive/string",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -51,7 +59,16 @@ public partial class PrimitiveClient
         );
     }
 
-    public async Task<int> GetAndReturnIntAsync(int request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Primitive.GetAndReturnIntAsync(1);
+    /// </code>
+    /// </example>
+    public async Task<int> GetAndReturnIntAsync(
+        int request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -61,7 +78,8 @@ public partial class PrimitiveClient
                 Path = "/primitive/integer",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -83,7 +101,16 @@ public partial class PrimitiveClient
         );
     }
 
-    public async Task<long> GetAndReturnLongAsync(long request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Primitive.GetAndReturnLongAsync(1000000);
+    /// </code>
+    /// </example>
+    public async Task<long> GetAndReturnLongAsync(
+        long request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -93,7 +120,8 @@ public partial class PrimitiveClient
                 Path = "/primitive/long",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -115,9 +143,15 @@ public partial class PrimitiveClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Primitive.GetAndReturnDoubleAsync(1.1);
+    /// </code>
+    /// </example>
     public async Task<double> GetAndReturnDoubleAsync(
         double request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -128,7 +162,8 @@ public partial class PrimitiveClient
                 Path = "/primitive/double",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -150,7 +185,16 @@ public partial class PrimitiveClient
         );
     }
 
-    public async Task<bool> GetAndReturnBoolAsync(bool request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Primitive.GetAndReturnBoolAsync(true);
+    /// </code>
+    /// </example>
+    public async Task<bool> GetAndReturnBoolAsync(
+        bool request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -160,7 +204,8 @@ public partial class PrimitiveClient
                 Path = "/primitive/boolean",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -182,9 +227,17 @@ public partial class PrimitiveClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Primitive.GetAndReturnDatetimeAsync(
+    ///     new DateTime(2024, 01, 15, 09, 30, 00, 000)
+    /// );
+    /// </code>
+    /// </example>
     public async Task<DateTime> GetAndReturnDatetimeAsync(
         DateTime request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -195,7 +248,8 @@ public partial class PrimitiveClient
                 Path = "/primitive/datetime",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -217,9 +271,15 @@ public partial class PrimitiveClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Primitive.GetAndReturnDateAsync(new DateOnly(2023, 1, 15));
+    /// </code>
+    /// </example>
     public async Task<DateOnly> GetAndReturnDateAsync(
         DateOnly request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -230,7 +290,8 @@ public partial class PrimitiveClient
                 Path = "/primitive/date",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -252,7 +313,16 @@ public partial class PrimitiveClient
         );
     }
 
-    public async Task<string> GetAndReturnUuidAsync(string request, RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Primitive.GetAndReturnUuidAsync("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+    /// </code>
+    /// </example>
+    public async Task<string> GetAndReturnUuidAsync(
+        string request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -262,7 +332,8 @@ public partial class PrimitiveClient
                 Path = "/primitive/uuid",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -284,9 +355,15 @@ public partial class PrimitiveClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Endpoints.Primitive.GetAndReturnBase64Async("SGVsbG8gd29ybGQh");
+    /// </code>
+    /// </example>
     public async Task<string> GetAndReturnBase64Async(
         string request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -297,7 +374,8 @@ public partial class PrimitiveClient
                 Path = "/primitive/base64",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using SeedPagination.Core;
 
 #nullable enable
 
@@ -13,4 +14,9 @@ public record ListUsersBodyCursorPaginationRequest
     /// </summary>
     [JsonPropertyName("pagination")]
     public WithCursor? Pagination { get; set; }
+
+    public override string ToString()
+    {
+        return JsonUtils.Serialize(this);
+    }
 }

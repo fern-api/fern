@@ -13,13 +13,30 @@ import path from "path";
 import { Directory, ts } from "ts-morph";
 import { arrayOf, code, Code, conditionalOutput, literalOf } from "ts-poet";
 
+export declare namespace JestTestGenerator {
+    interface Args {
+        ir: IR.IntermediateRepresentation;
+        dependencyManager: DependencyManager;
+        rootDirectory: Directory;
+        includeSerdeLayer: boolean;
+        writeUnitTests: boolean;
+    }
+}
+
 export class JestTestGenerator {
-    constructor(
-        private ir: IR.IntermediateRepresentation,
-        private dependencyManager: DependencyManager,
-        private rootDirectory: Directory,
-        private writeUnitTests: boolean
-    ) {}
+    private ir: IR.IntermediateRepresentation;
+    private dependencyManager: DependencyManager;
+    private rootDirectory: Directory;
+    private writeUnitTests: boolean;
+    private includeSerdeLayer: boolean;
+
+    constructor({ ir, dependencyManager, rootDirectory, includeSerdeLayer, writeUnitTests }: JestTestGenerator.Args) {
+        this.ir = ir;
+        this.dependencyManager = dependencyManager;
+        this.rootDirectory = rootDirectory;
+        this.writeUnitTests = writeUnitTests;
+        this.includeSerdeLayer = includeSerdeLayer;
+    }
 
     private addJestConfig(): void {
         const jestConfig = this.rootDirectory.createSourceFile(
@@ -307,6 +324,8 @@ describe("test", () => {
         // For certain complex types, we just JSON.parse/JSON.stringify to simplify some times
         let shouldJsonParseStringify = false;
 
+        const includeSerdeLayer = this.includeSerdeLayer;
+
         const getExpectedResponse = () => {
             const body = getExampleTypeReferenceForResponse(example.response);
             if (!body) {
@@ -327,7 +346,11 @@ describe("test", () => {
                             float: (value) => literalOf(value),
                             base64: (value) => literalOf(value),
                             bigInteger: (value) => literalOf(value),
-                            datetime: (value) => code`new Date(${literalOf(value.toISOString())})`,
+                            datetime: (value) => {
+                                return includeSerdeLayer
+                                    ? code`new Date(${literalOf(value.datetime.toISOString())})`
+                                    : literalOf(value.raw);
+                            },
                             date: (value) => literalOf(value),
                             uuid: (value) => literalOf(value),
                             _other: (value) => literalOf(value)

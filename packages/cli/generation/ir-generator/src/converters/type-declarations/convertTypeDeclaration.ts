@@ -145,7 +145,7 @@ async function convertTypeDeclarationSource({
         source: typeDeclaration.source,
         file
     });
-    if (resolvedSource.type !== "protobuf") {
+    if (resolvedSource == null || resolvedSource.type !== "protobuf") {
         return undefined;
     }
     return Source.proto(

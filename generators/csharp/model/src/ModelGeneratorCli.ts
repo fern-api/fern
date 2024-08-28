@@ -1,8 +1,9 @@
-import { AbstractCsharpGeneratorCli } from "@fern-api/csharp-codegen";
+import { AbstractCsharpGeneratorCli, validateReadOnlyMemoryTypes } from "@fern-api/csharp-codegen";
 import { FernGeneratorExec, GeneratorNotificationService } from "@fern-api/generator-commons";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { generateModels } from "./generateModels";
 import { generateWellKnownProtobufFiles } from "./generateWellKnownProtobufFiles";
+import { generateVersion } from "./generateVersion";
 import { ModelCustomConfigSchema } from "./ModelCustomConfig";
 import { ModelGeneratorContext } from "./ModelGeneratorContext";
 
@@ -23,7 +24,15 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
 
     protected parseCustomConfigOrThrow(customConfig: unknown): ModelCustomConfigSchema {
         const parsed = customConfig != null ? ModelCustomConfigSchema.parse(customConfig) : undefined;
-        return parsed ?? {};
+        if (parsed != null) {
+            return this.validateCustomConfig(parsed);
+        }
+        return {};
+    }
+
+    private validateCustomConfig(customConfig: ModelCustomConfigSchema): ModelCustomConfigSchema {
+        validateReadOnlyMemoryTypes(customConfig);
+        return customConfig;
     }
 
     protected async publishPackage(context: ModelGeneratorContext): Promise<void> {
@@ -43,12 +52,16 @@ export class ModelGeneratorCLI extends AbstractCsharpGeneratorCli<ModelCustomCon
         for (const file of generatedTypes) {
             context.project.addSourceFiles(file);
         }
+
+        context.project.addSourceFiles(generateVersion({ context }));
+
         const protobufFiles = generateWellKnownProtobufFiles(context);
         if (protobufFiles != null) {
             for (const file of protobufFiles) {
                 context.project.addSourceFiles(file);
             }
         }
+
         await context.project.persist();
     }
 }

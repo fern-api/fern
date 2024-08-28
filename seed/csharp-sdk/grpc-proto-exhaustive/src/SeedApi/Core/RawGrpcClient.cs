@@ -47,7 +47,7 @@ internal class RawGrpcClient
         CancellationToken cancellationToken = default
     )
     {
-        var metadata = new Metadata();
+        var metadata = new global::Grpc.Core.Metadata();
         foreach (var header in _headers)
         {
             metadata.Add(header.Key, header.Value);

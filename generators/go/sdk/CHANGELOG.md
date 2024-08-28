@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.23.2 - 2024-08-26]
+
+- No changes.
+
+## [0.23.1 - 2024-08-19]
+
+- Fix: Updates object and undisriminated union deserialization to return an error whenever any
+  literal values do not exist or are mismatched.
+
 ## [0.23.0 - 2024-08-07]
 
 - Fix: When `alwaysSendRequiredProperties` is enabled, required properties are never omitted in

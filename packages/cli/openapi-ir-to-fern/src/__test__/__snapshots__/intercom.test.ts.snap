@@ -7991,6 +7991,15 @@ You can optionally request the result page size and the cursor to start after to
                 "name": "successful",
                 "response": {
                   "body": {
+                    "data": [
+                      {
+                        "created_at": 1674917488,
+                        "id": "12312",
+                        "name": "My Newsfeed",
+                        "type": "newsfeed",
+                        "updated_at": 1674917488,
+                      },
+                    ],
                     "pages": {
                       "next": {
                         "per_page": 2,
@@ -8047,6 +8056,1773 @@ You can optionally request the result page size and the cursor to start after to
               "root.ManageConversationRequestUnauthorizedError",
               "root.ManageConversationRequestForbiddenError",
               "root.ManageConversationRequestNotFoundError",
+            ],
+            "examples": [
+              {
+                "name": "Close a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Snooze a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Let me pass you over to one of my colleagues.",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Open a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Let me pass you over to one of my colleagues.",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Assign a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Let me pass you over to one of my colleagues.",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Not found",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Close a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Snooze a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60ff8a68186f43bafdfc",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin190@email.com",
+                            "id": "991267610",
+                            "name": "Ciaran190 Lee",
+                            "type": "admin",
+                          },
+                          "created_at": 1719492864,
+                          "id": "103",
+                          "notified_at": 1719492864,
+                          "part_type": "snoozed",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492864,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492864,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "395",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": true,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1719496464,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin190@email.com",
+                        "id": "991267610",
+                        "name": "Ciaran190 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918277",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "snoozed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492864,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Open a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "74",
+                          "id": "667d61038a68186f43bafe01",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin191@email.com",
+                            "id": "991267612",
+                            "name": "Ciaran191 Lee",
+                            "type": "admin",
+                          },
+                          "created_at": 1719492873,
+                          "id": "105",
+                          "notified_at": 1719492873,
+                          "part_type": "open",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492873,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492863,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "400",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": true,
+                    "priority": "not_priority",
+                    "read": true,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin191@email.com",
+                        "id": "991267612",
+                        "name": "Ciaran191 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918278",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "open",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "",
+                    "type": "conversation",
+                    "updated_at": 1719492873,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Assign a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 991267615,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d610a8a68186f43bafe05",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "assigned_to": {
+                            "id": "991267615",
+                            "type": "admin",
+                          },
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin193@email.com",
+                            "id": "991267615",
+                            "name": "Ciaran193 Lee",
+                            "type": "admin",
+                          },
+                          "created_at": 1719492875,
+                          "id": "106",
+                          "notified_at": 1719492875,
+                          "part_type": "assign_and_reopen",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492875,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492874,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "405",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": true,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin193@email.com",
+                        "id": "991267615",
+                        "name": "Ciaran193 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918281",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "open",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492875,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -14701,6 +16477,15 @@ This will return the Message model that has been created.
                 },
                 "response": {
                   "body": {
+                    "data": [
+                      {
+                        "created_at": 1674917488,
+                        "id": "12312",
+                        "name": "My Newsfeed",
+                        "type": "newsfeed",
+                        "updated_at": 1674917488,
+                      },
+                    ],
                     "pages": {
                       "next": {
                         "per_page": 2,
@@ -14752,6 +16537,22 @@ This will return the Message model that has been created.
                 "name": "successful",
                 "response": {
                   "body": {
+                    "data": [
+                      {
+                        "created_at": 1719492976,
+                        "id": "29",
+                        "name": "My Newsfeed",
+                        "type": "newsfeed",
+                        "updated_at": 1719492976,
+                      },
+                      {
+                        "created_at": 1719492976,
+                        "id": "30",
+                        "name": "My Newsfeed",
+                        "type": "newsfeed",
+                        "updated_at": 1719492976,
+                      },
+                    ],
                     "pages": {
                       "next": {
                         "per_page": 2,
@@ -14797,6 +16598,22 @@ This will return the Message model that has been created.
                 "name": "successful",
                 "response": {
                   "body": {
+                    "data": [
+                      {
+                        "created_at": 1719492987,
+                        "id": "68",
+                        "name": "Visitor Feed",
+                        "type": "newsfeed",
+                        "updated_at": 1719492987,
+                      },
+                      {
+                        "created_at": 1719492987,
+                        "id": "69",
+                        "name": "Visitor Feed",
+                        "type": "newsfeed",
+                        "updated_at": 1719492987,
+                      },
+                    ],
                     "pages": {
                       "next": {
                         "per_page": 2,
@@ -35998,6 +37815,15 @@ You can optionally request the result page size and the cursor to start after to
                 "name": "successful",
                 "response": {
                   "body": {
+                    "data": [
+                      {
+                        "created_at": 1674917488,
+                        "id": "12312",
+                        "name": "My Newsfeed",
+                        "type": "newsfeed",
+                        "updated_at": 1674917488,
+                      },
+                    ],
                     "pages": {
                       "next": {
                         "per_page": 2,
@@ -36048,6 +37874,1773 @@ You can optionally request the result page size and the cursor to start after to
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.NotFoundError",
+            ],
+            "examples": [
+              {
+                "name": "Close a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Snooze a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Let me pass you over to one of my colleagues.",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Open a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Let me pass you over to one of my colleagues.",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Assign a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Let me pass you over to one of my colleagues.",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Not found",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Close a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60fd8a68186f43bafdfb",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin189@email.com",
+                            "id": "991267608",
+                            "name": "Ciaran189 Lee",
+                            "type": "admin",
+                          },
+                          "body": "<p>Goodbye :)</p>",
+                          "created_at": 1719492862,
+                          "id": "102",
+                          "notified_at": 1719492862,
+                          "part_type": "close",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492862,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492862,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "394",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": false,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin189@email.com",
+                        "id": "991267608",
+                        "name": "Ciaran189 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918276",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "closed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492862,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Snooze a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d60ff8a68186f43bafdfc",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin190@email.com",
+                            "id": "991267610",
+                            "name": "Ciaran190 Lee",
+                            "type": "admin",
+                          },
+                          "created_at": 1719492864,
+                          "id": "103",
+                          "notified_at": 1719492864,
+                          "part_type": "snoozed",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492864,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492864,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "395",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": true,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1719496464,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin190@email.com",
+                        "id": "991267610",
+                        "name": "Ciaran190 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918277",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "snoozed",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492864,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Open a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 0,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "74",
+                          "id": "667d61038a68186f43bafe01",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin191@email.com",
+                            "id": "991267612",
+                            "name": "Ciaran191 Lee",
+                            "type": "admin",
+                          },
+                          "created_at": 1719492873,
+                          "id": "105",
+                          "notified_at": 1719492873,
+                          "part_type": "open",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492873,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492863,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "400",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": true,
+                    "priority": "not_priority",
+                    "read": true,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin191@email.com",
+                        "id": "991267612",
+                        "name": "Ciaran191 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918278",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "open",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "",
+                    "type": "conversation",
+                    "updated_at": 1719492873,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
+              {
+                "name": "Assign a conversation",
+                "path-parameters": {
+                  "id": "123",
+                },
+                "request": {
+                  "admin_id": "12345",
+                  "assignee_id": "4324241",
+                  "body": "Goodbye :)",
+                  "message_type": "assignment",
+                  "type": "admin",
+                },
+                "response": {
+                  "body": {
+                    "admin_assignee_id": 991267615,
+                    "ai_agent": {
+                      "content_sources": {
+                        "content_sources": [
+                          {
+                            "locale": "en",
+                            "title": "My internal content snippet",
+                            "url": "/fin-ai-agent/content?content=content_snippet&id=3234924",
+                          },
+                        ],
+                        "total_count": 1,
+                        "type": "content_source.list",
+                      },
+                      "last_answer_type": "ai_answer",
+                      "rating": 4,
+                      "rating_remark": "Very helpful!",
+                      "resolution_state": "assumed_resolution",
+                      "source_title": "My AI Workflow",
+                      "source_type": "essentials_plan_setup",
+                    },
+                    "ai_agent_participated": false,
+                    "contacts": {
+                      "contacts": [
+                        {
+                          "external_id": "70",
+                          "id": "667d610a8a68186f43bafe05",
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "contact.list",
+                    },
+                    "conversation_parts": {
+                      "conversation_parts": [
+                        {
+                          "assigned_to": {
+                            "id": "991267615",
+                            "type": "admin",
+                          },
+                          "attachments": [
+                            {
+                              "content_type": "image/png",
+                              "filesize": 100,
+                              "height": 100,
+                              "name": "example.png",
+                              "type": "upload",
+                              "url": "https://picsum.photos/200/300",
+                              "width": 100,
+                            },
+                          ],
+                          "author": {
+                            "email": "admin193@email.com",
+                            "id": "991267615",
+                            "name": "Ciaran193 Lee",
+                            "type": "admin",
+                          },
+                          "created_at": 1719492875,
+                          "id": "106",
+                          "notified_at": 1719492875,
+                          "part_type": "assign_and_reopen",
+                          "redacted": false,
+                          "type": "conversation_part",
+                          "updated_at": 1719492875,
+                        },
+                      ],
+                      "total_count": 1,
+                      "type": "conversation_part.list",
+                    },
+                    "conversation_rating": {
+                      "contact": {
+                        "external_id": "f3b87a2e09d514c6c2e79b9a",
+                        "id": "5ba682d23d7cf92bef87bfd4",
+                        "type": "contact",
+                      },
+                      "created_at": 1671028894,
+                      "rating": 5,
+                      "remark": "",
+                      "teammate": {
+                        "id": "1a2b3c",
+                        "type": "contact",
+                      },
+                    },
+                    "created_at": 1719492874,
+                    "custom_attributes": {
+                      "key": "value",
+                    },
+                    "first_contact_reply": {
+                      "created_at": 1663597223,
+                      "type": "conversation",
+                      "url": "https://developers.intercom.com/",
+                    },
+                    "id": "405",
+                    "linked_objects": {
+                      "data": [
+                        {
+                          "id": "7583",
+                        },
+                      ],
+                      "has_more": false,
+                      "total_count": 0,
+                      "type": "list",
+                    },
+                    "open": true,
+                    "priority": "not_priority",
+                    "read": false,
+                    "sla_applied": {
+                      "sla_name": "",
+                      "sla_status": "hit",
+                      "type": "conversation_sla_summary",
+                    },
+                    "snoozed_until": 1663597260,
+                    "source": {
+                      "attachments": [
+                        {
+                          "content_type": "image/png",
+                          "filesize": 100,
+                          "height": 100,
+                          "name": "example.png",
+                          "type": "upload",
+                          "url": "https://picsum.photos/200/300",
+                          "width": 100,
+                        },
+                      ],
+                      "author": {
+                        "email": "admin193@email.com",
+                        "id": "991267615",
+                        "name": "Ciaran193 Lee",
+                        "type": "admin",
+                      },
+                      "body": "<p>this is the message body</p>",
+                      "delivered_as": "admin_initiated",
+                      "id": "403918281",
+                      "redacted": false,
+                      "subject": "",
+                      "type": "conversation",
+                      "url": "url",
+                    },
+                    "state": "open",
+                    "statistics": {
+                      "count_assignments": 1,
+                      "count_conversation_parts": 1,
+                      "count_reopens": 1,
+                      "first_admin_reply_at": 1663597233,
+                      "first_assignment_at": 1663597233,
+                      "first_close_at": 1663597233,
+                      "first_contact_reply_at": 1663597233,
+                      "last_admin_reply_at": 1663597233,
+                      "last_assignment_admin_reply_at": 1663597233,
+                      "last_assignment_at": 1663597233,
+                      "last_close_at": 1663597233,
+                      "last_closed_by_id": "c3po",
+                      "last_contact_reply_at": 1663597233,
+                      "median_time_to_reply": 2310,
+                      "time_to_admin_reply": 2310,
+                      "time_to_assignment": 2310,
+                      "time_to_first_close": 2310,
+                      "time_to_last_close": 2310,
+                      "type": "conversation_statistics",
+                    },
+                    "tags": {
+                      "tags": [
+                        {
+                          "applied_at": 1663597223,
+                          "id": "123456",
+                          "name": "Test tag",
+                          "type": "tag",
+                        },
+                      ],
+                      "type": "tag.list",
+                    },
+                    "team_assignee_id": "5017691",
+                    "teammates": {
+                      "teammates": [
+                        {
+                          "type": "contact",
+                        },
+                      ],
+                      "type": "admin.list",
+                    },
+                    "title": "Conversation Title",
+                    "type": "conversation",
+                    "updated_at": 1719492875,
+                    "waiting_since": 1663597260,
+                  },
+                },
+              },
             ],
             "method": "POST",
             "pagination": undefined,
@@ -42516,6 +46109,15 @@ This will return the Message model that has been created.
                 },
                 "response": {
                   "body": {
+                    "data": [
+                      {
+                        "created_at": 1674917488,
+                        "id": "12312",
+                        "name": "My Newsfeed",
+                        "type": "newsfeed",
+                        "updated_at": 1674917488,
+                      },
+                    ],
                     "pages": {
                       "next": {
                         "per_page": 2,
@@ -42558,6 +46160,22 @@ This will return the Message model that has been created.
                 "name": "successful",
                 "response": {
                   "body": {
+                    "data": [
+                      {
+                        "created_at": 1719492976,
+                        "id": "29",
+                        "name": "My Newsfeed",
+                        "type": "newsfeed",
+                        "updated_at": 1719492976,
+                      },
+                      {
+                        "created_at": 1719492976,
+                        "id": "30",
+                        "name": "My Newsfeed",
+                        "type": "newsfeed",
+                        "updated_at": 1719492976,
+                      },
+                    ],
                     "pages": {
                       "next": {
                         "per_page": 2,
@@ -42594,6 +46212,22 @@ This will return the Message model that has been created.
                 "name": "successful",
                 "response": {
                   "body": {
+                    "data": [
+                      {
+                        "created_at": 1719492987,
+                        "id": "68",
+                        "name": "Visitor Feed",
+                        "type": "newsfeed",
+                        "updated_at": 1719492987,
+                      },
+                      {
+                        "created_at": 1719492987,
+                        "id": "69",
+                        "name": "Visitor Feed",
+                        "type": "newsfeed",
+                        "updated_at": 1719492987,
+                      },
+                    ],
                     "pages": {
                       "next": {
                         "per_page": 2,

@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using OneOf;
 using SeedUndiscriminatedUnions.Core;
 
@@ -16,6 +17,11 @@ public partial class UnionClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Union.GetAsync("string");
+    /// </code>
+    /// </example>
     public async Task<
         OneOf<
             string,
@@ -34,7 +40,8 @@ public partial class UnionClient
             IEnumerable<IEnumerable<int>>,
             HashSet<string>
         > request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -45,7 +52,8 @@ public partial class UnionClient
                 Path = "",
                 Body = request,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
@@ -76,8 +84,14 @@ public partial class UnionClient
         );
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Union.GetMetadataAsync();
+    /// </code>
+    /// </example>
     public async Task<Dictionary<OneOf<KeyType, string>, string>> GetMetadataAsync(
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
         var response = await _client.MakeRequestAsync(
@@ -87,7 +101,8 @@ public partial class UnionClient
                 Method = HttpMethod.Get,
                 Path = "/metadata",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)

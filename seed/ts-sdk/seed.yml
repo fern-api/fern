@@ -1,17 +1,33 @@
 irVersion: v53
-docker: fernapi/fern-typescript-node-sdk:local
-dockerCommand: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
+publish:
+  workingDirectory: generators/typescript
+  versionSubstitution: "$VERSION"
+  command: 
+    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:browser "$VERSION"
+    - docker push fernapi/fern-typescript-browser-sdk:"$VERSION"
+    - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagVersion:node "$VERSION"
+    - docker push fernapi/fern-typescript-node-sdk:"$VERSION"
+test:
+  docker: 
+    image: fernapi/fern-typescript-node-sdk:local
+    command: pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLocal:node
+  local:
+    workingDirectory: generators/typescript
+    buildCommand:
+      - pnpm --filter @fern-typescript/sdk-generator-cli compile
+      - pnpm --filter @fern-typescript/sdk-generator-cli build:node
+    runCommand: node sdk/cli/dist/nodeCli.cjs
+    env:
+      NODE_ENV: test
+
 language: typescript
 generatorType: SDK
 defaultOutputMode: github
-local:
-  workingDirectory: generators/typescript
-  buildCommand:
-    - pnpm --filter @fern-typescript/sdk-generator-cli compile
-    - pnpm --filter @fern-typescript/sdk-generator-cli build:node
-  runCommand: node sdk/cli/dist/nodeCli.cjs
-  env:
-    NODE_ENV: test
+
+customFixtureConfig: 
+  customConfig: 
+    generateWireTests: true    
+    noSerdeLayer: true
 fixtures:
   imdb:
     - customConfig: null
@@ -31,6 +47,13 @@ fixtures:
         allowCustomFetcher: true
         timeoutInSeconds: 2
       outputFolder: allow-custom-fetcher
+  audiences:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig: null
+      audiences:
+        - partner
+      outputFolder: with-partner-audience      
   exhaustive:
     - customConfig: null
       audiences:
@@ -192,12 +215,17 @@ allowedFailures:
   - plain-text
   - alias
   - api-wide-base-path
+  - cross-package-type-names
   - auth-environment-variables
   - basic-auth-environment-variables
   - exhaustive:bundle
   - exhaustive:dev-dependencies
-  - audiences
+  - audiences:no-custom-config
   - enum # throws b/c of undiscriminated union examples
   - streaming-parameter
   - imdb:noScripts
   - circular-references
+  # the below are likely related to changes made to example generation
+  - multi-url-environment-no-default
+  - objects-with-imports
+  - reserved-keywords

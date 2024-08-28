@@ -1,4 +1,5 @@
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using SeedFileDownload.Core;
 
@@ -15,7 +16,15 @@ public partial class ServiceClient
         _client = client;
     }
 
-    public async Task DownloadFileAsync(RequestOptions? options = null)
+    /// <example>
+    /// <code>
+    /// await client.Service.DownloadFileAsync();
+    /// </code>
+    /// </example>
+    public async Task DownloadFileAsync(
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
     {
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
@@ -24,7 +33,8 @@ public partial class ServiceClient
                 Method = HttpMethod.Post,
                 Path = "",
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         throw new SeedFileDownloadApiException(

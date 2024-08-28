@@ -39,10 +39,11 @@ func (a *AnotherUnion) UnmarshalJSON(data []byte) error {
 	}
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
-		if valueFernStringLiteral == "fern" {
-			a.fernStringLiteral = valueFernStringLiteral
-			return nil
+		a.fernStringLiteral = valueFernStringLiteral
+		if a.fernStringLiteral != "fern" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", a, "fern", valueFernStringLiteral)
 		}
+		return nil
 	}
 	valueFoo := new(Foo)
 	if err := json.Unmarshal(data, &valueFoo); err == nil {
@@ -300,17 +301,19 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 	}
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
-		if valueFernStringLiteral == "fern" {
-			u.fernStringLiteral = valueFernStringLiteral
-			return nil
+		u.fernStringLiteral = valueFernStringLiteral
+		if u.fernStringLiteral != "fern" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "fern", valueFernStringLiteral)
 		}
+		return nil
 	}
 	var valueAnotherStringLiteral string
 	if err := json.Unmarshal(data, &valueAnotherStringLiteral); err == nil {
-		if valueAnotherStringLiteral == "another" {
-			u.anotherStringLiteral = valueAnotherStringLiteral
-			return nil
+		u.anotherStringLiteral = valueAnotherStringLiteral
+		if u.anotherStringLiteral != "another" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "another", valueAnotherStringLiteral)
 		}
+		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
 }
@@ -423,10 +426,11 @@ func (u *UnionWithLiteral) FernStringLiteral() string {
 func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
 	var valueFernStringLiteral string
 	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
-		if valueFernStringLiteral == "fern" {
-			u.fernStringLiteral = valueFernStringLiteral
-			return nil
+		u.fernStringLiteral = valueFernStringLiteral
+		if u.fernStringLiteral != "fern" {
+			return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", u, "fern", valueFernStringLiteral)
 		}
+		return nil
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {

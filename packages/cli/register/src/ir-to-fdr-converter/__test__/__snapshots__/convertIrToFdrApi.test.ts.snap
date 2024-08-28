@@ -767,6 +767,7 @@ exports[`fdr test definitions > audiences 1`] = `
       "subpackage_folder-a",
       "subpackage_folder-b",
       "subpackage_folder-c",
+      "subpackage_folder-d",
       "subpackage_foo",
     ],
     "types": [],
@@ -812,7 +813,16 @@ exports[`fdr test definitions > audiences 1`] = `
           "availability": undefined,
           "defaultEnvironment": undefined,
           "description": undefined,
-          "environments": undefined,
+          "environments": [
+            {
+              "baseUrl": "https://api.example.a.com",
+              "id": "environment-a",
+            },
+            {
+              "baseUrl": "https://api.example.b.com",
+              "id": "environment-b",
+            },
+          ],
           "errors": undefined,
           "errorsV2": [],
           "examples": [],
@@ -909,7 +919,85 @@ exports[`fdr test definitions > audiences 1`] = `
       "subpackageId": "subpackage_folder-c/common",
       "subpackages": [],
       "types": [
-        "type_folder-c/common:Foo",
+        "type_folder-c/common:FolderCFoo",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-d": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "folder-d",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-d",
+      "subpackages": [
+        "subpackage_folder-d/service",
+      ],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-d/service": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": [
+            {
+              "baseUrl": "https://api.example.a.com",
+              "id": "environment-a",
+            },
+            {
+              "baseUrl": "https://api.example.b.com",
+              "id": "environment-b",
+            },
+          ],
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "getDirectThread",
+          "method": "GET",
+          "name": "Get Direct Thread",
+          "originalEndpointId": "endpoint_folder-d/service.getDirectThread",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/partner-path",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_folder-d/service:Response",
+              },
+            },
+          },
+        },
+      ],
+      "name": "service",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-d/service",
+      "subpackages": [],
+      "types": [
+        "type_folder-d/service:Response",
       ],
       "webhooks": [],
       "websockets": [],
@@ -923,7 +1011,16 @@ exports[`fdr test definitions > audiences 1`] = `
           "availability": undefined,
           "defaultEnvironment": undefined,
           "description": undefined,
-          "environments": undefined,
+          "environments": [
+            {
+              "baseUrl": "https://api.example.a.com",
+              "id": "environment-a",
+            },
+            {
+              "baseUrl": "https://api.example.b.com",
+              "id": "environment-b",
+            },
+          ],
           "errors": undefined,
           "errorsV2": [],
           "examples": [],
@@ -1082,7 +1179,7 @@ exports[`fdr test definitions > audiences 1`] = `
             "valueType": {
               "itemType": {
                 "type": "id",
-                "value": "type_folder-c/common:Foo",
+                "value": "type_folder-c/common:FolderCFoo",
               },
               "type": "optional",
             },
@@ -1091,10 +1188,10 @@ exports[`fdr test definitions > audiences 1`] = `
         "type": "object",
       },
     },
-    "type_folder-c/common:Foo": {
+    "type_folder-c/common:FolderCFoo": {
       "availability": undefined,
       "description": undefined,
-      "name": "Foo",
+      "name": "FolderCFoo",
       "shape": {
         "extends": [],
         "properties": [
@@ -1106,6 +1203,32 @@ exports[`fdr test definitions > audiences 1`] = `
               "type": "primitive",
               "value": {
                 "type": "uuid",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_folder-d/service:Response": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Response",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "foo",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "default": undefined,
+                "maxLength": undefined,
+                "minLength": undefined,
+                "regex": undefined,
+                "type": "string",
               },
             },
           },
@@ -2558,6 +2681,501 @@ exports[`fdr test definitions > circular-references-advanced 1`] = `
             "value": "NUMBER",
           },
         ],
+      },
+    },
+  },
+}
+`;
+
+exports[`fdr test definitions > cross-package-type-names 1`] = `
+{
+  "auth": undefined,
+  "globalHeaders": [],
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_commons",
+      "subpackage_folder-a",
+      "subpackage_folder-b",
+      "subpackage_folder-c",
+      "subpackage_folder-d",
+      "subpackage_foo",
+    ],
+    "types": [],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {},
+  "subpackages": {
+    "subpackage_commons": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "commons",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_commons",
+      "subpackages": [],
+      "types": [
+        "type_commons:Imported",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-a": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "folder-a",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-a",
+      "subpackages": [
+        "subpackage_folder-a/service",
+      ],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-a/service": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "getDirectThread",
+          "method": "GET",
+          "name": "Get Direct Thread",
+          "originalEndpointId": "endpoint_folder-a/service.getDirectThread",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_folder-a/service:Response",
+              },
+            },
+          },
+        },
+      ],
+      "name": "service",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-a/service",
+      "subpackages": [],
+      "types": [
+        "type_folder-a/service:Response",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-b": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "folder-b",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-b",
+      "subpackages": [
+        "subpackage_folder-b/common",
+      ],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-b/common": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "common",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-b/common",
+      "subpackages": [],
+      "types": [
+        "type_folder-b/common:Foo",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-c": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "folder-c",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-c",
+      "subpackages": [
+        "subpackage_folder-c/common",
+      ],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-c/common": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "common",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-c/common",
+      "subpackages": [],
+      "types": [
+        "type_folder-c/common:Foo",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-d": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [],
+      "name": "folder-d",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-d",
+      "subpackages": [
+        "subpackage_folder-d/service",
+      ],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_folder-d/service": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "getDirectThread",
+          "method": "GET",
+          "name": "Get Direct Thread",
+          "originalEndpointId": "endpoint_folder-d/service.getDirectThread",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_folder-d/service:Response",
+              },
+            },
+          },
+        },
+      ],
+      "name": "service",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_folder-d/service",
+      "subpackages": [],
+      "types": [
+        "type_folder-d/service:Response",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+    "subpackage_foo": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": false,
+          "availability": undefined,
+          "defaultEnvironment": undefined,
+          "description": undefined,
+          "environments": undefined,
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [],
+          "headers": [],
+          "id": "find",
+          "method": "POST",
+          "name": "Find",
+          "originalEndpointId": "endpoint_foo.find",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "/",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "queryParameters": [
+            {
+              "availability": undefined,
+              "description": undefined,
+              "key": "optionalString",
+              "type": {
+                "type": "id",
+                "value": "type_foo:OptionalString",
+              },
+            },
+          ],
+          "request": {
+            "type": {
+              "contentType": "application/json",
+              "shape": {
+                "extends": [],
+                "properties": [
+                  {
+                    "description": undefined,
+                    "key": "publicProperty",
+                    "valueType": {
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "default": undefined,
+                          "maxLength": undefined,
+                          "minLength": undefined,
+                          "regex": undefined,
+                          "type": "string",
+                        },
+                      },
+                      "type": "optional",
+                    },
+                  },
+                  {
+                    "description": undefined,
+                    "key": "privateProperty",
+                    "valueType": {
+                      "itemType": {
+                        "type": "primitive",
+                        "value": {
+                          "default": undefined,
+                          "maximum": undefined,
+                          "minimum": undefined,
+                          "type": "integer",
+                        },
+                      },
+                      "type": "optional",
+                    },
+                  },
+                ],
+                "type": "object",
+              },
+              "type": "json",
+            },
+          },
+          "response": {
+            "statusCode": undefined,
+            "type": {
+              "type": "reference",
+              "value": {
+                "type": "id",
+                "value": "type_foo:ImportingType",
+              },
+            },
+          },
+        },
+      ],
+      "name": "foo",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_foo",
+      "subpackages": [],
+      "types": [
+        "type_foo:ImportingType",
+        "type_foo:OptionalString",
+      ],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "type_commons:Imported": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Imported",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "type": "primitive",
+          "value": {
+            "default": undefined,
+            "maxLength": undefined,
+            "minLength": undefined,
+            "regex": undefined,
+            "type": "string",
+          },
+        },
+      },
+    },
+    "type_folder-a/service:Response": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Response",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "foo",
+            "valueType": {
+              "itemType": {
+                "type": "id",
+                "value": "type_folder-b/common:Foo",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_folder-b/common:Foo": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Foo",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "foo",
+            "valueType": {
+              "itemType": {
+                "type": "id",
+                "value": "type_folder-c/common:Foo",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_folder-c/common:Foo": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Foo",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "bar_property",
+            "valueType": {
+              "type": "primitive",
+              "value": {
+                "type": "uuid",
+              },
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_folder-d/service:Response": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "Response",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "foo",
+            "valueType": {
+              "itemType": {
+                "type": "id",
+                "value": "type_folder-b/common:Foo",
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_foo:ImportingType": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "ImportingType",
+      "shape": {
+        "extends": [],
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "imported",
+            "valueType": {
+              "type": "id",
+              "value": "type_commons:Imported",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+    "type_foo:OptionalString": {
+      "availability": undefined,
+      "description": undefined,
+      "name": "OptionalString",
+      "shape": {
+        "type": "alias",
+        "value": {
+          "itemType": {
+            "type": "primitive",
+            "value": {
+              "default": undefined,
+              "maxLength": undefined,
+              "minLength": undefined,
+              "regex": undefined,
+              "type": "string",
+            },
+          },
+          "type": "optional",
+        },
       },
     },
   },
@@ -4158,7 +4776,7 @@ exports[`fdr test definitions > examples 1`] = `
               "description": undefined,
               "headers": {},
               "name": "Example0",
-              "path": "//check/id-2sdx82h",
+              "path": "/check/id-2sdx82h",
               "pathParameters": {
                 "id": "id-2sdx82h",
               },
@@ -4174,7 +4792,7 @@ exports[`fdr test definitions > examples 1`] = `
               "description": undefined,
               "headers": {},
               "name": "Example2",
-              "path": "//check/id-3tey93i",
+              "path": "/check/id-3tey93i",
               "pathParameters": {
                 "id": "id-3tey93i",
               },
@@ -4254,7 +4872,7 @@ exports[`fdr test definitions > examples 1`] = `
               "description": undefined,
               "headers": {},
               "name": "Example0",
-              "path": "//ping",
+              "path": "/ping",
               "pathParameters": {},
               "queryParameters": {},
               "requestBody": undefined,
@@ -4336,7 +4954,7 @@ exports[`fdr test definitions > examples 1`] = `
               "description": undefined,
               "headers": {},
               "name": undefined,
-              "path": "//movie/movie-c06a4ad7",
+              "path": "/movie/movie-c06a4ad7",
               "pathParameters": {
                 "movieId": "movie-c06a4ad7",
               },
@@ -4462,7 +5080,7 @@ exports[`fdr test definitions > examples 1`] = `
               "description": undefined,
               "headers": {},
               "name": undefined,
-              "path": "//movie",
+              "path": "/movie",
               "pathParameters": {},
               "queryParameters": {},
               "requestBody": {
@@ -4586,7 +5204,7 @@ exports[`fdr test definitions > examples 1`] = `
                 "X-API-Version": "0.0.1",
               },
               "name": undefined,
-              "path": "//metadata",
+              "path": "/metadata",
               "pathParameters": {},
               "queryParameters": {
                 "shallow": false,
@@ -4727,7 +5345,7 @@ exports[`fdr test definitions > examples 1`] = `
               "description": undefined,
               "headers": {},
               "name": undefined,
-              "path": "//response",
+              "path": "/response",
               "pathParameters": {},
               "queryParameters": {},
               "requestBody": undefined,
@@ -10701,446 +11319,6 @@ exports[`fdr test definitions > folders 1`] = `
             "type": "string",
           },
         },
-      },
-    },
-  },
-}
-`;
-
-exports[`fdr test definitions > grpc 1`] = `
-{
-  "auth": undefined,
-  "globalHeaders": [],
-  "rootPackage": {
-    "endpoints": [],
-    "pointsTo": undefined,
-    "subpackages": [
-      "subpackage_user",
-    ],
-    "types": [],
-    "webhooks": [],
-    "websockets": [],
-  },
-  "snippetsConfiguration": {},
-  "subpackages": {
-    "subpackage_user": {
-      "description": undefined,
-      "displayName": undefined,
-      "endpoints": [
-        {
-          "auth": false,
-          "availability": undefined,
-          "defaultEnvironment": undefined,
-          "description": undefined,
-          "environments": undefined,
-          "errors": undefined,
-          "errorsV2": [],
-          "examples": [],
-          "headers": [],
-          "id": "createUser",
-          "method": "POST",
-          "name": "Create User",
-          "originalEndpointId": "endpoint_user.createUser",
-          "path": {
-            "parts": [
-              {
-                "type": "literal",
-                "value": "/",
-              },
-              {
-                "type": "literal",
-                "value": "/users",
-              },
-            ],
-            "pathParameters": [],
-          },
-          "queryParameters": [],
-          "request": {
-            "type": {
-              "contentType": "application/json",
-              "shape": {
-                "extends": [],
-                "properties": [
-                  {
-                    "description": undefined,
-                    "key": "username",
-                    "valueType": {
-                      "type": "primitive",
-                      "value": {
-                        "default": undefined,
-                        "maxLength": undefined,
-                        "minLength": undefined,
-                        "regex": undefined,
-                        "type": "string",
-                      },
-                    },
-                  },
-                  {
-                    "description": undefined,
-                    "key": "email",
-                    "valueType": {
-                      "itemType": {
-                        "type": "primitive",
-                        "value": {
-                          "default": undefined,
-                          "maxLength": undefined,
-                          "minLength": undefined,
-                          "regex": undefined,
-                          "type": "string",
-                        },
-                      },
-                      "type": "optional",
-                    },
-                  },
-                  {
-                    "description": undefined,
-                    "key": "age",
-                    "valueType": {
-                      "itemType": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "uint",
-                        },
-                      },
-                      "type": "optional",
-                    },
-                  },
-                  {
-                    "description": undefined,
-                    "key": "weight",
-                    "valueType": {
-                      "itemType": {
-                        "type": "primitive",
-                        "value": {
-                          "type": "double",
-                        },
-                      },
-                      "type": "optional",
-                    },
-                  },
-                ],
-                "type": "object",
-              },
-              "type": "json",
-            },
-          },
-          "response": {
-            "statusCode": undefined,
-            "type": {
-              "type": "reference",
-              "value": {
-                "type": "id",
-                "value": "type_user:CreateUserResponse",
-              },
-            },
-          },
-        },
-        {
-          "auth": false,
-          "availability": undefined,
-          "defaultEnvironment": undefined,
-          "description": undefined,
-          "environments": undefined,
-          "errors": undefined,
-          "errorsV2": [],
-          "examples": [],
-          "headers": [],
-          "id": "getUser",
-          "method": "GET",
-          "name": "Get User",
-          "originalEndpointId": "endpoint_user.getUser",
-          "path": {
-            "parts": [
-              {
-                "type": "literal",
-                "value": "/",
-              },
-              {
-                "type": "literal",
-                "value": "/users",
-              },
-            ],
-            "pathParameters": [],
-          },
-          "queryParameters": [
-            {
-              "availability": undefined,
-              "description": undefined,
-              "key": "username",
-              "type": {
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "default": undefined,
-                    "maxLength": undefined,
-                    "minLength": undefined,
-                    "regex": undefined,
-                    "type": "string",
-                  },
-                },
-                "type": "optional",
-              },
-            },
-            {
-              "availability": undefined,
-              "description": undefined,
-              "key": "age",
-              "type": {
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "uint",
-                  },
-                },
-                "type": "optional",
-              },
-            },
-            {
-              "availability": undefined,
-              "description": undefined,
-              "key": "weight",
-              "type": {
-                "itemType": {
-                  "type": "primitive",
-                  "value": {
-                    "type": "double",
-                  },
-                },
-                "type": "optional",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "statusCode": undefined,
-            "type": {
-              "type": "reference",
-              "value": {
-                "type": "id",
-                "value": "type_user:User",
-              },
-            },
-          },
-        },
-      ],
-      "name": "user",
-      "pointsTo": undefined,
-      "subpackageId": "subpackage_user",
-      "subpackages": [],
-      "types": [
-        "type_user:Metadata",
-        "type_user:MetadataValue",
-        "type_user:User",
-        "type_user:CreateUserResponse",
-      ],
-      "webhooks": [],
-      "websockets": [],
-    },
-  },
-  "types": {
-    "type_user:CreateUserResponse": {
-      "availability": undefined,
-      "description": undefined,
-      "name": "CreateUserResponse",
-      "shape": {
-        "extends": [],
-        "properties": [
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "user",
-            "valueType": {
-              "type": "id",
-              "value": "type_user:User",
-            },
-          },
-        ],
-        "type": "object",
-      },
-    },
-    "type_user:Metadata": {
-      "availability": undefined,
-      "description": undefined,
-      "name": "Metadata",
-      "shape": {
-        "type": "alias",
-        "value": {
-          "keyType": {
-            "type": "primitive",
-            "value": {
-              "default": undefined,
-              "maxLength": undefined,
-              "minLength": undefined,
-              "regex": undefined,
-              "type": "string",
-            },
-          },
-          "type": "map",
-          "valueType": {
-            "itemType": {
-              "type": "id",
-              "value": "type_user:MetadataValue",
-            },
-            "type": "optional",
-          },
-        },
-      },
-    },
-    "type_user:MetadataValue": {
-      "availability": undefined,
-      "description": undefined,
-      "name": "MetadataValue",
-      "shape": {
-        "type": "undiscriminatedUnion",
-        "variants": [
-          {
-            "description": undefined,
-            "type": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "maximum": undefined,
-                "minimum": undefined,
-                "type": "double",
-              },
-            },
-            "typeName": undefined,
-          },
-          {
-            "description": undefined,
-            "type": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-            "typeName": undefined,
-          },
-          {
-            "description": undefined,
-            "type": {
-              "type": "primitive",
-              "value": {
-                "type": "boolean",
-              },
-            },
-            "typeName": undefined,
-          },
-          {
-            "description": undefined,
-            "type": {
-              "itemType": {
-                "type": "id",
-                "value": "type_user:MetadataValue",
-              },
-              "type": "list",
-            },
-            "typeName": undefined,
-          },
-        ],
-      },
-    },
-    "type_user:User": {
-      "availability": undefined,
-      "description": undefined,
-      "name": "User",
-      "shape": {
-        "extends": [],
-        "properties": [
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "id",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "username",
-            "valueType": {
-              "type": "primitive",
-              "value": {
-                "default": undefined,
-                "maxLength": undefined,
-                "minLength": undefined,
-                "regex": undefined,
-                "type": "string",
-              },
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "email",
-            "valueType": {
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "default": undefined,
-                  "maxLength": undefined,
-                  "minLength": undefined,
-                  "regex": undefined,
-                  "type": "string",
-                },
-              },
-              "type": "optional",
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "age",
-            "valueType": {
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "uint",
-                },
-              },
-              "type": "optional",
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "weight",
-            "valueType": {
-              "itemType": {
-                "type": "primitive",
-                "value": {
-                  "type": "double",
-                },
-              },
-              "type": "optional",
-            },
-          },
-          {
-            "availability": undefined,
-            "description": undefined,
-            "key": "metadata",
-            "valueType": {
-              "itemType": {
-                "type": "id",
-                "value": "type_user:Metadata",
-              },
-              "type": "optional",
-            },
-          },
-        ],
-        "type": "object",
       },
     },
   },
@@ -18035,7 +18213,7 @@ exports[`fdr test definitions > package-yml 1`] = `
             "description": undefined,
             "headers": {},
             "name": undefined,
-            "path": "/",
+            "path": "/id-ksfd9c1/",
             "pathParameters": {
               "id": "id-ksfd9c1",
             },
@@ -18166,7 +18344,7 @@ exports[`fdr test definitions > package-yml 1`] = `
               "description": undefined,
               "headers": {},
               "name": undefined,
-              "path": "//id-219xca8",
+              "path": "/id-a2ijs82/id-219xca8",
               "pathParameters": {
                 "id": "id-a2ijs82",
                 "nestedId": "id-219xca8",
@@ -33897,7 +34075,7 @@ exports[`fdr test definitions > undiscriminated-unions 1`] = `
               "description": undefined,
               "headers": {},
               "name": undefined,
-              "path": "//metadata",
+              "path": "/metadata",
               "pathParameters": {},
               "queryParameters": {},
               "requestBody": undefined,

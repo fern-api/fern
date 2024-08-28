@@ -22,6 +22,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -70,6 +71,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -144,6 +146,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -254,6 +257,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -328,6 +332,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -405,6 +410,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -501,6 +507,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -549,6 +556,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -623,6 +631,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -704,6 +713,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2722,6 +2732,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -2879,6 +2890,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -2953,6 +2965,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3001,6 +3014,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3075,6 +3089,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3232,6 +3247,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3409,6 +3425,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3566,6 +3583,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3675,6 +3693,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3721,6 +3740,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3795,6 +3815,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3805,6 +3826,7 @@ exports[`open api parser > aries > parse open api 1`] = `
             },
             {
               "name": "ref_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3853,6 +3875,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3879,6 +3902,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Inbound connection identifier",
           "name": "ref_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -3953,6 +3977,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -3984,6 +4009,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4093,6 +4119,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4132,6 +4159,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4228,6 +4256,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4287,6 +4316,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4383,6 +4413,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4433,6 +4464,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -4529,6 +4561,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -4588,6 +4621,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5388,6 +5422,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_def_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5594,6 +5629,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential definition identifier",
           "name": "cred_def_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5668,6 +5704,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_def_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5874,6 +5911,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential definition identifier",
           "name": "cred_def_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -5948,6 +5986,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "credential_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -5998,6 +6037,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential identifier",
           "name": "credential_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -6072,6 +6112,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "credential_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6111,6 +6152,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential identifier",
           "name": "credential_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -6254,6 +6296,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "credential_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6420,6 +6463,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential identifier",
           "name": "credential_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -6494,6 +6538,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "credential_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6542,6 +6587,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential identifier",
           "name": "credential_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -6616,6 +6662,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "credential_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6701,6 +6748,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential identifier",
           "name": "credential_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -6775,6 +6823,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "credential_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -6823,6 +6872,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential identifier",
           "name": "credential_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -8686,6 +8736,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -8843,6 +8894,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -8986,6 +9038,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -9143,6 +9196,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -15325,6 +15379,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16424,6 +16479,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16498,6 +16554,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -16546,6 +16603,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -16620,6 +16678,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -17730,6 +17789,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -17826,6 +17886,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -17885,6 +17946,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -17981,6 +18043,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -19040,6 +19103,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -19136,6 +19200,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -20133,6 +20198,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -20229,6 +20295,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -21339,6 +21406,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -29635,6 +29703,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -30355,6 +30424,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -30429,6 +30499,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -30477,6 +30548,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -30551,6 +30623,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -31282,6 +31355,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -31378,6 +31452,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -31437,6 +31512,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -31533,6 +31609,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -32256,6 +32333,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -32352,6 +32430,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -33072,6 +33151,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -33146,6 +33226,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -33877,6 +33958,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential exchange identifier",
           "name": "cred_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -39164,6 +39246,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "mediation_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -39232,6 +39315,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Mediation record identifier",
           "name": "mediation_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -39399,6 +39483,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "mediation_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -39523,6 +39608,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Mediation record identifier",
           "name": "mediation_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -39619,6 +39705,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -39799,6 +39886,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -40381,6 +40469,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "mediation_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -40519,6 +40608,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Mediation record identifier",
           "name": "mediation_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -40593,6 +40683,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "mediation_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -40731,6 +40822,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Mediation record identifier",
           "name": "mediation_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -40805,6 +40897,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "mediation_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -40931,6 +41024,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Mediation record identifier",
           "name": "mediation_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -41027,6 +41121,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "mediation_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -41099,6 +41194,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Mediation record identifier",
           "name": "mediation_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -41173,6 +41269,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -41267,6 +41364,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -41363,6 +41461,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "mediation_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -41501,6 +41600,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Mediation record identifier",
           "name": "mediation_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -41774,6 +41874,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "wallet_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -41838,6 +41939,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Subwallet identifier",
           "name": "wallet_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -41912,6 +42014,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "wallet_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -42017,6 +42120,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Subwallet identifier",
           "name": "wallet_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -42113,6 +42217,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "wallet_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -42172,6 +42277,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Subwallet identifier",
           "name": "wallet_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -42268,6 +42374,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "wallet_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -42318,6 +42425,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": null,
           "name": "wallet_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -46971,6 +47079,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -47591,6 +47700,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -47665,6 +47775,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -47713,6 +47824,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -47787,6 +47899,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -47920,6 +48033,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -48139,6 +48253,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -48198,6 +48313,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -48294,6 +48410,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -49015,6 +49132,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -49111,6 +49229,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -49749,6 +49868,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -49845,6 +49965,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -50465,6 +50586,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -54881,6 +55003,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -55605,6 +55728,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -55679,6 +55803,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -55727,6 +55852,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -55801,6 +55927,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -55934,6 +56061,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -56153,6 +56281,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -56212,6 +56341,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -56308,6 +56438,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -57121,6 +57252,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -57217,6 +57349,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -57959,6 +58092,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -58055,6 +58189,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "pres_ex_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -58779,6 +58914,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Presentation exchange identifier",
           "name": "pres_ex_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -60827,6 +60963,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "did",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -60867,6 +61004,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "DID",
           "name": "did",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -60941,6 +61079,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "cred_def_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -61185,6 +61324,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Credential definition identifier",
           "name": "cred_def_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -62669,6 +62809,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "rev_reg_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -62913,6 +63054,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -62987,6 +63129,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "rev_reg_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -63242,6 +63385,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -63338,6 +63482,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "rev_reg_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -63709,6 +63854,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -63848,6 +63994,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "rev_reg_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -64092,6 +64239,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -64231,6 +64379,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "rev_reg_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -64273,6 +64422,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -64370,6 +64520,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "rev_reg_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -64409,6 +64560,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -64483,6 +64635,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "rev_reg_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -64656,6 +64809,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -64730,6 +64884,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "rev_reg_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -64761,6 +64916,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -64835,6 +64991,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "rev_reg_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -65087,6 +65244,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -65257,6 +65415,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -65322,6 +65481,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -65382,6 +65542,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "rev_reg_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -65430,6 +65591,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Revocation Registry identifier",
           "name": "rev_reg_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -66335,6 +66497,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "schema_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -66426,6 +66589,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Schema identifier",
           "name": "schema_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -66500,6 +66664,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "schema_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -66591,6 +66756,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Schema identifier",
           "name": "schema_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -67132,6 +67298,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "tran_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -67333,6 +67500,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Transaction identifier",
           "name": "tran_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -68166,6 +68334,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -68223,6 +68392,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -68358,6 +68528,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "conn_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -68398,6 +68569,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Connection identifier",
           "name": "conn_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -68545,6 +68717,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "tran_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -68746,6 +68919,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Transaction identifier",
           "name": "tran_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -68820,6 +68994,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "tran_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -69021,6 +69196,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Transaction identifier",
           "name": "tran_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -69095,6 +69271,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "tran_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -69296,6 +69473,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Transaction identifier",
           "name": "tran_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -69405,6 +69583,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "tran_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -69606,6 +69785,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Transaction identifier",
           "name": "tran_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -69680,6 +69860,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "pathParameters": [
             {
               "name": "tran_id",
+              "parameterNameOverride": null,
               "value": {
                 "type": "primitive",
                 "value": {
@@ -69881,6 +70062,7 @@ exports[`open api parser > aries > parse open api 1`] = `
           "availability": null,
           "description": "Transaction identifier",
           "name": "tran_id",
+          "parameterNameOverride": null,
           "schema": {
             "availability": null,
             "description": null,
@@ -113200,6 +113382,7 @@ exports[`open api parser > aries > parse open api 1`] = `
   },
   "servers": [
     {
+      "audiences": null,
       "description": null,
       "name": null,
       "url": "/",

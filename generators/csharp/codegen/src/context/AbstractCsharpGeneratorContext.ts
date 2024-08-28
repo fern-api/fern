@@ -12,7 +12,7 @@ import {
     UndiscriminatedUnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
-import { csharp } from "..";
+import { convertReadOnlyPrimitiveTypes, csharp } from "..";
 import {
     COLLECTION_ITEM_SERIALIZER_CLASS_NAME,
     CONSTANTS_CLASS_NAME,
@@ -40,6 +40,7 @@ export abstract class AbstractCsharpGeneratorContext<
     public publishConfig: FernGeneratorExec.NugetGithubPublishInfo | undefined;
     private allNamespaceSegments?: Set<string>;
     private allTypeClassReferences?: Map<string, Set<Namespace>>;
+    private readOnlyMemoryTypes: Set<PrimitiveTypeV1>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -55,6 +56,9 @@ export abstract class AbstractCsharpGeneratorContext<
         this.csharpTypeMapper = new CsharpTypeMapper(this);
         this.csharpProtobufTypeMapper = new CsharpProtobufTypeMapper(this);
         this.protobufResolver = new ProtobufResolver(this, this.csharpTypeMapper);
+        this.readOnlyMemoryTypes = new Set<PrimitiveTypeV1>(
+            convertReadOnlyPrimitiveTypes(this.customConfig["read-only-memory-types"] ?? [])
+        );
         config.output.mode._visit<void>({
             github: (github) => {
                 if (github.publishInfo?.type === "nuget") {
@@ -75,8 +79,29 @@ export abstract class AbstractCsharpGeneratorContext<
         return `${this.namespace}.Core`;
     }
 
+    public getPublicCoreNamespace(): string {
+        return this.getNamespace();
+    }
+
     public getTestNamespace(): string {
         return `${this.namespace}.Test`;
+    }
+
+    public getTestUtilsNamespace(): string {
+        return `${this.getTestNamespace()}.Utils`;
+    }
+
+    public getMockServerTestNamespace(): string {
+        return `${this.getTestNamespace()}.Unit.MockServer`;
+    }
+
+    public getVersion(): string | undefined {
+        return this.config.output?.mode._visit({
+            downloadFiles: () => undefined,
+            github: (github) => github.version,
+            publish: (publish) => publish.version,
+            _other: () => undefined
+        });
     }
 
     public hasGrpcEndpoints(): boolean {
@@ -171,6 +196,25 @@ export abstract class AbstractCsharpGeneratorContext<
             name: "",
             namespace: "FluentAssertions.Json"
         });
+    }
+
+    public getVersionClassReference(): csharp.ClassReference {
+        return csharp.classReference({
+            name: "Version",
+            namespace: this.getPublicCoreNamespace()
+        });
+    }
+
+    public getCurrentVersionValueAccess(): csharp.CodeBlock {
+        return csharp.codeblock((writer) => {
+            writer.writeNode(this.getVersionClassReference());
+            writer.write(".");
+            writer.write(this.getCurrentVersionPropertyName());
+        });
+    }
+
+    public getCurrentVersionPropertyName(): string {
+        return "Current";
     }
 
     public getCollectionItemSerializerReference(
@@ -278,6 +322,27 @@ export abstract class AbstractCsharpGeneratorContext<
         return undefined;
     }
 
+    public getToStringMethod(): csharp.Method {
+        return csharp.method({
+            name: "ToString",
+            access: "public",
+            isAsync: false,
+            override: true,
+            parameters: [],
+            return_: csharp.Type.string(),
+            body: csharp.codeblock((writer) => {
+                writer.write("return ");
+                writer.writeNodeStatement(
+                    csharp.invokeMethod({
+                        on: this.getJsonUtilsClassReference(),
+                        method: "Serialize",
+                        arguments_: [csharp.codeblock("this")]
+                    })
+                );
+            })
+        });
+    }
+
     public isOptional(typeReference: TypeReference): boolean {
         switch (typeReference.type) {
             case "container":
@@ -314,14 +379,32 @@ export abstract class AbstractCsharpGeneratorContext<
         }
     }
 
+    public isReadOnlyMemoryType(typeReference: TypeReference): boolean {
+        switch (typeReference.type) {
+            case "container":
+                return false;
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.isReadOnlyMemoryType(typeDeclaration.shape.aliasOf);
+                }
+                return false;
+            }
+            case "unknown":
+                return false;
+            case "primitive":
+                return this.readOnlyMemoryTypes.has(typeReference.primitive.v1) ?? false;
+        }
+    }
+
     public getDefaultValueForPrimitive({ primitive }: { primitive: PrimitiveType }): csharp.CodeBlock {
         return PrimitiveTypeV1._visit<csharp.CodeBlock>(primitive.v1, {
             integer: () => csharp.codeblock("0"),
-            long: () => csharp.codeblock("0L"),
-            uint: () => csharp.codeblock("0U"),
-            uint64: () => csharp.codeblock("0UL"),
+            long: () => csharp.codeblock("0"),
+            uint: () => csharp.codeblock("0"),
+            uint64: () => csharp.codeblock("0"),
             float: () => csharp.codeblock("0.0f"),
-            double: () => csharp.codeblock("0.0d"),
+            double: () => csharp.codeblock("0.0"),
             boolean: () => csharp.codeblock("false"),
             string: () => csharp.codeblock('""'),
             date: () => csharp.codeblock("DateOnly.MinValue"),
@@ -336,6 +419,8 @@ export abstract class AbstractCsharpGeneratorContext<
     public abstract getCoreAsIsFiles(): string[];
 
     public abstract getPublicCoreAsIsFiles(): string[];
+
+    public abstract getAsIsTestUtils(): string[];
 
     public abstract getDirectoryForTypeId(typeId: TypeId): string;
 

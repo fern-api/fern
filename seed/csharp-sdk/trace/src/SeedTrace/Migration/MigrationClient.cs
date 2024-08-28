@@ -1,5 +1,6 @@
 using System.Net.Http;
 using System.Text.Json;
+using System.Threading;
 using SeedTrace.Core;
 
 #nullable enable
@@ -15,15 +16,22 @@ public partial class MigrationClient
         _client = client;
     }
 
+    /// <example>
+    /// <code>
+    /// await client.Migration.GetAttemptedMigrationsAsync(
+    ///     new GetAttemptedMigrationsRequest { AdminKeyHeader = "string" }
+    /// );
+    /// </code>
+    /// </example>
     public async Task<IEnumerable<Migration>> GetAttemptedMigrationsAsync(
         GetAttemptedMigrationsRequest request,
-        RequestOptions? options = null
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Dictionary<string, string>()
-        {
-            { "admin-key-header", request.AdminKeyHeader },
-        };
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "admin-key-header", request.AdminKeyHeader } }
+        );
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
@@ -32,7 +40,8 @@ public partial class MigrationClient
                 Path = "/migration-info/all",
                 Headers = _headers,
                 Options = options,
-            }
+            },
+            cancellationToken
         );
         var responseBody = await response.Raw.Content.ReadAsStringAsync();
         if (response.StatusCode is >= 200 and < 400)
