@@ -42,17 +42,6 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
 
     public doGenerate(): CSharpFile {
         const oneOfTypes = this.getProtoValueOneOfTypes();
-        const serializerAnnotation = csharp.annotation({
-            reference: csharp.classReference({
-                name: "JsonConverter",
-                namespace: "System.Text.Json.Serialization"
-            }),
-            argument: csharp.codeblock((writer) => {
-                writer.write("typeof(");
-                writer.writeNode(this.context.getOneOfSerializerClassReference(this.classReference));
-                writer.write(")");
-            })
-        });
         const class_ = csharp.class_({
             name: this.classReference.name,
             namespace: this.classReference.namespace,
@@ -68,8 +57,7 @@ export class WellKnownProtoValueGenerator extends FileGenerator<
                     })
                 ],
                 superClassArguments: [csharp.codeblock("value")]
-            },
-            annotations: [serializerAnnotation]
+            }
         });
 
         for (const operator of this.getProtoValueOperators()) {

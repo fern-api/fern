@@ -23,6 +23,7 @@ public partial class ReqWithHeadersClient
     ///     new SeedExhaustive.ReqWithHeaders.ReqWithHeaders
     ///     {
     ///         XTestEndpointHeader = "string",
+    ///         XTestServiceHeader = "string",
     ///         Body = "string",
     ///     }
     /// );
@@ -38,6 +39,7 @@ public partial class ReqWithHeadersClient
             new Dictionary<string, string>()
             {
                 { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
+                { "X-TEST-SERVICE-HEADER", request.XTestServiceHeader },
             }
         );
         var response = await _client.MakeRequestAsync(

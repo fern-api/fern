@@ -2,6 +2,7 @@ import { csharp } from "@fern-api/csharp-codegen";
 import {
     HttpEndpoint,
     HttpHeader,
+    HttpService,
     Name,
     QueryParameter,
     SdkRequest,
@@ -107,12 +108,14 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        if (this.endpoint.headers.length === 0) {
+        const service = this.context.getHttpServiceOrThrow(this.serviceId);
+        const headers = [...service.headers, ...this.endpoint.headers];
+        if (headers.length === 0) {
             return undefined;
         }
         const requiredHeaders: HttpHeader[] = [];
         const optionalHeaders: HttpHeader[] = [];
-        for (const header of this.endpoint.headers) {
+        for (const header of headers) {
             if (this.context.isOptional(header.valueType)) {
                 optionalHeaders.push(header);
             } else {
