@@ -74,10 +74,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     : query.valueType
             });
         }
-        const service = this.context.ir.services[this.serviceId];
-        if (service == null) {
-            throw new Error("Unexpected service not found");
-        }
+        const service = this.context.getHttpServiceOrThrow(this.serviceId);
         for (const header of [...this.endpoint.headers, ...service.headers]) {
             class_.addField(
                 csharp.field({

@@ -108,7 +108,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
-        const service = this.getService();
+        const service = this.context.getHttpServiceOrThrow(this.serviceId);
         const headers = [...this.endpoint.headers, ...service.headers];
         if (headers.length === 0) {
             return undefined;
@@ -211,14 +211,6 @@ export class WrappedEndpointRequest extends EndpointRequest {
         } else {
             return csharp.codeblock(`${parameter}.ToString()`);
         }
-    }
-
-    private getService(): HttpService {
-        const service = this.context.ir.services[this.serviceId];
-        if (service == null) {
-            throw new Error("Unexpected service not found");
-        }
-        return service;
     }
 
     public getRequestBodyCodeBlock(): RequestBodyCodeBlock | undefined {
