@@ -1,5 +1,7 @@
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
 import { CliReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
+import path from "path";
 import semver from "semver";
 import { PublishCommand } from "../../config/api";
 import { loadCliWorkspace } from "../../loadGeneratorWorkspaces";
@@ -45,10 +47,13 @@ export async function publishCli({
 
     let publishConfig: PublishCommand;
     if (isDevRelease) {
+        context.logger.info(`Publishing CLI@${publishVersion} as a dev release...`);
         publishConfig = cliWorkspace.workspaceConfig.publishDev;
     } else if (publishVersion.includes("rc")) {
+        context.logger.info(`Publishing CLI@${publishVersion} as a pre-release...`);
         publishConfig = cliWorkspace.workspaceConfig.publishRc;
     } else {
+        context.logger.info(`Publishing CLI@${publishVersion} as a production release...`);
         publishConfig = cliWorkspace.workspaceConfig.publishGa;
     }
 
@@ -57,7 +62,14 @@ export async function publishCli({
     const commands = Array.isArray(unparsedCommands) ? unparsedCommands : [unparsedCommands];
     const versionSubsitution = publishConfig.versionSubstitution;
     const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubsitution));
-    await runCommands(subbedCommands, context, cliWorkspace.absolutePathToWorkspace);
+
+    let workingDirectory = cliWorkspace.absolutePathToWorkspace;
+    if (publishConfig.workingDirectory) {
+        workingDirectory = AbsoluteFilePath.of(
+            path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(publishConfig.workingDirectory))
+        );
+    }
+    await runCommands(subbedCommands, context, workingDirectory);
 }
 
 // This function is just different enough from the equivalent in publishGenerator.ts that it's worth keeping them separate

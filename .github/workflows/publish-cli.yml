@@ -8,7 +8,6 @@ on:
 
 jobs:
   publish-dev:
-    if: github.ref == 'refs/heads/ab/cliPublish'
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -34,7 +33,7 @@ jobs:
         run: |
           git_version="$(./scripts/git-version.sh)"
 
-          pnpm seed:local publish generator cli --ver ${git_version} --dev --log-level debug
+          pnpm seed:local publish cli --ver ${git_version} --dev --log-level debug
 
   # Test prod and try to publish, the publish command will handle if there's no diff
   live-test:
@@ -81,5 +80,5 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
         run: |
           git show HEAD~1:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
-          pnpm seed:local publish generator cli --versions-file packages/cli/cli/versions.yml --previous-versions-file tmp_cli_previous_versions.yml --log-level debug
+          pnpm seed:local publish cli --versions-file packages/cli/cli/versions.yml --previous-versions-file tmp_cli_previous_versions.yml --log-level debug
           pnpm seed:local register cli

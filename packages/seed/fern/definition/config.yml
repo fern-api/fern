@@ -60,6 +60,7 @@ types:
       ex. `pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion "$VERSION"`
       Commands can be multi-line, we'll run them all!
     properties:
+      workingDirectory: optional<string>
       versionSubstitution: 
         type: optional<string>
         docs: | 

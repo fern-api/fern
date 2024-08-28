@@ -10,6 +10,7 @@ import * as FernSeedConfig from "../../..";
  * Commands can be multi-line, we'll run them all!
  */
 export interface PublishCommand {
+    workingDirectory?: string;
     /** The string to substitute for the version in the command. ex. `"$VERSION"` */
     versionSubstitution?: string;
     command: FernSeedConfig.DockerCommand;

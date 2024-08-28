@@ -1,6 +1,8 @@
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { GeneratorReleaseRequest } from "@fern-fern/generators-sdk/api/resources/generators";
+import path from "path";
 import semver from "semver";
 import { PublishDockerConfiguration } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
@@ -46,6 +48,12 @@ export async function publishGenerator({
     }
 
     const publishConfig = generator.workspaceConfig.publish;
+    let workingDirectory = generator.absolutePathToWorkspace;
+    if (publishConfig.workingDirectory) {
+        workingDirectory = AbsoluteFilePath.of(
+            path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(publishConfig.workingDirectory))
+        );
+    }
     // Instance of PublishDocker configuration, leverage docker CLI here
     if ("docker" in publishConfig) {
         const unparsedCommands = publishConfig.preBuildCommands;
@@ -55,7 +63,7 @@ export async function publishGenerator({
             ? [unparsedCommands]
             : [];
 
-        await runCommands(preBuildCommands, context, publishConfig.workingDirectory);
+        await runCommands(preBuildCommands, context, workingDirectory);
         await buildAndPushDockerImage(publishConfig.docker, publishVersion, context);
     } else {
         // Instance of PublishCommand configuration, leverage these commands outright
@@ -63,7 +71,7 @@ export async function publishGenerator({
         const commands = Array.isArray(unparsedCommands) ? unparsedCommands : [unparsedCommands];
         const versionSubsitution = publishConfig.versionSubstitution;
         const subbedCommands = commands.map((command) => subVersion(command, publishVersion, versionSubsitution));
-        await runCommands(subbedCommands, context, generator.absolutePathToWorkspace);
+        await runCommands(subbedCommands, context, workingDirectory);
     }
 }
 
@@ -79,7 +87,7 @@ async function buildAndPushDockerImage(
         context.failAndThrow("Docker Hub credentials not found within your environment variables.");
     }
 
-    context.logger.debug(`Logging into Docker Hub...`);
+    context.logger.debug("Logging into Docker Hub...");
     await loggingExeca(context.logger, "docker", ["login", "-u", dockerHubUsername, "--password-stdin"], {
         doNotPipeOutput: true,
         input: dockerHubPassword
