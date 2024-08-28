@@ -14,7 +14,7 @@ internal class RawClient(ClientOptions clientOptions)
     private const int InitialRetryDelayMs = 1000;
     private const int MaxRetryDelayMs = 60000;
 
-    private readonly Lazy<RawGrpcClient> _grpc = new Lazy<RawGrpcClient>(() => new(clientOptions));
+    private readonly Lazy<RawGrpcClient> _grpc = new(() => new RawGrpcClient(clientOptions));
 
     /// <summary>
     /// The gRPC client used to make requests.

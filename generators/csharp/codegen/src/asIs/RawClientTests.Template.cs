@@ -16,13 +16,15 @@ namespace <%= namespace%>.Test.Core
         private WireMockServer _server;
         private HttpClient _httpClient;
         private RawClient _rawClient;
-        private int _maxRetries = 3;
+        private string _baseUrl;
+        private const int _maxRetries = 3;
 
         [SetUp]
         public void SetUp()
         {
             _server = WireMockServer.Start();
-            _httpClient = new HttpClient { BaseAddress = new Uri(_server.Url) };
+            _baseUrl = _server.Url ?? "";
+            _httpClient = new HttpClient { BaseAddress = new Uri(_baseUrl) };
             _rawClient = new RawClient(
                 new ClientOptions() {
                     HttpClient = _httpClient,
@@ -56,7 +58,7 @@ namespace <%= namespace%>.Test.Core
 
             var request = new RawClient.BaseApiRequest
             {
-                BaseUrl = _server.Url,
+                BaseUrl = _baseUrl,
                 Method = HttpMethod.Get,
                 Path = "/test"
             };
@@ -82,7 +84,7 @@ namespace <%= namespace%>.Test.Core
 
             var request = new RawClient.BaseApiRequest
             {
-                BaseUrl = _server.Url,
+                BaseUrl = _baseUrl,
                 Method = HttpMethod.Get,
                 Path = "/test"
             };
@@ -99,8 +101,8 @@ namespace <%= namespace%>.Test.Core
         [TearDown]
         public void TearDown()
         {
-            _server?.Dispose();
-            _httpClient?.Dispose();
+            _server.Dispose();
+            _httpClient.Dispose();
         }
     }
 }
