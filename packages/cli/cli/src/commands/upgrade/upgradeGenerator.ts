@@ -2,10 +2,8 @@ import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
-import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
-import * as semver from "semver";
 import YAML from "yaml";
 import { CliContext } from "../../cli-context/CliContext";
 
@@ -95,19 +93,12 @@ export async function loadAndUpdateGenerators({
                 includeMajor,
                 context
             });
-            context.logger.debug(`${generatorName}, ${currentGeneratorVersion}, ${latestVersion}`);
 
             if (latestVersion == null) {
                 continue;
             }
-
-            // check if the versions have the same major version, if not fail, if yes do the upgrade
-            const currentMajor = semver.major(currentGeneratorVersion);
-            const latestMajor = semver.major(latestVersion);
-            if (currentMajor === latestMajor || includeMajor) {
-                generator.set("version", latestVersion);
-                context.logger.info(chalk.green(`${generatorName} has been upgraded to latest in group: ${groupName}`));
-            }
+            context.logger.debug(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`);
+            generator.set("version", latestVersion);
         }
     }
 

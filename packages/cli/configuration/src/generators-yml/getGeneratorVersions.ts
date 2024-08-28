@@ -92,49 +92,4 @@ function getGeneratorMetadataFromName(generatorName: string, context?: TaskConte
             return generatorName;
         }
     }
-    // switch (generatorName) {
-    //     // Python
-    //     case "fern-python-sdk":
-    //         return { language: "python", generatorType: { type: "sdk" } };
-    //     case "fern-pydantic-model":
-    //         return { language: "python", generatorType: { type: "model" } };
-    //     case "fern-fastapi-server":
-    //         return { language: "python", generatorType: { type: "server" } };
-    //     // TypeScript
-    //     case "fern-typescript-browser-sdk":
-    //     case "fern-typescript-node-sdk":
-    //     case "fern-typescript-sdk":
-    //         return { language: "typescript", generatorType: { type: "sdk" } };
-    //     case "fern-typescript-express":
-    //         return { language: "typescript", generatorType: { type: "server" } };
-    //     // Java
-    //     case "fern-java-sdk":
-    //         return { language: "java", generatorType: { type: "sdk" } };
-    //     case "java-model":
-    //         return { language: "java", generatorType: { type: "model" } };
-    //     case "fern-java-spring":
-    //         return { language: "java", generatorType: { type: "server" } };
-    //     // Go
-    //     case "fern-go-sdk":
-    //         return { language: "go", generatorType: { type: "sdk" } };
-    //     case "fern-go-model":
-    //         return { language: "go", generatorType: { type: "model" } };
-    //     case "fern-go-fiber":
-    //         return { language: "go", generatorType: { type: "server" } };
-    //     // C#
-    //     case "fern-csharp-sdk":
-    //         return { language: "csharp", generatorType: { type: "sdk" } };
-    //     case "fern-csharp-model":
-    //         return { language: "csharp", generatorType: { type: "model" } };
-    //     // Ruby
-    //     case "fern-ruby-sdk":
-    //         return { language: "ruby", generatorType: { type: "sdk" } };
-    //     case "fern-ruby-model":
-    //         return { language: "ruby", generatorType: { type: "model" } };
-    //     // Misc.
-    //     case "fern-postman":
-    //         return { language: "postman", generatorType: "other" };
-    //     case "fern-openapi":
-    //         return { language: "openapi", generatorType: "other" };
-    // }
 }

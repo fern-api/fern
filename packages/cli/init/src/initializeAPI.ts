@@ -35,9 +35,14 @@ export async function initializeAPI({
         taskContext: context
     });
     if (openApiPath != null) {
-        await createOpenAPIWorkspace({ directoryOfWorkspace, openAPIFilePath: openApiPath, cliVersion: versionOfCli });
+        await createOpenAPIWorkspace({
+            directoryOfWorkspace,
+            openAPIFilePath: openApiPath,
+            cliVersion: versionOfCli,
+            context
+        });
     } else {
-        await createFernWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli });
+        await createFernWorkspace({ directoryOfWorkspace, cliVersion: versionOfCli, context });
     }
     context.logger.info(chalk.green("Created new API: ./" + path.relative(process.cwd(), directoryOfWorkspace)));
 }
