@@ -5,6 +5,7 @@ types:
     properties:
       publishGa: PublishCommand
       publishRc: PublishCommand
+      publishDev: PublishCommand
       changelogLocation: 
         type: optional<string>
         docs: | 

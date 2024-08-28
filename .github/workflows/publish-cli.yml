@@ -4,10 +4,11 @@ on:
   push:
     branches:
       - main
+      - ab/cliPublish
 
 jobs:
   publish-dev:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/ab/cliPublish'
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -33,22 +34,7 @@ jobs:
         run: |
           git_version="$(./scripts/git-version.sh)"
 
-          cd packages/cli/cli
-          mv package.json package.json.tmp
-          version_replace="s/0.0.0/${git_version}/"
-          cat package.json.tmp| sed "${version_replace}" > package.json
-          rm -rf package.json.tmp
-
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-
-      - name: Update pnpm lock with new versions
-        run: pnpm install
-
-      - name: Compile
-        run: pnpm --filter @fern-api/cli compile
-
-      - name: Publish fern-api-dev CLI
-        run: pnpm --filter @fern-api/cli publish:cli:dev --access restricted
+          pnpm seed:local publish generator cli --ver ${git_version} --dev --log-level debug
 
   # Test prod and try to publish, the publish command will handle if there's no diff
   live-test:

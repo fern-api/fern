@@ -232,6 +232,11 @@ function addPublishCommands(cli: Argv) {
                             default: LogLevel.Info,
                             choices: LOG_LEVELS
                         })
+                        .option("dev", {
+                            type: "boolean",
+                            default: false,
+                            demandOption: false
+                        })
                         .check((argv) => {
                             return (
                                 // Check: Either version or changelog and previousChangelog must be provided
@@ -253,7 +258,8 @@ function addPublishCommands(cli: Argv) {
                                   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                                   previousChangelogPath: argv.previousChangelog!
                               },
-                        context
+                        context,
+                        isDevRelease: argv.dev
                     });
                 }
             )

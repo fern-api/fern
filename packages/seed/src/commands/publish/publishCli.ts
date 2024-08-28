@@ -13,10 +13,12 @@ interface VersionFilePair {
 
 export async function publishCli({
     version,
-    context
+    context,
+    isDevRelease
 }: {
     version: string | VersionFilePair;
     context: TaskContext;
+    isDevRelease: boolean | undefined;
 }): Promise<void> {
     const cliWorkspace = await loadCliWorkspace();
     context.logger.info(`Publishing CLI@${version}...`);
@@ -42,7 +44,9 @@ export async function publishCli({
     }
 
     let publishConfig: PublishCommand;
-    if (publishVersion.includes("rc")) {
+    if (isDevRelease) {
+        publishConfig = cliWorkspace.workspaceConfig.publishDev;
+    } else if (publishVersion.includes("rc")) {
         publishConfig = cliWorkspace.workspaceConfig.publishRc;
     } else {
         publishConfig = cliWorkspace.workspaceConfig.publishGa;
