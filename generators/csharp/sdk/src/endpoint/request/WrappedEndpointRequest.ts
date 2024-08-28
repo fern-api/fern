@@ -109,7 +109,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
 
     public getHeaderParameterCodeBlock(): HeaderParameterCodeBlock | undefined {
         const service = this.context.getHttpServiceOrThrow(this.serviceId);
-        const headers = [...this.endpoint.headers, ...service.headers];
+        const headers = [...service.headers, ...this.endpoint.headers];
         if (headers.length === 0) {
             return undefined;
         }

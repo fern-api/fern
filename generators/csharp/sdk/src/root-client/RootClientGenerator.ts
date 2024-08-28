@@ -294,7 +294,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkCustomConf
 
     public generateExampleClientInstantiationSnippet({
         clientOptionsArgument,
-        includeEnvVarArguments = false
+        includeEnvVarArguments
     }: {
         clientOptionsArgument?: csharp.ClassInstantiation;
         includeEnvVarArguments?: boolean;

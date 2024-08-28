@@ -75,7 +75,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             });
         }
         const service = this.context.getHttpServiceOrThrow(this.serviceId);
-        for (const header of [...this.endpoint.headers, ...service.headers]) {
+        for (const header of [...service.headers, ...this.endpoint.headers]) {
             class_.addField(
                 csharp.field({
                     name: header.name.name.pascalCase.safeName,
