@@ -91,8 +91,6 @@ jobs:
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
 
       - name: Install
         uses: ./.github/actions/install
@@ -143,8 +141,6 @@ jobs:
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
 
       - name: Install
         uses: ./.github/actions/install
