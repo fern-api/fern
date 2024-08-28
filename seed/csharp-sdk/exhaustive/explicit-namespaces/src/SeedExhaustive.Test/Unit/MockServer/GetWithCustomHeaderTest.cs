@@ -32,6 +32,7 @@ public class GetWithCustomHeaderTest : BaseMockServerTest
                     new ReqWithHeaders.ReqWithHeaders
                     {
                         XTestEndpointHeader = "string",
+                        XTestServiceHeader = "string",
                         Body = "string",
                     },
                     RequestOptions

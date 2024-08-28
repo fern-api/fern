@@ -34,7 +34,7 @@
             },
             "snippet": {
                 "type": "typescript",
-                "client": "using SeedExamples.File;\nusing SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.File.Service.GetFileAsync(\"file.txt\", new GetFileRequest());\n"
+                "client": "using SeedExamples.File;\nusing SeedExamples;\n\nvar client = new SeedExamplesClient(\"TOKEN\");\nawait client.File.Service.GetFileAsync(\n    \"file.txt\",\n    new GetFileRequest { XFileApiVersion = \"0.0.2\" }\n);\n"
             }
         },
         {

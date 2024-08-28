@@ -22,7 +22,10 @@ public partial class ServiceClient
     /// </summary>
     /// <example>
     /// <code>
-    /// await client.File.Service.GetFileAsync("file.txt", new GetFileRequest());
+    /// await client.File.Service.GetFileAsync(
+    ///     "file.txt",
+    ///     new GetFileRequest { XFileApiVersion = "0.0.2" }
+    /// );
     /// </code>
     /// </example>
     public async Task<File> GetFileAsync(
@@ -32,12 +35,16 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
+        var _headers = new Headers(
+            new Dictionary<string, string>() { { "X-File-API-Version", request.XFileApiVersion } }
+        );
         var response = await _client.MakeRequestAsync(
             new RawClient.JsonApiRequest
             {
                 BaseUrl = _client.Options.BaseUrl,
                 Method = HttpMethod.Get,
                 Path = $"/file/{filename}",
+                Headers = _headers,
                 Options = options,
             },
             cancellationToken

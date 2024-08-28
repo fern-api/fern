@@ -11,7 +11,7 @@ internal static class JsonOptions
     {
         JsonSerializerOptions = new JsonSerializerOptions
         {
-            Converters = { new DateTimeSerializer() },
+            Converters = { new DateTimeSerializer(), new OneOfSerializer() },
             WriteIndented = true,
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
         };
