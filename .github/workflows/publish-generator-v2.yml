@@ -87,6 +87,7 @@ jobs:
 
   # Test, publish and register generators
   publish-changed-generators:
+    if: ${{ inputs.generator == null }}
     runs-on: ubuntu-latest
     needs: versions-changed
     strategy:
