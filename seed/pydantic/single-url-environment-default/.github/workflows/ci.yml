@@ -34,7 +34,7 @@ jobs:
         run: poetry install
 
       - name: Test
-        run: poetry run pytest ./tests/custom/
+        run: poetry run pytest -rP .
 
   publish:
     needs: [compile, test]
