@@ -418,7 +418,11 @@ export abstract class AbstractCsharpGeneratorContext<
 
     public abstract getCoreAsIsFiles(): string[];
 
+    public abstract getCoreTestAsIsFiles(): string[];
+
     public abstract getPublicCoreAsIsFiles(): string[];
+
+    public abstract getPublicCoreTestAsIsFiles(): string[];
 
     public abstract getAsIsTestUtils(): string[];
 

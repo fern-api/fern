@@ -38,8 +38,8 @@ public partial class ReqWithHeadersClient
         var _headers = new Headers(
             new Dictionary<string, string>()
             {
-                { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
                 { "X-TEST-SERVICE-HEADER", request.XTestServiceHeader },
+                { "X-TEST-ENDPOINT-HEADER", request.XTestEndpointHeader },
             }
         );
         var response = await _client.MakeRequestAsync(

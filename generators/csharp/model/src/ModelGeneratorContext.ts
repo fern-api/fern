@@ -37,11 +37,19 @@ export class ModelGeneratorContext extends AbstractCsharpGeneratorContext<ModelC
         ];
     }
 
-    public getAsIsTestUtils(): string[] {
+    public getCoreTestAsIsFiles(): string[] {
         return [];
     }
 
     public getPublicCoreAsIsFiles(): string[] {
+        return [];
+    }
+
+    public getPublicCoreTestAsIsFiles(): string[] {
+        return [];
+    }
+
+    public getAsIsTestUtils(): string[] {
         return [];
     }
 

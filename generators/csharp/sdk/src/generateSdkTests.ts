@@ -6,16 +6,15 @@ import { MockServerTestGenerator } from "./test-generation/mock-server/MockServe
 
 export function generateSdkTests({ context }: { context: SdkGeneratorContext }): CSharpFile[] {
     const files: CSharpFile[] = [];
-    files.push(new BaseMockServerTestGenerator(context).generate());
-    generateMockServerTests({ context, files });
+    files.push(...generateMockServerTests({ context }));
     return files;
 }
 
-function generateMockServerTests({ context, files }: { context: SdkGeneratorContext; files: CSharpFile[] }) {
-    if (context.customConfig["generate-mock-server-tests"] !== true) {
-        return;
+function generateMockServerTests({ context }: { context: SdkGeneratorContext }): CSharpFile[] {
+    if (!context.customConfig["generate-mock-server-tests"]) {
+        return [];
     }
-    files.push(new BaseMockServerTestGenerator(context).generate());
+    const files: CSharpFile[] = [];
     for (const [serviceId, service] of Object.entries(context.ir.services)) {
         if (shouldSkipMockServerTestsForService({ context, serviceId })) {
             continue;
@@ -39,6 +38,11 @@ function generateMockServerTests({ context, files }: { context: SdkGeneratorCont
             files.push(file);
         }
     }
+    if (files.length > 0) {
+        // We should only generate the base if at least one mock test was generated.
+        files.push(new BaseMockServerTestGenerator(context).generate());
+    }
+    return files;
 }
 
 function shouldSkipMockServerTestForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): boolean {
