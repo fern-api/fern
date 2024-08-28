@@ -165,5 +165,6 @@ jobs:
         # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
         run: |
           git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
+          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml || DOES_THIS_WORK=false
           pnpm seed:local publish generator ${{ inputs.generator }} --ver ${{ inputs.version }} --log-level debug
           pnpm seed:local register generator --generators ${{ inputs.generator }}
