@@ -35,7 +35,6 @@
     "@fern-fern/fdr-cjs-sdk": "0.1.0",
     "@fern-fern/fiddle-sdk": "0.0.584",
     "@fern-fern/generators-sdk": "0.0.5606",
-    "dockerode": "^4.0.2",
     "find-up": "^6.3.0",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
@@ -44,7 +43,6 @@
     "zod": "^3.22.3"
   },
   "devDependencies": {
-    "@types/dockerode": "^3.3.9",
     "@types/jest": "^29.5.12",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.12",

@@ -110,7 +110,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.39.3
         output:
           location: local-file-system
           path: ../sdks/typescript
@@ -143,7 +143,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.39.3
         output:
           location: local-file-system
           path: ../sdks/typescript
@@ -377,7 +377,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.9.5
+        version: 0.39.3
         output:
           location: local-file-system
           path: ../sdks/typescript

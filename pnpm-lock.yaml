@@ -3118,9 +3118,6 @@ importers:
       ora:
         specifier: ^7.0.1
         version: 7.0.1
-      semver:
-        specifier: ^7.6.2
-        version: 7.6.2
       tar:
         specifier: ^6.2.1
         version: 6.2.1
@@ -3161,9 +3158,6 @@ importers:
       '@types/node':
         specifier: ^18.7.18
         version: 18.7.18
-      '@types/semver':
-        specifier: ^7.5.8
-        version: 7.5.8
       '@types/tar':
         specifier: ^6.1.11
         version: 6.1.11
@@ -3225,9 +3219,6 @@ importers:
       '@fern-fern/generators-sdk':
         specifier: 0.0.5606
         version: 0.0.5606
-      dockerode:
-        specifier: ^4.0.2
-        version: 4.0.2
       find-up:
         specifier: ^6.3.0
         version: 6.3.0
@@ -3247,9 +3238,6 @@ importers:
         specifier: ^3.22.3
         version: 3.22.4
     devDependencies:
-      '@types/dockerode':
-        specifier: ^3.3.9
-        version: 3.3.9
       '@types/jest':
         specifier: ^29.5.12
         version: 29.5.12
