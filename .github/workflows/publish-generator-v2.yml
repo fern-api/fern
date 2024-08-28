@@ -103,6 +103,9 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       # Because tests take too long, we're skipping them for now here, they will still
       # run in the CI pipeline, as before
       # - name: Run test
@@ -155,6 +158,9 @@ jobs:
 
       - name: Install
         uses: ./.github/actions/install
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
 
       # Because tests take too long, we're skipping them for now here, they will still
       # run in the CI pipeline, as before
