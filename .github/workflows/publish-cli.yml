@@ -110,9 +110,12 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Publish + Register CLI
-        env:
-          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-        run: |
-          pnpm seed:local publish cli --ver ${{ inputs.version }} --log-level debug
-          pnpm seed:local register cli
+      # - name: Publish + Register CLI
+      #   env:
+      #     FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+      #   run: |
+      #     pnpm seed:local publish cli --ver ${{ inputs.version }} --log-level debug
+      #     pnpm seed:local register cli
+      
+      - name: Setup upterm session
+        uses: lhotari/action-upterm@v1
