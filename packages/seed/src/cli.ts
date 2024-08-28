@@ -2,8 +2,11 @@ import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
 import { askToLogin } from "@fern-api/login";
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
+import { writeFile } from "fs/promises";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import { getLatestCli } from "./commands/latest/getLatestCli";
+import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { publishCli } from "./commands/publish/publishCli";
 import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
@@ -37,6 +40,7 @@ export async function tryRunCli(): Promise<void> {
     addRegisterCommands(cli);
     addPublishCommands(cli);
     addValidateCommands(cli);
+    addLatestCommands(cli);
 
     await cli.parse();
 
@@ -396,6 +400,119 @@ function addRegisterCommands(cli: Argv) {
                             fdrClient,
                             context
                         });
+                    }
+                }
+            );
+    });
+}
+
+function addLatestCommands(cli: Argv) {
+    cli.command("latest", "Get latest release", (yargs) => {
+        yargs
+            .command(
+                "cli",
+                "Get latest CLI release.",
+                (yargs) =>
+                    yargs
+                        .option("log-level", {
+                            default: LogLevel.Info,
+                            choices: LOG_LEVELS
+                        })
+                        .option("output", {
+                            alias: "o",
+                            type: "string",
+                            demandOption: false
+                        })
+                        .option("changelog", {
+                            type: "string",
+                            demandOption: false,
+                            description:
+                                "Path to the latest changelog file, used along side `previous-changelog` to get the most recent new version."
+                        })
+                        .option("previous-changelog", {
+                            type: "string",
+                            demandOption: false,
+                            description:
+                                "Path to the previous changelog file, used along side `changelog` to get the most recent new version."
+                        })
+                        .check((argv) => {
+                            return (
+                                (!argv.changelog && !argv.previousChangelog) ||
+                                (argv.changelog && argv.previousChangelog)
+                            );
+                        }),
+                async (argv) => {
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Publish");
+
+                    const ver = await getLatestCli({
+                        context,
+                        maybeChangelogs:
+                            argv.changelog && argv.previousChangelog
+                                ? {
+                                      latestChangelogPath: argv.changelog!,
+                                      previousChangelogPath: argv.previousChangelog!
+                                  }
+                                : undefined
+                    });
+                    if (ver == null) {
+                        context.logger.error("No latest version found for CLI");
+                        return;
+                    }
+
+                    if (argv.output) {
+                        await writeFile(argv.output, ver);
+                    } else {
+                        process.stdout.write(ver);
+                    }
+                }
+            )
+            .command(
+                "generator <generator>",
+                "Get latest release of the specified generator.",
+                (yargs) =>
+                    yargs
+                        .positional("generator", {
+                            type: "string",
+                            demandOption: true,
+                            description: "Generator(s) to register"
+                        })
+                        .option("log-level", {
+                            default: LogLevel.Info,
+                            choices: LOG_LEVELS
+                        })
+                        .option("output", {
+                            alias: "o",
+                            type: "string",
+                            demandOption: false
+                        }),
+                async (argv) => {
+                    const generators = await loadGeneratorWorkspaces();
+                    if (argv.generators != null) {
+                        throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+                    }
+
+                    const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                    const context = taskContextFactory.create("Publish");
+
+                    const maybeGeneratorWorkspace = generators.find((g) => g.workspaceName === argv.generator);
+                    if (maybeGeneratorWorkspace == null) {
+                        context.failAndThrow(`Specified generator ${argv.generator} not found.`);
+                        return;
+                    }
+
+                    const ver = await getLatestGenerator({
+                        generator: maybeGeneratorWorkspace,
+                        context
+                    });
+                    if (ver == null) {
+                        context.logger.error(`No latest version found for generator ${argv.generator}`);
+                        return;
+                    }
+                    if (argv.output) {
+                        await writeFile(argv.output, ver);
+                    } else {
+                        process.stdout.write(ver);
                     }
                 }
             );
