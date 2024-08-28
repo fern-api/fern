@@ -235,7 +235,7 @@ jobs:
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest .
+        run: poetry run pytest -rP .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
