@@ -38,7 +38,7 @@ export async function addGenerator({
                         cliVersion,
                         generatorName: normalizedGeneratorName,
                         context,
-                        includeRc: false
+                        channel: undefined
                     })) ?? invocation.version
             });
         }

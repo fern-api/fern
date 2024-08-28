@@ -2,10 +2,13 @@ import { generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, doesPathExist } from "@fern-api/fs-utils";
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
+import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import path from "path";
 import YAML from "yaml";
 import { CliContext } from "../../cli-context/CliContext";
+import { Values } from "@fern-api/core-utils";
+import { FernRegistry } from "@fern-fern/generators-sdk";
 
 export async function loadAndUpdateGenerators({
     absolutePathToWorkspace,
@@ -13,7 +16,7 @@ export async function loadAndUpdateGenerators({
     generatorFilter,
     groupFilter,
     includeMajor,
-    includeRc,
+    channel,
     cliVersion
 }: {
     absolutePathToWorkspace: AbsoluteFilePath;
@@ -21,7 +24,7 @@ export async function loadAndUpdateGenerators({
     generatorFilter: string | undefined;
     groupFilter: string | undefined;
     includeMajor: boolean;
-    includeRc: boolean;
+    channel: FernRegistry.generators.ReleaseType | undefined;
     cliVersion: string;
 }): Promise<string | undefined> {
     const filepath = generatorsYml.getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
@@ -89,7 +92,7 @@ export async function loadAndUpdateGenerators({
                 generatorName: normalizedGeneratorName,
                 cliVersion,
                 currentGeneratorVersion,
-                includeRc,
+                channel,
                 includeMajor,
                 context
             });
@@ -97,7 +100,9 @@ export async function loadAndUpdateGenerators({
             if (latestVersion == null) {
                 continue;
             }
-            context.logger.debug(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`);
+            context.logger.debug(
+                chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
+            );
             generator.set("version", latestVersion);
         }
     }
@@ -111,14 +116,14 @@ export async function upgradeGenerator({
     group,
     project: { apiWorkspaces },
     includeMajor,
-    includeRc
+    channel
 }: {
     cliContext: CliContext;
     generator: string | undefined;
     group: string | undefined;
     project: Project;
     includeMajor: boolean;
-    includeRc: boolean;
+    channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -144,7 +149,7 @@ export async function upgradeGenerator({
                     generatorFilter: generator,
                     groupFilter: group,
                     includeMajor,
-                    includeRc,
+                    channel,
                     cliVersion: cliContext.environment.packageVersion
                 });
 

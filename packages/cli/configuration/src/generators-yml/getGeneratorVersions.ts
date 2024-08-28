@@ -5,14 +5,14 @@ import semver from "semver";
 export async function getLatestGeneratorVersion({
     generatorName,
     cliVersion,
-    includeRc,
+    channel,
     currentGeneratorVersion,
     includeMajor,
     context
 }: {
     generatorName: string;
     cliVersion: string;
-    includeRc: boolean;
+    channel: FernRegistry.generators.ReleaseType | undefined;
     currentGeneratorVersion?: string;
     includeMajor?: boolean;
     context?: TaskContext;
@@ -20,11 +20,14 @@ export async function getLatestGeneratorVersion({
     const parsedVersion = semver.parse(currentGeneratorVersion);
     // We're just using unauthed endpoints, so we don't need to pass in a token
     const client = new GeneratorsClient({});
+    context?.logger.info(`Getting latest version for ${generatorName} with CLI version ${cliVersion}`);
     const latestReleaseResponse = await client.generators.versions.getLatestGeneratorRelease({
         generator: getGeneratorMetadataFromName(generatorName, context),
-        releaseType: includeRc ? FernRegistry.generators.ReleaseType.Rc : FernRegistry.generators.ReleaseType.Ga,
+        releaseType: channel ?? FernRegistry.generators.ReleaseType.Ga,
         retainMajorVersion: !includeMajor && parsedVersion != null ? parsedVersion.major : undefined,
-        cliVersion
+        // We get "*" as 0.0.0, so we need to handle that case for tests
+        // if we see this, then we shouldn't restrict on the CLI version
+        cliVersion: cliVersion === "0.0.0" ? undefined : cliVersion
     });
 
     if (latestReleaseResponse.ok) {
@@ -39,6 +42,9 @@ export async function getLatestGeneratorVersion({
 // Ideally we just do a lookup that's sdk type and language, but we need to do this for now, but we're looking to keep our options
 // open when it comes to handling generators by some ID (and don't necessarily want to disallow multiple generators of the same type in the same language)
 function getGeneratorMetadataFromName(generatorName: string, context?: TaskContext): string {
+    if (generatorName.startsWith("fernapi/")) {
+        generatorName = generatorName.replace("fernapi/", "");
+    }
     switch (generatorName) {
         // Python
         case "fern-python-sdk":

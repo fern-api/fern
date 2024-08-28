@@ -19,14 +19,25 @@ describe("fern generator upgrade", () => {
             cwd: directory
         });
 
-        const version = await runFernCli(
+        const pythonVersion = await runFernCli(
             ["generator", "get", "--group", "python-sdk", "--generator", "fernapi/fern-python-sdk", "--version"],
             {
                 cwd: directory
             }
         );
 
-        expect(version.stdout).not.toEqual("0.0.0");
+        expect(pythonVersion.stdout).not.toEqual("0.0.0");
+
+        // Let's make sure that we don't touch the version if it's not found
+        // TODO: remove this test when we register Java generators
+        const javaVersion = await runFernCli(
+            ["generator", "get", "--group", "local", "--generator", "fernapi/fern-java-sdk", "--version"],
+            {
+                cwd: directory
+            }
+        );
+
+        expect(javaVersion.stdout).toEqual("0.0.1");
     }, 60_000);
 
     it("fern generator help commands", async () => {

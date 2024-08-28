@@ -75,7 +75,7 @@ async function getDefaultGeneratorsConfiguration(
     const versionFromDB = await generatorsYml.getLatestGeneratorVersion({
         cliVersion,
         generatorName: defaultGeneratorName,
-        includeRc: false
+        channel: undefined
     });
 
     if (versionFromDB != null) {
