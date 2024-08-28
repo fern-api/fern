@@ -92,7 +92,7 @@ jobs:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Install
         uses: ./.github/actions/install
@@ -127,6 +127,8 @@ jobs:
 
           if [ $DOES_PREVIOUS_VERSIONS_EXIST != false ]; then
             pnpm seed:local publish generator ${{ matrix.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ matrix.generator }}_previous_versions.yml --log-level debug
+          else
+            echo "No previous versions found, skipping publish."
           fi
 
           pnpm seed:local register generator --generators ${{ matrix.generator }}
@@ -142,7 +144,7 @@ jobs:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Install
         uses: ./.github/actions/install
@@ -177,6 +179,8 @@ jobs:
 
           if [ $DOES_PREVIOUS_VERSIONS_EXIST != false ]; then
             pnpm seed:local publish generator ${{ inputs.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ inputs.generator }}_previous_versions.yml --log-level debug
+          else
+            echo "No previous versions found, skipping publish."
           fi
 
           pnpm seed:local register generator --generators ${{ inputs.generator }}
