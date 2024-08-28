@@ -96,6 +96,9 @@ jobs:
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 2
 
       - name: Install
         uses: ./.github/actions/install
@@ -158,17 +161,14 @@ jobs:
       # - name: Run test
       #   run: pnpm seed:local test --generator ${{ matrix.generator }}
 
-      # - name: Run publish
-      #   env:
-      #     FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-      #     DOCKER_USERNAME: fernapi
-      #     DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
-      #   # This is wack and redundant, but the path filter Github Action above does not let you easily see
-      #   # the modified file once in the matrix, you have to access it at the filter (e.g. output.openapi_files)
-      #   # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
-      #   run: |
-      #     git show HEAD~1:${VERSIONS_FILE} > tmp_${{ matrix.generator }}_previous_versions.yml
-      #     pnpm seed:local publish generator ${{ inputs.generator }} --ver ${{ inputs.version }} --log-level debug
-      #     pnpm seed:local register generator --generators ${{ inputs.generator }}
-      - name: Setup upterm session
-        uses: lhotari/action-upterm@v1
+      - name: Run publish
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          DOCKER_USERNAME: fernapi
+          DOCKER_PASSWORD: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+        # This is wack and redundant, but the path filter Github Action above does not let you easily see
+        # the modified file once in the matrix, you have to access it at the filter (e.g. output.openapi_files)
+        # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
+        run: |
+          pnpm seed:local publish generator ${{ inputs.generator }} --ver ${{ inputs.version }} --log-level debug
+          pnpm seed:local register generator --generators ${{ inputs.generator }}
