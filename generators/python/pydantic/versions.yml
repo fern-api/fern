@@ -1,5 +1,5 @@
 # For unreleased changes, use unreleased.yml
-- version: 1.4.3
+- version: 1.4.4
   ir_version: 53
   changelog_entry:
     - type: fix
