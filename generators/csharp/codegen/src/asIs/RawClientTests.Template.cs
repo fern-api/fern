@@ -3,8 +3,8 @@ using System.Net.Http;
 using SystemTask = System.Threading.Tasks.Task;
 using FluentAssertions;
 using NUnit.Framework;
-using Request = WireMock.RequestBuilders.Request;
-using Response = WireMock.ResponseBuilders.Response;
+using WireMockRequest = WireMock.RequestBuilders.Request;
+using WireMockResponse = WireMock.ResponseBuilders.Response;
 using WireMock.Server;
 using <%= namespace%>.Core;
 
@@ -40,21 +40,21 @@ namespace <%= namespace%>.Test.Core
         [TestCase(504)]
         public async SystemTask MakeRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
         {
-            _server.Given(Request.Create().WithPath("/test").UsingGet())
+            _server.Given(WireMockRequest.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WillSetStateTo("Server Error")
-                .RespondWith(Response.Create().WithStatusCode(statusCode));
+                .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode));
 
-            _server.Given(Request.Create().WithPath("/test").UsingGet())
+            _server.Given(WireMockRequest.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WhenStateIs("Server Error")
                 .WillSetStateTo("Success")
-                .RespondWith(Response.Create().WithStatusCode(statusCode));
+                .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode));
 
-            _server.Given(Request.Create().WithPath("/test").UsingGet())
+            _server.Given(WireMockRequest.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WhenStateIs("Success")
-                .RespondWith(Response.Create().WithStatusCode(200).WithBody("Success"));
+                .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
             var request = new RawClient.BaseApiRequest
             {
@@ -77,10 +77,10 @@ namespace <%= namespace%>.Test.Core
         [TestCase(409)]
         public async SystemTask MakeRequestAsync_ShouldRetry_OnNonRetryableStatusCodes(int statusCode)
         {
-            _server.Given(Request.Create().WithPath("/test").UsingGet())
+            _server.Given(WireMockRequest.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WillSetStateTo("Server Error")
-                .RespondWith(Response.Create().WithStatusCode(statusCode).WithBody("Failure"));
+                .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure"));
 
             var request = new RawClient.BaseApiRequest
             {

@@ -4,9 +4,9 @@ using FluentAssertions;
 using NUnit.Framework;
 using SeedApiWideBasePath.Core;
 using WireMock.Server;
-using Request = WireMock.RequestBuilders.Request;
-using Response = WireMock.ResponseBuilders.Response;
 using SystemTask = System.Threading.Tasks.Task;
+using WireMockRequest = WireMock.RequestBuilders.Request;
+using WireMockResponse = WireMock.ResponseBuilders.Response;
 
 namespace SeedApiWideBasePath.Test.Core
 {
@@ -38,23 +38,23 @@ namespace SeedApiWideBasePath.Test.Core
         public async SystemTask MakeRequestAsync_ShouldRetry_OnRetryableStatusCodes(int statusCode)
         {
             _server
-                .Given(Request.Create().WithPath("/test").UsingGet())
+                .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WillSetStateTo("Server Error")
-                .RespondWith(Response.Create().WithStatusCode(statusCode));
+                .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode));
 
             _server
-                .Given(Request.Create().WithPath("/test").UsingGet())
+                .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WhenStateIs("Server Error")
                 .WillSetStateTo("Success")
-                .RespondWith(Response.Create().WithStatusCode(statusCode));
+                .RespondWith(WireMockResponse.Create().WithStatusCode(statusCode));
 
             _server
-                .Given(Request.Create().WithPath("/test").UsingGet())
+                .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WhenStateIs("Success")
-                .RespondWith(Response.Create().WithStatusCode(200).WithBody("Success"));
+                .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
 
             var request = new RawClient.BaseApiRequest
             {
@@ -80,10 +80,12 @@ namespace SeedApiWideBasePath.Test.Core
         )
         {
             _server
-                .Given(Request.Create().WithPath("/test").UsingGet())
+                .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
                 .InScenario("Retry")
                 .WillSetStateTo("Server Error")
-                .RespondWith(Response.Create().WithStatusCode(statusCode).WithBody("Failure"));
+                .RespondWith(
+                    WireMockResponse.Create().WithStatusCode(statusCode).WithBody("Failure")
+                );
 
             var request = new RawClient.BaseApiRequest
             {
