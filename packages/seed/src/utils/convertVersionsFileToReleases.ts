@@ -26,7 +26,9 @@ export async function parseGeneratorReleasesFile({
                 });
                 await action(release);
             } catch (e) {
-                `Failed to parse and run action on release ${JSON.stringify(entry)}: ${(e as Error)?.message}`;
+                context.logger.error(
+                    `Failed to parse and run action on release ${JSON.stringify(entry)}: ${(e as Error)?.message}`
+                );
             }
         }
     }
@@ -49,7 +51,9 @@ export async function parseCliReleasesFile({
                 const release = serializers.generators.CliReleaseRequest.parseOrThrow(entry);
                 await action(release);
             } catch (e) {
-                `Failed to parse and run action on release ${JSON.stringify(entry)}: ${(e as Error)?.message}`;
+                context.logger.error(
+                    `Failed to parse and run action on release ${JSON.stringify(entry)}: ${(e as Error)?.message}`
+                );
             }
         }
     }
