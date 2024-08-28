@@ -4,9 +4,16 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "The version of the CLI to publish."
+        required: true
+        type: string
 
 jobs:
   publish-dev:
+    if: ${{ inputs.version == null }}
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -36,6 +43,7 @@ jobs:
 
   # Test prod and try to publish, the publish command will handle if there's no diff
   live-test:
+    if: ${{ inputs.version == null }}
     environment: Fern Prod
     runs-on: ubuntu-latest
     steps:
@@ -59,6 +67,7 @@ jobs:
 
   publish:
     needs: [live-test]
+    if: ${{ inputs.version == null }}
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -69,7 +78,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
           fetch-tags: true
 
       - name: Install
@@ -81,4 +89,28 @@ jobs:
         run: |
           git show HEAD~1:packages/cli/cli/versions.yml > tmp_cli_previous_versions.yml
           pnpm seed:local publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
+          pnpm seed:local register cli
+
+  publish-manually:
+    runs-on: ubuntu-latest
+    if: ${{ inputs.version != null }}
+    env:
+      NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+      AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+      AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+      POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-tags: true
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Publish + Register CLI
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          pnpm seed:local publish cli --ver ${{ inputs.version }} --log-level debug
           pnpm seed:local register cli

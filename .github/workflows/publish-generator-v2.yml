@@ -24,6 +24,10 @@ on:
       # - "generators/csharp/model/versions.yml"
   workflow_dispatch:
     inputs:
+      version:
+        description: "The version of the generator to publish."
+        required: true
+        type: string
       generator:
         description: "The generator to publish and register releases for, this is a back door for convenience."
         required: true
@@ -83,6 +87,7 @@ jobs:
 
   # Test, publish and register generators
   publish-changed-generators:
+    if: ${{ inputs.generator == null }}
     runs-on: ubuntu-latest
     needs: versions-changed
     strategy:
@@ -91,8 +96,6 @@ jobs:
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
 
       - name: Install
         uses: ./.github/actions/install
@@ -143,8 +146,6 @@ jobs:
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
 
       - name: Install
         uses: ./.github/actions/install
@@ -163,24 +164,5 @@ jobs:
         # the modified file once in the matrix, you have to access it at the filter (e.g. output.openapi_files)
         # So as a workaround, we are doing this switch statement to set the VERSIONS_FILE variable and use that to publish
         run: |
-          if [ ${{ inputs.generator }} = "python-sdk" ]; then
-              VERSIONS_FILE="generators/python/sdk/versions.yml"
-          elif [ ${{ inputs.generator }} = "fastapi" ]; then
-              VERSIONS_FILE="generators/python/fastapi/versions.yml"
-          elif [ ${{ inputs.generator }} = "pydantic" ]; then
-              VERSIONS_FILE="generators/python/pydantic/versions.yml"
-          elif [ ${{ inputs.generator }} = "ruby-model" ]; then
-              VERSIONS_FILE="generators/ruby/model/versions.yml"
-          elif [ ${{ inputs.generator }} = "ruby-sdk" ]; then
-              VERSIONS_FILE="generators/ruby/sdk/versions.yml"
-          fi
-
-          git show HEAD~1:${VERSIONS_FILE} > tmp_${{ inputs.generator }}_previous_versions.yml || DOES_PREVIOUS_VERSIONS_EXIST=false
-
-          if [ $DOES_PREVIOUS_VERSIONS_EXIST != false ]; then
-            pnpm seed:local publish generator ${{ inputs.generator }} --changelog $VERSIONS_FILE --previous-changelog tmp_${{ inputs.generator }}_previous_versions.yml --log-level debug
-          else
-            echo "No previous versions found, skipping publish."
-          fi
-
+          pnpm seed:local publish generator ${{ inputs.generator }} --ver ${{ inputs.version }} --log-level debug
           pnpm seed:local register generator --generators ${{ inputs.generator }}
